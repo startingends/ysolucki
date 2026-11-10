@@ -30,3 +30,7 @@ S1-cubic	2026-11-10	participant: speaks for seat R2-cubic's work	session model	r
 S1-curv	2026-11-10	participant: speaks for seat R2-curv's work	session model	rh/experiments/s1_seminar/curv	running	-
 S1-parity	2026-11-10	participant: speaks for seat R2-parity's work	session model	rh/experiments/s1_seminar/parity	running	-
 S1-mirror	2026-11-10	participant: develops idea 21 (two-prime model)	session model	rh/experiments/s1_seminar/mirror	running	-
+K-atlas	2026-11-10	persistent seat: failure atlas keeper and the pairing job	session model	rh/experiments/k_atlas	running	-
+K-theory	2026-11-10	persistent seat: theory document keeper	session model	rh/experiments/k_theory	running	-
+FH	2026-11-10	persistent seat: foothold hunt	session model	rh/experiments/foothold	running	-
+BG	2026-11-10	persistent seat: bigger-statement track (creation rules)	session model	rh/experiments/bigger	running	-

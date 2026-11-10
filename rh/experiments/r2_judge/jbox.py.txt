@@ -1,0 +1,41 @@
+"""R2-judge: third box-basis implementation of N = primes - arch (orthonormal boxes 1/sqrt(h)).
+Diagonal from Theorem E (curv seat): N_ii(arch part) = c_inf - 2 int_0^h w(u)(u/h) du - 2 int_h^inf w(u) du,
+with the closed form int_h^inf w = atanh(e^{-h/2}) + atan(e^{-h/2}) (substitution v = e^{-u/2}; derived by me).
+Off-diagonal arch: +int w(u) tri(u - mh) du / h. Primes: sum c_x x^{-1/2} [tri(log x - d) + tri(log x + d)]/h. scipy.quad, double."""
+import math, numpy as np
+from scipy.integrate import quad
+EULER = 0.5772156649015329
+CINF = EULER + math.pi / 2 + math.log(8 * math.pi)
+def w(u): return math.exp(-u / 2) / (-math.expm1(-2 * u))
+def primes(X, shift=None):
+    out = {}
+    ps = [p for p in range(2, int(X) + 2) if all(p % d for d in range(2, int(p ** 0.5) + 1))]
+    if shift: ps = [shift if p == 2 else p for p in ps]
+    for p in ps:
+        pk = p
+        while pk <= X:
+            out[float(pk)] = math.log(p); pk *= p
+    return out
+def boxN(L, n, shift=None):
+    h = 2 * L / n
+    cn = primes(math.exp(2 * L) + 1e-9, shift)
+    tri = lambda v: max(0.0, h - abs(v))
+    t = np.zeros(n)
+    t[0] = CINF - 2 * quad(lambda u: w(u) * u / h, 0, h, epsabs=1e-13, epsrel=1e-13)[0] - 2 * (math.atanh(math.exp(-h / 2)) + math.atan(math.exp(-h / 2)))
+    for m in range(1, n):
+        a, b = (m - 1) * h, (m + 1) * h
+        t[m] = (quad(lambda u: w(u) * tri(u - m * h), a, m * h, epsabs=1e-13, epsrel=1e-13)[0] + quad(lambda u: w(u) * tri(u - m * h), m * h, b, epsabs=1e-13, epsrel=1e-13)[0]) / h
+    for m in range(n):
+        d = m * h
+        for x, c in cn.items():
+            u = math.log(x)
+            t[m] += c / math.sqrt(x) * (tri(u - d) + tri(u + d)) / h
+    N = np.array([[t[abs(i - j)] for j in range(n)] for i in range(n)])
+    xs = -L + h * np.arange(n + 1)
+    p = 2 * (np.exp(xs[1:] / 2) - np.exp(xs[:-1] / 2)) / math.sqrt(h)
+    q = 2 * (np.exp(-xs[:-1] / 2) - np.exp(-xs[1:] / 2)) / math.sqrt(h)
+    return N, p, q
+def ext(N, p, q):
+    n = len(p); M = np.zeros((n + 2, n + 2))
+    M[:n, :n] = N; M[:n, n] = p; M[n, :n] = p; M[:n, n + 1] = q; M[n + 1, :n] = q; M[n, n + 1] = M[n + 1, n] = 1.0
+    return M

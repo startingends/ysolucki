@@ -1,0 +1,5 @@
+site  0: |Gamma_2 - (SOS + Hess + boundary)|_max = 2.2e-14 ; closed parallelograms 741, open paths 780 ; min eig: SOS -1.2e-15, Hess -0.374, boundary -2.791 ; max eig: Hess 9.729 boundary 2.187
+site  3: |Gamma_2 - (SOS + Hess + boundary)|_max = 1.8e-14 ; closed parallelograms 849, open paths 672 ; min eig: SOS -4.0e-16, Hess -0.154, boundary -1.254 ; max eig: Hess 4.634 boundary 1.148
+site 20: |Gamma_2 - (SOS + Hess + boundary)|_max = 3.0e-14 ; closed parallelograms 1121, open paths 400 ; min eig: SOS -1.4e-15, Hess -0.034, boundary -1.569 ; max eig: Hess 3.239 boundary 0.857
+site 38: |Gamma_2 - (SOS + Hess + boundary)|_max = 6.2e-15 ; closed parallelograms 779, open paths 742 ; min eig: SOS -3.9e-16, Hess -0.155, boundary -1.859 ; max eig: Hess 6.058 boundary 1.346
+worst error 2.9753977059954195e-14

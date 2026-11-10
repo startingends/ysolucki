@@ -1,0 +1,12 @@
+L=1 M=40: Hankel total: min -1.12268 max 2.37991 #neg 9 of 20 | prime part alone: min -1.12564 max 1.62807 #neg 10 | arch part: min -7.5e-18 max 1.18723
+   even Weil block: lowest eigenvalue 1.9905e-03 ; on its eigenvector (||phi|| = 1): Hankel atoms +0.90052  Hankel arch +0.99217  T +1.61251  4c^2 3.50720 4s^2 0.12130
+   odd  Weil block: lowest eigenvalue 8.1060e-03 ; on its eigenvector (||phi|| = 1): Hankel atoms +1.27397  Hankel arch +0.64419  T +1.68908  4c^2 3.61632 4s^2 0.22097
+L=1 M=80: Hankel total: min -1.21054 max 2.38634 #neg 19 of 40 | prime part alone: min -1.21362 max 1.63942 #neg 20 | arch part: min -6.3e-17 max 1.22644
+   even Weil block: lowest eigenvalue 5.4648e-04 ; on its eigenvector (||phi|| = 1): Hankel atoms +0.87513  Hankel arch +0.99079  T +1.58777  4c^2 3.45424 4s^2 0.11626
+   odd  Weil block: lowest eigenvalue 2.4126e-03 ; on its eigenvector (||phi|| = 1): Hankel atoms +1.20462  Hankel arch +0.64853  T +1.65083  4c^2 3.51143 4s^2 0.19991
+L=1 M=160: Hankel total: min -1.44003 max 2.39259 #neg 38 of 80 | prime part alone: min -1.44023 max 1.65896 #neg 40 | arch part: min -8.6e-17 max 1.25954
+   even Weil block: lowest eigenvalue 1.7206e-04 ; on its eigenvector (||phi|| = 1): Hankel atoms +0.83275  Hankel arch +1.00000  T +1.54959  4c^2 3.38251 4s^2 0.10874
+   odd  Weil block: lowest eigenvalue 6.5502e-04 ; on its eigenvector (||phi|| = 1): Hankel atoms +1.15090  Hankel arch +0.64196  T +1.60649  4c^2 3.40720 4s^2 0.18572
+L=1 M=320: Hankel total: min -1.56709 max 2.39662 #neg 78 of 160 | prime part alone: min -1.56713 max 1.66838 #neg 80 | arch part: min -1.5e-16 max 1.28781
+   even Weil block: lowest eigenvalue 4.4918e-05 ; on its eigenvector (||phi|| = 1): Hankel atoms +0.82445  Hankel arch +1.00235  T +1.53941  4c^2 3.36625 4s^2 0.10716
+   odd  Weil block: lowest eigenvalue 2.0872e-04 ; on its eigenvector (||phi|| = 1): Hankel atoms +1.15028  Hankel arch +0.62447  T +1.58642  4c^2 3.36884 4s^2 0.18813

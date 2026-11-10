@@ -1,0 +1,7 @@
+  int/30 L=0.5 x=1.9995  best c=0.690422 (log x=0.692897) max lowest eig=-2.443e-6 infeasible (6s)
+  int/30 L=0.5 x=1.9996  best c=0.690789 (log x=0.692947) max lowest eig=1.278e-6 FEASIBLE (11s)
+  int/30 L=0.5 x=1.9998  best c=0.691521 (log x=0.693047) max lowest eig=8.549e-6 FEASIBLE (17s)
+  int/30 L=0.5 x=2       best c=0.692256 (log x=0.693147) max lowest eig=1.576e-5 FEASIBLE (22s)
+  int/30 L=0.5 x=2.007   best c=0.719846 (log x=0.696641) max lowest eig=0.0002434 FEASIBLE (28s)
+  int/30 L=0.5 x=2.008   best c=0.722957 (log x=0.697139) max lowest eig=4.735e-5 FEASIBLE (34s)
+  int/30 L=0.5 x=2.010   best c=0.724342 (log x=0.698135) max lowest eig=-0.001284 infeasible (39s)

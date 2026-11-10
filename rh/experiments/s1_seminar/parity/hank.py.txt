@@ -1,0 +1,84 @@
+"""S1-parity, answer to board B10. Identity (PROVED in NOTES.md):  for phi on (0, L], f_e(x) = phi(|x|), f_o(x) = sgn(x) phi(|x|),
+   Q(f_e) - Q(f_o) = 4 [ E_+^2 - sum_{m>=1} E_m^2 - sum_{n<=e^{2L}} Lambda(n) n^{-1/2} (phi*phi)(log n) ],
+   E_+ = int_0^L phi e^{x/2},  E_m = int_0^L phi e^{-(2m+1/2)x},  (phi*phi)(t) = int phi(x) phi(t-x) dx.
+(1) numerical check on phi = 1, by direct quadrature of the definition of Q = P + A - Pi (no matrix code);
+(2) the same identity evaluated on the ground states of the background form (pole + arch, no primes) at L = 0.36..0.40,
+    integer lattice, with implementation B (wb.py.txt) for the eigenvectors only."""
+import sys, importlib.util, importlib.machinery
+import mpmath as mp
+mp.mp.dps = 30
+def w(u): return mp.exp(u / 2) / (2 * mp.sinh(u))
+def Esum(Em, tailfrom=4000):
+    """sum_{m>=1} E_m^2 with Em(m) callable"""
+    return mp.nsum(lambda m: Em(int(m)) ** 2, [1, mp.inf])
+print("(1) phi = 1 on (0, L]: direct quadrature of Q(f_e) - Q(f_o) against the right-hand side")
+for L, primes in ((mp.mpf('0.3'), False), (mp.mpf('0.38'), True), (mp.mpf(1), True)):
+    ge = lambda u: 2 * L - u
+    go = lambda u: (2 * L - 3 * u) if u <= L else (u - 2 * L)
+    def Qof(g, par):
+        # pole: 2<f,c>^2 (even) or -2<f,s>^2 (odd)
+        if par == 'e': P = 2 * (4 * mp.sinh(L / 2)) ** 2
+        else: P = -2 * (2 * (2 * mp.cosh(L / 2) - 2)) ** 2          # <f_o, s> = 2 int_0^L sinh(x/2) = 4(cosh(L/2) - 1)
+        A = -mp.log(mp.pi) * g(0) + mp.quad(lambda u: g(0) * mp.exp(-2 * u) / u - 2 * w(u) * g(u), [0, L, 2 * L]) + g(0) * mp.e1(4 * L)
+        Pi = mp.mpf(0)
+        if primes:
+            for n in range(2, int(mp.floor(mp.exp(2 * L))) + 1):
+                lam = mp.mpf(0)
+                for p in (2, 3, 5, 7):
+                    q = p
+                    while q <= n:
+                        if q == n: lam = mp.log(p)
+                        q *= p
+                Pi += lam / mp.sqrt(n) * 2 * g(mp.log(n))
+        return P + A - Pi
+    lhs = Qof(ge, 'e') - Qof(go, 'o')
+    Ep = 2 * (mp.exp(L / 2) - 1)
+    # sum_{m>=1} ((1-e^{-aL})/a)^2, a = 2m+1/2 : = psi_1(5/4)/4 - 2 sum e^{-aL}/a^2 + sum e^{-2aL}/a^2  (fast sums; nsum was only good to 5e-5)
+    S = mp.polygamma(1, mp.mpf(5) / 4) / 4 + mp.fsum((-2 * mp.exp(-(2 * m + mp.mpf(1) / 2) * L) + mp.exp(-2 * (2 * m + mp.mpf(1) / 2) * L)) / (2 * m + mp.mpf(1) / 2) ** 2 for m in range(1, 400))
+    conv = lambda t: t if t <= L else 2 * L - t
+    Hp = mp.mpf(0)
+    if primes:
+        for n, lam in ((2, mp.log(2)), (3, mp.log(3)), (4, mp.log(2)), (5, mp.log(5)), (7, mp.log(7))):
+            if mp.log(n) <= 2 * L: Hp += lam / mp.sqrt(n) * conv(mp.log(n))
+    rhs = 4 * (Ep ** 2 - S - Hp)
+    print("  L=%s primes=%s: Q(f_e)=%s Q(f_o)=%s ; LHS %s ; RHS %s ; diff %s" % (mp.nstr(L, 4), primes, mp.nstr(Qof(ge, 'e'), 12), mp.nstr(Qof(go, 'o'), 12),
+          mp.nstr(lhs, 15), mp.nstr(rhs, 15), mp.nstr(abs(lhs - rhs), 3)))
+
+print("(2) background (pole + arch, NO primes), integer lattice N=30: ground states and the Hankel form of the full kernel")
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+N = 30
+def Eexp(a, om, L, kind):
+    """int_0^L trig(om x) e^{a x} dx, kind 'c' or 's'"""
+    z = mp.mpc(a, om)
+    v = (mp.exp(z * L) - 1) / z if z != 0 else L
+    return v.real if kind == 'c' else v.imag
+def hankel(coef, kind, L):
+    """phi = sum_k coef_k trig(w_k x)/norm_k on (0,L]; returns E_+^2, sum_{m>=1} E_m^2, Gamma-Hankel sum_{m>=0} E_m^2, pole-Hankel E_+^2 + E_0^2"""
+    ws = wb.freqs(L, N, 'int'); ws = ws if kind == 'c' else ws[1:]
+    nrm = [mp.sqrt(2 * L) if om == 0 else mp.sqrt(L) for om in ws]
+    E = lambda a: mp.fsum(coef[k] * Eexp(a, ws[k], L, kind) / nrm[k] for k in range(len(ws)))
+    Ep = E(mp.mpf(1) / 2); E0 = E(-mp.mpf(1) / 2)
+    S = mp.mpf(0); m = 1
+    while m < 3000:
+        S += E(-(2 * m + mp.mpf(1) / 2)) ** 2; m += 1
+    phi0 = mp.fsum(coef[k] / nrm[k] for k in range(len(ws))) if kind == 'c' else mp.mpf(0)
+    S += phi0 ** 2 * mp.polygamma(1, 3000 + mp.mpf(1) / 4) / 4        # tail: E_m = phi(0)/a_m + O(a_m^-2)
+    return Ep ** 2, S, S + E0 ** 2, Ep ** 2 + E0 ** 2
+for L in ('0.36', '0.37', '0.38', '0.40'):
+    L = mp.mpf(L)
+    M = wb.add(wb.arch_blocks(L, N, 'int'), wb.pole_blocks(L, N, 'int'))
+    Aonly = wb.arch_blocks(L, N, 'int')
+    print("  L=%s arch form A alone: lowest eigenvalue even %s ; odd %s   [PROVED from D3+D5: even <= odd]" % (mp.nstr(L, 3),
+          mp.nstr(min(mp.eigsy(Aonly[0], eigvals_only=True)), 6), mp.nstr(min(mp.eigsy(Aonly[1], eigvals_only=True)), 6)))
+    for b, kind, nm in ((0, 'c', 'even'), (1, 's', 'odd ')):
+        ev, V = mp.eigsy(M[b]); i = min(range(len(ev)), key=lambda j: ev[j])
+        v = [V[k, i] for k in range(V.rows)]
+        Ep2, S, GH, PH = hankel(v, kind, L)
+        HQ = Ep2 - S
+        other = ev[i] - 4 * HQ if b == 0 else ev[i] + 4 * HQ
+        print("  L=%s %s ground state: lambda=%s ; E_+^2=%s ; sum_{m>=1}E_m^2=%s ; 4*Hankel_Q=%s ; Gamma-Hankel(4x)=%s pole-Hankel(4x)=%s ; energy of the %s extension of the same phi = %s" % (
+              mp.nstr(L, 3), nm, mp.nstr(ev[i], 5), mp.nstr(Ep2, 5), mp.nstr(S, 5), mp.nstr(4 * HQ, 5), mp.nstr(4 * GH, 5), mp.nstr(4 * PH, 5),
+              'ODD' if b == 0 else 'EVEN', mp.nstr(other, 5)), flush=True)

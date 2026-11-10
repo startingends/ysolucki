@@ -1,0 +1,50 @@
+"""S1-curv turn 1: the Weil form on a comb of narrow teeth at +-log a (S1-mirror's Model B at the largest width for which the mirror part is exactly [Lambda(ab)/sqrt(ab)]).
+usage: t1_comb.py.txt A kind     kind: zeta | beurling (2 -> 2.1, teeth at its own lattice points <= A)"""
+import sys, math, numpy as np, mpmath as mp
+mp.mp.dps = 20
+A = int(sys.argv[1]); kind = sys.argv[2]
+gens = [2.1 if kind == 'beurling' else 2] + [p for p in range(3, 4 * A * A) if all(p % q for q in range(2, int(p ** .5) + 1))]
+gens = [g for g in gens if g <= A * A + 1]
+if kind == 'zeta': pts = [float(a) for a in range(2, A + 1)]
+else:
+    el = {1.0}
+    for g in [g for g in gens if g <= A]:
+        new = set()
+        for e in el:
+            v = e
+            while v * g <= A + 1e-9: v *= g; new.add(v)
+        el |= new
+    pts = sorted(x for x in el if x > 1.5)
+# tooth width: products are separated by at least ...
+prods = sorted({a * b for a in pts for b in pts} | {a / b for a in pts for b in pts if a > b})
+pp = {}
+for g in gens:
+    v = g
+    while v <= A * A + 1: pp[v] = math.log(g); v *= g
+ppk = sorted(pp)
+# eps: half the smallest log-distance between a product/quotient of teeth and a prime power it does not equal
+mind = min(abs(math.log(x / n)) for x in prods for n in ppk if abs(x / n - 1) > 1e-12 and abs(math.log(x / n)) < 0.5)
+eps = min(mind / 2, 0.5 * math.log(1 + A ** -2.0))
+w = lambda u: mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+tent = lambda t: max(0.0, 1 - abs(t))
+Deps = float(-(-mp.log(mp.pi) + mp.quad(lambda u: mp.exp(-2 * u) / u - 2 * w(u) * (1 - u / eps), [0, eps / 2, eps]) + mp.e1(2 * eps)))
+def archoff(D):   # int w(|v|) tent((v - D)/eps) dv , D > 2 eps
+    return float(mp.quad(lambda v: w(v) * (1 - abs(v - D) / eps), [D - eps, D, D + eps]))
+def prime(D):
+    return sum(c / math.sqrt(n) * tent((D - math.log(n)) / eps) for n, c in pp.items() if abs(D - math.log(n)) < eps)
+n = len(pts); x = np.array([math.log(a) for a in pts])
+G = np.zeros((n, n)); Mm = np.zeros((n, n)); Ga = np.zeros((n, n)); Ma = np.zeros((n, n))
+for i in range(n):
+    for j in range(n):
+        Mm[i, j] = prime(x[i] + x[j]); Ma[i, j] = archoff(x[i] + x[j])
+        if i != j: G[i, j] = prime(abs(x[i] - x[j])); Ga[i, j] = archoff(abs(x[i] - x[j]))
+pref = float(4 * mp.sinh(eps / 4) / mp.sqrt(eps))
+c = pref * np.cosh(x / 2); s = pref * np.sinh(x / 2)
+T = Deps * np.eye(n) + G + Ga; H = Mm + Ma
+# even/odd extension (unnormalised, f = phi(|x|) or sign*phi): N(f+-) = 2 (T +- H), pole: even 2 (2c)^2, odd -2 (2s)^2
+Qe = 4 * np.outer(c, c) - (T + H); Qo = -4 * np.outer(s, s) - (T - H)      # per unit ||phi||^2 (divided by 2)
+ev = lambda X: np.linalg.eigvalsh((X + X.T) / 2)
+print("%s A=%d teeth=%d eps=%.3e  D_eps=%.4f  log(1/eps)-1.43=%.4f" % (kind, A, n, eps, Deps, math.log(1 / eps) - 1.43))
+print("  mirror part Mm: min eig %.2e ; top eig: G %.4f  G+Mm %.4f  G-Mm %.4f ; ratio top(G+Mm)/(-D) = %.4f  top(G-Mm)/(-D) = %.4f" % (ev(Mm)[0], ev(G)[-1], ev(G + Mm)[-1], ev(G - Mm)[-1], ev(G + Mm)[-1] / -Deps, ev(G - Mm)[-1] / -Deps))
+print("  Gamma off-diagonal parts: norm of shift part %.4f, of mirror part %.4f ; pole: 4|c|^2 = %.4f, 4|s|^2 = %.4f" % (np.abs(ev(Ga)).max(), np.abs(ev(Ma)).max(), 4 * c @ c, 4 * s @ s))
+print("  comb Weil blocks: min eig Q_even %.5f  Q_odd %.5f   (top eig of T+H %.4f, of T-H %.4f)" % (ev(Qe)[0], ev(Qo)[0], ev(T + H)[-1], ev(T - H)[-1]))

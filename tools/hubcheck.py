@@ -20,7 +20,8 @@ REQUIRED = [
     "docs/HUB.md", "docs/JOURNAL.md", "docs/KNOWLEDGE.md", "docs/IDEAS.md", "docs/DECISIONS.md",
     "docs/AGENT_REGISTRY.tsv", "docs/SUBAGENT_PREAMBLE.md",
     "rh/PROJECT_BRIEF.md", "rh/RESUME_HERE.md", "rh/REVIEW_LEDGER.md", "rh/BRIEF_PROPOSALS.md",
-    "rh/UNDERSTANDING.md", "rh/NOTEBOOK.md",
+    "rh/UNDERSTANDING.md", "rh/NOTEBOOK.md", "rh/THEORY.md", "rh/ATLAS.md", "rh/FOOTHOLDS.md", "rh/BIGGER.md",
+    "rh/specialists/ROSTER.md",
 ]
 REG_COLS = ["id", "date", "role", "model", "folder", "status", "result"]
 REG_STATUS = {"running", "done", "failed", "cancelled"}
@@ -84,6 +85,20 @@ def main(root=ROOT):
                     continue
                 if msgs and msgs[-1].get("kind") != "close":
                     print(f"open seminar board: {fn[:-6]} ({len(msgs)} messages)")
+    # theory document and failure atlas: structural checks
+    import records as records_mod
+    for kind in ("theory", "atlas"):
+        rp = os.path.join(root, records_mod.SPEC[kind]["file"])
+        if os.path.exists(rp) and os.path.getsize(rp):
+            items, e = records_mod.check(kind, rp)
+            errs += [f"{records_mod.SPEC[kind]['file']}: {x}" for x in e]
+            if kind == "theory":
+                est = sum(1 for it in items if it["f"].get("status") in records_mod.ESTABLISHED)
+                print(f"theory: {len(items)} lemmas, {est} established (checked, formal or known), "
+                      f"{sum(1 for it in items if it['f'].get('status') == 'formal')} formal")
+            else:
+                n = len(items)
+                print(f"atlas: {n} failures, {len(records_mod.pairs(records_mod.read(rp)))} of {n * (n - 1) // 2} pairs examined")
     for f in ("docs/HUB.md", "docs/JOURNAL.md", "docs/DECISIONS.md", "rh/RESUME_HERE.md"):
         p = os.path.join(root, f)
         if os.path.exists(p):

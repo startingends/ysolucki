@@ -1,0 +1,13 @@
+import sys, math, importlib.util, importlib.machinery
+P = "/home/user/ysolucki/rh/experiments/s1_seminar/mirror/lib.py.txt"
+spec = importlib.util.spec_from_file_location("lib", P, loader=importlib.machinery.SourceFileLoader("lib", P))
+lib = importlib.util.module_from_spec(spec); spec.loader.exec_module(lib)
+globals().update({k: v for k, v in vars(lib).items() if not k.startswith("__")})
+ns = lambda x, k=3: mp.nstr(x, k)
+print("weight at 4 multiplied by f (f>=0 keeps mirror positivity of [c(2^(i+j))], f<1 breaks it): lowest eig even/odd, N=40")
+for L in (0.70, 0.75, 0.80):
+    A = arch(L, 40); X = math.exp(2 * L); row = []
+    for f in (-1, 0, 0.5, 0.99, 1, 1.01, 2, 4):
+        e = mineig(add(A, atoms(L, 40, {n: (c * f if n == 4 else c) for n, c in lam(X).items()})))
+        row.append("f=%g: %s/%s" % (f, ns(e[0]), ns(e[1])))
+    print("  L=%.2f  " % L + " | ".join(row), flush=True)

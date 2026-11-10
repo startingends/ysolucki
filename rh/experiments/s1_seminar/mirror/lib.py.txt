@@ -1,0 +1,52 @@
+"""helpers copied from rh/experiments/e10_lorentzian/tests.py.txt (lead), which wrap the validated builder r1_A/weil.py.txt.
+Q = pole + arch - primes on L^2[-L, L], Fourier basis, returned as [even block, odd block] of mpmath matrices."""
+import sys, math, importlib.util, importlib.machinery
+import flint
+from flint import arb
+import mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+dps = 120
+def setprec(d):
+    global dps
+    dps = d; mp.mp.dps = d; flint.ctx.prec = int(d * 3.33) + 40
+setprec(120)
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+def blocks(q, N): return [to_mp(weil.even_block(q, N)), to_mp(weil.odd_block(q, N))]
+def arch(L, N, pole=True): return blocks(weil.build(L, N, kind='zeta', pole=pole, primes=False, arch=True)[0], N)
+def atoms(L, N, cn):
+    """blocks of  -sum_x c_x x^(-1/2) (shift by log x + adjoint);  cn: position x (any real, log x < 2L) -> weight c_x"""
+    cn = {x: c for x, c in cn.items() if math.log(float(x)) < 2 * L - 1e-12}
+    if not cn: return None
+    saved = weil.dh_logderiv_coeffs
+    weil.dh_logderiv_coeffs = lambda X: dict(cn)
+    q = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)[0]
+    weil.dh_logderiv_coeffs = saved
+    return blocks(q, N)
+def add(A, B, t=1): return A if B is None else [A[b] + mp.mpf(t) * B[b] for b in (0, 1)]
+def mineig(M): return [min(mp.eigsy(M[b], eigvals_only=True)) for b in (0, 1)]
+def lam(X, primes=None):
+    """true weights: {p^k: log p} for p^k <= X; primes = iterable restricts to those primes"""
+    out = {}
+    for n, (_, p) in weil.mangoldt_upto(int(X)).items():
+        if primes is None or p in primes: out[n] = arb(p).log()
+    return out
+def pencil(Q0, U):
+    """interval of eta with Q0 + eta U >= 0, per block; Q0 must be positive definite. returns [(lo, hi)]*2"""
+    out = []
+    for b in (0, 1):
+        Lc = mp.cholesky(Q0[b]); Li = mp.inverse(Lc)
+        C = Li * U[b] * Li.T
+        C = (C + C.T) / 2
+        ev = mp.eigsy(C, eigvals_only=True)
+        lmax, lmin = max(ev), min(ev)
+        lo = -1 / lmax if lmax > 0 else -mp.inf
+        hi = -1 / lmin if lmin < 0 else mp.inf
+        out.append((lo, hi))
+    return out

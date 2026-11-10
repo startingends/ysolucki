@@ -1,0 +1,28 @@
+"""S1-curv turn 1: exact parity-difference identities.  E(h_-) - E(h_+) = 4 <phi, H phi>,  ||L h_-||^2 - ||L h_+||^2 = 4 <phi, {lam1 - T, H} phi>, phi = u eta.
+usage: t1_b8b.py.txt L M kind"""
+import sys, importlib.machinery, importlib.util, numpy as np
+ld = importlib.machinery.SourceFileLoader('s1lib', 's1lib.py.txt'); sp = importlib.util.spec_from_loader('s1lib', ld); S = importlib.util.module_from_spec(sp); ld.exec_module(S)
+L = float(sys.argv[1]); M = int(sys.argv[2]); kind = sys.argv[3]
+b = S.build(L, M, kind); ev, lam1, u, q, Lg = S.process(b['N']); pi = u * u; k = b['k']; h = M // 2; N = b['N']
+E = np.eye(M); inW = lambda j: 0 <= j < M
+Op = np.zeros((M, M))
+for y in range(M):
+    for a in range(-M + 1, M):
+        if a == 0 or not inW(y + a): continue
+        ga = k[abs(a)] * u[y + a] * (E[y + a] - E[y])
+        for bb in range(-M + 1, M):
+            if bb == 0 or not inW(y + bb) or inW(y + a + bb): continue
+            Op += np.outer(ga, k[abs(bb)] * u[y + bb] * (E[y + bb] - E[y]))
+Op = (Op + Op.T) / 2; LL = Lg.T @ np.diag(pi) @ Lg; Cl = LL - Op
+Pp = np.zeros((M, h)); Pm = np.zeros((M, h))
+for j in range(h): Pp[h + j, j] = Pp[h - 1 - j, j] = 1.0; Pm[h + j, j] = 1.0; Pm[h - 1 - j, j] = -1.0
+J = np.eye(M)[::-1]; T = N[h:, h:]; H = (N @ J)[h:, h:]; Up = np.diag(u[h:]); I = np.eye(h)
+par = lambda X: Pm.T @ X @ Pm - Pp.T @ X @ Pp
+Atot = par(LL); AOp = par(Op); ACl = par(Cl)
+anti = 4 * Up @ ((lam1 * I - T) @ H + H @ (lam1 * I - T)) @ Up
+B = 4 * Up @ H @ Up
+cos = lambda X, Y: np.sum(X * Y) / np.linalg.norm(X) / np.linalg.norm(Y)
+print("%s L=%g M=%d lam1=%.5f Q=%.5f" % (kind, L, M, lam1, lam1 - N[0, 0]))
+print(" |par(||Lh||^2) - 4 U{lam1 - T, H}U|_max = %.1e   (norm %.3f)" % (np.abs(Atot - anti).max(), np.linalg.norm(Atot)))
+print(" cos(par(total), 4UHU) = %.4f ; cos(par(Op), 4UHU) = %.4f ; cos(par(Cl), 4UHU) = %.4f ; cos(par(Op), par(total)) = %.4f" % (cos(Atot, B), cos(AOp, B), cos(ACl, B), cos(AOp, Atot)))
+print(" Frobenius norms: par(total) %.4f  par(Op) %.4f  par(Cl) %.4f  4UHU %.4f ; least-squares multiple: par(Op) ~ %.3f * 4UHU, par(total) ~ %.3f * 4UHU  (2Q = %.3f)" % (np.linalg.norm(Atot), np.linalg.norm(AOp), np.linalg.norm(ACl), np.linalg.norm(B), np.sum(AOp * B) / np.sum(B * B), np.sum(Atot * B) / np.sum(B * B), 2 * (lam1 - N[0, 0])))

@@ -1,0 +1,103 @@
+import sys, math, numpy as np, scipy.linalg as sl, importlib.util, importlib.machinery
+P = "/home/user/ysolucki/rh/experiments/r2_judge/jbox.py.txt"
+spec = importlib.util.spec_from_file_location("jbox", P, loader=importlib.machinery.SourceFileLoader("jbox", P))
+jb = importlib.util.module_from_spec(spec); spec.loader.exec_module(jb)
+def chain(N):
+    ev, V = np.linalg.eigh(N); lam1 = ev[-1]; u = np.abs(V[:, -1])
+    q = N * u[None, :] / u[:, None]; np.fill_diagonal(q, 0.0)
+    Lg = q - np.diag(q.sum(1)); return ev, lam1, u, q, Lg
+def gam_mats(q, Lg):
+    M = len(q); Gs = []
+    for i in range(M):
+        D = np.zeros((M, M))
+        # Gamma f(i) = (1/2) sum_y q_iy (f_y - f_i)^2  as a quadratic form
+        D[np.diag_indices(M)] = 0.5 * q[i]
+        D[i, :] -= 0.5 * q[i]; D[:, i] -= 0.5 * q[i]; D[i, i] += 0.5 * q[i].sum()
+        Gs.append(D)
+    G2 = []
+    for i in range(M):
+        LG = sum(q[i, y] * (Gs[y] - Gs[i]) for y in range(M) if y != i)
+        G2.append(0.5 * LG - 0.5 * (Gs[i] @ Lg + Lg.T @ Gs[i]))
+    return Gs, G2
+def be_const(A, B, i):
+    idx = [k for k in range(len(A)) if k != i]
+    return sl.eigh(A[np.ix_(idx, idx)], B[np.ix_(idx, idx)], eigvals_only=True)[0]
+which = sys.argv[1]
+if which == "J11":
+    for name, shift in (("zeta", None), ("beurling", 2.1)):
+        N, p, q_ = jb.boxN(1.0, 40, shift); ev, lam1, u, q, Lg = chain(N)
+        Gs, G2 = gam_mats(q, Lg); rho = np.array([be_const(G2[i], Gs[i], i) for i in range(40)])
+        print("J11 %s L=1 M=40: lambda_1=%.6f #pos=%d gap/lambda_1-1=%.4e BE worst/lam1=%.4f (site %d) centre=%.4f" % (name, lam1, (ev > 0).sum(), (lam1 - ev[-2]) / lam1 - 1, rho.min() / lam1, rho.argmin(), rho[20] / lam1))
+        # J10 determinant identity (even block)
+        J = np.eye(40)[::-1]; B = (np.eye(40)[:, :20] + J[:, :20]) / math.sqrt(2)
+        Ne = B.T @ N @ B; c = B.T @ (p + q_) / 2; Qe = 2 * np.outer(c, c) - Ne
+        lhs = 2 * c @ np.linalg.solve(Ne, c) - 1
+        sQ, lQ = np.linalg.slogdet(Qe); sN, lN = np.linalg.slogdet(Ne)
+        print("J10 %s: 2c^T Ne^-1 c - 1 = %.12e ; det(Qe)/|det Ne| = %.12e (sign Qe %d) ; mu1(Qe)=%.6e" % (name, lhs, sQ * math.exp(lQ - lN), sQ, np.linalg.eigvalsh(Qe)[0]))
+    for n in (12,):
+        for name, shift in (("zeta", None), ("beurling", 2.1)):
+            N, p, q_ = jb.boxN(1.0, n, shift); H = jb.ext(N, p, q_); e = np.linalg.eigvalsh(H)
+            print("J11 Ntilde %s L=1 n=%d: top %.6f second %.6e third %.6e ; Weil min %.6e" % (name, n, e[-1], e[-2], e[-3], np.linalg.eigvalsh(2 * np.outer(p, q_) / 2 + 2 * np.outer(q_, p) / 2 - N)[0]))
+elif which == "J6":
+    for M in (40, 80, 160):
+        for name, shift in (("zeta", None), ("beurling", 2.1)):
+            N, p, q_ = jb.boxN(1.0, M, shift); ev, lam1, u, q, Lg = chain(N)
+            Gs, G2 = gam_mats(q, Lg)
+            cnt = []
+            for i in range(M):
+                e = np.linalg.eigvalsh(G2[i] - lam1 * Gs[i]); cnt.append(int((e < -1e-9).sum()))
+            hist = {k: cnt.count(k) for k in sorted(set(cnt))}
+            print("J6 %s M=%d: sites with index 1: %d of %d ; histogram %s" % (name, M, cnt.count(1), M, hist), flush=True)
+elif which == "J5":
+    for name, shift in (("zeta", None), ("beurling", 2.1)):
+        M = 40; N, p, q_ = jb.boxN(1.0, M, shift); ev, lam1, u, q, Lg = chain(N); Gs, G2 = gam_mats(q, Lg)
+        k = lambda a: N[0, abs(a)]            # Toeplitz off-diagonal kernel k(a), a != 0
+        U = lambda x: u[x] if 0 <= x < M else 0.0
+        for x in (20, 0, 5):
+            S = np.zeros((M, M)); Hh = np.zeros((M, M)); O = np.zeros((M, M))
+            E = lambda j: np.eye(M)[j]
+            for a in range(-M, M + 1):
+                if a == 0 or not (0 <= x + a < M): continue
+                for b in range(-M, M + 1):
+                    if b == 0: continue
+                    inb = 0 <= x + b < M; inab = 0 <= x + a + b < M
+                    if inb:
+                        A_ = E(x + a) - E(x); B_ = E(x + b) - E(x)
+                        Hab = (U(x + a) * U(x + b) - U(x) * U(x + a + b)) / U(x) ** 2
+                        Hh += 0.5 * k(a) * k(b) * Hab * 0.5 * (np.outer(A_, B_) + np.outer(B_, A_))
+                        if inab:
+                            D_ = E(x + a + b) - E(x + a) - E(x + b) + E(x)
+                            S += 0.25 * k(a) * k(b) * U(x + a + b) / U(x) * np.outer(D_, D_)
+                    elif inab:
+                        v1 = E(x + a + b) - E(x + a); v2 = E(x + a + b) - E(x)
+                        O += 0.5 * k(a) * k(b) * U(x + a + b) / U(x) * (np.outer(v1, v1) - 0.5 * np.outer(v2, v2))
+            err = np.abs(S + Hh + O - G2[x]).max()
+            c = lambda A: be_const(A, Gs[x], x) / lam1
+            idx = [j for j in range(M) if j != x]
+            raw = lambda A: np.linalg.eigvalsh(A[np.ix_(idx, idx)])
+            print("J5 %s site %d: |S+H+O-Gamma_2|=%.1e ; raw min eig H %.4f (max %.3f) O %.4f ; const/lam1: S %.4f  S+H %.4f  S+O %.4f  all %.4f" % (
+                name, x, err, raw(Hh)[0], raw(Hh)[-1], raw(O)[0], c(S), c(S + Hh), c(S + O), c(S + Hh + O)), flush=True)
+elif which == "J4":
+    def sigmas(H, a):
+        s = H @ a; pi = a * s
+        U0 = np.diag(1 / a); U1 = H / s[:, None]; U2 = (H * (a / s)[None, :]) @ H / s[:, None]
+        br = lambda X, Y, Z: np.einsum('l,li,lj,lk->ijk', pi, X, Y, Z)
+        def sym3(X, Y):   # sym[X g, Y f, Y h] three terms: X in each slot once
+            return br(X, Y, Y) + br(Y, X, Y) + br(Y, Y, X)
+        return br(U0, U0, U0), sym3(U1, U0), sym3(U2, U0), sym3(U0, U1), br(U1, U1, U1)
+    def worst(T, H, a):
+        s = H @ a
+        return min(np.linalg.eigvalsh(np.outer(H[:, k], H[:, k]) / s[k] - T[:, :, k])[0] for k in range(len(a)))
+    for name, L, n, shift in (("zeta", 1.0, 12, None), ("zeta", 1.0, 24, None), ("zeta", 0.5, 12, None), ("beurling", 1.0, 12, 2.1)):
+        N, p, q_ = jb.boxN(L, n, shift); H = jb.ext(N, p, q_); ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1])
+        s0, s1, s2, s11, s111 = sigmas(H, a)
+        BE = 0.25 * s0 - 0.25 * s2 + 0.5 * s11
+        # BE constant via slices: number of positive eigenvalues and |T.a - H|
+        npos = max(int((np.linalg.eigvalsh(BE[:, :, k]) > 1e-9).sum()) for k in range(n + 2))
+        res = []
+        for t in np.arange(-0.2, 0.4001, 0.001):
+            T = t * (s1 - s2) + (0.5 - t) * s11 + (3 * t - 0.5) * s111
+            res.append((worst(T, H, a), t, np.abs(np.einsum('ijk,k->ij', T, a) - H).max()))
+        best = max(res); at05 = min(res, key=lambda r: abs(r[1] - 0.05))
+        print("J4 %s L=%.1f n=%d: BE |T.a-H|=%.1e sym=%.1e max#pos per slice=%d worst P_k=%.3f || Theta_t best t=%.3f worst=%.5f (|T.a-H|=%.0e) ; at t=0.050: %.5f" % (
+            name, L, n, np.abs(np.einsum('ijk,k->ij', BE, a) - H).max(), np.abs(BE - BE.transpose(1, 0, 2)).max(), npos, worst(BE, H, a), best[1], best[0], best[2], at05[0]), flush=True)

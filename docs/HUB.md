@@ -14,6 +14,16 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 |---|---|---|---|
 | Riemann Hypothesis · start with [`rh/UNDERSTANDING.md`](../rh/UNDERSTANDING.md), then [`rh/KEY_LEMMA_SHAPE.md`](../rh/KEY_LEMMA_SHAPE.md); brainstorm in [`rh/NOTEBOOK.md`](../rh/NOTEBOOK.md) | [`rh/PROJECT_BRIEF.md`](../rh/PROJECT_BRIEF.md) | [`rh/RESUME_HERE.md`](../rh/RESUME_HERE.md) | [`rh/REVIEW_LEDGER.md`](../rh/REVIEW_LEDGER.md) |
 
+## Structures that accumulate (owner, 2026-11-10)
+| file | what | state |
+|---|---|---|
+| [`rh/THEORY.md`](../rh/THEORY.md) | lemmas with dependencies and statuses | `python3 tools/records.py theory check` / `tree` / `frontier` |
+| [`rh/ATLAS.md`](../rh/ATLAS.md) | failure atlas: where each approach breaks, what it needs, what it supplies; pairs examined | `python3 tools/records.py atlas check` / `todo` |
+| [`rh/FOOTHOLDS.md`](../rh/FOOTHOLDS.md) | provable nontrivial cases with a spreading mechanism | none yet |
+| [`rh/BIGGER.md`](../rh/BIGGER.md) | what RH is a shadow of; base cases | none yet |
+| [`rh/specialists/ROSTER.md`](../rh/specialists/ROSTER.md) | persistent specialist seats, one toolkit each | 4 chartered, 0 sessions |
+| [`rh/board/`](../rh/board/) | Socratic seminar boards | S1 open |
+
 ## The record
 | file | what |
 |---|---|
@@ -71,6 +81,12 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
   (each speaks for a finished round-2 seat and answers its checker), S1-mirror (develops idea #21: proof of
   the criterion, the two-prime model). The lead runs the turns (wake each participant when the board has
   something for it) and closes the board with a summary. Folders `rh/experiments/s1_seminar/*`.
+- **Standing seats** (persistent; each has a MEMORY.md in its folder; launched 00:05): K-theory (builds
+  `rh/THEORY.md`), K-atlas (builds `rh/ATLAS.md` and runs the pairing job), FH (foothold hunt,
+  `rh/FOOTHOLDS.md`), BG (bigger statement, `rh/BIGGER.md`). Specialists SP-reflection and SP-operator are
+  chartered in `rh/specialists/ROSTER.md` and NOT yet started: they join seminar S1 at its second turn.
+- **Formal checking is blocked** (decision D8): no proof assistant installed; installing Lean was refused
+  by the permission classifier. No lemma is marked `formal`.
 - Awaiting audit: ideas in the local logs of r2_cubic, r2_curv, r2_parity (and the creation seats when
   they finish). The auditor's test for created ideas is the two questions, not likelihood.
 

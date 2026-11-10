@@ -1,0 +1,7 @@
+V3 Liouville twist (weights at 2, 3 negated; 4 kept): lowest eigenvalue (even, odd); N = 30
+  L=0.36  no atoms 0.001086 0.03904 | Liouville twist 0.001206 0.01903 | true 0.000854 0.05146
+  L=0.40  no atoms 0.0006292 -0.07225 | Liouville twist -0.001141 -0.2467 | true 0.000183 0.01571
+  L=0.50  no atoms -0.03227 -0.3161 | Liouville twist -0.1232 -0.7428 | true 9.636e-7 0.0002205
+  L=0.60  no atoms -0.1282 -0.5292 | Liouville twist -0.3397 -1.112 | true 1.783e-9 6.833e-7
+  L=0.75  no atoms -0.3081 -0.8225 | Liouville twist -0.8476 -1.617 | true 4.785e-15 3.811e-12
+time 9.7 s

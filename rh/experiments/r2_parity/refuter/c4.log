@@ -1,0 +1,4 @@
+200 random (a, b, C, K): inequality (3d) holds in all; (3c) bound holds, max ratio |M|/(2e^-K) = 0.01418; (3b) holds
+  b=0.01: bracket positive from K=56 on (window needed about t+K = 112)
+  b=0.1: bracket positive from K=7 on (window needed about t+K = 14)
+  b=0.4: bracket positive from K=3 on (window needed about t+K = 6)

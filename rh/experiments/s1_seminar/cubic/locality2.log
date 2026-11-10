@@ -1,0 +1,68 @@
+zeta L=1.00 n=6: eig2(Ntilde)=-5.164e-03 #pos=1 ; slack t* CLARABEL / SCS
+  pairdist pair (0,1) N_ij=0.7729: +nan (fail) / -6.6913e-01 (optimal)
+  pairdist pair (0,2) N_ij=0.7870: -6.7784e-01 (optimal) / -6.7784e-01 (optimal)
+  pairdist pair (0,3) N_ij=0.7225: +nan (fail) / -6.4056e-01 (optimal)
+  pairdist pair (0,4) N_ij=0.7879: +nan (fail) / -6.7726e-01 (optimal)
+  pairdist pair (0,5) N_ij=0.9215: +nan (fail) / -7.4151e-01 (optimal)
+  pairdist pair (1,2) N_ij=0.7729: -6.7176e-01 (optimal) / -6.7179e-01 (optimal)
+  pairdist pair (1,3) N_ij=0.7870: +nan (fail) / -6.7960e-01 (optimal)
+  pairdist pair (1,4) N_ij=0.7225: -6.4143e-01 (optimal) / -6.4144e-01 (optimal)
+  pairdist pair (1,5) N_ij=0.7879: +nan (fail) / -6.7725e-01 (optimal)
+  pairdist pair (2,3) N_ij=0.7729: -6.7276e-01 (optimal) / -6.7278e-01 (optimal)
+  pairdist pair (2,4) N_ij=0.7870: +nan (fail) / -6.7960e-01 (optimal)
+  pairdist pair (2,5) N_ij=0.7225: -6.4054e-01 (optimal) / -6.4056e-01 (optimal)
+  pairdist pair (3,4) N_ij=0.7729: +nan (fail) / -6.7179e-01 (optimal)
+  pairdist pair (3,5) N_ij=0.7870: -6.7783e-01 (optimal) / -6.7784e-01 (optimal)
+  pairdist pair (4,5) N_ij=0.7729: -6.6912e-01 (optimal) / -6.6913e-01 (optimal)
+[[   nan -0.669 -0.678 -0.641 -0.677 -0.742]
+ [   nan    nan -0.672 -0.68  -0.641 -0.677]
+ [   nan    nan    nan -0.673 -0.68  -0.641]
+ [   nan    nan    nan    nan -0.672 -0.678]
+ [   nan    nan    nan    nan    nan -0.669]
+ [   nan    nan    nan    nan    nan    nan]]
+zeta L=1.00 n=6: eig2(Ntilde)=-5.164e-03 #pos=1 ; slack t* CLARABEL / SCS
+  raddist R=5 (0 entries zeroed): +nan (fail) / +1.8305e-03 (optimal)
+  raddist R=4 (4 entries zeroed): +nan (fail) / -7.4151e-01 (optimal)
+  raddist R=3 (10 entries zeroed): +nan (fail) / -7.4268e-01 (optimal)
+  raddist R=2 (16 entries zeroed): +nan (fail) / -7.4336e-01 (optimal)
+  raddist R=1 (20 entries zeroed): -7.4355e-01 (optimal) / -7.4355e-01 (optimal)
+  raddist R=0 (20 entries zeroed): -7.4355e-01 (optimal) / -7.4355e-01 (optimal)
+zeta L=1.00 n=8: eig2(Ntilde)=-2.789e-03 #pos=1 ; slack t* CLARABEL / SCS
+  raddist R=7 (0 entries zeroed): +nan (fail) / +8.7890e-04 (optimal)
+  raddist R=6 (6 entries zeroed): +nan (fail) / -5.4751e-01 (optimal)
+  raddist R=5 (16 entries zeroed): +nan (fail) / -6.7764e-01 (optimal)
+  raddist R=4 (28 entries zeroed): +nan (fail) / -6.7816e-01 (optimal)
+  raddist R=3 (40 entries zeroed): +nan (fail) / -6.8082e-01 (optimal)
+  raddist R=2 (50 entries zeroed): +nan (fail) / -6.8930e-01 (optimal)
+  raddist R=1 (56 entries zeroed): +nan (fail) / -7.2809e-01 (optimal)
+  raddist R=0 (56 entries zeroed): +nan (fail) / -7.2809e-01 (optimal)
+zeta L=1.00 n=4: eig2(Ntilde)=-8.343e-03 #pos=1 ; slack t* CLARABEL / SCS
+  end pair (0,3) fibre-only, N_ij=1.28638 h=0.5000: +nan (fail) / -2.3004e+00 (optimal)
+  end pair (0,3) without distinct third box (keeps T_00e, T_0ee): +nan (fail) / -8.5965e-01 (optimal)
+  central adjacent pair (1,2) fibre-only, N_ij=1.10943: +nan (fail) / -1.9765e+00 (optimal)
+  interior pair (1,3) fibre-only, N_ij=1.13940: -2.0381e+00 (optimal) / -2.0381e+00 (optimal)
+zeta L=1.00 n=8: eig2(Ntilde)=-2.789e-03 #pos=1 ; slack t* CLARABEL / SCS
+  end pair (0,7) fibre-only, N_ij=0.58192 h=0.2500: +nan (fail) / -8.2093e-01 (optimal)
+  end pair (0,7) without distinct third box (keeps T_00e, T_0ee): +nan (fail) / -5.4751e-01 (optimal)
+  central adjacent pair (3,4) fibre-only, N_ij=0.75379: +nan (fail) / -1.0607e+00 (optimal)
+  interior pair (2,6) fibre-only, N_ij=0.56076: +nan (fail) / -8.0413e-01 (optimal)
+zeta L=1.00 n=12: eig2(Ntilde)=-1.812e-03 #pos=1 ; slack t* CLARABEL / SCS
+  end pair (0,11) fibre-only, N_ij=0.30715 h=0.1667: +nan (fail) / -3.7224e-01 (optimal)
+  end pair (0,11) without distinct third box (keeps T_00e, T_0ee): +nan (fail) / -3.1680e-01 (optimal)
+  central adjacent pair (5,6) fibre-only, N_ij=0.73407: +nan (fail) / -8.6458e-01 (optimal)
+  interior pair (3,9) fibre-only, N_ij=0.37628: +nan (fail) / -4.6478e-01 (optimal)
+zeta L=1.00 n=16: eig2(Ntilde)=-1.827e-03 #pos=1 ; slack t* CLARABEL / SCS
+  end pair (0,15) fibre-only, N_ij=0.36841 h=0.1250: +nan (fail) / -3.9513e-01 (optimal)
+  end pair (0,15) without distinct third box (keeps T_00e, T_0ee): +nan (fail) / -3.5709e-01 (optimal)
+  central adjacent pair (7,8) fibre-only, N_ij=0.72400: +nan (fail) / -7.3798e-01 (optimal)
+  interior pair (4,12) fibre-only, N_ij=0.22174: +nan (fail) / -2.4747e-01 (optimal)
+beurling L=0.50 n=8: eig2(Ntilde)=-2.353e-02 #pos=1 ; slack t* CLARABEL / SCS
+  end pair (0,7) fibre-only, N_ij=0.09792 h=0.1250: -6.9372e-02 (optimal) / -6.9374e-02 (optimal)
+  end pair (0,7) without distinct third box (keeps T_00e, T_0ee): +nan (fail) / -6.9126e-02 (optimal)
+  central adjacent pair (3,4) fibre-only, N_ij=0.72400: +nan (fail) / -4.7076e-01 (optimal)
+  interior pair (2,6) fibre-only, N_ij=0.15533: +nan (fail) / -1.1505e-01 (optimal)
+zeta L=0.50 n=8: eig2(Ntilde)=-8.904e-03 #pos=1 ; slack t* CLARABEL / SCS
+  end pair (0,7) fibre-only, N_ij=0.09792 h=0.1250: -6.9012e-02 (optimal) / -6.9016e-02 (optimal)
+  end pair (0,7) without distinct third box (keeps T_00e, T_0ee): +nan (fail) / -6.9010e-02 (optimal)
+  central adjacent pair (3,4) fibre-only, N_ij=0.72400: +nan (fail) / -4.8131e-01 (optimal)
+  interior pair (2,6) fibre-only, N_ij=0.15533: -1.2237e-01 (optimal) / -1.2239e-01 (optimal)

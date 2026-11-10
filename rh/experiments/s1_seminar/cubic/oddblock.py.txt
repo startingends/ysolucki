@@ -1,0 +1,23 @@
+"""S1-cubic, board B33(1): signs of the off-diagonal entries of the even and odd blocks of Ntilde in the folded box basis.
+even basis: (e_i + e_Ji)/sqrt2 (i in x>0), (F1+F2)/sqrt2 ; odd basis: (e_i - e_Ji)/sqrt2, (F1-F2)/sqrt2."""
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+for kind, L, n in (("zeta", 1.0, 24), ("zeta", 1.0, 48), ("zeta", 0.5, 24), ("noprimes", 0.45, 24), ("beurling", 1.0, 24)):
+    cn = {} if kind == "noprimes" else (box.lam(math.exp(2 * L)) if kind == "zeta" else box.beurling(math.exp(2 * L)))
+    Nb, p, q = box.boxN(L, n, cn); H = box.ext(Nb, p, q); m = n + 2; h = n // 2
+    J = np.zeros((m, m))
+    for i in range(n): J[i, n - 1 - i] = 1
+    J[n, n + 1] = J[n + 1, n] = 1
+    assert np.abs(J @ H @ J - H).max() < 1e-12
+    idx = list(range(h, n)) + [n]                       # boxes in x>0, and F1
+    E = np.zeros((m, h + 1)); O = np.zeros((m, h + 1))
+    for c, i in enumerate(idx):
+        e = np.zeros(m); e[i] = 1; E[:, c] = (e + J @ e) / math.sqrt(2); O[:, c] = (e - J @ e) / math.sqrt(2)
+    He = E.T @ H @ E; Ho = O.T @ H @ O
+    off = ~np.eye(h + 1, dtype=bool)
+    ee = np.linalg.eigvalsh(He); eo = np.linalg.eigvalsh(Ho)
+    print("%-8s L=%.2f n=%d: EVEN block: min offdiag %.3e, negative offdiag %d of %d, eig top two %.4f %.3e | ODD block: min offdiag %.3e, negative offdiag %d of %d (fibre column min %.3e), top eig %.3e" % (
+        kind, L, n, He[off].min(), (He[off] < -1e-13).sum(), off.sum(), ee[-1], ee[-2], Ho[off].min(), (Ho[off] < -1e-13).sum(), off.sum(), Ho[:h, h].min(), eo[-1]))

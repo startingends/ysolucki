@@ -1,0 +1,12 @@
+zeta L=1 M=40 lam1=4.30309 Q=5.87125
+ |par(||Lh||^2) - 4 U{lam1 - T, H}U|_max = 1.8e-15   (norm 4.400)
+ cos(par(total), 4UHU) = 0.9374 ; cos(par(Op), 4UHU) = 0.9167 ; cos(par(Cl), 4UHU) = 0.7980 ; cos(par(Op), par(total)) = 0.8988
+ Frobenius norms: par(total) 4.3997  par(Op) 2.2693  par(Cl) 2.5613  4UHU 0.4165 ; least-squares multiple: par(Op) ~ 4.995 * 4UHU, par(total) ~ 9.902 * 4UHU  (2Q = 11.743)
+beurling L=1 M=40 lam1=4.28051 Q=5.84867
+ |par(||Lh||^2) - 4 U{lam1 - T, H}U|_max = 1.8e-15   (norm 4.404)
+ cos(par(total), 4UHU) = 0.9370 ; cos(par(Op), 4UHU) = 0.9193 ; cos(par(Cl), 4UHU) = 0.7888 ; cos(par(Op), par(total)) = 0.8989
+ Frobenius norms: par(total) 4.4043  par(Op) 2.3124  par(Cl) 2.5367  4UHU 0.4208 ; least-squares multiple: par(Op) ~ 5.052 * 4UHU, par(total) ~ 9.807 * 4UHU  (2Q = 11.697)
+zeta L=1 M=80 lam1=4.30431 Q=6.57185
+ |par(||Lh||^2) - 4 U{lam1 - T, H}U|_max = 1.0e-15   (norm 3.171)
+ cos(par(total), 4UHU) = 0.9528 ; cos(par(Op), 4UHU) = 0.9285 ; cos(par(Cl), 4UHU) = 0.8604 ; cos(par(Op), par(total)) = 0.9112
+ Frobenius norms: par(total) 3.1711  par(Op) 1.4583  par(Cl) 1.9378  4UHU 0.2636 ; least-squares multiple: par(Op) ~ 5.136 * 4UHU, par(total) ~ 11.461 * 4UHU  (2Q = 13.144)

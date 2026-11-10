@@ -1,0 +1,6 @@
+  L=0.70 int/40  true: 4.77e-13 / 2.85e-10  |  flipped: 7.03e-13 / -1.73e-10  |  doubled: -1.68e-12 / 3.8e-10   (2s)
+  L=0.70 half/40  true: 4.57e-13 / 2.94e-10  |  flipped: 7.75e-13 / -2.57e-6  |  doubled: 4.57e-14 / 4.1e-10   (4s)
+  L=0.70 int/80  true: 4.33e-13 / 2.78e-10  |  flipped: 6.56e-13 / -1.33e-9  |  doubled: -3.89e-12 / 3.76e-10   (14s)
+  L=0.70 half/80  true: 4.49e-13 / 2.62e-10  |  flipped: 7.05e-13 / -4.47e-6  |  doubled: -4.04e-13 / 3.8e-10   (24s)
+  L=0.70 int/120  true: 4.22e-13 / 2.73e-10  |  flipped: 6.51e-13 / -3.53e-9  |  doubled: -5.58e-12 / 3.76e-10   (54s)
+  L=0.70 half/120  true: 4.42e-13 / 2.57e-10  |  flipped: 6.84e-13 / -5.05e-6  |  doubled: -8.18e-13 / 3.77e-10   (83s)

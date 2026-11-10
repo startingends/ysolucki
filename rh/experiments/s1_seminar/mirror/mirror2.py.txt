@@ -1,0 +1,41 @@
+"""mirror matrices [c(ab)], a, b = 2..A, for controls asked on the board (double precision, numpy)."""
+import numpy as np, math, cmath
+def primes_upto(X):
+    return [p for p in range(2, X + 1) if all(p % q for q in range(2, int(p ** 0.5) + 1))]
+def euler_c(X, roots):
+    """c(p^k) = log p * sum_j m_j alpha_j^k, roots(p) -> list of (alpha, mult); returns real array c[0..X]"""
+    c = np.zeros(X + 1)
+    for p in primes_upto(X):
+        pk, k = p, 1
+        while pk <= X:
+            c[pk] = (math.log(p) * sum(m * (a ** k) for a, m in roots(p))).real
+            pk *= p; k += 1
+    return c
+def report(name, c, A=12):
+    M = np.array([[c[a * b] for b in range(2, A + 1)] for a in range(2, A + 1)])
+    ev = np.linalg.eigvalsh(M)
+    print("%-44s c(4)=%8.4f  min eig %10.3e  #neg(<-1e-9) %d  rank %d" % (name, c[4], ev[0], (ev < -1e-9).sum(), (abs(ev) > 1e-9).sum()))
+X = 144
+chi5 = {0: 0, 1: 1, 2: 1j, 3: -1j, 4: -1}
+report("zeta", euler_c(X, lambda p: [(1, 1)]))
+report("B6: L(chi)L(chi-bar), chi mod 5, chi(2)=i", euler_c(X, lambda p: [(chi5[p % 5], 1), (chi5[p % 5].conjugate() if isinstance(chi5[p % 5], complex) else chi5[p % 5], 1)]))
+report("zeta(s) zeta(s-1)  (zeros off its centre line)", euler_c(X, lambda p: [(1, 1), (p, 1)]))
+report("dial n=4 = (1-4^(1-s)) zeta(s) zeta(s-1)", euler_c(X, lambda p: [(1, 1), (p, 1)] + ([(2, -1), (-2, -1)] if p == 2 else [])))
+d = 0.3
+report("zeta(s-0.3) zeta(s+0.3) (zeros off the line)", euler_c(X, lambda p: [(p ** d, 1), (p ** -d, 1)]))
+report("Liouville twist of zeta = zeta(2s)/zeta(s)", euler_c(X, lambda p: [(-1, 1)]))
+# Ramanujan Delta, normalised roots e^{+-i theta_p}, 2 cos theta_p = tau(p) / p^(11/2)
+tau = {2: -24, 3: 252, 5: 4830, 7: -16744, 11: 534612}
+def rdelta(p):
+    if p not in tau: return [(0, 1)]
+    t = tau[p] / p ** 5.5 / 2
+    th = math.acos(t)
+    return [(cmath.exp(1j * th), 1), (cmath.exp(-1j * th), 1)]
+report("L(s, Delta) (Ramanujan tau; primes <= 11)", euler_c(X, rdelta))
+# sizes: number of negative eigenvalues for dial n=4 as the matrix grows
+for A in (4, 8, 12, 16, 24, 32):
+    Xb = A * A
+    c = euler_c(Xb, lambda p: [(1, 1), (p, 1)] + ([(2, -1), (-2, -1)] if p == 2 else []))
+    M = np.array([[c[a * b] / (a * b) for b in range(2, A + 1)] for a in range(2, A + 1)])   # rescaled by 1/(ab), congruence
+    ev = np.linalg.eigvalsh(M)
+    print("  dial n=4, a,b<=%d (rescaled by 1/ab): #neg %d, min eig %.3e" % (A, (ev < -1e-9).sum(), ev[0]))

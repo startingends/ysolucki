@@ -1,0 +1,15 @@
+"""S1-curv turn 1, answer to B35: Hankel form of K on (0, L] in the box basis; drift with M; sign on the Weil ground states. usage: t1_b35.py.txt L M"""
+import sys, importlib.machinery, importlib.util, numpy as np, math
+ld = importlib.machinery.SourceFileLoader('s1lib', 's1lib.py.txt'); sp = importlib.util.spec_from_loader('s1lib', ld); S = importlib.util.module_from_spec(sp); ld.exec_module(S)
+L = float(sys.argv[1]); M = int(sys.argv[2]); h = M // 2
+bz = S.build(L, M, 'zeta'); ba = S.build(L, M, 'arch')
+J = np.eye(M)[::-1]
+Hz = (bz['N'] @ J)[h:, h:]; Ha = (ba['N'] @ J)[h:, h:]; Hp = Hz - Ha       # H_ij = K(x_i + x_j), i, j on the positive half
+T = bz['N'][h:, h:]
+e = np.linalg.eigvalsh; ez = e(Hz); ep = e(Hp); ea = e(Ha)
+print("L=%g M=%d: Hankel total: min %.5f max %.5f #neg %d of %d | prime part alone: min %.5f max %.5f #neg %d | arch part: min %.1e max %.5f" % (L, M, ez[0], ez[-1], (ez < -1e-10).sum(), h, ep[0], ep[-1], (ep < -1e-10).sum(), ea[0], ea[-1]))
+# Weil blocks in folded form: Q_e = 4cc^T - (T+H), Q_o = -4ss^T - (T-H) (per unit ||phi||^2), c, s on the positive half
+c = bz['c'][h:]; s = bz['s'][h:]
+for nm, Qb in (("even", 4 * np.outer(c, c) - (T + Hz)), ("odd", -4 * np.outer(s, s) - (T - Hz))):
+    mu, V = np.linalg.eigh(Qb); v = V[:, 0]
+    print("   %-4s Weil block: lowest eigenvalue %.4e ; on its eigenvector (||phi|| = 1): Hankel atoms %+.5f  Hankel arch %+.5f  T %+.5f  4c^2 %.5f 4s^2 %.5f" % (nm, mu[0], v @ Hp @ v, v @ Ha @ v, v @ T @ v, 4 * (c @ v) ** 2, 4 * (s @ v) ** 2))

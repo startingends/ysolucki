@@ -1,0 +1,78 @@
+"""Model B of the two-prime model: compression of the Weil form Q = pole + arch - atoms to cubic B-spline bumps of
+half-width eps centred at a finite set F of lattice points i log p1 + j log p2.
+Method: the validated Fourier-basis matrix q of r1_A/weil.py.txt on a window Lw containing all bumps, N modes;
+bump coefficients c_k = <e_k, b(.-x)> in closed form; M = Re(C^H q C), G = Re(C^H C); reported: generalised eigenvalues of (M, G)
+(= Rayleigh quotient Q(f)/|f|^2 on the subspace), per parity block (F is symmetric).
+usage: python3 modelB.py.txt N"""
+import sys, math, time, itertools, importlib.util, importlib.machinery
+import numpy as np, scipy.linalg as sla
+import flint
+from flint import arb
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+flint.ctx.prec = 160
+def tonp(q): return np.array([[float(v.mid()) for v in row] for row in q])
+def q_arch(L, N): return tonp(weil.build(L, N, kind='zeta', pole=True, primes=False, arch=True)[0])
+def q_atoms(L, N, cn):
+    cn = {x: c for x, c in cn.items() if math.log(float(x)) < 2 * L - 1e-12}
+    saved = weil.dh_logderiv_coeffs
+    weil.dh_logderiv_coeffs = lambda X: dict(cn)
+    q = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)[0]
+    weil.dh_logderiv_coeffs = saved
+    return tonp(q)
+def powers(plist, X, wfun=None):
+    out = {}
+    for p in plist:
+        pk, k = p, 1
+        while pk <= X:
+            out[pk] = arb(p).log() if wfun is None else wfun(p, k); pk *= p; k += 1
+    return out
+def lattice(l1, l2, I, J, X, minsep):
+    pts = sorted(set(round(i * l1 + j * l2, 12) for i in range(-I, I + 1) for j in range(-J, J + 1) if abs(i * l1 + j * l2) <= X + 1e-12))
+    pos = [x for x in pts if x > 1e-9]
+    keep = []
+    for x in pos:                       # thin: keep points at distance >= minsep from those already kept and from 0
+        if x >= minsep and all(abs(x - y) >= minsep for y in keep): keep.append(x)
+    return [-x for x in reversed(keep)] + [0.0] + keep
+def coeffs(F, eps, L, N):
+    h = eps / 2.0                                              # cubic B-spline, knots spacing h, support [-2h, 2h] = [-eps, eps]
+    k = np.arange(-N, N + 1); w = np.pi * k / L
+    s = np.sinc(w * h / (2 * np.pi)) ** 4 * h                  # FT of the B-spline (np.sinc(x) = sin(pi x)/(pi x))
+    return np.array([np.exp(-1j * w * x) * s for x in F]).T / math.sqrt(2 * L)     # columns = bumps
+def geneigs(q, C, F):
+    M = (C.conj().T @ q @ C).real; G = (C.conj().T @ C).real
+    n = len(F); J = np.eye(n)[::-1]                             # reflection x -> -x permutes the (symmetric, sorted) F
+    out = []
+    for sgn in (1, -1):
+        Pm = (np.eye(n) + sgn * J) / 2
+        U, s, _ = np.linalg.svd(Pm); B = U[:, s > 0.5]
+        ev = sla.eigh(B.T @ M @ B, B.T @ G @ B, eigvals_only=True)
+        out.append(ev)
+    return out
+N = int(sys.argv[1])
+t0 = time.time()
+print("Model B. N = %d Fourier modes. lowest generalised eigenvalue even / odd" % N)
+for eps in (0.05, 0.1, 0.2):
+    for name, p1 in (("2", 2.0), ("2.1", 2.1)):
+        l1, l2 = math.log(p1), math.log(3.0)
+        F = lattice(l1, l2, 2, 2, 1.5, 2 * eps)
+        Lw = max(F) + eps + 0.02
+        X = math.exp(2 * Lw)
+        C = coeffs(F, eps, Lw, N)
+        qa = q_arch(Lw, N)
+        tw = powers([p1, 3.0], X)
+        res = {}
+        res["true"] = geneigs(qa + q_atoms(Lw, N, tw), C, F)
+        res["no atoms"] = geneigs(qa, C, F)
+        for f in (-1, 0.5, 1.5, 2, 4):
+            t2 = {x: (c * f if abs(x - p1 * p1) < 1e-9 else c) for x, c in tw.items()}
+            res["w(p1^2) x %g" % f] = geneigs(qa + q_atoms(Lw, N, t2), C, F)
+        res["Liouville twist"] = geneigs(qa + q_atoms(Lw, N, powers([p1, 3.0], X, lambda p, k: arb(p).log() * (-1) ** k)), C, F)
+        if name == "2":
+            res["all primes (zeta)"] = geneigs(qa + q_atoms(Lw, N, powers([2, 3, 5, 7, 11, 13, 17, 19, 23], X)), C, F)
+            res["atoms at 2.1^k (off the lattice)"] = geneigs(qa + q_atoms(Lw, N, powers([2.1, 3.0], X)), C, F)
+        print("eps = %.2f  p1 = %s  |F| = %d  F>0: %s  window %.3f" % (eps, name, len(F), [round(x, 3) for x in F if x > 0], Lw))
+        for kname, (ee, eo) in res.items():
+            print("     %-34s %11.4e / %11.4e    (largest %9.3e)" % (kname, ee[0], eo[0], max(ee[-1], eo[-1])), flush=True)
+print("time %.1f s" % (time.time() - t0))

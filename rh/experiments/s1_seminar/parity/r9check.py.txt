@@ -1,0 +1,26 @@
+"""S1-parity: second route for the number quoted on the board (B7, refuter R9 of the curvature seat):
+matrix [ w(log ab) + Lambda(ab)/sqrt(ab) ], 2 <= a, b <= A, w(log x) = x^(3/2)/(x^2-1); double precision gave -2.1e-16.
+Here: mpmath at high precision, so the true sign and size of the smallest eigenvalue are visible. Also the 2x2 at {3/2, 4/3}."""
+import sys, mpmath as mp
+A = int(sys.argv[1]) if len(sys.argv) > 1 else 60
+mp.mp.dps = int(sys.argv[2]) if len(sys.argv) > 2 else 400
+def w(x): return mp.power(x, mp.mpf(3) / 2) / (x * x - 1)
+def lam(n):
+    for p in range(2, n + 1):
+        if n % p == 0:
+            while n % p == 0: n //= p
+            return mp.log(p) if n == 1 else mp.mpf(0)
+    return mp.mpf(0)
+for kind in ("arch + primes", "arch only", "primes only"):
+    M = mp.matrix(A - 1, A - 1)
+    for a in range(2, A + 1):
+        for b in range(a, A + 1):
+            v = (w(mp.mpf(a * b)) if kind != "primes only" else 0) + (lam(a * b) / mp.sqrt(a * b) if kind != "arch only" else 0)
+            M[a - 2, b - 2] = M[b - 2, a - 2] = v
+    ev = sorted(mp.eigsy(M, eigvals_only=True))
+    tol = mp.mpf(10) ** (-mp.mp.dps + 40)
+    print("%-14s a,b=2..%d dps=%d: smallest eig %s ; second %s ; largest %s ; #neg (< -tol) %d ; #|eig|<tol %d" % (kind, A, mp.mp.dps, mp.nstr(ev[0], 5), mp.nstr(ev[1], 5),
+          mp.nstr(ev[-1], 5), sum(1 for e in ev if e < -tol), sum(1 for e in ev if abs(e) <= tol)), flush=True)
+a, b = mp.mpf(3) / 2, mp.mpf(4) / 3
+M = mp.matrix([[w(a * a), w(a * b) + mp.log(2) / mp.sqrt(2)], [w(a * b) + mp.log(2) / mp.sqrt(2), w(b * b)]])
+print("2x2 at {3/2, 4/3}: eigenvalues", [mp.nstr(e, 8) for e in mp.eigsy(M, eigvals_only=True)])

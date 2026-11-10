@@ -1,0 +1,20 @@
+zeta A=12 teeth=11 eps=3.460e-03  D_eps=-4.2505  log(1/eps)-1.43=4.2364
+  mirror part Mm: min eig -9.16e-15 ; top eig: G 1.4956  G+Mm 1.8917  G-Mm 1.2086 ; ratio top(G+Mm)/(-D) = 0.4451  top(G-Mm)/(-D) = 0.2843
+  Gamma off-diagonal parts: norm of shift part 0.0617, of mirror part 0.0073 ; pole: 4|c|^2 = 0.3498, 4|s|^2 = 0.1976
+  comb Weil blocks: min eig Q_even 2.50730  Q_odd 2.91197   (top eig of T+H -2.3277, of T-H -3.0213)
+zeta A=24 teeth=23 eps=8.673e-04  D_eps=-5.6348  log(1/eps)-1.43=5.6201
+  mirror part Mm: min eig -3.82e-14 ; top eig: G 2.1559  G+Mm 2.5262  G-Mm 1.8813 ; ratio top(G+Mm)/(-D) = 0.4483  top(G-Mm)/(-D) = 0.3339
+  Gamma off-diagonal parts: norm of shift part 0.0406, of mirror part 0.0024 ; pole: 4|c|^2 = 0.3016, 4|s|^2 = 0.2218
+  comb Weil blocks: min eig Q_even 3.22184  Q_odd 3.62988   (top eig of T+H -3.0931, of T-H -3.7391)
+zeta A=48 teeth=47 eps=2.170e-04  D_eps=-7.0206  log(1/eps)-1.43=7.0058
+  mirror part Mm: min eig -2.05e-13 ; top eig: G 2.8393  G+Mm 3.1717  G-Mm 2.5913 ; ratio top(G+Mm)/(-D) = 0.4518  top(G-Mm)/(-D) = 0.3691
+  Gamma off-diagonal parts: norm of shift part 0.0255, of mirror part 0.0008 ; pole: 4|c|^2 = 0.2761, 4|s|^2 = 0.2353
+  comb Weil blocks: min eig Q_even 3.94214  Q_odd 4.32167   (top eig of T+H -3.8410, of T-H -4.4213)
+beurling A=12 teeth=10 eps=1.238e-03  D_eps=-5.2787  log(1/eps)-1.43=5.2641
+  mirror part Mm: min eig -1.23e-14 ; top eig: G 1.3165  G+Mm 1.7690  G-Mm 0.9828 ; ratio top(G+Mm)/(-D) = 0.3351  top(G-Mm)/(-D) = 0.1862
+  Gamma off-diagonal parts: norm of shift part 0.0296, of mirror part 0.0024 ; pole: 4|c|^2 = 0.1108, 4|s|^2 = 0.0613
+  comb Weil blocks: min eig Q_even 3.55307  Q_odd 4.26167   (top eig of T+H -3.4996, of T-H -4.2895)
+beurling A=24 teeth=22 eps=5.399e-05  D_eps=-8.4116  log(1/eps)-1.43=8.3967
+  mirror part Mm: min eig -4.21e-13 ; top eig: G 2.0865  G+Mm 2.4733  G-Mm 1.7964 ; ratio top(G+Mm)/(-D) = 0.2940  top(G-Mm)/(-D) = 0.2136
+  Gamma off-diagonal parts: norm of shift part 0.0067, of mirror part 0.0001 ; pole: 4|c|^2 = 0.0180, 4|s|^2 = 0.0133
+  comb Weil blocks: min eig Q_even 5.94517  Q_odd 6.60819   (top eig of T+H -5.9373, of T-H -6.6141)

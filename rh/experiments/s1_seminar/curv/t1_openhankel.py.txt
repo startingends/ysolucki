@@ -1,0 +1,43 @@
+"""S1-curv turn 1: check the identity (S1-curv/#1)
+   sum_x pi_x O_x(f) = (1/2) sum_y sum_{a,b: y+a, y+b in W, y+a+b NOT in W} g_y(a) g_y(b),  g_y(a) = k(a) u(y+a) (f(y+a) - f(y)),
+   and ||Lf||_pi^2 = sum_y sum_{a,b: y+a, y+b in W} g_y(a) g_y(b)  (kernel identically 1 in (a,b)).
+usage: t1_openhankel.py.txt L M kind"""
+import sys, importlib.machinery, importlib.util, numpy as np, scipy.linalg as sl
+ld = importlib.machinery.SourceFileLoader('s1lib', 's1lib.py.txt'); sp = importlib.util.spec_from_loader('s1lib', ld); S = importlib.util.module_from_spec(sp); ld.exec_module(S)
+L = float(sys.argv[1]); M = int(sys.argv[2]); kind = sys.argv[3]
+b = S.build(L, M, kind); ev, lam1, u, q, Lg = S.process(b['N']); pi = u * u; k = b['k']
+E = np.eye(M); inW = lambda j: 0 <= j < M
+Obar = np.zeros((M, M))
+for x in range(M): Obar += pi[x] * S.b3_parts(k, u, x)[2]
+Op = np.zeros((M, M)); Cl = np.zeros((M, M)); OpUp = np.zeros((M, M))
+for y in range(M):
+    # vectors G_a = k(a) u(y+a) (e_{y+a} - e_y)
+    for a in range(-M + 1, M):
+        if a == 0 or not inW(y + a): continue
+        ga = k[abs(a)] * u[y + a] * (E[y + a] - E[y])
+        for bb in range(-M + 1, M):
+            if bb == 0 or not inW(y + bb): continue
+            gb = k[abs(bb)] * u[y + bb] * (E[y + bb] - E[y])
+            if inW(y + a + bb): Cl += np.outer(ga, gb)
+            else:
+                Op += np.outer(ga, gb)
+                if y + a + bb >= M: OpUp += np.outer(ga, gb)
+LL = Lg.T @ np.diag(pi) @ Lg
+print("%s L=%g M=%d" % (kind, L, M))
+print(" |Obar - Op/2|_max = %.2e ;  | ||Lf||^2 - (Cl + Op) |_max = %.2e" % (np.abs(Obar - Op / 2).max(), np.abs(LL - Cl - Op).max()))
+Gbar = sum(pi[x] * S.gamma_at(q, Lg, x)[0] for x in range(M))
+B = np.linalg.qr(np.hstack([np.ones((M, 1)), np.eye(M)[:, 1:]]))[0][:, 1:]
+ge = lambda A: sl.eigh(B.T @ (A + A.T) / 2 @ B, B.T @ Gbar @ B, eigvals_only=True) / lam1
+for nm, A in (("open  Op", Op), ("closed Cl", Cl), ("Cl + Op = ||Lf||^2", Cl + Op), ("upper-edge half of Op", OpUp)):
+    e = ge(A); print(" %-22s gen. eig vs E, /lam1: min %.4f 2nd %.4f max %.4f  #neg %d" % (nm, e[0], e[1], e[-1], (e < -1e-9).sum()))
+# parity: does Op commute with the reflection J ?  and the split of Op on even / odd f
+J = np.eye(M)[::-1]
+print(" |J Op J - Op| = %.1e" % np.abs(J @ Op @ J - Op).max())
+h = M // 2
+for nm, sgn in (("even", 1), ("odd", -1)):
+    Bp = np.zeros((M, h))
+    for j in range(h): Bp[h + j, j] = 2 ** -0.5; Bp[h - 1 - j, j] = sgn * 2 ** -0.5
+    if sgn == 1: Bp = Bp @ sl.null_space((pi @ Bp)[None, :])
+    for nm2, A in (("Op", Op), ("Cl", Cl), ("all", Cl + Op)):
+        e = sl.eigh(Bp.T @ (A + A.T) / 2 @ Bp, Bp.T @ Gbar @ Bp, eigvals_only=True) / lam1
+        print("   %-4s f, %-3s: min %.4f 2nd %.4f max %.4f" % (nm, nm2, e[0], e[1], e[-1]))

@@ -1,0 +1,47 @@
+"""S1-curv turn 1: mirror (total inversion) matrices on integer logs, Beurling on its own lattice, and off-lattice controls."""
+import math, itertools, numpy as np
+from sympy import factorint
+w = lambda u: math.exp(-u / 2) / (1 - math.exp(-2 * u))
+def lam_int(n):
+    f = factorint(n); return math.log(list(f)[0]) if len(f) == 1 else 0.0
+A = 60
+ints = list(range(2, A + 1))
+Mp = np.array([[lam_int(a * b) / math.sqrt(a * b) for b in ints] for a in ints])
+Ma = np.array([[w(math.log(a * b)) for b in ints] for a in ints])
+for nm, X in (("prime part", Mp), ("arch part", Ma), ("both", Mp + Ma)):
+    e = np.linalg.eigvalsh(X); print("integers 2..60, %-10s: min eig %.3e  rank(>1e-9) %d" % (nm, e[0], (np.abs(e) > 1e-9).sum()))
+ints1 = [1] + ints
+e = np.linalg.eigvalsh(np.array([[lam_int(a * b) / math.sqrt(a * b) for b in ints1] for a in ints1])); print("integers 1..60, prime part: min eig %.4f" % e[0])
+# Beurling system: generators 2.1, 3, 5, 7, ... ; lattice elements = products with norm <= 60 ; Lambda_B evaluated on REAL numbers with tolerance
+gens = [2.1, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]
+elems = {1.0}
+for g in gens:
+    new = set()
+    for e_ in elems:
+        v = e_
+        while v * g <= A + 1e-9: v *= g; new.add(v)
+    elems |= new
+elems = sorted(x for x in elems if x > 1.5)
+pp = {}                                   # prime powers up to A^2 as real numbers
+for g in gens:
+    v = g
+    while v <= A * A + 1: pp[v] = math.log(g); v *= g
+ppk = np.array(sorted(pp)); ppv = np.array([pp[k_] for k_ in ppk])
+def lamB(x, tol=1e-9):
+    i = np.searchsorted(ppk, x); best = 0.0
+    for j in (i - 1, i):
+        if 0 <= j < len(ppk) and abs(ppk[j] / x - 1) < tol: best = ppv[j]
+    return best
+MB = np.array([[lamB(a * b) / math.sqrt(a * b) + w(math.log(a * b)) for b in elems] for a in elems])
+e = np.linalg.eigvalsh(MB); print("Beurling (2 -> 2.1) own lattice, %d elements <= 60, prime + arch: min eig %.3e" % (len(elems), e[0]))
+MBp = np.array([[lamB(a * b) / math.sqrt(a * b) for b in elems] for a in elems]); e = np.linalg.eigvalsh(MBp)
+print("   prime part alone: min eig %.3e rank %d (generators <= 60: %d)" % (e[0], (np.abs(e) > 1e-9).sum(), len(gens)))
+# controls: zeta atoms tested at positions that are NOT integers
+for nm, pos in (("rationals 3/2, 4/3", [1.5, 4 / 3]), ("integers and 3/2, 4/3", [2, 3, 1.5, 4 / 3]), ("Beurling lattice positions (2.1-lattice) with ZETA atoms", elems)):
+    def lamZ(x):
+        r = round(x); return lam_int(r) if r >= 2 and abs(x / r - 1) < 1e-9 else 0.0
+    X = np.array([[lamZ(a * b) / math.sqrt(a * b) for b in pos] for a in pos]); e = np.linalg.eigvalsh(X)
+    print("zeta atoms on %-58s: min eig %.4f" % (nm, e[0]))
+# coordinate reflection v_2 -> -v_2 applied to the arch kernel: not a symmetry
+th = lambda a: a / 4 ** (len([1 for _ in range(10) if a % 2 ** (_ + 1) == 0]))
+print("arch kernel under theta_2: K(2, theta 6) = w(log 4/3) = %.4f ; K(6, theta 2) = w(log 12) = %.4f" % (w(math.log(2 / th(6))), w(math.log(6 / th(2)))))

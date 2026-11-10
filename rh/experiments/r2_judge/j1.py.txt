@@ -1,0 +1,57 @@
+import sys, math, importlib.util, importlib.machinery
+import flint
+from flint import arb
+import mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+dps = 40; mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+def blocks(q, N): return [to_mp(weil.even_block(q, N)), to_mp(weil.odd_block(q, N))]
+def arch(L, N, pole): return blocks(weil.build(L, N, kind='zeta', pole=pole, primes=False, arch=True)[0], N)
+def atoms(L, N, cn):
+    cn = {x: c for x, c in cn.items() if math.log(float(x)) < 2 * L - 1e-12}
+    if not cn: return None
+    saved = weil.dh_logderiv_coeffs
+    weil.dh_logderiv_coeffs = lambda X: dict(cn)
+    q = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)[0]
+    weil.dh_logderiv_coeffs = saved
+    return blocks(q, N)
+def add(A, B, t=1): return A if B is None else [A[b] + mp.mpf(t) * B[b] for b in (0, 1)]
+def low(M): return [min(mp.eigsy(M[b], eigvals_only=True)) for b in (0, 1)]
+def lam(X): return {n: arb(p).log() for n, (_, p) in weil.mangoldt_upto(int(X)).items()}
+which = sys.argv[1]
+if which == "J1":
+    for N in (30, 60):
+        for L in (0.362, 0.366, 0.370, 0.375, 0.380, 0.400):
+            e = low(arch(L, N, pole=True))
+            print("J1 background N=%d L=%.3f  lowest even %s  odd %s" % (N, L, mp.nstr(e[0], 5), mp.nstr(e[1], 5)), flush=True)
+    A = arch(0.38, 30, True); e = low(add(A, atoms(0.38, 30, lam(math.exp(0.76)))))
+    print("J1 control true primes L=0.38 N=30: even %s odd %s" % (mp.nstr(e[0], 5), mp.nstr(e[1], 5)))
+elif which == "J2":
+    L = 0.5
+    for N, xs in ((30, (1.994, 1.9996, 2.0, 2.0075, 2.008, 2.0085, 2.010)), (60, (1.9996, 2.0, 2.0075, 2.008, 2.0085))):
+        A = arch(L, N, pole=True)
+        for x in xs:
+            U = atoms(L, N, {x: arb(1) * arb(x).sqrt()})
+            f = lambda m: min(low(add(A, U, m)))
+            lo, hi = mp.mpf('0.3'), mp.mpf('0.7'); g = (mp.sqrt(5) - 1) / 2
+            x1, x2 = hi - g * (hi - lo), lo + g * (hi - lo); f1, f2 = f(x1), f(x2)
+            for _ in range(34):
+                if f1 < f2: lo, x1, f1 = x1, x2, f2; x2 = lo + g * (hi - lo); f2 = f(x2)
+                else: hi, x2, f2 = x2, x1, f1; x1 = hi - g * (hi - lo); f1 = f(x1)
+            m = (lo + hi) / 2
+            print("J2 N=%d x=%.4f best m=%s max lowest eig=%s" % (N, x, mp.nstr(m, 6), mp.nstr(f(m), 4)), flush=True)
+elif which == "J3":
+    for L in (0.05, 0.10, 0.12, 0.20):
+        N = 30
+        Nn = arch(L, N, pole=False)   # this is +arch (no primes in window for L < 0.3466); N = -arch
+        top = max(-min(mp.eigsy(Nn[b], eigvals_only=True)) for b in (0, 1))
+        tops = [-min(mp.eigsy(Nn[b], eigvals_only=True)) for b in (0, 1)]
+        e = low(arch(L, N, pole=True))
+        print("J3 L=%.2f top eig of N=-arch: even %s odd %s ; lowest Weil even %s odd %s" % (L, mp.nstr(tops[0], 6), mp.nstr(tops[1], 6), mp.nstr(e[0], 5), mp.nstr(e[1], 5)), flush=True)

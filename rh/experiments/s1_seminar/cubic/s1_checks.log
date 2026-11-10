@@ -1,0 +1,18 @@
+a) zeta L=1.00 n=12: fine grid best t=0.014 worst lambda_min(P_k)=-0.0184
+a) zeta L=0.50 n=12: fine grid best t=0.057 worst lambda_min(P_k)=-0.0217
+a) beurling L=1.00 n=12: fine grid best t=0.014 worst lambda_min(P_k)=-0.0239
+b) L=1.0 n=12 p=2: eig(q_p) in [0.2404, 2.2465] ; Poisson bounds [0.1716, 5.8284]
+b) L=1.0 n=12 p=3: eig(q_p) in [0.4393, 1.5607] ; Poisson bounds [0.2679, 3.7321]
+b) L=1.0 n=12 p=5: eig(q_p) in [0.5965, 1.4035] ; Poisson bounds [0.3820, 2.6180]
+b) L=1.0 n=12 p=7: eig(q_p) in [0.8773, 1.1227] ; Poisson bounds [0.4514, 2.2153]
+   theta=5.3471 ; |Q - (rest - sum log p q_p)|max = 5.6e-17 ; eig(Q) min 8.3833e-03 ; eig(rest) in [4.0617, 7.3079] ; eig(sum log p q_p) in [3.9993, 7.1786]
+   on the lowest eigenvector of Q (mu=8.383e-03): rest(f)=6.476031  sum log p q_p(f)=6.467648 ; per prime q_p(f): 1.9941 1.3323 1.0394 1.0016
+b) L=1.0 n=24 p=2: eig(q_p) in [0.2306, 2.2630] ; Poisson bounds [0.1716, 5.8284]
+b) L=1.0 n=24 p=3: eig(q_p) in [0.4257, 1.5743] ; Poisson bounds [0.2679, 3.7321]
+b) L=1.0 n=24 p=5: eig(q_p) in [0.5673, 1.4327] ; Poisson bounds [0.3820, 2.6180]
+b) L=1.0 n=24 p=7: eig(q_p) in [0.7547, 1.2453] ; Poisson bounds [0.4514, 2.2153]
+   theta=5.3471 ; |Q - (rest - sum log p q_p)|max = 4.4e-16 ; eig(Q) min 3.7398e-03 ; eig(rest) in [4.0368, 7.4731] ; eig(sum log p q_p) in [3.9458, 7.2052]
+   on the lowest eigenvector of Q (mu=3.740e-03): rest(f)=6.416971  sum log p q_p(f)=6.413231 ; per prime q_p(f): 1.9641 1.3168 1.0304 1.0004
+c) resampling m=40, CD(rho, n=5): rho*=0.13500 ; refuter's formula 1/2 - 2/n + (1+2/n)/m = 0.13500 ; my report's (n-4)/(2(n-1))*(n-1)/n = 1/2-2/n = 0.10000
+c) resampling m=40, CD(rho, n=8): rho*=0.28125 ; refuter's formula 1/2 - 2/n + (1+2/n)/m = 0.28125 ; my report's (n-4)/(2(n-1))*(n-1)/n = 1/2-2/n = 0.25000
+c) resampling m=40, CD(rho, n=20): rho*=0.42750 ; refuter's formula 1/2 - 2/n + (1+2/n)/m = 0.42750 ; my report's (n-4)/(2(n-1))*(n-1)/n = 1/2-2/n = 0.40000

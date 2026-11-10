@@ -52,6 +52,19 @@ Owner: **startingends** (repo owner). This file loads automatically.
 - **If a workflow can't be used for any reason, ask the owner.** Never work around a permission or classifier refusal.
 - Long jobs (> ~20 min) whose inputs are in git run as separate cloud sessions; jobs that need this disk run here and are resumed with `resumeFromRunId` after a container restart (commit WIP first).
 
+## Standing structures (owner, 2026-11-10)
+These exist so that work accumulates instead of evaporating. Each has one writer.
+| file | what it is | writer |
+|---|---|---|
+| `rh/THEORY.md` | **the theory document**: lemmas with dependencies, each `open` / `proved` / `checked` / `formal` / `known` / `refuted` (`tools/records.py theory`). A lemma is established only when checked, formal or known; nothing is `checked` on top of an unchecked dependency | the theory keeper (seat K-theory) |
+| `rh/ATLAS.md` | **the failure atlas**, separate from the idea log: for each dead approach the exact step that breaks (as mathematics), what would have to be true for it not to break, and what the approach does supply. A standing job pairs failures: "does what kills A supply what B was missing?" Every pair examined is recorded (`tools/records.py atlas`) | the atlas keeper (seat K-atlas) |
+| `rh/FOOTHOLDS.md` | **the foothold hunt**: any nontrivial case that is actually provable, however small, with a mechanism that could spread it | the foothold seat (FH) |
+| `rh/BIGGER.md` | **the bigger statement**: what RH is a shadow of, and whether the larger statement has a provable base case | the bigger-statement seat (BG) |
+| `rh/specialists/<seat>/` | **specialist seats that persist**: each owns one toolkit deeply (CHARTER, LIBRARY, MEMORY, own idea log) and keeps its memory across sessions; roster in `rh/specialists/ROSTER.md`. Collisions need two deep holders: put two specialists on one question, on a seminar board | each specialist |
+| `rh/formal/` | **formal checking**: any lemma a live route depends on must be machine-checked in a proof assistant (status `formal`) or be `known` with a citation, before that route is reported above L2 | the formal seat |
+- Other seats do not write these files; they write proofs and notes in their own folders and the keeper picks them up.
+- A session of a persistent seat starts by reading its own memory file and ends by rewriting it.
+
 ## Before any new piece of work
 1. **Backlog recheck** (a Haiku agent greps IDEAS / KNOWLEDGE / JOURNAL / reports): "done before? yes / partly / no, idea N, date, result". The owner sees the answer, not the process. If it was done, answer from the record and ask what is new.
 2. Open with: done before? · the ONE testable sentence · what it's worth if true (or the decision it changes).

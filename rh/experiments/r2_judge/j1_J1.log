@@ -1,0 +1,13 @@
+J1 background N=30 L=0.362  lowest even 0.0010741  odd 0.033228
+J1 background N=30 L=0.366  lowest even 0.0010617  odd 0.021694
+J1 background N=30 L=0.370  lowest even 0.0010586  odd 0.010268
+J1 background N=30 L=0.375  lowest even 0.0010571  odd -0.003868
+J1 background N=30 L=0.380  lowest even 0.0010456  odd -0.017844
+J1 background N=30 L=0.400  lowest even 0.00062921  odd -0.072254
+J1 background N=60 L=0.362  lowest even 0.0010725  odd 0.030497
+J1 background N=60 L=0.366  lowest even 0.0010606  odd 0.018959
+J1 background N=60 L=0.370  lowest even 0.0010579  odd 0.0075279
+J1 background N=60 L=0.375  lowest even 0.0010568  odd -0.0066134
+J1 background N=60 L=0.380  lowest even 0.0010455  odd -0.020596
+J1 background N=60 L=0.400  lowest even 0.00062833  odd -0.07503
+J1 control true primes L=0.38 N=30: even 0.0004101 odd 0.028721

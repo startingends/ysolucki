@@ -1,0 +1,86 @@
+"""S1-cubic, answer to board B9(a): WHICH forbidden entries make the certificate program infeasible?
+Certificate program (PROOF_trickle Lemma B remark 1): symmetric T, T.a = H, P_k := l_k l_k^T/s_k - T_k >= 0.
+Slack version (the refuter's normalisation): maximise t with P_k >= t (I - a a^T/|a|^2) for all k (P_k a = 0 always).
+t* > 0: feasible with margin; t* < 0: infeasible by |t*|.
+Modes (n boxes 0..n-1, fibre indices n, n+1 never restricted):
+  pairall  i j : zero every entry T_{i j k} with k a box index (k = i and k = j included)  [pair (i,j) is 'fibre only']
+  pairdist i j : zero T_{i j k} for box k not in {i, j} only (keeps T_iij, T_ijj)
+  raddist  R   : zero T_{i j k} for DISTINCT boxes i<j<k with k - i > R (keeps all entries with a repeated index)
+  radall   R   : zero all box entries i<=j<=k with k - i > R   (= the original P5 program)
+usage: locality2.py.txt <kind> <L> <n> <what>
+"""
+import sys, math, itertools, importlib.util, importlib.machinery, numpy as np, cvxpy as cp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+
+class Prog:
+    def __init__(self, H, a):
+        self.H, self.a = H, a
+        m = self.m = len(a); self.l = H @ a
+        self.keys = list(itertools.combinations_with_replacement(range(m), 3)); self.idx = {k: i for i, k in enumerate(self.keys)}
+        self.Sl = []
+        for k in range(m):
+            A = np.zeros((m * m, len(self.keys)))
+            for i in range(m):
+                for j in range(m): A[i * m + j, self.idx[tuple(sorted((i, j, k)))]] = 1.0
+            self.Sl.append(A)
+        self.Pa = np.eye(m) - np.outer(a, a) / (a @ a)
+    def run(self, zero, solver=cp.CLARABEL):
+        m, H, a, l = self.m, self.H, self.a, self.l
+        x = cp.Variable(len(self.keys)); t = cp.Variable(); cons = []
+        cons.append(sum(a[k] * (self.Sl[k] @ x) for k in range(m)) == H.reshape(-1))
+        for k in range(m):
+            cons.append(np.outer(H[:, k], H[:, k]) / l[k] - cp.reshape(self.Sl[k] @ x, (m, m), order='C') - t * self.Pa >> 0)
+        for key in zero: cons.append(x[self.idx[key]] == 0)
+        cons.append(t <= 1)
+        prob = cp.Problem(cp.Maximize(t), cons)
+        try:
+            prob.solve(solver=solver)
+            return prob.status, (float(t.value) if t.value is not None else float('nan'))
+        except Exception as ex:
+            return "fail", float('nan')
+
+def both(P, zero):
+    r1 = P.run(zero, cp.CLARABEL); r2 = P.run(zero, cp.SCS)
+    return "%+.4e (%s) / %+.4e (%s)" % (r1[1], r1[0][:7], r2[1], r2[0][:7]), r1[1], r2[1]
+
+kind, L, n, what = sys.argv[1], float(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
+cn = box.lam(math.exp(2 * L)) if kind == "zeta" else box.beurling(math.exp(2 * L))
+Nb, p, q = box.boxN(L, n, cn); H = box.ext(Nb, p, q); ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1])
+P = Prog(H, a)
+print("%s L=%.2f n=%d: eig2(Ntilde)=%.3e #pos=%d ; slack t* CLARABEL / SCS" % (kind, L, n, np.sort(ev)[-2], (ev > 1e-10).sum()), flush=True)
+if what == "full":
+    print("  no restriction: " + both(P, [])[0], flush=True)
+if what in ("pairall", "pairdist"):
+    tab = np.full((n, n), np.nan)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if what == "pairall":
+                zero = sorted(set(tuple(sorted((i, j, k))) for k in range(n)))
+            else:
+                zero = sorted(set(tuple(sorted((i, j, k))) for k in range(n) if k not in (i, j)))
+            s, t1, t2 = both(P, zero)
+            tab[i, j] = t1 if t1 == t1 else t2
+            print("  %s pair (%d,%d) N_ij=%.4f: %s" % (what, i, j, Nb[i, j], s), flush=True)
+    np.set_printoptions(linewidth=200, precision=3, suppress=True)
+    print(tab)
+if what in ("raddist", "radall"):
+    for R in range(n - 1, -1, -1):
+        if what == "raddist":
+            zero = [(i, j, k) for (i, j, k) in itertools.combinations(range(n), 3) if k - i > R]
+        else:
+            zero = [(i, j, k) for (i, j, k) in itertools.combinations_with_replacement(range(n), 3) if k - i > R]
+        print("  %s R=%d (%d entries zeroed): %s" % (what, R, len(zero), both(P, zero)[0]), flush=True)
+if what == "endpair":
+    zero = sorted(set(tuple(sorted((0, n - 1, k))) for k in range(n)))
+    print("  end pair (0,%d) fibre-only, N_ij=%.5f h=%.4f: %s" % (n - 1, Nb[0, n - 1], 2 * L / n, both(P, zero)[0]), flush=True)
+    zero = sorted(set(tuple(sorted((0, n - 1, k))) for k in range(n) if k not in (0, n - 1)))
+    print("  end pair (0,%d) without distinct third box (keeps T_00e, T_0ee): %s" % (n - 1, both(P, zero)[0]), flush=True)
+    i, j = n // 2 - 1, n // 2
+    zero = sorted(set(tuple(sorted((i, j, k))) for k in range(n)))
+    print("  central adjacent pair (%d,%d) fibre-only, N_ij=%.5f: %s" % (i, j, Nb[i, j], both(P, zero)[0]), flush=True)
+    i, j = n // 4, 3 * n // 4
+    zero = sorted(set(tuple(sorted((i, j, k))) for k in range(n)))
+    print("  interior pair (%d,%d) fibre-only, N_ij=%.5f: %s" % (i, j, Nb[i, j], both(P, zero)[0]), flush=True)

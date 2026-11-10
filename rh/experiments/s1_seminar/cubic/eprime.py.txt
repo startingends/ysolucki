@@ -1,0 +1,43 @@
+"""S1-cubic: necessary condition (E') for a pair (i,j) of boxes to have NO box third index (T_ijk = 0 for all boxes k, incl. k=i,j).
+(E') there is w in span(e_F1, e_F2) with a.w = H_ij and  G := HDH - H  >=  (a_i/s_i) v_i v_i^T + (a_j/s_j) v_j v_j^T,
+     v_i := l_i - (s_i/H_ij) w,  v_j := l_j - (s_j/H_ij) w.
+Proof in NOTES.md (turn 1).  Here: best over w of lambda_min( [G - ...] restricted to a-perp ).  < 0  => pair cannot be fibre-only.
+Also: 'two-close' locality radius r: zero distinct box triples i<j<k with min(j-i, k-j) > r.
+usage: eprime.py.txt <kind> <L> <n> [twoclose]"""
+import sys, math, itertools, importlib.util, importlib.machinery, numpy as np
+from scipy.optimize import minimize_scalar
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+D0 = "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/"
+box = load("box", D0 + "box.py.txt")
+kind, L, n = sys.argv[1], float(sys.argv[2]), int(sys.argv[3])
+cn = box.lam(math.exp(2 * L)) if kind == "zeta" else box.beurling(math.exp(2 * L))
+Nb, p, q = box.boxN(L, n, cn); H = box.ext(Nb, p, q); ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1])
+m = n + 2; s = H @ a; G = H @ np.diag(a / s) @ H - H
+# orthonormal basis of a-perp
+Qm, _ = np.linalg.qr(np.c_[a, np.eye(m)[:, :m - 1]]); B = Qm[:, 1:]
+print("%s L=%.2f n=%d eig2=%.3e ; G restricted to a-perp: eigenvalues in [%.3e, %.3f]" % (kind, L, n, np.sort(ev)[-2], *np.linalg.eigvalsh(B.T @ G @ B)[[0, -1]]))
+if len(sys.argv) > 4 and sys.argv[4] == "twoclose":
+    import cvxpy as cp
+    sys.argv = ["x", kind, str(L), str(n), "none"]
+    loc = load("loc", D0 + "locality2.py.txt")
+    P = loc.Prog(H, a)
+    for r in range((n - 1) // 2, -1, -1):
+        zero = [(i, j, k) for (i, j, k) in itertools.combinations(range(n), 3) if min(j - i, k - j) > r]
+        print("  two-close r=%d (%d of %d distinct triples zeroed): %s" % (r, len(zero), n * (n - 1) * (n - 2) // 6, loc.both(P, zero)[0]), flush=True)
+    sys.exit()
+worst = []
+for i in range(n):
+    for j in range(i + 1, n):
+        def f(alpha):
+            beta = (H[i, j] - a[n] * alpha) / a[n + 1]
+            w = np.zeros(m); w[n] = alpha; w[n + 1] = beta
+            vi = H[:, i] - (s[i] / H[i, j]) * w; vj = H[:, j] - (s[j] / H[i, j]) * w
+            Mx = G - (a[i] / s[i]) * np.outer(vi, vi) - (a[j] / s[j]) * np.outer(vj, vj)
+            return -np.linalg.eigvalsh(B.T @ Mx @ B)[0]
+        best = min((minimize_scalar(f, bracket=(c - 0.5, c + 0.5)) for c in (-2, 0, 2)), key=lambda r: r.fun)
+        worst.append((-best.fun, i, j, H[i, j]))
+worst.sort()
+print("  (E') best lambda_min over w, per pair: max over pairs = %.4f at (%d,%d) N_ij=%.4f ; min over pairs = %.4f at (%d,%d) N_ij=%.4f ; pairs with value >= 0: %d of %d" % (
+    *worst[-1], *worst[0], sum(1 for x in worst if x[0] >= 0), len(worst)))
