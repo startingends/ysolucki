@@ -1,0 +1,24 @@
+import sys, math, itertools, importlib.machinery, importlib.util, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+R = load("ref_lib", "/home/user/ysolucki/rh/experiments/r2_cubic/refuter/ref_lib.py.txt")
+def sig(H, a):
+    m = len(a); s = H @ a; pi = a * s; K = (H * a[None, :]) / s[:, None]
+    U0 = np.diag(1 / a); U1 = K @ U0; U2 = K @ U1
+    br = lambda X, Y, Z: np.einsum('l,li,lj,lk->ijk', pi, X, Y, Z)
+    s1 = br(U1, U0, U0) + br(U0, U1, U0) + br(U0, U0, U1); s2 = br(U2, U0, U0) + br(U0, U2, U0) + br(U0, U0, U2)
+    s11 = br(U1, U1, U0) + br(U1, U0, U1) + br(U0, U1, U1); s111 = br(U1, U1, U1)
+    return s1, s2, s11, s111
+def worst(H, a, T):
+    s = H @ a
+    return min(np.linalg.eigvalsh(np.outer(H[:, k], H[:, k]) / s[k] - T[:, :, k])[0] for k in range(len(a)))
+for kind, L, n in (("zeta", 0.5, 12), ("zeta", 1.0, 12), ("zeta", 1.0, 24), ("beurling", 1.0, 12)):
+    at = None if kind == "zeta" else R.beurling(math.exp(2 * L))
+    N, p, q, _ = R.build(L, n, at); H = R.ext(N, p, q); lam, a = R.perron(H)
+    s1, s2, s11, s111 = sig(H, a)
+    f = lambda t: worst(H, a, t * (s1 - s2) + (0.5 - t) * s11 + (3 * t - 0.5) * s111)
+    fine = max((f(t), t) for t in np.arange(-1, 2.00001, 0.001))
+    nposbest = max(int((np.linalg.eigvalsh((fine[1] * (s1 - s2) + (0.5 - fine[1]) * s11 + (3 * fine[1] - 0.5) * s111)[:, :, k]) > 1e-9).sum()) for k in range(n + 2))
+    print("%s L=%.2f n=%d: t=0: %.4e  t=0.05: %.4e  t=1/6: %.4e  t=1/2: %.4e | grid 0.001 on [-1,2]: best t=%.3f worst=%.4e (max #pos of a slice there: %d)" % (
+        kind, L, n, f(0), f(0.05), f(1 / 6), f(0.5), fine[1], fine[0], nposbest))

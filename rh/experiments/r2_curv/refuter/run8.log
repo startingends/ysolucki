@@ -1,0 +1,6 @@
+zeta M=20: LLY min/lam1 = -0.1359 at pair 0 (x=-0.950,-0.850); centre pair 0.3695; #negative pairs 4 of 19; Dobrushin min/lam1 = 0.6030 at (7, 12)
+zeta M=40: LLY min/lam1 = -3.4965 at pair 38 (x=0.925,0.975); centre pair 0.3555; #negative pairs 10 of 39; Dobrushin min/lam1 = 0.4305 at (1, 38)
+zeta M=80: LLY min/lam1 = -6.2078 at pair 1 (x=-0.963,-0.938); centre pair 0.3746; #negative pairs 18 of 79; Dobrushin min/lam1 = 0.3337 at (3, 76)
+zeta M=160: LLY min/lam1 = -10.1686 at pair 155 (x=0.944,0.956); centre pair 0.3654; #negative pairs 30 of 159; Dobrushin min/lam1 = 0.2888 at (5, 154)
+beurling M=40: LLY min/lam1 = -3.5297 at pair 38 (x=0.925,0.975); centre pair 0.3759; #negative pairs 8 of 39; Dobrushin min/lam1 = 0.4721 at (11, 37)
+beurling M=80: LLY min/lam1 = -6.2536 at pair 1 (x=-0.963,-0.938); centre pair 0.3764; #negative pairs 20 of 79; Dobrushin min/lam1 = 0.3618 at (4, 75)

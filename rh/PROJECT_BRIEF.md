@@ -42,6 +42,12 @@ Owner's standing instructions:
 8. **Look where nobody has looked. There is no procedure for finding it.** The easy ideas were used up over
    165 years. Do not expect a method to produce the idea; expect to have to invent. When an idea turns out
    to be known, record it and move further out, do not circle back to its neighbours.
+9. **Build on what is there; real insight, not novelty for its own sake.** (owner, later the same day)
+   Everything in the journal, the knowledge base and the idea log, including the paths other people have
+   made, is there to help create new mathematics and make discoveries. Follow those paths far enough to
+   learn from them, then make your own discovery out of what you learned. A new idea must say which
+   recorded results it grows from and what it explains or uses that was not explained or used before.
+   "Nobody has done this" is not a reason to do it; "this is what the record is pointing at" is.
 These are enforced as required fields in `tools/ideas.py` (wall, new input, prediction, smallest, novelty).
 A field may honestly read "FAILS RULE: …"; such ideas cannot be `alive`.
 

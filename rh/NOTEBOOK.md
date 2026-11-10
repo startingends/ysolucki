@@ -321,3 +321,25 @@ saw that I had already split the tracks, recorded the owner's "longer time boxes
 run 1. The owner's instruction appeared to me as new and I started to carry it out again. I noticed only
 because an edit failed on text that had already been changed. Fix: the hub's "Running jobs" section and the
 Answered table are the memory; read them and the git log before acting on anything that looks new.
+
+**N32. What round 2 did to my two created ideas, and what grew out of the wreckage.** (lead)
+- #10 (certificates): seat R2-cubic proved that a certificate exists whenever positivity holds. So my test
+  "search for a certificate" could never have told us anything. The one cubic with a formula is the
+  Bakry-Emery form, i.e. idea #11 in disguise, and it loses a factor 2 on the mean-field model. Parked.
+- #11 (curvature): seat R2-curv showed the factor 2 is structural and the tool is blind to the Beurling
+  control. Killed. The process picture is also already in an unrefereed 2026 preprint.
+- What they found that I did not ask for: the whole curvature deficit sits at the window EDGE; and the
+  prime kernel is a Gram matrix on prime powers (their Theorem D).
+- Built on that (rule 9), idea #21: the kernel has a SECOND positivity, of mirror (Hankel) type on the
+  integers, with an explicit spectrum: one atom per prime on the coordinate axes of the dual semigroup, and
+  the trivial zeros on its diagonal. The zeros of zeta are the spectrum of the FIRST (shift) positivity.
+  One object, two spectra: places and zeros. Test: 5 of 6 blind predictions hit, including the one that
+  matters (a real-character L-function passes although its couplings are not all positive, so this
+  criterion is right exactly where idea #10's sign condition was wrong).
+- The missing step now has a name borrowed from physics: mirror positivity implies shift positivity
+  (Kallen-Lehmann) is a theorem with one time variable. Here there is one time per prime, and the mirror
+  positivity lives on the integers, not on the continuum. First honest sub-question: two primes.
+- Unexpected in the table: the dial at n = 4 fails by exactly ONE negative eigenvalue, and n = 4 is
+  zeta(s) zeta(s-1) times a factor, whose zeros sit on two lines beside the centre line. Is the number of
+  negative mirror eigenvalues counting something about where the zeros are? One data point; do not believe
+  it yet.

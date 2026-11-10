@@ -1,0 +1,13 @@
+import sys, math, importlib.machinery
+import numpy as np
+R = importlib.machinery.SourceFileLoader('refute', '/home/user/ysolucki/rh/experiments/r2_curv/refuter/refute.py.txt').load_module()
+for kind in ('zeta', 'beurling'):
+    for M in (20, 40, 80, 160):
+        N, xs, c, s, d = R.build(1.0, M, kind)
+        h = M//2; Be = np.zeros((M, h))
+        for i in range(h): Be[i, i] = Be[M-1-i, i] = 1/math.sqrt(2)
+        Ne = Be.T@N@Be; ce = Be.T@c
+        nu = np.linalg.eigvalsh(-Ne); mu = np.linalg.eigvalsh(2*np.outer(ce, ce) - Ne)
+        margin = 2*ce@np.linalg.solve(Ne, ce) - 1
+        lam1 = -nu[0]
+        print(f"{kind} M={M}: margin={margin:.6e} mu1={mu[0]:.6e} lam1={lam1:.6f} nu2={nu[1]:.4e} margin/(mu1/lam1)={margin/(mu[0]/lam1):.6f}  prod check={np.prod(mu[1:]/nu[1:]):.6f}")

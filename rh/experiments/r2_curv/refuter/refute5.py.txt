@@ -1,0 +1,69 @@
+# R10: sign of lambda_1 at small L (gap in Theorem A).  R11: impostor negative fraction.  R12: dial.
+import sys, math, importlib.machinery
+import numpy as np, mpmath as mp
+R = importlib.machinery.SourceFileLoader('refute', '/home/user/ysolucki/rh/experiments/r2_curv/refuter/refute.py.txt').load_module()
+mp.mp.dps = 20
+def blocks(N, c, s):
+    M = N.shape[0]; h = M//2
+    Be = np.zeros((M, h)); Bo = np.zeros((M, h))
+    for i in range(h):
+        Be[i, i] = Be[M-1-i, i] = 1/math.sqrt(2)
+        Bo[i, i] = -1/math.sqrt(2); Bo[M-1-i, i] = 1/math.sqrt(2)
+    return Be.T@N@Be, Bo.T@N@Bo, Be.T@c, Bo.T@s
+print("R10: small windows")
+for L in (0.03, 0.05, 0.07, 0.1, 0.12, 0.14, 0.2):
+    for kind in ('zeta', 'beurling'):
+        N, xs, c, s, d = R.build(L, 40, kind)
+        Ne, No, ce, so = blocks(N, c, s)
+        eve = np.linalg.eigvalsh(Ne); evo = np.linalg.eigvalsh(No)
+        Qe = 2*np.outer(ce, ce) - Ne; Qo = -2*np.outer(so, so) - No
+        print(f" L={L} {kind}: lambda1={eve[-1]:.6f} #pos(N_e)={(eve>0).sum()} #pos(N_o)={(evo>0).sum()} min eig Q_e={np.linalg.eigvalsh(Qe)[0]:.4e} Q_o={np.linalg.eigvalsh(Qo)[0]:.4e}  2c^T N_e^-1 c - 1 = {2*ce@np.linalg.solve(Ne,ce)-1:.4e}")
+
+def gen_build(L, M, alpha, atoms):
+    wf = lambda u: mp.exp(-alpha*u)/(-mp.expm1(-2*u))
+    d = mp.mpf(2*L)/M; k = np.zeros(M)
+    for m in range(1, M):
+        a = (m-1)*d; b = m*d; c = (m+1)*d
+        k[m] = float(mp.quad(lambda u: wf(u)*(u-a)/d, [a, b]) + mp.quad(lambda u: wf(u)*(c-u)/d, [b, c]))
+    df = float(d); karch = k.copy()
+    for (pos, wt) in atoms:
+        for m in range(1, M):
+            t = 1 - abs(pos - m*df)/df
+            if t > 0: k[m] += wt*t
+    return k, karch
+def negfrac(k):
+    M = len(k); tot = M*(M-1); neg = sum(2*(M-m) for m in range(1, M) if k[m] < 0)
+    return neg/tot, k[1:].min(), [m for m in range(1, M) if k[m] < 0]
+def logder(a, X):
+    # a[n] for n>=1 with a[1]=1 ; returns Lam[n] with a_n log n = sum_{d|n} Lam(d) a(n/d)
+    Lam = {}
+    for n in range(2, X+1):
+        v = a(n)*math.log(n)
+        for dd in range(2, n):
+            if n % dd == 0: v -= Lam[dd]*a(n//dd)
+        Lam[n] = v
+    return Lam
+print("R11: impostor (DH), alpha=3/2, atoms Lambda_f(n)/sqrt(n) at log n, L=1 M=40")
+kap = float((mp.sqrt(10 - 2*mp.sqrt(5)) - 2)/(mp.sqrt(5) - 1))
+a = lambda n: (0.0, 1.0, kap, -kap, -1.0)[n % 5]
+Lam = logder(a, 7)
+print("  Lambda_f:", {n: round(v, 4) for n, v in Lam.items()})
+k, ka = gen_build(1.0, 40, 1.5, [(math.log(n), v/math.sqrt(n)) for n, v in Lam.items() if n <= math.exp(2.0)])
+f, mn, where = negfrac(k); print(f"  negative off-diag fraction {100*f:.2f}%  min entry {mn:.4f}  at offsets {where}")
+print("R12: dial theta^n")
+for nn in (1.0, 1.4, 2.0):
+    X = 54
+    # theta^n coefficients via J.C.P. Miller recurrence on theta = 1 + 2 sum q^{k^2}
+    th = [0.0]*(X+1); th[0] = 1.0
+    kq = 1
+    while kq*kq <= X: th[kq*kq] = 2.0; kq += 1
+    r = [0.0]*(X+1); r[0] = 1.0
+    for m in range(1, X+1):
+        r[m] = sum((nn*j - (m - j))*th[j]*r[m-j] for j in range(1, m+1))/m
+    a = lambda m: r[m]/(2*nn)
+    assert abs(a(1) - 1) < 1e-12
+    c = logder(a, X)
+    atoms = [(0.5*math.log(m), 0.5*v*m**(-nn/4)) for m, v in c.items() if 0.5*math.log(m) <= 2.0]
+    k, ka = gen_build(1.0, 40, nn/2, atoms)
+    f, mn, where = negfrac(k)
+    print(f"  n={nn}: c_m (m<=12) {[round(c[m],4) for m in range(2,13)]}  negative fraction {100*f:.2f}%  min entry {mn:.4f} at offsets {where}")

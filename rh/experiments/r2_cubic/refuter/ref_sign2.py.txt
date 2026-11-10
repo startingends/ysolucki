@@ -1,0 +1,11 @@
+import sys, math, itertools, importlib.machinery, importlib.util, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+sys.argv = ["x", "none"]
+S = load("ref_sdp", "/home/user/ysolucki/rh/experiments/r2_cubic/refuter/ref_sdp.py.txt")
+for kind, L, n in (("zeta", 1.0, 8), ("zeta", 0.75, 8)):
+    H = S.Hmat(kind, L, n); lam, a = S.R.perron(H)
+    for solver in ("CLARABEL", "SCS"):
+        st, t, T = S.cert(H, a, "sign", solver=solver)
+        print("%s L=%.2f n=%d a=Perron %s: %s t*=%s %s" % (kind, L, n, solver, st, "%.5f" % t if t is not None else "-", S.check(H, a, T) if T is not None else ""), flush=True)

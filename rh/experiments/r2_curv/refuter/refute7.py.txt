@@ -1,0 +1,21 @@
+import sys, math, importlib.machinery
+import numpy as np
+R = importlib.machinery.SourceFileLoader('refute', '/home/user/ysolucki/rh/experiments/r2_curv/refuter/refute.py.txt').load_module()
+for kind, Ms in (('zeta', (20, 40, 80, 160)), ('beurling', (40, 80))):
+    for M in Ms:
+        N, xs, c, s, d = R.build(1.0, M, kind)
+        ev, lam1, u, q, Lg = R.process(N)
+        G = np.cumsum(Lg, axis=1)
+        kap = np.zeros(M-1)
+        for x in range(M-1):
+            D = G[x] - G[x+1]
+            kap[x] = -D[x] - (np.abs(D).sum() - abs(D[x]))
+        kt = np.inf; arg = None
+        for i in range(M):
+            mn = np.minimum(q[i][None, :], q[i+1:])           # rows j>i
+            for jj in range(mn.shape[0]):
+                j = i+1+jj
+                v = mn[jj].sum() - mn[jj, i] - mn[jj, j] + q[i, j] + q[j, i]
+                if v < kt: kt = v; arg = (i, j)
+        a = int(kap.argmin())
+        print(f"{kind} M={M}: LLY min/lam1 = {kap.min()/lam1:.4f} at pair {a} (x={xs[a]:.3f},{xs[a+1]:.3f}); centre pair {kap[M//2-1]/lam1:.4f}; #negative pairs {(kap<0).sum()} of {M-1}; Dobrushin min/lam1 = {kt/lam1:.4f} at {arg}")

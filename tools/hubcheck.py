@@ -70,6 +70,20 @@ def main(root=ROOT):
             seen.add(r[0])
             if r[5] not in REG_STATUS:
                 errs.append(f"registry {r[0]}: bad status '{r[5]}'")
+    # seminar boards: every board must load, and an open board is reported so it is not forgotten
+    bdir = os.path.join(root, "rh", "board")
+    if os.path.isdir(bdir):
+        import json
+        for fn in sorted(os.listdir(bdir)):
+            if fn.endswith(".jsonl"):
+                try:
+                    with open(os.path.join(bdir, fn)) as fh:
+                        msgs = [json.loads(ln) for ln in fh if ln.strip()]
+                except ValueError:
+                    errs.append(f"rh/board/{fn}: not valid JSON lines")
+                    continue
+                if msgs and msgs[-1].get("kind") != "close":
+                    print(f"open seminar board: {fn[:-6]} ({len(msgs)} messages)")
     for f in ("docs/HUB.md", "docs/JOURNAL.md", "docs/DECISIONS.md", "rh/RESUME_HERE.md"):
         p = os.path.join(root, f)
         if os.path.exists(p):
