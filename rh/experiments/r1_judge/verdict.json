@@ -1,0 +1,271 @@
+{
+ "synthesis": "Round 1 produced good measuring instruments and no route to a proof. Every number a critic rechecked reproduced; nothing is above L1 and nothing is a step toward L4. Full reasoning is in /home/user/ysolucki/rh/experiments/r1_judge/JUDGEMENT.md.\n\nThree things changed during judging (all judge computations are single-run, double precision or mpmath, not interval-certified):\n\n1. The \"horizon lemma\" of lane A's critic is false as stated. It claimed that junk zeros above 1.5 x 4 pi e^{2L} can never make the window form negative. I took zeta's zeros, replaced one pair near height 15000 by an off-line quartet (offset 0.49) and evaluated the form on an explicit wave packet at window L = 3, where the claimed horizon is 5070. The Rayleigh quotient is -2.48 (and -2.78 at L = 2.7 with the quartet at 8000). The unmodified value agrees between the zero side (5.1696) and the prime side (5.1695, primes up to 403), so the base computation has two routes. The critic's own kill line is hit. The correct picture has two regimes: near the line a window sees up to about 4 pi e^{2L}; far from the line (offset delta) it sees up to about exp(sinh(2 delta L)/delta). One consequence: the hoped corollary \"verification of RH to 3e12 gives positivity for windows containing all primes up to 1e11\" is out of reach; the corrected ceiling is primes up to roughly a thousand.\n\n2. The \"theta dial\" of lane C's critic is now reproduced by a second implementation (incomplete-gamma series, no numerical integration), and its off-line zeros are located for the first time: 0.368894 + 21.146073i at n = 1.4, 0.557087 + 21.161908i at n = 1.5, 0.614261 + 21.206138i at n = 1.8; the pair is on the line at n = 1.3 (20.8981, 21.3598) and at n = 2 (21.0220, 21.4506). The collision is near n = 1.399.\n\n3. Lane B's \"missing-prime fee\" also holds when a single prime is left out: the cost is 1.10 times the forced local fee for the prime 3, and 1.17 for {3,5} and {5,7}, the same constant the critic found when all primes above P are missing.\n\nDisputes settled: A3 is not a reduction (its hypothesis already contains \"at most one negative square\", which gives RH by parity); B-1 does not beat the 1/log N floor (D_P(N) >= d_N); the critic's proof that D_S > 0 is correct, so B's WALL 2 is not a wall; B-2 and C3 hit their kill lines; C2's counting claim is false as stated; D1's numerics measured deletion noise, not the cost of a zero.\n\nThe most useful output of the round is the set of control families (zero surgery, pencil, theta dial, multiplicity dial) and the corrected map of what each finite test can see. Files written by the judge: /home/user/ysolucki/rh/experiments/r1_judge/JUDGEMENT.md, wavepacket.py.txt, wp_primeside.py.txt, thetadial.py.txt, missing_prime.py.txt, their logs, and IDEAS_LOCAL.md (three judge ideas awaiting audit).",
+ "ranking": [
+  {
+   "title": "Theta-power dial (C critic N1)",
+   "lane": "C",
+   "score_0_10": 4,
+   "status": "alive",
+   "why": "Now two implementations; off-line zeros located by the judge (n=1.4, 1.5, 1.8). A one-parameter family through zeta with an exact functional equation at every setting that still loses RH between n=1.3 and 1.4. It is an instrument, not a route, but a small theorem (off-line zeros for every 1<n<2) looks provable and it is the right control for ideas #9 and #10."
+  },
+  {
+   "title": "Missing-prime law (B critic C-1)",
+   "lane": "B",
+   "score_0_10": 3,
+   "status": "alive",
+   "why": "One small proved statement (D_S > 0 with an explicit floor; proof checked) and a stable constant: 1.14-1.16 for all primes above P missing, 1.10-1.17 for single missing primes (judge). Still RH with a rate; nobody knows how to bound the remainder above the local fee."
+  },
+  {
+   "title": "Two-regime visibility law (judge J1, replaces A2 and A-critic C2)",
+   "lane": "A/C (judge)",
+   "score_0_10": 3,
+   "status": "open",
+   "why": "Corrects two round-1 claims. Computed with one implementation plus a prime-side cross-check of the base value. Could become a clean lemma: positivity on [-L,L] excludes isolated zeros at offset delta below height about exp(X^delta/delta). Needs an Arb reproduction before L1."
+  },
+  {
+   "title": "D2 Pencil lab",
+   "lane": "D",
+   "score_0_10": 3,
+   "status": "alive",
+   "why": "L1, reproduced digit for digit by an independent method. The continuous control group lanes A-C need. 'Exactly' must read 'up to O(1) boundary terms, GRH for the two ends up to T'. Instrument only."
+  },
+  {
+   "title": "Zero-surgery controls (A critic C1)",
+   "lane": "A",
+   "score_0_10": 3,
+   "status": "alive",
+   "why": "Dial-an-impostor at any height and offset; cheap. The perturbation code has one implementation; the judge's wave-packet run is consistent in mechanism but is not a digit-for-digit reproduction."
+  },
+  {
+   "title": "Functional-equation-rigid dial as a control for uniqueness arguments (judge J2)",
+   "lane": "C/lead (judge)",
+   "score_0_10": 3,
+   "status": "open",
+   "why": "By Hecke's dimension count (from memory, supported by one search snippet) the dial function is the unique solution of its functional equation for 0<n<8, yet RH fails at n=1.4. So uniqueness cannot be what forces zeros onto the line. Must be run on idea #9; dimension count needs a full-text check."
+  },
+  {
+   "title": "One price list C(S) for missing primes (judge J3)",
+   "lane": "B/D (judge)",
+   "score_0_10": 3,
+   "status": "open",
+   "why": "Unifies lane B's staircase and lane D's deletions as one functional. First numbers (S={3}: 0.0607 against fee 0.0552) support 'the cost is local'. Untested for thin infinite sets; my local bound is invalid when 2 is missing."
+  },
+  {
+   "title": "B-1 Semilocal Nyman-Beurling (prime filtration)",
+   "lane": "B",
+   "score_0_10": 3,
+   "status": "open",
+   "why": "The object D_S is well-posed and new-looking. The headline claims ('beats the floor', 'more efficient detector') are dead by D_P(N) >= d_N. Fold into the missing-prime law."
+  },
+  {
+   "title": "A2 Detection height",
+   "lane": "A",
+   "score_0_10": 2,
+   "status": "open",
+   "why": "Numbers exact and reproduced; the band [0.6,1.2] fails in 10 of 20 surgery controls and misses the far-from-line regime entirely. Superseded by the two-regime law."
+  },
+  {
+   "title": "Horizon lemma (A critic C2)",
+   "lane": "A",
+   "score_0_10": 2,
+   "status": "killed",
+   "why": "Its own kill line is hit: a single quartet at 2.96 x 4 pi e^{2L} (L=3, offset 0.49) gives Rayleigh quotient -2.48. The observation that generic junk is harmless at L=0.58 stands, and explains nothing beyond the near-line regime."
+  },
+  {
+   "title": "D1 Price of a zero (Beurling rigidity)",
+   "lane": "D",
+   "score_0_10": 2,
+   "status": "open",
+   "why": "Strictly stronger than RH, no mechanism, the experts conjecture the opposite, and the critic's z=0.5 control shows the measured exponent a/2 is deletion noise. Keep only through D4."
+  },
+  {
+   "title": "D4 Discrepancy lower bound on ordinary integers",
+   "lane": "D",
+   "score_0_10": 2,
+   "status": "open",
+   "why": "The smallest statement on the D1 route. Untested; the natural proof is circular (needs 1/zeta left of the critical line)."
+  },
+  {
+   "title": "Second critical line (D critic)",
+   "lane": "D",
+   "score_0_10": 2,
+   "status": "open",
+   "why": "Says what a cheap deletion system must look like (extra zeros near Re s = a/2). Heuristic only, nothing computed. For S = all primes, a/2 is the critical line itself, which is a neat consistency check."
+  },
+  {
+   "title": "Multiplicity dial (D critic)",
+   "lane": "D",
+   "score_0_10": 2,
+   "status": "alive",
+   "why": "A correct and cheap control (integer weight kills the Selberg-Delange main term). It explains D1's numbers; it is not a route."
+  },
+  {
+   "title": "D7 Threshold law",
+   "lane": "D",
+   "score_0_10": 2,
+   "status": "open",
+   "why": "Four minima determine no exponent, and the quoted values mix signs. Restate as a distribution of small critical values and move it to the theta dial, where zeta itself is the base point."
+  },
+  {
+   "title": "C1 Fejer-window test",
+   "lane": "C",
+   "score_0_10": 2,
+   "status": "parked",
+   "why": "Lemma F is correct and reproduced; it is the diagonal of the Weil form, an equivalence with no new input. Keep as the 0.2-second impostor detector."
+  },
+  {
+   "title": "Certified sentence S_100(t) >= 0 (C critic N2)",
+   "lane": "C",
+   "score_0_10": 2,
+   "status": "open",
+   "why": "A finite, certifiable statement that is true for zeta and computed false for the impostor. Small and honest; in spirit a consequence of zero verification."
+  },
+  {
+   "title": "Exact sum over zeros for the optimal distance (B critic C-2)",
+   "lane": "B",
+   "score_0_10": 2,
+   "status": "open",
+   "why": "The absent 1/log^2 N term is real (|A| < 0.01 against 3.55). The spectral evidence is at resolution 1.79, suggestive only. Read Landreau-Richard 2002 first."
+  },
+  {
+   "title": "A1 Prolate law",
+   "lane": "A",
+   "score_0_10": 2,
+   "status": "parked",
+   "why": "Reproduced; the mechanism is Connes-Consani; the constant drifts and L=1.75 is not converged. A measurement of the no-slack barrier."
+  },
+  {
+   "title": "A5 Windowed Pick/Loewner identity",
+   "lane": "A",
+   "score_0_10": 2,
+   "status": "alive",
+   "why": "Proved off the lattice by the critic and checked to 1e-30. Generic to every truncated convolution form, so it carries no arithmetic. A computational tool."
+  },
+  {
+   "title": "D3 Kernel shape is not what pins the zeros",
+   "lane": "D",
+   "score_0_10": 1,
+   "status": "alive",
+   "why": "A narrow negative result that stands: four shape properties, grid check, do not separate zeta from the impostor. It does not kill 'all shape properties'."
+  },
+  {
+   "title": "A3 One-gap reduction",
+   "lane": "A",
+   "score_0_10": 1,
+   "status": "killed",
+   "why": "Not a reduction: the hypothesis gives mu_2 >= R(theta_L) >= 0, i.e. at most one negative square, which already implies RH by parity. By-product worth keeping: the parity-resolved negative index."
+  },
+  {
+   "title": "A4 Kicked Krein system",
+   "lane": "A",
+   "score_0_10": 1,
+   "status": "parked",
+   "why": "a(L) is never defined, 'no pole' restates 'no eigenvalue crosses zero', and in substance this is Suzuki's canonical systems, already in KNOWLEDGE section 7."
+  },
+  {
+   "title": "B-2 Second-order recipe",
+   "lane": "B",
+   "score_0_10": 1,
+   "status": "parked",
+   "why": "Own kill line hit (cubic coefficient drifts 10-13% per doubling; P(1) tends to 0). The 3.55/log^2 N constant is a correct measurement."
+  },
+  {
+   "title": "B-3 Zoomed control with Dirichlet-polynomial targets",
+   "lane": "B",
+   "score_0_10": 1,
+   "status": "parked",
+   "why": "The floor lemma is correct. The lane sees zeros only through 1/|rho|^2, so the instrument will probably miss its own kill line by a factor 2-3."
+  },
+  {
+   "title": "B-4 Heat-flow imaginary-part energy",
+   "lane": "B",
+   "score_0_10": 1,
+   "status": "parked",
+   "why": "Known (de Bruijn 1950; Ki-Kim-Lee 2009) and informative only for t > 0."
+  },
+  {
+   "title": "C2 Prime-side Pick pencil",
+   "lane": "C",
+   "score_0_10": 1,
+   "status": "parked",
+   "why": "The counting claim is false as stated; the method is the Loewner framework and the continuation is ill-posed. A good off-line zero finder."
+  },
+  {
+   "title": "C4 Fractional-multiplicity Eisenstein series",
+   "lane": "C",
+   "score_0_10": 1,
+   "status": "parked",
+   "why": "Kernel positivity is the de Branges-Lagarias structure function; the local parameter was wrong; the one global fractional object that exists (theta^n) has no Hecke operators."
+  },
+  {
+   "title": "D5 Totally positive density from Moebius",
+   "lane": "D",
+   "score_0_10": 1,
+   "status": "parked",
+   "why": "A known equivalence (Groechenig, Katkova); the density is dominated by the first zero, so the impostor's off-line pair is invisible."
+  },
+  {
+   "title": "C3 Shadow pairs",
+   "lane": "C",
+   "score_0_10": 0,
+   "status": "killed",
+   "why": "Six real zeros at X = 1e6 instead of a closing pair; the real signature is a non-monotone phase, which is C1."
+  },
+  {
+   "title": "D6 Carry deformation",
+   "lane": "D",
+   "score_0_10": 0,
+   "status": "killed",
+   "why": "Own kill line hit and reproduced: zeros leave the line at first order in both directions."
+  }
+ ],
+ "walls": [
+  "WJ1 (locality; merges lane A W3 and lane C W-C5). For a Dirichlet series F with functional equation and any L below its first-detection window L*(F), no computed property of the window form on [-L, L] separates F from zeta. Not known: any quantity Phi(L) defined from the prime side on [-L, L] with Phi_zeta(L) != Phi_DH(L) in a way not explained by zeros below the visibility curve (near the line: height < about 4 pi e^{2L}; at offset delta: sinh(2 delta L)/(2 delta) - L > about (1/2) log(T/2 pi)).",
+  "WJ2 (accuracy). inf spec Q_L is about (1 - chi_4(2 pi e^{2L})) times a power of L, i.e. about exp(-4 pi e^{2L}) (6e-30 at L=1). Any proof of Q_L >= 0 that estimates sum_{n <= e^{2L}} Lambda(n) n^{-1/2} g(log n) needs an error below that. Missing: a positive measure on R whose Fourier transform equals the Weil distribution on (-2L, 2L), constructed without the zeros.",
+  "WJ3 (gap). No lower bound mu_2(L) - mu_1(L) >= K L e^{(1+2 delta)L} (R(theta_L) - mu_1(L)) is known for the two lowest eigenvalues of Q_L and an explicit trial vector theta_L; any such bound contains mu_2(L) >= 0, which already implies RH.",
+  "WJ4 (rate of the prime filtration). Not known: D_P^2 = O(1/(P log P)), where D_P = dist(chi_(0,1), closed span{frac(1/(kx)) : k P-smooth}) in L^2(0, infinity). Proved (critic): D_P^2 >= m_P > 0 with m_P about (1/2) sum over n > 1 coprime to all p <= P of 1/n^2.",
+  "WJ5 (missing estimate in the size filtration). sum over h, k <= N of mu(h) mu(k) w(h) w(k) (pi/(2hk)) (V(h,k) + V(k,h)) = explicit main term + o(1), where V(h,k) = sum_{m<k} frac(mh/k) cot(pi m/k) and w(k) = 1 - log k/log N. The elementary terms to be cancelled contain sum_{k<=N} mu(k) w(k), not known to be o(1) with the needed uniformity.",
+  "WJ6 (resolution of Dirichlet polynomials). Proved: an off-line zero rho = beta + i gamma forces d_N^2 >= (2 beta - 1)/(|rho|^2 (1 + (2 beta - 1)/|rho - 1|^2)) for every N; Burnol: d_N^2 >= (C + o(1))/log N from the on-line zeros. So a length-N approximant cannot tell a zero on the line from one within about 1/log N of it, and excluding a zero at height T needs N > exp(c T^2).",
+  "WJ7 (conservation of difficulty). For fixed X >= 70, not proved without the zeros: 2 sum_{n<=X} Lambda(n) n^{-1/2} (1 - log n/log X) cos(t log n) <= Pole_X(t) + Arch_X(t) for all real t.",
+  "WJ8 (half-shift). Not constructed without the zeros: a Hilbert space whose scattering function is Lambda(k' - w)/Lambda(k' + w) for some 1/2 < k' < 1 (equivalently a geometric realisation of the de Branges space of xi(1/2 + h - iz) for some 0 < h < 1/2). Every geometric positivity known over Spec Z gives k' = 1.",
+  "WJ9 (Hodge index, barrier B9 unchanged). No candidate for Spec Z x Spec Z has a proved inequality E.E <= 2 (E.h)(E.v).",
+  "WJ10 (heat-flow direction). Every functional of the zeros of H_t computed (min gap, gap variance, sum 1/gap^2, log-energy) is monotone forward in t. Not found: a functional F with F(t) <= F(0) for t > 0, F(0) bounded by arithmetic, whose finiteness excludes a double real zero at any t > 0.",
+  "WJ11 (Beurling cost). Not decided: if S is a set of primes with pi_S(x) = Li(x^a) + O(x^{a'}), a' < a, a > 1/2, is #{n <= x : gcd(n, S) = 1} - Ax = Omega(x^c) for some c(a) > 0? Equivalently: can zeta_S(s) = prod_{p in S}(1 - p^{-s})^{-1} have every zero with Re s > c located at a zero of zeta, with zeta/zeta_S of polynomial growth there, for every c > 0? Broucke-Debruyne-Revesz conjecture yes; lane D conjectures no.",
+  "WJ12 (shape of the kernel). Find a property P of an even kernel K that holds for Phi_zeta, fails for Phi_DH, and implies that the cosine transform of K has only real zeros. Positivity, log-concavity, Csordas-Varga concavity and the Turan inequalities (m <= 40) do not separate the two.",
+  "WJ13 (new, judge; signature is not positivity). 'N = primes - arch has exactly one positive eigenvalue on every window' (idea #10, claim a) follows from RH but does not obviously imply it. With Q = pole - N and the pole term equal to +2<f,cosh(u/2)>^2 on even f and -2<f,sinh(u/2)>^2 on odd f, the signature claim gives at most one negative square of Q in each parity block, i.e. at most ONE off-line quartet [linear algebra PROVED; 'each quartet costs one negative square per block' HEURISTIC, seen for DH as 1+1 then 2+2]. The statements equivalent to RH are the block inequalities N_even <= 2<f,cosh(u/2)>^2 and N_odd <= -2<f,sinh(u/2)>^2."
+ ],
+ "round2": [
+  {
+   "title": "Visibility map on real impostors (lanes A, C, D together)",
+   "experiment": "(a) Reproduce the judge's wave-packet result in Arb with a second implementation: full even/odd eigenproblem, or a certified Rayleigh quotient, at L = 2.7 with the quartet at 8000.37 and at L = 3.0 with the quartet at 15000.37 (offset 0.49). (b) Register a blind prediction of the sign of the same quotient for quartets at the pair midpoints nearest 6000, 10000, 20000, 60000 at L = 3, then compute. (c) Run lane A's window form along lane D's pencil for the quartets below height 300 and compare each first-detection window with the two-regime law (near line: 4 pi e^{2L*}/q = T + 0.9 log T ln(1/delta); far: sinh(2 delta L)/(2 delta) - L = c (1/2) log(T/2 pi), c in [0.3, 1.3]).",
+   "kill_line": "The second implementation finds the form positive at (L=3.0, delta=0.49, height 15000.37); or more than half of the pencil quartets are first detected more than 0.08 in L away from the two-regime prediction.",
+   "why_this": "It settles the A2 dispute with genuine Dirichlet series instead of surgery sets, turns three separate 'detection' claims into one law, and fixes how much the verified height 3e12 can ever buy for window positivity."
+  },
+  {
+   "title": "Dial battery: the impostor factory around zeta itself",
+   "experiment": "On Z_n(s) = sum r_n(m) m^{-s}: (a) bisect the collision value n_c(T) for the first ten collisions up to T = 200, on both sides of n = 1 (prediction to register first: n_c(200) - 1 < 0.15 on the n > 1 side). (b) Run idea #9's feasible-set test, idea #10's sign test and lane A's first-failure window along the dial. (c) Heat-flow the located off-line pair at n = 1.4 back to the line to get a lower bound for the de Bruijn-Newman constant Lambda(1.4). (d) Proof attempt: Z_n has a zero off Re s = n/4 for every 1 < n < 2. (e) Read the Berndt-Knopp dimension formula in full text.",
+   "kill_line": "n_c(T) stays above 1.2 up to T = 500 on both sides (then the dial says nothing local about zeta and is only another impostor); or the solution space of the functional equation turns out not to be one-dimensional under the conditions idea #9 uses.",
+   "why_this": "It is the only control family with zeta as an interior point and a unique solution of the functional equation at every setting. Any argument built on uniqueness, on a bootstrap, or on signs of couplings can be tested on it in minutes, before anyone invests in it."
+  },
+  {
+   "title": "Missing-prime law: is the cost of a missing prime purely local?",
+   "experiment": "(a) Converge kappa_P for P = 11 and 13 with a well-conditioned y-space solve including the tail. (b) Compute the exact one-prime cost C({q}) for q = 3, 5, 7 (a one-variable Szego problem) and compare with the judge's finite-N values 0.0607, 0.0248, 0.0151 and with the three-interval fee. (c) Test additivity C({q,q'}) against C({q}) + C({q'}). (d) Run the Davenport-Heilbronn staircase in y-space as the control.",
+   "kill_line": "Converged kappa_P > 1.5 at P = 11 or 13; or C({3}) divided by its local fee rises above 1.5 as N grows; or the lower-bound ratio climbs steadily by P = 31.",
+   "why_this": "It is the one place in the round with a proved unconditional floor and a constant that keeps coming out the same (1.10 to 1.17). If the cost is local with a universal constant, RH becomes 'no global surcharge on top of the local fee', and the remainder kappa - 1 is a concrete object to attack."
+  },
+  {
+   "title": "Write out the parity lemma and the exact relation between signature and RH",
+   "experiment": "Proof attempt, on paper and then checked numerically: (a) 'if Q_L has at most one negative square for every L then RH', through the Krein-Langer extension theory for functions with finitely many negative squares; (b) the statement WJ13: idea #10's signature claim allows at most one off-line quartet, and RH is equivalent to the two block inequalities with the pole term. Numerical check on surgery sets with exactly one quartet: the negative index of the even and odd blocks, and the number of positive eigenvalues of N, as L grows.",
+   "kill_line": "A surgery configuration with one quartet whose form has fewer than two negative squares at every L up to 2 (then the per-block count is wrong); or the one-quartet configuration keeps N at exactly one positive eigenvalue (then the signature target of idea #10 cannot see a single quartet at all and must be replaced).",
+   "why_this": "It is the cheapest fully provable conditional lemma on the table, and it tells the lead precisely what a Lorentzian certificate for idea #10 would and would not prove before the certificate search starts."
+  },
+  {
+   "title": "One certified sentence that the impostor fails",
+   "experiment": "Prove S_100(t) >= 0 for all real t by interval arithmetic on the prime side up to an explicit T0(100) and the trivial bound beyond it. Then repeat with the judge's odd sinh packet (offset parameter 0.3085) in place of the triangle and find the smallest X at which Davenport-Heilbronn fails that test; prediction to register first: below X = 45, against 60-70 for the triangle and 31 for the full form.",
+   "kill_line": "T0(70) comes out above 1e11 with no zero-side substitute, making the scan infeasible; or a full-text read of Yoshida 1992 or Connes-Consani arXiv 2106.01715 shows window positivity is already published up to log 100.",
+   "why_this": "Owner rule 6: the smallest statement that can actually be proved. It would be the first proved inequality in the project that separates zeta from the impostor, and a fixed finite target for a structural certificate search."
+  }
+ ],
+ "cross_links": "1. One map of what each test can see. Lane A measured that a window with primes up to X sees bad zeros near the line up to height about 4 pi X. Lane C measured that its simpler test is trivially passed above height exp(8 sqrt X/log X). Lane B proved that its approximants cannot resolve a zero closer than 1/log N to the line and need N > exp(c T^2) to reach height T. The judge's wave-packet run supplies the missing piece: far from the line (offset delta) the window sees up to about exp(X^delta/delta), which is the classical scale X = (log T)^{1/(sigma - 1/2)}. Put together: the window is the only efficient detector, it has two regimes, and both lane A's 'detection law' and the critic's 'horizon lemma' were the near-line regime mistaken for the whole picture.\n\n2. Three counts of the same integer. Lane A's negative eigenvalues split by parity (one even plus one odd per off-line quartet), lane C's negative eigenvalues of Pick matrices, and lane D's count of humps of rho(t) with tops between 0 and lam all count off-line quartets and can only grow under refinement. Combined with the pole term's opposite signs on even and odd functions, this gives a statement nobody inside one lane had: the lead's idea #10 target ('exactly one positive eigenvalue') is weaker than RH by at most one quartet (wall WJ13). The target equivalent to RH is a pair of block inequalities.\n\n3. The dial is the pencil for zeta, and it is rigid. Lane D observed that zeta is alone in its functional-equation space, so the pencil cannot be built around zeta. Lane C's critic, attacking a different idea, found the missing family: theta^n. By Hecke's dimension count the dial function is the only solution of its functional equation for every 0 < n < 8 (from memory, one search snippet agrees), yet it has off-line zeros at n = 1.4. So uniqueness of the solution does not force RH. What n = 1 and n = 2 have and the settings between lack is Hecke operators. This is a ready-made test for idea #9 (positivity forces the primes) and corrects the reading of KEY_LEMMA S1, which argued from a two-dimensional space that does not exist for zeta. Exact and by hand: the coupling at m = 3 is (2/3)(n-1)(n-2) log 3, negative for 1 < n < 2, so idea #10's sign fact fails immediately off n = 1 although the zeros stay on the line up to height 20.\n\n4. A two-parameter picture. The dial n (lane C) and the heat time t (lane B) both keep the functional equation. Let Lambda(n) be the de Bruijn-Newman constant of theta^n. Then Lambda(1) = 0 is RH (given Rodgers-Tao), Lambda(1.4) > 0 by the located zero, and Lambda(2) = 0 is GRH for Q(i). Conjecture to test: Lambda(n) > 0 for every non-integer n near 1, so Euler-product points are isolated zeros of Lambda. Lane D's threshold law (D7) is the same question in the pencil direction, and it should be asked on the dial, where the base point is zeta itself.\n\n5. One price list. Lane B's staircase (leaving out a prime q costs about 1/(2 q^2)) and lane D's deletions (removing a thin set of primes costs the integers a wobble of x^{a/2}) are the same functional: the additive unevenness forced by a multiplicative defect. With C(S) the Nyman-Beurling distance using only dilations coprime to S, RH is 'C(all primes above P) tends to 0', and the judge's numbers suggest C(S) is within 1.1 to 1.2 of its forced local fee for small S. Lane D's 'second critical line' at a/2 is, when S is all primes, the critical line itself.\n\n6. Exact stages against truncations. With primes up to 7, lane A's ground state gives the first zero to 3e-26. With primes up to a million, lane C's truncated Euler family gives 0.0069. Lane B's prime filtration is exact but only algebraic, 1/(P log P). Among the exact finite stages only the window is exponentially efficient, which quantifies S4 of KEY_LEMMA_SHAPE.",
+ "owner_note": "Plain summary: round 1 built very good test equipment and found no path to a proof. Three ideas are worth your attention.\n\n1. How far each test can see. Every test we have is like a telescope with a zoom setting (how many primes it uses). Lane A believed a telescope using primes up to X sees a 'bad zero' only up to height about 12.6 times X. The lane's critic then claimed anything beyond that is invisible for good. I checked that claim and it is wrong. Example: with primes up to 403 the supposed limit is height 5070. I planted one bad zero at height 15000, sitting 0.49 off the line, and wrote down a short wave tuned to that height. Its energy came out -2.48, where RH needs it never to be negative. A bad zero only 0.30 off the line at the same height was not caught (+1.44). So the telescope has two modes: zeros very close to the line are seen only at low heights, zeros far from the line are seen enormously high. One practical consequence: the computer check of RH up to height 3,000,000,000,000 cannot be converted into 'the energy is positive for all primes up to a hundred billion', as hoped; the honest ceiling is primes up to about a thousand.\n\n2. The dial. One critic found a knob n that changes zeta continuously while keeping its mirror symmetry exact. At n = 1 you have zeta, at n = 2 another well-behaved function; in between the prime structure is switched off. I rebuilt it independently and located the damage. Example: at n = 1.3 two zeros sit on the line at heights 20.90 and 21.36. At n = 1.4 they have collided and stepped off: one sits 0.019 off the line at height 21.146. At n = 1.5 it is 0.18 off. At n = 2 the pair is back on the line at 21.02 and 21.45. There is a second lesson. For zeta, the mirror symmetry alone already pins down the function completely, and one might hope that this uniqueness is what keeps the zeros in line. But the dial function is equally unique at every setting, and it still loses zeros. So uniqueness is not the reason; whatever protects zeta exists only at the special settings.\n\n3. The price list for missing primes. Lane B's critic rewrote an old criterion as a walk along 1, 2, 3, ... that must stay level, where the step at each number may depend only on its allowed prime factors. Every prime you leave out forces a mistake that costs about 1/(2 q^2). Example: allow only the primes 2 and 3 and the forced fees add up to 0.0438; the true best error is 0.04996, 14 percent more. I tested the opposite case, leaving out just the prime 3: fee 0.0552, true error 0.0607, 10 percent more. RH says the error goes to zero as primes are added. The numbers suggest something sharper: you never pay much more than the unavoidable local fee.\n\nThe question where your direction helps most: the dial is a look-alike family, and your rule says results about look-alikes are not progress on RH. Do you want round 2 to spend effort proving a small theorem about the dial (for example 'every setting strictly between 1 and 2 has zeros off the line'), which would be a real proved statement but about the impostors; or should the dial stay purely a test bench, with the effort going into the new-object ideas (#10, #11) and every one of them forced through the dial before anyone invests in it? My recommendation is the second, plus the one cheap proof in round-2 item 4."
+}

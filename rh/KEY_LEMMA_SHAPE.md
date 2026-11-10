@@ -86,3 +86,16 @@ them; so P4, or the exact match between the Gamma kernel and the integers, has t
 - Literature check (2026-11-10, three papers, partly read): no first-failure / null-vector argument, no
   formula for dλ_a/da, no control without Euler product was found in Suzuki 2026, Kim et al. 2026 or
   Connes–van Suijlekom 2025. This is "not found in what was read", not "new".
+
+## Corrections after round 1 (judge, 2026-11-10)
+- **S1 does not apply to ζ as written.** The two-dimensional space used in S1 exists for conductor 5, not
+  for ζ: ζ is alone in the solution space of its functional equation. The right control at ζ is the
+  "dial": the Dirichlet series of θⁿ, which solves a unique functional equation for each n, equals ζ's
+  completed function at n = 1, and has off-line zeros at n = 1.4. So: uniqueness of the functional-equation
+  solution does not imply RH, and S1's conclusion (the lemma must use more than the symmetry) stands with
+  this control instead.
+- **Detection has two regimes.** Near the line a window of half-width a sees zeros up to height about
+  4π e^(2a); at distance δ from the line it sees up to about exp(sinh(2δa)/δ). The statement in S6 and in
+  idea #8 that only the height matters is the near-line regime only.
+- **Signature is not positivity.** "One positive direction" for primes − arch allows one off-line quartet;
+  the RH-equivalent statements are the two parity-block inequalities (wall WJ13).

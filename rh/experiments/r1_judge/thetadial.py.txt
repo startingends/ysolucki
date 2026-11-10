@@ -1,0 +1,37 @@
+"""Judge's independent implementation of the lane-C critic's theta-power dial (no numerical integration of theta^n).
+Lambda_n(s) = pi^-s Gamma(s) Z_n(s),  Z_n(s) = sum_{m>=1} r_n(m) m^-s,  theta^n = 1 + sum r_n(m) q^m  (real n, binomial recurrence).
+Lambda_n(s) = sum_m r_n(m) [ (pi m)^-s Gamma(s, pi m) + (pi m)^-(n/2-s) Gamma(n/2-s, pi m) ] - 1/s - 1/(n/2-s)   (Riemann's splitting at y=1).
+Real on Re s = n/4. usage: thetadial.py.txt mode ...
+  count n tmin tmax step      : sign changes of Lambda_n(n/4+it)
+  root  n sigma0 t0           : complex zero near sigma0 + i t0 (findroot)"""
+import sys, mpmath as mp
+mp.mp.dps = 70
+M = 70
+def coeffs(n, M=M):
+    a = [0] * (M + 1); a[0] = 1
+    k = 1
+    while k * k <= M: a[k * k] = 2; k += 1
+    b = [mp.mpf(0)] * (M + 1); b[0] = mp.mpf(1)
+    for m in range(1, M + 1):
+        b[m] = mp.fsum((n * j - (m - j)) * a[j] * b[m - j] for j in range(1, m + 1) if a[j]) / m
+    return b
+def Lam(n, s, b):
+    s = mp.mpmathify(s); s2 = n / 2 - s; tot = -1 / s - 1 / s2
+    for m in range(1, M + 1):
+        if b[m] == 0: continue
+        x = mp.pi * m
+        tot += b[m] * (x ** (-s) * mp.gammainc(s, x) + x ** (-s2) * mp.gammainc(s2, x))
+    return tot
+if __name__ == "__main__":
+    mode = sys.argv[1]; n = mp.mpf(sys.argv[2]); b = coeffs(n)
+    if mode == "count":
+        t0, t1, h = map(float, sys.argv[3:6])
+        f = lambda t: mp.re(Lam(n, mp.mpc(n / 4, t), b))
+        ts = [t0 + h * j for j in range(int(round((t1 - t0) / h)) + 1)]
+        vals = [f(t) for t in ts]
+        zs = [float(mp.findroot(f, (a_, b_), solver="anderson")) for a_, b_, fa, fb in zip(ts[:-1], ts[1:], vals[:-1], vals[1:]) if fa * fb < 0]
+        im = max(abs(mp.im(Lam(n, mp.mpc(n / 4, t), b)) / (abs(v) + mp.mpf(10) ** -60)) for t, v in list(zip(ts, vals))[::7])
+        print("n=%s: %d on-line zeros in (%g,%g): %s   [max |Im/Re| on the line %.1e]" % (mp.nstr(n, 5), len(zs), t0, t1, ["%.4f" % z for z in zs], float(im)), flush=True)
+    else:
+        z = mp.findroot(lambda s: Lam(n, s, b), mp.mpc(float(sys.argv[3]), float(sys.argv[4])))
+        print("n=%s: zero at %s   offset from the line Re s = n/4: %s   |Lambda|=%.1e" % (mp.nstr(n, 5), mp.nstr(z, 12), mp.nstr(mp.re(z) - n / 4, 8), float(abs(Lam(n, z, b)))), flush=True)

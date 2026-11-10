@@ -7,7 +7,7 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
   not yet reproduced) for ideas #8, #9, #10. Nothing proved that is new.
 - Infrastructure: built and tested (journal J1).
 - Understanding experiments U-1 to U-5 run by the lead (`rh/UNDERSTANDING.md`); one classical lemma re-proved.
-- Round 1 seminar: running (see AGENT_REGISTRY).
+- Round 1 seminar: finished (journal J2). Verdict: good instruments, no route to a proof. Audit of agent ideas running.
 
 ## Projects
 | project | brief | live state | review ledger |
@@ -44,6 +44,11 @@ tight a constraint is); every miss is written up under the idea with the reason.
   interval, but this does not force ψ̂(ρ) = 0: the zeros are infinitely dense, so their exponentials are
   over-complete on every finite interval. A uniqueness argument on the zero side cannot close idea #8; the
   contradiction has to come from the prime side. Stated in `rh/KEY_LEMMA_SHAPE.md`.
+
+- **WJ1–WJ13 (round-1 judge).** Thirteen walls stated exactly in `rh/experiments/r1_judge/verdict.json` and
+  `JUDGEMENT.md`. The ones that bear on the live ideas: WJ1 (below its detection window nothing computed
+  separates an impostor from ζ), WJ2 (any estimate must be accurate to exp(−4π e^(2L))), WJ13 (one positive
+  eigenvalue is weaker than RH by one quartet).
 
 ## Literature access
 Verified 2026-11-10: web search works and arXiv full text can be fetched (partly; long papers are truncated).

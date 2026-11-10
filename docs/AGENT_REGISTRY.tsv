@@ -1,11 +1,12 @@
 id	date	role	model	folder	status	result
-R1-A	2026-11-10	proposer lane A positivity	session model	rh/experiments/r1_A	running	-
-R1-B	2026-11-10	proposer lane B approximation/deformation	session model	rh/experiments/r1_B	running	-
-R1-C	2026-11-10	proposer lane C spectral/geometric	session model	rh/experiments/r1_C	running	-
-R1-D	2026-11-10	proposer lane D new structures	session model	rh/experiments/r1_D	running	-
-R1-critA	2026-11-10	critic of lane A	session model	rh/experiments/r1_A/critic	running	-
-R1-critB	2026-11-10	critic of lane B	session model	rh/experiments/r1_B/critic	running	-
-R1-critC	2026-11-10	critic of lane C	session model	rh/experiments/r1_C/critic	running	-
-R1-critD	2026-11-10	critic of lane D	session model	rh/experiments/r1_D/critic	running	-
-R1-judge	2026-11-10	judge of round 1	session model	rh/experiments/r1_judge	running	-
-R1-transcribe	2026-11-10	transcribe round-1 Ideas sections into per-agent local idea logs	sonnet	rh/experiments/r1_*	running	-
+R1-A	2026-11-10	proposer lane A positivity	session model	rh/experiments/r1_A	done	validated window Weil form for zeta and impostor; lowest eigenvalue law; impostor first fails at L in (1.70,1.72]
+R1-B	2026-11-10	proposer lane B approximation/deformation	session model	rh/experiments/r1_B	done	Nyman-Beurling Gram to N=2000; prime-filtered variant; heat-flow functionals; 4 ideas
+R1-C	2026-11-10	proposer lane C spectral/geometric	session model	rh/experiments/r1_C	done	Pick/Loewner tests, Fejer-window test, shadow pairs; 4 ideas
+R1-D	2026-11-10	proposer lane D new structures	session model	rh/experiments/r1_D	done	7 ideas incl. pencil lab and Beurling rigidity; kernel-shape test shows impostor shares all tested shape properties
+R1-critA	2026-11-10	critic of lane A	session model	rh/experiments/r1_A/critic	done	numbers reproduced; proposed zero-surgery controls and a horizon lemma (later refuted by judge)
+R1-critB	2026-11-10	critic of lane B	session model	rh/experiments/r1_B/critic	done	numbers reproduced; B-1 does not beat the 1/log N floor; missing-prime law proposed
+R1-critC	2026-11-10	critic of lane C	session model	rh/experiments/r1_C/critic	done	C3 killed, C2 counting claim false as stated; theta-power dial proposed
+R1-critD	2026-11-10	critic of lane D	session model	rh/experiments/r1_D/critic	done	D1 numerics measured deletion noise; multiplicity dial and second critical line proposed
+R1-judge	2026-11-10	judge of round 1	session model	rh/experiments/r1_judge	done	no route to a proof; instruments ranked (top: theta-power dial 4/10); horizon lemma refuted; walls WJ1-WJ13
+R1-transcribe	2026-11-10	transcribe round-1 Ideas sections into per-agent local idea logs	sonnet	rh/experiments/r1_*	done	20 ideas transcribed from PROGRESS files into four local logs
+R1-AUD	2026-11-10	idea auditor for round 1 (promote/skip/merge local logs)	session model	rh/experiments/r1_audit	running	-

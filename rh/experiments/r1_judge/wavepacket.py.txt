@@ -1,0 +1,41 @@
+"""Judge check of lane-A critic idea C2 (horizon lemma).
+Zero-surgery configuration: zeta's zeros, with ONE neighbouring pair gamma_a, gamma_b replaced by an off-line quartet
+(+-mu +- i delta), mu = midpoint. Test vector (no eigen-solve): wave packet f(u) = phi(u) cos(mu u) on [-L, L],
+phi(u) = sinh(delta u) * (1 - (u/L)^2)^2   (odd, tapered so that fhat decays like |w|^-3).
+Zero side of the modified form:  Q'(f) = sum_{gamma>0, not a,b} 2 |fhat(gamma)|^2 + 4 Re[ fhat(mu + i delta) fhat(-mu - i delta) ],
+fhat(w) = int f(u) e^{iwu} du = (phihat(w - mu) + phihat(w + mu))/2.
+A negative value is a negative direction of the window form although every zero below mu is on the line.
+usage: wavepacket.py.txt L delta target_height [halfwidth]"""
+import sys, math, numpy as np, flint
+L = float(sys.argv[1]); delta = float(sys.argv[2]); target = float(sys.argv[3]); HW = float(sys.argv[4]) if len(sys.argv) > 4 else 150.0; TP = int(sys.argv[5]) if len(sys.argv) > 5 else 2
+# zeros up to target + HW
+def nmain(T): return T / (2 * math.pi) * math.log(T / (2 * math.pi * math.e)) + 7 / 8
+n_hi = int(nmain(target + HW)) + 5; n_lo = max(1, int(nmain(max(target - HW, 14.0))) - 5)
+flint.ctx.prec = 80
+g = np.array([float(z.imag.mid()) for z in flint.acb.zeta_zeros(n_lo, n_hi - n_lo + 1)])
+i = int(np.argmin(np.abs(g - target))); ga, gb = g[i], g[i + 1]; mu = 0.5 * (ga + gb)
+x, w = np.polynomial.legendre.leggauss(12000); u = L * x; wu = L * w
+phi = np.sinh(delta * u) * (1 - (u / L) ** 2) ** TP
+def phihat(z):  # complex z, vectorised over array z
+    z = np.atleast_1d(np.asarray(z, dtype=complex))
+    return (np.exp(1j * np.outer(z, u)) * (phi * wu)).sum(axis=1)
+# the mirror term phihat(z + mu)/2 (argument ~ 2 mu) is dropped: |phihat(x)| <= C |x|^-(TP+1), i.e. < 1e-7 relative here,
+# and a 12000-node rule cannot resolve it anyway (first version of this script kept it: aliasing noise of order 1e-2).
+def fhat(z):
+    z = np.atleast_1d(np.asarray(z, dtype=complex))
+    return np.where(z.real > 0, 0.5 * phihat(z - mu), 0.5 * phihat(z + mu))
+others = np.delete(g, [i, i + 1])
+online = 2 * np.sum(np.abs(fhat(others)) ** 2)
+pair = 2 * (abs(fhat(ga)[0]) ** 2 + abs(fhat(gb)[0]) ** 2)
+quart = 4 * (fhat(mu + 1j * delta)[0] * fhat(-mu - 1j * delta)[0]).real
+norm2 = np.sum(phi ** 2 * wu) / 2          # ||f||^2 = int phi^2 cos^2 ~ (1/2) int phi^2
+# tail of the on-line sum outside the zero range used: density * int |fhat|^2, |phihat(x)| <= C/|x|^3
+xs = np.array([HW, 2 * HW]); dec = np.abs(phihat(xs)) ** 2
+tail = 2 * 2 * (math.log((target + HW) / (2 * math.pi)) / (2 * math.pi)) * dec[0] * 0.25 * HW / 5   # crude: 2 sides, |fhat|^2 ~ dec/4 * (HW/x)^6
+pred_pos = 0.5 * math.log(mu / (2 * math.pi)) * np.sum(phi ** 2 * wu)
+pred_neg = -(np.sum(phi * np.sinh(delta * u) * wu)) ** 2
+print("L=%.2f delta=%.2f  pair (%.4f, %.4f)  mu=%.4f   mu/(4 pi e^2L)=%.2f   zeros used: %d in [%.0f, %.0f]" % (L, delta, ga, gb, mu, mu / (4 * math.pi * math.exp(2 * L)), len(g), g[0], g[-1]))
+print("  on-line sum (pair removed) = %.6e   [heuristic (1/2) log(mu/2pi) int phi^2 = %.6e; removed pair was %.3e]" % (online, pred_pos, pair))
+print("  quartet term               = %.6e   [heuristic -(int phi sinh(delta u))^2 = %.6e]" % (quart, pred_neg))
+print("  tail bound (crude)         <= %.2e" % tail)
+print("  Q'(f) = %.6e    Rayleigh quotient Q'(f)/||f||^2 = %.4f     unmodified zeta Q(f)/||f||^2 = %.4f" % (online + quart, (online + quart) / norm2, (online + pair) / norm2))

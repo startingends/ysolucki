@@ -1,0 +1,39 @@
+L=3.00 delta=0.49  pair (15000.0088, 15000.7282)  mu=15000.3685   mu/(4 pi e^2L)=2.96   zeros used: 753 in [14696, 15303]
+  on-line sum (pair removed) = 8.825752e-01   [heuristic (1/2) log(mu/2pi) int phi^2 = 2.203963e+00; removed pair was 5.823e-01]
+  quartet term               = -1.584626e+00   [heuristic -(int phi sinh(delta u))^2 = -1.584626e+00]
+  tail bound (crude)         <= 4.53e-15
+  Q'(f) = -7.020508e-01    Rayleigh quotient Q'(f)/||f||^2 = -2.4776     unmodified zeta Q(f)/||f||^2 = 5.1696
+L=3.00 delta=0.49  pair (15000.0088, 15000.7282)  mu=15000.3685   mu/(4 pi e^2L)=2.96   zeros used: 1991 in [14196, 15804]
+  on-line sum (pair removed) = 8.825752e-01   [heuristic (1/2) log(mu/2pi) int phi^2 = 2.203963e+00; removed pair was 5.823e-01]
+  quartet term               = -1.584626e+00   [heuristic -(int phi sinh(delta u))^2 = -1.584626e+00]
+  tail bound (crude)         <= 9.89e-15
+  Q'(f) = -7.020508e-01    Rayleigh quotient Q'(f)/||f||^2 = -2.4776     unmodified zeta Q(f)/||f||^2 = 5.1696
+L=3.00 delta=0.49  pair (15000.0088, 15000.7282)  mu=15000.3685   mu/(4 pi e^2L)=2.96   zeros used: 3724 in [13495, 16503]
+  on-line sum (pair removed) = 2.019806e+00   [heuristic (1/2) log(mu/2pi) int phi^2 = 4.895519e+00; removed pair was 1.831e+00]
+  quartet term               = -5.554376e+00   [heuristic -(int phi sinh(delta u))^2 = -5.554376e+00]
+  tail bound (crude)         <= 5.01e-10
+  Q'(f) = -3.534570e+00    Rayleigh quotient Q'(f)/||f||^2 = -5.6157     unmodified zeta Q(f)/||f||^2 = 6.1180
+L=2.70 delta=0.49  pair (8000.0868, 8000.6543)  mu=8000.3705   mu/(4 pi e^2L)=2.88   zeros used: 3422 in [6495, 9504]
+  on-line sum (pair removed) = 1.405557e+00   [heuristic (1/2) log(mu/2pi) int phi^2 = 3.131756e+00; removed pair was 6.247e-01]
+  quartet term               = -2.623248e+00   [heuristic -(int phi sinh(delta u))^2 = -2.623248e+00]
+  tail bound (crude)         <= 1.01e-10
+  Q'(f) = -1.217691e+00    Rayleigh quotient Q'(f)/||f||^2 = -2.7798     unmodified zeta Q(f)/||f||^2 = 4.6347
+L=3.00 delta=0.49  pair (39999.4973, 40000.8154)  mu=40000.1564   mu/(4 pi e^2L)=7.89   zeros used: 2242 in [39195, 40803]
+  on-line sum (pair removed) = 1.714030e+00   [heuristic (1/2) log(mu/2pi) int phi^2 = 2.481885e+00; removed pair was 1.409e+00]
+  quartet term               = -1.584626e+00   [heuristic -(int phi sinh(delta u))^2 = -1.584626e+00]
+  tail bound (crude)         <= 1.11e-14
+  Q'(f) = 1.294040e-01    Rayleigh quotient Q'(f)/||f||^2 = 0.4567     unmodified zeta Q(f)/||f||^2 = 11.0211
+L=3.00 delta=0.30  pair (15000.0088, 15000.7282)  mu=15000.3685   mu/(4 pi e^2L)=2.96   zeros used: 1991 in [14196, 15804]
+  on-line sum (pair removed) = 3.017049e-01   [heuristic (1/2) log(mu/2pi) int phi^2 = 7.433047e-01; removed pair was 1.889e-01]
+  quartet term               = -1.642677e-01   [heuristic -(int phi sinh(delta u))^2 = -1.642677e-01]
+  tail bound (crude)         <= 2.46e-15
+  Q'(f) = 1.374373e-01    Rayleigh quotient Q'(f)/||f||^2 = 1.4381     unmodified zeta Q(f)/||f||^2 = 5.1337
+L=3.50 delta=0.30  pair (99999.7009, 100000.7437)  mu=100000.2223   mu/(4 pi e^2L)=7.26   zeros used: 1551 in [99496, 100502]
+  on-line sum (pair removed) = 7.776633e-01   [heuristic (1/2) log(mu/2pi) int phi^2 = 1.502017e+00; removed pair was 8.026e-01]
+  quartet term               = -4.422957e-01   [heuristic -(int phi sinh(delta u))^2 = -4.422957e-01]
+  tail bound (crude)         <= 2.60e-14
+  Q'(f) = 3.353676e-01    Rayleigh quotient Q'(f)/||f||^2 = 2.1602     unmodified zeta Q(f)/||f||^2 = 10.1791
+L=3.20 delta=0.49  pair (29999.7100, 30000.6377)  mu=30000.1739   mu/(4 pi e^2L)=3.97   zeros used: 415 in [29846, 30153]
+  Q'(f) = 5.537878e-01    Rayleigh quotient Q'(f)/||f||^2 = 1.5730     unmodified zeta Q(f)/||f||^2 = 12.3601
+L=1.00 delta=0.49  pair (201.2648, 202.4936)  mu=201.8792   mu/(4 pi e^2L)=2.17   zeros used: 171 in [30, 357]
+  Q'(f) = 2.502869e-02    Rayleigh quotient Q'(f)/||f||^2 = 2.7702     unmodified zeta Q(f)/||f||^2 = 3.1558
