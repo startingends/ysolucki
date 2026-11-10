@@ -1,0 +1,26 @@
+"""Zoomed Nyman-Beurling: d_N(T)^2 = dist^2( x^{-iT} chi_(0,1), span{e_k, k<=N} ).  Same Gram matrix; only b changes:
+b_k(T) = <x^{-iT}chi, e_k>-type vector = -zeta(1-iT) k^{iT-1}/(1-iT) + i/(kT)   (T != 0; T->0 gives (1-gamma+log k)/k).
+Prediction (HEURISTIC, analogue of BDBLS/Burnol): d_N(T)^2 log N -> C(T) = sum_rho 1/|rho - iT|^2 = 2 Re (xi'/xi)(1+iT)."""
+import sys, math, numpy as np, mpmath as mp, scipy.linalg as sla
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+G = np.load("/home/user/ysolucki/rh/data/r1_B/G2000.npy"); Nmax = 2000; ks = np.arange(1, Nmax + 1)
+L = np.linalg.cholesky(G)
+def CT(T):
+    s = mp.mpc(1, T); f = lambda z: mp.log(rhlib.xi(z)); return float(2 * mp.re(mp.diff(f, s)))
+def bT(T):
+    z = complex(mp.zeta(mp.mpc(1, -T)))
+    return -z * ks ** (1j * T - 1.0) / (1 - 1j * T) + 1j / (ks * T)
+# check b_k(T) by direct quadrature for k=3, T=5:  int_0^1 x^{-iT} frac(1/(3x)) dx  (conjugate-linear convention irrelevant for |.|)
+mp.mp.dps = 20
+k, T = 3, 5.0
+direct = mp.quad(lambda u: mp.frac(u) * u ** (mp.mpc(-2, T)) , mp.linspace(mp.mpf(1) / k, 60, 3 * 60)) * k ** (mp.mpc(-1, T)) 
+tail = sum(1 for _ in [])  # tail u>60 handled analytically below
+# int_0^1 x^{-iT} frac(1/(kx)) dx with u=1/(kx): = k^{iT-1} int_{1/k}^inf frac(u) u^{iT-2} du ; tail u>U: mean 1/2 -> (1/2) U^{iT-1}/(1-iT)
+direct += k ** (mp.mpc(-1, T)) * 0.5 * 60 ** (mp.mpc(-1, T)) / (1 - 1j * T)
+print("b_3(5): formula", bT(5.0)[2], " direct quadrature (tail ~1e-4 accurate)", complex(direct))
+print("\n   T     C(T)=2Re xi'/xi(1+iT) | d_N(T)^2 at N=100, 500, 2000 | d^2 logN at N=100, 500, 2000")
+gam = rhlib.zeros(5)
+for T in [1e-6, 5.0, 10.0, gam[0], 17.5, gam[1], 23.0, gam[2], 40.0, 85.7]:
+    b = bT(T); y = sla.solve_triangular(L, b, lower=True); cum = np.cumsum(np.abs(y) ** 2)
+    d = [1 - cum[N - 1] for N in (100, 500, 2000)]
+    print("%8.4f  %8.5f | %.6f %.6f %.6f | %.5f %.5f %.5f" % (T, CT(T), *d, *[d[i] * math.log(N) for i, N in enumerate((100, 500, 2000))]))
