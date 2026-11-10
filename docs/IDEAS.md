@@ -13,7 +13,7 @@ When a line of attack hits a wall: write the wall into the idea's log as an exac
 file from the top before choosing what to do next.
 
 ## #1 · Control-group lab: run every criterion on zeta AND on a function known to fail
-- status: open
+- status: testing
 - source: lead (pre-seminar)
 - date: 2026-11-10
 - tags: infra,B1,B2
@@ -24,6 +24,8 @@ file from the top before choosing what to do next.
 - kill line: If the first negativity for the impostor only shows up at indices beyond what we can compute (n > 10^6), the lab is useless as a diagnostic and is dropped.
 - evidence: none yet
 - log:
+  - 2026-11-10: status -> testing: lead ran the first test analytically while round 1 runs
+  - 2026-11-10: COMPUTED+HEURISTIC (lead): the impostor's off-line zero 0.808517+85.699348i contributes 4 - 2(|w|^n + |w|^-n)cos(n arg w) to its Li-type coefficient, |w| = 0.99995800, so the negative swing grows like exp(4.2e-5 n) and first beats the smooth growth (n/2)log n near n ~ 3.3e5 (inside the kill line of 1e6, so the lab stays). Li's test is very short-sighted: index n only sees zeros up to height about sqrt(n). Scaled to zeta, an off-line zero just above the verified height 3e12 would first show at n ~ 1e27. Consequence: Li-coefficient numerics can never be evidence, and a proof through Li positivity must control the prime part at n ~ (height)^2. Smooth main term used is the leading asymptotic only (unreviewed).
 
 ## #2 · Truncated Weil positivity: watch the lowest eigenvalue as the window opens
 - status: open

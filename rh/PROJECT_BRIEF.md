@@ -41,7 +41,7 @@ Every claim carries its level. Nothing is reported above the level it has earned
 
 ## Standard for a claimed proof (any step at L2 or above)
 1. Written out in full, every inequality with its constants.
-2. Passed through barriers B1–B9 in `docs/KNOWLEDGE.md`, in writing.
+2. Passed through barriers B1–B10 in `docs/KNOWLEDGE.md`, in writing.
 3. Run on the control group; the failing step for the counterexample is exhibited.
 4. Three independent refuters with different lenses (logic / analysis estimates / "does it prove too much"),
    then a judge. Survives only if no reproduced gap remains.
