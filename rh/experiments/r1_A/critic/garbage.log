@@ -1,0 +1,12 @@
+L=0.58 n0=5 delta=0.40 H=32.9 H/(4pi e^2L)=0.82  #neg=2 min=-4.752e-04 smallest pos=4.109e-02
+L=0.58 n0=9 delta=0.40 H=48.0 H/(4pi e^2L)=1.20  #neg=0 min=4.048e-09 smallest pos=4.048e-09
+L=0.58 n0=13 delta=0.40 H=59.3 H/(4pi e^2L)=1.48  #neg=0 min=7.341e-09 smallest pos=7.341e-09
+L=0.58 n0=17 delta=0.40 H=69.5 H/(4pi e^2L)=1.73  #neg=0 min=7.271e-09 smallest pos=7.271e-09
+L=0.58 n0=21 delta=0.40 H=79.3 H/(4pi e^2L)=1.98  #neg=0 min=7.101e-09 smallest pos=7.101e-09
+L=0.58 n0=31 delta=0.40 H=103.7 H/(4pi e^2L)=2.59  #neg=0 min=6.882e-09 smallest pos=6.882e-09
+L=0.58 n0=5 delta=0.10 H=32.9 H/(4pi e^2L)=0.82  #neg=1 min=-8.075e-06 smallest pos=1.196e-10
+L=0.58 n0=9 delta=0.10 H=48.0 H/(4pi e^2L)=1.20  #neg=0 min=4.916e-09 smallest pos=4.916e-09
+L=0.58 n0=13 delta=0.10 H=59.3 H/(4pi e^2L)=1.48  #neg=0 min=7.324e-09 smallest pos=7.324e-09
+L=0.58 n0=17 delta=0.10 H=69.5 H/(4pi e^2L)=1.73  #neg=0 min=7.252e-09 smallest pos=7.252e-09
+L=0.58 n0=21 delta=0.10 H=79.3 H/(4pi e^2L)=1.98  #neg=0 min=7.102e-09 smallest pos=7.102e-09
+L=0.58 n0=31 delta=0.10 H=103.7 H/(4pi e^2L)=2.59  #neg=0 min=6.887e-09 smallest pos=6.887e-09

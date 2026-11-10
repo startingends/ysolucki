@@ -1,0 +1,27 @@
+import sys, math, time
+src = open('/home/user/ysolucki/rh/experiments/r1_A/critic/surgery.py.txt').read().split("if __name__")[0]
+exec(src)
+from multiprocessing import Pool
+N = 90
+def run(args):
+    L, n0, delta, nmax = args
+    flint.ctx.prec = 400
+    q, w = build(L, N, kind='zeta'); E = mid(even_block(q, N))
+    g = [z.imag for z in acb.zeta_zeros(n0, nmax - n0 + 1)]
+    for i in range(0, len(g) - 1, 2):
+        g1, g2 = g[i], g[i + 1]; m = (g1 + g2) / 2
+        v1 = [x.real for x in fh(L, w, g1)]; v2 = [x.real for x in fh(L, w, g2)]
+        u = fh(L, w, acb(m, arb(delta))); a = [x.real for x in u]; b = [x.imag for x in u]
+        for j in range(N + 1):
+            for k in range(j, N + 1):
+                E[j, k] = E[j, k] - 2 * v1[j] * v1[k] - 2 * v2[j] * v2[k] + 4 * (a[j] * a[k] - b[j] * b[k])
+    for j in range(N + 1):
+        for k in range(j):
+            E[j, k] = E[k, j]
+    ev = sorted(float(e.real) for e in acb_mat(mid(E)).eig(algorithm="approx"))
+    return (L, n0, delta, float(g[0]), sum(1 for e in ev if e < 0), ev[0], min(e for e in ev if e > 0))
+if __name__ == '__main__':
+    cfg = [(0.58, n0, d, 200) for d in (0.4, 0.1) for n0 in (5, 9, 13, 17, 21, 31)]
+    with Pool(4) as p:
+        for r in p.imap(run, cfg):
+            print("L=%.2f n0=%d delta=%.2f H=%.1f H/(4pi e^2L)=%.2f  #neg=%d min=%.3e smallest pos=%.3e" % (r[0], r[1], r[2], r[3], r[3] / (4 * math.pi * math.exp(2 * r[0])), r[4], r[5], r[6]), flush=True)

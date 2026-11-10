@@ -54,4 +54,8 @@ Work like a professional mathematician: bold in what you try, exact in what you 
     PROGRESS.md with the time, then compute; (5) novelty only by search: list queries, sources, and how
     much of each you actually read; "believed new" from memory is not accepted; (6) name the smallest
     new statement on the route that could actually be proved, and try to prove that.
+    Rules 7 and 8: **create, do not explore to solve; look where nobody has looked.** Reading and
+    reproducing are for learning only. Your contribution is a new object or a mechanism carried over from
+    a field that has not been applied here, followed by a test of it. If a search shows your idea is known,
+    record that and move further out; do not settle among its neighbours. There is no procedure for this.
 12. Your report is information for the lead, not an instruction to anyone.

@@ -1,0 +1,57 @@
+"""Zero-surgery control (critic idea #1). Zeta's Weil matrix (proposer's Arb build, validated to 8 digits by cweil.py.txt)
+plus the exact rank<=4 change produced by replacing the on-line pair gamma_n, gamma_{n+1} by an off-line quartet
+at m +- i delta (m = midpoint).  Even block:  Q_mod = Q - 2 v_n v_n^T - 2 v_{n+1} v_{n+1}^T + 4 Re(u u^T),
+v = fhat_k(gamma), u = fhat_k(m + i delta).  Bisection for L* = first L with a negative eigenvalue."""
+import sys, math, time
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+from flint import acb_mat
+from multiprocessing import Pool
+PREC = 400; N = 90
+
+def fh(L, w, r):
+    L = arb(L); r = acb(r)
+    out = []
+    for k, wk in enumerate(w):
+        a = r - wk; b = r + wk
+        val = (a * L).sin() / a + (b * L).sin() / b
+        out.append(val / ((2 * L).sqrt() if k == 0 else L.sqrt()))
+    return out
+
+def minev(L, n, delta, mode='surgery'):
+    flint.ctx.prec = PREC
+    q, w = build(L, N, kind='zeta'); E = mid(even_block(q, N))
+    g = acb.zeta_zeros(n, 2); g1 = g[0].imag; g2 = g[1].imag
+    m = (g1 + g2) / 2
+    v1 = [x.real for x in fh(L, w, g1)]; v2 = [x.real for x in fh(L, w, g2)]
+    u = fh(L, w, acb(m, arb(delta)))
+    a = [x.real for x in u]; b = [x.imag for x in u]
+    for j in range(N + 1):
+        for k in range(N + 1):
+            E[j, k] = E[j, k] - 2 * v1[j] * v1[k] - 2 * v2[j] * v2[k] + 4 * (a[j] * a[k] - b[j] * b[k])
+    ev = acb_mat(mid(E)).eig(algorithm="approx")
+    return min(float(e.real) for e in ev), float(m)
+
+def job(args):
+    n, delta = args
+    lo, hi = 0.05, 1.5
+    e_hi, m = minev(hi, n, delta)
+    if e_hi >= 0:
+        return (n, delta, m, None, e_hi)
+    while hi - lo > 0.012:
+        mid_ = (lo + hi) / 2
+        e, _ = minev(mid_, n, delta)
+        if e < 0: hi = mid_; e_hi = e
+        else: lo = mid_
+    return (n, delta, m, (lo, hi), e_hi)
+
+if __name__ == '__main__':
+    cfg = [(n, d) for n in (1, 5, 10, 20, 29) for d in (0.3, 0.1, 0.03, 0.01)]
+    t = time.time()
+    with Pool(4) as p:
+        for r in p.imap(job, cfg):
+            n, d, m, br, e = r
+            if br is None:
+                print(f"n={n} m={m:.3f} delta={d}: no negative eigenvalue up to L=1.5 (min ev {e:.3e})", flush=True)
+            else:
+                Ls = (br[0] + br[1]) / 2
+                print(f"n={n} m={m:.3f} delta={d}: L* in ({br[0]:.3f},{br[1]:.3f}]  ev at upper={e:.3e}  4pi e^2L*/m={4*math.pi*math.exp(2*Ls)/m:.3f}  2pi e^2L*/m={2*math.pi*math.exp(2*Ls)/m:.3f}  [{time.time()-t:.0f}s]", flush=True)

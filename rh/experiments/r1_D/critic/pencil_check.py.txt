@@ -1,0 +1,74 @@
+"""Critic's independent check of D2 (pencil). No Dirichlet characters, no hardy_z: only Hurwitz zeta.
+f = DH function, coefficients (1,k,-k,-1,0) mod 5; g = 'odd' partner, coefficients (k,-1,1,-k,0).
+A = w f real, B = w g / i real on the line; Z1 = (A+B)/2|a|, Z2 = (A-B)/2|a|; rho = -Z1/Z2.
+usage: python3 pencil_check.py.txt T h engine(mp|flint)"""
+import sys, math, time
+import numpy as np
+from scipy.optimize import brentq, minimize_scalar
+T = float(sys.argv[1]); h = float(sys.argv[2]); eng = sys.argv[3]
+kap = (math.sqrt(10 - 2 * math.sqrt(5)) - 2) / (math.sqrt(5) - 1)
+if eng == "mp":
+    import mpmath as mp
+    mp.mp.dps = 20
+    def hz(s):
+        return [mp.zeta(s, mp.mpf(j) / 5) for j in (1, 2, 3, 4)]
+    def fg(s):
+        s = mp.mpc(s); z = hz(s); p = mp.power(5, -s)
+        return complex(p * (z[0] + kap * z[1] - kap * z[2] - z[3])), complex(p * (kap * z[0] - z[1] + z[2] - kap * z[3]))
+    def w(t):
+        s = mp.mpc(0.5, t); lg = mp.loggamma((1 + s) / 2) - (s / 2) * mp.log(mp.pi / 5)
+        return complex(mp.exp(1j * lg.imag))
+else:
+    import flint
+    flint.ctx.prec = 80
+    def fg(s):
+        s = flint.acb(s.real, s.imag); z = [s.zeta(flint.arb(j) / 5) for j in (1, 2, 3, 4)]; p = (-s * flint.acb(5).log()).exp()
+        return complex(p * (z[0] + kap * z[1] - kap * z[2] - z[3])), complex(p * (kap * z[0] - z[1] + z[2] - kap * z[3]))
+    def w(t):
+        s = flint.acb(0.5, t); lg = ((1 + s) / 2).lgamma() - (s / 2) * (flint.acb.pi() / 5).log()
+        return complex((flint.acb(0, 1) * lg.imag).exp())
+def AB(t):
+    f, g = fg(complex(0.5, t)); ww = w(t)
+    a = ww * f; b = ww * g / 1j
+    return a.real, b.real, abs(a.imag) + abs(b.imag)
+def rho(t):
+    A, B, _ = AB(t); return (A + B) / (B - A)
+if __name__ == "__main__":
+    t0 = time.time()
+    # sanity: known DH zeros
+    for z in [complex(0.5, 5.094159844571095), complex(0.808517, 85.699348), complex(0.650830, 114.163343), complex(0.574356, 166.479306), complex(0.724258, 176.702461)]:
+        print("|f(%s)| = %.2e" % (z, abs(fg(z)[0])))
+    ts = np.arange(h / 2, T, h)
+    A = np.empty(len(ts)); B = np.empty(len(ts)); im = 0.0
+    for i, t in enumerate(ts):
+        A[i], B[i], e = AB(float(t)); im = max(im, e)
+    print("# grid %d pts %.1fs, max |imag part| (should be ~0): %.2e" % (len(ts), time.time() - t0, im))
+    sc = lambda v: int(np.sum(v[:-1] * v[1:] < 0))
+    print("real zeros below T=%g: DH (Z1+Z2): %d ; odd (Z1-Z2): %d ; Z1: %d ; Z2: %d" % (T, sc(A), sc(B), sc(A + B), sc(A - B)))
+    for Tp in (100, 200, 500, 1000):
+        if Tp <= T:
+            m = ts < Tp
+            print("  T'=%d: DH %d, odd %d, Z1 %d, Z2 %d" % (Tp, sc(A[m]), sc(B[m]), sc((A + B)[m]), sc((A - B)[m])))
+    np.save("/tmp/claude-0/-home-user-ysolucki/9039aa06-6540-523a-ba98-9efe520848c8/scratchpad/AB_%s_%d.npy" % (eng, int(T)), np.vstack([ts, A, B]))
+    # critical points of rho: local extrema on the grid between poles, refined
+    r = (A + B) / (B - A)
+    crit = []
+    for i in range(1, len(ts) - 1):
+        if (r[i] - r[i - 1]) * (r[i + 1] - r[i]) < 0 and abs(r[i]) < 50 and (A[i-1]-B[i-1])*(A[i+1]-B[i+1]) > 0:
+            kind = "max" if r[i] > r[i - 1] else "min"
+            res = minimize_scalar(lambda t: -rho(t) if kind == "max" else rho(t), bracket=(ts[i - 1], ts[i], ts[i + 1]), tol=1e-12)
+            crit.append((res.x, rho(res.x), kind))
+    print("# critical points of rho: %d" % len(crit))
+    for lam in (1.0, -1.0):
+        c = 0
+        for t, v, k in crit:
+            if lam > 0 and 0 < v < lam: c += 1 if k == "max" else -1
+            if lam < 0 and lam < v < 0: c += 1 if k == "min" else -1
+        print("predicted off-line pairs for lam=%+g: %d" % (lam, c))
+    for t, v, k in crit:
+        if 0 < v < 1 and t < 200: print("  t_c = %.5f rho = %.6f %s" % (t, v, k))
+    for Tp in (100, 200, 500, 1000):
+        if Tp <= T:
+            vp = [v for t, v, k in crit if t < Tp and k == "max" and v > 0]; vm = [v for t, v, k in crit if t < Tp and k == "min" and v < 0]
+            print("  T'=%d lam_plus %.6f lam_minus %.6f" % (Tp, min(vp) if vp else float("nan"), max(vm) if vm else float("nan")))
+    print("# total %.1fs" % (time.time() - t0))

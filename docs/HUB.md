@@ -3,7 +3,8 @@
 One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 
 ## Status (exact)
-- Proof of RH: **not achieved.** No result above level L0 yet (ladder in `rh/PROJECT_BRIEF.md`).
+- Proof of RH: **not achieved.** Highest level reached: L1-minus (computed evidence, single implementation,
+  not yet reproduced) for ideas #8, #9, #10. Nothing proved that is new.
 - Infrastructure: built and tested (journal J1).
 - Understanding experiments U-1 to U-5 run by the lead (`rh/UNDERSTANDING.md`); one classical lemma re-proved.
 - Round 1 seminar: running (see AGENT_REGISTRY).
@@ -27,14 +28,14 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 ## Idea board (keep in step with `python3 tools/ideas.py list`)
 | status | ideas |
 |---|---|
-| open | #4 heat-flow particles · #5 Nyman–Beurling least squares · #7 one prime at a time · **#8 first-failure window** (designed to the key-lemma shape; blind prediction on record) |
-| testing | #1 control-group lab (instrument) |
-| alive | none |
-| parked | #2 truncated Weil positivity (already in the literature; kept as laboratory) · #6 Lee–Yang in Bohr's variables (owner rule 1: a look-alike family with no escape from W1) |
+| testing | #1 control-group lab (instrument) · #8 first-failure window · **#9 bootstrap: positivity forces the primes** (core found in an unreviewed 2026 preprint; our finite-window and control results are separate) · **#10 arithmetic Lorentzian geometry** (created under rules 7–8; first predictions hit; its real content, the certificate, untested) |
+| open | #4 heat-flow particles · #5 Nyman–Beurling least squares · #7 one prime at a time |
+| parked | #2 truncated Weil positivity (already in the literature; kept as laboratory) · #6 Lee–Yang in Bohr's variables (owner rule 1) |
 | killed | #3 Li split (pure reformulation, and blind as evidence) |
+| awaiting audit | 22 ideas in agents' local logs (`python3 tools/hubcheck.py` lists them) |
 
-Audit against the owner's six rules (2026-11-10): 10 rule failures are recorded in ideas #2 to #7
-(`python3 tools/ideas.py check` lists them). Only #8 passes all six as written.
+Blind predictions so far (rule 4): 9 made, 6 hit, 3 missed on size (all three too optimistic about how
+tight a constraint is); every miss is written up under the idea with the reason.
 
 ## Walls hit so far
 - **W1 (convergence wall).** Every known family of approximants with all zeros real by construction converges

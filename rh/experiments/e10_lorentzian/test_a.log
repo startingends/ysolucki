@@ -1,0 +1,7 @@
+(a) N = primes - arch (no pole): positive eigenvalues and second-largest eigenvalue
+  zeta L=0.50: #positive = 1 ; largest 1.98719 ; second -0.01203 ; third -0.01978
+  zeta L=0.75: #positive = 1 ; largest 3.10041 ; second -9.051e-10 ; third -1.053e-7
+  zeta L=1.00: #positive = 1 ; largest 4.30541 ; second -2.105e-23 ; third -1.065e-20
+  zeta L=1.25: #positive = 1 ; largest 5.66836 ; second -2.451e-47 ; third -3.773e-44
+    control: zeta arch only (no primes), L=1.0:
+    #positive = 4 ; top three ['2.613', '1.011', '0.4829']

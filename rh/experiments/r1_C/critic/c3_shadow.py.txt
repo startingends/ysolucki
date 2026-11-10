@@ -1,0 +1,22 @@
+"""Critic C3: zeros of cos(Phi_X) for DH near the off-line zero 85.699, own implementation, X up to 1e6."""
+import sys, math, numpy as np
+from scipy.special import loggamma
+sys.path.insert(0, "."); 
+import importlib.machinery, importlib.util
+ld = importlib.machinery.SourceFileLoader("c1", "/home/user/ysolucki/rh/experiments/r1_C/critic/c1_check.py.txt").load_module()
+Xs = [float(x) for x in sys.argv[1:]]
+lam = ld.lam_dh(int(max(Xs)))
+n = np.array([a for a, b in lam], float); L = np.array([b for a, b in lam]); ln = np.log(n)
+T = np.arange(83.0, 88.5, 0.001)
+theta = (T/2)*math.log(5/math.pi) + np.imag(loggamma(0.75 + 0.5j*T))
+for X in Xs:
+    V = math.log(X); m = n <= X
+    c = L[m]*(1 - ln[m]/V)/(ln[m]*np.sqrt(n[m])); l = ln[m]
+    arg = np.zeros_like(T)
+    for k in range(0, len(c), 20000):
+        arg -= np.sin(np.outer(T, l[k:k+20000])) @ c[k:k+20000]
+    Phi = theta + arg; F = np.cos(Phi)
+    idx = np.nonzero(F[:-1]*F[1:] < 0)[0]; z = T[idx] - F[idx]*(T[idx+1]-T[idx])/(F[idx+1]-F[idx])
+    dPhi = np.diff(Phi)/0.001
+    print("X=%g: %d real zeros of F_X in (83,88.5): %s | Phi swing: min dPhi/dt %.2f max %.2f | total Phi change/pi %.3f" % (
+        X, len(z), np.round(z, 3).tolist() if len(z) < 30 else "many", dPhi.min(), dPhi.max(), (Phi[-1]-Phi[0])/math.pi))

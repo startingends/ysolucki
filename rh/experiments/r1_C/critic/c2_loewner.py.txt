@@ -1,0 +1,25 @@
+"""Critic C2: own Loewner (Pick) matrix for DH on Re s = sigma0, nodes t in [t0,t1]; mpmath only (eigh)."""
+import sys, mpmath as mp
+sys.path.insert(0, "/home/user/ysolucki/tools"); import controls
+t0, t1, N, dps = float(sys.argv[1]), float(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4])
+mode = sys.argv[5] if len(sys.argv) > 5 else "dh"
+mp.mp.dps = dps; sig = mp.mpf("1.25")
+kap = controls.dh_kappa(); co = (0, 1, kap, -kap, -1)
+def logder(s):
+    if mode == "dh":
+        f = mp.power(5, -s)*mp.fsum(co[a]*mp.zeta(s, mp.mpf(a)/5) for a in (1, 2, 3, 4))
+        fp = -mp.log(5)*f + mp.power(5, -s)*mp.fsum(co[a]*mp.zeta(s, mp.mpf(a)/5, 1) for a in (1, 2, 3, 4))
+        return mp.log(5/mp.pi)/2 + mp.digamma((s + 1)/2)/2 + fp/f
+    return 1/s + 1/(s - 1) - mp.log(mp.pi)/2 + mp.digamma(s/2)/2 + mp.zeta(s, 1, 1)/mp.zeta(s)
+ts = [mp.mpf(t0) + (mp.mpf(t1) - t0)*j/(N - 1) for j in range(N)]
+U, S = [], []
+for t in ts:
+    s = mp.mpc(sig, t); w = 1j*(s - mp.mpf(1)/2); U.append(w*w); S.append(1j*logder(s)/(2*w))
+A = mp.matrix(N, N)
+for i in range(N):
+    for j in range(N):
+        A[i, j] = (S[i] - mp.conj(S[j]))/(U[i] - mp.conj(U[j]))
+E = mp.eigh(A, eigvals_only=True)
+neg = [e for e in E if e < 0]
+print("%s nodes t in [%g,%g] N=%d step %.3f dps=%d: #neg=%d  negatives: %s ; smallest positive %s ; largest %s" % (
+    mode, t0, t1, N, (t1 - t0)/(N - 1), dps, len(neg), [mp.nstr(e, 3) for e in neg], mp.nstr(min(e for e in E if e > 0), 3), mp.nstr(max(E), 3)))

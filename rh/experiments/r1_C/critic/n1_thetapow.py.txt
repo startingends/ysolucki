@@ -1,0 +1,27 @@
+"""Critic new idea: Z_n(s) = sum r_n(m) m^-s, r_n = coefficients of theta^n for REAL n (theta = sum q^{m^2}).
+Xi_n(t) := pi^-s Gamma(s) Z_n(s) at s = n/4 + it  =  2 int_0^inf (theta(i e^x)^n - 1) e^{nx/4} cos(tx) dx - (n/2)/(n^2/16 + t^2).
+n=1: 2 zeta(2s) (zeros t = gamma/2); n=2: 4 zeta(s) L(s,chi_4). Count real zeros (on the line Re s = n/4) for t in (0,TMAX)."""
+import sys, mpmath as mp
+mp.mp.dps = 45
+TMAX = float(sys.argv[1]); ns = [mp.mpf(x) for x in sys.argv[2:]]
+# Gauss-Legendre nodes on [0, 3.6] in 30 panels x 20 nodes
+gl = mp.calculus.quadrature.GaussLegendre(mp.mp); nodes = gl.calc_nodes(5, mp.mp.prec)   # degree 5 -> 3*2^4=48 nodes
+xs, ws = [], []
+P = 12
+for p in range(P):
+    a, b = mp.mpf(3.6)*p/P, mp.mpf(3.6)*(p + 1)/P
+    for x, w in nodes:
+        xs.append((b - a)/2*x + (a + b)/2); ws.append((b - a)/2*w)
+def theta(y):   # theta(iy) = sum_m exp(-pi m^2 y)
+    return 1 + 2*mp.nsum(lambda m: mp.exp(-mp.pi*m*m*y), [1, mp.inf])
+th = [theta(mp.exp(x)) for x in xs]
+for n in ns:
+    phi = [w*(t_**n - 1)*mp.exp(n*x/4) for w, t_, x in zip(ws, th, xs)]
+    def Xi(t):
+        return 2*mp.fsum(p*mp.cos(t*x) for p, x in zip(phi, xs)) - (n/2)/(n*n/16 + t*t)
+    ts = [mp.mpf(j)*0.05 for j in range(1, int(TMAX/0.05) + 1)]
+    vals = [Xi(t) for t in ts]
+    zs = []
+    for a, b, fa, fb in zip(ts[:-1], ts[1:], vals[:-1], vals[1:]):
+        if fa*fb < 0: zs.append(float(mp.findroot(Xi, (a, b), solver="anderson")))
+    print("n=%s: %d on-line zeros in (0,%g): %s" % (mp.nstr(n, 4), len(zs), TMAX, ["%.2f" % z for z in zs]), flush=True)

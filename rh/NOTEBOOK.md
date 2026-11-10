@@ -216,3 +216,75 @@ exist for every value of the parameter. Read only as search summaries. So the "K
 singularity" restatement is known; by rule 2 it is not an idea. Burnol's Painleve results: one search found
 nothing; still only a recollection. N20 (integrable flow with prime kicks) stays open and unsearched beyond
 this; before any work on it, fetch both Suzuki papers and look for what he does with the prime terms.
+
+**N23. Owner: stop exploring, create; look where nobody has looked; there is no procedure.** (lead)
+Taken as rules 7 and 8. What I did differently for the next idea: instead of asking "what is known near
+window positivity", I asked "which other field has a theorem of exactly this SHAPE (one positive direction,
+zero margin, proved without estimates), and what did its proof need that we have never supplied?"
+
+**N24. The shape, and who else has it.** (lead) Weil's criterion in Castelnuovo form: with
+N = (prime terms) - (archimedean terms), RH iff N(f) <= 2 d1(f) d2(f), d1, d2 the two pole functionals.
+That is: N has ONE positive direction. Same shape as: the Hodge index theorem on a surface; the
+Alexandrov-Fenchel / isoperimetric inequality (mixed area of plane convex bodies is the form of
+(1/2)(1 + d^2/dtheta^2) on the circle: one positive mode, two null modes, the rest negative);
+log-concavity statements for matroids. In the last decade the last family got proofs with no geometry at
+all, by a local-to-global step that loses nothing at the threshold.
+PROVED (from the formulas, two lines): the kernel of N off the diagonal is pointwise >= 0. The prime atoms
+are Lambda(n)/sqrt(n) >= 0, and Gauss's integral for the digamma function puts the cosine term with a minus
+sign in the archimedean part, so -arch has kernel +e^(u/2)/(2 sinh u) > 0. In geometric words: distinct
+"curves" meet non-negatively, and all the negativity is self-intersection. In physical words: ferromagnet.
+This sign is an input Weil's criterion never uses. It fails at once for the impostor.
+
+**N25. What has to be invented.** (lead) The local-to-global step (Branden-Huh; Oppenheim's trickle-down)
+needs cubic data: a non-negative symmetric 3-tensor T ("triple intersections") with N = T contracted with a
+positive vector and every slice Lorentzian. Symmetry of T is what makes a sum of Lorentzian slices
+Lorentzian. Our form comes with no such T. Candidates to invent it from:
+ - chains in the divisibility order (the Selberg identity Lambda log + Lambda*Lambda = Lambda_2 is a
+   balance identity of exactly the kind such a tensor must satisfy);
+ - mixed volumes of generalised permutohedra: the lattice of divisors of a squarefree M is the Boolean
+   lattice, whose "Chow ring" is the cohomology of the permutohedral variety; ample classes there are the
+   strictly submodular functions, and a concave function of log d is one. Multiplication = the variety,
+   addition = the ample class. That is a dictionary for B10 I have not seen.
+ - hand check: for M = 30 the six proper divisors form a hexagon under divisibility, with edge weights
+   log r / sqrt r (r the ratio prime) and opposite edges equal; rescaling makes it the 0/1 hexagon, i.e. the
+   six (-1)-curves on the plane blown up at three points. Its intersection matrix (hexagon adjacency minus
+   identity) has eigenvalues 1, 0, 0, -2, -2, -3: one positive, two null, three negative.
+Honest worry: on atoms the Weil form is trivially positive (infinite self-energy), so the hexagon by itself
+proves nothing about RH; the content is in spread-out functions. The test is whether a certificate T exists
+on a discretised window.
+
+**N26. Further out (not yet ideas, written down so they are not lost).** (lead) WILD.
+ - If zeta is the solution at the smallest possible conductor (N16), the other Gamma factors have smallest
+   conductors too, and the preprint I read says the quadratic fields are NOT at theirs. So there may be
+   extremal objects that are not L-functions: "what solves the odd Gamma factor at its threshold?" A family
+   of new objects of which zeta is the one that happens to be arithmetic.
+ - Mixed area is the form of 1 + d^2/dtheta^2. If the arithmetic form were literally of that kind for some
+   "angle" variable, the zeros would be the frequencies of a second-order operator on a circle and the two
+   null modes would be the two poles. What is the circle?
+ - The certificate T is a statement about triples of scales. Zeros see pairs (pair correlation). Is there a
+   number-theoretic meaning of a positive triple correlation of primes that nobody has asked for because
+   nothing needed it?
+
+**N27. First tests of the created idea (#10), and an unexpected clean fact.** (lead) COMPUTED.
+- The form N = primes - arch has exactly one positive eigenvalue on every window tried; without the primes
+  the background alone has four at L = 1. The primes take away the surplus directions and leave one.
+- Half of the impostor's couplings are negative: it is not a ferromagnet at all.
+- THE CLEAN FACT: allow one atom anywhere with any weight on a window of half-width 0.5. Positivity is
+  possible only if the atom sits at 2.000 (1.994 and 2.014 both fail) and weighs log 2. And with no atom
+  the background goes negative just past the point where 2 would enter. **The Gamma factor already knows
+  that the first prime is 2.** The additive structure (where the integers are) is not an extra input: it is
+  forced by the smooth term through positivity. That is barrier B10 seen from the inside.
+- My stated reason for prediction (c) was wrong even though the number was right. Third time today a
+  mechanism in my head was wrong while the direction was right. Keep predicting; it is the only way I find
+  out.
+
+**N28. Where this leaves the creative thread.** (lead)
+What exists now that did not this morning: (1) a sign (the arithmetic intersection kernel is non-negative
+off the diagonal), (2) a shape (Lorentzian, same as the isoperimetric inequality), (3) a borrowed proof
+mechanism that loses nothing at zero margin (local-to-global for Lorentzian forms), (4) two controls that
+fail it in the predicted way, (5) the observation that positions and weights of primes are both forced by
+the Gamma factor through positivity, one integer at a time.
+What does not exist: the cubic object (triple intersections) the mechanism needs. That is the thing to
+invent. Three seeds: chains in the divisibility order with Selberg's identity as the balance law; mixed
+volumes of permutohedra with a concave function of log n as ample class; a numerical certificate found
+first and understood afterwards.

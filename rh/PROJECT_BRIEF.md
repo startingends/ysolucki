@@ -19,7 +19,7 @@ Owner's standing instructions:
 - Explain each interesting idea to the owner in plain English with an example; the owner may answer with
   insights or direction, which are recorded in the idea's log and acted on.
 
-## The six rules (owner, 2026-11-10). Binding on every idea, every agent, and the lead.
+## The owner's rules (2026-11-10). Binding on every idea, every agent, and the lead.
 1. **Start from the wall, not the toolbox.** Every idea names the wall it attacks (W1, W2, …; list in
    `docs/HUB.md`) and says why it will not hit the same wall. "Another look-alike with zeros on the line" is
    rejected on sight.
@@ -34,6 +34,14 @@ Owner's standing instructions:
    full-text fetch of arXiv). The honest end state is usually "not found in what was read".
 6. **Aim for the smallest new proved statement,** not the whole thing. It is the first real sign that a
    route exists.
+7. **Create; do not explore to solve.** (owner, later the same day) Exploring is for learning only: one
+   big step toward understanding, then stop. The area around every approach we touched is crowded, and what
+   is known there is equivalent to RH, not easier. Progress comes from making something new: taking a
+   mechanism from another field and building a new object with it. A search that only rediscovers the map
+   is not work on the problem.
+8. **Look where nobody has looked. There is no procedure for finding it.** The easy ideas were used up over
+   165 years. Do not expect a method to produce the idea; expect to have to invent. When an idea turns out
+   to be known, record it and move further out, do not circle back to its neighbours.
 These are enforced as required fields in `tools/ideas.py` (wall, new input, prediction, smallest, novelty).
 A field may honestly read "FAILS RULE: …"; such ideas cannot be `alive`.
 

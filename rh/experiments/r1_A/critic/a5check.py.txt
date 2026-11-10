@@ -1,0 +1,33 @@
+"""A5 off-lattice check: Weil form of e^{iwx}, e^{iw'x} on [-L,L] by x-space quadrature vs the Loewner-type formula."""
+import mpmath as mp
+mp.mp.dps = 30
+def check(L, w, wp):
+    L = mp.mpf(L); w = mp.mpf(w); wp = mp.mpf(wp); D = w - wp
+    X = int(mp.floor(mp.exp(2 * L)))
+    lam = {}
+    for p in range(2, X + 1):
+        if all(p % d for d in range(2, int(p ** 0.5) + 1)):
+            pk = p
+            while pk <= X: lam[pk] = mp.log(p); pk *= p
+    gp = lambda x: mp.exp(1j * wp * x) * (mp.exp(1j * D * L) - mp.exp(1j * D * (x - L))) / (1j * D)      # g(x), x>=0
+    gm = lambda x: mp.exp(-1j * wp * x) * (mp.exp(1j * D * (L - x)) - mp.exp(-1j * D * L)) / (1j * D)    # g(-x)
+    g0 = 2 * mp.sin(D * L) / D
+    K = lambda x: 2 * mp.exp(-x / 2) / (1 - mp.exp(-2 * x))
+    arch = mp.quadgl(lambda x: g0 * mp.exp(-2 * x) / x - K(x) * (gp(x) + gm(x)) / 2, mp.linspace(0, 2 * L, 65)) + g0 * mp.e1(4 * L)
+    prime = -mp.fsum(c / mp.sqrt(n) * (gp(mp.log(n)) + gm(mp.log(n))) for n, c in lam.items())
+    eh = lambda ww, r: 2 * mp.sin((ww + r) * L) / (ww + r)
+    pole = eh(w, 0.5j) * mp.conj(eh(wp, -0.5j)) + eh(w, -0.5j) * mp.conj(eh(wp, 0.5j))
+    true = arch + prime - mp.log(mp.pi) * g0 + pole
+    def G(ww):
+        s = mp.digamma(0.25 + 0.5j * ww) - mp.log(mp.pi) - 2 * mp.fsum(c * mp.power(n, -0.5 - 1j * ww) for n, c in lam.items())
+        s += 2 * mp.fsum((lambda m: mp.exp(-2 * L * (2 * m + 0.5 + 1j * ww)) / (2 * m + 0.5 + 1j * ww))(m) for m in range(200))
+        return s
+    Gno = lambda ww: G(ww) - 2 * mp.fsum((lambda m: mp.exp(-2 * L * (2 * m + 0.5 + 1j * ww)) / (2 * m + 0.5 + 1j * ww))(m) for m in range(200))
+    form = mp.im(mp.exp(1j * L * D) * (G(w) + mp.conj(G(wp)))) / D + pole
+    form_no = mp.im(mp.exp(1j * L * D) * (Gno(w) + mp.conj(Gno(wp)))) / D + pole
+    print(f"L={L} w={w} w'={wp}: x-space {mp.nstr(true, 15)}  formula {mp.nstr(form, 15)}  diff {mp.nstr(abs(true - form), 3)}  | without tail sum diff {mp.nstr(abs(true - form_no), 3)}")
+check(0.8, 3.3, 7.1); check(1.3, 0.37, 11.913); check(0.5, 20.2, 2.05)
+print("lattice control (w=pi/L, w'=3pi/L) and higher working precision:")
+check(0.8, mp.pi / mp.mpf('0.8'), 3 * mp.pi / mp.mpf('0.8'))
+mp.mp.dps = 50
+check(0.8, 3.3, 7.1); check(mp.mpf('0.5'), mp.mpf('20.2'), mp.mpf('2.05'))

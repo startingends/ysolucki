@@ -1,0 +1,8 @@
+import mpmath as mp
+mp.mp.dps = 30
+Lam = lambda s: mp.pi**(-s/2)*mp.gamma(s/2)*mp.zeta(s)
+for k in (1, 0.5, 0.2, 2):
+    M = lambda w: Lam(w)/Lam(w + k)
+    for w in (mp.mpc(0.3, 2), mp.mpc(0, 5)):
+        print("k=%s w=%s  M(w)M(-w) = %s   M(w)M(1-k-w) = %s  |M| on Re w=0: %s  |M| on Re w=(1-k)/2: %s" % (
+            k, w, mp.nstr(M(w)*M(-w), 8), mp.nstr(M(w)*M(1 - k - w), 8), mp.nstr(abs(M(mp.mpc(0, 5))), 8), mp.nstr(abs(M(mp.mpc((1 - k)/2, 5))), 8)))
