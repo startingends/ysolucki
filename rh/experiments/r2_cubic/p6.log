@@ -1,0 +1,4 @@
+unmodified: mu=1.318e-02  |H vt|=1.32e-02  eig2(H)=-2.79e-03  status optimal
+    max_k |T_k vt| = 9.990e-02   max_k |vt T_k vt| = 1.290e-02   (mean |T_k| = 2.042) ;  sum_k a_k vt^T P_k vt = 1.321e-02  vs  vt^T(HDH - H)vt = 1.321e-02
+made singular: mu=1.318e-02  |H vt|=7.36e-16  eig2(H)=4.30e-17  status optimal
+    max_k |T_k vt| = 1.074e-04   max_k |vt T_k vt| = 9.480e-09   (mean |T_k| = 2.044) ;  sum_k a_k vt^T P_k vt = 4.041e-11  vs  vt^T(HDH - H)vt = 3.185e-17

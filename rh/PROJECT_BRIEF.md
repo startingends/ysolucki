@@ -76,15 +76,28 @@ Every claim carries its level. Nothing is reported above the level it has earned
    then a judge. Survives only if no reproduced gap remains.
 5. Numerical sanity check of every intermediate inequality where one is possible.
 
-## How a round works (seminar)
-proposers (parallel, one lane each, each keeping its own `IDEAS_LOCAL.md`) → critics who try to refute (own
-local logs too) → judge ranks and names the next experiments → **idea auditor** goes through every local log
-and PROGRESS.md and promotes the important entries to the main log `docs/IDEAS.md` (checking each against
-the six rules; `ideas.py promote` / `skip`) → lead runs or assigns the tests and updates the hub.
-A round is not closed while `tools/hubcheck.py` reports local ideas awaiting audit.
-After each round the lead writes the wall(s) hit into the main log and the next round starts from it.
+## How work is organised: two tracks (owner, 2026-11-10)
+Round 1 showed four faults: lanes anchored the agents on the known map; refuters told to default to
+"wounded or refuted" killed half-formed ideas, which always look refutable; 30 to 40 minute timeboxes rewarded
+finishing something safe over staying with something strange; and a judge scoring 0-10 on "chance this leads
+to a theorem" ranks the weird idea low every time. So the two jobs are split.
 
-## Lanes (round 1)
+**Creation track.** No lane, a long run, no refuter attached. Each seat keeps its own `IDEAS_LOCAL.md`.
+At the end a *screen* (not a judge) asks two questions of each idea and nothing else:
+1. Is it new? (by search, with queries and sources; "not found in what was read" is the usual honest answer)
+2. Is it precise enough to compute? (is an object defined well enough to calculate a number from it; if not,
+   exactly what is missing)
+No score, no likelihood, no kill. Ideas that pass are computed next.
+
+**Verification track.** Proofs and numbers only: independent refuters (default to wounded/refuted when
+unsure) and a judge who settles disputes with evidence. Scores and kill decisions live here.
+An idea enters this track only when it asserts a proof or a number.
+
+**Audit.** After either track an idea auditor promotes the important entries from the agents' local logs to
+the main log `docs/IDEAS.md` (`ideas.py promote` / `skip`). A round is not closed while
+`tools/hubcheck.py` reports local ideas awaiting audit.
+
+## Lanes (round 1 only; lanes are no longer used for creation)
 - **A Positivity:** Weil explicit formula, Li coefficients, truncated Weil quadratic forms.
 - **B Approximation / deformation:** Nyman–Beurling–Báez-Duarte, de Bruijn–Newman flow, Jensen polynomials.
 - **C Spectral / geometric:** Hilbert–Pólya, Berry–Keating, prolate operator, scaling flow, function-field

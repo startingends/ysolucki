@@ -1,0 +1,71 @@
+import sys, math, importlib.util, importlib.machinery
+import numpy as np
+loader = importlib.machinery.SourceFileLoader('refute', 'refute.py.txt'); spec = importlib.util.spec_from_loader('refute', loader)
+R = importlib.util.module_from_spec(spec); loader.exec_module(R)   # my OWN file, not the seat's
+np.random.seed(1)
+# --- Theorem C2 check, random pi, n=7, lambda=3
+n=7; lam=3.0; pi=np.random.rand(n); pi/=pi.sum()
+q=lam*np.tile(pi,(n,1)); np.fill_diagonal(q,0); Lg=q-np.diag(q.sum(1))
+G,G2=R.gamma_forms(q,Lg)
+rho=min(R.be_site(G,G2,x)[0] for x in range(n))
+print("C2: BE =",rho," formula (lam/2)(1+2 min pi) =",lam/2*(1+2*pi.min()), " per-site negative index of G2-lam G:",[int((R.be_site(G,G2,x)<lam-1e-12).sum()) for x in range(n)])
+# --- D1: Lambda(ab)/sqrt(ab), 2<=a,b<=60
+def mangoldt(m):
+    for p in range(2,m+1):
+        if m%p==0:
+            k=m
+            while k%p==0: k//=p
+            return math.log(p) if k==1 else 0.0
+    return 0.0
+for lo in (2,1):
+    A=np.array([[mangoldt(a*b)/math.sqrt(a*b) for b in range(lo,61)] for a in range(lo,61)])
+    e=np.linalg.eigvalsh(A); print(f"D1 a,b>={lo}: min eig {e[0]:.3e}, rank {int((abs(e)>1e-10).sum())}")
+# --- Hankel form H_ij = k(i+j+1), boxes on (0,L]
+for M in (40,80):
+    for kind,ao in (('arch',True),('zeta',False),('beurling',False)):
+        N,xs,c,s,d=R.build(1.0,M,'zeta' if ao else kind,arch_only=ao)
+        k=N[0]; h=M//2
+        H=np.array([[k[i+j+1] for j in range(h)] for i in range(h)])
+        e=np.linalg.eigvalsh(H); print(f"Hankel L=1 M={M} {kind}: min eig {e[0]:.4f}, #neg(<-1e-10) {int((e<-1e-10).sum())} of {h}")
+# --- det identity for the even margin, and B3 decomposition at the centre, zeta L=1 M=40
+N,xs,c,s,d=R.build(1.0,40,'zeta'); M=40
+ev,lam1,u,q,Lg=R.process(N)
+h=M//2; Be=np.zeros((M,h))
+for i in range(h): Be[i,i]=Be[M-1-i,i]=1/math.sqrt(2)
+Ne=Be.T@N@Be; ce=Be.T@c; Qe=2*np.outer(ce,ce)-Ne
+mu=np.linalg.eigvalsh(Qe); nu=np.linalg.eigvalsh(-Ne)
+print("even margin via solve:",2*ce@np.linalg.solve(Ne,ce)-1," via prod mu_i/|nu_i|:",np.prod(mu/np.abs(nu)), " mu_1/lam1 =",mu[0]/lam1," prod_{i>=2} mu_i/nu_i =",np.prod(mu[1:]/nu[1:]))
+G,G2=R.gamma_forms(q,Lg)
+kk=N[0].copy(); kk[0]=0.0
+def parts(x):
+    S=np.zeros((M,M)); Hs=np.zeros((M,M)); O=np.zeros((M,M))
+    def e(i):
+        v=np.zeros(M); v[i]=1; return v
+    for a in range(-M+1,M):
+        if a==0 or not (0<=x+a<M): continue
+        for b in range(-M+1,M):
+            if b==0: continue
+            ka=kk[abs(a)]; kb=kk[abs(b)]
+            inb=0<=x+b<M; inab=0<=x+a+b<M
+            A=e(x+a)-e(x)
+            if inb:
+                B=e(x+b)-e(x)
+                rho=u[x+a+b]/u[x] if inab else 0.0
+                Hab=u[x+a]*u[x+b]/u[x]**2-rho
+                Hs+=0.5*ka*kb*Hab*0.5*(np.outer(A,B)+np.outer(B,A))
+                if inab:
+                    D=e(x+a+b)-e(x+a)-e(x+b)+e(x)
+                    S+=0.25*ka*kb*rho*np.outer(D,D)
+            elif inab:
+                rho=u[x+a+b]/u[x]
+                v1=e(x+a+b)-e(x+a); v2=e(x+a+b)-e(x)
+                O+=0.5*ka*kb*rho*(np.outer(v1,v1)-0.5*np.outer(v2,v2))
+    return S,Hs,O
+for x in (M//2,0,5):
+    S,Hs,O=parts(x)
+    err=np.abs(S+Hs+O-G2[x]).max()
+    keep=[i for i in range(M) if i!=x]
+    dg=np.sqrt(np.diag(G[x])[keep])
+    def nm(Z): return np.linalg.eigvalsh(Z[np.ix_(keep,keep)]/np.outer(dg,dg))
+    print(f"B3 site {x}: |S+H+O-Gamma2|max={err:.1e}; raw min eig S {np.linalg.eigvalsh(S)[0]:.3f}, H {np.linalg.eigvalsh(Hs)[0]:.3f} (max {np.linalg.eigvalsh(Hs)[-1]:.2f}), O {np.linalg.eigvalsh(O)[0]:.3f};"
+          f" Gamma-normalised/lam1: S {nm(S)[0]/lam1:.3f}, S+H {nm(S+Hs)[0]/lam1:.3f}, S+O {nm(S+O)[0]/lam1:.3f}, all {nm(S+Hs+O)[0]/lam1:.3f}")

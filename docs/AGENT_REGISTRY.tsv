@@ -19,3 +19,9 @@ R2-curv-ref	2026-11-10	refuter of seat curv	session model	rh/experiments/r2_curv
 R2-parity-ref	2026-11-10	refuter of seat parity	session model	rh/experiments/r2_parity/refuter	running	-
 R2-free-ref	2026-11-10	refuter of seat free	session model	rh/experiments/r2_free/refuter	running	-
 R2-judge	2026-11-10	judge of round 2	session model	rh/experiments/r2_judge	running	-
+C1-blank	2026-11-10	creation seat, no lane, starts from a blank page	session model	rh/experiments/c1_blank	running	-
+C1-inside	2026-11-10	creation seat, no lane, starts inside the project's understanding	session model	rh/experiments/c1_inside	running	-
+C1-data	2026-11-10	creation seat, no lane, starts from the raw numbers	session model	rh/experiments/c1_data	running	-
+C1-blank-screen	2026-11-10	screen (new? computable?) for C1-blank	session model	rh/experiments/c1_blank/screen	running	-
+C1-inside-screen	2026-11-10	screen for C1-inside	session model	rh/experiments/c1_inside/screen	running	-
+C1-data-screen	2026-11-10	screen for C1-data	session model	rh/experiments/c1_data/screen	running	-

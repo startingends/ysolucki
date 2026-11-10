@@ -1,0 +1,10 @@
+zeta     L=1 M=40: negative directions of Gamma_2 - lambda_1 Gamma per site: [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]
+          sites with exactly one: 38 of 40 ; integrated form: 0 negative directions (min eig 1.521e-03)
+beurling L=1 M=40: negative directions of Gamma_2 - lambda_1 Gamma per site: [2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2]
+          sites with exactly one: 32 of 40 ; integrated form: 4 negative directions (min eig -3.830e-02)
+sites where zeta and Beurling counts agree: 34 of 40
+zeta     L=1 M=80: negative directions of Gamma_2 - lambda_1 Gamma per site: [4, 3, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 4]
+          sites with exactly one: 50 of 80 ; integrated form: 0 negative directions (min eig 2.186e-04)
+beurling L=1 M=80: negative directions of Gamma_2 - lambda_1 Gamma per site: [4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4]
+          sites with exactly one: 24 of 80 ; integrated form: 4 negative directions (min eig -2.290e-02)
+sites where zeta and Beurling counts agree: 50 of 80

@@ -1,0 +1,89 @@
+# Exact certificates: polynomials r_n(m), c_n(m) in n over QQ; sign on intervals by Sturm (sympy count_roots).
+import sys
+from sympy import symbols, Poly, QQ, Rational, factorint, binomial, ff, factorial
+n = symbols('n')
+def comps(mmax):
+    # comp[k][m] = number of ordered k-tuples of positive squares with sum m
+    sq = [j*j for j in range(1, int(mmax**0.5)+1)]
+    comp = [[0]*(mmax+1)]; comp[0][0] = 1
+    for k in range(1, mmax+1):
+        row = [0]*(mmax+1)
+        prev = comp[-1]
+        for m in range(k, mmax+1):
+            row[m] = sum(prev[m-s] for s in sq if s <= m)
+        comp.append(row)
+    return comp
+def rpoly(m, comp):
+    p = Poly(0, n, domain=QQ)
+    for k in range(1, m+1):
+        if comp[k][m]:
+            p += Poly(ff(n, k), n, domain=QQ) * Rational(2**k * comp[k][m], factorial(k))
+    return p
+def cpolys(mmax, comp):
+    a = {1: Poly(1, n, domain=QQ)}
+    N = Poly(n, n, domain=QQ)
+    for m in range(2, mmax+1):
+        q, r = rpoly(m, comp).div(2*N); assert r.is_zero
+        a[m] = q
+    L = {}; c = {}
+    for m in range(2, mmax+1):
+        Om = sum(factorint(m).values())
+        s = a[m]*Om
+        for d in range(2, m):
+            if m % d == 0: s -= L[d]*a[m//d]
+        L[m] = s; c[m] = s*Rational(1, Om)
+    return a, c
+def neg_open(p, lo, hi):
+    """True iff p < 0 on the OPEN interval (lo, hi), lo < hi rational; roots at the endpoints allowed (divided out)."""
+    lo = Rational(lo); hi = Rational(hi); q = p; sgn = 1
+    for e, s in ((lo, 1), (hi, -1)):
+        while q.eval(e) == 0:
+            q = q.div(Poly(n - e, n, domain=QQ))[0]; sgn *= s   # (n-lo) > 0, (n-hi) < 0 inside
+    if q.count_roots(lo, hi) != 0: return False
+    mid = (lo+hi)/2
+    return sgn * q.eval(mid) < 0
+if __name__ == '__main__':
+    mmax = 60
+    comp = comps(mmax)
+    a, c = cpolys(mmax, comp)
+    print('c_2 =', c[2].as_expr().factor()); print('c_3 =', c[3].as_expr().factor()); print('c_4 =', c[4].as_expr().factor())
+    print('c_6 =', c[6].as_expr().factor())
+    print('r_7 =', rpoly(7, comp).as_expr().factor())
+    # multiplicative points: all c_m with m not a prime power vanish
+    for pt in (1, 2, 8):
+        nz = [m for m in range(2, mmax+1) if len(factorint(m)) > 1 and c[m].eval(pt) != 0]
+        neg = [m for m in range(2, mmax+1) if c[m].eval(pt) < 0]
+        print('n =', pt, ': non-prime-power m<=60 with c != 0:', nz, '; m with c < 0:', neg)
+    # greedy exact cover of (0,12] minus {1,2,8}
+    cands = [2, 3, 4, 6, 12, 18, 24, 30, 36, 48, 60]
+    special = [Rational(1), Rational(2), Rational(8)]
+    x = Rational(0); end = Rational(12); cover = []
+    step = Rational(1, 64)
+    while x < end:
+        best = None
+        for m in cands:
+            # largest t on the grid x + j*step (capped at next special point) with c_m < 0 on (x, t)
+            nxt = min([s for s in special if s > x] + [end])
+            lo_j, hi_j = 0, int((nxt - x)/step)
+            if hi_j == 0: hi_j = 1
+            if not neg_open(c[m], x, x + step if x + step <= nxt else nxt): continue
+            j = 1
+            while j < hi_j and neg_open(c[m], x, x + (j+1)*step): j += 1
+            # try to also reach nxt exactly
+            t = x + j*step
+            if t > nxt: t = nxt
+            if j == hi_j or neg_open(c[m], x, nxt): t = nxt if neg_open(c[m], x, nxt) else t
+            if best is None or t > best[1]: best = (m, t)
+        if best is None:
+            print('COVER FAILS at', x, float(x)); break
+        m, t = best
+        # interior point x itself (if not special and not 0) must be negative for the polynomial that covered up to x: handled by overlap below
+        cover.append((x, t, m)); print('c_%d < 0 on (%s, %s)  [%.4f, %.4f]' % (m, x, t, float(x), float(t)))
+        if t in special or t == end:
+            x = t
+        else:
+            # step back so consecutive open intervals overlap: need next poly negative on an interval containing t
+            x = t - step/2
+            ok = any(c[mm].eval(t) < 0 for mm in cands)
+            assert ok
+    print('cover complete' if x >= end else 'INCOMPLETE')

@@ -1,0 +1,34 @@
+import sys, math, itertools, importlib.util, importlib.machinery, numpy as np, cvxpy as cp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/r2_cubic/box.py.txt")
+def run(H, a, zero, solver):
+    """max t s.t. certificate exists with slack: l_k l_k^T/s_k - T_k + (-t) I >= 0  (t>0 feasible with margin; t<0: infeasible by |t|)"""
+    m = len(a); l = H @ a
+    keys = list(itertools.combinations_with_replacement(range(m), 3)); idx = {k: i for i, k in enumerate(keys)}
+    x = cp.Variable(len(keys)); t = cp.Variable(); cons = []
+    Sl = []
+    for k in range(m):
+        A = np.zeros((m * m, len(keys)))
+        for i in range(m):
+            for j in range(m): A[i * m + j, idx[tuple(sorted((i, j, k)))]] = 1.0
+        Sl.append(A)
+    cons.append(sum(a[k] * (Sl[k] @ x) for k in range(m)) == H.reshape(-1))
+    for k in range(m):
+        cons.append(np.outer(H[:, k], H[:, k]) / l[k] - cp.reshape(Sl[k] @ x, (m, m), order='C') - t * np.eye(m) >> 0)
+    for key in zero: cons.append(x[idx[key]] == 0)
+    cons.append(t <= 1)
+    prob = cp.Problem(cp.Maximize(t), cons); prob.solve(solver=solver)
+    return prob.status, t.value
+L = 1.0
+for n in (2, 3, 4, 6, 8):
+    Nb, p, q = box.boxN(L, n); H = box.ext(Nb, p, q); ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1])
+    out = []
+    for R in (n - 1, n - 2):
+        zero = [(i, j, k) for (i, j, k) in itertools.combinations_with_replacement(range(n), 3) if k - i > R]
+        for solver in (cp.CLARABEL, cp.SCS):
+            try: st, t = run(H, a, zero, solver)
+            except Exception as ex: st, t = "fail", float('nan')
+            out.append("R=%d %s: %s t=%.3e" % (R, solver, st, t if t is not None else float('nan')))
+    print("zeta L=1 n=%d eig2(H)=%.3e | " % (n, np.sort(ev)[-2]) + " | ".join(out), flush=True)

@@ -1,0 +1,5 @@
+resampling m=12        BE: |T.a-H|=8e-17 worst lambda_min(P_k)=-0.2083 max#pos=2 || family: best t=-0.25 worst lambda_min(P_k)=-6.433e-18 max#pos=1 |T.a-H|=4e-17 ; at t=0: -2.082e-17, t=1/6: -2.711e-17, t=1/2: -3.368e-17
+zeta L=0.50 n=12       BE: |T.a-H|=2e-16 worst lambda_min(P_k)=-2.2152 max#pos=2 || family: best t=0.05 worst lambda_min(P_k)=-3.157e-02 max#pos=3 |T.a-H|=2e-16 ; at t=0: -1.175e+00, t=1/6: -1.063e-01, t=1/2: -2.937e+00
+zeta L=1.00 n=12       BE: |T.a-H|=7e-16 worst lambda_min(P_k)=-4.1380 max#pos=2 || family: best t=0.05 worst lambda_min(P_k)=-4.694e-02 max#pos=2 |T.a-H|=2e-16 ; at t=0: -6.472e-02, t=1/6: -2.029e-01, t=1/2: -1.135e+00
+zeta L=1.00 n=24       BE: |T.a-H|=7e-16 worst lambda_min(P_k)=-6.1482 max#pos=2 || family: best t=0.05 worst lambda_min(P_k)=-5.181e-02 max#pos=5 |T.a-H|=2e-16 ; at t=0: -7.175e-01, t=1/6: -2.546e-01, t=1/2: -2.575e+00
+beurling L=1.00 n=12   BE: |T.a-H|=2e-16 worst lambda_min(P_k)=-4.2640 max#pos=2 || family: best t=0.05 worst lambda_min(P_k)=-4.795e-02 max#pos=3 |T.a-H|=2e-16 ; at t=0: -7.277e-02, t=1/6: -1.996e-01, t=1/2: -1.108e+00

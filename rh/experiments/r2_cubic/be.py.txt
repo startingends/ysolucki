@@ -1,0 +1,35 @@
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/r2_cubic/box.py.txt")
+for kind, L, n in (("zeta", 0.5, 12), ("zeta", 1.0, 12), ("zeta", 1.0, 24), ("beurling", 1.0, 12)):
+    cn = box.lam(math.exp(2 * L)) if kind == "zeta" else box.beurling(math.exp(2 * L))
+    Nb, p, q = box.boxN(L, n, cn); H = box.ext(Nb, p, q); m = n + 2
+    ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1]); s = H @ a
+    D = np.diag(a / s); G = H @ D @ H - H
+    Lg = (H * a[None, :]) / s[:, None] - np.eye(m)            # generator, rows sum to 0
+    pi = a * s
+    r = Lg - np.diag(np.diag(Lg))
+    I = np.eye(m)
+    Gam = [0.5 * sum(r[i, j] * np.outer(I[j] - I[i], I[j] - I[i]) for j in range(m)) for i in range(m)]
+    Gam2 = []
+    for i in range(m):
+        LG = sum(r[i, j] * (Gam[j] - Gam[i]) for j in range(m))
+        X = sum(r[i, j] * np.outer(I[j] - I[i], Lg[j] - Lg[i]) for j in range(m))
+        Gam2.append(0.5 * (LG - 0.5 * (X + X.T)))
+    A1 = np.diag(1 / a)
+    B = [pi[i] * A1 @ (Gam2[i] - Gam[i]) @ A1 for i in range(m)]
+    gap = np.sort(np.linalg.eigvals(-Lg).real)
+    # best pointwise Bakry-Emery constant: largest rho with Gam2_i - rho Gam_i >= 0 for all i
+    def ok(rho): return all(np.linalg.eigvalsh(Gam2[i] - rho * Gam[i])[0] > -1e-10 for i in range(m))
+    lo, hi = -50.0, 5.0
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        if ok(mid): lo = mid
+        else: hi = mid
+    T = np.array([np.outer(H[:, k], H[:, k]) / s[k] - B[k] / a[k] for k in range(m)])   # T[k,i,j]
+    asym = np.abs(T - np.transpose(T, (1, 0, 2))).max() / np.abs(T).max()
+    print("%s L=%.2f n=%d: #pos(H)=%d ; |sum B - G|=%.1e ; spectrum of -L: 0, %.4f, %.4f ... ; min eig of B_i over sites %.3e ; #sites with B_i PSD %d/%d ; rho_BE=%.4f ; T^BE asymmetry %.2f" % (
+        kind, L, n, (ev > 1e-10).sum(), np.abs(sum(B) - G).max(), gap[1], gap[2], min(np.linalg.eigvalsh(b)[0] for b in B),
+        sum(np.linalg.eigvalsh(b)[0] > -1e-10 for b in B), m, lo, asym))

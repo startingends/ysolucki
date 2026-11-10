@@ -1,0 +1,12 @@
+m=8 trial 0 eig2(H)=-0.610 | d=1 optimal tau*=7.45e-11 lam_min(P)=3.11e-15 #pos=1 | d=2 optimal tau*=-9.12e-12 lam_min(P)=-3.95e-12 #pos=1
+m=8 trial 1 eig2(H)=-0.620 | d=1 optimal tau*=2.82e-10 lam_min(P)=-3.01e-16 #pos=1 | d=2 optimal tau*=1.17e-10 lam_min(P)=1.10e-11 #pos=1
+m=8 trial 2 eig2(H)=-0.519 | d=1 optimal tau*=1.79e-10 lam_min(P)=-2.74e-16 #pos=1 | d=2 optimal tau*=-6.49e-13 lam_min(P)=3.97e-13 #pos=1
+m=8 trial 3 eig2(H)=-0.713 | d=1 optimal tau*=4.32e-10 lam_min(P)=4.44e-17 #pos=1 | d=2 optimal tau*=3.31e-12 lam_min(P)=-1.35e-12 #pos=1
+m=8 trial 4 eig2(H)=-0.654 | d=1 optimal tau*=3.00e-10 lam_min(P)=2.44e-16 #pos=1 | d=2 optimal tau*=6.90e-12 lam_min(P)=-2.92e-12 #pos=1
+m=8 trial 5 eig2(H)=-0.888 | d=1 optimal tau*=1.32e-10 lam_min(P)=1.68e-13 #pos=1 | d=2 optimal tau*=-1.51e-11 lam_min(P)=2.64e-12 #pos=1
+m=12 trial 0 eig2(H)=-0.371 | d=1 optimal tau*=7.39e-10 lam_min(P)=-5.33e-17 #pos=1 | d=2 optimal tau*=6.87e-11 lam_min(P)=-1.35e-11 #pos=1
+m=12 trial 1 eig2(H)=-0.475 | d=1 optimal tau*=5.62e-10 lam_min(P)=-1.43e-16 #pos=1 | d=2 optimal tau*=-6.96e-11 lam_min(P)=3.79e-12 #pos=1
+m=12 trial 2 eig2(H)=-0.416 | d=1 optimal tau*=2.91e-10 lam_min(P)=6.56e-16 #pos=1 | d=2 optimal tau*=-3.75e-11 lam_min(P)=-6.02e-11 #pos=1
+m=12 trial 3 eig2(H)=-0.658 | d=1 optimal_i tau*=6.39e-09 lam_min(P)=2.37e-12 #pos=1 | d=2 optimal tau*=5.79e-12 lam_min(P)=3.16e-13 #pos=1
+m=12 trial 4 eig2(H)=-0.544 | d=1 optimal tau*=1.66e-10 lam_min(P)=2.47e-16 #pos=1 | d=2 optimal tau*=-2.67e-11 lam_min(P)=1.29e-12 #pos=1
+m=12 trial 5 eig2(H)=-0.164 | d=1 optimal tau*=6.26e-02 lam_min(P)=-6.26e-02 #pos=3 | d=2 optimal tau*=-1.05e-12 lam_min(P)=-1.91e-13 #pos=1

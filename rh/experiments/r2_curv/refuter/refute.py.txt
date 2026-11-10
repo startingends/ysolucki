@@ -1,0 +1,127 @@
+# Independent recomputation for the refuter of seat curv. No import of the seat's scripts.
+import sys, math
+import numpy as np
+import mpmath as mp
+mp.mp.dps = 20
+
+def w(u):
+    return mp.exp(-u/2)/(-mp.expm1(-2*u))
+
+CINF = mp.log(mp.pi) - mp.digamma(mp.mpf(1)/4)
+
+def atoms(kind, X):
+    """list of (log position, weight Lambda/sqrt) for prime powers <= X"""
+    out = []
+    if kind == 'zeta':
+        primes = [p for p in range(2, int(X)+2) if all(p % q for q in range(2, int(p**0.5)+1))]
+        plist = [float(p) for p in primes]
+    elif kind == 'beurling':
+        primes = [p for p in range(3, int(X)+2) if all(p % q for q in range(2, int(p**0.5)+1))]
+        plist = [2.1] + [float(p) for p in primes]
+    for p in plist:
+        k = 1
+        while p**k <= X*(1+1e-12):
+            out.append((k*math.log(p), math.log(p)/p**(k/2)))
+            k += 1
+    return out
+
+def build(L, M, kind='zeta', arch_only=False):
+    d = mp.mpf(2*L)/M
+    k = np.zeros(M)
+    # diagonal
+    k0 = CINF - 2*mp.quad(lambda u: w(u)*u/d, [0, d]) - 2*mp.quad(w, [d, 1, 5, 20, mp.inf])
+    k[0] = float(k0)
+    for m in range(1, M):
+        a = (m-1)*d; b = m*d; c = (m+1)*d
+        I = mp.quad(lambda u: w(u)*(u-a)/d, [a, b]) + mp.quad(lambda u: w(u)*(c-u)/d, [b, c])
+        k[m] = float(I)
+    df = float(d)
+    if not arch_only:
+        for (pos, wt) in atoms(kind, math.exp(2*L)):
+            for m in range(0, M):
+                t = 1 - abs(pos - m*df)/df
+                if t > 0:
+                    k[m] += wt*t * (2 if m == 0 else 1)
+    idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+    N = k[idx]
+    xs = -L + (np.arange(M)+0.5)*df
+    # exact box integrals of cosh(x/2), sinh(x/2), normalised boxes
+    lo = xs - df/2; hi = xs + df/2
+    c = 2*(np.sinh(hi/2)-np.sinh(lo/2))/math.sqrt(df)
+    s = 2*(np.cosh(hi/2)-np.cosh(lo/2))/math.sqrt(df)
+    return N, xs, c, s, df
+
+def process(N):
+    ev, V = np.linalg.eigh(N)
+    lam1 = ev[-1]; u = V[:, -1]; u = u*np.sign(u.sum())
+    assert u.min() > 0
+    q = N*u[None, :]/u[:, None]
+    np.fill_diagonal(q, 0.0)
+    Lg = q - np.diag(q.sum(1))
+    return ev, lam1, u, q, Lg
+
+def gamma_forms(q, Lg):
+    M = q.shape[0]
+    G = np.zeros((M, M, M))
+    for y in range(M):
+        Gy = 0.5*np.diag(q[y])
+        Gy[y, y] += 0.5*q[y].sum()
+        Gy[y, :] -= 0.5*q[y]
+        Gy[:, y] -= 0.5*q[y]
+        G[y] = Gy
+    G2 = np.zeros((M, M, M))
+    for x in range(M):
+        A = 0.5*(np.tensordot(q[x], G, axes=(0, 0)) - q[x].sum()*G[x])
+        B = G[x] @ Lg
+        G2[x] = A - 0.5*(B + B.T)
+    return G, G2
+
+def be_site(G, G2, x, shift=0.0):
+    M = G.shape[0]
+    keep = [i for i in range(M) if i != x]
+    g = G[x][np.ix_(keep, keep)]; g2 = G2[x][np.ix_(keep, keep)]
+    dg = np.sqrt(np.diag(g))   # g is diagonal on f(x)=0
+    off = np.abs(g - np.diag(np.diag(g))).max()
+    assert off < 1e-12
+    Mx = g2/np.outer(dg, dg)
+    return np.linalg.eigvalsh(Mx)
+
+def report(L, M, kind):
+    N, xs, c, s, d = build(L, M, kind)
+    ev, lam1, u, q, Lg = process(N)
+    npos = int((ev > 1e-12).sum())
+    offneg = int(((N - np.diag(np.diag(N))) < 0).sum())
+    gap = lam1 - ev[-2]
+    print(f"== {kind} L={L} M={M}: lambda1={lam1:.6f} #pos={npos} mu2={ev[-2]:.4e} gap/lam1={gap/lam1:.5f} (gap/lam1-1={gap/lam1-1:.3e}) offdiag<0: {offneg}  N00={N[0,0]:.6f} rate={q.sum(1).min():.4f}..{q.sum(1).max():.4f} umin/umax={u.min()/u.max():.3f}")
+    # parity blocks
+    J = np.eye(M)[::-1]
+    Pe = (np.eye(M)+J)/2; Po = (np.eye(M)-J)/2
+    # even/odd orthonormal bases
+    h = M//2
+    Be = np.zeros((M, h)); Bo = np.zeros((M, h))
+    for i in range(h):
+        Be[i, i] = Be[M-1-i, i] = 1/math.sqrt(2)
+        Bo[i, i] = -1/math.sqrt(2); Bo[M-1-i, i] = 1/math.sqrt(2)
+    Ne = Be.T@N@Be; No = Bo.T@N@Bo; ce = Be.T@c; so = Bo.T@s
+    eve = np.linalg.eigvalsh(Ne); evo = np.linalg.eigvalsh(No)
+    print(f"   even: #pos={int((eve>1e-12).sum())}  2c^T N^-1 c - 1 = {2*ce@np.linalg.solve(Ne,ce)-1:.4e};  odd: #pos={int((evo>1e-12).sum())} 1-2 s^T(-N)^-1 s = {1-2*so@np.linalg.solve(-No,so):.4e}")
+    Qe = 2*np.outer(ce, ce) - Ne; Qo = -2*np.outer(so, so) - No
+    print(f"   Weil form min eig: even {np.linalg.eigvalsh(Qe)[0]:.3e}  odd {np.linalg.eigvalsh(Qo)[0]:.3e}")
+    G, G2 = gamma_forms(q, Lg)
+    # check integrated identity: sum pi_x G2[x] = L^T diag(pi) L
+    pi = u*u
+    I2 = np.tensordot(pi, G2, axes=(0, 0)); chk = Lg.T@np.diag(pi)@Lg
+    rhos = []; negidx = []
+    for x in range(M):
+        e = be_site(G, G2, x)
+        rhos.append(e[0]); negidx.append(int((e < lam1).sum()))
+    rhos = np.array(rhos)
+    xw = int(rhos.argmin())
+    print(f"   int Gamma2 check {np.abs(I2-chk).max():.1e};  BE rho/lam1: worst {rhos.min()/lam1:.4f} at site {xw} (x={xs[xw]:.3f}), centre {rhos[M//2]/lam1:.4f};  rho/gap worst {rhos.min()/gap:.4f}")
+    one = sum(1 for n in negidx if n == 1)
+    print(f"   per-site negative index of Gamma2 - lam1 Gamma: ==1 at {one} of {M}; histogram {np.bincount(negidx).tolist()}")
+    return dict(N=N, xs=xs, lam1=lam1, u=u, q=q, Lg=Lg, G=G, G2=G2, negidx=negidx, rhos=rhos, d=d)
+
+if __name__ == '__main__':
+    L = float(sys.argv[1]); M = int(sys.argv[2]); kind = sys.argv[3]
+    report(L, M, kind)
