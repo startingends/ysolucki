@@ -1,0 +1,21 @@
+(a) N = primes - arch (no pole): #positive eigenvalues, largest, second, third
+  L=0.50 N=30 int : #pos=1 ; largest 1.987187 ; second -0.012028 ; third -0.019778   (1s)
+  L=0.50 N=30 half: #pos=1 ; largest 1.975783 ; second -0.013284 ; third -0.019763   (1s)
+  L=0.75 N=30 int : #pos=1 ; largest 3.100413 ; second -9.0515e-10 ; third -1.0526e-7   (2s)
+  L=0.75 N=30 half: #pos=1 ; largest 3.080618 ; second -8.3127e-10 ; third -1.1233e-7   (3s)
+  L=1.00 N=40 int : #pos=1 ; largest 4.305408 ; second -2.1051e-23 ; third -1.0654e-20   (4s)
+      even block of N: top two 4.305408 -2.1051e-23
+      odd block of N: top two -1.065369e-20 -4.5404e-15
+  L=1.00 N=40 half: #pos=1 ; largest 4.281874 ; second -2.138e-23 ; third -1.1404e-20   (6s)
+      even block of N: top two 4.281874 -2.138e-23
+      odd block of N: top two -1.140384e-20 -4.6135e-15
+  L=1.00 N=60 int : #pos=1 ; largest 4.305568 ; second -1.7379e-23 ; third -9.9482e-21   (10s)
+  L=1.00 N=60 half: #pos=1 ; largest 4.289086 ; second -1.7442e-23 ; third -9.604e-21   (13s)
+  no primes, L=1.0 N=40 int : #pos=4 ; top five ['2.613', '1.011', '0.4829', '0.1324', '-0.1144']
+  no primes, L=1.0 N=40 half: #pos=4 ; top five ['2.607', '1.016', '0.479', '0.1361', '-0.118']
+  control Beurling (2 -> 2.1), L=0.5 and 1.0:
+  Beurling L=0.50 N=30 int : #pos(N)=3 ; top three of N ['1.9453', '0.043943', '0.037624'] ; lowest eig of Q: even -0.041582 odd -0.06619
+  Beurling L=0.50 N=30 half: #pos(N)=3 ; top three of N ['1.9334', '0.043943', '0.03476'] ; lowest eig of Q: even -0.039578 odd -0.06625
+  Beurling L=1.00 N=40 int : #pos(N)=5 ; top three of N ['4.283', '0.49681', '0.48807'] ; lowest eig of Q: even -0.48835 odd -0.50304
+  Beurling L=1.00 N=40 half: #pos(N)=5 ; top three of N ['4.2585', '0.49673', '0.47692'] ; lowest eig of Q: even -0.47784 odd -0.50296
+total 20s

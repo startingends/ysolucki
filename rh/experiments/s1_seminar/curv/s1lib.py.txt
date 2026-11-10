@@ -1,0 +1,65 @@
+"""S1-curv helper: box matrix N = primes - arch (same construction as r2_curv/proc.py.txt), process, B3 parts."""
+import math, numpy as np, mpmath as mp
+mp.mp.dps = 25
+tri = lambda t: max(0.0, 1 - abs(t))
+def build(L, M, kind='zeta', primes=(2, 3, 5, 7, 11, 13, 17, 19, 23)):
+    d = 2 * L / M
+    w = lambda u: mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+    def Wk(k):
+        f = lambda u: w(u) * (1 - abs(u - k * d) / d)
+        return mp.quad(f, [0, d, 2 * d]) if k == 1 else mp.quad(f, [(k - 1) * d, k * d, (k + 1) * d])
+    diag = float(-(-mp.log(mp.pi) + mp.quad(lambda u: mp.exp(-2 * u) / u - 2 * w(u) * (1 - u / d), [0, d / 2, d]) + mp.e1(2 * d)))
+    ta = np.array([0.0] + [float(Wk(k)) for k in range(1, M)])
+    lam = {}
+    if kind != 'arch':
+        for p in primes:
+            p = 2.1 if (kind == 'beurling' and p == 2) else p
+            pk = p
+            while pk <= math.exp(2 * L) + 1e-9: lam[pk] = math.log(p); pk *= p
+    tp = np.array([sum(c / math.sqrt(n) * (tri((math.log(n) - k * d) / d) + tri((math.log(n) + k * d) / d)) for n, c in lam.items()) for k in range(M)])
+    idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+    k = ta + tp; k[0] = 0.0
+    N = k[idx] + diag * np.eye(M)
+    x = (np.arange(M) + 0.5) * d - L
+    pref = float(4 * mp.sinh(d / 4) / mp.sqrt(d))
+    c = pref * np.cosh(x / 2); s = pref * np.sinh(x / 2)
+    return dict(N=N, k=k, diag=diag, x=x, c=c, s=s, d=d, L=L, M=M)
+def process(N):
+    M = len(N); ev, V = np.linalg.eigh(N); lam1 = ev[-1]; u = V[:, -1] * np.sign(V[:, -1].sum())
+    q = N * u[None, :] / u[:, None]; np.fill_diagonal(q, 0.0); Lg = q - np.diag(q.sum(1))
+    return ev, lam1, u, q, Lg
+def gamma_at(q, Lg, i):
+    M = len(q); E = np.eye(M)
+    def G(j):
+        D = E - E[j][None, :]          # rows e_y - e_j
+        return 0.5 * (D.T * q[j]) @ D
+    Gi = G(i)
+    LG = sum(q[i, y] * (G(y) - Gi) for y in range(M) if y != i)
+    return Gi, 0.5 * (LG - (Gi @ Lg + Lg.T @ Gi))
+def b3_parts(k, u, x):
+    """S, H, O matrices of Theorem B3 at site x (index)."""
+    M = len(u); E = np.eye(M); inW = lambda j: 0 <= j < M
+    S = np.zeros((M, M)); H = np.zeros((M, M)); O = np.zeros((M, M))
+    for a in range(-M + 1, M):
+        if a == 0 or not inW(x + a): continue
+        for b in range(-M + 1, M):
+            if b == 0: continue
+            kk = k[abs(a)] * k[abs(b)]
+            if inW(x + b):
+                A = E[x + a] - E[x]; B = E[x + b] - E[x]
+                rho = u[x + a + b] / u[x] if inW(x + a + b) else 0.0
+                Hc = u[x + a] * u[x + b] / u[x] ** 2 - rho
+                H += 0.25 * kk * Hc * (np.outer(A, B) + np.outer(B, A))
+                if rho:
+                    D = E[x + a + b] - E[x + a] - E[x + b] + E[x]
+                    S += 0.25 * kk * rho * np.outer(D, D)
+            elif inW(x + a + b):
+                rho = u[x + a + b] / u[x]
+                Bp = E[x + a + b] - E[x + a]; Sv = E[x + a + b] - E[x]
+                O += 0.5 * kk * rho * (np.outer(Bp, Bp) - 0.5 * np.outer(Sv, Sv))
+    return S, H, O
+def geneig_min(A, G, i):
+    """min of f^T A f / f^T G f at site i (Gamma_i kills constants and has f_i as base point)."""
+    import scipy.linalg as sl
+    idx = [j for j in range(len(A)) if j != i]
+    return sl.eigh(A[np.ix_(idx, idx)], G[np.ix_(idx, idx)], eigvals_only=True)[0]

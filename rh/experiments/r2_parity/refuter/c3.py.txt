@@ -1,0 +1,27 @@
+"""V6: position of one atom at L=0.5, free coupling; max over weight of the lowest eigenvalue. usage: c3.py.txt <lattice> <N> x1 x2 ..."""
+import sys, time, importlib.util, importlib.machinery
+import numpy as np
+import mpmath as mp
+from scipy.optimize import minimize_scalar
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path, loader=importlib.machinery.SourceFileLoader(name, path))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wc = load("wc", "/home/user/ysolucki/rh/experiments/r2_parity/refuter/wc.py.txt")
+mp.mp.dps = 34; t0 = time.time()
+lat, N = sys.argv[1], int(sys.argv[2]); L = 0.5
+F = wc.Form(L, N, lat); P, A = F.pole(), F.arch()
+base = wc.comb([P, A], [1, 1])
+tonp = lambda M: np.array([[float(M[i, j]) for j in range(M.cols)] for i in range(M.rows)])
+b0 = [tonp(base[b]) for b in (0, 1)]
+for xs in sys.argv[3:]:
+    x = mp.mpf(xs); Bx = F.atom(x); bx = [tonp(Bx[b]) for b in (0, 1)]      # c * x^{-1/2} (shift+adjoint), c = weight
+    f = lambda c: -min(np.linalg.eigvalsh(b0[b] - c * bx[b])[0] for b in (0, 1))
+    res = minimize_scalar(f, bounds=(0.0, 3.0), method='bounded', options={'xatol': 1e-12})
+    # refine with a second pass around the optimum (concave, piecewise smooth)
+    res2 = minimize_scalar(f, bounds=(max(0, res.x - 1e-3), res.x + 1e-3), method='bounded', options={'xatol': 1e-13})
+    c = res2.x if -res2.fun >= -res.fun else res.x; val = max(-res.fun, -res2.fun)
+    le = [np.linalg.eigvalsh(b0[b] - c * bx[b])[0] for b in (0, 1)]
+    # mp check of the value at the optimum
+    M = wc.comb([base, Bx], [1, -mp.mpf(c)]); mpv = min(min(e) for e in wc.eig_all(M))
+    print("%s/%d L=0.5 x=%s best c=%.6f max lowest eig=%.4g (mp check %s) even %.3g odd %.3g  %s  (%.0fs)" % (
+        lat, N, xs, c, val, mp.nstr(mpv, 4), le[0], le[1], "FEASIBLE" if mpv >= 0 else "infeasible", time.time() - t0), flush=True)

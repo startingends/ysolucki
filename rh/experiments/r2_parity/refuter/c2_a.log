@@ -1,0 +1,9 @@
+L=0.50 N=30 int: #pos(N)=1 ; largest 1.987187 ; second -0.012028 ; third -0.019778 ; even top two 1.987187 -0.012028 ; odd top -0.019778  (1s)
+   control Beurling (2->2.1; atoms ['2.1']): #pos(N)=3 ; top three ['1.9453', '0.043943', '0.037624'] ; lowest eig of Q even -0.041582 odd -0.06619
+L=0.75 N=30 int: #pos(N)=1 ; largest 3.100413 ; second -9.0515e-10 ; third -1.0526e-7 ; even top two 3.100413 -9.0515e-10 ; odd top -1.0526e-7  (2s)
+L=1.00 N=40 int: #pos(N)=1 ; largest 4.305408 ; second -2.1051e-23 ; third -1.0654e-20 ; even top two 4.305408 -2.1051e-23 ; odd top -1.0654e-20  (3s)
+   no primes: #pos=4 ; top five ['2.613', '1.011', '0.4829', '0.1324', '-0.1144']
+   control Beurling (2->2.1; atoms ['2.1', '4.41', '3.0', '5.0', '7.0']): #pos(N)=5 ; top three ['4.283', '0.49681', '0.48807'] ; lowest eig of Q even -0.48835 odd -0.50304
+L=1.00 N=40 half: #pos(N)=1 ; largest 4.281874 ; second -2.138e-23 ; third -1.1404e-20 ; even top two 4.281874 -2.138e-23 ; odd top -1.1404e-20  (7s)
+L=1.00 N=60 int: #pos(N)=1 ; largest 4.305568 ; second -1.7379e-23 ; third -9.9482e-21 ; even top two 4.305568 -1.7379e-23 ; odd top -9.9482e-21  (11s)
+total 11s

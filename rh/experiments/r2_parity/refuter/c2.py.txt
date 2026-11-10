@@ -1,0 +1,89 @@
+"""V2..V7 with implementation C. usage: python3 c2.py.txt a|bg|iv|sieve|joint [args]"""
+import sys, time, math, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path, loader=importlib.machinery.SourceFileLoader(name, path))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wc = load("wc", "/home/user/ysolucki/rh/experiments/r2_parity/refuter/wc.py.txt")
+t0 = time.time()
+which = sys.argv[1]
+ns = lambda v, k=5: mp.nstr(v, k)
+
+def beurling(X):
+    out = {}
+    for p in ('2.1', '3', '5', '7', '11', '13'):
+        p = mp.mpf(p); q = p
+        while q <= X:
+            out[q] = mp.log(p); q *= p
+    return out
+
+if which == "a":
+    for (L, N, lat, dps) in ((0.5, 30, 'int', 40), (0.75, 30, 'int', 50), (1.0, 40, 'int', 80), (1.0, 40, 'half', 80), (1.0, 60, 'int', 80)):
+        mp.mp.dps = dps
+        F = wc.Form(L, N, lat); A = F.arch()
+        lam = wc.mangoldt(mp.floor(mp.exp(mp.mpf(2) * L)))
+        Bs = [F.atom(n) for n in lam]
+        Nm = wc.comb([A] + Bs, [-1] + [lam[n] for n in lam])            # N = primes - arch
+        ev = wc.eig_all(Nm); allv = sorted(ev[0] + ev[1], reverse=True)
+        print("L=%.2f N=%d %s: #pos(N)=%d ; largest %s ; second %s ; third %s ; even top two %s %s ; odd top %s  (%.0fs)" % (
+            L, N, lat, sum(1 for e in allv if e > 0), ns(allv[0], 7), ns(allv[1]), ns(allv[2]), ns(ev[0][-1], 7), ns(ev[0][-2]), ns(ev[1][-1]), time.time() - t0), flush=True)
+        if L == 1.0 and N == 40 and lat == 'int':
+            ev0 = wc.eig_all(wc.comb([A], [-1])); a0 = sorted(ev0[0] + ev0[1], reverse=True)
+            print("   no primes: #pos=%d ; top five %s" % (sum(1 for e in a0 if e > 0), [ns(e, 4) for e in a0[:5]]))
+        if lat == 'int' and N in (30, 40) and L in (0.5, 1.0):
+            bl = beurling(mp.exp(mp.mpf(2) * L)); bl = {x: v for x, v in bl.items() if mp.log(x) < 2 * mp.mpf(L)}
+            Nb = wc.comb([A] + [F.atom(x) for x in bl], [-1] + [bl[x] for x in bl])
+            evb = wc.eig_all(Nb); ab = sorted(evb[0] + evb[1], reverse=True)
+            Qb = wc.comb([F.pole(), Nb], [1, -1]); eq = wc.eig_all(Qb)
+            print("   control Beurling (2->2.1; atoms %s): #pos(N)=%d ; top three %s ; lowest eig of Q even %s odd %s" % (
+                [ns(x, 4) for x in bl], sum(1 for e in ab if e > 0), [ns(e) for e in ab[:3]], ns(eq[0][0]), ns(eq[1][0])))
+elif which == "bg":
+    mp.mp.dps = 30
+    for (lat, N) in (('int', 30), ('half', 60), ('int', 200)):
+        for L in (0.36, 0.37, 0.375, 0.38, 0.40):
+            F = wc.Form(L, N, lat)
+            M = wc.comb([F.pole(), F.arch()], [1, 1]); ev = wc.eig_all(M)
+            print("bg %s/%d L=%.3f: lowest even %s ; lowest odd %s  (%.0fs)" % (lat, N, L, ns(ev[0][0], 4), ns(ev[1][0], 4), time.time() - t0), flush=True)
+elif which == "iv":       # exact single-weight intervals and joint directions, L = 1
+    N = int(sys.argv[2]); lat = sys.argv[3]
+    mp.mp.dps = 110; L = 1.0
+    F = wc.Form(L, N, lat); P, A = F.pole(), F.arch()
+    lam = wc.mangoldt(7); nn = [2, 3, 4, 5, 6, 7]
+    B = {n: F.atom(n) for n in nn}
+    Q = wc.comb([P, A] + [B[n] for n in lam], [1, 1] + [-lam[n] for n in lam])
+    ev = wc.eig_all(Q)
+    print("L=1 %s N=%d: lowest eig at true weights even %s odd %s ; no weights: %s" % (lat, N, ns(ev[0][0]), ns(ev[1][0]),
+          ns(min(min(e) for e in wc.eig_all(wc.comb([P, A], [1, 1]))), 8)), flush=True)
+    r = {}
+    for n in nn:
+        lo, hi = wc.exact_interval(Q, B[n])     # Q - delta B_n >= 0
+        r[n] = (lo, hi)
+        print("  n=%d  delta in [%s, %s]   (%.0fs)" % (n, ns(lo, 4), ns(hi, 4), time.time() - t0), flush=True)
+    def ext(d):                                  # largest t >= 0 with Q - t sum d_n B_n >= 0
+        Bd = wc.comb([B[n] for n in d], [d[n] for n in d])
+        return wc.exact_interval(Q, Bd)[1]
+    print("raw: e6+e7 %s ; -e6+e7 %s ; e2+e4 %s ; -(e2+e4) %s ; all ones %s ; -all ones %s" % (
+        ns(ext({6: 1, 7: 1}), 4), ns(ext({6: -1, 7: 1}), 4), ns(ext({2: 1, 4: 1}), 4), ns(ext({2: -1, 4: -1}), 4),
+        ns(ext({n: 1 for n in nn}), 4), ns(ext({n: -1 for n in nn}), 4)), flush=True)
+    def scaled(s):
+        return ext({n: (r[n][1] if sg > 0 else r[n][0]) * 1 for n, sg in s.items()})   # d_n = s_n * r_n(s_n); r[n][0] is negative already
+    for s in ({n: 1 for n in nn}, {n: -1 for n in nn}, {6: 1, 7: 1}, {6: 1, 7: -1}, {6: -1, 7: 1}, {6: -1, 7: -1}, {2: 1, 3: -1}, {2: -1, 7: 1}):
+        print("  scaled signs %s : t = %s" % (s, ns(scaled(s), 4)), flush=True)
+elif which == "sieve":
+    lat = sys.argv[2]
+    for n in range(2, 9):
+        L = 0.5 * math.log(n + 0.5)
+        dps = int(60 + 5.5 * math.exp(2 * L)); N = max(24, int(2.6 * L * math.exp(2 * L)) + 8)
+        mp.mp.dps = dps
+        F = wc.Form(L, N, lat); P, A = F.pole(), F.arch()
+        lam = wc.mangoldt(n)
+        prev = [k for k in lam if k < n]
+        base = wc.comb([P, A] + [F.atom(k) for k in prev], [1, 1] + [-lam[k] for k in prev])
+        Bn = F.atom(n); true = lam.get(n, mp.mpf(0))
+        Qt = wc.comb([base, Bn], [1, -true])
+        at_true = min(min(e) for e in wc.eig_all(Qt))
+        lo, hi = wc.exact_interval(Qt, Bn)
+        hw = max(hi, -lo)
+        print("n=%d L=%.4f N=%d dps=%d eig@true=%s above=%s below=%s digits=%.3f (%.0fs)" % (n, L, N, dps, ns(at_true, 3), ns(hi, 4), ns(-lo, 4),
+              float(-mp.log10(hw)), time.time() - t0), flush=True)
+print("total %.0fs" % (time.time() - t0))

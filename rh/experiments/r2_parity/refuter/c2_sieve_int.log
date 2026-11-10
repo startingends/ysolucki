@@ -1,0 +1,8 @@
+n=2 L=0.4581 N=24 dps=73 eig@true=1.06e-5 above=0.0008495 below=0.0105 digits=1.979 (1s)
+n=3 L=0.6264 N=24 dps=79 eig@true=2.98e-10 above=7.307e-5 below=0.0003498 digits=3.456 (2s)
+n=4 L=0.7520 N=24 dps=84 eig@true=3.84e-15 above=7.609e-6 below=3.306e-5 digits=4.481 (4s)
+n=5 L=0.8524 N=24 dps=90 eig@true=4.56e-20 above=1.39e-6 below=4.134e-6 digits=5.384 (5s)
+n=6 L=0.9359 N=24 dps=95 eig@true=4.24e-25 above=2.535e-7 below=7.438e-7 digits=6.129 (6s)
+n=7 L=1.0075 N=27 dps=101 eig@true=4.35e-30 above=5.832e-8 below=1.652e-7 digits=6.782 (8s)
+n=8 L=1.0700 N=31 dps=106 eig@true=4.13e-35 above=1.571e-8 below=3.714e-8 digits=7.430 (11s)
+total 11s

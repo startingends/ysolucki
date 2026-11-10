@@ -1,0 +1,14 @@
+#!/bin/bash
+# reruns of the r2_parity scripts (copies in this folder), logs under rerun/
+cd /home/user/ysolucki/rh/experiments/s1_seminar/parity
+MC="python3 /home/user/ysolucki/tools/memcap.py 2 python3"
+$MC v1.py.txt > rerun/v1.log 2>&1
+$MC v2.py.txt a > rerun/v2_a.log 2>&1
+$MC v2.py.txt sieve int > rerun/v2_sieve_int.log 2>&1
+$MC v2.py.txt sieve half > rerun/v2_sieve_half.log 2>&1
+$MC v2.py.txt joint int 40 > rerun/v2_joint_int40.log 2>&1
+$MC v2.py.txt bg > rerun/v2_bg.log 2>&1
+$MC v3.py.txt int 30 0.5 1.9995 1.9996 1.9998 2 2.007 2.008 2.010 > rerun/v3_int.log 2>&1
+$MC v3.py.txt half 30 0.5 1.9996 1.9998 2 2.008 2.010 > rerun/v3_half.log 2>&1
+$MC v2.py.txt joint half 60 > rerun/v2_joint_half60.log 2>&1
+echo done > rerun/DONE

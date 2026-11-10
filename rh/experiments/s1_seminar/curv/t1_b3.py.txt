@@ -1,0 +1,28 @@
+"""S1-curv turn 1: Gamma-normalised split of Theorem B3 (checker's objection 3), per site and integrated against pi.
+usage: t1_b3.py.txt L M kind"""
+import sys, importlib.machinery, importlib.util, numpy as np, scipy.linalg as sl
+ld = importlib.machinery.SourceFileLoader('s1lib', 's1lib.py.txt'); sp = importlib.util.spec_from_loader('s1lib', ld); S = importlib.util.module_from_spec(sp); ld.exec_module(S)
+L = float(sys.argv[1]); M = int(sys.argv[2]); kind = sys.argv[3]
+b = S.build(L, M, kind); ev, lam1, u, q, Lg = S.process(b['N']); pi = u * u; k = b['k']
+print("%s L=%g M=%d lambda_1=%.6f  #pos=%d  total rate Q=%.5f" % (kind, L, M, lam1, (ev > 0).sum(), q.sum(1)[0]))
+tot = dict(S=np.zeros((M, M)), H=np.zeros((M, M)), O=np.zeros((M, M)), G=np.zeros((M, M)), G2=np.zeros((M, M)))
+for x in range(M):
+    Sx, Hx, Ox = S.b3_parts(k, u, x); G, G2 = S.gamma_at(q, Lg, x)
+    err = np.abs(G2 - Sx - Hx - Ox).max()
+    for n, m in (('S', Sx), ('H', Hx), ('O', Ox), ('G', G), ('G2', G2)): tot[n] += pi[x] * m
+    if x in (0, M // 4, M // 2):
+        g = lambda A: S.geneig_min(A, G, x) / lam1
+        # trial function 1 - delta_x
+        f = np.ones(M); f[x] = 0; R = lambda A: (f @ A @ f) / (f @ G @ f) / lam1
+        print(" site %3d (x=%+.3f) err %.1e | BE const/lam1: S %.4f  S+H %.4f  S+O %.4f  H+O %.4f  all %.4f" % (x, b['x'][x], err, g(Sx), g(Sx + Hx), g(Sx + Ox), g(Hx + Ox), g(G2)))
+        print("      on f = 1 - delta_x (Rayleigh /lam1): S %.4f  H %.4f  O %.4f  all %.4f" % (R(Sx), R(Hx), R(Ox), R(G2)))
+# integrated: sum_x pi_x Gamma_2 = ||Lf||_pi^2 ; sum pi_x Gamma = E(f).  restrict to f with pi-mean zero
+Pm = np.eye(M) - np.outer(np.ones(M), pi)
+B = np.linalg.qr(np.hstack([np.ones((M, 1)), np.eye(M)[:, 1:]]))[0][:, 1:]
+def ge(A): return sl.eigh(B.T @ A @ B, B.T @ tot['G'] @ B, eigvals_only=True)
+chk = np.abs(tot['G2'] - Lg.T @ np.diag(pi) @ Lg).max()
+print(" integrated check |sum pi Gamma_2 - L^T Pi L| = %.1e" % chk)
+for name, A in (('S', tot['S']), ('H', tot['H']), ('O', tot['O']), ('S+H', tot['S'] + tot['H']), ('S+O', tot['S'] + tot['O']), ('H+O', tot['H'] + tot['O']), ('all', tot['G2'])):
+    e = ge(A)
+    print(" integrated %-4s: generalised eigenvalues vs Dirichlet form, /lam1: min %.4f  2nd %.4f  max %.3f ; #neg %d of %d" % (name, e[0] / lam1, e[1] / lam1, e[-1] / lam1, (e < -1e-9).sum(), len(e)))
+np.save("int_parts_%s_%g_%d.npy" % (kind, L, M), np.array([tot['S'], tot['H'], tot['O'], tot['G']]))

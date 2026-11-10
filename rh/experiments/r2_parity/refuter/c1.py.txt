@@ -1,0 +1,46 @@
+"""V1: implementation C vs r1_A builder (entrywise), L=1, N=12; control 2 -> 2.1."""
+import sys, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path, loader=importlib.machinery.SourceFileLoader(name, path))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wc = load("wc", "/home/user/ysolucki/rh/experiments/r2_parity/refuter/wc.py.txt")
+weil = load("weil", "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt")
+import flint
+dps = 60; mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 60
+t0 = time.time()
+L, N = 1.0, 12
+F = wc.Form(L, N, 'int')
+lam = wc.mangoldt(mp.floor(mp.exp(2 * L)))
+P, A = F.pole(), F.arch()
+Bs = {n: F.atom(n) for n in lam}
+Q = wc.comb([P, A] + [Bs[n] for n in lam], [1, 1] + [-lam[n] for n in lam])
+q, _ = weil.build(L, N, kind='zeta', pole=True, primes=True, arch=True)
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+R = [to_mp(weil.even_block(q, N)), to_mp(weil.odd_block(q, N))]
+for b, nm in ((0, 'even'), (1, 'odd')):
+    d = max(abs(Q[b][i, j] - R[b][i, j]) for i in range(Q[b].rows) for j in range(Q[b].cols))
+    print("max |C - builder| %s block: %s" % (nm, mp.nstr(d, 3)))
+# separate pieces
+for nm, kw, mine in (("pole only", dict(pole=True, primes=False, arch=False), P), ("arch only", dict(pole=False, primes=False, arch=True), A)):
+    if nm == "pole only":
+        qa, _ = weil.build(L, N, kind='zeta', pole=True, primes=False, arch=True)
+        qb, _ = weil.build(L, N, kind='zeta', pole=False, primes=False, arch=True)
+        Ra = to_mp(weil.even_block(qa, N)) - to_mp(weil.even_block(qb, N))
+    else:
+        qb, _ = weil.build(L, N, kind='zeta', pole=False, primes=False, arch=True)
+        Ra = to_mp(weil.even_block(qb, N))
+    d = max(abs(mine[0][i, j] - Ra[i, j]) for i in range(Ra.rows) for j in range(Ra.cols))
+    print("  %s, even block: max diff %s" % (nm, mp.nstr(d, 3)))
+# control: move 2 -> 2.1 in C only
+lam2 = {(mp.mpf('2.1') if n == 2 else n): (mp.log(mp.mpf('2.1')) if n == 2 else v) for n, v in lam.items() if n != 4}
+lam2[mp.mpf('2.1') ** 2] = mp.log(mp.mpf('2.1'))
+Qc = wc.comb([P, A] + [F.atom(x) for x in lam2], [1, 1] + [-lam2[x] for x in lam2])
+d = max(abs(Qc[0][i, j] - R[0][i, j]) for i in range(Qc[0].rows) for j in range(Qc[0].cols))
+print("control (2 -> 2.1 in C only): max diff even block %s" % mp.nstr(d, 3))
+print("%.1fs" % (time.time() - t0))

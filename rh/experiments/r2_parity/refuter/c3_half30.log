@@ -1,0 +1,7 @@
+half/30 L=0.5 x=1.9996 best c=0.690894 max lowest eig=-3.534e-07 (mp check -3.534e-7) even -3.53e-07 odd -3.52e-07  infeasible  (1s)
+half/30 L=0.5 x=1.9998 best c=0.691621 max lowest eig=6.992e-06 (mp check 6.992e-6) even 6.99e-06 odd 6.99e-06  FEASIBLE  (1s)
+half/30 L=0.5 x=2 best c=0.692351 max lowest eig=1.43e-05 (mp check 1.43e-5) even 1.43e-05 odd 1.43e-05  FEASIBLE  (1s)
+half/30 L=0.5 x=2.007 best c=0.719841 max lowest eig=0.0002435 (mp check 0.0002435) even 0.000243 odd 0.000243  FEASIBLE  (2s)
+half/30 L=0.5 x=2.008 best c=0.724128 max lowest eig=0.000272 (mp check 0.000272) even 0.000272 odd 0.000272  FEASIBLE  (2s)
+half/30 L=0.5 x=2.009 best c=0.726359 max lowest eig=-0.000104 (mp check -0.000104) even -0.000104 odd -0.000104  infeasible  (2s)
+half/30 L=0.5 x=2.010 best c=0.727080 max lowest eig=-0.0007659 (mp check -0.0007659) even -0.000766 odd -0.000766  infeasible  (2s)

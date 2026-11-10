@@ -1,0 +1,165 @@
+"""Implementation C (verifier R2-parity-ref). Windowed Weil form on L^2[-L,L], Fourier basis, entries by
+Gauss-Legendre quadrature of the kernel (no digamma, no closed form for the archimedean part).
+Q = P + A - sum_x c_x B_x,  B_x = x^{-1/2} (shift by log x + adjoint).
+Basis: e_p(x) = exp(i pi p x / L)/sqrt(2L), p in Z ('int') or Z+1/2 ('half'); even/odd real blocks.
+"""
+import math
+import mpmath as mp
+from mpmath.calculus.quadrature import GaussLegendre
+
+_nodes_cache = {}
+def gl_nodes(deg=6):
+    key = (deg, mp.mp.prec)
+    if key not in _nodes_cache:
+        _nodes_cache[key] = GaussLegendre(mp.mp).calc_nodes(deg, mp.mp.prec + 20)
+    return _nodes_cache[key]
+
+def w(u):
+    return mp.exp(u / 2) / (2 * mp.sinh(u))
+
+class Form:
+    def __init__(self, L, N, lattice='int', deg=6):
+        self.L = L = mp.mpf(L); self.N = N; self.lattice = lattice
+        if lattice == 'int':
+            self.pos = [mp.mpf(k) for k in range(1, N + 1)]; self.zero = True
+        else:
+            self.pos = [mp.mpf(k) + mp.mpf(1) / 2 for k in range(0, N)]; self.zero = False
+        self.ps = ([mp.mpf(0)] if self.zero else []) + self.pos        # non-negative lattice points
+        self.freq = [mp.pi * p / L for p in self.ps]
+        self._arch_integrals(deg)
+
+    # ---- quadrature of the archimedean kernel ----
+    def _arch_integrals(self, deg):
+        L = self.L; twoL = 2 * L
+        wmax = float(self.freq[-1])
+        width = min(0.25, 50.0 / max(wmax, 1.0))
+        npan = int(math.ceil(float(twoL) / width))
+        nodes = gl_nodes(deg)
+        n = len(self.ps)
+        Sw = [mp.mpf(0)] * n; Dw = [mp.mpf(0)] * n; cL = mp.mpf(0)
+        h = twoL / npan / 2
+        step = mp.pi / L
+        p0 = self.ps[0]
+        for ip in range(npan):
+            c = (2 * ip + 1) * h
+            for (x, wt) in nodes:
+                u = c + h * x; wq = wt * h
+                wu = w(u)
+                cL += wq * (mp.exp(-2 * u) / u - 2 * wu)
+                z = mp.expj(step * u)            # e^{i pi u / L}
+                zz = mp.expj(step * u * p0)      # first lattice point
+                for k in range(n):
+                    co = zz.real; si = zz.imag
+                    Sw[k] += wq * wu * si
+                    Dw[k] += wq * wu * (4 * L * (1 - co) + 2 * u * co)
+                    zz = zz * z
+        self.Sw = Sw; self.Dw = Dw
+        self.cL = cL + mp.e1(4 * L)
+
+    # ---- generic assembly from S (odd in frequency) and D (diagonal, even in frequency) ----
+    def _assemble(self, S, D, pole=None):
+        """returns [even block, odd block] of the form with off-diagonal (-1)^m (S(b)-S(a))/(pi (pa-pb)) and diagonal D."""
+        ps = self.ps; n = len(ps)
+        idx = {}
+        def Sx(p):
+            return S[ps.index(abs(p))] * (1 if p > 0 else (-1 if p < 0 else 0))
+        def h(pa, pb):
+            if pa == pb:
+                return D[ps.index(abs(pa))]
+            m = int(mp.nint(pa - pb))
+            sg = -1 if m % 2 else 1
+            return sg * (Sx(pb) - Sx(pa)) / (mp.pi * (pa - pb))
+        pos = self.pos; s2 = mp.sqrt(2)
+        ne = len(pos) + (1 if self.zero else 0)
+        E = mp.matrix(ne, ne); O = mp.matrix(len(pos), len(pos))
+        off = 1 if self.zero else 0
+        if self.zero:
+            E[0, 0] = h(mp.mpf(0), mp.mpf(0))
+            for j, b in enumerate(pos):
+                v = s2 * h(mp.mpf(0), b)
+                E[0, j + 1] = v; E[j + 1, 0] = v
+        for i, a in enumerate(pos):
+            for j, b in enumerate(pos):
+                if j < i: continue
+                hp = h(a, b); hm = h(a, -b)
+                E[i + off, j + off] = hp + hm; E[j + off, i + off] = hp + hm
+                O[i, j] = hp - hm; O[j, i] = hp - hm
+        return [E, O]
+
+    def arch(self):
+        L = self.L
+        S = [-s for s in self.Sw]
+        D = [(self.cL - mp.log(mp.pi)) + d / (2 * L) for d in self.Dw]
+        return self._assemble(S, D)
+
+    def atom(self, x):
+        """B_x: unit weight c=1 at position x (log x < 2L): x^{-1/2}(shift + adjoint)."""
+        L = self.L; x = mp.mpf(x); u = mp.log(x)
+        assert u < 2 * L
+        cf = 1 / mp.sqrt(x)
+        S = [cf * mp.sin(a * u) for a in self.freq]
+        D = [cf * 2 * mp.cos(a * u) * (1 - u / (2 * L)) for a in self.freq]
+        return self._assemble(S, D)
+
+    def pole(self):
+        L = self.L
+        def Fp(p):
+            a = mp.pi * p / L; z = mp.mpc(mp.mpf(1) / 2, a)        # int e^{iax} e^{x/2} dx = 2 sinh(zL)/z
+            return 2 * mp.sinh(z * L) / z
+        def Fm(p):
+            a = mp.pi * p / L; z = mp.mpc(-mp.mpf(1) / 2, a)
+            return 2 * mp.sinh(z * L) / z
+        def h(pa, pb):
+            v = (Fp(pa) * mp.conj(Fm(pb)) + Fm(pa) * mp.conj(Fp(pb))) / (2 * L)
+            assert abs(v.imag) < mp.mpf(10) ** (-mp.mp.dps + 8), v
+            return v.real
+        pos = self.pos; s2 = mp.sqrt(2)
+        ne = len(pos) + (1 if self.zero else 0); off = 1 if self.zero else 0
+        E = mp.matrix(ne, ne); O = mp.matrix(len(pos), len(pos))
+        if self.zero:
+            E[0, 0] = h(mp.mpf(0), mp.mpf(0))
+            for j, b in enumerate(pos):
+                v = (h(mp.mpf(0), b) + h(mp.mpf(0), -b)) / s2
+                E[0, j + 1] = v; E[j + 1, 0] = v
+        for i, a in enumerate(pos):
+            for j, b in enumerate(pos):
+                if j < i: continue
+                pp, pm, mp_, mm = h(a, b), h(a, -b), h(-a, b), h(-a, -b)
+                e = (pp + pm + mp_ + mm) / 2; o = (pp - pm - mp_ + mm) / 2
+                E[i + off, j + off] = e; E[j + off, i + off] = e
+                O[i, j] = o; O[j, i] = o
+        return [E, O]
+
+def mangoldt(X):
+    """dict n -> log p for prime powers n = p^k <= X"""
+    X = int(X); out = {}
+    for p in range(2, X + 1):
+        if all(p % d for d in range(2, int(p ** 0.5) + 1)):
+            q = p
+            while q <= X:
+                out[q] = mp.log(p); q *= p
+    return out
+
+def comb(blocks_list, coefs):
+    out = []
+    for b in (0, 1):
+        M = blocks_list[0][b] * coefs[0]
+        for Bk, c in zip(blocks_list[1:], coefs[1:]):
+            M = M + Bk[b] * c
+        out.append(M)
+    return out
+
+def eig_all(M):
+    return [sorted(mp.eigsy(M[b], eigvals_only=True)) for b in (0, 1)]
+
+def exact_interval(Q, B):
+    """exact set {t : Q - t B >= 0} for Q positive definite: [1/mu_min, 1/mu_max] over both blocks."""
+    lo, hi = -mp.inf, mp.inf
+    for b in (0, 1):
+        Lc = mp.cholesky(Q[b]); Li = mp.inverse(Lc)
+        C = Li * B[b] * Li.T
+        C = (C + C.T) / 2
+        ev = sorted(mp.eigsy(C, eigvals_only=True))
+        if ev[-1] > 0: hi = min(hi, 1 / ev[-1])
+        if ev[0] < 0: lo = max(lo, 1 / ev[0])
+    return lo, hi

@@ -1,0 +1,30 @@
+"""S1-curv turn 1. (a) exact margin formulas: even margin = 1/(t_e - 1), odd margin = 1/(1 + t_o), t = 2 <pole, Q^-1 pole>;
+P_M = lambda_1/(mu_1 (t_e - 1)) vs lambda_1/(2 <c,v_1>^2).  (b) lambda_1 < 0 on small windows (checker R10).
+usage: t1_margins.py.txt"""
+import sys, importlib.machinery, importlib.util, numpy as np
+ld = importlib.machinery.SourceFileLoader('s1lib', 's1lib.py.txt'); sp = importlib.util.spec_from_loader('s1lib', ld); S = importlib.util.module_from_spec(sp); ld.exec_module(S)
+def blocks(b):
+    N, c, s, M = b['N'], b['c'], b['s'], b['M']
+    h = M // 2
+    # orthonormal even / odd bases
+    Be = np.zeros((M, h)); Bo = np.zeros((M, h))
+    for j in range(h):
+        Be[h + j, j] = Be[h - 1 - j, j] = 2 ** -0.5
+        Bo[h + j, j] = 2 ** -0.5; Bo[h - 1 - j, j] = -2 ** -0.5
+    return Be.T @ N @ Be, Bo.T @ N @ Bo, Be.T @ c, Bo.T @ s
+print("zeta, L = 1: margins three ways")
+for M in (20, 40, 80, 160):
+    b = S.build(1.0, M); Ne, No, ce, so = blocks(b)
+    Qe = 2 * np.outer(ce, ce) - Ne; Qo = -2 * np.outer(so, so) - No
+    me = 2 * ce @ np.linalg.solve(Ne, ce) - 1; mo = 1 - 2 * so @ np.linalg.solve(-No, so)
+    te = 2 * ce @ np.linalg.solve(Qe, ce); to = 2 * so @ np.linalg.solve(Qo, so)
+    mu, V = np.linalg.eigh(Qe); lam1 = np.linalg.eigvalsh(Ne)[-1]
+    P = me * lam1 / mu[0]
+    print("M=%3d lam1=%.6f mu1(Qe)=%.6e  even margin %.9e = 1/(t_e-1) %.9e ; odd margin %.9e = 1/(1+t_o) %.9e" % (M, lam1, mu[0], me, 1 / (te - 1), mo, 1 / (1 + to)))
+    print("      P_M = %.6f ; lam1/(2<c,v1>^2) = %.6f ; share of v1 in t_e: %.4f ; 2<c,v1>^2 = %.5f" % (P, lam1 / (2 * (ce @ V[:, 0]) ** 2), (2 * (ce @ V[:, 0]) ** 2 / mu[0]) / te, 2 * (ce @ V[:, 0]) ** 2))
+print("small windows (M = 40): sign of lambda_1 and the even sum rule")
+for L in (0.05, 0.10, 0.12, 0.20):
+    b = S.build(L, 40); Ne, No, ce, so = blocks(b)
+    Qe = 2 * np.outer(ce, ce) - Ne
+    lam1 = np.linalg.eigvalsh(Ne)[-1]; te = 2 * ce @ np.linalg.solve(Qe, ce)
+    print("L=%.2f lam1=%+.4f  #pos eig N_e=%d  min eig Q_e=%.4f  2c^T N^-1 c - 1 = %+.4f  t_e=%.4f  1/(t_e-1)=%+.4f" % (L, lam1, (np.linalg.eigvalsh(Ne) > 0).sum(), np.linalg.eigvalsh(Qe)[0], 2 * ce @ np.linalg.solve(Ne, ce) - 1, te, 1 / (te - 1)))

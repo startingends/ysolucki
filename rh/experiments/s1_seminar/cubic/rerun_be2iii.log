@@ -2,3 +2,5 @@
 (iii) zeta L=1 n=24: #pos(H)=1 gap(-L)=1.00015 rho_BE=0.5280 ; positive eigenvalues of slices of T^BE: min 2 max 2
 (iii) zeta L=1 n=48: #pos(H)=1 gap(-L)=1.00005 rho_BE=0.4816 ; positive eigenvalues of slices of T^BE: min 2 max 2
 (iii) beurling L=1 n=12: #pos(H)=2 gap(-L)=0.99623 rho_BE=0.5863 ; positive eigenvalues of slices of T^BE: min 2 max 2
+(iii) beurling L=1 n=24: #pos(H)=5 gap(-L)=0.95387 rho_BE=0.5230 ; positive eigenvalues of slices of T^BE: min 2 max 2
+(iii) beurling L=1 n=48: #pos(H)=5 gap(-L)=0.92808 rho_BE=0.4825 ; positive eigenvalues of slices of T^BE: min 2 max 2
