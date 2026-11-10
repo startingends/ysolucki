@@ -176,3 +176,43 @@ form in terms of Lambda(2..n-1), then RH becomes "c_n - Lambda(n) is tiny", a qu
   (Sieve table: 0.075, 0.2, 0.24, 0.36, 0.37, 0.36, 0.42, 0.42, 0.49: not going to 0 at admission. At L = 1
   for old integers: 0.002, 0.01, 0.03, 0.06, 0.15, 0.42: small for integers that entered long ago. So the
   truth drifts to the upper end as the window keeps growing after admission. Worth a proper test.)
+
+**N19. The derivative formula I wanted for #8 probably already has a name.** (lead) FROM MEMORY, to be
+searched before any claim. For a positive-definite kernel on a growing window, the resolvent kernel obeys
+the Bellman-Krein (Krein-Sobolev) identity: d/dr Gamma_r(t,s) = Gamma_r(t,r) Gamma_r(r,s), and
+d/dr log det = an edge value of the resolvent. That is exactly a formula for how the window form changes
+as the window widens, in terms of the solution's value at the window edge. The window family is then a
+"Krein system" with a potential a(L); positivity for all L iff a(L) never blows up. Lane A's idea A4 says
+the same. Recalled prior work that must be read before going on: Burnol (Sonine spaces; the archimedean
+part alone is exactly solvable, with Painleve-type functions), Suzuki ("Hamiltonians arising from
+L-functions in the Selberg class": RH iff a certain canonical-system Hamiltonian exists for all a).
+If that recollection is right, "RH iff the potential has no singularity" is KNOWN and by owner rule 2 is
+only a reformulation. The open part would be: what do the primes do to the potential, kick by kick.
+
+**N20. Integrable structure, with primes as kicks.** (lead) WILD, testable.
+Lane A's lattice identity has the shape (T(w) - T(w'))/(w - w'). Kernels of that shape are the "integrable
+operators" of mathematical physics; their determinants are tau-functions and obey exact differential
+equations (the sine kernel gives Painleve V; the sine kernel IS the time-and-band-limiting operator behind
+lane A's prolate law). So between two consecutive prime powers the window determinant tau(L) should obey
+an exact ODE, and each prime power log n applies an explicit jump. Then:
+   RH  iff  tau(L) never vanishes  iff  a kicked integrable system never hits a pole.
+What would be new input (rule 2): exact evolution equations, i.e. identities, which is the only kind of
+tool S3 allows. Why it might avoid W1/W2: nothing converges and nothing is estimated; a pole of an
+integrable flow is forbidden by conservation laws when it is forbidden at all.
+What a kill would look like: the kicks destroy integrability (no closed evolution across a kick), leaving
+just the definition of tau.
+First test (cheap, with matrices we have): compute log tau(L) for zeta and the impostor on a fine grid of
+L in [0.3, 1.9]; check the Bellman-Krein identity numerically between kicks; measure the jump in
+d/dL log tau at L = (1/2) log n for n = 2..30 and look for a closed form in Lambda(n) and the edge values.
+
+**N21. A habit to keep.** (lead) Four of today's "new" ideas turned out to be partly or wholly known within
+one search (#2 Yoshida/Suzuki, #6 Gonek, #9 Johns, N19 Krein/Suzuki). The territory around window
+positivity is crowded. What nobody in the papers read so far has done is run the CONTROL (the impostor) and
+make blind numerical predictions. That is our edge: an experimental method, not yet a new idea.
+
+**N22. Search result for N19.** (lead) SEARCHED: Suzuki, arXiv 1606.05726 (J. Funct. Anal. 2021) and
+arXiv 1204.1827 give an equivalent condition for (G)RH in terms of canonical systems: the Hamiltonian must
+exist for every value of the parameter. Read only as search summaries. So the "Krein system with no
+singularity" restatement is known; by rule 2 it is not an idea. Burnol's Painleve results: one search found
+nothing; still only a recollection. N20 (integrable flow with prime kicks) stays open and unsearched beyond
+this; before any work on it, fetch both Suzuki papers and look for what he does with the prime terms.

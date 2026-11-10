@@ -1,0 +1,105 @@
+"""CRITIC's independent Weil-form implementation (mpmath, x-space, Gauss-Legendre quadrature; no digamma closed forms).
+Even block only, basis C_k(x) = cos(w_k x), w_k = pi k / L (k = 0..N), normalised.
+Q(f) = 2 F(f)^2 [pole, zeta only] + g(0) c0 + int_0^inf [ g(0) e^{-2x}/x - K(x) g(x) ] dx - 2 sum_n c_n n^{-1/2} g(log n)
+with K(x) = 2 e^{-alpha2 x}/(1 - e^{-2x}), alpha2 = 1/2 (zeta) or 3/2 (DH), g = autocorrelation of f, F(f) = int f cosh(x/2).
+(Gauss' integral psi(z) = int_0^inf (e^-t/t - e^{-zt}/(1-e^-t)) dt, z = alpha2/2... with t = 2x.)
+"""
+import sys, time
+import mpmath as mp
+
+def gl_nodes(a, b, panels, n):
+    xs, ws = [], []
+    base = mp.calculus.quadrature.GaussLegendre(mp.mp)
+    # use mp's own gauss-legendre nodes of degree giving >= n points
+    deg = 1
+    while 3 * 2 ** (deg - 1) < n:
+        deg += 1
+    nodes = base.calc_nodes(deg, mp.mp.prec)
+    h = (b - a) / panels
+    for p in range(panels):
+        lo = a + p * h
+        for (x, w) in nodes:
+            xs.append(lo + (x + 1) * h / 2); ws.append(w * h / 2)
+    return xs, ws
+
+def dh_c(X):
+    k = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+    a = [None] + [(mp.mpf(0), mp.mpf(1), k, -k, mp.mpf(-1))[n % 5] for n in range(1, X + 1)]
+    c = [mp.mpf(0)] * (X + 1)
+    for n in range(2, X + 1):
+        s = a[n] * mp.log(n)
+        for d in range(2, n):
+            if n % d == 0:
+                s -= c[d] * a[n // d]
+        c[n] = s
+    return {n: c[n] for n in range(2, X + 1) if c[n] != 0}
+
+def zeta_c(X):
+    out = {}
+    for p in range(2, X + 1):
+        if all(p % d for d in range(2, int(p ** 0.5) + 1)):
+            pk = p
+            while pk <= X:
+                out[pk] = mp.log(p); pk *= p
+    return out
+
+def matrix(L, N, kind='zeta', panels=None, npts=48):
+    L = mp.mpf(L)
+    a2 = mp.mpf(1) / 2 if kind == 'zeta' else mp.mpf(3) / 2
+    c0 = -mp.log(mp.pi) if kind == 'zeta' else mp.log(5 / mp.pi)
+    X = int(mp.floor(mp.exp(2 * L) + mp.mpf(10) ** -9))
+    cn = zeta_c(X) if kind == 'zeta' else dh_c(X)
+    w = [mp.pi * k / L for k in range(N + 1)]
+    if panels is None:
+        panels = max(16, int(N * 0.6))
+    xs, ws = gl_nodes(mp.mpf(0), 2 * L, panels, npts)
+    Kx = [2 * mp.exp(-a2 * x) / (1 - mp.exp(-2 * x)) for x in xs]
+    Ex = [mp.exp(-2 * x) / x for x in xs]
+    E1 = mp.e1(4 * L)
+    Js = [mp.mpf(0)] * (N + 1); Jc = [mp.mpf(0)] * (N + 1)
+    for k in range(N + 1):
+        wk = w[k]
+        s = mp.mpf(0); c = mp.mpf(0)
+        for x, wt, K, E in zip(xs, ws, Kx, Ex):
+            s += wt * K * mp.sin(wk * x)
+            c += wt * (2 * L * E - K * (2 * L - x) * mp.cos(wk * x))
+        Js[k] = s; Jc[k] = c + 2 * L * E1
+    lg = [(c / mp.sqrt(n), mp.log(n)) for n, c in sorted(cn.items())]
+    # prime sums: Ps(w) = sum cc sin(w u), Pc(w) = sum cc (2L-u) cos(w u)
+    Ps = [mp.fsum(cc * mp.sin(wk * u) for cc, u in lg) for wk in w]
+    Pc = [mp.fsum(cc * (2 * L - u) * mp.cos(wk * u) for cc, u in lg) for wk in w]
+    # functional A(g) = arch(g) - 2 sum cc g(u) is linear in g; on g = sin(w x): -(Js + 2 Ps); on g=(2L-x)cos(wx): Jc - 2 Pc
+    As = [-(Js[k] + 2 * Ps[k]) for k in range(N + 1)]
+    Ac = [Jc[k] - 2 * Pc[k] for k in range(N + 1)]
+    F = [(-1) ** k * mp.sinh(L / 2) / (w[k] ** 2 + mp.mpf(1) / 4) for k in range(N + 1)]
+    nrm = [mp.sqrt(2 * L)] + [mp.sqrt(L)] * N
+    M = mp.matrix(N + 1, N + 1)
+    for j in range(N + 1):
+        for k in range(j, N + 1):
+            a, b = w[j], w[k]
+            if j == k == 0:
+                v = Ac[0] + 2 * L * c0                       # g = 2L - x, g(0) = 2L
+            elif j == k:
+                v = Ac[j] / 2 - As[j] / (2 * a) + L * c0     # g = (2L-x)cos(ax)/2 - sin(ax)/(2a), g(0) = L
+            else:
+                sp = -(-1) ** (j + k) * (As[k] + As[j]) / (a + b)
+                sm = (-1) ** (j - k) * (As[k] - As[j]) / (a - b)
+                v = (sp + sm) / 2                            # g(0) = 0
+            if kind == 'zeta':
+                v += 2 * F[j] * F[k]
+            v /= nrm[j] * nrm[k]
+            M[j, k] = v; M[k, j] = v
+    return M, w, nrm
+
+if __name__ == '__main__':
+    kind = sys.argv[1]; mp.mp.dps = int(sys.argv[2])
+    for spec in sys.argv[3:]:
+        L, N = spec.split(':'); N = int(N)
+        t = time.time()
+        M, w, nrm = matrix(L, N, kind)
+        t1 = time.time() - t
+        ev = mp.eigsy(M, eigvals_only=True)
+        ev = sorted(ev)
+        neg = [e for e in ev if e < 0]
+        pos = sorted([e for e in ev if e > 0])
+        print(f"{kind} L={L} N={N} dps={mp.mp.dps} neg={[mp.nstr(e, 6) for e in neg[:4]]} smallest pos={[mp.nstr(e, 8) for e in pos[:4]]} [build {t1:.1f}s total {time.time()-t:.1f}s]", flush=True)
