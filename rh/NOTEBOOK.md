@@ -72,3 +72,22 @@ impostor (blind prediction 2.8 +- 0.5 on record in idea #8), infinite for zeta i
 natural "distance from RH" for a general Dirichlet series, continuous in the coefficients? If so, the honest
 L-functions sit at 1/a0 = 0, the boundary of the range. That would be the picture asked for in Q5: zero
 slack because true L-functions are extreme points.
+
+**N12. My first blind prediction missed, and that taught more than a hit would have.** (lead) Predicted
+a0 = 2.8 for the impostor; lane A measured 1.71. My mental picture had a loud positive background that an
+off-line zero must overcome. The truth is the opposite: the windowed form is almost exactly degenerate
+(eigenvalues like 1e-30), a whisper is enough, and only the *height* of the bad zero matters, not how far
+off the line it is. New picture: the window of half-width a is a telescope that resolves heights up to
+about 4 pi e^(2a)/q, and it reports a violation the instant one comes into view.
+
+**N13. What this does to the template (#8).** (lead) HEURISTIC. At a first-failure window for zeta itself the
+null vector would be a wave packet at the height T of the first bad zero, and the equation says its envelope
+h is reproduced by prime-shifted copies with phases n^(-iT), n up to about T/(4 pi), with total strength
+log(T/2 pi). The available total weight is sum Lambda(n)/sqrt(n) ~ 2 sqrt(T/4 pi), vastly more than log T,
+so a size argument cannot forbid it: only a statement about *phases of primes at frequency T* can.
+So the key lemma is a statement that the primes up to X cannot be coherent at a frequency T ~ 4 pi X in a
+specific self-reproducing way. Note the regime: frequency about 4 pi times the length. That is exactly where
+the functional equation balances (the two halves of the approximate functional equation have equal length).
+WILD: the null-vector equation is a fixed-point equation for a "prime-shift transfer operator at frequency
+T"; RH would say this operator never has eigenvalue exactly log(T/2 pi) on the window. Compare its spectrum
+for the impostor at T = 85.7 and for zeta at the same T.

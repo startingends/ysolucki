@@ -1,0 +1,2 @@
+mode=dh N=110 sigma0=1.25 Tmax=112.0 dps=320  (function values: 69.2s)
+Pick matrix A: 2 negative eigenvalues; most negative -3.400e-06 ; smallest positive 3.550e-163 ; largest 4.199e-02
