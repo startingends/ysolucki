@@ -1,7 +1,7 @@
-# <PROJECT>: context for every session
+# ysolucki (Riemann Hypothesis research): context for every session
 
 **Start at `docs/HUB.md`** (one entry point: projects, live pages, open decisions, running jobs).
-Owner: **<OWNER>**. This file loads automatically. Replace every `<...>` before use.
+Owner: **startingends** (repo owner). This file loads automatically.
 
 ## Where things live (create these on day one)
 | file | what it is | who writes it |
