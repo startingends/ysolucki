@@ -55,7 +55,9 @@ Verified 2026-11-10: web search works and arXiv full text can be fetched (partly
 Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` section 7.
 
 ## Running jobs
-None.
+- Round 2 (creation round, workflow `rh-round2-creation`): seats cubic (#10), curv (#11), parity (proofs and
+  reproduction of the lead's numbers), free (rule 8); then four refuters and a judge.
+- Idea auditor R1-AUD: promoting / skipping the round-1 local idea logs.
 
 ## Scheduled routines
 None.
