@@ -1,0 +1,161 @@
+"""Box-basis N = primes - arch, Doob transform, gap, Bakry-Emery, Ollivier.  usage: proc.py.txt <L> <M> <kind>
+kind: zeta | beurling | dh | dial1.4 | dial2 (dial: sign count only uses zeta arch as stand-in, flagged)"""
+import sys, math, numpy as np, mpmath as mp
+from scipy.optimize import linprog
+mp.mp.dps = 25
+L = float(sys.argv[1]); M = int(sys.argv[2]); kind = sys.argv[3]
+d = 2 * L / M
+alpha = 1.5 if kind == 'dh' else (float(kind[4:]) / 2 if kind.startswith('dial') else 0.5)
+def w(u):  # sum_m exp(-(2m+alpha)u)
+    return mp.exp(-alpha * u) / (-mp.expm1(-2 * u))
+tri = lambda t: max(0.0, 1 - abs(t))
+# arch off-diagonal: W_k = int w(u) tri((u-kd)/d) du
+def Wk(k):
+    f = lambda u: w(u) * (1 - abs(u - k * d) / d)
+    if k == 1:
+        return mp.quad(f, [0, d, 2 * d])
+    return mp.quad(f, [(k - 1) * d, k * d, (k + 1) * d])
+c0 = -mp.log(mp.pi) if kind != 'dh' else mp.log(5 / mp.pi)
+# arch diagonal: c0 + int_0^inf ( e^{-2u}/u - 2 w(u) tri(u/d) ) du   [general alpha: constant e^{-2u}/u is the
+# builder's convention for zeta; for alpha use Re psi(alpha/2) check below]
+def arch_diag():
+    f1 = lambda u: mp.exp(-2 * u) / u - 2 * w(u) * (1 - u / d)
+    return c0 + mp.quad(f1, [0, d / 2, d]) + mp.e1(2 * d)
+def weights(X):
+    out = {}
+    if kind in ('zeta', 'beurling'):
+        ps = [2.1 if kind == 'beurling' else 2, 3, 5, 7, 11, 13, 17, 19, 23]
+        for p in ps:
+            pk = p
+            while pk <= X:
+                out[pk] = math.log(p); pk *= p
+    elif kind == 'dh':
+        import importlib.util, importlib.machinery, flint
+        P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+        spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+        weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+        c = weil.dh_logderiv_coeffs(int(X))
+        out = {n: float(c[n].mid()) for n in c}
+    elif kind.startswith('dial'):
+        nn = float(kind[4:])
+        # log-derivative coefficients of sum r_n(m) m^-s / (2n): from theta^n = (1+2q+2q^4+..)^n
+        K = int(math.exp(4 * L) + 1e-9)
+        th = np.zeros(K + 1); 
+        j = 0
+        while j * j <= K:
+            th[j * j] = 1 if j == 0 else 2
+            j += 1
+        # coefficients of theta^n via  n * th' * P = th * P'   (P = theta^n), power-series recurrence
+        P_ = np.zeros(K + 1); P_[0] = 1
+        for m in range(1, K + 1):
+            s = 0.0
+            for k in range(1, m + 1):
+                s += (nn * k - (m - k)) * th[k] * P_[m - k]
+            P_[m] = s / m
+        a = P_ / P_[1]   # a_1 = 1
+        c = np.zeros(K + 1)
+        for m in range(2, K + 1):
+            s = a[m] * math.log(m)
+            for dd in range(2, m):
+                if m % dd == 0: s -= c[dd] * a[m // dd]
+            c[m] = s
+        out = {math.sqrt(m): (c[m] / 2) * m ** ((1 - nn) / 4) for m in range(2, K + 1) if abs(c[m]) > 1e-13}
+        print('  dial couplings c_m (m<=12):', {m: round(c[m], 4) for m in range(2, 13)})
+    return out
+wts = weights(math.exp(2 * L) + 1e-9)
+t = np.zeros(M)
+t[0] = -float(arch_diag())
+for k in range(1, M):
+    t[k] = float(Wk(k))
+tp = np.zeros(M)
+for n, c in wts.items():
+    ln = math.log(n)
+    for k in range(M):
+        v = tri((ln - k * d) / d) + tri((ln + k * d) / d)
+        tp[k] += c / math.sqrt(n) * v
+if kind == 'dh':
+    # DH diagonal convention check is done in check mode; the constant term uses e^{-2u}/u which is right only for
+    # the zeta normalisation; correct it: diag should be c0 + Re psi(alpha/2)-consistent. shift = psi(1/4)-psi(3/4) handled:
+    # general: int_0^inf (e^{-2u}/u - 2 w_alpha(u)) du = psi(alpha/2).  Our formula already uses w_alpha, so it is right.
+    pass
+Nm = np.array([[t[abs(i - j)] + tp[abs(i - j)] for j in range(M)] for i in range(M)])
+x = (np.arange(M) + 0.5) * d - L
+off = ~np.eye(M, dtype=bool)
+negfrac = np.mean(Nm[off] < 0)
+print("kind=%s L=%g M=%d d=%.4f  diag N_ii=%.6f  W_1=%.5f W_2=%.5f  neg offdiag fraction=%.4f  min offdiag=%.4g" % (kind, L, M, d, Nm[0, 0], t[1], t[2], negfrac, Nm[off].min()))
+ev, V = np.linalg.eigh(Nm)
+lam1 = ev[-1]; u = V[:, -1]; u = u * np.sign(u.sum())
+print("  eigenvalues of N: top %.10f  second %.6e  third %.6e   #positive=%d   min(u)/max(u)=%.4g" % (ev[-1], ev[-2], ev[-3], (ev > 0).sum(), u.min() / u.max()))
+# parity blocks and RH block inequalities (pole only for zeta arch)
+J = np.eye(M)[::-1]
+Pe = (np.eye(M) + J) / 2; Po = (np.eye(M) - J) / 2
+ch = np.array([float(2 * mp.sinh(d / 4) * 2 / mp.sqrt(d)) * math.cosh(xi / 2) for xi in x])  # <phi_i,cosh(x/2)> = (4/sqrt d) sinh(d/4) cosh(x_i/2)
+sh = np.array([float(2 * mp.sinh(d / 4) * 2 / mp.sqrt(d)) * math.sinh(xi / 2) for xi in x])
+if kind != 'dh' and not kind.startswith('dial'):
+    Q = 2 * np.outer(ch, ch) - 2 * np.outer(sh, sh) - Nm
+    qe = np.linalg.eigvalsh(Pe @ Q @ Pe + Po * 1e3); qo = np.linalg.eigvalsh(Po @ Q @ Po + Pe * 1e3)
+    print("  Weil form Q=pole-N in boxes: min eig even %.6e  odd %.6e" % (qe[0], qo[0]))
+    Ninv = np.linalg.inv(Nm)
+    print("  even block:  2<cosh,N^-1 cosh> - 1 = %.6e (RH_even <=> >=0 given one positive eig);  odd: 1 - 2<sinh,(-N)^-1 sinh> = %.6e (RH_odd <=> >= 0 given N_odd<0)" % (2 * ch @ Ninv @ ch - 1, 1 + 2 * sh @ Ninv @ sh))
+    evo = np.linalg.eigvalsh(Po @ Nm @ Po - Pe * 1e3); eve = np.linalg.eigvalsh(Pe @ Nm @ Pe - Po * 1e3)
+    print("  top eig of N_odd %.6e ; second eig of N_even %.6e" % (evo[-1], eve[-2]))
+if u.min() <= 0 or negfrac > 0:
+    print("  NO PROCESS (negative rates or non-positive ground state)."); 
+    if u.min() <= 0: sys.exit()
+q = Nm * u[None, :] / u[:, None]
+np.fill_diagonal(q, 0.0)
+qtot = q.sum(1)
+print("  total rate: min %.6f max %.6f  (should equal lambda_1 - N_ii = %.6f)" % (qtot.min(), qtot.max(), lam1 - Nm[0, 0]))
+Lg = q - np.diag(qtot)
+gap = lam1 - ev[-2]
+print("  gap=%.10f  lambda_1=%.10f  gap/lambda_1 - 1 = %.6e" % (gap, lam1, gap / lam1 - 1))
+# Bakry-Emery per site
+def Gmat(i):
+    G = np.zeros((M, M))
+    for y in range(M):
+        if y == i or q[i, y] == 0: continue
+        e = np.zeros(M); e[y] = 1; e[i] = -1
+        G += 0.5 * q[i, y] * np.outer(e, e)
+    return G
+Gs = [Gmat(i) for i in range(M)]
+rho = np.zeros(M)
+import scipy.linalg as sl
+for i in range(M):
+    G2 = 0.5 * (sum(q[i, y] * (Gs[y] - Gs[i]) for y in range(M)) - (Gs[i] @ Lg + Lg.T @ Gs[i]))
+    idx = [k for k in range(M) if k != i]
+    A = G2[np.ix_(idx, idx)]; B = Gs[i][np.ix_(idx, idx)]
+    try:
+        rho[i] = sl.eigh(A, B, eigvals_only=True)[0]
+    except Exception as ex:
+        rho[i] = np.nan
+print("  Bakry-Emery rho per site: min %.6f at site %d (x=%.3f) ; centre %.6f ; max %.6f" % (np.nanmin(rho), np.nanargmin(rho), x[np.nanargmin(rho)], rho[M // 2], np.nanmax(rho)))
+print("  rho_BE/lambda_1 = %.5f   rho_BE/gap = %.5f   (centre site: %.5f)" % (np.nanmin(rho) / lam1, np.nanmin(rho) / gap, rho[M // 2] / lam1))
+print("  rho profile (every M/10):", np.round(rho[::max(1, M // 10)] / lam1, 4))
+np.save("rho_%s_%g_%d.npy" % (kind, L, M), rho)
+# Ollivier (Lin-Lu-Yau generator form) for nearest neighbours: kappa(x,y) = inf_{f 1-Lip, f(y)-f(x)=1} (Lf(x) - Lf(y))/d(x,y)
+# (Muench-Wojciechowski formula), distance = |i-j| (in units of d).
+def LLY(i, j):
+    # variables f_0..f_{M-1}; minimise (Lg[i]-Lg[j]) . f  s.t. |f_a - f_b| <= |a-b| (enough: consecutive), f_j - f_i = dist
+    c = Lg[i] - Lg[j]
+    A = []; b = []
+    for a in range(M - 1):
+        r = np.zeros(M); r[a + 1] = 1; r[a] = -1
+        A.append(r); b.append(1); A.append(-r); b.append(1)
+    Aeq = np.zeros((2, M)); Aeq[0, j] = 1; Aeq[0, i] = -1; Aeq[1, i] = 1
+    res = linprog(c, A_ub=np.array(A), b_ub=np.array(b), A_eq=Aeq, b_eq=[abs(j - i), 0], bounds=[(None, None)] * M, method='highs')
+    assert res.status == 0, res.message
+    return res.fun / abs(j - i)
+kap = np.array([LLY(i, i + 1) for i in range(M - 1)])
+print("  Ollivier (Lin-Lu-Yau) curvature, nearest sites: min %.6f at pair %d ; centre %.6f ; max %.6f ; min/lambda_1 = %.5f ; centre/lambda_1 = %.5f" % (kap.min(), kap.argmin(), kap[M // 2 - 1], kap.max(), kap.min() / lam1, kap[M // 2 - 1] / lam1))
+print("  kappa profile:", np.round(kap[::max(1, M // 10)] / lam1, 4))
+
+# Dobrushin / total-variation Ollivier curvature (discrete metric): kappa_TV(x,y) = sum_{z != x,y} min(q_xz, q_yz) + q_xy + q_yx
+kt = np.full((M, M), np.inf)
+for i in range(M):
+    for j in range(i + 1, M):
+        mn = np.minimum(q[i], q[j]); mn[i] = 0; mn[j] = 0
+        kt[i, j] = mn.sum() + q[i, j] + q[j, i]
+ij = np.unravel_index(np.argmin(kt), kt.shape)
+print("  Dobrushin (TV-metric Ollivier) curvature: min over ALL pairs %.6f at pair %s ; /lambda_1 = %.5f ; /gap = %.5f" % (kt.min(), ij, kt.min() / lam1, kt.min() / gap))
+# check symmetric pairs of LLY
+print("  LLY symmetry check: pair(0,1)=%.6f pair(M-2,M-1)=%.6f" % (kap[0], kap[-1]))

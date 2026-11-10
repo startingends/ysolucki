@@ -16,6 +16,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: WebSearch 2026-11-10, one query: Fejer/triangle test functions in Weil's criterion; only general Weil-positivity sources (Burnol math/9809119, math/0101068). No hit for Lemma F as stated; short corollary of Weil 1952, so 'variant of known'.
 - evidence: COMPUTED (E3): prime side validated against 20000 zeros to 8 digits. For zeta, min_t S_X(t) = +0.033377 (X=10), +0.014718 (100), +0.010570 (1e3), +0.008703 (1e4), +0.007019 (1e5), +0.005356 (1e6), never negative, min*log X ~ 0.075. DH control: min_t S_X = +0.195, +0.139, +0.090, +0.085, +0.091 for X = 5, 10, 20, 30, 50, then -0.132 (X=70, at t=84.455), -0.421 (100), ... -4.785 (3000); fails at X* in (50, 70], vs lane A's e^{2L*} in (30, 31.2].
 - log:
+  - 2026-11-10: audit: not promoted: merged into main #1
 
 ## #2 · C2 Prime-side Pick pencil and the negative-square count
 - status: open
@@ -27,6 +28,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: A window containing an off-line DH zero with A PSD at spacing 0.3, or a negative eigenvalue for zeta above the rounding level.
 - evidence: COMPUTED (E2): zeta, A PSD in every run (N = 12, 24, 36; min eig 2.8e-7, 1.8e-17, 2.1e-41); N=36 first 20 Ritz values <= 4.1e-8. DH with 48 local nodes in [70,100]: exactly one negative eigenvalue (-5.3e-6) and one non-real Ritz pair at 85.6993484854 -+ 0.308517182457 i = the off-line zero to 12 digits. With 64 global nodes the impostor PASSES (A PSD) until the nodes resolve height 85. Truncating primes (<= 1e5) at sigma0 = 2.5 gives a negative eigenvalue -6.6e-12 for zeta. Arb eigen-solver failed (nan) at N=48 / N=110 global; not repaired. Number of negative squares as invariant is HEURISTIC as a general statement.
 - log:
+  - 2026-11-10: audit: not promoted: judge: parked, score 1. The counting claim is false as stated (critic, prediction registered first: 2 negative eigenvalues with nodes in [85, 115], where the stated window [T-8, T+8] holds no off-line zero and the claim predicts 0; judge: this refutes the stated counting window, not the idea that negatives count off-line zeros inside the node range; the true statement is the classical Krein-Langer bound); the method is the Loewner framework / AAA continuation (Trefethen arXiv 2312.03565, search summary) and the continuation is ill-posed (precision exponential in height). Kept only as an off-line zero finder: it returns the impostor's zero 0.808517182457 + 85.699348485i to 12 digits. Not important enough for the main log.
 
 ## #3 · C3 Shadow pairs
 - status: open
@@ -38,6 +40,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: Gap law for DH not monotone, or a zeta pair whose gap in F_X keeps shrinking through X = 1e6.
 - evidence: COMPUTED (E1): zeta, F_X recovers all 20 zeros below height 78.2 for every X from 3 up, max error of the first 20 = 0.692, 0.170, 0.080, 0.060, 0.0239, 0.0155, 0.0089, 0.0069 for X = 3, 10, 30, 100, 1e3, 1e4, 1e5, 1e6 (~1.2/log^2 X). DH control (formal coefficients): near 85.699 the real pair (85.262, 86.113), (85.474, 85.917), (85.573, 85.822) for X = 30, 300, 3000; gap 0.851, 0.443, 0.249. Agent notes the fake-primes control (p + 1/2) is weak.
 - log:
+  - 2026-11-10: audit: not promoted: merged into main #6
 
 ## #4 · C4 Fractional-multiplicity Eisenstein series (new object)
 - status: open
@@ -49,3 +52,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: The product of the local Plancherel measures for non-integer k admits no discrete 'lattice' (no k-deformed Poisson summation), e.g. if a putative k-theta function with Euler product prod_p (1 - p^{-w})^{-1}(1 - p^{-w-k}) and the Jacobi-k gamma factor fails the functional equation numerically.
 - novelty: WebSearch 2026-11-10, one query: Heckman-Opdam / Macdonald c-functions with real multiplicity are standard locally (Opdam, Stokman); no hit for a GLOBAL Eisenstein series with xi(z)/xi(z+k), non-integer k. Agent: 'One search is not a literature review.' Agent's wall W-C3: could not write down any global object with scattering coefficient xi(w)/xi(w+k), 0 < k < 1; global geometric positivity over Spec Z controls only xi(w)/xi(w+1) (HEURISTIC).
 - log:
+  - 2026-11-10: audit: not promoted: judge: parked, score 1. Part 1 (kernel positivity) is the de Branges-Lagarias structure function (arXiv math/0601653 Lemma 2.1, search summary by the critic); part 2 has the wrong local parameter (critic: M(w)M(-w) = 0.917 - 0.022i at k = 0.5, not 1); and the one global fractional object that exists, theta^n, has no Hecke operators. Its wall is recorded by the judge as WJ8 (half-shift). The theta dial found while refuting it is main #12.

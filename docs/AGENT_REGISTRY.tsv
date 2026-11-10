@@ -9,7 +9,7 @@ R1-critC	2026-11-10	critic of lane C	session model	rh/experiments/r1_C/critic	do
 R1-critD	2026-11-10	critic of lane D	session model	rh/experiments/r1_D/critic	done	D1 numerics measured deletion noise; multiplicity dial and second critical line proposed
 R1-judge	2026-11-10	judge of round 1	session model	rh/experiments/r1_judge	done	no route to a proof; instruments ranked (top: theta-power dial 4/10); horizon lemma refuted; walls WJ1-WJ13
 R1-transcribe	2026-11-10	transcribe round-1 Ideas sections into per-agent local idea logs	sonnet	rh/experiments/r1_*	done	20 ideas transcribed from PROGRESS files into four local logs
-R1-AUD	2026-11-10	idea auditor for round 1 (promote/skip/merge local logs)	session model	rh/experiments/r1_audit	running	-
+R1-AUD	2026-11-10	idea auditor for round 1 (promote/skip/merge local logs)	session model	rh/experiments/r1_audit	done	33 local entries decided: 9 promoted (#12-#20), 20 merged as notes, 4 skipped; 18 rule failures on record
 R2-cubic	2026-11-10	creator: invent the cubic object for idea #10	session model	rh/experiments/r2_cubic	running	-
 R2-curv	2026-11-10	creator: curvature of the prime jump process (idea #11)	session model	rh/experiments/r2_curv	running	-
 R2-parity	2026-11-10	creator: prove the parity lemma; reproduce the lead's numbers	session model	rh/experiments/r2_parity	running	-

@@ -1,0 +1,75 @@
+"""Box-basis matrix of N = primes - arch on [-L, L], and the fibre-extended matrix Ntilde.
+Orthonormal basis e_i = 1_{box i}/sqrt(h), h = 2L/n.  Formulas (lead's, = weil.py.txt docstring via Gauss' integral):
+  primes(f,g) = sum_x c_x x^{-1/2} [C(log x) + C(-log x)],  C(u) = int f(t+u) g(t) dt
+  arch(g)     = c0 g(0) + int_0^inf ( g(0) e^{-2u}/u - 2 w(u) g(u) ) du ,  w(u) = e^{(1-alpha)u}/(2 sinh u)
+  zeta: alpha = 1/2, c0 = -log pi.   pole(f) = 2 <f,p><f,q>, p = e^{x/2}, q = e^{-x/2}.
+"""
+import math, numpy as np, mpmath as mp
+mp.mp.dps = 30
+
+def lam(X):
+    out = {}
+    for p in range(2, int(X) + 1):
+        if all(p % d for d in range(2, int(p ** 0.5) + 1)):
+            pk = p
+            while pk <= X:
+                out[float(pk)] = math.log(p); pk *= p
+    return out
+
+def beurling(X, shift=2.1):
+    out = {}
+    for p in (shift, 3, 5, 7, 11, 13, 17, 19, 23):
+        pk = p
+        while pk <= X:
+            out[float(pk)] = math.log(p); pk *= p
+    return out
+
+def w(u, alpha=0.5):
+    return mp.exp((1 - alpha) * u) / (2 * mp.sinh(u))
+
+def boxN(L, n, cn=None, alpha=0.5, c0=None):
+    """returns N (n x n numpy, = primes - arch), p, q (numpy)"""
+    h = mp.mpf(2) * L / n
+    if c0 is None: c0 = -mp.log(mp.pi)
+    if cn is None: cn = lam(math.exp(2 * L) + 1e-9)
+    tri = lambda v: max(mp.mpf(0), h - abs(v))
+    # arch part, depends on |i-j| = m only (d = m h)
+    A = []
+    for m in range(n):
+        d = m * h
+        if m == 0:
+            val = c0 * h + mp.quad(lambda u: h * mp.exp(-2 * u) / u - 2 * w(u, alpha) * (h - u), [0, h / 2, h]) + h * mp.e1(2 * h)
+        else:
+            val = -mp.quad(lambda u: w(u, alpha) * tri(u - d), [d - h, d, d + h])
+        A.append(val / h)
+    N = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            d = (i - j) * h
+            pr = mp.mpf(0)
+            for x, c in cn.items():
+                u = mp.log(x)
+                pr += c / mp.sqrt(x) * (tri(u - d) + tri(u + d))
+            N[i, j] = float(pr / h - A[abs(i - j)])
+    xs = [-mp.mpf(L) + i * h for i in range(n + 1)]
+    p = np.array([float(2 * (mp.exp(xs[i + 1] / 2) - mp.exp(xs[i] / 2)) / mp.sqrt(h)) for i in range(n)])
+    q = np.array([float(2 * (mp.exp(-xs[i] / 2) - mp.exp(-xs[i + 1] / 2)) / mp.sqrt(h)) for i in range(n)])
+    return N, p, q
+
+def ext(N, p, q):
+    n = len(p)
+    M = np.zeros((n + 2, n + 2))
+    M[:n, :n] = N; M[:n, n] = p; M[n, :n] = p; M[:n, n + 1] = q; M[n + 1, :n] = q
+    M[n, n + 1] = M[n + 1, n] = 1.0
+    return M
+
+def general_form(L, fvals_fn, cn=None):
+    """N-form and pole for a general real f on [-L,L] by quadrature (validation of the formulas only)"""
+    if cn is None: cn = lam(math.exp(2 * L) + 1e-9)
+    C = lambda u: mp.quad(lambda t: fvals_fn(t + u) * fvals_fn(t), [-L, L - u]) if u < 2 * L else mp.mpf(0)
+    g0 = C(0)
+    pts = [0] + sorted(set([min(float(mp.log(x)), 2 * L) for x in cn])) + [2 * L]
+    archv = -mp.log(mp.pi) * g0 + mp.quad(lambda u: g0 * mp.exp(-2 * u) / u - 2 * w(u) * C(u), mp.linspace(0, 2 * L, 9)) + g0 * mp.e1(4 * L)
+    pr = sum(c / mp.sqrt(x) * 2 * C(mp.log(x)) for x, c in cn.items())
+    P = mp.quad(lambda t: fvals_fn(t) * mp.exp(t / 2), [-L, L]); Qq = mp.quad(lambda t: fvals_fn(t) * mp.exp(-t / 2), [-L, L])
+    return pr - archv, 2 * P * Qq

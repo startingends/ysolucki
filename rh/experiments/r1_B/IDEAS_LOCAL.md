@@ -16,6 +16,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: One web search for Nyman-Beurling restricted to smooth numbers / a prime-generated semigroup found nothing. Also checked: Bettin-Conrey-Farmer arXiv:1211.5191, Balazard-de Roton, Darses-Hillion arXiv:1805.06733, Baez-Duarte arXiv:math/0505453.
 - evidence: COMPUTED (Step 4): D_S(N)^2 at N = 2000: S={2} 0.1247227 (converged ~6 digits); {2,3} 0.04996061 (limit 0.04996047, N=1.0e6, 7 digits); {2,3,5} 0.02900279 (0.02889735 at N=2.56e5, not converged); {2,3,5,7} 0.01874684 (0.01833983 at N=6.4e4, not converged). Loss factor L(P,2) for P = 5,7,11,...,43: 1.92, 1.70, 1.66, 1.49, 1.46, 1.36, 1.31, 1.31, 1.26, 1.25, 1.22, 1.20, decreasing monotonically in P. Agent's caveat: four converged-or-nearly-converged values (P = 2,3,5,7) cannot separate c/log P from P^{-a}. Heuristic mechanism unproved (errors adding orthogonally gives ~1/P, coherently gives no saving).
 - log:
+  - 2026-11-10: audit: not promoted: merged into main #14
 
 ## #2 · B-2 The explicit recipe misses by 3.55/log^2 N; find the recipe with no second-order term
 - status: open
@@ -27,6 +28,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: If the fitted polynomial coefficients drift by more than 10% per doubling of N, there is no limiting shape.
 - evidence: COMPUTED (Step 3, float64, cond(G_2000) = 1.5e7, no Arb cross-check): Q[V_N] = C/log N + A/log^2 N with A = 3.55 +- 0.02 over 50 <= N <= 2000 (C = 0.0461914179); at N = 2000 the textbook recipe is 11x worse than the optimum (0.0674 vs 0.0061). Cubic polynomial in log k/log N times mu(k) (4 numbers) is within 18% of the optimum (times log N: 0.0546 vs 0.0465); linear recipe 0.204.
 - log:
+  - 2026-11-10: audit: not promoted: merged into main #5
 
 ## #3 · B-3 Zoomed control-group test with Dirichlet-polynomial targets
 - status: open
@@ -38,6 +40,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: If no B of length <= 100 makes the DH floor exceed its on-line part by N = 2000, the lab is dropped for lane B.
 - evidence: PROVED lemma (Step 5): an off-line zero rho0 forces ||chi - sum c_k e_k||^2 >= (2beta-1)/(|rho0|^2(1 + (2beta-1)/|rho0-1|^2)); for DH (zero near 0.8085+85.699i) floor ~1.7e-4 (HEURISTIC estimate, DH zero from memory). COMPUTED negative: the twisted-target zoom x^{-iT} chi fails, d_N(T)^2 = 0.439, 0.422, 0.416 at N = 100, 500, 2000 for T = 5 (0.97 for T = 85.7); proved reason: on (1/2,1) every e_k equals a/x + b.
 - log:
+  - 2026-11-10: audit: not promoted: merged into main #1
 
 ## #4 · B-4 Heat flow: use the imaginary-part energy, the one functional defined when zeros are off the line
 - status: open
@@ -49,3 +52,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: If the boundary flux is not controllable (same size as the main term for windows of length log T), park.
 - evidence: PROVED for finite systems (polynomials under the same flow, simple zeros): d/dt sum_k y_k^2 = -4 sum_{j<k} (y_j - y_k)^2/|z_j - z_k|^2 <= -4 * #(conjugate non-real pairs); known in spirit (de Bruijn 1950). COMPUTED (Step 6): the 40-zero window functionals are all monotone in the direction that does not help (min gap 1.690 -> 2.445, sum 1/gap^2 2.210 -> 1.857 for t in [0, 0.5]); forward in t the gas relaxes (Rodgers-Tao, from memory).
 - log:
+  - 2026-11-10: audit: not promoted: merged into main #4

@@ -1,0 +1,78 @@
+"""Search for a cubic certificate (R2-cubic/#2, #6) by semidefinite programming.
+Unknown: symmetric 3-tensor T on m = n+2 indices.  Constraints: T.a = H (= Ntilde);  slices T_k <= l_k l_k^T / s_k
+(equivalent to 'T_k has at most one positive eigenvalue', given T.a = H; l_k = H e_k, s_k = (Ha)_k);  sign constraints by mode:
+  free     : none                         (must be feasible iff H is Lorentzian: cone certificate)
+  distinct : T_ijk >= t for i,j,k distinct
+  two      : T_ijk >= t for all entries that are not T_iii
+Objective: maximise t (after scaling entries by 1/(l_i l_j l_k / s^2), the mean-field size), capped at 10."""
+import sys, math, itertools, importlib.util, importlib.machinery, numpy as np, cvxpy as cp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/r2_cubic/box.py.txt")
+np.set_printoptions(linewidth=220, precision=4, suppress=True)
+
+def solve(H, a, mode, verbose=False):
+    m = len(a); l = H @ a; s = float(a @ l)
+    keys = [k for k in itertools.combinations_with_replacement(range(m), 3)]
+    idx = {k: i for i, k in enumerate(keys)}
+    x = cp.Variable(len(keys)); t = cp.Variable()
+    # selection matrices: slice k as a linear map of x
+    cons = []
+    Sl = []
+    for k in range(m):
+        A = np.zeros((m * m, len(keys)))
+        for i in range(m):
+            for j in range(m):
+                A[i * m + j, idx[tuple(sorted((i, j, k)))]] = 1.0
+        Sl.append(A)
+    Hx = sum(a[k] * (Sl[k] @ x) for k in range(m))
+    cons.append(Hx == H.reshape(-1))
+    for k in range(m):
+        Tk = cp.reshape(Sl[k] @ x, (m, m), order='C')
+        cons.append(np.outer(H[:, k], H[:, k]) / l[k] - Tk >> 0)
+    scale = np.array([l[i] * l[j] * l[k] / s ** 2 for (i, j, k) in keys])
+    if mode != "free":
+        for (i, j, k), ii in idx.items():
+            nd = len({i, j, k})
+            if (mode == "distinct" and nd == 3) or (mode == "two" and nd >= 2):
+                cons.append(x[ii] >= t * scale[ii])
+        cons.append(t <= 10)
+        prob = cp.Problem(cp.Maximize(t), cons)
+    else:
+        prob = cp.Problem(cp.Minimize(cp.sum_squares(cp.multiply(x, 1 / scale))), cons)
+    try:
+        prob.solve(solver=cp.CLARABEL, verbose=verbose)
+    except Exception as ex:
+        return str(ex), None, None
+    if x.value is None: return prob.status, None, None
+    T = np.zeros((m, m, m))
+    for (i, j, k), ii in idx.items():
+        for pp in set(itertools.permutations((i, j, k))): T[pp] = x.value[ii]
+    return prob.status, (t.value if mode != "free" else None), T
+
+def report(tag, H, a, modes=("free", "distinct", "two")):
+    m = len(a); l = H @ a
+    e = np.linalg.eigvalsh(H)[::-1]
+    print("%s  m=%d  #pos(H)=%d eig2=%.3e  min(Ha)=%.3e  min offdiag H=%.3e" % (tag, m, (e > 1e-10).sum(), e[1], l.min(), H[~np.eye(m, dtype=bool)].min()))
+    out = {}
+    for mode in modes:
+        st, t, T = solve(H, a, mode)
+        if T is None: print("    mode %-8s: %s" % (mode, st)); continue
+        npos = [int((np.linalg.eigvalsh(T[:, :, k]) > 1e-7).sum()) for k in range(m)]
+        res = np.abs(np.einsum('ijk,k->ij', T, a) - H).max()
+        print("    mode %-8s: %s  t*=%s  slices #pos in %s  |T.a-H|=%.1e" % (mode, st, "%.5f" % t if t is not None else "-", sorted(set(npos)), res))
+        out[mode] = (t, T)
+    return out
+
+if __name__ == "__main__":
+    which = sys.argv[1]
+    if which == "main":
+        for kind, L, n in (("zeta", 0.5, 8), ("zeta", 0.75, 8), ("zeta", 1.0, 8), ("zeta", 1.0, 10),
+                           ("beurling", 0.30, 8), ("beurling", 0.5, 8), ("beurling", 1.0, 8), ("beurling", 1.0, 10)):
+            cn = box.lam(math.exp(2 * L)) if kind == "zeta" else box.beurling(math.exp(2 * L))
+            Nb, p, q = box.boxN(L, n, cn); H = box.ext(Nb, p, q)
+            ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1])
+            report("%s L=%.2f n=%d a=Perron" % (kind, L, n), H, a)
+            a2 = np.r_[np.ones(n) * math.sqrt(2 * L / n), 1, 1]
+            if (H @ a2).min() > 0: report("%s L=%.2f n=%d a=(sqrt h,..,1,1)" % (kind, L, n), H, a2, modes=("distinct", "two"))

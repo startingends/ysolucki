@@ -1,0 +1,58 @@
+zeta L=0.50 n=8 a=Perron  m=10  #pos(H)=1 eig2=-8.904e-03  min(Ha)=7.835e-01  min offdiag H=9.792e-02
+    mode free    : optimal  t*=-  slices #pos in [1]  |T.a-H|=3.1e-11
+/home/user/ysolucki/rh/experiments/r2_cubic/sdp.py.txt:45: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  prob.solve(solver=cp.CLARABEL, verbose=verbose)
+    mode distinct: optimal_inaccurate  t*=0.78540  slices #pos in [1]  |T.a-H|=1.0e-13
+    mode two     : optimal  t*=-2.12548  slices #pos in [1]  |T.a-H|=2.2e-09
+zeta L=0.50 n=8 a=(sqrt h,..,1,1)  m=10  #pos(H)=1 eig2=-8.904e-03  min(Ha)=1.278e+00  min offdiag H=9.792e-02
+    mode distinct: optimal_inaccurate  t*=0.76051  slices #pos in [1]  |T.a-H|=1.1e-10
+    mode two     : optimal  t*=-2.19205  slices #pos in [1]  |T.a-H|=8.0e-13
+zeta L=0.75 n=8 a=Perron  m=10  #pos(H)=1 eig2=-6.170e-03  min(Ha)=1.229e+00  min offdiag H=2.285e-01
+    mode free    : optimal  t*=-  slices #pos in [1]  |T.a-H|=3.0e-11
+    mode distinct: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+    mode two     : optimal_inaccurate  t*=-0.47367  slices #pos in [1]  |T.a-H|=1.0e-13
+zeta L=0.75 n=8 a=(sqrt h,..,1,1)  m=10  #pos(H)=1 eig2=-6.170e-03  min(Ha)=2.164e+00  min offdiag H=2.285e-01
+    mode distinct: optimal  t*=0.65587  slices #pos in [1]  |T.a-H|=2.3e-10
+    mode two     : optimal  t*=-0.46986  slices #pos in [1]  |T.a-H|=3.4e-13
+zeta L=1.00 n=8 a=Perron  m=10  #pos(H)=1 eig2=-2.789e-03  min(Ha)=1.635e+00  min offdiag H=3.230e-01
+    mode free    : optimal  t*=-  slices #pos in [1]  |T.a-H|=2.1e-12
+    mode distinct: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+    mode two     : optimal_inaccurate  t*=-0.44318  slices #pos in [1]  |T.a-H|=1.5e-13
+zeta L=1.00 n=8 a=(sqrt h,..,1,1)  m=10  #pos(H)=1 eig2=-2.789e-03  min(Ha)=3.084e+00  min offdiag H=3.230e-01
+    mode distinct: optimal  t*=0.73236  slices #pos in [1]  |T.a-H|=1.3e-11
+    mode two     : optimal  t*=-0.44923  slices #pos in [1]  |T.a-H|=1.1e-11
+zeta L=1.00 n=10 a=Perron  m=12  #pos(H)=1 eig2=-3.600e-03  min(Ha)=1.464e+00  min offdiag H=2.853e-01
+    mode free    : optimal  t*=-  slices #pos in [1]  |T.a-H|=4.6e-13
+    mode distinct: optimal_inaccurate  t*=0.65847  slices #pos in [1]  |T.a-H|=2.1e-12
+    mode two     : optimal_inaccurate  t*=-0.47210  slices #pos in [1]  |T.a-H|=3.4e-14
+zeta L=1.00 n=10 a=(sqrt h,..,1,1)  m=12  #pos(H)=1 eig2=-3.600e-03  min(Ha)=2.760e+00  min offdiag H=2.853e-01
+    mode distinct: optimal  t*=0.65368  slices #pos in [1]  |T.a-H|=8.0e-13
+    mode two     : optimal  t*=-0.48230  slices #pos in [1]  |T.a-H|=7.0e-13
+beurling L=0.30 n=8 a=Perron  m=10  #pos(H)=1 eig2=-1.728e-02  min(Ha)=4.522e-01  min offdiag H=8.898e-02
+    mode free    : optimal  t*=-  slices #pos in [1]  |T.a-H|=4.8e-12
+    mode distinct: optimal_inaccurate  t*=1.29951  slices #pos in [1]  |T.a-H|=3.0e-13
+    mode two     : optimal  t*=-6.55183  slices #pos in [1]  |T.a-H|=6.2e-10
+beurling L=0.30 n=8 a=(sqrt h,..,1,1)  m=10  #pos(H)=1 eig2=-1.728e-02  min(Ha)=6.830e-01  min offdiag H=8.898e-02
+    mode distinct: optimal_inaccurate  t*=1.26296  slices #pos in [1]  |T.a-H|=5.3e-13
+    mode two     : optimal_inaccurate  t*=-6.64141  slices #pos in [1, 2]  |T.a-H|=1.2e-06
+beurling L=0.50 n=8 a=Perron  m=10  #pos(H)=1 eig2=-2.353e-02  min(Ha)=7.886e-01  min offdiag H=9.792e-02
+    mode free    : optimal  t*=-  slices #pos in [1]  |T.a-H|=9.5e-11
+    mode distinct: optimal_inaccurate  t*=0.77629  slices #pos in [1]  |T.a-H|=1.5e-11
+    mode two     : optimal  t*=-2.31991  slices #pos in [1]  |T.a-H|=2.5e-11
+beurling L=0.50 n=8 a=(sqrt h,..,1,1)  m=10  #pos(H)=1 eig2=-2.353e-02  min(Ha)=1.285e+00  min offdiag H=9.792e-02
+    mode distinct: optimal_inaccurate  t*=0.75162  slices #pos in [1]  |T.a-H|=2.7e-13
+    mode two     : optimal  t*=-2.31248  slices #pos in [1]  |T.a-H|=7.1e-10
+beurling L=1.00 n=8 a=Perron  m=10  #pos(H)=2 eig2=3.769e-02  min(Ha)=1.582e+00  min offdiag H=3.230e-01
+    mode free    : infeasible
+    mode distinct: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+    mode two     : Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+beurling L=1.00 n=8 a=(sqrt h,..,1,1)  m=10  #pos(H)=2 eig2=3.769e-02  min(Ha)=3.004e+00  min offdiag H=3.230e-01
+    mode distinct: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+    mode two     : infeasible_inaccurate
+beurling L=1.00 n=10 a=Perron  m=12  #pos(H)=2 eig2=3.630e-02  min(Ha)=1.447e+00  min offdiag H=2.853e-01
+    mode free    : infeasible
+    mode distinct: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+    mode two     : Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+beurling L=1.00 n=10 a=(sqrt h,..,1,1)  m=12  #pos(H)=2 eig2=3.630e-02  min(Ha)=2.739e+00  min offdiag H=2.853e-01
+    mode distinct: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+    mode two     : Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.

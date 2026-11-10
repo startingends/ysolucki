@@ -1,0 +1,37 @@
+"""Stage 1: ideas that exist only in a critic's PROGRESS.md or in the judge's verdict.json get a local-log entry first."""
+import os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage1")
+
+# lane B critic never created a local log
+run("init-local", os.path.join(EXP, "r1_B", "critic"), "R1-critB")
+B = LOGS["critB"]
+run("--file", B, "add",
+    "--title", "C-1 Missing-prime law: the prime-filtered Nyman-Beurling distance is a bounded multiple of a forced local fee",
+    "--source", "R1-critB (lane B critic, idea C-1; transcribed from rh/experiments/r1_B/critic/PROGRESS.md by auditor R1-AUD, 2026-11-10)",
+    "--claim", "D_P^2 = kappa_P * (1/2) sum_{n>1, gcd(n,P#)=1} n^-2 with kappa_P bounded (1.14..1.2 seen for P = 3..13).",
+    "--test", "Converge the upper bound for P = 11, 13 (N ~ 1e7).",
+    "--kill", "kappa_P > 1.5 at P = 11 or 13.")
+run("--file", B, "add",
+    "--title", "C-2 The optimal Nyman-Beurling distance has no 1/log^2 N term; its residual frequencies are differences of zeros",
+    "--source", "R1-critB (lane B critic, idea C-2; transcribed from rh/experiments/r1_B/critic/PROGRESS.md by auditor R1-AUD, 2026-11-10)",
+    "--claim", "The optimum has no 1/log^2 N term; residual frequencies are differences of zeros.",
+    "--test", "N = 2e4 (resolution 1.08).",
+    "--kill", "Peaks not within 0.3 of zero differences, or mean of (d_N^2 log N - C) log N leaves [-0.05, 0.05].",
+    "--evidence", "COMPUTED (critic PROGRESS 5 and 7): (d_N^2 log N - C) log N = 0.003, -0.004, -0.000, -0.006, 0.002 at N = 125, 250, 500, 1000, 2000. Spectral scan of r(N) = d_N^2 log N - C on 60 <= N <= 2000: peaks in the variable log N at 1.34 (amp 0.0012), 3.88, 7.16, 9.96; zero differences are 3.99, 6.89, 10.88; resolution 1.79. Critic: suggestive only, inconclusive.")
+
+J = LOGS["judge"]
+run("--file", J, "add",
+    "--title", "Parity lemma: at most one negative square of the window form for every L already gives RH; idea #10's signature claim is weaker than RH by one quartet (WJ13)",
+    "--source", "r1_judge (verdict.json round-2 item 4 and wall WJ13; transcribed by auditor R1-AUD, 2026-11-10)",
+    "--claim", "(a) If Q_L has at most one negative square for every L then RH (via Krein-Langer extension theory). (b) WJ13: 'N = primes - arch has exactly one positive eigenvalue on every window' gives at most one negative square of Q in each parity block, i.e. allows at most ONE off-line quartet; the statements equivalent to RH are the block inequalities N_even <= 2<f,cosh(u/2)>^2 and N_odd <= -2<f,sinh(u/2)>^2. Judge's labels: linear algebra PROVED; 'each quartet costs one negative square per block' HEURISTIC.",
+    "--test", "Proof attempt on paper, then numerical check on surgery sets with exactly one quartet: negative index of the even and odd blocks and the number of positive eigenvalues of N as L grows.",
+    "--kill", "A surgery configuration with one quartet whose form has fewer than two negative squares at every L up to 2 (then the per-block count is wrong); or the one-quartet configuration keeps N at exactly one positive eigenvalue (then the signature target of idea #10 cannot see a single quartet at all and must be replaced).",
+    "--evidence", "Judge: reasoning plus Davenport-Heilbronn parity counts 1+1 then 2+2 (lane A's table). Nothing new computed.")
+run("--file", J, "add",
+    "--title", "Two-parameter picture: de Bruijn-Newman constant Lambda(n) along the theta dial; conjecture that zeta is an isolated zero of Lambda",
+    "--source", "r1_judge (JUDGEMENT.md section 5 item 4 / verdict.json cross_links 4; transcribed by auditor R1-AUD, 2026-11-10)",
+    "--claim", "The dial n (lane C critic) and the heat time t (lane B) both keep the functional equation. Let Lambda(n) be the de Bruijn-Newman constant of theta^n. Then Lambda(1) = 0 iff RH (given Rodgers-Tao), Lambda(1.4) > 0 by the located off-line zero, Lambda(2) = 0 iff GRH for Q(i). CONJECTURE to test: Lambda(n) > 0 for every non-integer n near 1, so zeta is an isolated zero of Lambda.",
+    "--test", "Heat-flow the located off-line pair at n = 1.4 back to the line to get a lower bound for Lambda(1.4) (judge's round-2 item 2c).",
+    "--evidence", "None beyond the located zero 0.368894 + 21.146073i at n = 1.4 (judge, thetadial.py.txt).")
+open(marker, "w").write("ok\n")

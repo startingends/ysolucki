@@ -14,6 +14,8 @@ Owner answers yes / no (or a number); the lead applies it the same day and moves
 | D5 | Git | WIP commits pushed to `claude/eloquent-keller-2074gq`; one draft PR kept open | owner may ask for separate PRs per round |
 | D6 | Long compute | jobs over ~20 min run here under `tools/memcap.py` + flock, one at a time | owner may approve separate cloud sessions for heavy jobs |
 
+| D7 | Auditor's calls on round 1: #14 (missing-prime law) recorded as `testing`, not the judge's `alive`, because its wall field fails rule 1; lane B's prime-filtered Nyman–Beurling folded into #14 instead of getting its own number | auditor's calls accepted | owner may ask for the judge's status or a separate number |
+
 ## Answered
 
 | id | date | answer | applied |
