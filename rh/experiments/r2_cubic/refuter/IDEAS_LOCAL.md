@@ -32,3 +32,10 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-10
 - plain english: From the seat's own formulas the ratio is (3<f^2> + f_k^2)/(2(<f^2> + f_k^2)); for mean-zero f Cauchy-Schwarz gives f_k^2 <= (m-1)<f^2>, with equality for f = e_k - 1/m, so the minimum is (m+2)/(2m). Same argument gives the exact CD(rho,n) constant 1/2 - 2/n + (1 + 2/n)/m. Example m = 10: 0.6.
 - log:
+
+## #5 · Cheap end-to-end validator for any box/atom builder: entries of the Weil matrix as a sum over the first 20000 zeros
+- status: open
+- source: R2-cubic-ref
+- date: 2026-11-10
+- plain english: For box functions the Weil form entry is 2 * sum over zeros of 4 sin^2(gamma h/2) cos(gamma d)/(h gamma^2), plus a smooth tail on the diagonal and for adjacent boxes. Example L=1, 12 boxes: entry (0,5) is 0.148905 from the zeros and 0.148905 from pole + Gamma kernel - primes; without the prime 2 the builder gives 0.226778. Takes 2 seconds.
+- log:

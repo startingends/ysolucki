@@ -25,3 +25,8 @@ C1-data	2026-11-10	creation seat, no lane, starts from the raw numbers	session m
 C1-blank-screen	2026-11-10	screen (new? computable?) for C1-blank	session model	rh/experiments/c1_blank/screen	running	-
 C1-inside-screen	2026-11-10	screen for C1-inside	session model	rh/experiments/c1_inside/screen	running	-
 C1-data-screen	2026-11-10	screen for C1-data	session model	rh/experiments/c1_data/screen	running	-
+S1-socrates	2026-11-10	moderator of seminar S1: asks questions only	session model	rh/experiments/s1_seminar/socrates	running	-
+S1-cubic	2026-11-10	participant: speaks for seat R2-cubic's work	session model	rh/experiments/s1_seminar/cubic	running	-
+S1-curv	2026-11-10	participant: speaks for seat R2-curv's work	session model	rh/experiments/s1_seminar/curv	running	-
+S1-parity	2026-11-10	participant: speaks for seat R2-parity's work	session model	rh/experiments/s1_seminar/parity	running	-
+S1-mirror	2026-11-10	participant: develops idea 21 (two-prime model)	session model	rh/experiments/s1_seminar/mirror	running	-
