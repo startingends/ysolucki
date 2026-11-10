@@ -148,3 +148,31 @@ Questions this raises (not yet searched beyond the one preprint):
   unpinned integer is next. Does positivity at window L predict whether the next integer is prime before it
   enters? If yes that is "primes predict primes" made exact (N14, step 2), and the predicting rule is the
   object to study.
+
+**N17. The positivity sieve works.** (lead) COMPUTED, n = 2..10. Open the window just enough to let the
+integer n in; keep the earlier weights; ask what weight positivity allows at n. Answer each time: exactly
+one value to several digits, and it is log p if n is a power of p and 0 otherwise. 6 and 10 come out as
+zero, 8 as log 2, 9 as log 3, 7 as log 7. Nothing in the input says which numbers are prime: only the Gamma
+factor, the pole, and "never negative". In plain words: **the rule that energy is never negative, applied
+window by window, generates the primes one at a time.**
+The needle narrows like exp(-8 sqrt n): about 2, 3.5, 4.5, 5.4, 6.2, 6.8, 7.4, 8.0, 8.6 digits.
+
+**N18. What the sieve says RH is.** (lead) HEURISTIC. Each step has an allowed interval I_n computed from
+the past. RH = the sieve never jams: the true weight is always inside I_n and the window never goes negative
+between integers. So a counterexample to RH would be a first n (around 4 pi n ~ height of the bad zero,
+from lane A's detection law) at which the interval predicted from all earlier primes MISSES the true
+value: the primes up to n-1 would "predict" a wrong weight at n by more than exp(-8 sqrt n).
+That is a statement about primes only. It is exponentially sharp, which looks hopeless for estimates, but
+it is exactly the kind of statement an IDENTITY could give: if the centre c_n of the interval has a closed
+form in terms of Lambda(2..n-1), then RH becomes "c_n - Lambda(n) is tiny", a question about a recursion.
+- Q9. What is c_n explicitly? It is determined by the near-null vector(s) of the window form: a ratio of two
+  quadratic expressions in that vector. Compute c_n - Lambda(n) (sign, size) and look for its law.
+- Q10. Is the interval's centre off from the truth by a comparable amount to its width (then the truth sits
+  at a generic point inside), or is the truth at an END of the interval (then true primes are extreme, as in
+  N16)? In the L = 1 table the room above was 20 to 500 times smaller than the room below for small n:
+  the truth sits near the UPPER end. WILD: the true weight is the largest weight positivity allows?
+  If "Lambda(n) = sup of the allowed interval, up to exp(-..)" held, primes would be defined by a greedy
+  rule: at each integer put as much weight as positivity permits. Test: is room above / room below -> 0?
+  (Sieve table: 0.075, 0.2, 0.24, 0.36, 0.37, 0.36, 0.42, 0.42, 0.49: not going to 0 at admission. At L = 1
+  for old integers: 0.002, 0.01, 0.03, 0.06, 0.15, 0.42: small for integers that entered long ago. So the
+  truth drifts to the upper end as the window keeps growing after admission. Worth a proper test.)

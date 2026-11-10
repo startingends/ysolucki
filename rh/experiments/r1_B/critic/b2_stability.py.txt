@@ -1,0 +1,21 @@
+"""Critic: B-2 kill-line test the proposer did not run. Best c_k = -mu(k) * poly_deg(u), u = log k / log N,
+fitted at several N (uses proposer's G2000, which the critic validated on the 200x200 block to 7e-10)."""
+import math, numpy as np
+from sympy import mobius
+EG = 0.57721566490153286061; C = 2 + EG - math.log(4 * math.pi)
+G = np.load("/home/user/ysolucki/rh/data/r1_B/G2000.npy"); d2 = np.load("/home/user/ysolucki/rh/data/r1_B/d2.npy")
+ks = np.arange(1, 2001); b = (1 - EG + np.log(ks)) / ks; mu = np.array([int(mobius(int(k))) for k in ks], float)
+for deg in (1, 3, 5):
+    print("degree", deg, " columns: N, Q*logN, opt d^2*logN, coefficients a_j of -mu(k)*sum a_j u^j, P(1)=sum a_j")
+    for N in (125, 250, 500, 1000, 2000):
+        u = np.log(ks[:N]) / math.log(N)
+        B = np.stack([-mu[:N] * u ** j for j in range(deg + 1)], 1)
+        A = B.T @ G[:N, :N] @ B; r = B.T @ b[:N]; a = np.linalg.solve(A, r); Q = 1 - r @ a
+        print("  N=%4d Q logN=%.4f opt=%.4f  a=%s  P(1)=%.3f" % (N, Q * math.log(N), d2[N - 1] * math.log(N), np.round(a, 3), a.sum()))
+# second-order law for V_N and for the optimum, and for V_N + boundary term a/logN * (-mu(k))
+print("V_N + (t/log N)*(-mu(k)) : best t and resulting (Q logN - C) logN")
+for N in (125, 250, 500, 1000, 2000):
+    u = np.log(ks[:N]) / math.log(N); v = -mu[:N] * (1 - u); w = -mu[:N] / math.log(N)
+    Gs = G[:N, :N]; Qv = 1 - 2 * b[:N] @ v + v @ Gs @ v
+    t = (b[:N] @ w - v @ Gs @ w) / (w @ Gs @ w); x = v + t * w; Qx = 1 - 2 * b[:N] @ x + x @ Gs @ x
+    print("  N=%4d  A_V=%.3f  t=%.3f  A_(V+bdry)=%.3f  A_opt=%.3f" % (N, (Qv * math.log(N) - C) * math.log(N), t, (Qx * math.log(N) - C) * math.log(N), (d2[N - 1] * math.log(N) - C) * math.log(N)))
