@@ -1,0 +1,6 @@
+J5 zeta site 20: |S+H+O-Gamma_2|=2.3e-14 ; raw min eig H -0.0337 (max 0.233) O -0.0515 ; const/lam1: S -0.0000  S+H 0.2405  S+O 0.1999  all 0.5222
+J5 zeta site 0: |S+H+O-Gamma_2|=1.8e-15 ; raw min eig H -0.2778 (max 0.868) O -0.0780 ; const/lam1: S 0.0000  S+H 0.0056  S+O -0.2269  all 0.4963
+J5 zeta site 5: |S+H+O-Gamma_2|=2.0e-14 ; raw min eig H -0.1172 (max 0.469) O -0.0350 ; const/lam1: S 0.0000  S+H 0.3002  S+O 0.1103  all 0.5269
+J5 beurling site 20: |S+H+O-Gamma_2|=1.3e-15 ; raw min eig H -0.0334 (max 0.231) O -0.0506 ; const/lam1: S 0.0000  S+H 0.2523  S+O 0.2058  all 0.5244
+J5 beurling site 0: |S+H+O-Gamma_2|=2.1e-14 ; raw min eig H -0.2760 (max 0.864) O -0.0777 ; const/lam1: S 0.0000  S+H 0.0107  S+O -0.2198  all 0.4989
+J5 beurling site 5: |S+H+O-Gamma_2|=7.1e-15 ; raw min eig H -0.1181 (max 0.460) O -0.0348 ; const/lam1: S -0.0000  S+H 0.2989  S+O 0.1189  all 0.5296

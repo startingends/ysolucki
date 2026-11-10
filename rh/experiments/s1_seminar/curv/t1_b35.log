@@ -10,3 +10,6 @@ L=1 M=160: Hankel total: min -1.44003 max 2.39259 #neg 38 of 80 | prime part alo
 L=1 M=320: Hankel total: min -1.56709 max 2.39662 #neg 78 of 160 | prime part alone: min -1.56713 max 1.66838 #neg 80 | arch part: min -1.5e-16 max 1.28781
    even Weil block: lowest eigenvalue 4.4918e-05 ; on its eigenvector (||phi|| = 1): Hankel atoms +0.82445  Hankel arch +1.00235  T +1.53941  4c^2 3.36625 4s^2 0.10716
    odd  Weil block: lowest eigenvalue 2.0872e-04 ; on its eigenvector (||phi|| = 1): Hankel atoms +1.15028  Hankel arch +0.62447  T +1.58642  4c^2 3.36884 4s^2 0.18813
+L=1 M=640: Hankel total: min -1.62908 max 2.39932 #neg 158 of 320 | prime part alone: min -1.62913 max 1.67512 #neg 161 | arch part: min -1.2e-16 max 1.31217
+   even Weil block: lowest eigenvalue 1.3331e-05 ; on its eigenvector (||phi|| = 1): Hankel atoms +0.77006  Hankel arch +1.00650  T +1.48794  4c^2 3.26451 4s^2 0.09776
+   odd  Weil block: lowest eigenvalue 5.2257e-05 ; on its eigenvector (||phi|| = 1): Hankel atoms +1.13180  Hankel arch +0.61047  T +1.55680  4c^2 3.30910 4s^2 0.18541

@@ -1,0 +1,4 @@
+J4 zeta L=1.0 n=12: BE |T.a-H|=7.2e-16 sym=1.1e-16 max#pos per slice=2 worst P_k=-4.138 || Theta_t best t=0.014 worst=-0.01836 (|T.a-H|=2e-16) ; at t=0.050: -0.04694
+J4 zeta L=1.0 n=24: BE |T.a-H|=4.4e-16 sym=2.2e-16 max#pos per slice=2 worst P_k=-6.148 || Theta_t best t=0.034 worst=-0.03794 (|T.a-H|=4e-16) ; at t=0.050: -0.05181
+J4 zeta L=0.5 n=12: BE |T.a-H|=2.2e-16 sym=2.2e-16 max#pos per slice=2 worst P_k=-2.215 || Theta_t best t=0.057 worst=-0.02170 (|T.a-H|=4e-16) ; at t=0.050: -0.03157
+J4 beurling L=1.0 n=12: BE |T.a-H|=3.3e-16 sym=1.1e-16 max#pos per slice=2 worst P_k=-4.264 || Theta_t best t=0.014 worst=-0.02389 (|T.a-H|=2e-16) ; at t=0.050: -0.04795
