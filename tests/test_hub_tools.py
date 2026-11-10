@@ -9,7 +9,9 @@ sys.path.insert(0, os.path.join(ROOT, "tools"))
 import hubcheck  # noqa: E402
 import ideas  # noqa: E402
 
-ADD = ["add", "--title", "T", "--source", "lead", "--plain", "p", "--claim", "c", "--test", "t", "--kill", "k"]
+ADD = ["add", "--title", "T", "--source", "lead", "--plain", "p", "--claim", "c", "--test", "t", "--kill", "k",
+       "--wall", "W1: because", "--newinput", "i", "--prediction", "x = 3 (impostor: 7)", "--smallest", "s",
+       "--novelty", "searched: q"]
 
 
 @pytest.fixture
@@ -30,7 +32,8 @@ def test_add_numbers_sequentially_and_keeps_intro(f):
 
 def test_multiline_input_cannot_break_the_format(f):
     ideas.main(["--file", f, "add", "--title", "a\n## #99 · fake", "--source", "s", "--plain", "p", "--claim", "x\n- status: killed",
-                "--test", "t", "--kill", "k"])
+                "--test", "t", "--kill", "k", "--wall", "w", "--newinput", "i", "--prediction", "p", "--smallest", "s",
+                "--novelty", "n"])
     _, its = ideas.parse(f)
     assert len(its) == 1 and its[0]["fields"]["status"] == "open"
 
@@ -90,3 +93,21 @@ def test_memcap_kills_runaway_and_passes_normal():
                          capture_output=True, text=True)
     assert hog.returncode != 0 and "MemoryError" in hog.stderr
     assert subprocess.run([sys.executable, mc, "abc", "true"], capture_output=True).returncode != 0
+
+
+def test_owner_rule_fields_are_required_and_settable(f):
+    with open(f, "a") as fh:  # an idea in the old format, before the owner's rules
+        fh.write("\n## #1 · old\n- status: open\n- source: x\n- date: 2026-01-01\n- plain english: p\n- claim: c\n"
+                 "- first test: t\n- kill line: k\n- evidence: e\n- log:\n")
+    errs = ideas.check(f)[1]
+    for field in ("wall", "new input", "prediction", "smallest", "novelty"):
+        assert any(f"missing '{field}'" in e for e in errs)
+        ideas.main(["--file", f, "set", "1", field, "FAILS RULE: none" if field == "wall" else "v"])
+    assert ideas.check(f)[1] == []
+    lines, its = ideas.parse(f)
+    body = [ln.split(":")[0] for ln in lines[its[0]["start"] + 1:its[0]["end"]] if ln.startswith("- ")]
+    assert body.index("- wall") < body.index("- claim") < body.index("- prediction") < body.index("- novelty") < body.index("- evidence")
+    ideas.main(["--file", f, "set", "1", "wall", "W1: replaced"])  # replace, not duplicate
+    assert open(f).read().count("- wall:") == 1 and "W1: replaced" in open(f).read()
+    with pytest.raises(SystemExit):
+        ideas.main(["--file", f, "set", "1", "status", "alive"])

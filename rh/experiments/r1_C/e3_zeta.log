@@ -1,0 +1,6 @@
+zeta X=10       min_t D_X(t) = -0.53437 at t = 2.050 ;  min * log X = -1.2304 ; fraction of t with D<0: 0.0417
+zeta X=100      min_t D_X(t) = -2.40115 at t = 1.042 ;  min * log X = -11.0577 ; fraction of t with D<0: 0.0598
+zeta X=1000     min_t D_X(t) = -7.87345 at t = 0.662 ;  min * log X = -54.3879 ; fraction of t with D<0: 0.0677
+zeta X=10000    min_t D_X(t) = -23.90640 at t = 0.500 ;  min * log X = -220.1861 ; fraction of t with D<0: 0.0751
+zeta X=100000   min_t D_X(t) = -29.44905 at t = 0.500 ;  min * log X = -339.0448 ; fraction of t with D<0: 0.0862
+zeta X=1e+06    min_t D_X(t) = -0.02974 at t = 0.536 ;  min * log X = -0.4108 ; fraction of t with D<0: 0.0267

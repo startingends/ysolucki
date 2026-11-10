@@ -1,0 +1,21 @@
+mode=dh N=48 sigma0=1.25 Tmax=100.0 dps=300  (function values: 26.5s)
+Pick matrix A: 1 negative eigenvalues; most negative -5.308e-06 ; smallest positive 1.333e-47 ; largest 1.178e-03
+time 32.3s
+Ritz values sqrt(lambda) with |Im| > 1e-6 and Re < 130:
+    (85.6993484854 - 0.308517182457j)
+    (85.6993484854 + 0.308517182457j)
+true off-line zeros (gamma = t -+ i(beta-1/2)): 85.699348 -+ 0.308517i ; 114.163343 -+ 0.150830i
+   DH on-line zero #1 = 5.0941598446   nearest real Ritz value error 8.96e+00
+   DH on-line zero #4 = 14.4040031123   nearest real Ritz value error 3.50e-01
+   DH on-line zero #7 = 22.1597077651   nearest real Ritz value error 8.11e+00
+   DH on-line zero #10 = 27.9237988216   nearest real Ritz value error 2.81e+00
+   DH on-line zero #13 = 33.6998622816   nearest real Ritz value error 2.97e+00
+   DH on-line zero #16 = 40.1625784769   nearest real Ritz value error 1.89e+00
+   DH on-line zero #19 = 44.9471342189   nearest real Ritz value error 2.90e+00
+   DH on-line zero #22 = 50.2400864501   nearest real Ritz value error 8.22e-01
+   DH on-line zero #25 = 54.8367768801   nearest real Ritz value error 6.25e-01
+   DH on-line zero #28 = 59.7667923435   nearest real Ritz value error 1.23e-01
+   DH on-line zero #31 = 64.6767188975   nearest real Ritz value error 5.34e-07
+   DH on-line zero #34 = 68.9367002151   nearest real Ritz value error 0.00e+00
+   DH on-line zero #37 = 74.3249817490   nearest real Ritz value error 0.00e+00
+   DH on-line zero #40 = 78.7174099263   nearest real Ritz value error 0.00e+00

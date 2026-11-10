@@ -48,3 +48,27 @@ on the impostor before using it for anything.
 
 **N7. Memory accident.** (lead) An outer product of 78 734 × 12 500 doubles (8 GB) was killed by the kernel;
 rerun in chunks under `tools/memcap.py 3`. Rule: every numpy job in this repo runs under memcap.
+
+**N8. The owner's six rules, applied to my own ideas.** (lead) #6 (Lee-Yang lift) is exactly what rule 1
+rejects: another look-alike family. Parked. The understanding it gave stays (U-3). Lesson: I was working
+from the toolbox.
+
+**N9. Working backwards (rule 3).** (lead) Details in `rh/KEY_LEMMA_SHAPE.md`. The two observations I did
+not have this morning: (a) S1: nothing linear in the function can work, because the impostor lives in the
+same 2-dimensional space as two honest L-functions; (b) S3: zero margin is fatal for estimates but harmless
+for an equality-case argument, where zero margin is the *hypothesis*.
+
+**N10. First failed attempt on #8, and why (wall W2).** (lead) At a first-failure window the null vector
+gives a zero-side sum vanishing on an interval. Hoped: analytic continuation forces all coefficients to
+vanish, then a counting argument (an entire function of exponential type a0 cannot vanish at all zeros,
+whose density grows like log T) gives a contradiction. Fails: with infinitely dense frequencies the
+exponentials are over-complete on any finite interval, so vanishing on an interval says nothing coefficient
+by coefficient. I told myself "I can do it" and looked again: the density that kills uniqueness on the zero
+side is the same density that makes the *prime* side finite on the window. So the contradiction must be
+sought on the prime side, where the equation has finitely many terms. That is the next thing to try.
+
+**N11. A number that separates true from false.** (lead) a0 = first-failure half-width. Finite for the
+impostor (blind prediction 2.8 +- 0.5 on record in idea #8), infinite for zeta iff RH. WILD: is 1/a0 a
+natural "distance from RH" for a general Dirichlet series, continuous in the coefficients? If so, the honest
+L-functions sit at 1/a0 = 0, the boundary of the range. That would be the picture asked for in Q5: zero
+slack because true L-functions are extreme points.

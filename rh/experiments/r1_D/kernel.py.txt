@@ -1,0 +1,47 @@
+"""E3: 'ferromagnetic-type' shape properties of the kernel Phi, zeta versus the Davenport-Heilbronn impostor.
+Xi(t) = int Phi(u) e^{itu} du.  zeta: Phi(u) = sum (2 pi^2 n^4 e^{9u/2} - 3 pi n^2 e^{5u/2}) exp(-pi n^2 e^{2u})  (u-scale with t conjugate).
+DH:   Lambda(s) = (5/pi)^{s/2} Gamma((s+1)/2) f(s) = int_0^inf theta(x) x^{(s+1)/2} dx/x,  theta(x) = sum a(n) n exp(-pi n^2 x/5),
+      a = (1, xi, -xi, -1, 0) mod 5;   Phi_DH(u) = 2 e^{3u/2} theta(e^{2u}) (even in u iff the functional equation holds)."""
+import mpmath as mp
+mp.mp.dps = 40
+xi = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+A = [0, 1, xi, -xi, -1]
+def phi_z(u):
+    u = mp.mpf(u); e2 = mp.e ** (2 * u)
+    return mp.nsum(lambda n: (2 * mp.pi ** 2 * n ** 4 * mp.e ** (4.5 * u) - 3 * mp.pi * n ** 2 * mp.e ** (2.5 * u)) * mp.e ** (-mp.pi * n * n * e2), [1, mp.inf])
+def phi_d(u):
+    u = mp.mpf(u); x = mp.e ** (2 * u); s = mp.mpf(0); n = 1
+    while True:
+        term = A[n % 5] * n * mp.e ** (-mp.pi * n * n * x / 5)
+        s += term
+        if n > 20 and mp.pi * n * n * x / 5 > 120: break
+        n += 1
+    return 2 * mp.e ** (1.5 * u) * s
+print("evenness check: Phi_z(0.3)/Phi_z(-0.3) =", mp.nstr(phi_z(0.3) / phi_z(-0.3), 15), " Phi_DH(0.3)/Phi_DH(-0.3) =", mp.nstr(phi_d(0.3) / phi_d(-0.3), 15))
+# check transform reproduces a known zero: Xi_DH(5.094159844571) ~ 0 relative to Xi_DH(0)
+X = lambda ph, t: 2 * mp.quad(lambda u: ph(u) * mp.cos(t * u), [0, 0.5, 1, 2, 4])
+print("Xi_DH(0) =", mp.nstr(X(phi_d, 0), 12), " Xi_DH(5.094159844571095)/Xi_DH(0) =", mp.nstr(X(phi_d, mp.mpf('5.094159844571095')) / X(phi_d, 0), 5),
+      " Xi_z(14.134725141734693)/Xi_z(0) =", mp.nstr(X(phi_z, mp.mpf('14.134725141734693')) / X(phi_z, 0), 5))
+print("  u      Phi_z      (logPhi_z)''   CV_z      |   Phi_DH     (logPhi_DH)''   CV_DH        [CV = d/du( Phi'/(u Phi) ) ; <0 means log Phi(sqrt u) concave]")
+res = {"z": [1, 1, 1], "d": [1, 1, 1]}
+u = mp.mpf('0.02')
+while u < 2.0:
+    row = []
+    for key, ph in (("z", phi_z), ("d", phi_d)):
+        L = lambda v, ph=ph: mp.log(ph(v))
+        p = ph(u); l2 = mp.diff(L, u, 2); cv = mp.diff(lambda v: mp.diff(L, v) / v, u)
+        if p <= 0: res[key][0] = 0
+        if l2 >= 0: res[key][1] = 0
+        if cv >= 0: res[key][2] = 0
+        row += [p, l2, cv]
+    if int(round(float(u) * 50)) % 10 == 1: print(f"{float(u):5.2f}  " + "  ".join(mp.nstr(x, 6) for x in row[:3]) + "   |  " + "  ".join(mp.nstr(x, 6) for x in row[3:]))
+    u += mp.mpf('0.02')
+print("zeta kernel: positive, log-concave, CV-concave on grid (0,2):", res["z"]); print("DH kernel:   positive, log-concave, CV-concave on grid (0,2):", res["d"])
+# moments and Turan inequalities: b_m = int u^{2m} Phi ; gamma_m = m! b_m/(2m)! ; Turan: gamma_m^2 - gamma_{m-1} gamma_{m+1} >= 0 ; first failures
+for key, ph in (("zeta", phi_z), ("DH", phi_d)):
+    b = [2 * mp.quad(lambda v: v ** (2 * m) * ph(v), [0, 0.25, 0.5, 1, 2, 4]) for m in range(0, 42)]
+    g = [mp.factorial(m) * b[m] / mp.factorial(2 * m) for m in range(42)]
+    tur = [g[m] ** 2 - g[m - 1] * g[m + 1] for m in range(1, 41)]
+    lag = [3 * g[m+1]**2 - 4 * g[m] * g[m + 2] + g[m-1] * g[m + 3] for m in range(1, 39)]   # third-order (Laguerre-type) inequality for LP class
+    print(key, ": Turan holds for m=1..40:", all(t > 0 for t in tur), "; min normalised Turan ratio g_m^2/(g_{m-1}g_{m+1}) =", mp.nstr(min(g[m] ** 2 / (g[m - 1] * g[m + 1]) for m in range(1, 41)), 10),
+          "; ratio at m=40:", mp.nstr(g[40] ** 2 / (g[39] * g[41]), 10), "; 4-term inequality holds:", all(x > 0 for x in lag))

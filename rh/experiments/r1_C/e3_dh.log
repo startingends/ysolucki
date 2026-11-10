@@ -1,0 +1,11 @@
+dh X=10       min_t D_X(t) = -0.13764 at t = 0.500 ;  min * log X = -0.3169 ; fraction of t with D<0: 0.0051
+dh X=30       min_t D_X(t) = -0.08476 at t = 0.500 ;  min * log X = -0.2883 ; fraction of t with D<0: 0.0077
+dh X=100      min_t D_X(t) = -0.21073 at t = 84.482 ;  min * log X = -0.9705 ; fraction of t with D<0: 0.0090
+dh X=200      min_t D_X(t) = -0.30869 at t = 84.644 ;  min * log X = -1.6355 ; fraction of t with D<0: 0.0104
+dh X=300      min_t D_X(t) = -0.57262 at t = 86.622 ;  min * log X = -3.2661 ; fraction of t with D<0: 0.0118
+dh X=400      min_t D_X(t) = -0.74514 at t = 86.588 ;  min * log X = -4.4645 ; fraction of t with D<0: 0.0126
+dh X=500      min_t D_X(t) = -0.86485 at t = 86.560 ;  min * log X = -5.3747 ; fraction of t with D<0: 0.0135
+dh X=700      min_t D_X(t) = -1.10226 at t = 84.898 ;  min * log X = -7.2210 ; fraction of t with D<0: 0.0178
+dh X=1000     min_t D_X(t) = -1.37468 at t = 84.946 ;  min * log X = -9.4959 ; fraction of t with D<0: 0.0207
+dh X=2000     min_t D_X(t) = -1.93284 at t = 85.030 ;  min * log X = -14.6913 ; fraction of t with D<0: 0.0188
+dh X=3000     min_t D_X(t) = -2.39273 at t = 85.072 ;  min * log X = -19.1571 ; fraction of t with D<0: 0.0197

@@ -5,10 +5,20 @@ its format consistent so ideas can be referred to by number ("look deeper into #
   ideas.py add --title T --source S --plain P --claim C --test X --kill K [--worth W] [--evidence E] [--tags a,b]
                                     --plain is the idea in plain English with a concrete example, written for
                                     the owner (no jargon); it is required, because the owner steers from it
+  ideas.py set N FIELD "text"       set/replace one field of idea N (e.g. wall, prediction, novelty)
   ideas.py note N "text"            append a dated line to idea N's log
   ideas.py status N STATUS "why"    open | testing | killed | parked | alive
   ideas.py list [--status S]
   ideas.py check                    validate numbering and required fields (exit 1 on error)
+
+Owner rules (2026-11-10), enforced as required fields:
+  wall        which wall (W1, ...) the idea attacks and why it will not hit the same wall again
+  new input   what the idea brings in that the original statement of RH did not have
+              (a bare "RH is equivalent to X" is rejected)
+  prediction  a number stated BEFORE computing it, that would come out differently for the impostor
+  novelty     the searches actually run (queries, sources, date) and what they found; recall does not count
+  smallest    the smallest new statement on this route that could actually be proved
+A field may honestly say "FAILS RULE: ..."; hubcheck counts those so they stay visible.
 
 Statuses: open (recorded, untested) · testing · alive (survived a real test) ·
           parked (blocked on a named wall) · killed (kill line hit; reason in the log).
@@ -25,8 +35,10 @@ import sys
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 DEFAULT = os.path.join(ROOT, "docs", "IDEAS.md")
 STATUSES = ("open", "testing", "alive", "parked", "killed")
-FIELDS = ("status", "source", "date", "tags", "plain english", "claim", "worth if true", "first test", "kill line", "evidence")
-REQUIRED = ("status", "source", "date", "plain english", "claim", "first test", "kill line")
+FIELDS = ("status", "source", "date", "tags", "plain english", "wall", "new input", "claim", "prediction",
+          "smallest", "worth if true", "first test", "kill line", "novelty", "evidence")
+REQUIRED = ("status", "source", "date", "plain english", "wall", "new input", "claim", "prediction", "smallest",
+            "first test", "kill line", "novelty")
 HEAD = re.compile(r"^## #(\d+) · (.+)$")
 
 
@@ -88,10 +100,15 @@ def add(path, a):
         f"- date: {today}",
         f"- tags: {_one_line(a.tags or '')}",
         f"- plain english: {_one_line(a.plain)}",
+        f"- wall: {_one_line(a.wall)}",
+        f"- new input: {_one_line(a.newinput)}",
         f"- claim: {_one_line(a.claim)}",
+        f"- prediction: {_one_line(a.prediction)}",
+        f"- smallest: {_one_line(a.smallest)}",
         f"- worth if true: {_one_line(a.worth or '')}",
         f"- first test: {_one_line(a.test)}",
         f"- kill line: {_one_line(a.kill)}",
+        f"- novelty: {_one_line(a.novelty)}",
         f"- evidence: {_one_line(a.evidence or 'none yet')}",
         "- log:",
         "",
@@ -119,6 +136,28 @@ def note(path, n, text):
     _write(path, lines)
 
 
+def set_field(path, n, field, text):
+    if field not in FIELDS or field in ("status", "date"):
+        sys.exit(f"field must be one of {[f for f in FIELDS if f not in ('status', 'date')]}")
+    lines, ideas = parse(path)
+    it = _find(ideas, n)
+    new = f"- {field}: {_one_line(text)}"
+    for i in range(it["start"], it["end"]):
+        if lines[i].startswith(f"- {field}:"):
+            lines[i] = new
+            break
+    else:  # field absent (idea recorded before the field existed): insert in canonical order
+        order = {f: k for k, f in enumerate(FIELDS)}
+        pos = it["start"] + 1
+        for i in range(it["start"] + 1, it["end"]):
+            if lines[i].startswith("- ") and ":" in lines[i]:
+                k = lines[i][2:].split(":", 1)[0]
+                if k in order and order[k] < order[field]:
+                    pos = i + 1
+        lines.insert(pos, new)
+    _write(path, lines)
+
+
 def set_status(path, n, status, why):
     if status not in STATUSES:
         sys.exit(f"status must be one of {STATUSES}")
@@ -137,13 +176,18 @@ def main(argv=None):
     p.add_argument("--file", default=DEFAULT)
     sub = p.add_subparsers(dest="cmd", required=True)
     a = sub.add_parser("add")
-    for f in ("title", "source", "plain", "claim", "test", "kill"):
+    for f in ("title", "source", "plain", "wall", "newinput", "claim", "prediction", "smallest", "test", "kill",
+              "novelty"):
         a.add_argument("--" + f, required=True)
     for f in ("worth", "evidence", "tags"):
         a.add_argument("--" + f)
     nt = sub.add_parser("note")
     nt.add_argument("n", type=int)
     nt.add_argument("text")
+    sf = sub.add_parser("set")
+    sf.add_argument("n", type=int)
+    sf.add_argument("field")
+    sf.add_argument("text")
     st = sub.add_parser("status")
     st.add_argument("n", type=int)
     st.add_argument("status")
@@ -157,6 +201,8 @@ def main(argv=None):
         print(f"added idea #{add(args.file, args)}")
     elif args.cmd == "note":
         note(args.file, args.n, args.text)
+    elif args.cmd == "set":
+        set_field(args.file, args.n, args.field, args.text)
     elif args.cmd == "status":
         set_status(args.file, args.n, args.status, args.why)
     elif args.cmd == "list":
@@ -170,7 +216,10 @@ def main(argv=None):
         ideas, errs = check(args.file)
         for e in errs:
             print("ERROR", e)
-        print(f"{len(ideas)} ideas, {len(errs)} errors")
+        fails = [(it["n"], f) for it in ideas for f, v in it["fields"].items() if v.startswith("FAILS RULE")]
+        for n, f in fails:
+            print(f"rule-failure on record: #{n} '{f}'")
+        print(f"{len(ideas)} ideas, {len(errs)} errors, {len(fails)} recorded rule failures")
         return 1 if errs else 0
     return 0
 

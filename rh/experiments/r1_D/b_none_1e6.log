@@ -1,0 +1,20 @@
+# X=1e+06 rho0=(0.6+4j) c=0.0733-0.4890j mode=none P0=50 delta=0.00000 Nmax=1020010 max|eps|=0.0000
+# sieve+sort done 0.1s ; N_B(X) = 1000000
+# A (LSQ fit on [X/50,X]) = 1.0000000000
+# window_lo   rms(R, global A)   rms(R, local linear detrend)   max|R|
+        1000         0.0000         0.0000        0.000
+        2000         0.0000         0.0000        0.000
+        4000         0.0000         0.0000        0.000
+        8000         0.0000         0.0000        0.000
+     1.6e+04         0.0000         0.0000        0.000
+     3.2e+04         0.0000         0.0000        0.000
+     6.4e+04         0.0000         0.0000        0.000
+    1.28e+05         0.0000         0.0000        0.000
+    2.56e+05         0.0000         0.0000        0.000
+# exponent fit of local-detrended rms: all windows 1.377 ; upper half of windows 1.178
+/home/user/ysolucki/rh/experiments/r1_D/beurling.py.txt:77: RuntimeWarning: divide by zero encountered in log
+  sl_all = np.polyfit(np.log(xs), np.log(arr), 1)[0]
+/home/user/ysolucki/rh/experiments/r1_D/beurling.py.txt:78: RuntimeWarning: divide by zero encountered in log
+  sl_hi = np.polyfit(np.log(xs[h:]), np.log(arr[h:]), 1)[0]
+# exponent fit of global-A rms: all windows nan ; upper half of windows nan
+# total time 0.1s

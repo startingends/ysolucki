@@ -1,0 +1,16 @@
+"""E1 control: formal truncated 'Euler product' for Davenport-Heilbronn; compare zeros of Re[e^{i theta} P_X] with DH on-line zeros."""
+import sys, json, math, subprocess
+import numpy as np
+d = json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))
+on = np.array(sorted(float(x) for x in d["online"]))
+TM = 120.0; on = on[on < TM]
+print("DH on-line zeros below 120:", len(on))
+for X in sys.argv[1:]:
+    z = np.load("e1_dh_X%d.npy" % int(float(X)))
+    k = min(len(z), len(on))
+    near = np.array([np.min(np.abs(z - g)) for g in on])
+    print("X=%s: family has %d zeros in (0.5,80) vs %d true on-line; median dist true->nearest family zero %.3f, max %.3f" % (X, len(z), len(on), np.median(near), near.max()))
+    for lo, hi in ((0.5, 60), (60, 80), (80, 92), (92, 120)):
+        zf = z[(z > lo) & (z < hi)]; zt = on[(on > lo) & (on < hi)]
+        print("   window (%g,%g): family %d zeros, DH on-line %d zeros" % (lo, hi, len(zf), len(zt)))
+    print("   family zeros in (82,90):", np.round(z[(z > 82) & (z < 90)], 3), " DH on-line there:", np.round(on[(on > 82) & (on < 90)], 3))

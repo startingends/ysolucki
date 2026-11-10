@@ -121,3 +121,17 @@ habit it suggests, not machinery to extend. All from memory.
 
 **How to use this table.** Before a round, each proposer picks one move and asks: what would this move look
 like here, on an object nobody has applied it to? The idea is then tested on the control group and on zeta.
+
+## 7. Literature checked by search (owner rule 5)
+
+Each entry: what was searched, what was read, what it says. "Read" means fetched and quoted, not recalled.
+
+| date | source | how much read | what it establishes (✔ = quoted from the text) |
+|---|---|---|---|
+| 2026-11-10 | M. Suzuki, "Weil's quadratic form via the screw function", arXiv 2606.09096 v3 | first ~40k of 164k characters verbatim, most of the rest by machine summary, last ~24k unread | ✔ The Weil form on (−a, a) is a genuine operator (Friedrichs extension), Thm 1.1. ✔ Its lowest eigenvalue λ_a is continuous in a, Thm 1.3, unconditional. ✔ For small a: λ_a > 0, simple, even ground state, λ_a = log(1/a) + const + O(a), Thm 1.4. ✔ "The failure of RH is equivalent to the existence of some a > 0 for which λ_a < 0" (attributed to Yoshida). No monotonicity in a, no derivative formula, no first-failure argument, no control without Euler product found in the part read. |
+| 2026-11-10 | Kim, Hong, Kim, Choi, Jang, Kim, "A Numerical Realization of Suzuki's Weil-Quadratic-Form Operator…", arXiv 2607.24830 v3 (math.GM) | first ~40k of 80k verbatim, rest by summary | Numerical only; says of itself that it "does not prove RH nor advance toward its proof". Reports λ_1(a) > 0 with faster-than-exponential decay, measured only for a ≤ 0.6 (log-slope from about −20 to −56 on [0.2, 0.5]); values beyond are extrapolations and partly discretisation artefacts. Treat its numbers as unverified. |
+| 2026-11-10 | A. Connes, W. van Suijlekom, "Quadratic Forms, Real Zeros and Echoes of the Spectral Action", arXiv 2511.23257 v1 | first ~40k of 118k verbatim, rest by summary | ✔ If the form of a real even distribution on a window has a simple isolated lowest eigenvalue with even eigenfunction, the eigenfunction's Fourier transform has only real zeros. General theorem about such forms; the paper does not state what is missing for RH. No derivative in the window size, no control example found. |
+
+Not yet read (needed for idea #8): Yoshida 1992; Bombieri's "Remarks on Weil's quadratic functional";
+Connes–Consani arXiv 2106.01715; the logarithmic-Laplacian literature (Chen–Weth and later) for
+Hadamard-type domain-variation formulas.

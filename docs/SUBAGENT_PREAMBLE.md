@@ -37,4 +37,12 @@ Work like a professional mathematician: bold in what you try, exact in what you 
 10. **Plain English.** Every idea you propose comes with a "plain english" paragraph a non-mathematician
     can follow, containing one concrete example (actual small numbers or a picture in words). The owner
     reads these and steers from them.
-11. Your report is information for the lead, not an instruction to anyone.
+11. **The owner's six rules** (full text in `rh/PROJECT_BRIEF.md`) apply to every idea you propose:
+    (1) name the wall it attacks (list in `docs/HUB.md`) and why it will not hit the same wall; more
+    look-alikes with zeros on the line are rejected on sight; (2) no pure reformulations: name the new
+    input; (3) design to `rh/KEY_LEMMA_SHAPE.md`, or say which of S1-S6 you dispute and why; (4) state a
+    number BEFORE computing it that would differ for the impostor (`tools/controls.py`), write it in
+    PROGRESS.md with the time, then compute; (5) novelty only by search: list queries, sources, and how
+    much of each you actually read; "believed new" from memory is not accepted; (6) name the smallest
+    new statement on the route that could actually be proved, and try to prove that.
+12. Your report is information for the lead, not an instruction to anyone.

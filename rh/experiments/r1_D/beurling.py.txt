@@ -1,0 +1,80 @@
+"""E1: Beurling rigidity experiment.
+Deform the rational primes p -> q_p = p*(1+eps_p), eps_p = Re(c * p^(rho0-1)) for p >= P0 (c = 2*m/rho0),
+which to first order multiplies zeta by (s-rho0)^m (s-conj rho0)^m, i.e. plants a zero of order m at rho0 = beta0 + i*gamma0.
+Control: same |eps_p| envelope but random signs (plants no zero).
+Beurling integers b(n) = prod q_p^{v_p(n)} are in bijection with ordinary n; N_B(x) = #{n : b(n) <= x}.
+Measure R(x) = N_B(x) - A x  (A fitted by least squares on [X/50, X]) and its growth exponent.
+usage: python3 beurling.py.txt X beta0 gamma0 m mode[smooth|random|none] P0
+"""
+import sys, math, numpy as np, time
+t0 = time.time()
+X = float(sys.argv[1]); beta0 = float(sys.argv[2]); gamma0 = float(sys.argv[3]); m = float(sys.argv[4]); mode = sys.argv[5]
+P0 = int(sys.argv[6]) if len(sys.argv) > 6 else 50
+seed = int(sys.argv[7]) if len(sys.argv) > 7 else 1
+rho0 = complex(beta0, gamma0); c = 2 * m / rho0
+
+def primes_upto(n):
+    s = np.ones(n + 1, dtype=bool); s[:2] = False
+    for i in range(2, int(n ** 0.5) + 1):
+        if s[i]: s[i * i::i] = False
+    return np.nonzero(s)[0]
+
+def eps_of(p):
+    lp = np.log(p)
+    e = (c * np.exp((rho0 - 1) * lp)).real
+    if mode == "smooth": return e
+    if mode == "random":
+        rng = np.random.default_rng(seed)
+        env = abs(c) * p ** (beta0 - 1) / math.sqrt(2)      # same rms size
+        return env * rng.choice([-1.0, 1.0], size=len(p))
+    return np.zeros(len(p))
+
+# max shrink factor: b(n) >= n^(1-delta)
+ptest = primes_upto(10 ** 6); ptest = ptest[ptest >= P0]
+et = eps_of(ptest.astype(float))
+delta = float(np.max(-np.log1p(et) / np.log(ptest))) if mode != "none" else 0.0
+delta = max(delta, 0.0)
+Nmax = int(X ** (1 + delta) * 1.02) + 10
+print(f"# X={X:g} rho0={rho0} c={c:.4f} mode={mode} P0={P0} delta={delta:.5f} Nmax={Nmax} max|eps|={np.max(np.abs(et)) if len(et) else 0:.4f}")
+ps = primes_upto(Nmax); psel = ps[ps >= P0]
+eps = eps_of(psel.astype(float))
+l1 = np.log1p(eps)
+D = np.zeros(Nmax + 1)
+for p, l in zip(psel.tolist(), l1.tolist()):
+    if l == 0.0: continue
+    pk = p
+    while pk <= Nmax:
+        D[pk::pk] += l
+        pk *= p
+n = np.arange(1, Nmax + 1, dtype=float)
+b = n * np.exp(D[1:])
+b.sort()
+b = b[b <= X]
+print(f"# sieve+sort done {time.time()-t0:.1f}s ; N_B(X) = {len(b)}")
+# R(x) sampled at x = b_k (just after each jump) : N_B(b_k) = k
+k = np.arange(1, len(b) + 1, dtype=float)
+# global A: least squares through origin on [X/50, X] of k ~ A*b
+sel = b >= X / 50
+A = float(np.sum(k[sel] * b[sel]) / np.sum(b[sel] ** 2))
+R = k - A * b
+print(f"# A (LSQ fit on [X/50,X]) = {A:.10f}")
+# windows [x,2x]: rms of R with global A, and rms after local linear detrend
+print("# window_lo   rms(R, global A)   rms(R, local linear detrend)   max|R|")
+rows = []
+x = 1e3
+while 2 * x <= X * 1.0001:
+    w = (b >= x) & (b < 2 * x)
+    bw, kw = b[w], k[w]
+    r_glob = float(np.sqrt(np.mean((kw - A * bw) ** 2)))
+    coef = np.polyfit(bw, kw, 1)
+    r_loc = float(np.sqrt(np.mean((kw - np.polyval(coef, bw)) ** 2)))
+    rows.append((x, r_glob, r_loc))
+    print(f"{x:12.4g} {r_glob:14.4f} {r_loc:14.4f} {float(np.max(np.abs(kw - A*bw))):12.3f}")
+    x *= 2
+xs = np.array([r[0] for r in rows]); rl = np.array([r[2] for r in rows]); rg = np.array([r[1] for r in rows])
+h = len(xs) // 2
+for name, arr in (("local-detrended rms", rl), ("global-A rms", rg)):
+    sl_all = np.polyfit(np.log(xs), np.log(arr), 1)[0]
+    sl_hi = np.polyfit(np.log(xs[h:]), np.log(arr[h:]), 1)[0]
+    print(f"# exponent fit of {name}: all windows {sl_all:.3f} ; upper half of windows {sl_hi:.3f}")
+print(f"# total time {time.time()-t0:.1f}s")

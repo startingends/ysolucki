@@ -19,6 +19,24 @@ Owner's standing instructions:
 - Explain each interesting idea to the owner in plain English with an example; the owner may answer with
   insights or direction, which are recorded in the idea's log and acted on.
 
+## The six rules (owner, 2026-11-10). Binding on every idea, every agent, and the lead.
+1. **Start from the wall, not the toolbox.** Every idea names the wall it attacks (W1, W2, …; list in
+   `docs/HUB.md`) and says why it will not hit the same wall. "Another look-alike with zeros on the line" is
+   rejected on sight.
+2. **No pure reformulations.** "RH is equivalent to X" counts only if X brings in an input the original
+   did not have, and the idea names that input.
+3. **Work backwards from the constraints.** Given B1–B10, what must the key lemma of any proof look like?
+   Design to that shape (`rh/KEY_LEMMA_SHAPE.md`), not from what is familiar.
+4. **A surprising prediction.** Each idea states a number before computing it, one that would come out
+   differently for the impostor. If nothing could surprise us, the idea says nothing.
+5. **Novelty by search, not memory.** "Believed new" from recall is worthless. Record the queries run, the
+   sources read and how much of each was read. Literature access was verified on 2026-11-10 (web search +
+   full-text fetch of arXiv). The honest end state is usually "not found in what was read".
+6. **Aim for the smallest new proved statement,** not the whole thing. It is the first real sign that a
+   route exists.
+These are enforced as required fields in `tools/ideas.py` (wall, new input, prediction, smallest, novelty).
+A field may honestly read "FAILS RULE: …"; such ideas cannot be `alive`.
+
 ### The deeper version
 - *What a top professional would do that wasn't asked:* keep a barrier list and test every idea against known
   counterexamples before investing in it; build the numerical laboratory first; demand that each route says
