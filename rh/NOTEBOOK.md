@@ -118,3 +118,33 @@ because the route matters more than the result:
    idea #9 with that stated. What is left for us: the finite-window experiment, the control group, the
    extreme-point conjecture, and the link to the first-failure window (#8).
 Lesson: two of my three "new" ideas today were already out there. Search first, think second.
+
+**N15. The bootstrap experiment: the primes really are forced, and I mis-predicted how tightly.** (lead)
+COMPUTED at window L = 1. Without primes the energy goes to -1.3. With them, 8e-30. Wiggle one weight and
+positivity breaks at once: log 2 at n = 2 is pinned to 26 digits; the composite 6 is pinned to zero to 13
+digits; 7, at the edge of the window, to 6 digits. Predicted "< 1e-20" for 6; got 1e-13. Second miss of the
+day on a size, second time the direction was right. Pattern in my misses: I keep assuming one scale governs
+everything; the truth has a ladder of scales (one per rung, one per integer).
+
+**N16. Why zeta is rigid and conductor 5 is not: the threshold picture.** (lead) HEURISTIC.
+For conductor 5 the allowed set is fat (weights can move by 10). For zeta it is a needle. The difference is
+not "honest versus impostor"; it is that zeta sits at the smallest possible conductor. Picture a valley whose
+floor rises as the conductor drops; at conductor 1 the floor touches zero at exactly one point, and that
+point is the primes. This is the cleanest answer so far to Q5 (why no slack): RH is the statement that the
+valley floor touches zero rather than going below it at conductor 1.
+Reframing: let q* be the smallest conductor for which some positive solution exists with zeta's Gamma
+factor. RH iff q* <= 1 (given uniqueness; Johns preprint, unreviewed). Unconditionally q* < 1.0172 there.
+So there is a NUMBER measuring how far we are from RH: q* - 1 is at most 0.0172. Every improvement of that
+bound is an unconditional theorem. That fits the owner's rule 6 exactly.
+Questions this raises (not yet searched beyond the one preprint):
+- Q6. How is 1.0172 proved? Which test functions? Is the bottleneck computational or structural?
+- Q7. Their solutions allow prime-side weight anywhere beyond log 2. If weights are allowed only at logs of
+  integers the threshold can only go up. Is the integer-restricted threshold also 1 (i.e. do the integers
+  emerge for free), and can the restriction be used to get a better unconditional bound?
+- Q8. In my experiment the weight at n is pinned to about 26, 24, 21, 18, 13, 6 digits for n = 2..7. Is
+  there a law (digits as a function of n and L)? If digits grow without bound for each fixed n as L grows,
+  then finite windows already "prove" each individual prime weight to any accuracy, with no zeros involved.
+- WILD. Run the window forward as a sieve: at window L the weights at n <= e^(2L) are pinned; the first
+  unpinned integer is next. Does positivity at window L predict whether the next integer is prime before it
+  enters? If yes that is "primes predict primes" made exact (N14, step 2), and the predicting rule is the
+  object to study.

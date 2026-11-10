@@ -14,6 +14,10 @@ Labels: PROVED / COMPUTED / HEURISTIC / CONJECTURE. Citations not opened in this
 5. E2 `pencil.py.txt`: the straight line of functions between the two Euler products L(s,chi), L(s,chibar) mod 5;
    Davenport-Heilbronn is its midpoint. Predicted DH's four off-line zeros from critical values of one real function.
 6. E3 `kernel.py.txt`: does the Fourier kernel Phi of zeta have a shape property the DH kernel lacks? (No.)
+7. E2 extended to height 1000 and cross-checked by direct sign-change counts (section 2b).
+8. D6 `carry.py.txt`: a family from the zeta function of F_2[T] to zeta; zeros tracked; killed (section 4).
+9. Not done: second implementation of E1/E1b/E3; Beurling runs beyond X = 1e8; pencil beyond T = 1000;
+   D4, D5, D7 are untested proposals.
 
 ## 1. E1 / E1b: Beurling rigidity ("what does a zero off the line cost the integers?")
 
@@ -150,24 +154,74 @@ Conclusion: none of the pointwise shape properties tested separates zeta from a 
 Any "ferromagnetic" property of Phi alone that pins zeros must be invisible to these tests. Kill for the
 family of ideas "RH from positivity + log-concavity type properties of Phi".
 
-## 2b. Pencil, larger heights
-(see end of file)
+## 2b. Pencil, larger heights (COMPUTED)
+
+Command: `python3 pencil.py.txt 1000 0.02` (about 6 min; output `pencil_T1000.log`, data `pencil_T1000.json`).
+- zeros below 1000: 904 (L_1), 904 (L_2); rho = -Z_1/Z_2 has 430 critical points.
+- Predicted off-line pairs below 1000 from critical values (#local maxima with value in (0,lam) minus #local
+  minima with value in (0,lam); mirrored for lam < 0):
+
+| lam | 0.01 | 0.03 | 0.1 | 0.3 | 1 (DH) | 3 | 10 | 100 |
+|---|---|---|---|---|---|---|---|---|
+| lam > 0 | 0 | 1 | 5 | 20 | 28 | 24 | 6 | 0 |
+| lam < 0 | 1 | 6 | 44 | 113 | 153 | 123 | 48 | 0 |
+
+- Independent check in this lane (direct sign changes of Z_1 +- Z_2 on a 0.01 grid, inline script recorded below):
+  Z_1 + Z_2 has 848 real zeros in (0,1000), so (904 - 848)/2 = 28 off-line pairs: equals the prediction 28.
+  Z_1 - Z_2 has 597 real zeros, so about 153.5 off-line pairs: prediction 153.
+  Cross-lane check at T = 200: predicted on-line count 121.5, lane A (`r1_A/dh_zeros.json`, mpmath Hurwitz zeta) 122.
+- New observation: the second real-coefficient member Z_1 - Z_2 (odd in t) has 34 percent of its zeros below 1000
+  off the line, DH itself (Z_1 + Z_2) 6 percent. I have not found this stated; not searched beyond one query.
+- Threshold (smallest |lam| with an off-line pair below T'): 7.4e-2 (T'=100), 2.7e-2 (200), 1.6e-2 (500),
+  1.1e-3 (1000). With N = number of zeros of L_1 below T': threshold x N = 4.0, 3.5, 6.3, 1.0. Four points of an
+  extreme-value statistic: consistent with a power decay in N, exponent not determined.
+- The run to T = 4000 was stopped unfinished (hardy_z cost); no data from it is used.
+
+Inline check script (run from the repo): builds `ts = arange(0.005, 1000, 0.01)`, evaluates
+`c1.hardy_z(acb(t)) +- c2.hardy_z(acb(t))` with `c1 = dirichlet_char(5,2)`, `c2 = dirichlet_char(5,3)`, prec 64,
+and counts sign changes: 848 and 597.
+
+## 4. D6 first test: carry deformation (COMPUTED, killed in this form)
+
+Z_tau(s) = sum_n (2^floor(log2 n))^{-(1-tau)s} n^{-tau s}. tau = 0 is the zeta function of F_2[T] with the degree norm,
+1/(1-2^{1-s}), no zeros; tau = 1 is zeta. Command: `python3 carry.py.txt` (about 3 min, mpmath 30 digits; blocks
+k < 7 by Hurwitz zeta, tail by Euler-Maclaurin, checks: |Z_1(1/2+i gamma_1)| = 6e-16, Z_1(2) - zeta(2) = 2e-31,
+Z_0 exact to 5e-32, Z_0.5(3) = 1.248053 against direct summation 1.248046).
+Zeros continued from tau = 1 downwards:
+
+| tau | zero 1 | zero 2 | zero 3 |
+|---|---|---|---|
+| 1.0 | 0.5 + 14.1347i | 0.5 + 21.0220i | 0.5 + 25.0109i |
+| 0.9 | 0.3874 + 14.6025i | 0.6748 + 21.4461i | 0.4023 + 25.5457i |
+| 0.8 | 0.2391 + 15.1637i | 0.7388 + 21.9553i | 0.2366 + 26.1729i |
+| 0.7 | 0.0622 + 15.8673i | 0.6992 + 22.5594i | lost |
+| 0.6 | -0.1174 + 16.8132i | 0.5475 + 23.2938i | lost |
+| 0.4 | lost | -0.0988 + 25.6756i | lost |
+
+The zeros leave the line at first order, in both directions (zero 2 moves right, zeros 1 and 3 left), then drift
+into Re s < 0. No line, no sign-definite motion. Kill line hit for the naive family. What it suggests: a
+deformation that keeps neither the Euler product nor the functional equation has nothing to hold the zeros;
+a useful family must keep one of the two exactly at every tau (the pencil of section 2 keeps the functional
+equation; Beurling systems keep the Euler product).
 
 ## Ideas (title · claim · first test · kill line)
 
-- D1 Price of a zero (Beurling rigidity) · kappa(a) > 0 for all a > 1/2 · push deletion / hybrid families to
-  X = 1e10 and optimise S by discrepancy methods · killed by any discrete family with a planted zero at a > 1/2
-  whose measured integer exponent falls below 0.10 over three decades (then proved).
-- D2 Pencil lab · off-line zeros of every member are counted by critical values of rho = -Z_1/Z_2 · done up to
-  200 (4/4) · killed if a known off-line zero is not matched by a critical value.
-- D3 Shape of Phi cannot be the mechanism · tested, DH shares all · (this is itself a kill).
-- D4 Threshold law in the pencil · lam_plus(T), lam_minus(T) -> 0 like a power of the zero count · fit on T = 4000 ·
-  killed if the thresholds stop decreasing.
-- D5 Totally positive density from Moebius · the inverse Laplace transform g of xi(1/2)/xi(1/2+sqrt w), computed on
-  Re w = c > 1/4 from the Dirichlet series of 1/zeta only, is PF_infinity iff RH · compute PF_2, PF_3 minors for zeta
-  and DH · killed if no minor up to order 6 separates DH from zeta.
-- D6 Carry deformation · Z_tau(s) = sum_n (2^{floor(log2 n)})^{-(1-tau)s} n^{-tau s} joins the zeta function of F_2[T]
-  (tau = 0, no zeros) to zeta (tau = 1) · track the zeros in tau · killed if the zeros do not arrive along
-  identifiable curves or no monotone quantity appears.
-- D7 Discrepancy formulation · the deletion cost is a discrepancy lower bound on homogeneous progressions ·
-  integer programme for S at X <= 1e5 · killed if the optimum stays bounded as X grows.
+- D1 Price of a zero (Beurling rigidity) · kappa(a) > 0 for all a > 1/2, equivalently: integers regular to
+  O(x^eps) plus free generation forces all zeros in Re s > 1/2 off (no zeros there) · push deletion / hybrid
+  families to X = 1e10 and several a; · killed by any discrete family with a planted zero at a > 1/2 whose
+  measured integer oscillation exponent is below 0.10 over three decades (then proved). Status: tested, alive;
+  first version BR killed by BDR Thm 1.3.
+- D2 Pencil lab · the number of off-line pairs of Z_1 + lam Z_2 below T equals the signed count of critical values of
+  rho = -Z_1/Z_2 between 0 and lam · done to T = 1000 (28 = 28, 153 = 153.5, 4/4 heights) · killed if a member's
+  direct count disagrees. Status: tested, alive.
+- D3 Shape of Phi is not the mechanism · positivity, log-concavity, Csordas-Varga concavity, Turan (m <= 40) all hold
+  for the DH kernel too · done · (the result is the kill of shape-only ferromagnetic ideas).
+- D4 Discrepancy form of the cost · for S a set of primes of density x^(a-1), a > 1/2, the count of integers
+  coprime to S has error Omega(x^c(a)), c(a) > 0 · integer programme / greedy search for the best S at X <= 1e6 and
+  fit of the optimum · killed if the optimal error stays below X^0.1.
+- D5 Totally positive density from Moebius · g = inverse Laplace transform of xi(1/2)/xi(1/2+sqrt w), computed on
+  Re w = c > 1/4 where 1/zeta is an absolutely convergent Dirichlet series, is a Polya frequency density iff RH ·
+  compute 2x2 and 3x3 minors for zeta and for DH · killed if no minor of order <= 6 separates DH from zeta.
+- D6 Carry deformation F_2[T] -> Z · zeros arrive along curves with a monotone quantity · done · KILLED (section 4).
+- D7 Threshold law · the admissible interval of lam around an Euler product shrinks like a power of the zero
+  count · extend the pencil to T = 1e4 with a faster Hardy-Z · killed if the threshold stops decreasing.

@@ -1,0 +1,28 @@
+built in 0.4s; L=1 N=40 dps=150 integers [2, 3, 4, 5, 6, 7]
+
+== zeta archimedean term ==
+weights = von Mangoldt: lowest eigenvalue even 8.2493e-30 odd 2.228e-26
+no weights at all (m = 0): lowest eigenvalue -1.3152884
+
+feasible interval for each single weight, others held at von Mangoldt (delta = m_n - Lambda(n)):
+  n=2  Lambda=0.693147  delta in [-4.87e-26, 1.0e-28]
+  n=3  Lambda=1.09861   delta in [-3.16e-24, 3.16e-26]
+  n=4  Lambda=0.693147  delta in [-1.33e-21, 3.65e-23]
+  n=5  Lambda=1.60944   delta in [-3.65e-18, 2.37e-19]
+  n=6  Lambda=0.0       delta in [-1.15e-13, 1.78e-14]
+  n=7  Lambda=1.94591   delta in [-1.54e-6, 6.49e-7]
+
+== conductor-5 odd archimedean term (shared by L(chi), L(chibar) and the impostor) ==
+  Re(chi)*Lambda (honest pair, averaged)   lowest eigenvalue even 0.01498 odd 0.3619   weights ['0.0', '0.0', '-0.6931', '0.0', '0.0', '0.0']
+  impostor's own coefficients              lowest eigenvalue even 3.491e-5 odd 0.01344   weights ['0.1969', '-0.3121', '-1.442', '0.0', '1.936', '0.5528']
+  midpoint of the two                      lowest eigenvalue even 0.01304 odd 0.1955   weights ['0.09845', '-0.156', '-1.068', '0.0', '0.9682', '0.2764']
+  no weights                               lowest eigenvalue even -0.09917 odd 0.6565   weights ['0', '0', '0', '0', '0', '0']
+  distance between the two feasible points: 2.17999
+feasible interval for each single weight around Re(chi)*Lambda:
+  n=2  base=0.0       delta in [-10.0, 0.0154]
+  n=3  base=0.0       delta in [-10.0, 0.0422]
+  n=4  base=-0.69315  delta in [-10.0, 10.0]
+  n=5  base=0.0       delta in [-10.0, 10.0]
+  n=6  base=0.0       delta in [-10.0, 10.0]
+  n=7  base=0.0       delta in [-10.0, 10.0]
+total 165s
