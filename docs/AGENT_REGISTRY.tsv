@@ -1,1 +1,10 @@
 id	date	role	model	folder	status	result
+R1-A	2026-11-10	proposer lane A positivity	session model	rh/experiments/r1_A	running	-
+R1-B	2026-11-10	proposer lane B approximation/deformation	session model	rh/experiments/r1_B	running	-
+R1-C	2026-11-10	proposer lane C spectral/geometric	session model	rh/experiments/r1_C	running	-
+R1-D	2026-11-10	proposer lane D new structures	session model	rh/experiments/r1_D	running	-
+R1-critA	2026-11-10	critic of lane A	session model	rh/experiments/r1_A/critic	running	-
+R1-critB	2026-11-10	critic of lane B	session model	rh/experiments/r1_B/critic	running	-
+R1-critC	2026-11-10	critic of lane C	session model	rh/experiments/r1_C/critic	running	-
+R1-critD	2026-11-10	critic of lane D	session model	rh/experiments/r1_D/critic	running	-
+R1-judge	2026-11-10	judge of round 1	session model	rh/experiments/r1_judge	running	-

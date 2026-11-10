@@ -16,7 +16,7 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 | file | what |
 |---|---|
 | [`IDEAS.md`](IDEAS.md) | **the hub of the work**: numbered ideas, plain-English first, each with test and kill line |
-| [`KNOWLEDGE.md`](KNOWLEDGE.md) | equivalents of RH, what is proved, barriers B1–B9 every idea must face |
+| [`KNOWLEDGE.md`](KNOWLEDGE.md) | equivalents of RH, what is proved, barriers B1–B10 every idea must face |
 | [`DECISIONS.md`](DECISIONS.md) | open decisions with the default in use |
 | [`JOURNAL.md`](JOURNAL.md) | append-only record of finished jobs |
 | [`AGENT_REGISTRY.tsv`](AGENT_REGISTRY.tsv) | every agent / workflow spawned |

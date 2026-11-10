@@ -75,6 +75,13 @@ Each new idea is run against this list. "Cannot answer yet" is allowed, but the 
   Frobenius. No accepted analogue "Spec ℤ × Spec ℤ over F₁" with a Hodge index theorem exists yet
   (Deninger's programme, Connes–Consani's arithmetic site and scaling site are candidates).
 
+- **B10 Both structures at once.** Beurling generalized primes: there are multiplicative systems with an
+  Euler product and very regular "integer" counting whose zeta function has zeros off the line
+  (Diamond–Montgomery–Vorhauer 2006). So the Euler product alone is not enough either. Davenport–Heilbronn
+  has the additive side (functional equation, i.e. Poisson summation over ℤ) without the multiplicative
+  side; Beurling systems have the multiplicative side without the additive one. RH lives only where both
+  hold. → *Where does your argument use the additive structure of ℤ and the primes together?*
+
 ## 4. Numbers worth having at hand
 
 - γ₁ = 14.134725141734693…, γ₂ = 21.022039638771555…, γ₃ = 25.010857580145688… ✔ (tests)
