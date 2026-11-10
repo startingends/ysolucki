@@ -56,12 +56,18 @@ Verified 2026-11-10: web search works and arXiv full text can be fetched (partly
 Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` section 7.
 
 ## Running jobs
-- **Creation run 1** (workflow `rh-creation-1`, new shape): three seats with no lane, at least two hours each,
-  no refuter (blank page / inside the project's understanding / the raw numbers); then a screen that asks
-  only "is it new" and "is it precise enough to compute".
-- Round 2 (workflow `rh-round2-creation`, launched in the old shape before the owner split the tracks): seats
-  cubic (#10), curv (#11), parity (proofs and reproduction of the lead's numbers), free; refuters and a
-  judge. Its refuter verdicts and scores will be used for proofs and numbers only.
+**After any context summary or restart, read this section and `git log -5` before launching anything.**
+- **Creation run 1** (workflow `rh-creation-1`, run `wf_0afb126a-9cf`, started 23:20): three seats with no
+  lane, at least two hours each, no refuter (C1-blank: blank page / C1-inside: inside the project's
+  understanding / C1-data: the raw numbers); then a screen that asks only "is it new" and "is it precise
+  enough to compute". Folders `rh/experiments/c1_*`.
+- **Round-2 verification track** (same run id as the old round 2, `wf_39b9c4a2-4ff`, resumed 23:30 as
+  `rh-round2-verification`): the three finished seats cubic, curv, parity are kept; verifiers check their
+  PROOFS and NUMBERS only (60 to 90 minutes); a judge reports which statements are proved and which numbers
+  reproduced, with no ranking of ideas. The old round-2 free seat was withdrawn (it had a refuter and a
+  0-10 judge waiting, which the owner's split forbids); its partial files are in `rh/experiments/r2_free`.
+- Awaiting audit: ideas in the local logs of r2_cubic, r2_curv, r2_parity (and the creation seats when
+  they finish). The auditor's test for created ideas is the two questions, not likelihood.
 
 ## Scheduled routines
 None.

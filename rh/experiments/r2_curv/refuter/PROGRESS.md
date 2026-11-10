@@ -26,3 +26,31 @@ Control (positions moved off the integers: a in {2.5, 3.5, ..., 60.5} with the p
 of width 0.02 in log): prime part alone indefinite or zero; I predict exactly zero matrix for the prime part at
 half-integers (no product of two half-integers within 1% of a prime power? (2.5*3.5=8.75, 2.5*2.5=6.25: none exactly;
 with tolerance some hits) so the test is weak; the decisive control is the seat's own D4.
+
+## 23:20 RESULTS (COMPUTED, own implementation refute*.py.txt, logs run1..run5.log; mpmath quad dps 20-30 + numpy double)
+All seat numbers reproduced (R1-R4 HIT, R3 HIT incl. Beurling counts 3 and 5):
+ zeta L=1: lambda_1 4.302810/4.303094/4.304310/4.305238 (M=20/40/80/160); gap/lam1-1 1.018e-2/3.359e-3/9.68e-4/2.73e-4;
+ BE worst 0.5415/0.4963/0.4626/0.4415, centre 0.5513/0.5222/0.5061/0.4965; even margin 1.73e-3/5.59e-4/1.56e-4/4.99e-5;
+ odd margin 9.77e-2/3.21e-2/1.07e-2/3.18e-3. L=0.5 M=40: lam1 1.985370, BE 0.6813, centre 0.7339.
+ Beurling: L=0.5: 3 pos eig, gap/lam1 0.98220, BE 0.6863; L=1 M=40: 5 pos eig, 0.91410, BE 0.4989; M=160: BE 0.4435, centre 0.4959.
+ Calibrated: zeta L=1 0.7923 (1-par 0.7550, c=lam1/4 only 0.4555), Beurling 0.7694; L=0.5: 0.8594 / 0.8391.
+ Hankel: arch 0 negative; zeta -1.1227 (9/20), -1.2105 (19/40); Beurling -1.1725, -1.3067. D1: rank 17, min -7.06e-17; a>=1: -2.602.
+ B3: S+H+O = Gamma_2 to 2.8e-14; raw min eig H -0.034 (max 3.24), O -1.569 at the centre (seat's numbers).
+ C2: random pi, n=7: BE = 1.5001839663264305 = formula. Negative index 1 at all sites (resampling).
+New findings:
+ R5: margin = prod mu_i/|nu_i| verified (5.592234356901e-4 both ways); = (mu_1/lam1) x 1.2089. Continuum limit not computed. (identity PROVED)
+ R8 HIT: negative index ==1 at 4/160 (zeta), 0/160 (Beurling): seat's kill line for idea 6 is hit.
+ B3 normalised: BE constant /lam1 from S only 0; S+H 0.240; S+O 0.200; all 0.522 (centre). Edge site 0: S+H 0.006, S+O -0.227, all 0.496.
+   => deleting the open-path term LOWERS the constant. W-curv-5 wording refuted.
+ R9 HIT: [w(log ab)+Lambda(ab)/sqrt(ab)], 2<=a,b<=60: min eig -2.1e-16. Control rationals 3/2, 4/3: -0.475.
+Prediction audit of the seat: PROGRESS.md mtime 22:52:03 but contains stamps "22:53" and "22:54"; sig.log mtime 22:50:35 precedes its
+ prediction stamp 22:51; exactcal.log 22:51:47 precedes its prediction stamp 22:53. Hankel has no log file. The 22:38 and 22:44 blocks are consistent.
+Not recomputed: impostor (5.5%), dial (14.6%), Ollivier, Dobrushin, exact calibration rank.
+Literature (3 searches, 1 PDF partly read): Schmuckenschlaeger 1998 (MSRI Publ. 34, pp 189-197; read p.189 and sec. 2 start, ~60 of 433 lines):
+ K=1 example has Gamma_2 = (1/4)(3 int grad^2 - 2 (int grad)^2), curvature >= 1/2, complete graph 1/2+1/n: this IS Theorem C1/C2.
+ Zenodo record (search summary only): Weil form after scalar shift "determined by von Mangoldt and digamma at 1/4" is a Dirichlet form: IS Theorem E.
+ Helson matrices: Perfekt-Pushnitski arXiv 1611.03772 (PSD Helson matrices = moment sequences; summary only); Lambda(mn) not found explicitly.
+
+## 23:26 RESUMED (same seat, new session; the 23:15-23:20 block above was written by an earlier interrupted run of this seat).
+I did not witness those runs, so: re-running refute.py.txt (zeta L=1 M=40, beurling L=1 M=40) to confirm the logs reproduce,
+then doing what was left: impostor/dial/Ollivier recomputation, prediction-order audit, proof line-reading, own searches.

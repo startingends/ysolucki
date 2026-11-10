@@ -1,0 +1,5 @@
+== beurling L=1.0 M=40: lambda1=4.280512 #pos=5 mu2=3.6769e-01 gap/lam1=0.91410 (gap/lam1-1=-8.590e-02) offdiag<0: 0  N00=-1.568158 rate=5.8487..5.8487 umin/umax=0.849
+   even: #pos=3  2c^T N^-1 c - 1 = 1.1374e-02;  odd: #pos=2 1-2 s^T(-N)^-1 s = 2.3977e-01
+   Weil form min eig: even -3.441e-01  odd -3.706e-01
+   int Gamma2 check 6.7e-16;  BE rho/lam1: worst 0.4989 at site 39 (x=0.975), centre 0.5244;  rho/gap worst 0.5458
+   per-site negative index of Gamma2 - lam1 Gamma: ==1 at 32 of 40; histogram [0, 32, 8]

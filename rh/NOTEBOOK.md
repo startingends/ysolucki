@@ -315,3 +315,9 @@ Ideas #10 and #11 and step 6 above all need the same thing: a statement about TH
 (a triple intersection number, a Gamma_2, a chessboard estimate). Pair statements are what the explicit
 formula gives; they are equivalent to RH and nothing more. The new mathematics, if there is any here, is
 the cubic structure. Nobody needed it before, so nobody looked. That is where to look.
+
+**N31. A process failure of my own, kept because it will recur.** (lead) After a context summary I no longer
+saw that I had already split the tracks, recorded the owner's "longer time boxes", and launched creation
+run 1. The owner's instruction appeared to me as new and I started to carry it out again. I noticed only
+because an edit failed on text that had already been changed. Fix: the hub's "Running jobs" section and the
+Answered table are the memory; read them and the git log before acting on anything that looks new.

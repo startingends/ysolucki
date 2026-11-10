@@ -2,6 +2,12 @@
 
 _Last updated: 2026-11-10, after round 1 (journal J2, J3)._
 
+## Read this first after a context summary or a restart
+`docs/HUB.md` section "Running jobs", `docs/DECISIONS.md` (the Answered table is the record of every owner
+instruction and what was done about it), and `git log -8`. On 2026-11-10 the lead lost sight of work it had
+already done (a creation run already launched, an owner instruction already recorded) after a context
+summary, and began to redo it. Nothing was launched twice, but one verifier was restarted twice.
+
 ## Where we are
 - No proof. Nothing new proved. Round 1 gave instruments and controls, not a route (judge's verdict).
 - The owner's rules 1-8 are in `rh/PROJECT_BRIEF.md`. The two that decide what happens next:
