@@ -13,6 +13,9 @@ steps back to the recorded ideas, brainstorms, and keeps going. The ideas log is
 Owner's standing instructions:
 - Do not treat the goal as unrealistic; persevere.
 - Be creative and think outside the box: novel, real, testable ideas, not restatements.
+- Learn from solved cases, but do not build on top of them. Study them for the *move* (how the solver got
+  creative, how a strange idea was tested), not as a foundation to extend. Solving an analogue, a partial
+  ("quasi") version or a look-alike is not solving RH and is never reported as progress toward L4 by itself.
 - Explain each interesting idea to the owner in plain English with an example; the owner may answer with
   insights or direction, which are recorded in the idea's log and acted on.
 

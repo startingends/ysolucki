@@ -97,3 +97,27 @@ Each new idea is run against this list. "Cannot answer yet" is allowed, but the 
 - `tools/rhlib.py`: zeros (Arb, cached), ξ, Li coefficients two ways, Hardy Z, N(T).
 - `tools/ideas.py`: the numbered idea log. `tools/hubcheck.py`: hub consistency.
 - python-flint (Arb) is the fast, rigorous engine; mpmath is the independent cross-check.
+
+## 6. Moves from solved cases (inspiration, not foundations)
+
+Owner direction (2026-11-10): learn from solved cases but do not build on top of them; solving an analogue or
+a partial version is not solving RH. So this section records the *creative move* in each case and the testing
+habit it suggests, not machinery to extend. All from memory.
+
+| solved case | the move (what was creative) | the habit it suggests for us |
+|---|---|---|
+| RH for curves over finite fields (Weil 1940s) | Could not prove the inequality in the existing language, so invented a new language (abstract varieties, correspondences) in which it became a statement that squares are non-negative | When an inequality resists, ask what object would make it a square. Test: can the quantity be written as a Gram matrix numerically? |
+| Same theorem, elementary (Stepanov 1969) | Ignored the geometry entirely; built an auxiliary polynomial vanishing to high order at the points, a trick imported from transcendence theory | Import a tool from a field that has never touched the problem. Test on a small case by brute force first |
+| Weil conjectures (Deligne 1974) | Did not prove the bound directly: proved a weak bound for all tensor powers at once, and let the powers amplify it into the sharp one | A weak statement about a *family* can force a sharp statement about one member. Look for a self-improving family |
+| Prime number theorem (Hadamard, de la Vallee Poussin 1896) | One line of trigonometry, 3 + 4cos x + cos 2x >= 0, turned positivity of prime weights into a zero-free line | Tiny positivity identities carry enormous weight. Search systematically (by computer) for better ones |
+| Poincare conjecture (Perelman 2002) | Found a quantity (entropy) that only moves one way along a flow, which nobody had looked for | For any flow we have (heat flow on xi, growth of the window), hunt numerically for a one-way quantity |
+| Fermat (Wiles 1994) | Proved something much bigger and more rigid than asked, because the bigger statement could be attacked by counting | Sometimes the stronger statement is easier. Ask what RH is a shadow of |
+| Lambda >= 0 (Rodgers-Tao 2018) | Treated zeros as particles relaxing to equilibrium, importing ideas from random-matrix dynamics | Change what the objects *are* (zeros as a gas, primes as a signal) and see what the new picture makes obvious |
+| Ramanujan graphs of every degree (Marcus-Spielman-Srivastava 2013) | Proved real-rootedness of an *average* polynomial via interlacing, then showed one member of the family must do as well as the average | Real zeros can be inherited from an average over a family. Is xi an average of something? |
+| Lee-Yang circle theorem (1952) | Zeros forced onto a circle by a physical property (ferromagnetism) of the system, not by computing them | Look for a qualitative property of the system that pins zeros, and test whether zeta has it |
+| Sphere packing in dimension 8 (Viazovska 2016) | The proof was a single "magic function" certificate; existence was predicted numerically years earlier, then built from modular forms | Compute the certificate numerically first; if it exists to many digits, go and find its formula |
+| Kepler conjecture / four colour theorem | Reduced an infinite problem to a finite, checkable computation | Ask whether any piece of our problem can be made finite and certified by interval arithmetic |
+| Bounded gaps between primes (Zhang 2013, Maynard) | Outsider reread a "stuck" method and changed one ingredient others thought fixed | Revisit what everyone treats as fixed in a stuck method; change one assumption at a time and measure |
+
+**How to use this table.** Before a round, each proposer picks one move and asks: what would this move look
+like here, on an object nobody has applied it to? The idea is then tested on the control group and on zeta.

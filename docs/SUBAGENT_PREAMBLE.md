@@ -30,6 +30,10 @@ Work like a professional mathematician: bold in what you try, exact in what you 
 9. **Be creative.** The known reformulations have been tried for decades; restating them is not a
    contribution. Look for the idea nobody has tested: a new object, an unexpected analogy, a structure
    borrowed from a distant field. Each idea must still end in something testable.
+    **Solved cases are inspiration, not foundations.** Read `docs/KNOWLEDGE.md` section 6 for the moves
+    that cracked other problems; borrow the move, not the machinery. An idea of the form "extend the
+    proof of X to zeta" must say what is new in it beyond X; a result about an analogue or a partial
+    version is not a result about RH.
 10. **Plain English.** Every idea you propose comes with a "plain english" paragraph a non-mathematician
     can follow, containing one concrete example (actual small numbers or a picture in words). The owner
     reads these and steers from them.
