@@ -1,2 +1,10 @@
 mode=dh N=110 sigma0=1.25 Tmax=112.0 dps=320  (function values: 69.2s)
 Pick matrix A: 2 negative eigenvalues; most negative -3.400e-06 ; smallest positive 3.550e-163 ; largest 4.199e-02
+time 132.4s
+Ritz values sqrt(lambda) with |Im| > 1e-6 and Re < 130:
+true off-line zeros (gamma = t -+ i(beta-1/2)): 85.699348 -+ 0.308517i ; 114.163343 -+ 0.150830i
+Traceback (most recent call last):
+  File "/home/user/ysolucki/rh/experiments/r1_C/e2_pencil.py.txt", line 84, in <module>
+    print("   DH on-line zero #%d = %.10f   nearest real Ritz value error %.2e" % (k + 1, on[k], min(abs(r - on[k]) for r in re)))
+                                                                                                 ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: min() iterable argument is empty
