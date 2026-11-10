@@ -20,6 +20,7 @@ REQUIRED = [
     "docs/HUB.md", "docs/JOURNAL.md", "docs/KNOWLEDGE.md", "docs/IDEAS.md", "docs/DECISIONS.md",
     "docs/AGENT_REGISTRY.tsv", "docs/SUBAGENT_PREAMBLE.md",
     "rh/PROJECT_BRIEF.md", "rh/RESUME_HERE.md", "rh/REVIEW_LEDGER.md", "rh/BRIEF_PROPOSALS.md",
+    "rh/UNDERSTANDING.md", "rh/NOTEBOOK.md",
 ]
 REG_COLS = ["id", "date", "role", "model", "folder", "status", "result"]
 REG_STATUS = {"running", "done", "failed", "cancelled"}

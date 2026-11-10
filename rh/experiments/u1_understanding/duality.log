@@ -1,0 +1,16 @@
+(a) zeros -> primes: psi(x) = sum of log p over prime powers p^k <= x
+    x      true     K=10     K=100    K=1000   K=5000
+   10.5    7.8320   7.7021   7.8352   7.8208   7.8322
+   20.5   19.2657  19.6556  19.2207  19.2588  19.2648
+   50.5   49.4854  49.4732  49.5254  49.4973  49.4912
+  100.5   94.0453  95.7762  95.0093  94.1696  94.0211
+  500.5  501.6521 501.1268 500.5630 502.2923 501.7089
+    jump of the rebuilt staircase at 97: 4.643   (true: 4.575)
+    jump of the rebuilt staircase at 98: -0.004   (true: 0.000)
+    jump of the rebuilt staircase at 121: 2.321   (true: 2.398)
+    jump of the rebuilt staircase at 125: 1.517   (true: 1.609)
+(b) primes -> zeros: F(t) = -sum_{p^k<=X} (log p / p^(k/2)) * w(p^k) * cos(t log p^k); peaks sit at the zeros
+    primes up to      100 (    35 prime powers): peaks at t = 14.126 21.024 25.004 30.438 32.910
+    primes up to    10000 (  1280 prime powers): peaks at t = 14.142 21.026 25.012 30.428 32.932
+    primes up to  1000000 ( 78734 prime powers): peaks at t = 14.124 21.012 25.010 30.428 32.932
+    actual zeros:                                            14.135 21.022 25.011 30.425 32.935

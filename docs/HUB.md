@@ -5,12 +5,13 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 ## Status (exact)
 - Proof of RH: **not achieved.** No result above level L0 yet (ladder in `rh/PROJECT_BRIEF.md`).
 - Infrastructure: built and tested (journal J1).
-- Round 1 seminar: not started.
+- Understanding experiments U-1 to U-5 run by the lead (`rh/UNDERSTANDING.md`); one classical lemma re-proved.
+- Round 1 seminar: running (see AGENT_REGISTRY).
 
 ## Projects
 | project | brief | live state | review ledger |
 |---|---|---|---|
-| Riemann Hypothesis | [`rh/PROJECT_BRIEF.md`](../rh/PROJECT_BRIEF.md) | [`rh/RESUME_HERE.md`](../rh/RESUME_HERE.md) | [`rh/REVIEW_LEDGER.md`](../rh/REVIEW_LEDGER.md) |
+| Riemann Hypothesis · start with [`rh/UNDERSTANDING.md`](../rh/UNDERSTANDING.md), brainstorm in [`rh/NOTEBOOK.md`](../rh/NOTEBOOK.md) | [`rh/PROJECT_BRIEF.md`](../rh/PROJECT_BRIEF.md) | [`rh/RESUME_HERE.md`](../rh/RESUME_HERE.md) | [`rh/REVIEW_LEDGER.md`](../rh/REVIEW_LEDGER.md) |
 
 ## The record
 | file | what |
@@ -25,14 +26,15 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 ## Idea board (keep in step with `python3 tools/ideas.py list`)
 | status | ideas |
 |---|---|
-| open | #1 control-group lab · #2 truncated Weil positivity · #3 Li split · #4 heat-flow particles · #5 Nyman–Beurling least squares |
-| testing | none |
+| open | #2 truncated Weil positivity · #3 Li split · #4 heat-flow particles · #5 Nyman–Beurling least squares · #7 one prime at a time |
+| testing | #1 control-group lab · #6 Lee–Yang in Bohr's variables |
 | alive | none |
 | parked (wall named) | none |
 | killed | none |
 
 ## Walls hit so far
-None yet. Each wall is written as an exact statement in the idea's log and summarised here.
+- **W1 (convergence wall).** Every known family of approximants with all zeros real by construction converges
+  to ξ only if RH-type information is supplied. Stated exactly in `rh/UNDERSTANDING.md` (U-4).
 
 ## Running jobs
 None.

@@ -1,0 +1,50 @@
+# Notebook: running brainstorm
+
+Dated, informal, newest at the bottom. Anything goes here: half-thoughts, analogies, dead ends, questions.
+When a note becomes testable it gets a number in `docs/IDEAS.md` and the note says so.
+Labels: PROVED / COMPUTED / HEURISTIC / CONJECTURE / WILD.
+
+---
+
+## 2026-11-10
+
+**N1. Start from the duality, not from the zeros.** (lead) Before any clever idea: rebuild primes from zeros
+and zeros from primes ourselves. Done (U-1). Thirty-five prime powers already locate five zeros to 2 digits.
+Thought: the "primes → zeros" sum is a spectrometer. RH is a statement about the *width* of its spectral
+lines as more primes are added. Is there a sharp statement? → Q1.
+
+**N2. One rule behind every "all zeros real" result.** (lead) PROVED (classical). Let A(s) = Σ_{n≤N} c_n n^(−s),
+c_n real, zero-free in Re s > 1/2. Put E(z) = e^(iωz) A(1/2 + iz), E*(z) = e^(−iωz) A(1/2 − iz), so
+f = E + E* on the real axis. R = E/E* is analytic in the upper half-plane (A(1/2 − iz) has real part of its
+argument > 1/2 there), |R| = 1 on the real axis, and |R| is bounded as Im z → ∞ when ω ≥ ½ log N. By
+Phragmén–Lindelöf |R| < 1 in the open upper half-plane, so f = E*(1 + R) ≠ 0 there; the lower half-plane is
+symmetric. Hence all zeros of f are real. ∎
+Everything else is a variation: Pólya's fake zeta functions, Taylor/Lagarias ξ(s+a) ± ξ(s−a), Gonek's
+symmetrised Euler products, de Branges spaces.
+
+**N3. Lee–Yang in Bohr's variables.** (lead) Replace p^(−it) by an independent variable x_p on the unit
+circle (Bohr). "A is zero-free in Re s > 1/2" becomes "the polynomial Σ c_n n^(−1/2) x^(v(n)) has no zero in
+the open unit polydisc", which is exactly the Lee–Yang property physicists use to pin partition-function
+zeros to a circle. Hand check: sharp cut at 2 is Lee–Yang (zero at |x₂| = √2 > 1); sharp cut at 3 is not
+(1 + x₂/√2 + x₃/√3 vanishes at x₂ = x₃ = −0.78). COMPUTED: matches the zero counts in U-3 exactly.
+Move borrowed: Lee–Yang (a qualitative property of the system pins the zeros). → idea #6.
+
+**N4. Why the product wins.** (lead) In Bohr's variables the Euler product is a product of one-variable
+factors (1 − x_p/√p), each harmless alone, and *independent*. A sum over integers mixes the variables through
+the ordering n ≤ N, which is additive information. So the two structures of B10 show up as: multiplication =
+independence of the variables x_p; addition = the cut-off and the Gamma factor that couples them. RH needs a
+coupling that does not destroy the Lee–Yang property. WILD: is the Gamma factor the *unique* coupling that
+preserves it? → Q3, Q4.
+
+**N5. One prime at a time.** (lead) WILD. Lee and Yang's theorem is proved by building the system bond by
+bond (Asano contraction), each step preserving the property. Here: is there an operation "adjoin the prime p"
+on symmetric functions, preserving real zeros, whose infinite composition is ξ? Each step would have to be
+compensated by a change in the archimedean part (window, Gamma factor), since adding a prime alone lowers the
+Weil form. → idea #7.
+
+**N6. Blind tests.** (lead) Li's criterion sees a zero at height γ only at index ~γ² (idea #1). Suspect the
+same blindness in every positivity test. Make it a rule: for each criterion, compute its "detection index"
+on the impostor before using it for anything.
+
+**N7. Memory accident.** (lead) An outer product of 78 734 × 12 500 doubles (8 GB) was killed by the kernel;
+rerun in chunks under `tools/memcap.py 3`. Rule: every numpy job in this repo runs under memcap.

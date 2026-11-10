@@ -78,3 +78,30 @@ file from the top before choosing what to do next.
 - kill line: If d_N^2 log N does not approach a constant near 0.046 by N = 2000 in our implementation, the implementation is wrong; fix before interpreting.
 - evidence: none yet
 - log:
+
+## #6 · Lee-Yang in Bohr's variables: approximants whose zeros are pinned to the line by a stability property
+- status: testing
+- source: lead, notebook N2-N4, after the Lee-Yang move in KNOWLEDGE section 6
+- date: 2026-11-10
+- tags: laneD,B1,B5,W1
+- plain english: Physicists have a theorem (Lee-Yang) saying that for magnets, a simple qualitative property forces all the special points of the system onto a circle, without computing them. I checked that the same property decides whether a zeta look-alike has all its zeros on the line. Treat each prime as its own independent dial. Example: the sum 1 + 1/2^s passes (its only cancellation point needs the dial for 2 turned beyond its range), and all 5833 of its zeros up to height 20000 are on the line. Add the term 1/3^s and it fails, because 1/sqrt(2) + 1/sqrt(3) = 1.28 is bigger than 1 so the terms can cancel the leading 1; and indeed 1120 of 7975 zeros (14 percent) leave the line. Products over primes always pass, because each factor is harmless on its own. So we look for a family of look-alikes that passes at every stage AND provably closes in on the real zeta.
+- claim: There is a family A_N of Dirichlet polynomials, defined from primes only, whose Bohr lifts are zero-free in the open unit polydisc for every N and whose symmetrisations converge locally uniformly to xi(1/2+it) by an argument that uses no information about zeros.
+- worth if true: Convergence plus Hurwitz would give RH; even a proof for one family that convergence is equivalent to a statement about primes in short intervals would be a new reduction (question Q1).
+- first test: For 4 candidate families (smooth-cut sums, Euler-shaped products, exp of truncated prime sums, optimal Nyman-Beurling recipes) measure (i) the stability margin min|lift| on the polydisc and (ii) distance to Z(t) on a fixed range, as N grows; look for a family where both behave and identify what controls the distance.
+- kill line: If in every family the distance to Z(t) stops shrinking exactly where a zero-density input would be needed (i.e. the error term is literally a sum over zeros), record wall W1 as confirmed for this route and park.
+- evidence: COMPUTED rh/experiments/u1_understanding/leeyang.log: sharp cuts at 3,5,10,30 lose 14-21% of zeros; smooth log-cut N=3,10,30 and Euler-shaped products p<=3,7,13 lose none on 0<t<20000; margins 0.124, 0.043, 0.026 for the products. Mechanism PROVED (notebook N2, classical).
+- log:
+  - 2026-11-10: status -> testing: first test run by lead; mechanism proved, convergence untested
+
+## #7 · One prime at a time: an 'adjoin p' operation that preserves real zeros
+- status: open
+- source: lead, notebook N5, after the Asano-contraction move behind Lee-Yang
+- date: 2026-11-10
+- tags: laneD,B3,B10
+- plain english: Instead of proving the property for the finished object, build the object in steps and show no step breaks it, the way you check a tower by checking each brick as it is laid. Each step would add one prime and at the same time adjust the smooth, non-prime part to keep the balance. Example of the shape we want: start with a function with all zeros on the line that knows about no primes; apply the step for 2, then for 3, then 5; after each step count the zeros on the line and check none has left.
+- claim: There is an explicit operator T_p acting on real entire functions of order 1 with real zeros, which preserves real-rootedness (provably, as a multiplier or differential operator of Laguerre-Polya type), such that the ordered product of T_p over primes p <= P applied to a fixed archimedean seed converges to xi as P grows.
+- worth if true: Would replace one infinite positivity statement by infinitely many identical finite ones, each of a kind that is routinely provable (zero-preserving operators are classified: Polya-Schur, Borcea-Branden).
+- first test: Numerically: pick candidate T_p (multiplication by the Euler factor followed by symmetrisation; convolution with a p-dependent kernel in the Fourier variable), apply for p = 2,3,5,7 to a Gaussian-type seed, count real zeros and compare with zeta zeros. Run the same on a non-multiplicative control.
+- kill line: If no candidate T_p both preserves real zeros numerically and moves the zeros toward the zeta zeros for the first 4 primes, kill; record which half failed for each candidate.
+- evidence: none yet
+- log:

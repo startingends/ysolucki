@@ -1,0 +1,51 @@
+"""Understanding experiment U1: primes and zeros are two descriptions of the same thing.
+(a) zeros -> primes: rebuild the prime staircase psi(x) from the first K zeros.
+(b) primes -> zeros: find the first zeros using ONLY primes (no zeta function evaluated)."""
+import sys, math
+import numpy as np
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+from sympy import primerange
+
+g = np.array(rhlib.zeros(5000))
+
+def psi_true(x):
+    s = 0.0
+    for p in primerange(2, int(x) + 1):
+        k = p
+        while k <= x:
+            s += math.log(p); k *= p
+    return s
+
+def psi_from_zeros(x, K):
+    rho = 0.5 + 1j * g[:K]
+    wave = 2 * np.sum((x ** rho / rho).real)
+    return x - wave - math.log(2 * math.pi) - 0.5 * math.log(1 - x ** -2.0)
+
+print("(a) zeros -> primes: psi(x) = sum of log p over prime powers p^k <= x")
+print("    x      true     K=10     K=100    K=1000   K=5000")
+for x in (10.5, 20.5, 50.5, 100.5, 500.5):
+    print("%7.1f %9.4f" % (x, psi_true(x)), " ".join("%8.4f" % psi_from_zeros(x, K) for K in (10, 100, 1000, 5000)))
+# the jump at a prime: psi just above minus just below 97 should be log 97 = 4.5747; at 98 (not a prime power) 0
+for n in (97, 98, 121, 125):
+    jump = psi_from_zeros(n + 0.3, 5000) - psi_from_zeros(n - 0.3, 5000)
+    print("    jump of the rebuilt staircase at %d: %.3f   (true: %.3f)" % (n, jump, psi_true(n + .3) - psi_true(n - .3)))
+
+print("(b) primes -> zeros: F(t) = -sum_{p^k<=X} (log p / p^(k/2)) * w(p^k) * cos(t log p^k); peaks sit at the zeros")
+def lam_table(X):
+    out = []
+    for p in primerange(2, X + 1):
+        k = p
+        while k <= X:
+            out.append((k, math.log(p))); k *= p
+    a = np.array(out); return a[:, 0], a[:, 1]
+for X in (100, 10000, 1000000):
+    n, lam = lam_table(X)
+    ln = np.log(n); w = (1 - ln / math.log(X))            # smooth (Fejer) cutoff
+    t = np.arange(10, 35, 0.002)
+    c = lam / np.sqrt(n) * w
+    F = np.zeros(len(t))
+    for i in range(0, len(n), 2000):                     # chunked: the full outer product would need 8 GB
+        F -= c[i:i + 2000] @ np.cos(np.outer(ln[i:i + 2000], t))
+    pk = [i for i in range(1, len(t) - 1) if F[i] > F[i - 1] and F[i] > F[i + 1] and F[i] > 0.5 * F.max()]
+    print("    primes up to %8d (%6d prime powers): peaks at t =" % (X, len(n)), " ".join("%.3f" % t[i] for i in pk))
+print("    actual zeros:                                           ", " ".join("%.3f" % x for x in g[:5]))

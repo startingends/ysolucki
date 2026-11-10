@@ -1,0 +1,36 @@
+"""DH: (1) zeros of the transform of the lowest eigenvector before L* vs DH zeros; (2) frequency content of the negative eigenvector after L*.
+usage: dhmin.py.txt prec L N shift Rmax"""
+import sys, math, json
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+prec = int(sys.argv[1]); L = float(sys.argv[2]); N = int(sys.argv[3]); shift = sys.argv[4]; R = float(sys.argv[5])
+flint.ctx.prec = prec
+q, w = build(L, N, kind='dh'); E = even_block(q, N)
+if shift != "0":
+    for i in range(N + 1): E[i, i] = E[i, i] - arb(shift)
+mu, v, _ = lowest(E)
+if shift != "0": mu = mu + arb(shift)
+print(f"# dh L={L} N={N} eigenvalue={mu.str(8, radius=False)} (shift {shift})")
+wts = [float(c * c) for c in v]
+top = sorted(range(N + 1), key=lambda k: -wts[k])[:6]
+print("# largest |c_k|^2:", [(k, round(math.pi * k / L, 2), round(wts[k], 4)) for k in top], " mean frequency:", round(sum(wts[k] * math.pi * k / L for k in range(N + 1)), 2))
+d = json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))
+on = [float(t) for t in d["online"]]
+F = lambda r: fhat_even(v, L, acb(r)).real
+h = 0.02
+rs = [0.011 + h * i for i in range(int(R / h))]
+vals = [F(arb(r)) for r in rs]
+roots = []
+for i in range(len(rs) - 1):
+    a, b = vals[i], vals[i + 1]
+    if (a > 0 and b < 0) or (a < 0 and b > 0):
+        lo, hi = arb(rs[i]), arb(rs[i + 1]); flo = a
+        for _ in range(200):
+            m = arb(((lo + hi) / 2).mid()); fm = F(m)
+            if (fm > 0) == (flo > 0): lo, flo = m, fm
+            else: hi = m
+        roots.append(lo)
+print(f"# real zeros in (0,{R}): {len(roots)} ; DH on-line zeros below {R}: {sum(1 for t in on if t < R)} ; first off-line zero at 85.699 (+-0.3085 i)")
+for i, r in enumerate(roots):
+    j = min(range(len(on)), key=lambda j: abs(float(r) - on[j]))
+    dd = abs(float(r) - on[j])
+    print(f"{i+1:3d} r={float(r):11.6f}  nearest on-line DH zero {on[j]:11.6f}  |diff|={dd:.2e}")

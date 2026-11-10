@@ -1,0 +1,47 @@
+"""Understanding experiment U2: when does a zeta-like sum have ONLY real zeros?
+f(t) = 2 Re[ e^{i w t} * A(t) ],  A(t) = sum_n c_n n^(-1/2 - it).
+Count real zeros in [0,T]; if all zeros are real the count is w*T/pi + O(1). A shortfall = zeros off the line.
+Prediction (hand calculation): all zeros real when the 'Bohr lift' of A (replace p^(-it) by an independent
+variable x_p) has no zero with all |x_p| < 1.  N=2: lift 1 + x2/sqrt2, zero at |x2| = 1.41 > 1 -> all real.
+N=3: lift 1 + x2/sqrt2 + x3/sqrt3 vanishes at x2 = x3 = -0.78 -> some zeros must leave the line."""
+import math, numpy as np
+from sympy import factorint, primerange, mobius
+
+def count_real_zeros(coef, w, T=20000.0, h=0.002):
+    t = np.arange(0, T, h); A = np.zeros(len(t), dtype=complex)
+    for n, c in coef.items():
+        A += c / math.sqrt(n) * np.exp(-1j * math.log(n) * t)
+    f = (np.exp(1j * w * t) * A).real
+    return int(np.sum(f[1:] * f[:-1] < 0)), w * T / math.pi
+
+def lift_min_on_polydisc(coef, trials=200000, seed=1):
+    """min |A(x)| over random points of the closed unit polydisc (boundary torus and interior)."""
+    rng = np.random.default_rng(seed)
+    ps = sorted({p for n in coef for p in factorint(n)})
+    best = 1e9
+    for r in (1.0, 0.9, 0.78, 0.6):
+        x = r * np.exp(2j * math.pi * rng.random((trials, len(ps))))
+        A = np.zeros(trials, dtype=complex)
+        for n, c in coef.items():
+            term = np.full(trials, c / math.sqrt(n), dtype=complex)
+            for p, e in factorint(n).items():
+                term = term * x[:, ps.index(p)] ** e
+            A += term
+        best = min(best, np.abs(A).min())
+    return best
+
+print("%-34s %8s %10s %10s %9s  %s" % ("A(t)", "w", "real zeros", "if all real", "missing", "min|lift| in polydisc"))
+cases = []
+for N in (2, 3, 5, 10, 30):
+    cases.append(("sharp cut, n <= %d" % N, {n: 1.0 for n in range(1, N + 1)}, math.log(N + 0.5)))
+for N in (3, 10, 30):
+    cases.append(("smooth cut (1 - log n/log N), N=%d" % N, {n: 1 - math.log(n) / math.log(N + 1) for n in range(1, N + 1)}, math.log(N + 1)))
+for P in (3, 7, 13):
+    ps = list(primerange(2, P + 1)); co = {}
+    for m in range(1, int(np.prod(ps)) + 1):
+        if all(e == 1 for e in factorint(m).values()) and all(p in ps for p in factorint(m)):
+            co[m] = float(mobius(m))
+    cases.append(("prod_{p<=%d} (1 - p^-s)  [Euler shape]" % P, co, math.log(np.prod(ps)) / 2 + 0.3))
+for name, co, w in cases:
+    z, exp = count_real_zeros(co, w)
+    print("%-34s %8.4f %10d %10.1f %9.1f  %.4f" % (name, w, z, exp, exp - z, lift_min_on_polydisc(co)))
