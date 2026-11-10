@@ -1,0 +1,53 @@
+"""Calibrated Bakry-Emery constant. usage: calib.py.txt <L> <M> <zeta|beurling>"""
+import sys, math, numpy as np, mpmath as mp
+from scipy.optimize import minimize
+mp.mp.dps = 25
+L = float(sys.argv[1]); M = int(sys.argv[2]); kind = sys.argv[3]; d = 2 * L / M
+w = lambda u: mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+tri = lambda t: max(0.0, 1 - abs(t))
+def Wk(k):
+    f = lambda u: w(u) * (1 - abs(u - k * d) / d)
+    return mp.quad(f, [0, d, 2 * d]) if k == 1 else mp.quad(f, [(k - 1) * d, k * d, (k + 1) * d])
+diag = -(-mp.log(mp.pi) + mp.quad(lambda u: mp.exp(-2 * u) / u - 2 * w(u) * (1 - u / d), [0, d / 2, d]) + mp.e1(2 * d))
+lam = {}
+for p in ((2.1 if kind == 'beurling' else 2), 3, 5, 7, 11, 13):
+    pk = p
+    while pk <= math.exp(2 * L): lam[pk] = math.log(p); pk *= p
+t = np.array([float(diag)] + [float(Wk(k)) for k in range(1, M)])
+t[1:] += np.array([sum(c / math.sqrt(n) * (tri((math.log(n) - k * d) / d) + tri((math.log(n) + k * d) / d)) for n, c in lam.items()) for k in range(1, M)])
+idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+N = t[idx]; ev, V = np.linalg.eigh(N); lam1 = ev[-1]; u = np.abs(V[:, -1]); gap = lam1 - ev[-2]
+q = N * u[None, :] / u[:, None]; np.fill_diagonal(q, 0); Lg = q - np.diag(q.sum(1)); pi = u ** 2 / (u ** 2).sum()
+E = np.eye(M)
+Gs = np.array([sum(0.5 * q[i, y] * np.outer(E[y] - E[i], E[y] - E[i]) for y in range(M) if y != i) for i in range(M)])
+LG = np.einsum('xy,yab->xab', Lg, Gs)                                  # L[Gamma(f)](x) as forms
+G2 = np.array([0.5 * (LG[i] - (Gs[i] @ Lg + Lg.T @ Gs[i])) for i in range(M)])
+C = E - np.outer(np.ones(M), pi)                                        # centring: g = C f
+Sq = np.array([np.outer(C[y], C[y]) for y in range(M)])                 # g(y)^2 as a form in f
+LS = np.einsum('xy,yab->xab', Lg, Sq)                                   # L[(f - pi f)^2](x)
+# basis of pi-mean-zero is not needed: all forms are invariant under constants; work on the complement of constants
+Bc = np.linalg.qr(np.hstack([np.ones((M, 1)), np.eye(M)[:, 1:]]))[0][:, 1:]
+def red(A): return np.einsum('ia,xij,jb->xab', Bc, A, Bc)
+G2r, Gr, LSr, LGr = red(G2), red(Gs), red(LS), red(LG)
+def minev(rho, c, cp):
+    return min(np.linalg.eigvalsh(G2r[i] - rho * Gr[i] - c * LSr[i] - cp * LGr[i])[0] for i in range(M))
+def rhostar(c, cp):
+    lo, hi = -5 * lam1, 1.2 * gap
+    if minev(lo, c, cp) < 0: return lo
+    for _ in range(45):
+        mid = (lo + hi) / 2
+        if minev(mid, c, cp) >= -1e-11: lo = mid
+        else: hi = mid
+    return lo
+print("%s L=%g M=%d: lambda_1=%.6f gap=%.6f gap/lambda_1=%.5f" % (kind, L, M, lam1, gap, gap / lam1))
+print("  plain BE rho*(0,0)/lambda_1 = %.5f" % (rhostar(0, 0) / lam1))
+print("  resampling-exact calibration c = lambda_1/4, c'=0:  rho*/lambda_1 = %.5f" % (rhostar(lam1 / 4, 0) / lam1))
+best = (-9, 0, 0)
+for c in np.linspace(0, 2.0, 11) * lam1 / 4:
+    for cp in (0, 0.1, 0.2, 0.3, 0.4, 0.5):
+        r = rhostar(c, cp)
+        if r > best[0]: best = (r, c, cp)
+res = minimize(lambda p: -rhostar(p[0], p[1]), [best[1], best[2]], method='Nelder-Mead', options={'xatol': 1e-4, 'fatol': 1e-7, 'maxiter': 120})
+r = -res.fun
+print("  one-parameter family c' = 0: best over grid c: %s" % max((round(rhostar(c, 0) / lam1, 5), round(4 * c / lam1, 2)) for c in np.linspace(0, 2.0, 21) * lam1 / 4).__repr__())
+print("  two-parameter optimum: rho*/lambda_1 = %.5f  rho*/gap = %.5f at c = %.4f lambda_1/4, c' = %.4f" % (r / lam1, r / gap, 4 * res.x[0] / lam1, res.x[1]))

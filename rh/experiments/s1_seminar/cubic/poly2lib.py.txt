@@ -1,0 +1,33 @@
+import sys, math, itertools, importlib.util, importlib.machinery, numpy as np, cvxpy as cp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+poly = load("poly", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/poly.py.txt") if False else None
+def family(H, a, d):
+    m = len(a); s = H @ a; pi = a * s
+    U = [np.diag(1 / a)]; Kx = (H * a[None, :]) / s[:, None]
+    for _ in range(d): U.append(Kx @ U[-1])
+    out = {}
+    for (c, b, aa) in itertools.combinations_with_replacement(range(d + 1), 3):
+        t = np.einsum('l,li,lj,lk->ijk', pi, U[aa], U[b], U[c])
+        out[(aa, b, c)] = sum(np.transpose(t, pp) for pp in itertools.permutations(range(3))) / 6
+    return out
+def solve(H, a, d, solver):
+    m = len(a); s = H @ a; fam = family(H, a, d); keys = list(fam)
+    nrm = {k: np.abs(fam[k]).max() for k in keys}
+    c = cp.Variable(len(keys)); tau = cp.Variable()
+    cons = [sum(c[i] * np.einsum('ijk,k->ij', fam[k] / nrm[k], a) for i, k in enumerate(keys)) == H, tau >= -1, cp.abs(c) <= 1e4]
+    for k in range(m):
+        Tk = sum(c[i] * fam[key][:, :, k] / nrm[key] for i, key in enumerate(keys))
+        cons.append(np.outer(H[:, k], H[:, k]) / s[k] - Tk + tau * np.eye(m) >> 0)
+    prob = cp.Problem(cp.Minimize(tau), cons)
+    try: prob.solve(solver=solver)
+    except Exception as ex: return "fail", None, None, None
+    if c.value is None: return prob.status, None, None, None
+    T = sum(c.value[i] * fam[k] / nrm[k] for i, k in enumerate(keys))
+    # independent check of the returned tensor
+    lam = min(np.linalg.eigvalsh(np.outer(H[:, k], H[:, k]) / s[k] - T[:, :, k])[0] for k in range(m))
+    npos = max(int((np.linalg.eigvalsh(T[:, :, k]) > 1e-8).sum()) for k in range(m))
+    res = np.abs(np.einsum('ijk,k->ij', T, a) - H).max()
+    return prob.status, tau.value, (lam, npos, res), {k: c.value[i] / nrm[k] for i, k in enumerate(keys)}
