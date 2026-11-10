@@ -1,0 +1,43 @@
+"""Extremal-measure (Caratheodory-Fejer / Krein) test: is  Q_even - mu*I  =  sum_i m_i v(r_i) v(r_i)^T  with r_i the real zeros
+of fhat_min and m_i > 0 ?  v(r)_k = transform of the even basis function C_k at r (r>0 node stands for the pair +-r).
+usage: weights.py.txt kind prec L N"""
+import sys, math, time
+import numpy as np
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+kind = sys.argv[1]; prec = int(sys.argv[2]); L = float(sys.argv[3]); N = int(sys.argv[4])
+flint.ctx.prec = prec
+q, w = build(L, N, kind=kind); E = even_block(q, N)
+mu, v, _ = lowest(E)
+F = lambda r: fhat_even(v, L, acb(r)).real
+R = math.pi * (N + 1) / L - 1e-3
+h = 0.01
+rs = [0.0037 + h * i for i in range(int(R / h))]
+vals = [F(arb(r)) for r in rs]
+roots = []
+for i in range(len(rs) - 1):
+    a, b = vals[i], vals[i + 1]
+    if (a > 0 and b < 0) or (a < 0 and b > 0):
+        lo, hi = arb(rs[i]), arb(rs[i + 1]); flo = a
+        for _ in range(60):
+            m = arb(((lo + hi) / 2).mid()); fm = F(m)
+            if (fm > 0) == (flo > 0): lo, flo = m, fm
+            else: hi = m
+        roots.append(float(lo))
+print(f"# {kind} L={L} N={N} mu={mu.str(6, radius=False)}  real zeros of fhat_min in (0,{R:.1f}): {len(roots)}  (matrix size {N+1}, rank of Q-mu = {N})")
+def vec(r):
+    x = r * L
+    out = [math.sqrt(2 * L) * math.sin(x) / x]
+    for k in range(1, N + 1):
+        out.append(math.sqrt(2 * L) * math.sin(x) * (-1) ** k * math.sqrt(2) * x / (x * x - (math.pi * k) ** 2))
+    return np.array(out)
+V = np.array([vec(r) for r in roots])          # nodes x (N+1)
+Em = np.array([[float(E[j, k]) for k in range(N + 1)] for j in range(N + 1)])
+iu = np.triu_indices(N + 1)
+A = np.array([np.outer(V[i], V[i])[iu] for i in range(len(roots))]).T * 2.0    # factor 2: node r stands for +-r
+b = Em[iu]
+m, res, rk, sv = np.linalg.lstsq(A, b, rcond=None)
+resid = np.linalg.norm(A @ m - b) / np.linalg.norm(b)
+print(f"# least squares: relative residual {resid:.3e} ; min weight {m.min():.6f} ; #negative weights {int((m < 0).sum())}")
+for i, (r, mi) in enumerate(zip(roots, m)):
+    if i < 24 or i % 8 == 0 or i >= len(roots) - 3:
+        print(f"{i+1:3d} r={r:10.5f}  weight m={mi:.10f}   smooth prediction log(q r/2pi)/(2L)={math.log((5 if kind=='dh' else 1)*r/(2*math.pi))/(2*L):.4f}")

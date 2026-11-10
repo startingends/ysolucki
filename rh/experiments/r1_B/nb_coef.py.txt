@@ -1,0 +1,32 @@
+import sys, math
+import numpy as np, scipy.linalg as sla
+from sympy import mobius, factorint
+exec(open("nb_gram.py.txt").read().split('if __name__')[0])
+C = 2 + EG - math.log(4 * math.pi)
+G = np.load("/home/user/ysolucki/rh/data/r1_B/G2000.npy"); Nmax = G.shape[0]
+b = bvec(Nmax); mu = np.array([int(mobius(k)) for k in range(1, Nmax + 1)], dtype=float)
+ks = np.arange(1, Nmax + 1); lk = np.log(ks)
+def Q(c, N): return 1 - 2 * b[:N] @ c + c @ G[:N, :N] @ c
+print("  N   d_N^2(opt)  Q[mu(1-logk/logN)]  ratio   Q*logN | best over M of Q[mu(1-logk/logM)_+ on k<=N]  M/N")
+for N in [50, 100, 200, 500, 1000, 2000]:
+    copt = np.linalg.solve(G[:N, :N], b[:N]); dopt = 1 - b[:N] @ copt
+    v = mu[:N] * (1 - lk[:N] / math.log(N)); qv = Q(v, N)
+    best = (1e9, None)
+    for M in np.exp(np.linspace(math.log(N) * 0.6, math.log(N) * 3, 400)):
+        w = mu[:N] * np.maximum(1 - lk[:N] / math.log(M), 0); q = Q(w, N)
+        if q < best[0]: best = (q, M)
+    print("%5d  %.8f  %.8f  %.3f  %.5f | %.8f  M/N=%.3f" % (N, dopt, qv, qv / dopt, qv * math.log(N), best[0], best[1] / N))
+# structure of optimal coefficients at N=2000
+N = 2000
+copt = np.linalg.solve(G, b)
+print("\noptimal c_k(N=2000) vs mu(k)(1-logk/logN):")
+for k in list(range(1, 31)) + [64, 100, 210, 500, 997, 1000, 1500, 1994, 1997, 1999, 2000]:
+    print("%5d mu=%2d  c_opt=% .6f  v=% .6f  diff=% .6f" % (k, mu[k - 1], copt[k - 1], mu[k - 1] * (1 - lk[k - 1] / math.log(N)), copt[k - 1] - mu[k - 1] * (1 - lk[k - 1] / math.log(N))))
+v = mu * (1 - lk / math.log(N))
+print("||c_opt - v||_inf = %.4f ; l2 = %.4f ; max |c_opt| on non-squarefree k: %.5f (at k=%d)" % (np.abs(copt - v).max(), np.linalg.norm(copt - v), np.abs(copt[mu == 0]).max(), ks[mu == 0][np.abs(copt[mu == 0]).argmax()]))
+np.save("/home/user/ysolucki/rh/data/r1_B/copt2000.npy", copt)
+# fit: c_opt(k)/mu(k) as function of u = log k / log N for squarefree k
+sf = mu != 0; u = lk[sf] / math.log(N); r = copt[sf] / mu[sf]
+for lo, hi in [(0, .2), (.2, .4), (.4, .6), (.6, .7), (.7, .8), (.8, .9), (.9, .95), (.95, 1.0001)]:
+    m = (u >= lo) & (u < hi)
+    print("u in [%.2f,%.2f): n=%4d  mean c/mu=% .4f  std=%.4f   mean(1-u)=%.4f" % (lo, hi, m.sum(), r[m].mean(), r[m].std(), (1 - u[m]).mean()))

@@ -1,0 +1,47 @@
+"""D_S(N) for S-smooth k up to large N: Gram entries only for S-smooth pairs (Vasyunin, float64)."""
+import sys, math, time, itertools
+import numpy as np
+from functools import lru_cache
+EG = 0.57721566490153286061
+C0 = (math.log(2 * math.pi) - EG) / 2
+@lru_cache(maxsize=None)
+def V(h, k):
+    if k == 1: return 0.0
+    m = np.arange(1, k, dtype=np.int64)
+    return float(np.dot(((m * (h % k)) % k) / k, 1.0 / np.tan(np.pi * m / k)))
+@lru_cache(maxsize=None)
+def g_coprime(h, k):
+    return C0 * (1 / h + 1 / k) + (k - h) / (2 * h * k) * math.log(h / k) - math.pi / (2 * h * k) * (V(h, k) + V(k, h))
+def entry(h, k):
+    g = math.gcd(h, k); a, b = sorted((h // g, k // g)); return g_coprime(a, b) / g
+def smooth(S, N):
+    out = [1]
+    for p in S:
+        new = []
+        for x in out:
+            y = x
+            while y <= N:
+                new.append(y); y *= p
+        out = new
+    return sorted(out)
+def run(S, N, levels):
+    ks = smooth(S, N); n = len(ks); t0 = time.time()
+    G = np.empty((n, n))
+    for i in range(n):
+        for j in range(i, n):
+            G[i, j] = G[j, i] = entry(ks[i], ks[j])
+    b = np.array([(1 - EG + math.log(k)) / k for k in ks]); ka = np.array(ks)
+    res = []
+    for M in levels:
+        idx = np.where(ka <= M)[0]; A = G[np.ix_(idx, idx)]; r = b[idx]
+        vals = []
+        for rc in (1e-9, 1e-11, 1e-13):
+            c, *_ = np.linalg.lstsq(A, r, rcond=rc); vals.append(1 - 2 * r @ c + c @ A @ c)
+        res.append((M, len(idx), vals))
+    print("S=%s N=%d  (%d numbers, %.0fs)" % (S, N, n, time.time() - t0))
+    for M, cnt, vals in res:
+        print("   N<=%8d  #=%4d  D^2 (rcond 1e-9, 1e-11, 1e-13) = %.8f %.8f %.8f" % (M, cnt, *vals), flush=True)
+if __name__ == "__main__":
+    S = [int(x) for x in sys.argv[1].split(",")]; N = int(float(sys.argv[2]))
+    lv = [x for x in [2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000, 512000, 1024000] if x <= N]
+    run(S, N, lv)

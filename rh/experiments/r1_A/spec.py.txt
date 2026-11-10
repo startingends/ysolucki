@@ -1,0 +1,18 @@
+"""lowest eigenvalues (even and odd blocks) by full diagonalisation. usage: spec.py.txt kind prec L:N ..."""
+import sys, math, time
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+from flint import acb_mat
+kind = sys.argv[1]; prec = int(sys.argv[2]); flint.ctx.prec = prec
+for spec in sys.argv[3:]:
+    L, N = spec.split(":"); L = float(L); N = int(N)
+    t = time.time()
+    q, w = build(L, N, kind=kind)
+    out = []
+    for name, B in (("even", even_block(q, N)), ("odd", odd_block(q, N))):
+        ev = acb_mat(mid(B)).eig(algorithm="approx")
+        ev = sorted(ev, key=lambda z: float(z.real) if abs(float(z.real)) > 0 else 0.0)
+        ev = sorted([e.real for e in ev], key=lambda x: (x < 0) and -1e300 * 0 + (-1 if x < 0 else 1) * 1.0)
+        neg = [e for e in ev if e < 0]
+        pos = sorted([e for e in ev if not (e < 0)], key=lambda x: float(abs(x).log()))
+        out.append(f"{name}: #neg={len(neg)} neg={[e.str(5, radius=False) for e in neg[:4]]} smallest pos={[e.str(5, radius=False) for e in pos[:3]]}")
+    print(f"{kind} L={L} N={N} prec={prec} | " + " | ".join(out) + f" [{time.time()-t:.1f}s]", flush=True)
