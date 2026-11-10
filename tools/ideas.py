@@ -11,6 +11,19 @@ its format consistent so ideas can be referred to by number ("look deeper into #
   ideas.py list [--status S]
   ideas.py check                    validate numbering and required fields (exit 1 on error)
 
+Two kinds of log, same tool (choose with --file):
+  MAIN   docs/IDEAS.md               written by the lead and the auditor only; all fields required.
+  LOCAL  <job folder>/IDEAS_LOCAL.md one per agent, for that agent's own use; only --title is required,
+                                     so a thought can be captured in one line the moment it comes up.
+                                     Numbers are local to the file: cite as "<agent id>/#N", never as "#N".
+                                     Other agents do not read it. An auditor reviews it afterwards.
+  ideas.py init-local FOLDER AGENT_ID          create FOLDER/IDEAS_LOCAL.md
+  ideas.py --file LOCAL add --title T [...]    capture (any other field optional)
+  ideas.py promote --from LOCAL N --auditor A  copy local idea N into the main log under the next main
+                                               number; refuses until every required field is filled in
+                                               (the auditor fills gaps with `--file LOCAL set N FIELD ...`)
+  ideas.py --file LOCAL skip N "reason"        auditor's decision not to promote, recorded in the local log
+
 Owner rules (2026-11-10), enforced as required fields:
   wall        which wall (W1, ...) the idea attacks and why it will not hit the same wall again
   new input   what the idea brings in that the original statement of RH did not have
@@ -40,6 +53,38 @@ FIELDS = ("status", "source", "date", "tags", "plain english", "wall", "new inpu
 REQUIRED = ("status", "source", "date", "plain english", "wall", "new input", "claim", "prediction", "smallest",
             "first test", "kill line", "novelty")
 HEAD = re.compile(r"^## #(\d+) · (.+)$")
+LOCAL_NAME = "IDEAS_LOCAL.md"
+LOCAL_MARK = re.compile(r"^<!-- local-idea-log owner=(\S+) -->$")
+LOCAL_REQUIRED = ("status", "date")
+
+
+def local_owner(path):
+    """Agent id if `path` is a local idea log (first line is the marker), else None."""
+    try:
+        with open(path) as f:
+            m = LOCAL_MARK.match(f.readline().rstrip("\n"))
+    except OSError:
+        return None
+    return m.group(1) if m else None
+
+
+def init_local(folder, agent):
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+", agent):
+        sys.exit("agent id may contain only letters, digits, _ . -")
+    path = os.path.join(folder, LOCAL_NAME)
+    if os.path.exists(path):
+        sys.exit(f"{path} already exists")
+    os.makedirs(folder, exist_ok=True)
+    _write(path, [
+        f"<!-- local-idea-log owner={agent} -->",
+        f"# Local idea log of {agent}",
+        "",
+        f"Private working log of agent `{agent}`. **Other agents: do not read or cite this file.**",
+        f"Numbers here are local: an idea is cited as `{agent}/#N`, never as `#N` (that means the main log).",
+        "Nothing here has been reviewed. An auditor copies the important entries into `docs/IDEAS.md`.",
+        "",
+    ])
+    return path
 
 
 def _read(path):
@@ -74,10 +119,11 @@ def parse(path):
 def check(path):
     _, ideas = parse(path)
     errs = []
+    required = LOCAL_REQUIRED if local_owner(path) else REQUIRED
     for k, it in enumerate(ideas, start=1):
         if it["n"] != k:
             errs.append(f"idea #{it['n']} is at position {k}: numbers must run 1..N with no gaps")
-        for f in REQUIRED:
+        for f in required:
             if not it["fields"].get(f):
                 errs.append(f"#{it['n']}: missing '{f}'")
         if it["fields"].get("status", "").split(" ")[0] not in STATUSES:
@@ -89,34 +135,84 @@ def _one_line(s):
     return " ".join(str(s).split())
 
 
-def add(path, a):
+ARG_OF = {"source": "source", "tags": "tags", "plain english": "plain", "wall": "wall", "new input": "newinput",
+          "claim": "claim", "prediction": "prediction", "smallest": "smallest", "worth if true": "worth",
+          "first test": "test", "kill line": "kill", "novelty": "novelty", "evidence": "evidence"}
+
+
+def _append(path, title, fields, log=()):
     lines, ideas = parse(path)
     n = (ideas[-1]["n"] + 1) if ideas else 1
-    today = datetime.date.today().isoformat()
-    block = [
-        f"## #{n} · {_one_line(a.title)}",
-        "- status: open",
-        f"- source: {_one_line(a.source)}",
-        f"- date: {today}",
-        f"- tags: {_one_line(a.tags or '')}",
-        f"- plain english: {_one_line(a.plain)}",
-        f"- wall: {_one_line(a.wall)}",
-        f"- new input: {_one_line(a.newinput)}",
-        f"- claim: {_one_line(a.claim)}",
-        f"- prediction: {_one_line(a.prediction)}",
-        f"- smallest: {_one_line(a.smallest)}",
-        f"- worth if true: {_one_line(a.worth or '')}",
-        f"- first test: {_one_line(a.test)}",
-        f"- kill line: {_one_line(a.kill)}",
-        f"- novelty: {_one_line(a.novelty)}",
-        f"- evidence: {_one_line(a.evidence or 'none yet')}",
-        "- log:",
-        "",
-    ]
+    block = [f"## #{n} · {_one_line(title)}", "- status: open"]
+    for f in FIELDS[1:]:
+        v = fields.get(f)
+        if v:
+            block.append(f"- {f}: {_one_line(v)}")
+    block += ["- log:"] + [f"  - {_one_line(x)}" for x in log] + [""]
     while lines and lines[-1] == "":
         lines.pop()
     _write(path, lines + [""] + block)
     return n
+
+
+def add(path, a):
+    owner = local_owner(path)
+    fields = {f: getattr(a, arg, None) for f, arg in ARG_OF.items()}
+    fields["date"] = datetime.date.today().isoformat()
+    if owner:
+        fields["source"] = fields["source"] or owner
+    else:
+        fields["evidence"] = fields["evidence"] or "none yet"
+        missing = [ARG_OF[f] for f in REQUIRED if f in ARG_OF and not fields.get(f)]
+        if missing:
+            sys.exit("the main log needs every field; missing: " + ", ".join("--" + m for m in missing))
+    return _append(path, a.title, fields)
+
+
+def _log_lines(lines, it):
+    out, on = [], False
+    for ln in lines[it["start"]:it["end"]]:
+        if ln.startswith("- log:"):
+            on = True
+        elif on and ln.startswith("  - "):
+            out.append(ln[4:])
+    return out
+
+
+def promote(main, local, n, auditor):
+    owner = local_owner(local)
+    if not owner:
+        sys.exit(f"{local} is not a local idea log")
+    if local_owner(main):
+        sys.exit("promotion target must be the main log")
+    lines, ideas = parse(local)
+    it = _find(ideas, n)
+    done = [x for x in _log_lines(lines, it) if "promoted to main #" in x]
+    if done:
+        sys.exit(f"{owner}/#{n} was already promoted: {done[0]}")
+    f = dict(it["fields"])
+    missing = [k for k in REQUIRED if k not in ("status", "date", "source") and not f.get(k)]
+    if missing:
+        sys.exit(f"cannot promote {owner}/#{n}; the auditor must first fill in: " + ", ".join(missing)
+                 + f"   (python3 tools/ideas.py --file {local} set {n} FIELD \"...\")")
+    today = datetime.date.today().isoformat()
+    f["source"] = f"{f.get('source') or owner}; promoted from {owner}/#{n} by {auditor} on {today}"
+    f["date"] = f.get("date") or today
+    f["evidence"] = f.get("evidence") or "none yet"
+    m = _append(main, it["title"], f, log=[f"(from {owner}'s local log) {x}" for x in _log_lines(lines, it)])
+    if f.get("status") in STATUSES and f["status"] != "open":
+        set_status(main, m, f["status"], f"status carried over from {owner}/#{n}")
+    note(local, n, f"promoted to main #{m} by {auditor}")
+    return m
+
+
+def audit_state(path):
+    """(total, awaiting) for a local log: awaiting = neither promoted nor skipped by an auditor."""
+    lines, ideas = parse(path)
+    waiting = [it["n"] for it in ideas
+               if not any("promoted to main #" in x or x.split(": ", 1)[-1].startswith("audit: not promoted")
+                          for x in _log_lines(lines, it))]
+    return len(ideas), waiting
 
 
 def _find(ideas, n):
@@ -176,11 +272,19 @@ def main(argv=None):
     p.add_argument("--file", default=DEFAULT)
     sub = p.add_subparsers(dest="cmd", required=True)
     a = sub.add_parser("add")
-    for f in ("title", "source", "plain", "wall", "newinput", "claim", "prediction", "smallest", "test", "kill",
-              "novelty"):
-        a.add_argument("--" + f, required=True)
-    for f in ("worth", "evidence", "tags"):
+    a.add_argument("--title", required=True)
+    for f in sorted(set(ARG_OF.values())):
         a.add_argument("--" + f)
+    il = sub.add_parser("init-local")
+    il.add_argument("folder")
+    il.add_argument("agent")
+    pr = sub.add_parser("promote")
+    pr.add_argument("--from", dest="local", required=True)
+    pr.add_argument("n", type=int)
+    pr.add_argument("--auditor", required=True)
+    sk = sub.add_parser("skip")
+    sk.add_argument("n", type=int)
+    sk.add_argument("why")
     nt = sub.add_parser("note")
     nt.add_argument("n", type=int)
     nt.add_argument("text")
@@ -198,7 +302,18 @@ def main(argv=None):
     args = p.parse_args(argv)
 
     if args.cmd == "add":
-        print(f"added idea #{add(args.file, args)}")
+        owner = local_owner(args.file)
+        n = add(args.file, args)
+        print(f"added idea {owner + '/' if owner else ''}#{n}")
+    elif args.cmd == "init-local":
+        print("created", init_local(args.folder, args.agent))
+    elif args.cmd == "promote":
+        m = promote(args.file, args.local, args.n, args.auditor)
+        print(f"promoted {local_owner(args.local)}/#{args.n} to main #{m}")
+    elif args.cmd == "skip":
+        if not local_owner(args.file):
+            sys.exit("skip applies to a local idea log (use --file)")
+        note(args.file, args.n, f"audit: not promoted: {args.why}")
     elif args.cmd == "note":
         note(args.file, args.n, args.text)
     elif args.cmd == "set":

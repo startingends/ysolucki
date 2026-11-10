@@ -16,7 +16,8 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 ## The record
 | file | what |
 |---|---|
-| [`IDEAS.md`](IDEAS.md) | **the hub of the work**: numbered ideas, plain-English first, each with test and kill line |
+| [`IDEAS.md`](IDEAS.md) | **the hub of the work**: the MAIN idea log (audited entries only), plain-English first, each with test and kill line |
+| `rh/experiments/<job>/IDEAS_LOCAL.md` | each agent's own unreviewed idea log; `python3 tools/hubcheck.py` lists what still awaits audit |
 | [`KNOWLEDGE.md`](KNOWLEDGE.md) | equivalents of RH, what is proved, barriers B1–B10 every idea must face |
 | [`DECISIONS.md`](DECISIONS.md) | open decisions with the default in use |
 | [`JOURNAL.md`](JOURNAL.md) | append-only record of finished jobs |

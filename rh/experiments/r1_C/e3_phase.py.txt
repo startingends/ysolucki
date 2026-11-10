@@ -1,14 +1,15 @@
-"""E3: monotone-phase test.  D_X(t) = d/dt [theta(t) + Im log P_X(1/2+it) + pole correction]
- = theta'(t) - sum_{n<=X} Lambda(n) (1 - log n/log X) n^{-1/2} cos(t log n) + pole term.
-By the explicit formula D_X(t) = sum over zeros of a Fejer kernel (>= 0 termwise iff the zero is on the line).
-Report min over t in [0.5, TMAX] for zeta and for Davenport-Heilbronn (formal Lambda_f).
-Derivative taken numerically from the same phase used in E1 (grid step 0.002).
-usage: python3 e3_phase.py.txt <zeta|dh> TMAX X1 X2 ...
+"""E3: exact Fejer-window Weil test (monotone phase of the real-rooted family, with the exact archimedean term).
+g(x) = (1 - |x|/V)_+ e^{-itx},  V = log X,  ghat(r) = (4/V) sin^2((r-t)V/2)/(r-t)^2 >= 0 on the real line.
+Explicit formula:  S_X(t) := sum_rho ghat(gamma_rho) = Pole + Arch - 2 sum_{n<=X} Lambda(n) n^{-1/2} (1 - log n/V) cos(t log n)
+ Pole = 2 Re int_0^V (1-v/V) e^{-itv} (e^{v/2}+e^{-v/2}) dv      (zeta only)
+ Arch = -gamma_E + c0 - log(1-e^{-2V}) + int_0^{2V} [e^{-u} - e^{-alpha u}(1-u/2V) cos(tu/2)]/(1-e^{-u}) du
+        zeta: alpha=1/4, c0=-log pi ;  DH: alpha=3/4, c0=log(5/pi)
+If every zero is on the line each term of the zero sum is >= 0, so S_X(t) >= 0 for all t, X.
+usage: python3 e3_phase.py.txt <zeta|dh> TMAX X1 X2 ...   (self-check against the zero sum with: check)
 """
 import sys, math, numpy as np
-from scipy.special import loggamma, exp1
-mode, TMAX = sys.argv[1], float(sys.argv[2]); Xs = [float(x) for x in sys.argv[3:]]
-T = np.linspace(0.5, TMAX, int((TMAX - 0.5) * 500) + 1)
+mode, TMAX = sys.argv[1], float(sys.argv[2]); Xs = [float(x) for x in sys.argv[3:] if x != "check"]
+T = np.linspace(0.0, TMAX, int(TMAX * 200) + 1)
 def lam_zeta(N):
     s = np.ones(N + 1, bool); s[:2] = False
     for i in range(2, int(N ** 0.5) + 1):
@@ -17,7 +18,7 @@ def lam_zeta(N):
     for p in np.nonzero(s)[0]:
         q = int(p)
         while q <= N: out.append((float(q), math.log(p))); q *= int(p)
-    return out
+    return sorted(out)
 def lam_dh(N):
     kap = (math.sqrt(10 - 2 * math.sqrt(5)) - 2) / (math.sqrt(5) - 1)
     a = [0.0] + [[0.0, 1.0, kap, -kap, -1.0][n % 5] for n in range(1, N + 1)]
@@ -29,21 +30,39 @@ def lam_dh(N):
         L[n] = a[n] * math.log(n) - sum(L[d] * a[n // d] for d in divs[n])
     return [(float(n), L[n]) for n in range(2, N + 1) if abs(L[n]) > 1e-14]
 lam = (lam_dh if mode == "dh" else lam_zeta)(int(max(Xs)))
-for X in Xs:
+alpha, c0 = (0.75, math.log(5 / math.pi)) if mode == "dh" else (0.25, -math.log(math.pi))
+def S_of(X):
     V = math.log(X)
-    D = np.zeros_like(T)
+    S = np.zeros_like(T)
     for n, L in lam:
         if n > X: break
         ln = math.log(n)
-        D -= L * (1 - ln / V) * n ** -0.5 * np.cos(T * ln)
-    if mode == "dh":
-        th = np.imag(loggamma(0.75 + 0.5j * T)) + 0.5 * T * math.log(5 / math.pi); corr = 0 * T
-    else:
-        th = np.imag(loggamma(0.25 + 0.5j * T)) - 0.5 * T * math.log(math.pi)
-        mz = (-0.5 + 1j * T) * V
-        G = -exp1(mz) - np.log(mz) - np.euler_gamma - (np.exp(-mz) - 1) / (-mz) + 1
-        corr = -np.imag(G) + np.arctan(2 * T)
-    D += np.gradient(th + corr, T)
-    i = int(np.argmin(D))
-    print("%s X=%-8g min_t D_X(t) = %+.5f at t = %.3f ;  min * log X = %+.4f ; fraction of t with D<0: %.4f"
-          % (mode, X, D[i], T[i], D[i] * V, float(np.mean(D < 0))))
+        S -= 2 * L * (1 - ln / V) * n ** -0.5 * np.cos(T * ln)
+    # Arch by Gauss-Legendre on [0, 2V], panels of length ~0.05 (resolves cos(tu/2) up to t=120)
+    npan = int(2 * V / 0.05) + 1
+    x, w = np.polynomial.legendre.leggauss(8)
+    edges = np.linspace(0, 2 * V, npan + 1)
+    arch = np.full_like(T, -np.euler_gamma + c0 - math.log(1 - math.exp(-2 * V)))
+    for a, b in zip(edges[:-1], edges[1:]):
+        u = 0.5 * (b - a) * x + 0.5 * (a + b); wu = 0.5 * (b - a) * w
+        den = -np.expm1(-u)
+        arch += (wu * np.exp(-u) / den).sum()
+        arch -= np.cos(np.outer(T, u) / 2) @ (wu * np.exp(-alpha * u) * (1 - u / (2 * V)) / den)
+    S += arch
+    if mode != "dh":
+        for a in (0.5 - 1j * T, -0.5 - 1j * T):
+            S += 2 * np.real((np.exp(a * V) - 1 - a * V) / (a * a * V))
+    return S, V
+if "check" in sys.argv:
+    sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+    g = np.array(rhlib.zeros(20000)); X = Xs[0]; S, V = S_of(X)
+    for t in (0.0, 10.0, 14.134725, 17.5, 50.0):
+        i = int(round(t * 200)); tt = T[i]
+        zs = sum((4 / V) * (np.sin((s * g - tt) * V / 2) / (s * g - tt)) ** 2 for s in (1, -1)).sum()
+        tail = 2 * (2 / V) * (math.log(g[-1] / (2 * math.pi)) + 1) / (2 * math.pi * g[-1])
+        print("check X=%g t=%.4f: prime side %.8f   zero side (20000 zeros + tail) %.8f" % (X, tt, S[i], zs + tail))
+for X in Xs:
+    S, V = S_of(X)
+    i = int(np.argmin(S))
+    print("%s X=%-8g min_t S_X(t) = %+.6f at t = %.3f ; min*log X = %+.4f ; fraction of t in [0,%g] with S<0: %.4f"
+          % (mode, X, S[i], T[i], S[i] * V, TMAX, float(np.mean(S < 0))))

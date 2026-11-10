@@ -69,9 +69,12 @@ Every claim carries its level. Nothing is reported above the level it has earned
 5. Numerical sanity check of every intermediate inequality where one is possible.
 
 ## How a round works (seminar)
-proposers (parallel, one lane each) → critics who try to refute → proposers' answers → judge ranks and
-names the next experiments → lead records ideas (numbered), runs or assigns the tests, updates the hub.
-After each round the lead writes the wall(s) hit into IDEAS.md and the next round starts from the log.
+proposers (parallel, one lane each, each keeping its own `IDEAS_LOCAL.md`) → critics who try to refute (own
+local logs too) → judge ranks and names the next experiments → **idea auditor** goes through every local log
+and PROGRESS.md and promotes the important entries to the main log `docs/IDEAS.md` (checking each against
+the six rules; `ideas.py promote` / `skip`) → lead runs or assigns the tests and updates the hub.
+A round is not closed while `tools/hubcheck.py` reports local ideas awaiting audit.
+After each round the lead writes the wall(s) hit into the main log and the next round starts from it.
 
 ## Lanes (round 1)
 - **A Positivity:** Weil explicit formula, Li coefficients, truncated Weil quadratic forms.

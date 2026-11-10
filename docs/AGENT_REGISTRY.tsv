@@ -8,3 +8,4 @@ R1-critB	2026-11-10	critic of lane B	session model	rh/experiments/r1_B/critic	ru
 R1-critC	2026-11-10	critic of lane C	session model	rh/experiments/r1_C/critic	running	-
 R1-critD	2026-11-10	critic of lane D	session model	rh/experiments/r1_D/critic	running	-
 R1-judge	2026-11-10	judge of round 1	session model	rh/experiments/r1_judge	running	-
+R1-transcribe	2026-11-10	transcribe round-1 Ideas sections into per-agent local idea logs	sonnet	rh/experiments/r1_*	running	-

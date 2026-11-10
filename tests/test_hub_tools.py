@@ -111,3 +111,71 @@ def test_owner_rule_fields_are_required_and_settable(f):
     assert open(f).read().count("- wall:") == 1 and "W1: replaced" in open(f).read()
     with pytest.raises(SystemExit):
         ideas.main(["--file", f, "set", "1", "status", "alive"])
+
+
+def test_local_log_is_frictionless_and_separate(tmp_path, f):
+    folder = str(tmp_path / "job")
+    ideas.main(["init-local", folder, "R9-X"])
+    lp = os.path.join(folder, ideas.LOCAL_NAME)
+    assert ideas.local_owner(lp) == "R9-X" and ideas.local_owner(f) is None
+    assert ideas.main(["--file", lp, "add", "--title", "half a thought"]) == 0       # title alone is enough
+    assert ideas.main(["--file", lp, "add", "--title", "second", "--claim", "c"]) == 0
+    assert ideas.check(lp)[1] == []
+    assert "do not read or cite" in open(lp).read()
+    with pytest.raises(SystemExit):                                                   # the main log stays strict
+        ideas.main(["--file", f, "add", "--title", "half a thought"])
+    with pytest.raises(SystemExit):
+        ideas.main(["init-local", folder, "R9-X"])                                    # never overwrite
+    with pytest.raises(SystemExit):
+        ideas.main(["init-local", str(tmp_path / "j2"), "bad id"])
+
+
+def test_promotion_needs_every_field_then_copies_and_marks(tmp_path, f):
+    folder = str(tmp_path / "job")
+    ideas.main(["init-local", folder, "R9-X"])
+    lp = os.path.join(folder, ideas.LOCAL_NAME)
+    ideas.main(["--file", lp, "add", "--title", "raw", "--claim", "c"])
+    ideas.main(["--file", lp, "note", "1", "tried it, looked promising"])
+    ideas.main(["--file", f] + ADD)                                                   # main already has #1
+    with pytest.raises(SystemExit) as e:
+        ideas.main(["--file", f, "promote", "--from", lp, "1", "--auditor", "AUD"])
+    assert "plain english" in str(e.value) and "novelty" in str(e.value)
+    assert len(ideas.parse(f)[1]) == 1                                                # nothing was written
+    for field in ("plain english", "wall", "new input", "prediction", "smallest", "first test", "kill line", "novelty"):
+        ideas.main(["--file", lp, "set", "1", field, "v"])
+    assert ideas.audit_state(lp) == (1, [1])
+    ideas.main(["--file", f, "promote", "--from", lp, "1", "--auditor", "AUD"])
+    _, its = ideas.parse(f)
+    assert [i["n"] for i in its] == [1, 2] and its[1]["title"] == "raw"
+    assert "promoted from R9-X/#1 by AUD" in its[1]["fields"]["source"]
+    assert "tried it, looked promising" in open(f).read()
+    assert ideas.check(f)[1] == [] and ideas.audit_state(lp) == (1, [])
+    assert "promoted to main #2 by AUD" in open(lp).read()
+    with pytest.raises(SystemExit):                                                   # no double promotion
+        ideas.main(["--file", f, "promote", "--from", lp, "1", "--auditor", "AUD"])
+    with pytest.raises(SystemExit):                                                   # main -> main is refused
+        ideas.main(["--file", f, "promote", "--from", f, "1", "--auditor", "AUD"])
+
+
+def test_skip_records_the_auditors_decision(tmp_path):
+    folder = str(tmp_path / "job")
+    ideas.main(["init-local", folder, "R9-X"])
+    lp = os.path.join(folder, ideas.LOCAL_NAME)
+    ideas.main(["--file", lp, "add", "--title", "a"])
+    ideas.main(["--file", lp, "add", "--title", "b"])
+    ideas.main(["--file", lp, "skip", "1", "restates main #2"])
+    assert ideas.audit_state(lp) == (2, [2])
+    assert "audit: not promoted: restates main #2" in open(lp).read()
+
+
+def test_hubcheck_reports_local_logs(tmp_path, capsys):
+    for rel in hubcheck.REQUIRED:
+        q = tmp_path / rel
+        q.parent.mkdir(parents=True, exist_ok=True)
+        q.write_text("")
+    (tmp_path / "docs/AGENT_REGISTRY.tsv").write_text("\t".join(hubcheck.REG_COLS) + "\n")
+    ideas.main(["init-local", str(tmp_path / "rh/experiments/j"), "R9-X"])
+    ideas.main(["--file", str(tmp_path / "rh/experiments/j" / ideas.LOCAL_NAME), "add", "--title", "a"])
+    assert hubcheck.main(str(tmp_path)) == 0
+    out = capsys.readouterr().out
+    assert "awaiting audit" in out and "R9-X/#1" in out and "1 in agents' local logs (1 awaiting audit)" in out

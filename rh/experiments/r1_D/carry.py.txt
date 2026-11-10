@@ -1,0 +1,35 @@
+"""D6 first test: carry deformation  Z_tau(s) = sum_n ||n||^{-(1-tau)s} n^{-tau s},  ||n|| = 2^floor(log2 n).
+tau = 0: zeta function of the polynomial ring F_2[T] (norm 2^deg), = 1/(1-2^{1-s}), no zeros.  tau = 1: Riemann zeta.
+Blocks k < K by Hurwitz zeta, tail k >= K by Euler-Maclaurin summed geometrically (this defines the continuation)."""
+import mpmath as mp, sys
+mp.mp.dps = 30
+K, J = 7, 10
+def Z(s, tau):
+    s = mp.mpc(s); w = tau * s; tot = mp.mpc(0)
+    for k in range(K):
+        tot += mp.power(2, -k * (1 - tau) * s) * (mp.zeta(w, 2 ** k) - mp.zeta(w, 2 ** (k + 1)))
+    geo = lambda m: mp.power(2, -K * (s + m)) / (1 - mp.power(2, -(s + m)))
+    tot += (mp.power(2, 1 - w) - 1) / (1 - w) * mp.power(2, K * (1 - s)) / (1 - mp.power(2, 1 - s))
+    tot += mp.mpf(1) / 2 * (1 - mp.power(2, -w)) * geo(0)
+    for j in range(1, J + 1):
+        m = 2 * j - 1
+        tot += mp.bernoulli(2 * j) / mp.factorial(2 * j) * mp.rf(w, m) * (1 - mp.power(2, -(w + m))) * geo(m)
+    return tot
+print("check tau=1: Z(0.5+14.134725141734693i) =", mp.nstr(Z(mp.mpc(0.5, '14.134725141734693'), 1), 5), " Z(2,1)-zeta(2) =", mp.nstr(Z(2, 1) - mp.zeta(2), 5))
+print("check tau=0: Z(3+2i,0) - 1/(1-2^(1-s)) =", mp.nstr(Z(mp.mpc(3, 2), 0) - 1 / (1 - mp.power(2, 1 - mp.mpc(3, 2))), 5))
+print("check direct sum tau=0.5, s=3: ", mp.nstr(Z(3, 0.5), 15), mp.nstr(mp.nsum(lambda n: mp.power(2, -mp.floor(mp.log(n, 2)) * 1.5) * mp.power(n, -1.5), [1, mp.inf]), 15))
+starts = [mp.mpc(0.5, g) for g in ('14.134725141734693', '21.022039638771555', '25.010857580145688')]
+print("tau    zero_1                      zero_2                      zero_3            (zeros of zeta continued down in tau)")
+cur = list(starts); tau = mp.mpf(1); alive = [True] * 3
+while tau > 0.02:
+    tau -= mp.mpf('0.02')
+    for i in range(3):
+        if not alive[i]: continue
+        try:
+            r = mp.findroot(lambda z: Z(z, tau), cur[i], tol=1e-18, maxsteps=40)
+            if abs(r - cur[i]) > 3: alive[i] = False
+            else: cur[i] = r
+        except Exception as e:
+            alive[i] = False
+    if int(round(float(tau) * 100)) % 10 == 0 or tau < 0.1:
+        print(f"{float(tau):.2f}  " + "   ".join((mp.nstr(c, 9) if a else "lost").ljust(26) for c, a in zip(cur, alive)))

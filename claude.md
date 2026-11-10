@@ -9,7 +9,8 @@ Owner: **startingends** (repo owner). This file loads automatically.
 | `docs/HUB.md` | index: projects, pages, decisions, running jobs | lead |
 | `docs/JOURNAL.md` | append-only record of every finished job: date, what was done, decisions, useful facts; newest at the bottom; no secrets | **lead only** |
 | `docs/KNOWLEDGE.md` | reference knowledge base, refreshed at checkpoints | lead |
-| `docs/IDEAS.md` | numbered idea backlog (see below) | lead (agents propose) |
+| `docs/IDEAS.md` | MAIN idea log: numbered, reviewed entries only (see below) | lead and the idea auditor |
+| `<job folder>/IDEAS_LOCAL.md` | an agent's OWN idea log, for its own use; unreviewed; other agents do not read it | the agent that owns the folder |
 | `docs/DECISIONS.md` | ONE queue of every open decision, each with its default | lead |
 | `docs/AGENT_REGISTRY.tsv` | every spawned agent / workflow: id, role, folder, status | lead |
 | `docs/SUBAGENT_PREAMBLE.md` | rules pasted at the top of every agent brief | lead |
@@ -28,7 +29,7 @@ Owner: **startingends** (repo owner). This file loads automatically.
 - Say plainly what is unverified, what was chosen after looking, and what was skipped.
 
 ## Agents
-- **Every agent brief starts with `docs/SUBAGENT_PREAMBLE.md`**: read the project's PROJECT_BRIEF.md first; keep PROGRESS.md; write files as you go; check disk before big writes; never write the journal; no commits unless told; name stray scratch code `.py.txt` (not `.py`) outside `tools/` and `tests/`.
+- **Every agent brief starts with `docs/SUBAGENT_PREAMBLE.md`**: read the project's PROJECT_BRIEF.md first; keep PROGRESS.md; keep its own idea log `IDEAS_LOCAL.md` in its job folder (see "Ideas log"); write files as you go; check disk before big writes; never write the journal or the main idea log; no commits unless told; name stray scratch code `.py.txt` (not `.py`) outside `tools/` and `tests/`.
 - Brief agents like peers: goal, what is already ruled out, files to read, narrow scope, the exact output wanted. If you can't write a clear brief, you don't understand the task yet.
 - **Model by judgement:** Haiku for lookups and file chores; Sonnet for mechanical work from a tight brief; Opus for judgement, design and independent review; the strongest model for adversarial audits and judge seats. Quality over speed, no over-spending. If a top-model seat fails on usage limits, rerun it on the next model down, labelled.
 - Track every agent in `docs/AGENT_REGISTRY.tsv` (running → done + one-line result).
@@ -59,8 +60,13 @@ Owner: **startingends** (repo owner). This file loads automatically.
 - Routines pin the code sha they run; a changed sha means "verify only, do not run" until the lead re-pins.
 
 ## Ideas log
-- Every interesting idea or test goes into `docs/IDEAS.md` **the moment it comes up**, with the next number, its source, any raw evidence, and the first test. Agents' idea sections are copied in by the lead. The owner refers to ideas by number ("look deeper into #37").
-- Unconfirmed leads go to IDEAS, not the journal. Optionally render it to a page and republish when the file changes.
+Two levels, one tool (`python3 tools/ideas.py`, `--help` for the commands).
+- **Local logs (every agent has its own).** An agent creates `IDEAS_LOCAL.md` in its job folder (`ideas.py init-local <job folder> <agent id>`) and writes every idea into it **the moment it comes up** (`ideas.py --file <job folder>/IDEAS_LOCAL.md add --title "..."`; only the title is required, so a half-thought costs one line). It is the agent's own working log: it adds, annotates, kills and revives entries freely.
+- **Local logs must not confuse anyone else.** The file opens with a banner saying whose it is and that it is unreviewed. Its numbers are local and are cited as `<agent id>/#N`, never as a bare `#N` (a bare number always means the main log). Agents do not read, cite or build on another agent's local log; they read the main log. Only the lead and the auditor read local logs.
+- **Audit, then promote.** When an agent finishes, an **idea auditor** (a fresh agent that did not write the log, or the lead) goes through its local log and its PROGRESS.md and keeps the most important takeaways: for each entry, either `ideas.py promote --from <local log> N --auditor <id>` (copies it into `docs/IDEAS.md` under the next main number, after the auditor has filled in every required field and checked it against the project's rules), or `ideas.py --file <local log> skip N "reason"`. Duplicates are merged into one main entry; an idea that only restates an existing main entry becomes a note on that entry. Nothing is deleted from a local log.
+- **The main log** (`docs/IDEAS.md`) holds only audited entries, written by the lead and the auditor. The owner refers to ideas by main number ("look deeper into #37"). The lead's own ideas go straight into the main log.
+- `python3 tools/hubcheck.py` lists every local idea still awaiting audit, so nothing sits uncopied unseen. No round is closed while that count is above zero.
+- Unconfirmed leads go to an idea log, not the journal. Optionally render the main log to a page and republish when the file changes.
 
 ## Decisions
 - `docs/DECISIONS.md` holds EVERY open decision in one list, each with the default in use and what changes if the owner says otherwise. New questions go there, not scattered across files.

@@ -37,6 +37,23 @@ def main(root=ROOT):
         its, e = ideas_mod.check(ideas_path)
         errs += e
         nums = {it["n"] for it in its}
+    # agents' local idea logs: lenient format check, and a count of what still awaits an auditor
+    waiting_total = local_total = 0
+    for d, _, files in os.walk(root):
+        if "/.git" in d or ideas_mod.LOCAL_NAME not in files:
+            continue
+        lp = os.path.join(d, ideas_mod.LOCAL_NAME)
+        rel = os.path.relpath(lp, root)
+        owner = ideas_mod.local_owner(lp)
+        if not owner:
+            errs.append(f"{rel}: missing the local-idea-log marker on line 1")
+            continue
+        errs += [f"{rel}: {e}" for e in ideas_mod.check(lp)[1]]
+        total, waiting = ideas_mod.audit_state(lp)
+        local_total += total
+        waiting_total += len(waiting)
+        if waiting:
+            print(f"awaiting audit: {rel}: {owner}/#" + f", {owner}/#".join(str(n) for n in waiting))
     reg = os.path.join(root, "docs/AGENT_REGISTRY.tsv")
     if os.path.exists(reg):
         with open(reg) as f:
@@ -72,7 +89,8 @@ def main(root=ROOT):
         pass
     for e in errs:
         print("ERROR", e)
-    print(f"hubcheck: {len(nums)} ideas, {len(errs)} errors")
+    print(f"hubcheck: {len(nums)} ideas in the main log, {local_total} in agents' local logs "
+          f"({waiting_total} awaiting audit), {len(errs)} errors")
     return 1 if errs else 0
 
 

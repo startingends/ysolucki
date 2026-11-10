@@ -8,9 +8,18 @@ Work like a professional mathematician: bold in what you try, exact in what you 
 **Rules**
 1. Work only inside the job folder named in your brief. Keep `PROGRESS.md` there, written as you go
    (what you tried, what happened, what you concluded). Write files as you go, not at the end.
-2. Never edit: `docs/JOURNAL.md`, `docs/IDEAS.md`, `docs/HUB.md`, `docs/KNOWLEDGE.md`, `docs/DECISIONS.md`,
-   `rh/PROJECT_BRIEF.md`, `tools/`, `tests/`. Propose instead: new ideas go in an `## Ideas` section of your
-   PROGRESS.md (title · one testable claim · first test · kill line); brief changes go in `rh/BRIEF_PROPOSALS.md`.
+2. Never edit: `docs/JOURNAL.md`, `docs/IDEAS.md` (the main idea log), `docs/HUB.md`, `docs/KNOWLEDGE.md`,
+   `docs/DECISIONS.md`, `rh/PROJECT_BRIEF.md`, `tools/`, `tests/`. Brief changes go in `rh/BRIEF_PROPOSALS.md`.
+   **Your ideas go in your OWN idea log**, which you create first thing and write to constantly:
+       python3 tools/ideas.py init-local <your job folder> <your agent id>
+       python3 tools/ideas.py --file <your job folder>/IDEAS_LOCAL.md add --title "..." [--plain ... --claim ...]
+       python3 tools/ideas.py --file <your job folder>/IDEAS_LOCAL.md note N "what happened when I tried it"
+   Only the title is required: write the thought down the moment you have it, fill in fields as it firms up.
+   It is yours: kill, revive, annotate freely. Its numbers are local; cite them as `<your agent id>/#N`.
+   Do NOT read, cite or build on any other agent's `IDEAS_LOCAL.md` (they are unreviewed working notes and
+   their numbers mean something else); read the main log `docs/IDEAS.md` instead. After you finish, an
+   auditor reviews your log and promotes the important entries to the main log, so for the ideas you most
+   believe in, fill in the fields the project's rules ask for (wall, new input, prediction, smallest, novelty).
 3. No git commits, no pushes. The lead commits.
 4. Scratch code outside `tools/` and `tests/` is named `*.py.txt` (run it with `python3 file.py.txt`).
    Import shared numerics with `sys.path.insert(0, "<repo>/tools"); import rhlib`.

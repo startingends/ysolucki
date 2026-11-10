@@ -91,3 +91,30 @@ the functional equation balances (the two halves of the approximate functional e
 WILD: the null-vector equation is a fixed-point equation for a "prime-shift transfer operator at frequency
 T"; RH would say this operator never has eigenvalue exactly log(T/2 pi) on the window. Compare its spectrum
 for the impostor at T = 85.7 and for zeta at the same T.
+
+**N14. From "what must enter at the prime side" to a bootstrap.** (lead) Chain of thought, kept in full
+because the route matters more than the result:
+1. Lane A's lattice identity says the windowed form is a Loewner (Pick) matrix of the log-derivative of the
+   truncated completed zeta. Loewner: such matrices are non-negative exactly when the function maps the
+   upper half-plane to itself. For the true function that is the classical "RH iff -xi'/xi is a Pick
+   function". So window positivity = "the truncated data are still consistent with some Pick function".
+2. Krein: a function positive-definite on (-2L, 2L) extends to all of R; the extension is nearly unique when
+   the form is nearly degenerate, and here it is degenerate to 1e-30. So primes up to X almost determine
+   what may come next. Each new prime power must land inside a "Weyl disc" fixed by the earlier ones.
+3. So turn it round: do not put the primes in. Allow weights at all integers and ask what positivity allows.
+4. PROVED (three lines, assumes RH, surely folklore): if Lambda gives a positive measure (RH) and another
+   weight vector m with sum |m_n - Lambda(n)|/sqrt(n) finite also does, then the difference of the two
+   zero-side measures is an almost-periodic function with mean zero that is >= 0 off a discrete set, hence
+   identically 0, hence m = Lambda. So under RH the primes are an isolated solution.
+5. Dual form, no primes and no zeros in it: for every positive-definite g with g(log n) >= 0 at all
+   integers n >= 2, A(g) >= 0, where A is the archimedean-plus-pole functional. RH implies it. Is it
+   provable outright?
+6. For conductor 5 (odd) two honest L-functions share the archimedean term, so the feasible set is at least
+   a segment; the impostor's coefficients sit in the feasible set only below L* = 1.71. CONJECTURE: the
+   feasible set for all L is the convex hull of the genuine L-functions; Euler products are its extreme
+   points. That would answer Q5: zero slack because true L-functions are extreme points.
+7. Rule 5 check, done before computing: the core (positive solutions, prime-free dual, uniqueness) already
+   exists in an unreviewed AI-produced preprint from October 2026 (N. Johns). I had not seen it. Recorded as
+   idea #9 with that stated. What is left for us: the finite-window experiment, the control group, the
+   extreme-point conjecture, and the link to the first-failure window (#8).
+Lesson: two of my three "new" ideas today were already out there. Search first, think second.
