@@ -288,3 +288,30 @@ What does not exist: the cubic object (triple intersections) the mechanism needs
 invent. Three seeds: chains in the divisibility order with Selberg's identity as the balance law; mixed
 volumes of permutohedra with a concave function of log n as ample class; a numerical certificate found
 first and understood afterwards.
+
+**N29. From ferromagnet to random walk to curvature.** (lead) Chain of thought:
+1. N = W - Delta with W >= 0 off the diagonal and Delta the (large, positive) self-energy on the diagonal.
+2. Perron-Frobenius: N has a positive top eigenfunction u, eigenvalue lambda_1 (= 4.31 at L = 1).
+3. Divide by u (ground-state transform). Then N = -(Laplacian of the graph with weights u W u) + lambda_1 u^2.
+   PROVED (algebra): "N has at most one positive eigenvalue" iff the reversible jump process with those
+   rates and stationary measure u^2 has spectral gap >= lambda_1.
+4. So RH on a window = a Poincare inequality for an explicit jump process: jumps by log of prime powers
+   and by a smooth kernel, tilted by u.
+5. The zero margin reads: gap = lambda_1 with the excited level almost infinitely degenerate. The only
+   processes like that are close to "resample from the stationary law at rate lambda_1". In kernel terms:
+   prime atoms + Gamma kernel = 2 cosh(u/2) in the weak sense, which is the prime number theorem with the
+   zeros as the error. So RH says: the actual kernel never exceeds its own mean field. Physicists prove
+   statements of exactly that form for ferromagnets (infrared bounds) by reflection positivity.
+6. PROVED (formula): the Gamma kernel is e^(u/2)/(2 sinh u) = sum over m >= 0 of e^(-(2m + 1/2) u), a
+   positive mixture of decaying exponentials (completely monotone), hence reflection positive; its rates
+   2m + 1/2 are the trivial zeros. The prime atoms are a positive measure but not reflection positive on
+   their own. WILD: is the SUM reflection positive after the tilt by u? Reflection positivity + ferromagnet
+   is precisely the hypothesis of the infrared bound.
+Three tools carried over, none used on this problem as far as two searches and my memory go (memory is not
+evidence): Bakry-Emery curvature, Ollivier coupling curvature, infrared bounds. Recorded as idea #11.
+
+**N30. What these have in common, and the single missing object.** (lead)
+Ideas #10 and #11 and step 6 above all need the same thing: a statement about THREE scales at once
+(a triple intersection number, a Gamma_2, a chessboard estimate). Pair statements are what the explicit
+formula gives; they are equivalent to RH and nothing more. The new mathematics, if there is any here, is
+the cubic structure. Nobody needed it before, so nobody looked. That is where to look.

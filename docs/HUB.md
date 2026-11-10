@@ -29,7 +29,7 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 | status | ideas |
 |---|---|
 | testing | #1 control-group lab (instrument) · #8 first-failure window · **#9 bootstrap: positivity forces the primes** (core found in an unreviewed 2026 preprint; our finite-window and control results are separate) · **#10 arithmetic Lorentzian geometry** (created under rules 7–8; first predictions hit; its real content, the certificate, untested) |
-| open | #4 heat-flow particles · #5 Nyman–Beurling least squares · #7 one prime at a time |
+| open | #4 heat-flow particles · #5 Nyman–Beurling least squares · #7 one prime at a time · **#11 RH as the spectral gap of a prime jump process** (created under rules 7–8; untested, unsearched) |
 | parked | #2 truncated Weil positivity (already in the literature; kept as laboratory) · #6 Lee–Yang in Bohr's variables (owner rule 1) |
 | killed | #3 Li split (pure reformulation, and blind as evidence) |
 | awaiting audit | 22 ideas in agents' local logs (`python3 tools/hubcheck.py` lists them) |
