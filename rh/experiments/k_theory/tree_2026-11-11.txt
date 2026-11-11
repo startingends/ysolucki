@@ -105,24 +105,24 @@ T48 [open] The prime-free dual inequality
 T54 [checked] Every coupled pair needs a third scale at a critical window (Lemma E)
   T53 [checked] Rigidity: null directions of H are lineality directions of every certificate (Lemma 
     T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
-    T50 [checked] Fibre classes: both block inequalities are one signature statement about the borde
+    T50 [formal] Fibre classes: both block inequalities are one signature statement about the border
 T56 [checked] At mean field the certificate is unique, and a one-parameter family of local cubics is
   T53 [checked] Rigidity: null directions of H are lineality directions of every certificate (Lemma 
     T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
-    T50 [checked] Fibre classes: both block inequalities are one signature statement about the borde
+    T50 [formal] Fibre classes: both block inequalities are one signature statement about the border
   T55 [checked] The Bakry-Emery cubic: the one certificate candidate with a formula, and it is the c
     T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
 T57 [checked] Pair obstruction: a coupled pair whose third indices are restricted forces a rank-two 
   T53 [checked] Rigidity: null directions of H are lineality directions of every certificate (Lemma 
     T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
-    T50 [checked] Fibre classes: both block inequalities are one signature statement about the borde
+    T50 [formal] Fibre classes: both block inequalities are one signature statement about the border
 T58 [checked] Block trickle-down: Lemma B with slices replaced by block contractions
   T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contractio
 T59 [checked] One fibre field: pole minus the slowest Gamma exponential is the kernel e^{|x-y|/2}, a
 T60 [checked] Per-prime Poisson decomposition of the Weil form
   T49 [checked] The archimedean term is a constant minus the Dirichlet form of a Levy measure
 T61 [checked] The signature of the fibre-extended form counts the off-line zeros exactly, per parity
-  T50 [checked] Fibre classes: both block inequalities are one signature statement about the bordere
+  T50 [formal] Fibre classes: both block inequalities are one signature statement about the bordered
   T29 [checked] Exact negative index of the Weil form: the number of negative squares on large windo
     T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinat
   T30 [checked] Equivalence: one spare negative square, or one parity block, costs nothing
@@ -134,7 +134,7 @@ T61 [checked] The signature of the fibre-extended form counts the off-line zeros
   T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
 T62 [open] A structured cubic certificate given by a rule (the wall of idea #10)
   T4 [checked] Sign of the arithmetic kernel
-  T50 [checked] Fibre classes: both block inequalities are one signature statement about the bordere
+  T50 [formal] Fibre classes: both block inequalities are one signature statement about the bordered
   T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contractio
   T52 [checked] The cone certificate: bare existence of a cubic certificate is equivalent to the con
     T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
@@ -164,14 +164,14 @@ T79 [checked] Tilt identity: the Weil form of zeta(s-d) zeta(s+d) is zeta's bili
   T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
 T81 [open] Open converse (wall WP1): does 'N has at most one positive direction on every window' imp
   T31 [checked] 'N has at most one positive direction on every window' implies at most one off-line 
-    T27 [checked] Negative squares of Q are bounded by positive squares of N (per parity block), wit
+    T27 [formal] Negative squares of Q are bounded by positive squares of N (per parity block), with
       T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
     T29 [checked] Exact negative index of the Weil form: the number of negative squares on large win
       T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordin
     T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
   T32 [formal] Exact inertia relation between a Weil block and the corresponding block of N (rank-on
-T83 [proved] Forcing of the first prime: on a window that sees one atom, positivity confines its pos
-  T82 [proved] Window positivity with one prime: the Weil form is strictly positive on every window 
+T83 [checked] Forcing of the first prime: on a window that sees one atom, positivity confines its po
+  T82 [checked] Window positivity with one prime: the Weil form is strictly positive on every window
     T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
 T86 [proved] The first-prime inequality: if the odd block is non-negative on a window where the back
   T85 [proved] On a window with no atom the odd block has a simple lowest eigenvalue with a strictly
@@ -208,3 +208,20 @@ T96 [proved] Suzuki's dial: reflection symmetry in the shift, and where the dial
   T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinate)
 T97 [proved] Derivative in the window of the ratio of the two parity determinants (bounded continuou
 T98 [proved] Explicit dial coefficients: the first log-coefficients of theta^n as polynomials in n, 
+T103 [open] Bridge planks 7b, 7c: heuristic model for the comparison constant (about 2L, growing lin
+  T100 [checked] Bridge plank 7: Moebius inversion on the window removes the von Mangoldt function f
+T105 [open] Bridge plank 8 (the span): the lower comparison Q_L >= kappa D_L on all directions
+  T102 [open] Bridge plank 6: the least-leak form D_L on the whole window space, and the upper compa
+    T101 [open] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its t
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+  T101 [open] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its tai
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+  T104 [open] Bridge plank 8a: the cross terms between dilates and the pole term are bounded by a co
+    T102 [open] Bridge plank 6: the least-leak form D_L on the whole window space, and the upper com
+      T101 [open] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its
+        T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
+    T100 [checked] Bridge plank 7: Moebius inversion on the window removes the von Mangoldt function
+  T1 [known] Weil's positivity criterion
+  T99 [known] Archimedean positivity on the window with no prime (Connes-Consani)
+  T82 [checked] Window positivity with one prime: the Weil form is strictly positive on every window
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late

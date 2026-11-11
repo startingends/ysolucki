@@ -245,3 +245,23 @@ S4. F_d at d = 1e-5 (lowest even eigenvalue negative): its eigenvector has overl
     and below 1e-5 with zeta's explicit vector n = 4.
 S5. Impostor: its lowest eigenvalues at L = 1.0 and 1.5 are within a factor 10 of prolate defects 1 - chi_n at c = 2 pi e^(2L)/5
     for small odd-function indices (n = 1 for the bottom): the impostor passes plank 1 below its failing window.
+
+### RESULTS of turn 4 / PLANK 9 (2026-11-11 01:23 to 01:40 UTC). New files: bridge9.py.txt (bridge9_0.75.log, bridge9_one_0.5.log,
+### bridge9_one_0.6.log), dhladder.py.txt (dhladder_1.0.log, dhladder_1.5.log, dhladder_1.8.log). Posted B199, B200 (claims to the lead).
+Predictions: S1, S2, S3, S4, S5 all HIT.
+- S1 F_d, d = 5e-6, L = 0.75, zeta's explicit vectors, ratio to 2 zeta: 0.7255 (n=4), 0.99327 (n=6), 0.99988 (n=8), 0.999997 (n=10).
+  d^2-coefficients c = 1.445e-4, 2.416e-3, 1.951e-2, 0.1026; rungs fail from the bottom at d = 9.5e-6, 6.1e-5, 4.6e-4, 2.7e-3.
+- S2 weight at 4 x (1 + 1e-5): 0.447, 1.155, 0.970, 1.008; x 1.01: -552, +156, -29, +8.6.
+- S3 one-prime at L = 0.5: identical to zeta. At L = 0.6: +860, -208, +55, -8.4 (ladder destroyed).
+- S4 negative eigenvector of F_d at d = 1e-5: 1 - overlap^2 = 3.5e-9 with zeta's ground state, 5.0e-7 with the explicit vector.
+- S5 impostor: Poisson map PROVED (a is a DFT eigenvector, eigenvalue i sqrt5; E_DH(g)(x) = i E_DH(ghat)(1/(5x)));
+  ladder / odd prolate defects at c = 2 pi e^(2L)/5: L = 1.0: 2.9, 2.07, 1.61; L = 1.5: 3.96, 2.42, 2.19, 1.94, 1.17;
+  L = 1.8 (failed): negative eigenvalues -2.5e-7 / -6.8e-9, remaining ladder still on the defects (5.1, 3.2, 3.8, 4.1, 4.2).
+Conclusions posted: (i) planks 5-7 have analogues for both controls; plank 1 holds for the impostor; only inequalities separate.
+(ii) F_d fails on the BOTTOM rung (not off the ladder); mechanism = energy of x w (log-variable multiplication). (iii) the impostor
+fails plank 8 on one direction per block near the band edge. (iv) the chirp-tail mechanism for plank 8 is not control-sensitive.
+CAVEATS: one implementation; N = 28; impostor's explicit vectors not built; F_d's own (Voronoi-type) band-limiting operator
+not built, so 'plank 5 for F_d' is formal; my earlier worry about degrees of freedom of the degree-2 leak was withdrawn in my own
+notes (companions on the window are fixed by a finite triangular inversion; no resonance argument applies) and NOT posted.
+Open for a next turn: explicit impostor vectors E_DH(odd prolates) and the form-level ratio kappa_K for the impostor at L = 1.5, 1.8
+(does kappa_K break at the K where the defect is ~1e-7?); F_d's own band-limiting operator (Bessel-type kernel, Nystrom).

@@ -1,0 +1,4 @@
+L = 1/1, lam^2 = 7.3891, NB = 116, nh = 40, prec = 520; prime powers [2, 3, 4, 5, 7]; Q built 17s
+D built 20s (x nodes 1176, xi nodes 206)
+ degree < 84: kappa_min = 0.297958  second = 0.300318  kappa_max = 3.20878   (24s)
+ degree < 100: kappa_min = 0.2979  second = 0.300249  kappa_max = 3.6517   (31s)

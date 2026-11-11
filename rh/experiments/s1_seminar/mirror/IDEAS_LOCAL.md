@@ -67,3 +67,14 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: If an independent recomputation gives a bound below 0.742 for the atom at 2.1 at L = 0.40, the Beurling exclusion is wrong.
 - novelty: Checked rh/library digests 2106.01715, connes-consani-weil-positivity-archimedean, suzuki-2606.09096, yoshida-1992 (grep): numerics only there. No web search. Overlaps on the board with B168 and B169.
 - log:
+
+## #6 · The impostor has a Poisson map and obeys the small-eigenvalue law; what it violates is one direction per block near the band edge
+- status: open
+- source: S1-mirror, plank 9 of Bridge 1 (rh/BRIDGE.md); grows from lane A's r1_A impostor table (the 1/q in 4 pi e^(2L)/q) and idea 27
+- date: 2026-11-11
+- tags: bridge1,plank9,control,B1
+- plain english: The fake zeta function used as a control has coefficients repeating with period 5, and that pattern is its own Fourier transform up to a constant. So the same summation trick that produces zeta's nearly-zero-energy functions works for the fake, with a band five times narrower. Its tiny energies follow the classical leak numbers just as zeta's do: on the window L = 1.5, 3.2e-18 against 8.2e-19, 1.1e-14 against 4.7e-15, and so on with ratios between 1 and 4. On the window L = 1.8, where the fake is known to fail, all those tiny energies are still positive and still on the law; the failure is one extra negative energy of size 2.5e-7 in each half, at the height of its first zero off the line.
+- claim: PROVED: E_DH(g)(x) = i E_DH(ghat)(1/(5x)) for odd g. COMPUTED: ladder/defect ratios 3.96, 2.42, 2.19, 1.94, 1.17 at L = 1.5 and 5.1, 3.2, 3.8, 4.1, 4.2 at L = 1.8 beside the two negative eigenvalues.
+- first test: Build E_DH(odd prolates) and compute the form-level ratio on their span for K up to the rung where the defect is 1e-7.
+- kill line: If the form-level ratio for the impostor collapses already at small K on L = 1.8, the low rungs do see the failure and this entry is wrong.
+- log:

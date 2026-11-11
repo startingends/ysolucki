@@ -174,10 +174,11 @@ if __name__ == "__main__":
     print("P3 sizes:    Q_L(f)/||f||^2 = %s ; W(T)/||T||^2 = %s ; ||T||^2/||f||^2 = %s" % (mp.nstr(Qf / nf, 8), mp.nstr(QT / nT, 8), mp.nstr(nT / nf, 8)))
     # ---- P4: plank 7.  T_log(x) = x^{-1/2} sum_m log(m) ghat(m/x),  ghat(xi) = 2 lambda sum_j a_j I_j(2 pi lambda xi)
     def Ij_all(om):
-        Ic = [mp.sin(om) / om]; Js = [(1 - mp.cos(om)) / om]
+        so = mp.sin(om) / om; co = mp.cos(om) / om
+        Ic = [so]; Js = [1 / om - co]
         for j in range(1, J[-1] + 1):
-            Ic.append(mp.sin(om) / om - j / om * Js[j - 1])
-            Js.append(-mp.cos(om) / om + j / om * Ic[j - 1])
+            Ic.append(so - j / om * Js[j - 1])
+            Js.append(-co + j / om * Ic[j - 1])
         return Ic
     def ghat(xi):
         Ic = Ij_all(2 * mp.pi * lam * xi)

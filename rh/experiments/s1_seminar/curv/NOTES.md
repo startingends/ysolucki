@@ -177,3 +177,27 @@ B114 (S1-cubic withdrew 0.05), B143 (FORMAL: F1 step, folding identity, Theorem 
  By the derivative lemma the even ground state gets an edge node where its level reaches the odd ground level. Vary the multiplier s of the EVEN pole term (s = 1 true).
  zeta, delta = 0.2 (L = 0.4466), M = 240: s_cross (mu_e1(s) = mu_o1) = 1 + (mu_o1 - mu_e1)/(2<c,v_e>^2) = 1 + 0.0030/3.4 = 1.0009 +- 0.0003; s_node (last-box sign change) within 0.002 of s_cross.
  No-prime window L = 0.30, M = 240: s_cross and s_node agree within 2%; s_cross > 1.
+
+### RESULT t3_pole.log (01:31:03): s_cross vs s_node: 1.00245/1.00259 (zeta L=0.4466), 1.2211/1.2240 (no primes L=0.30), 0.9533/0.9552 (weight 0.3). Agreement prediction HIT; my numeric guess 1.0009 MISS.
+
+## STATE AT END OF TURN 3 (board read to B202)
+My posts: B183 (answer B155: edge-strip lemma H1 + tables H2), B184 (answer B149: collective tilt = nu; one-zero identity c(L) = sum c_gamma; far regime heuristic),
+B185 (B158 line: no candidate meeting all three; lemma for (C); arithmetic begins at L > 0.372 in the odd block), B197 (result: derivative lemma H3 + weight-family test H4; B119 fails in the weight family),
+B198 (answer B177 + accept objection B193: F1(a) wrong for the even margin when t_e < 1; file corrected; nominations: swap bound, discrete derivative antisymmetry, Wbar series),
+B201 (result re B140: t* = level crossing), B202 (note: judge's findings accepted).
+FORMAL has machine-checked: B2, B3 (weaker hypotheses: u != 0, k need not be even, any finite W), F1 step, folding identity, Theorem C. Not formal: F2 step, B4.
+Open questions I asked: to S1-parity (B197): overlap of (even ground state)' with the odd ground state at L = 0.75, 1 in their basis; (B185): nodes vs weight (I answered it myself in B197).
+No unanswered question addressed to me at the end of the turn.
+
+New this turn (S1_ADDITIONS.md): H1 edge-strip lemma (PROVED; no control violates); H2 first-prime-window tables (crude route closes for delta <= 0.029; admissible weights);
+H3 derivative lemma (PROVED given hypotheses; cites Suzuki Thm 1.1); H4 weight-family test (overlap 1.0000 at level crossings); H5 pole threshold.
+Prediction score: T3-P1 MISS, P2 HIT, P3 HIT, P4 MISS, P5 MISS; N-P1, N-P2 MISS; band: mostly HIT; cross tolerances HIT at 0.2/0.3, MISS at 0.1; pole agreement HIT, numeric guess MISS.
+
+Others this turn (do not re-derive): SP-operator P7 (odd block on no-prime window: simple positive ground state, PROVED given cited theorems; no violating control);
+S1-parity B136 (G1 confirmed, d*(1) = 4.87e-13), B119 (nodeless conjecture, now contradicted in the weight family by my B197: await their recomputation);
+SP-reflection B129 (Neeb-Olafsson; window bridge needs +K); lead B128 (one-prime tilt withdrawn as candidate, B165); Zhu 2608.24827 claims a certificate at L = 0.8 (certificates unavailable).
+
+Open for next turn: (a) edge asymptotics of eigenfunctions (log-killing) to make Corollary 2 of H3 exact (the edge term); (b) does zeta's even ground state at L = 1 satisfy v_e' ~ odd ground state
+(S1-parity to compute); (c) the F2 step is still not machine-checked; (d) a certificate for the archimedean form Q_0 - c 1_strips at delta = 0.01 would prove positivity on a window containing a prime
+(but a control does not violate it); (e) K-atlas B188(2): (C) on the cone with constants better than theta.
+Rule: numerics as `python3 tools/memcap.py 1 python3 <script>`, small arrays, one job at a time (machine load was 6-10 this turn; jobs took minutes).

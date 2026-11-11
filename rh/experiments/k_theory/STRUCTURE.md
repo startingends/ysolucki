@@ -1,10 +1,9 @@
 # STRUCTURE of the theory document (K-theory, 2026-11-11; revised after the round-2 judgement and the readers' addenda)
 
-Source of truth: `rh/THEORY.md` (98 entries). Commands run: `records.py theory check` (0 errors), `tree`
-(saved as `tree_2026-11-11.txt` in this folder), `frontier`. Counts: **2 formal, 45 checked, 11 known** (58 established),
-**21 proved** (written proof; not independently checked, or computer-assisted with the verifier still running, or resting
-on an open input), **17 open**, **2 refuted**. Sections (a) to (e) were written at 81 entries; what the third batch
-(formal results, foothold theorems, seminar turns 2-3) changes is in "Revision 2" at the end, which takes precedence. Labels below: everything is a statement about the record, not new mathematics.
+Source of truth: `rh/THEORY.md` (105 entries). Commands run: `records.py theory check` (0 errors), `tree`
+(saved as `tree_2026-11-11.txt` in this folder), `frontier`. Counts: **4 formal, 46 checked, 12 known** (62 established),
+**19 proved**, **22 open**, **2 refuted**. Sections (a) to (e) were written at 81 entries; "Revision 2" (98 entries) and
+"Revision 3" (105 entries; the bridge, idea #27, is now the project's main line) at the end take precedence. Labels below: everything is a statement about the record, not new mathematics.
 
 Nothing in the established part is a case of RH. It consists of (i) dictionaries (what a signature or a null vector
 means), (ii) finite linear algebra about certificates and chains, (iii) statements that are conditional on RH,
@@ -222,3 +221,53 @@ its finite form (already in Perron_GroundState.lean as form_abs_le) and the fini
 two-case deduction (easy given T43 and T29 as hypotheses); (4) T88 (secular equation of a rank-one perturbation,
 finite, medium). T82/T83 are interval-arithmetic certificates: a Lean formalisation is hard; an independent
 re-run with a second ball-arithmetic implementation is the realistic check.
+
+## Revision 3 (fourth batch: V-FH's verdict, the formal seat's end of session, READER-3, the bridge)
+
+**The main line is now the bridge (rh/BRIDGE.md, idea #27): the Weil form is comparable to the least band-limiting
+leak.** Its chain in the theory document:
+
+    T1, T7 (known)   T99 (known: Connes-Consani, no-prime window, archimedean place)   T82 (checked: L <= (1/2) log 3)
+    T100 plank 7 (checked: Moebius inversion removes Lambda; elementary)
+        -> T101 plank 5 (OPEN, heuristic): Q_L(f) = W(tail)                      <- FIRST OPEN LINK
+        -> T102 plank 6 (OPEN): the form D_L on the whole window space; Q <= C D
+        -> T103 planks 7b, 7c (OPEN, heuristic model for the constant; computed comparisons only)
+        -> T104 plank 8a (OPEN): cross + pole terms <= constant x leak
+        -> T105 plank 8 (OPEN, the span): Q_L >= kappa D_L on all directions   => RH by T1
+
+What is established on the bridge: only T100 (a change of variable) and the two base cases T99 and T82, neither of
+which is yet an inequality against D_L. Everything that carries the hunch (planks 1 to 3, 7b, 7c) is COMPUTED by one
+implementation in truncated bases; plank 4 (second implementation) is open. *First open link: T101.* It is not a
+hard-looking statement but it is not yet precise: the Weil form has to be defined on functions without compact
+support, with the pole bookkeeping. After it T102 (that D_L is a densely defined quadratic form) is the next
+bookkeeping link; the first link that is the actual mathematics is T104/T105. Plank 9 (which plank breaks for the
+controls) has no entry: nothing is stated yet.
+
+**Statuses changed.** T82, T83 -> `checked` (verifier V-FH: verified as stated; trust base Arb / python-flint,
+nothing formalised; Theorem A not new as a claim (Zhu, unrefereed, weaker constant on these windows), Theorem B's
+type not found). T27, T50 -> `formal` after rewriting their statements to the machine-checked wording (T27: real,
+abstract forms; T50: subspace-dimension count, any dimension). Formal now: T27, T32, T50, T70, all in the full
+build of 01:06 UTC (26 files, axioms audit). T100 `checked` (K-theory re-derived N41 (a), (b); absolute convergence
+added as a hypothesis in (b)).
+
+**In print, per READER-3 (digests checked):** T35 (Bombieri 2000 Thm 5; CCM (3.27)); T10 (1), (3) (Bombieri Thm 3);
+T38 (Bombieri Lemma 1); T29 for FINITE zero sets (Bombieri Thm 9; not for zeta); one implication of T37 (CCM Cor
+3.8). Not supplied by Bombieri: T80. T41 is "missing step 1" of Connes-Consani-Moscovici.
+
+**Frontier now:** T13, T14, T15, T17, T24, T25, T40, T42, T46, T47, T48, T62, T78, T80, T81, T101, T103.
+**Islands (22):** T3, T14 to T22, T24, T25, T33, T34, T45, T46, T47, T59, T72, T93, T97, T98.
+
+**First open links, all ideas:** #27 (main line) -> T101; #8 -> T80; #9 -> T47 (then T46), with T82, T83 now
+checked; #10 (parked) -> T62; #21 (killed) -> refuted T6.
+
+**The three open lemmas that would most enlarge the established part, revised for the main line:**
+1. T101 (plank 5), with T102: until they are precise, T104 and T105 are not statements one can prove.
+2. T80: still restores four entries on the first-failure route.
+3. T104 (plank 8a), as a measurement first: it decides whether the span has the shape "a constant against 2L".
+T47 and T46 remain the next ones on route #9.
+
+**Formalise first, revised.** For the main line the only proved link is T100: its part (a) is a finite identity
+(Moebius inversion on a finite triangular sum, Lambda * 1 = log; mathlib has both) and is EASY; do it first, with
+the numerical check the bridge demands. Then the finite model of T102/T105 once defined. Still pending from before:
+the eigenvalue bridge (spectral theorem) that would let T32, T50, T27 be read with "eigenvalues", T34 from T32 +
+T33, and confirmation of T33's corrected wording.

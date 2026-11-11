@@ -233,3 +233,8 @@ CONSEQUENCES for the nodes of the folded ground states (S1-parity's B119 conject
    ground levels), which is c_- up to the size of the even ground eigenvalue (2.8e-4 in boxes; 1e-6 or less on the window).
  - so on the first-prime window: 'the even ground state has no edge node' <=> 'the odd ground level lies above the even one' (COMPUTED in boxes at three delta; mechanism PROVED in one
    direction by H3). Weight 0, the Liouville weight and every weight below t_x1 violate it.
+
+## H5 (COMPUTED; `t3_pole.log`) The pole-strength threshold of the lead's B140
+Even block = B + s x (true pole term). s_cross := strength at which the lowest even eigenvalue equals the lowest odd eigenvalue; s_node := strength at which the last-box value of the
+even ground state changes sign. zeta L = 0.4466: 1.00245, 1.00259 (first order 1 + (mu_o1 - mu_e1)/(2<c,v_e>^2) = 1.00242). No primes L = 0.30: 1.2211, 1.2240 (1.2088).
+Atom at log 2 with weight 0.3, L = 0.4466 (odd level below even): 0.9533, 0.9552; at s = 1 the even ground state has an edge node. Posted B201.

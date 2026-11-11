@@ -128,3 +128,19 @@ Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+
   re-derived too but those entries stay `proved` (T86: depends on the unchecked T85; T90: per the coordinator).
 - Not marked: no VERDICT.md from V-FH yet; the formal seat's MEMORY.md still lists nothing.
 - Final check: 98 entries, 0 errors; 17 open, 21 proved, 45 checked, 2 formal, 11 known, 2 refuted.
+
+### Fourth batch (batch9_verdict_formal_bridge.py.txt): V-FH verdict, formal seat's end of session, READER-3, the bridge
+- T82, T83 -> checked (V-FH: verified as stated). Notes carry the trust base and the novelty finding.
+- T27, T50 -> formal after rewriting the statements to the machine-checked wording; T70, T32 confirmed. Formal total 4.
+- READER-3's remarks checked against bombieri-2000.md and 2511.22755.md and applied (sources/notes of T2, T10, T11, T29, T35, T36, T37,
+  T38, T41, T80).
+- Bridge entries T99-T105. My re-derivation of notebook N41 (plank 7), as asked:
+  (a) f = Z psi on the window, (Z psi)(u) = sum_m m^-1/2 psi(u + log m), psi supported in [-L, L]. Inverse: sum_m mu(m) m^-1/2 f(u + log m)
+      = sum_N N^-1/2 psi(u + log N) sum_{m | N} mu(m) = psi(u) (the cut in f is harmless: if u + log m > L every psi(u + log m + log k) = 0).
+      For real f, Pi(f) = 2 sum_n Lambda(n) n^-1/2 int f(u) f(u + log n) du = 2 <f, P+ f>. For u in the window,
+      (P+ f)(u) = sum_n Lambda(n) n^-1/2 sum_m m^-1/2 psi(u + log n + log m) (lower cut automatic since u + log n >= -L; upper cut harmless)
+      = sum_N N^-1/2 psi(u + log N) sum_{nm = N} Lambda(n) = sum_N N^-1/2 log N psi(u + log N). OK.
+  (b) same computation on v > L, where v + log n > L always, so the cut 1_{v > L} is never met; needs absolute convergence of
+      sum_N N^-1/2 log N |psi(v + log N)|, which N41 does not state: added as a hypothesis. OK.
+  The numerical check of (a) to 12 digits that the bridge demands was NOT run by me.
+- Final check: 105 entries, 0 errors; 22 open, 19 proved, 46 checked, 4 formal, 12 known, 2 refuted.

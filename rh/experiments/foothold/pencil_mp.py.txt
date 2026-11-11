@@ -1,0 +1,157 @@
+"""Multiprecision (Arb midpoints + mpmath; NOT a certificate) whole-space pencil (Q, D_L) on polynomials of degree < NB.
+Q  = exact Weil form of zeta on the window L (x-space formula of PROOF_forcing_prime2.md, Lemma 5, all prime powers
+     n with log n < 2L), in the orthonormal Legendre basis of L^2[-L, L], by Gauss-Legendre quadrature.
+D_L = least out-of-band energy (band [-lam, lam], lam = e^L) of a companion g supported in [-lam, lam] with E(g) = f
+     on the window (Moebius inverse on [1/lam, lam]), free even part h on (0, 1/lam), with both pole conditions
+     int g = 0 and int_{-lam}^{lam} ghat = 0 (Schur complement).
+usage: pencil_mp.py.txt <L=p/q> <NB> [nh=40] [prec_bits=400] [K1,K2,...]   (extra degrees for the stability check)"""
+import sys, math, time
+import flint, mpmath as mp
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+LQ = Fr(sys.argv[1]); NB = int(sys.argv[2]); nh = int(sys.argv[3]) if len(sys.argv) > 3 else 40
+prec = int(sys.argv[4]) if len(sys.argv) > 4 else 400
+KS = [int(t) for t in sys.argv[5].split(',')] if len(sys.argv) > 5 else []
+flint.ctx.prec = prec; mp.mp.prec = prec - 40
+t0 = time.time()
+L = arb(LQ.numerator) / arb(LQ.denominator); lam = L.exp(); pi = arb.pi()
+def gl(n, a, b):
+    out = []
+    for k in range(n):
+        x, w = arb.legendre_p_root(n, k, weight=True)
+        out.append(((a + b) / 2 + (b - a) / 2 * x, (b - a) / 2 * w))
+    return out
+NORM = [((2 * arb(j) + 1) / (2 * L)).sqrt() for j in range(NB)]
+def phis(u):
+    """[phi_j(u)] j < NB, orthonormal Legendre on [-L, L]"""
+    t = u / L; P = [arb(1), t]
+    for n in range(1, NB - 1):
+        P.append(((2 * n + 1) * t * P[n] - n * P[n - 1]) / (n + 1))
+    return [NORM[j] * P[j] for j in range(NB)]
+def gamma_sym(x, nin):
+    """S(x)_jk = symmetric part of int_{x-L}^{L} phi_j(u) phi_k(u - x) du"""
+    nodes = gl(nin, x - L, L)
+    A = arb_mat(nin, NB, [v for u, w in nodes for v in phis(u)])
+    B = arb_mat(nin, NB, [w * v for u, w in nodes for v in phis(u - x)])
+    G = A.transpose() * B
+    return (G + G.transpose()) * (arb(1) / 2)
+def midmat(M):
+    return arb_mat(M.nrows(), M.ncols(), [M[i, j].mid() for i in range(M.nrows()) for j in range(M.ncols())])
+# ---------------- Q
+nin = NB + 2; nout = NB + 70
+I = arb_mat(NB, NB, [arb(1) if i == j else arb(0) for i in range(NB) for j in range(NB)])
+acc = arb_mat(NB, NB)
+for x, w in gl(nout, arb(0), 2 * L):
+    S = gamma_sym(x, nin)
+    h = (x / 2).exp() / x.sinh() - 1 / x
+    acc = midmat(acc + (I - S) * (w / x) - S * (w * h))
+C0 = (4 * pi * L).log() + arb.const_euler()
+Q = acc - I * C0
+pn = gl(NB + 40, -L, L)
+pv = [arb(0)] * NB
+for u, w in pn:
+    ph = phis(u); e = (u / 2).exp()
+    for j in range(NB): pv[j] += w * e * ph[j]
+Q = Q + arb_mat(NB, NB, [pv[j] * pv[k] * ((1 if j % 2 == 0 else -1) + (1 if k % 2 == 0 else -1)) for j in range(NB) for k in range(NB)])
+X = int(math.floor(math.exp(2 * float(LQ)) - 1e-12))
+atoms = []
+for n in range(2, X + 1):
+    for p in range(2, n + 1):
+        if all(p % d for d in range(2, int(p ** 0.5) + 1)):
+            m = n
+            while m % p == 0: m //= p
+            if m == 1: atoms.append((n, p)); break
+            if n % p == 0: break
+for n, p in atoms:
+    Q = Q - gamma_sym(arb(n).log(), nin) * (2 * arb(p).log() / arb(n).sqrt())
+Q = midmat(Q)
+print(f"L = {sys.argv[1]}, lam^2 = {math.exp(2*float(LQ)):.4f}, NB = {NB}, nh = {nh}, prec = {prec}; prime powers {[n for n, p in atoms]}; Q built {time.time()-t0:.0f}s", flush=True)
+# ---------------- D_L
+def mobius(n):
+    r = 1; d = 2; m = n
+    while d * d <= m:
+        if m % d == 0:
+            m //= d
+            if m % d == 0: return 0
+            r = -r
+        d += 1
+    if m > 1: r = -r
+    return r
+lamf = math.exp(float(LQ))
+sqf = [n for n in range(1, int(lamf * lamf) + 2) if mobius(n) != 0]
+brk = sorted(set([lamf / n for n in sqf if lamf / n > 1 / lamf + 1e-12] + [1 / lamf]))
+def as_arb(v):          # exact break points
+    if abs(v - 1 / lamf) < 1e-12: return 1 / lam
+    n = int(round(lamf / v)); return lam / n
+npc = 60 + NB
+rows_x = []; rows_w = []; cols = []       # nodes on (0, lam], weights, and the column of companion values
+for x, w in gl(40 + 2 * nh, arb(0), 1 / lam):
+    t = 2 * lam * x - 1; P = [arb(1), t]
+    for n in range(1, nh - 1): P.append(((2 * n + 1) * t * P[n] - n * P[n - 1]) / (n + 1))
+    rows_x.append(x); rows_w.append(w)
+    cols.append([arb(0)] * NB + [((2 * arb(i) + 1) * lam).sqrt() * P[i] for i in range(nh)])
+for a, b in zip(brk[:-1], brk[1:]):
+    ns = [n for n in sqf if n * (a + b) / 2 <= lamf]
+    for x, w in gl(npc, as_arb(a), as_arb(b)):
+        g = [arb(0)] * NB
+        for n in ns:
+            y = n * x; ph = phis(y.log()); c = mobius(n) / y.sqrt()
+            for j in range(NB): g[j] += c * ph[j]
+        rows_x.append(x); rows_w.append(w); cols.append(g + [arb(0)] * nh)
+nx = len(rows_x); NT = NB + nh
+Gm = arb_mat(nx, NT, [v for col in cols for v in col])                          # nx x NT
+GW = arb_mat(nx, NT, [rows_w[i] * v for i, col in enumerate(cols) for v in col])
+xin = gl(160 + int(2 * math.pi * lamf * lamf), arb(0), lam)
+CS = arb_mat(nx, len(xin), [(2 * pi * x * xi).cos() for x in rows_x for xi, wx in xin])
+Cm = midmat((GW.transpose() * CS) * arb(2))                                      # NT x nxi : ghat(xi_m)
+CW = arb_mat(NT, len(xin), [Cm[i, m] * xin[m][1] for i in range(NT) for m in range(len(xin))])
+Gram = (GW.transpose() * Gm) * arb(2)
+Aout = midmat(Gram - (CW * Cm.transpose()) * arb(2))
+ell1 = [2 * sum((GW[i, a] for i in range(nx)), arb(0)) for a in range(NT)]       # ghat(0)
+ell2 = [2 * sum((CW[a, m] for m in range(len(xin))), arb(0)) for a in range(NT)] # int_{-lam}^{lam} ghat
+sub = lambda M, r, c: arb_mat(len(r), len(c), [M[i, j] for i in r for j in c])
+F = list(range(NB)); Hh = list(range(NB, NT))
+Aff = sub(Aout, F, F); Afh = sub(Aout, F, Hh); Ahh = sub(Aout, Hh, Hh)
+Ahi = midmat(Ahh.inv())
+Dfree = Aff - Afh * Ahi * Afh.transpose()
+Lf = arb_mat(NB, 2, [v for a in F for v in (ell1[a], ell2[a])]); Lh = arb_mat(nh, 2, [v for a in Hh for v in (ell1[a], ell2[a])])
+S2 = Lh.transpose() * Ahi * Lh; T2 = Lf - Afh * Ahi * Lh
+D = midmat(Dfree + T2 * midmat(S2.inv()) * T2.transpose())
+print(f"D built {time.time()-t0:.0f}s (x nodes {nx}, xi nodes {len(xin)})", flush=True)
+# ---------------- pencil in mpmath
+def to_mp(M, K):
+    R = mp.matrix(K, K)
+    for i in range(K):
+        for j in range(K):
+            R[i, j] = (mp.mpf(M[i, j].mid().str(int(prec * 0.3), radius=False)) + mp.mpf(M[j, i].mid().str(int(prec * 0.3), radius=False))) / 2
+    return R
+def pencil(K, vectors):
+    Qm = to_mp(Q, K); Dm = to_mp(D, K)
+    Lc = mp.cholesky(Dm); Li = mp.inverse(Lc)
+    A = Li * Qm * Li.T; A = (A + A.T) / 2
+    if not vectors:
+        ev = mp.eigsy(A, eigvals_only=True); return ev, None, Qm, Dm, Li
+    ev, V = mp.eigsy(A); return ev, V, Qm, Dm, Li
+for K in KS:
+    ev, _, _, _, _ = pencil(K, False)
+    print(f" degree < {K}: kappa_min = {mp.nstr(ev[0], 6)}  second = {mp.nstr(ev[1], 6)}  kappa_max = {mp.nstr(ev[K-1], 6)}   ({time.time()-t0:.0f}s)", flush=True)
+ev, V, Qm, Dm, Li = pencil(NB, True)
+print(f" degree < {NB}: kappa_min = {mp.nstr(ev[0], 6)}  second = {mp.nstr(ev[1], 6)}  third = {mp.nstr(ev[2], 6)}  kappa_max = {mp.nstr(ev[NB-1], 6)}   ({time.time()-t0:.0f}s)", flush=True)
+qe, QV = mp.eigsy(Qm); de = mp.eigsy(Dm, eigvals_only=True)
+print(" ladder of Q (10 lowest):", [mp.nstr(q, 4) for q in qe[:10]])
+print(" ladder of D (10 lowest):", [mp.nstr(d, 4) for d in de[:10]])
+def describe(i, name):
+    v = Li.T * V[:, i]; n2 = (v.T * v)[0]
+    ov = [((v.T * QV[:, r])[0]) ** 2 / n2 for r in range(NB)]
+    cum = [sum(ov[:r]) for r in (1, 2, 4, 6, 8, 12)]
+    top = sorted(range(NB), key=lambda r: -ov[r])[:4]
+    par = sum(v[j] ** 2 for j in range(0, NB, 2)) / n2
+    hi = sum(v[j] ** 2 for j in range(NB // 2, NB)) / n2
+    print(f" {name}: kappa = {mp.nstr(ev[i], 6)}; D(v)/|v|^2 = {mp.nstr((v.T * Dm * v)[0] / n2, 4)}; Q(v)/|v|^2 = {mp.nstr((v.T * Qm * v)[0] / n2, 4)}; even share {mp.nstr(par, 3)}; share in Legendre degrees >= NB/2: {mp.nstr(hi, 3)};")
+    qv = (v.T * Qm * v)[0] / n2
+    en = [ov[r] * qe[r] / qv for r in range(NB)]
+    topen = sorted(range(NB), key=lambda r: -abs(en[r]))[:5]
+    print(f"      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): {[(r + 1, mp.nstr(en[r], 3), mp.nstr(qe[r], 3)) for r in topen]}; energy share in rungs 1..6: {mp.nstr(sum(en[:6]), 3)}, in rungs 1..12: {mp.nstr(sum(en[:12]), 3)}")
+    print(f"      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): {[mp.nstr(c, 4) for c in cum]}; largest overlaps at Q-rungs {[(r + 1, mp.nstr(ov[r], 3), mp.nstr(qe[r], 3)) for r in top]}")
+describe(0, "MINIMISER"); describe(1, "second"); describe(NB - 1, "MAXIMISER")
+print(f"total {time.time()-t0:.0f}s")

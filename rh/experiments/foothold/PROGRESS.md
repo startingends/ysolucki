@@ -285,3 +285,16 @@ label, section 13; the stale line in section 7 is now marked), C2 (the two forci
 current script: identical intervals, 66 and 70; the float-check line now uses log 2 to 17 digits: 1.9573e-4 odd at
 L = 1/2), C3 (wording, removed). The only change to forcing.py.txt after verification is that float-check line.
 FOOTHOLDS.md: FH-1 and FH-2 set to `checked`; FH-3 added as a candidate (float).
+
+## Session 3 (2026-11-11): the pencil at larger windows (coordinator's question: does kappa_min hold, grow, or fall like e^(-2L)?)
+
+### 19. PREDICTION, written before any run at L > 0.54
+Data so far: kappa_min = 0.3317, 0.3307, 0.3281 at L = 0.34, 0.5, 0.54 (slope about -0.02 per unit of L).
+The two hypotheses to separate: FLAT (stays near 0.33) against FALL like e^(-2L) (from 0.33 at L = 0.5: 0.24 at
+0.65, 0.20 at 0.75, 0.16 at 0.85, 0.12 at 1.0).
+My prediction: nearly flat with a slow decrease: kappa_min in [0.30, 0.34] at L = 0.65, [0.28, 0.34] at 0.75,
+[0.26, 0.34] at 0.85, [0.24, 0.34] at 1.0; stable in the degree to 2 digits once the degree exceeds about
+2 pi e^(2L) L + 40. Minimiser: still a small-leak combination (D(v)/|v|^2 below 1e-3, most of its norm on the first
+6 rungs of Q), not the bulk. kappa_max between 2 and 4, attained on the highest-degree directions (Q grows like
+the log of the frequency, D is bounded), increasing with the degree.
+What would move the bridge: kappa_min(1.0) below 0.15, or a minimiser that sits in the bulk with D(v)/|v|^2 of order 1.
