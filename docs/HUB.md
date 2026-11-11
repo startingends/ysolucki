@@ -104,8 +104,14 @@ State at 2026-11-11, about 02:10 UTC.
   can be laid on its input (Möbius function through a family with an amplifier; cubic Gauss sums / Kubota theta).
 - **SP-modular (running, session 1):** three questions from the lead; its toolkit (Eisenstein series, metaplectic
   forms, Rankin–Selberg) is the one the quasi-RH mechanism belongs to. NEXT: give it N42 and the digest.
-- **Seminar S1** (board `rh/board/s1.md`, about 210 posts): all seats have handed back turn 3. NEXT: ask the
-  moderator for a closing summary, close the board, copy what matters to the journal.
+- **Seminar S1: CLOSED** (218 posts). Closing summary: `rh/experiments/s1_seminar/socrates/CLOSING.md` (questions in
+  order, about 20 proved statements with who checked them, 23 rows of withdrawn or refuted statements, 12 open items,
+  and the one question for the next seminar).
+- **Hunches (owner, A22): `rh/HUNCHES.md`.** The quasi-RH argument's bets against ours, six rules (H1–H6), and three
+  new hunches with plank-zero tests: (1) RH as a growth rate of the windowed Möbius inverse with the functional
+  equation as a doubling law: plank zero with S1-parity (running); (2) the Weil form over ℚ(√−3) as a norm through
+  the cubic theta function: plank zero for SP-modular when its session ends; (3) the new theorem as input: the
+  comparison constant along the damping parameter: for the foothold seat. NONE is tested.
 - **Finished and recorded:** K-theory (105 entries, 4 formal, 46 checked), FORMAL (26 files, full build),
   K-atlas (30 failures, 435 pairs), FH (FH-1, FH-2 checked; FH-3 the whole-space pencil), V-FH, readers 1–3,
   SP-operator and SP-reflection, the round-2 audit.

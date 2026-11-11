@@ -226,7 +226,97 @@ No unproved hypothesis is stated.
 ## 11. Open questions stated by the paper
 None.
 
-## 12. Reliability
+## 12. Design choices of the proof (from the published text only; requested by the owner)
+In the order the argument needs them. For each: (1) what was needed; (2) what was chosen; (3) what the text says
+it buys; (4) alternatives the text mentions; (5) the classical idea the text names, with its citation. "Text
+silent" means the paper gives no reason or alternative. The paper never says how any choice was found. Lines
+marked INFERENCE are the reader's, not the text's.
+
+1. **Target: Möbius sums, not zeros.** (1) A zero-free half-plane. (2) "We will deduce Theorem 1.1 from a
+   power-saving estimate for ν-twisted Möbius sums", smoothed: A_1(D) = Σ μ(n)ν(n)W(N(n)/D) ≪ D^(1−δ+ε) (2.1).
+   (3) (2.1) with δ gives no zeros in Re s > 1 − δ; here δ = 1/12. (4) None mentioned. (5) "the smoothed Hecke
+   version of the classical relation between Möbius sums and zero-free regions"; Littlewood [28] for the
+   equivalence RH ⟺ Σ_{n≤x} μ(n) ≪ x^(1/2+ε), "see also [31, §1]" (Maier–Montgomery).
+2. **Ground field Q(√−3), Hecke characters; Dirichlet L-functions afterwards.** (1) A setting for the family of
+   step 3. (2) "Let K = Q(√−3). The main result ... every finite-order Hecke L-function over K"; ζ and Dirichlet
+   L-functions follow because "quadratic base change gives, up to Euler factors nonzero in Re s > 0,
+   L_K(s, χ∘N) = L(s, χ)L(s, χχ_(−3))". (3) Sextic symbols and primary generators: "O = Z[ω] is Euclidean ...
+   the six units represent the six invertible residue classes modulo 3". (4) None. (5) The text says "quadratic
+   base change" and cites Dirichlet's L(1, χ_(−3)) > 0 [6, Ch. 4, 6]; it does not use the word "descent".
+3. **Embed the single sum in a family of sextic twists.** (1) A handle on the single sum A_1(D). (2) "In order to
+   estimate A_1(D), we embed it into a family of such sums, parametrized by u ∈ O_K, by introducing a sextic
+   twist": A_u(D) = Σ μ(n)ν(n)(u/n)_6 W. (3) The target becomes the mean square (2.3), described as "'square-root
+   cancellation' on average (in the L² sense) over u". (4) None mentioned (no other family is discussed).
+   (5) Text silent on a name; the word "amplification" does not occur in this paper (it does in the 7/8 paper).
+4. **Recover A_1 from the rows u = p⁶.** (1) To get the single sum back from the average. (2) "A_{p⁶}(D) ≈ A_1(D)
+   for many primes p", since χ_n(p⁶) = 1_{p∤n}; primes with N(p) ≍ Y = H^(1/6), counted by Landau's prime ideal
+   theorem [27]. (3) |A_1(D)|² ≪ D^(1+ε)H^(5/6) + D²H^(−1/3) (2.5); with H = D^(1+ϑ): A_1 ≪ D^(11/12+5ϑ/12+ε).
+   (4) None. (5) Text silent.
+5. **Row length H = D^(1+ϑ), 0 < ϑ ≤ 1/10.** (1) A row range for (2.3). (2) H slightly longer than the column
+   length D. (3) The dual row range is 𝓗 ≍ D²/H ≍ D^(1−ϑ), and in §5.6 "𝓗/Σ ≪ D^(−ϑ)" is the hypothesis
+   𝓗 ≤ ΣD^(−κ) of Proposition 5.1. (4) None. (5) Text silent.
+6. **Poisson summation in the row variable.** (1) To estimate the mean square. (2) "Now that we have introduced
+   the row variable u, we can apply Poisson summation in this variable", producing sextic Gauss sums. (3) (2.8):
+   Σ_u |A_u(D)|² ≼ DH + (H/D) Σ_{0<N(h)≪𝓗} |B_h(D)|²; the target becomes Σ_h |B_h(D)|² ≼ D² (2.9).
+   (4) None. (5) "dual sums": terminology of [40, p. 440], [25, §2.3], [10].
+7. **Replace μ(n) by cubic Gauss sums.** (1) Structure in the dual coefficients. (2) "these sextic Gauss sums
+   absorb the factor of μ and turn into cubic Gauss sums": μ(n)γ_(−1)(n) = χ_n(−1)G(n)^(−1)α(n)γ_2(n).
+   (3) The dual sums B_h have coefficients α(n)γ_2(n)ξ(n). (4) The text motivates it by the classical quadratic
+   identity (−1/m) = (m^(−1/2) Σ_x (x/m) e^(2πix/m))² and says "We would like a similar decomposition for μ
+   instead of (−1/m)". (5) "Following the work of Hasse [17, pp. 443–445] and Heath-Brown [19, (2)]".
+8. **Read the cubic Gauss sums as coefficients of Kubota's cubic theta function.** (1) A summation formula for
+   the column sum. (2) Patterson's formula c_θ(nb³) = 3^(5/2)|b|χ_n(λ)²γ_2(n) [38, Thm 8.1], [7, (5.7)]. (3) "the
+   automorphy of θ gives a summation formula". (4) None. (5) "This connection was used by Heath-Brown and
+   Patterson to study Kummer sums [20]"; the introduction links it to Patterson's conjecture
+   (Heath-Brown–Patterson [20], Heath-Brown [19], Dunn–Radziwiłł [7]).
+9. **Cube completion.** (1) The theta transformation applies to sums over all indices nb³, not squarefree n.
+   (2) "we embed the sum (2.11) in a completed sum, by including terms indexed by nb³" (T_h(X), (2.12)).
+   (3) Makes the transformation applicable. (4) See 12. (5) "This use of cube completion follows Dunn and
+   Radziwiłł [7, Lemma 5.4 and Proposition 5.3]".
+10. **Transform in the column with the row fixed, so that the twist becomes quadratic.** (1) A mean-square bound
+    for T_h over h. (2) Theta transformation in n for fixed h; "at each prime p | h, the Fourier and theta
+    factors combine as χ_p^(−1)χ_p^(−2) = χ_p^(−3) = χ_p³". (3) "Now a key point is that since χ_p³ is quadratic,
+    Goldmakher and Louvel's quadratic large sieve [13] (a generalization of Heath-Brown's quadratic large sieve
+    [18] to number fields) bounds the mean square ... gives the factor M + L, up to (ML)^ε": (2.15)
+    Σ_h |T_h(X)|² ≪ (𝓗X)^ε(𝓗 + 𝓗²/X). (4) Stated alternative: "Crucially, this avoids the additional term
+    (ML)^(2/3) in Blomer, Goldmakher, and Louvel's general higher-order large sieve [5, Theorem 1.3]".
+    (5) Quadratic large sieve, Heath-Brown [18], Goldmakher–Louvel [13].
+11. **Angular factor through a z̄-derivative** (Appendix A.2). (1) The coefficients carry α(n) = n/|n|.
+    (2) Mellin transform of ∂_z̄ Θ_Ψ at z = 0: "Differentiation in z̄ supplies a factor ℓ̄ ... this produces the
+    required angular factor α(ℓ)". (3) "the horizontal derivative removes the constant mode", so T(s, Ψ) is
+    entire and "No poles are crossed". (4) None. (5) "compare the arguments of Dunn and Radziwiłł in
+    [7, Propositions 5.1–5.2]".
+12. **Remove the cubes by Möbius inversion, split at a cutoff.** (1) To pass from T_h back to the b = 1 part.
+    (2) Möbius inversion (2.18) in the cube variable, split at H_c = min(X^(1/3), X^(2/3)/𝓗). (3) The part
+    N(d) ≤ H_c is "within the target (2.19) provided 𝓗²H_c³/X ≤ X". (4) Stated alternative that fails: "one cannot
+    simply discard the terms with b ≠ 1, because the contributions from different b can cancel". (5) "Related
+    completions appear in Patterson [38, Theorem 6.1] and Heath-Brown [19, §3], with explicit removal of the
+    cube factors by Möbius inversion in Dunn and Radziwiłł [7, Proposition 5.3 and (8.2)]".
+13. **Large cube divisors: a recursion by two Poisson summations with an enlarged range.** (1) "The inverse sum
+    can extend to N(d) ≍ D^(1/3), so we must still control the larger divisors." (2) Regroup as the same mean
+    square at column scale L_b; Poisson (Gauss → Möbius), "enlarge the nonnegative sum over y" to
+    Y = XL_b/𝓗, Poisson again (Möbius → Gauss). (3) "The purpose of this enlargement is that a second application
+    of Poisson summation gives a shorter row range: 𝓗′ = L_b²/Y = 𝓗L_b/X"; "Both scales decrease while their ratio
+    stays fixed"; 𝓗′ < 𝓗(𝓗/X)² ≪ D^(−2ϑ)𝓗, so "After O_ϑ(1) steps" the row parameter is at most 1 and counting
+    suffices. (4) None. (5) "For related uses of an enlarged summation range, see Goldmakher–Louvel [13, Lemma 4.4
+    and the proof of Theorem 4.1], following Heath-Brown [18, Lemma 9]"; the iteration is "following the
+    admissible-exponent method of Heath-Brown [18, Lemma 8 and §8], [19, Lemma 9]; see also [13, Theorem 4.1] and
+    [5, §3.2]"; introduction: "The recursive large-sieve arguments also build on Heath-Brown's proof of the
+    quadratic large sieve inequality [18]".
+14. **An auxiliary twisting index f.** (1) "The column indices produced by expanding the square need not be
+    coprime." (2) Extract the common factor, Möbius-invert the coprimality condition; this introduces the family
+    E(𝓗, X, F) with the extra twist χ_n(f)⁴ and target E ≼ XF. (3) The reductions close on one family
+    (Lemma 4.4: exclusions removed "without changing the row range or the product of the column and auxiliary
+    scales"). (4) None. (5) Text silent.
+
+**What the text says about the limit of the method.** Nothing. This paper states no barrier and no obstruction to
+exponents below 11/12; its only sentence on a better exponent is "Theorem 1.1 is a natural intermediate step
+toward the stronger zero-free region Re s > 7/8 established in [36, Theorem 1.1]. For simplicity, we have isolated
+Theorem 1.1 and its proof here." There is no "extremal argument on the supremum of real parts" in this paper (the
+7/8 paper has one; see its digest). INFERENCE (reader): the exponent 11/12 = 1/2 + 5/12 is fixed by item 4, the
+density H^(1/6) of sixth-power rows.
+
+## 13. Reliability
 Unrefereed; machine-produced (author "OpenAI", no named human author in the PDF). One identity as printed is
 false by a complex conjugation (§9). The reader verified only the outer logic and the elementary identities; the
 theta transformation and the two-Poisson transfer were read, not verified. For what named experts say has been

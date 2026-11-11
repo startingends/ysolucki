@@ -1,0 +1,13 @@
+# check of the K-Bessel Mellin transform used in NOTES D2 (from memory), and of the resulting identity termwise:
+# int_0^inf sqrt(y) K_nu(2 pi n y) y^(S-1/2) dy/y = (1/4) (pi n)^(-S) Gamma((S+nu)/2) Gamma((S-nu)/2)
+import mpmath as mp
+mp.mp.dps = 25
+for (n, S, nu) in [(1, mp.mpf('2.3'), mp.mpf('0.2')), (3, mp.mpc('1.7', '0.9'), mp.mpf('0.35')), (2, mp.mpf(3), mp.mpc(0, '1.1'))]:
+    lhs = mp.quad(lambda y: mp.sqrt(y)*mp.besselk(nu, 2*mp.pi*n*y)*y**(S - mp.mpf(1)/2)/y, [0, 0.05, 0.5, 2, 10, mp.inf])
+    rhs = mp.mpf(1)/4*(mp.pi*n)**(-S)*mp.gamma((S+nu)/2)*mp.gamma((S-nu)/2)
+    print("n =", n, " S =", S, " nu =", nu, " lhs =", mp.nstr(lhs, 15), " rhs =", mp.nstr(rhs, 15), " |diff| =", mp.nstr(abs(lhs-rhs), 3))
+# full identity at S = 2.3, d = 0.2 via the Dirichlet series (termwise integration is legitimate for Re S > 1 + |d|)
+S, d = mp.mpf('2.3'), mp.mpf('0.2')
+xi = lambda w: mp.pi**(-w/2)*mp.gamma(w/2)*mp.zeta(w)
+series = 2*mp.nsum(lambda n: n**d*sum(mp.mpf(k)**(-2*d) for k in range(1, int(n)+1) if int(n) % k == 0)*mp.mpf(1)/4*(mp.pi*n)**(-S), [1, 4000])
+print("2 * sum_n a_n * termwise transform (n <= 4000) =", mp.nstr(series*mp.gamma((S+d)/2)*mp.gamma((S-d)/2), 12), "  xi(S+d) xi(S-d) =", mp.nstr(xi(S+d)*xi(S-d), 12))

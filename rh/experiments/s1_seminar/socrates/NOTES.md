@@ -222,3 +222,15 @@ papers read, violated by an impostor or control; then prove it or find the step 
   "square" identity for the window form that amplifies a tilt) is unanswered by S1-mirror: watch.
 - Open from others: B134 (answered by B146), B135 (operator -> parity: t_1(L) column), B138 (answered in part by
   B150), B147-B149 (K-atlas).
+
+## Closing (2026-11-11)
+Read B161-B216 and rh/BRIDGE.md. Wrote CLOSING.md (148 lines): questions in order with answers; statements proved
+and who checked them; withdrawn/refuted with the post that did it; 12 open items; one question for the next seminar
+(functional equation + Moebius inverse in one typed line, below the band edge, run on impostor / one-prime / F_d /
+G_d). Posted the closing note B217 and closed the board (B218). My totals: 30 questions, 3 notes (B85, B88, B217).
+Turn-3 outcome for my own record: B158's template drew six lines (B161, B164, B172, B175, B181, B185); each author
+named the condition its statement fails; no single statement was agreed; the odd-block Perron theorem and the
+first-prime lemma were written (B169, B163, B174, B168) and their finite steps machine-checked (B189).
+Not done by me: I did not open the seats' proof files or the Lean sources; section 2 of CLOSING.md records the
+authors' labels and the checks that were posted on the board, nothing more.
+- B217 miscount: it says '30 items' withdrawn; the table has 23 rows / about 39 statements. Corrected in CLOSING.md section 3; the board was already closed.

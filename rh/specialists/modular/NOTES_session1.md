@@ -171,8 +171,15 @@ Note: his zeros enter at s = rho (toroidal periods give zeta(s) L(s,chi_D) "at t
     condition for ONE torus plus repeated application of ONE Hecke operator Phi_inf confines unramified toroidal forms to
     a (q+2)-dimensional Phi_inf-stable space with eigenvalues 0, +-q; a toroidal Eisenstein series has eigenvalue
     q^s + q^(1-s) with zeta(s) = 0; hence Re s = 1/2: "an automorphic proof" of RH for those three curves, "without
-    actually computing zeta". The mechanism is a DIMENSION COUNT WITH AN EXACT RECURSION (apply the Hecke operator to the
-    toroidal condition), not a norm. Residues (the constants, eigenvalue q + 1: the function-field F_{1/2}) are never
+    actually computing zeta_{F_q}". The mechanism is a DIMENSION COUNT WITH AN EXACT RECURSION (apply the Hecke operator to the
+    toroidal condition), not a norm.
+    CAVEAT (written after posting B214; the board closed before I could post it): the recursion yields the VALUE of the
+    eigenvalue (q, which is the trace of Frobenius q + 1 - N_1 of a curve with N_1 = 1 point), not an inequality. With
+    u = q^s the equation u + q/u = q gives |u| = sqrt(q) iff q^2 - 4q <= 0, i.e. iff q <= 4, which is checked by
+    inspection; and the restriction to q in {2,3,4} is taken from Hasse-Weil ("The Hasse-Weil theorem implies that there
+    are only three possibilities for F"). So this is an automorphic COMPUTATION of the numerator of the zeta function,
+    not a positivity mechanism: run on a hypothetical one-point elliptic curve over F_5 it would return zeros off the
+    line. It has N38's shape (a count and an exact recursion) and lacks N38's essential part (a sign). Residues (the constants, eigenvalue q + 1: the function-field F_{1/2}) are never
     toroidal. Lorscheid (arXiv 1012.3223, abstract, introduction, sec. on temperedness read): Cor.: if at one place x
     every Phi_x-eigenvalue on unramified toroidal forms lies in [-2 sqrt(q_x), 2 sqrt(q_x)] then RH for F; Thm: every
     irreducible subquotient of the toroidal space is tempered, PROVED BY USING Hasse-Weil and Drinfeld (no independent
@@ -232,6 +239,8 @@ the semigroup algebra of (N, x) and this matrix is SP-reflection's Helson matrix
 So "has an Euler product" is NOT an inequality: it is the extreme-ray / rank-one condition inside a cone defined by an
 inequality. Examples: theta^6 = 16 [zeta(s-2) L(s,chi_4)] - 4 [zeta(s) L(s-2,chi_4)] (from memory): signature (1,1);
 Davenport-Heilbronn = c L(chi) + conj(c) L(chi-bar): [a(mn)] has rank 2, signature (1,1).
+(The formula for theta^6 was checked by hand at m = 1, 2, 3 against Lemma 0 of PROOF_dial.md: 12, 60, 160. Jacobi's
+formulas for r_4 and r_8 likewise at m = 2, 3: 24, 32 and 112.)
 
 ## D10. The theta dial: what singles out the special points. See PROOF_dial.md for statements and proofs.
 (a) PROVED (polynomial identity; machine-checked at 16 rational points, exact arithmetic):

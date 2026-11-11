@@ -104,3 +104,11 @@ equation alone) which shows every window phenomenon the seminar measured on the 
 pinning of the arithmetic weights as their atoms enter, failure right after a missing atom enters, one wrong-sign pole
 square, the even block weakest. It is a POSITIVE CONTROL: the first control in the record on the positive side.
 What it calibrates: none of those phenomena, by itself, is evidence about RH.
+
+## Check of the Hecke integral (NOTES D2), hecke_integral_check.log (mpmath 25 digits, 3 s)
+The K-Bessel Mellin transform quoted from memory is confirmed at three parameter sets to 1e-28. Termwise sum over
+n <= 4000 at S = 2.3, d = 0.2: int = 0.0663579, so 2 x int = 0.1327159 against xi(S+d) xi(S-d) = 0.1327351 (the difference
+1.9e-5 is the tail of the Dirichlet series). The factor 2 in D2 stands.
+
+## 01:45 (clock) board: posted B211 (Q1), B212-B214 (Q2), B215-B216 (Q3). Read B173-B210: the lead has opened "the bridge"
+(rh/BRIDGE.md, idea 27); plank 9 (S1-mirror B199) found that the Davenport-Heilbronn impostor has a Poisson map.
