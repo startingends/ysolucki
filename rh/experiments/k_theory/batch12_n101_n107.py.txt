@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""K-theory: N107 corrections to T106-T114, N104 formal cores of T129/T139/T140, N101-N103 and N105 entries. Run ONCE."""
+import os, subprocess, sys
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+sys.path.insert(0, os.path.join(ROOT, "tools")); import records
+TH = os.path.join(ROOT, "rh", "THEORY.md")
+def run(*a):
+    p = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "records.py"), "theory"] + list(a), capture_output=True, text=True)
+    if p.returncode: sys.exit(f"FAILED {a[:3]}: {p.stdout}{p.stderr}")
+    return p.stdout.strip()
+def get(t, f):
+    _, it = records.parse("theory", TH); return next(x for x in it if x["n"] == int(t[1:]))["f"].get(f, "")
+def app(t, f, x, sep=" | "):
+    o = get(t, f); run("set", t, f, (o + sep if o else "") + x)
+def rep(t, f, a, b):
+    o = get(t, f)
+    if a not in o: sys.exit(f"{t}.{f}: text not found: {a[:50]}")
+    run("set", t, f, o.replace(a, b))
+PAP = "rh/papers/copy_barrier.md (self-contained write-up, every proof re-derived; notebook N107)"
+NOV = "NOVELTY (READER-13, rh/library/NOVELTY_copy_barrier.md, ~30 arXiv + 10 web + 5 MathOverflow queries, ~12 sources read in the relevant sections; scope excludes Montgomery's Topics, Iwaniec-Kowalski, Iwaniec-Sarnak and others not obtained): "
+nov = {"T106": "KNOWN in substance: Heath-Brown, Acta Arith. 72 (1995) 235-275, pp. 236-237 read (square rows, about M^(1/2) of them, each about N^2): the quadratic case with the copy count; folklore in Conrey-Iwaniec-Soundararajan arXiv 1105.1176; dual form in Goldmakher-Louvel. The general multiset statement with eta-copy constants was not found printed (same one-vector argument).",
+       "T107": "PARTLY KNOWN (quadratic number-field case in the column direction, Goldmakher-Louvel); the general statement, kappa_K(D) and the Q(sqrt -163) counterexample: not found.",
+       "T108": "PARTLY KNOWN (immediate from Heath-Brown's square rows for the quadratic family); not found as a statement about amplifiers.",
+       "T109": "KNOWN (a^2 b^3 decomposition and asymptotic: Erdos-Szekeres 1935, Bateman-Grosswald 1958); explicit uniform constants not found printed.",
+       "T110": "PARTLY KNOWN (power-residue case, BGL arXiv 1112.1650); the abstract form not found.",
+       "T111": "PARTLY KNOWN (power-residue symbols; the Dirichlet family); the general kernel lemma with the C(K,S,P_0) H^(1/2) bound and the [1, D] repair: NOT FOUND.",
+       "T112": "not a novelty question (elementary inequalities).",
+       "T113": "NOT FOUND as a written result; the conclusion 3/4 is asserted without argument in public (Tao, via secondary sources).",
+       "T114": "KNOWN (classical orthogonality)."}
+for t in ("T106", "T107", "T108", "T109", "T110", "T111", "T112", "T113", "T114"):
+    app(t, "proof", PAP, sep="; ")
+    app(t, "note", NOV + nov[t])
+app("T106", "source", "KNOWN IN SUBSTANCE: Heath-Brown 1995, pp. 236-237 (read by READER-13)", sep=". ")
+# T107 correction
+rep("T107", "statement", "for near copies (1 - 2 kappa_K(D) eta)^2.", "for near copies with eta(r_i) <= eta <= 1/(2 kappa_K(D)): Delta(F, D) >= (1 - 2 kappa_K(D) eta)^2 C I(D).")
+app("T107", "note", "CORRECTED 2026-11-11 (notebook N107, found while writing rh/papers/copy_barrier.md): the near-copy case needs eta <= 1/(2 kappa_K(D)) (previously stated without that range).")
+# T108 correction
+rep("T108", "statement", "(Amplifier) for every near copy |A_chi - A_1| <= eta D + O(omega(r)), hence |A_1|^2 <= 2 S/C_eta + 2 (eta D + O(log D))^2.", "(Amplifier) for every exact copy |A_chi - A_1| <= eta D and for every near copy |A_chi - A_1| <= 2 eta D, hence (near copies) |A_1|^2 <= 2 S/C_eta + 8 eta^2 D^2.")
+app("T108", "note", "CORRECTED 2026-11-11 (notebook N107): the near-copy error is 2 eta D (the copy and A_1 can each differ on the multiples of r), not eta D + O(omega(r)); over Q the count of multiples is sum_p floor(D/p) <= eta D, so no O(omega(r)) term is needed.")
+# T111 correction
+rep("T111", "statement", "for the quadratic family (Kronecker symbols (d/.), d <= H) and the full Dirichlet family (all characters mod q <= Q).", "for the quadratic family, taken as the Jacobi family n -> (n/d), d odd, d <= H (Heath-Brown's setting), and the full Dirichlet family (all characters mod q <= Q).")
+app("T111", "note", "CORRECTED 2026-11-11 (notebook N107): the quadratic family is the Jacobi family (n/d), d odd (Heath-Brown's setting); for the Dirichlet family the [1, D]-copy count follows from T106 run backwards plus orthogonality (T114), with no Polya-Vinogradov. Still not proved: the [1, D] version over a general field K (the write-up states Theorem 3(a) for global copies only). Cited from memory in the write-up: Polya-Vinogradov (quadratic family), Jacobi-symbol facts, ideal counting, Kummer/Chebotarev.")
+rep("T111", "depends", "T110", "T110, T106, T114")
+app("T113", "note", "Write-up scope (N107): Theorem 3(a) is stated for GLOBAL copies over a general K; the [1, D]-copy version is proved for the quadratic (Jacobi) and Dirichlet families only.")
+# (2) formal cores (notes; full statements NOT formal)
+FB = "full build 'Build completed successfully (3971 jobs)' at 13:10 UTC, 88 audited theorems on the standard axioms, no sorry (rh/formal/MEMORY.md, Session 3; notebook N104)"
+app("T129", "note", "FORMAL CORE (not the whole entry): rh/formal/RHFormal/T129_PairGram.lean (T129.gramDet_sum_diff, gramDet_eq_J, lam_root, lam_lower, lam_bounds): det Gram(p + m, p - m) = 4 det Gram(p, m), the J form, and for a 2 x 2 Gram matrix det/tr <= lambda_min <= det tr/(tr^2 - 2 det); " + FB + ". NOT formal: the O(u) expansions of the analytic family and the continuation to u = -beta^2.")
+app("T139", "note", "FORMAL CORE (not the whole entry): rh/formal/RHFormal/T139_SupportClosure.lean (T139.mul_supported, inv_supported, not_two_and_three, zeta_not_quotient): Dirichlet products and inverses of arithmetic functions supported on a submonoid stay supported on it; log 2 and log 3 lie in no common lattice cZ; zeta is not P/Q for (ordinary) Dirichlet series P, Q supported on {n : log n in cZ}; " + FB + ". NOT formal: generalised frequencies e^{-lambda s} and the analytic half-plane statement.")
+app("T140", "note", "FORMAL CORE (not the whole entry): rh/formal/RHFormal/T140_KroneckerSum.lean (T140.kroneckerSum_lower, kroneckerSum_attained, kroneckerSum_ground_eigen): for two factors, the bottom of c I + A (x) I + I (x) B is c + lambda_min(A) + lambda_min(B), attained at x_0 (x) y_0; " + FB + ". NOT formal: the r-factor induction, the spectral theorem step, and the divisor-box identity M = log(T/2 pi) I + sum_p M_p itself.")
+# (3) N101-N103, N105
+add = lambda *a: run(*a).split()[-1]
+t1 = add("add", "--name", "Analytic tensor power over Q: a moment bound for prime polynomials at one fixed k gives a pointwise bound, and the needed input is a short-interval variance of k-almost-primes",
+  "--statement", "Let S_X(t) := sum_{n <= X} Lambda(n) n^{-1/2 - it} (or a smooth prime polynomial of length X = T^c) and M_{2k}(T) := int_T^{2T} |S_X(t)|^{2k} dt. (1) If M_{2k}(T) << T^{1 + o(1)} for ONE fixed k >= 1/(2 c eps), then |S_X(t)| << X^eps for t in [T, 2T] (Gallagher / Sobolev); conversely |S_X| << X^eps only gives M_{2k} << T^{1 + 2 k c eps} (the equivalence holds in exponents only). (2) With a smooth kernel, M_{2k} = T sum_I (sum_{n in I} a_n)^2 + (smooth main term) exactly, the a_n counting ordered factorisations into k prime powers and I running over multiplicatively short intervals of relative width 1/T; its off-diagonal is the excess variance of k-fold prime products in short intervals. (3) The upper-bound sieve gives the counts in I but loses a factor N/T = T^{kc - 1} against the needed variance.",
+  "--proof", "rh/NOTEBOOK.md N101 (lead); check in rh/specialists/sieve/HYBRID_FE.md, 'Check of N101' (SP-sieve; notebook N102)",
+  "--source", "lead (N101); checked and corrected by SP-sieve (N102); Gallagher's inequality and Goldston-Montgomery (k = 1, under RH) cited FROM MEMORY", "--routes", "#34")
+run("set", t1, "note", "PROVED in the corrected form (N102: the lead's 'equivalence' holds in exponents only; with sharp intervals only Gallagher's inequality, exact only with a smooth kernel); checked by SP-sieve, not by K-theory. It is a REDUCTION, not progress: the needed input is square-root cancellation in the variance of products of exactly k primes <= X in multiplicatively short intervals for every fixed k, which is RH-strength and known only beyond the trivial range X^k <= T for smooth convolutions (d_2, Jutila) and over function fields (Keating-Rudnick), FROM MEMORY. N103 (READER-12, Gorodetsky arXiv 2111.00853 read whole): the only unconditional variance results for prime-built sets need y = X^{o(1)}, far from the range u <= k needed here: no foothold.")
+run("status", t1, "proved", "corrected statement; the check is SP-sieve's, not independent of the project's seats but not by K-theory")
+t2 = add("add", "--name", "Gorodetsky: variance of rough integers in short intervals, unconditional only for y = X^(o(1))",
+  "--statement", "(As recorded by the reader.) Let Phi_y(x) count the y-rough integers up to x. For (2 + eps) log H <= y and (1 + a) log H/log log H <= (1 - eps) log X/log y, the variance over x in [0, X] of Phi_y(x + H) - Phi_y(x) - (expected) is asymptotic to the full-period variance M(H, y), which equals H P_y (Poisson) only for H = y^{o(1)} and H P_y lambda(u) with lambda < 1 otherwise. In particular y = X^{o(1)} throughout the range.",
+  "--source", "O. Gorodetsky, arXiv 2111.00853 v3 (Math. Z. 308 (2024)); read in full by READER-12 (rh/library/gorodetsky-2111.00853.md)", "--routes", "#34")
+run("set", t2, "note", "Exact hypotheses are in the digest; the statement here is the reader's paraphrase of the range. It closes question (5) of N102 negatively for the analytic tensor power (" + t1 + "): there y ~ N^{1/k}, u <= k bounded, where the error term has no cancellation (the paper's own section 1.6.2: Friedlander-Granville-Hildebrand-Maier oscillation).")
+run("status", t2, "known", "theorem recorded from a paper read in full by a reader seat")
+t3 = add("add", "--name", "Bagchi: strong recurrence of zeta is equivalent to RH; with Selberg's density bound it is the density-to-pointwise converter, circular at zero-containing configurations",
+  "--statement", "(i) (Bagchi 1981) RH holds iff zeta is strongly recurrent in the strip 1/2 < Re s < 1: for every compact K in the strip and eps > 0 the set of tau > 0 with max_{s in K} |zeta(s + i tau) - zeta(s)| < eps has positive lower density. (ii) If zeta were strongly recurrent near an off-line zero rho_0, Rouche's theorem would give >> T off-line zeros up to height T, contradicting the density estimate N(1/2 + delta, T) = o(T) (Selberg); so recurrence near a zero plus the density bound gives a contradiction. (iii) Voronin universality approximates only NON-VANISHING targets, so recurrence near a zero has density zero unless there is no such zero: the converter is circular exactly at zero-containing configurations.",
+  "--source", "Bagchi 1981 (thesis), Voronin universality, Selberg's zero-density estimate: all classical, CITED FROM MEMORY (lead, notebook N105; 'known: Bagchi 1981, Voronin; packaging the lead's')", "--routes", "#34")
+run("set", t3, "note", "OPEN as an entry of this document: the three classical inputs are cited from memory and no text was read in the project (KNOWLEDGE B4 records Voronin universality, from memory). Part (ii) is a two-line Rouche argument given (i)'s recurrence and the density bound. Reading (N105): the first converter on the record whose FIXED BOUND is proved (a density estimate); what fails is the amplifier's reach. Number-multiplying amplifiers (vertical shifts, base change, twists) either need RH or land on a common factor that family averaging cannot see.")
+print(run("check"))

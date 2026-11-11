@@ -190,3 +190,5 @@ Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+
   plus irrationality of log2/log3), T140 (exponents additive; Lambda(m/n) moves one exponent), the P_rho example of T136.
 - Not checked (cited from memory or long): T136 general case, T137 (1b), T138 (Godement), T142, T143, T144 (c), T131 (ADM), T101 (iv).
 - Check: 144 entries, 0 errors; 25 open, 28 proved, 62 checked, 9 formal, 16 known, 4 refuted.
+
+### Ninth batch (N101-N107): corrections T107, T108, T111; formal cores of T129/T139/T140 as notes; T145-T147. Check: 147 entries, 0 errors.

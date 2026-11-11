@@ -1,7 +1,11 @@
 # K-theory MEMORY (rewritten at the end of session 1, 2026-11-11, after the round-2 judgement was ingested). Read this first.
 
 ## State of rh/THEORY.md
-144 entries, `records.py theory check` clean. 9 formal, 62 checked, 16 known, 28 proved, 25 open, 4 refuted.
+147 entries, `records.py theory check` clean. 9 formal, 62 checked, 17 known, 29 proved, 26 open, 4 refuted.
+NINTH BATCH (batch12_n101_n107.py.txt): N107 corrections in T107 (near-copy eta <= 1/(2 kappa_K)), T108 (near-copy error 2 eta D),
+T111 (Jacobi family; Dirichlet count via T106 + T114); T106-T114 point to rh/papers/copy_barrier.md and the novelty report; formal
+CORES of T129, T139, T140 recorded in notes only (entries not formal); T145 analytic tensor power (proved, corrected by SP-sieve),
+T146 Gorodetsky (known), T147 Bagchi converter (open: classical, from memory).
 EIGHTH BATCH (batch11_n80_n93.py.txt + batch11b_continue.py.txt, notebook N80-N93): T129 collision expansion (checked), T130 (S)
 REFUTED (V-TZ), T131 D-kernel formula (open, ADM), T132 W_k facts (checked), T133 H-1(a) REFUTED (computed, uncertified), T134 barrier
 lemma and T135 Lemma 2 (checked), T136 moving pole (proved, from memory), T137/T138 (proved, from memory), T139 frequency no-go and T140
