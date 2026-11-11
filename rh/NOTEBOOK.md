@@ -1060,3 +1060,26 @@ exclusion), and Nyman–Beurling boundedness (N53) needs θ → ∞ at bounded h
 and inputs. The question to carry: **why do Möbius-type coefficients go further than general ones (4/7 against
 ½ + 1/66)?** That difference is Type II structure specific to μ crossing the self-dual point — the one thing S2 said
 is needed.
+
+**N65. READER-8 corrects the map in three places and supplies its dictionary** (lead, after the digests
+`rh/library/{bcr-1411.7764,conrey-1989,bettin-gonek-1604.02740,radziwill-1207.6583,burnol-lower-bound-0103058,bcf-1211.5191,balazard-deroton-0812.1689,przz-1802.10521,bdbls-0306251}.md`).
+- CORRECTION 1 (N53 (b), (c); #34 form (4)): in the Nyman–Beurling integral, heights T ≥ N^(2/3+ε) are harmless with
+  TRIVIAL bounds (convexity + Montgomery–Vaughan; Balazard–de Roton); the open range is T ≤ N^(2/3), i.e. mollifier
+  exponent θ ≥ 3/2, not θ > ½. My "the D-term carries no information" was wrong for N^(2/3) ≤ T < N².
+- CORRECTION 2 (#34's sentence "only arithmetic specific to μ can help"): Bettin–Chandee–Radziwiłł cross θ = ½ for
+  GENERAL coefficients (θ < 17/33) by Poisson + trilinear Kloosterman-fraction bounds; Möbius structure buys more
+  (Conrey θ < 4/7: Vaughan's split gives the Deshouillers–Iwaniec bilinear bound its extra variable). So near the
+  self-dual point the wall is crossed WITHOUT μ-specific input; μ-specific input pushes further; beyond θ ≈ 1 nothing
+  is known for either (BCR: the formula fails in general for θ > 1; their route is sharp at θ < 1).
+- CORRECTION 3 (N57): ½ is crossed here without an amplifier; Kuznetsov enters only inside Deshouillers–Iwaniec.
+- THE DICTIONARY (Bettin–Gonek Thm 1, read whole by the reader): an upper bound ∫₀^T |ζM_N|² ≪ T^(1+ε) for all N ≤ T^θ,
+  INCLUDING bounded heights, implies no zeros in Re s > ½ + 1/(2θ). So zero-free abscissa σ ↔ mollifier exponent
+  θ = 1/(2σ − 1). Reading the October 2026 theorem through it: 7/8 ↔ θ = 4/3, 11/12 ↔ θ = 6/5, the heuristic 3/4 cap
+  ↔ θ = 2, RH ↔ θ = ∞; the Nyman–Beurling open range θ ≥ 3/2 ↔ σ ≤ 5/6. (The converse direction of the dictionary
+  is my assumption, not checked.) So **the algebraic-family method reaches, in zero-free strength, what a mollifier
+  bound at θ = 4/3 would give, while the best mollifier technology over ℚ stops below θ = 1**: the two methods are
+  on different sides of the same scale, and the quasi-RH method is currently AHEAD on it. That is a fact about the
+  October proof worth knowing: it beats everything mollifiers can do, by a different kind of input.
+- Also: Radziwiłł's unconditional lower bound (1/T)∫|1 − ζM|² ≥ c/θ for every length (each zero on the line costs
+  c/θ) is the same mechanism as Burnol's 1/log N; #34's predicted Type II range [D^(1/4), D^(1/2)] is Conrey's 1989
+  split (classical).
