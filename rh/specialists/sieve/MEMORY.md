@@ -1,7 +1,18 @@
 # MEMORY of SP-sieve
 
-Rewritten at the end of session 2 (2026-11-11; session 1 = seminar S2, session 2 = TRANSPORT.md). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
+Rewritten at the end of session 3 (2026-11-11; 1 = seminar S2, 2 = TRANSPORT.md, 3 = COPY_BARRIER.md). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
 Files: S2_B10d.md (long form of everything below), typeII_exponents.py.txt / .log (exponent bookkeeping), IDEAS_LOCAL.md (SP-sieve/#1-#4).
+
+## 0'. SESSION 3 (COPY_BARRIER.md, 96 lines; idea SP-sieve/#7)
+- Thm 1 PROVED: Delta(F,D) >= (1-2eta)^2 C_eta D for any multiset F (test vector 1): copy amplification needs a mu-specific mean square.
+- Thm 2 PROVED: for multiplicative, local families u -> psi_u (conductor supported on u and a fixed S), a principal psi_u forces
+  m_p | v_p(u) off S u P_0 (P_0 = primes whose own row is unramified at p); with P_0 finite copies are (S u P_0-part) x squarefull, << H^(1/2).
+  Residue symbols: P_0 empty, copies = m-th powers ~ H^(1/m); quadratic attains 1/2. Dirichlet full family: C = Q ~ 1.81|F|^(1/2).
+  The brief's hypothesis 'conductor <= |F| + optimal sieve off copies' is insufficient (all-principal family): structure is needed.
+- Thm 3: diagonal mu-specific S on H >= D^(1-eps0) + kernel copies => at best Re s > 3/4 - eps0/4. Exits listed E1-E6 (bootstrap, short
+  regime, P_0 infinite = circular, approximate copies, non-character families, Dirichlet needs power Siegel-Walfisz).
+- Lean cores L1-L5 nominated (squarefull count, kernel lemma, Gram lower bound, amplifier arithmetic, orthogonality).
+HOLDING: novelty search for Thm 2/3; open question E3 (Poisson-able families with P_0 infinite?).
 
 ## 0. SESSION 2 (TRANSPORT.md, 101 lines; same object as SP-modular, whose answer I did NOT read)
 Asked: (1) converse of Bettin-Gonek (zero-free half-plane => long-mollifier upper bounds?); (2) hybrid family (sextic u x t) for zeta_K;

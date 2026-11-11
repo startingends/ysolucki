@@ -64,3 +64,11 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - plain english: In the sextic family the rows that copy the untwisted sum are the sixth powers: rare but not too rare. In the height family no row is a copy; in the family of all characters mod p^k the copy is exact but the family is a finite group, and then the copy argument gives back only the trivial bound.
 - claim: PROVED (orthogonality for depth family; Kronecker for t); TRANSPORT.md sec 3
 - log:
+
+## #7 · Copy barrier theorem: general sieves pay for copies; kernel copies of local multiplicative families are squarefull (density <= H^(1/2)); copy amplifier with diagonal mu-mean square at H >= D stops at 3/4
+- status: open
+- source: SP-sieve
+- date: 2026-11-11
+- plain english: If a family of twists contains many exact copies of the untwisted sum, any inequality that works for all coefficient sequences must already be large, so the copies help only through an inequality special to the Moebius function. And in families built multiplicatively from residue symbols the copies are the squarefull rows, at most about the square root of the family (squares for quadratic symbols, sixth powers in the October family): so this trick alone can never beat Re s > 3/4.
+- claim: PROVED: COPY_BARRIER.md Thms 1-3; COMPUTED squarefull counts to 1e12; Lean cores L1-L5
+- log:

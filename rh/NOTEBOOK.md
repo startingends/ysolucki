@@ -1139,3 +1139,19 @@ is needed.
   arithmetic analogue of that derivation is Buium's p-derivation δ_p(x) = (x − x^p)/p, but there is one per prime, not
   one for all primes. Closed, with the exact missing ingredient named: a single derivation that kills a "Frobenius"
   simultaneously at every prime.
+
+**N69. The copy principle is now three proved barrier statements** (lead, after `rh/specialists/sieve/COPY_BARRIER.md`;
+unverified; novelty of Thms 2–3 not searched).
+- Thm 1 (folklore): any GENERAL-coefficient large sieve already pays for the copies (test vector a_n = 1), so the copy
+  amplifier needs a μ-specific mean square. My form (ii) was FALSE as stated (the family of principal characters
+  mod q ≤ Q has C = |F|); the limit comes from how the family is parametrised.
+- Thm 2: for a multiplicative, local family u ↦ ψ_u whose conductor is supported on the primes of u plus a fixed set S,
+  with finitely many primes whose own row is unramified there (P₀ finite), every copy is an S-part times a SQUAREFULL
+  number, so C ≪ H^(1/2) ≪ |F|^(1/2). m-th power residue symbols: copies = m-th powers; quadratic symbols reach the
+  bound exactly; the October family is sextic (H^(1/6)); all Dirichlet characters: C = Q ≈ 1.81|F|^(1/2).
+- Thm 3: kernel copies + a μ-specific diagonal mean square valid only for H ≥ D^(1−ε₀) give at best |A₁| ≪ D^(3/4−ε₀/4):
+  a zero-free half-plane no better than about Re s > 3/4. Exits named (E1–E6): the 7/8 paper's bootstrap (outside
+  Thm 3); the short regime; P₀ infinite (copy density > ½ but then the mean square is RH-strength by itself);
+  approximate copies (G5, tested negative at small scale); non-character families.
+- This is the first BARRIER THEOREM of the project for a class of methods. Sent to an independent verifier and the
+  finite cores L1–L5 to the formal seat.

@@ -1,0 +1,5 @@
+X=1e4: squarefull 185, /sqrt(X) = 1.85000, asymptotic const zeta(3/2)/zeta(3) = 2.17325, bound zeta(3/2) = 2.61238
+X=1e6: squarefull 2027, /sqrt(X) = 2.02700, asymptotic const zeta(3/2)/zeta(3) = 2.17325, bound zeta(3/2) = 2.61238
+X=1e8: squarefull 21044, /sqrt(X) = 2.10440, asymptotic const zeta(3/2)/zeta(3) = 2.17325, bound zeta(3/2) = 2.61238
+X=1e10: squarefull 214122, /sqrt(X) = 2.14122, asymptotic const zeta(3/2)/zeta(3) = 2.17325, bound zeta(3/2) = 2.61238
+X=1e12: squarefull 2158391, /sqrt(X) = 2.15839, asymptotic const zeta(3/2)/zeta(3) = 2.17325, bound zeta(3/2) = 2.61238

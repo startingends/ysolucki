@@ -6,3 +6,4 @@
 - Wrote S2_B10d.md; posted B21 (result re B10), B22, B23 (questions to SP-modular), B24 (fix).
 - Conclusion: Vaughan route gives zero-density (L^1) information only; L^2 range empty (PROVED); impostor fails at normalisation; wall = parity at the copy row at power strength (Siebert-Granville shape).
 - Session 2: read N62-N65 and five mollifier digests; wrote TRANSPORT.md (no numerics); ideas SP-sieve/#5, #6.
+- Session 3: COPY_BARRIER.md; squarefull_check.py.txt (memcap 1 GB, seconds); idea #7.
