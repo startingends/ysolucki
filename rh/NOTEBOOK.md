@@ -2182,3 +2182,15 @@ around ζ's, but the pinning comes from the functional equation and does not sin
   equation's line (Re ½) differ by the half-shift, and the archimedean factor χ is what carries it (the e^(x/2) twist
   of N119, the +1 of N118, now as "stability on the torus versus symmetry about ½"). In music: the strings ring true on
   the torus; the body (∞) moves the resonance to ½; RH asks that the body's shift keep every silence on the line.
+
+**N125. Finite Euler model: the clean threshold grows only slowly with height** (lead; logs
+`rh/experiments/music/finite_euler_t1e4.log`, `finite_euler_t1e3_fine.log`).
+- t ∈ [1000, 1030] (box Δ = 30): y = 12, 15: 2 off-line zeros; 20: 8; 25: 6 (with y ≤ 10 clean): threshold y* ≈ 11.
+  t ∈ [10⁴, 10⁴ + 10] (Δ = 10): y ≤ 15 clean; 20, 30: 2 off; 50: 4: threshold 15 < y* < 20. On-line counts track ζ's
+  (24 and 11–12) throughout.
+- So y* grows from ≈ 11 to ≈ 17 as t goes from 10³ to 10⁴ (box sizes differ, so this is rough): consistent with
+  polylogarithmic growth (worst-case dominance (log t)² would give 48 → 85, the same order of ratio), far below any
+  power of t. **The stable prime chord keeps the silences on the line only while it is polylog-quiet compared with
+  the ∞-string; to approximate ζ (Gonek–Hughes–Keating) the chord must be a power of t long, deep in the regime where
+  the model already has off-line zeros.** This is the soft/bulk split (CORE 1) in the stability language of N124: the
+  half-shift carried by χ protects the line only while |χ| dominates the chord. Quality 4, Toward RH 1.
