@@ -94,3 +94,12 @@ J15 (written about 00:07 UTC 11-11 by the system clock, before computing) Bakry-
    zeta L = 1, my box matrix. Predict M = 160: centre 0.4965, worst (edge) 0.4415 (the common values of seat and checker);
    M = 320 (nobody has computed it): centre in (0.488, 0.494), worst in (0.425, 0.433), i.e. the centre value is below
    1/2 and still falling. Control: Beurling M = 160 worst 0.4435 (checker's value).
+
+J15 result (j15.log, j15b.log): centre 0.5061 (M = 80), 0.4965 (160), 0.4908 (320). Global minimum over sites: 0.4415 at
+site 4 (M = 160), 0.4302 at site 9 (M = 320; sites 0..39 searched); the edge site itself gives 0.4483 and 0.4405.
+Beurling M = 160: minimum 0.4435 at site 4, centre 0.4959. Values HIT (M = 320 inside both predicted ranges).
+MISS on one word: I wrote "worst (edge)"; from M = 160 on the worst site is not the edge box but the box containing
+x = -0.944 (M = 160) and x = -0.941 (M = 320). OBSERVATION (COMPUTED, two refinements; the identification is HEURISTIC):
+that is x = log 7 - L = -0.9459 up to one box, the point from which the largest jump in the window (log 7 < 2L) just
+reaches the far edge. Final score: 15 predictions, 13 clean hits, J13 missed at first run (my threshold) and hit on the
+rerun, J15 hit on values and missed on the location of the worst site.

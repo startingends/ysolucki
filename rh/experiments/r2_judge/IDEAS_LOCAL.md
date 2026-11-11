@@ -44,3 +44,17 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - source: R2-judge
 - date: 2026-11-11
 - log:
+
+## #7 · Observation: under refinement the worst Bakry-Emery site is not the edge box but the box at x = log 7 - L (-0.946 at L = 1)
+- status: open
+- source: R2-judge
+- date: 2026-11-11
+- claim: COMPUTED j15b.log: minimum at site 4 of 160 (x=-0.944) and site 9 of 320 (x=-0.941); identification with log 7 - L is HEURISTIC (two data points, zeta and Beurling alike)
+- log:
+
+## #8 · Toy check of the negative-index count: negative eigenvalues on small windows are below 1e-8 of the top eigenvalue; any count with a coarse threshold undercounts
+- status: open
+- source: R2-judge
+- date: 2026-11-11
+- claim: COMPUTED j13.log vs j13b.log: (0,0),(1,0),(2,2),(1,1) at threshold 1e-8 against (2,2) at every L at threshold 1e-45
+- log:
