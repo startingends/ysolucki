@@ -47,3 +47,4 @@ READER-4	2026-11-11	reader: the October 2026 quasi-Riemann-hypothesis papers (ze
 READER-5	2026-11-11	reader: Bombieri-Garrett pseudo-Laplacians and Garrett notes	session model	rh/library	running	-
 READER-6	2026-11-11	reader: zeros of E(z,s) as z varies; Epstein; Hecke Grossencharacter expansion at CM points	session model	rh/library	running	-
 SP-sieve	2026-11-11	persistent specialist: sieve methods, bilinear forms, dispersion, parity (session 1, seminar S2)	session model	rh/specialists/sieve	running	-
+R3-AUD	2026-11-11	auditor: seminar S1/S2, specialists and standing seats local idea logs	session model	rh/experiments/r3_audit	running	-

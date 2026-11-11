@@ -94,40 +94,18 @@ Verified 2026-11-10: web search works and arXiv full text can be fetched (partly
 Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` section 7.
 
 ## Running jobs
-**After any context summary or restart, read this section, `rh/BRIDGE.md` and `git log -8` before launching anything.**
-State at 2026-11-11, about 02:10 UTC.
-- **Bridge 1 (idea #27): built and ended** (see the bridge section above and `rh/BRIDGE.md`). All its planks have
-  reports in; nothing of it is still running.
-- **MODE (owner's rule 13, A23): abstract, risk, structure; NO new measurement jobs.** `rh/HUNCHES.md` part F is the
-  working document: the structural question (where is a zero a THING: a pole of the Eisenstein series at ρ/2, the
-  wrong parameter; a NODE at the CM point ω of the Eisenstein family at the right parameter s), the wall table
-  ("what object would make this wall trivial?"), and one concrete object given to three specialists at once:
-  **Φ(s) = E*(ω, s) = completed Dedekind zeta of ℚ(√−3)**. SP-operator (session 3), SP-reflection (session 2) and
-  SP-modular each write `OBJECT_PHI.md` in their folder WITHOUT reading the others. NEXT: when all three are in,
-  lay them side by side (that comparison is the test), and only then decide on bridge 2.
-- **Container restart ~02:40 UTC:** SP-operator, SP-reflection, SP-modular (round 2 on the common object: a
-  NON-LINEAR invariant at ω that separates it from the degree-two impostor E*(i√5, s)), READER-5 (Bombieri–Garrett
-  pseudo-Laplacians), READER-6 (zeros of E(z, s) as z varies) were resumed from their transcripts.
-- **READER-4: done.** Quasi-RH papers: `rh/library/openai-qrh-11-12.md` (whole), `openai-qrh-7-8.md` (45%).
-- **Measurements already running when rule 13 arrived:** S1-parity on the growth of the windowed Möbius inverse
-  (Hunch 1 plank zero); the foothold seat's damped pencil is in (dμ/dε ≈ 0.10 at ε = 0, the ladder dissolves at once,
-  κ_min barely moves). No more of these.
-- **SP-modular (running, session 1):** three questions from the lead; its toolkit (Eisenstein series, metaplectic
-  forms, Rankin–Selberg) is the one the quasi-RH mechanism belongs to. NEXT: give it N42 and the digest.
-- **Seminar S1: CLOSED** (218 posts). Closing summary: `rh/experiments/s1_seminar/socrates/CLOSING.md` (questions in
-  order, about 20 proved statements with who checked them, 23 rows of withdrawn or refuted statements, 12 open items,
-  and the one question for the next seminar).
-- **Hunches (owner, A22): `rh/HUNCHES.md`.** The quasi-RH argument's bets against ours, six rules (H1–H6), and three
-  new hunches with plank-zero tests: (1) RH as a growth rate of the windowed Möbius inverse with the functional
-  equation as a doubling law: plank zero with S1-parity (running); (2) the Weil form over ℚ(√−3) as a norm through
-  the cubic theta function: plank zero for SP-modular when its session ends; (3) the new theorem as input: the
-  comparison constant along the damping parameter: for the foothold seat. NONE is tested.
-- **Finished and recorded:** K-theory (105 entries, 4 formal, 46 checked), FORMAL (26 files, full build),
-  K-atlas (30 failures, 435 pairs), FH (FH-1, FH-2 checked; FH-3 the whole-space pencil), V-FH, readers 1–3,
-  SP-operator and SP-reflection, the round-2 audit.
-- **Awaiting audit:** about 80 ideas in local logs (seminar, specialists, atlas, foothold, bigger). After S1 closes.
-- **Creation seats: off** (refused by the model's safeguard; decisions D10, A19). BG finished one session.
-- Load: every numerical job runs under `tools/memcap.py 1`; one Lean process at a time.
+**After any context summary or restart, read this section, `rh/NOTEBOOK.md` from N43 on, `rh/HUNCHES.md` part F and
+`git log -8` before launching anything.** State at 2026-11-11 ~03:45 UTC.
+- **Mode: structural (owner's rule 13).** Since ~02:15 the work is: one object given to several specialists; the
+  question "what object would make this wall trivial?". Result so far (journal J6, notebook N49–N60): **five routes
+  end at one wall** (Möbius-specific mean squares when the family is not longer than the sum; equivalently windows
+  below the band edge, long mollifiers, bounded Nyman–Beurling approximants, the amplifier at H ≤ D), and Seminar S2
+  (closed) found that the near side of that wall is the PARITY problem (Type II information specific to μ at power
+  strength), stated in four languages. On the Möbius side no controls exist (N60). No bridge 2 hunch survives yet.
+- **Running:** R3-AUD (audit of about 90 local ideas from S1, S2, specialists, atlas, foothold, bigger).
+- **Idle, resumable by id:** SP-operator, SP-reflection, SP-modular, SP-sieve (new), S1-parity, S1-mirror,
+  S1-socrates, K-theory, K-atlas, FH, FORMAL, readers 1–7.
+- **Creation seats: off** (D10, A19). Load: numerical jobs under `tools/memcap.py 1`; one Lean process at a time.
 
 ## Scheduled routines
 None.
