@@ -235,8 +235,8 @@ point; D3 uses the phase.
   the orbit measure is a sum of FOUR shifted convolutions (two diagonal, two cross terms between the two class group
   characters). This is SP-modular's "rank one versus rank two", seen in the second moment of representation numbers.
 - D2, the extremal vector (KNOWN, same theorem): the minimiser has transform (Cauchy kernel at t0)/O_w, normalised. At omega,
-  if RH_K, O_w = G_omega up to a unimodular constant and an outer polynomial factor, and 1/G_omega = (s/(s-1)) (2/sqrt3)^s
-  zeta(2s)/(3 zeta_K(s)): a Dirichlet series whose coefficients are the MOBIUS FUNCTION OF Z[omega] convolved with the squares.
+  if RH_K, O_w = G_omega up to a unimodular constant and an outer polynomial factor, and 1/G_omega = (s/(s-1))
+  zeta(2s)/(3 zeta_K(s)) (the factor (sqrt3/2)^s of E(omega,s) cancels against ht^-s exactly): a Dirichlet series whose coefficients are the MOBIUS FUNCTION OF Z[omega] convolved with the squares.
   PROVED restatement: RH_K <=> the Mobius function of Z[omega], so weighted, is an asymptotically optimal test vector for the
   free positive form of the orbit of omega. At i sqrt5 the candidate 1/G has no multiplicative coefficients, and the limit of
   lambda_T is bound(i sqrt5) e^(2 Dfc(i sqrt5)), strictly larger (Davenport-Heilbronn; from memory).

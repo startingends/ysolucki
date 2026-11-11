@@ -1,8 +1,34 @@
 # MEMORY of SP-reflection
 
-Rewritten at the end of session 2 (2026-11-11). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
+Rewritten at the end of session 3 (2026-11-11; sessions 2 and 3 were rounds 1 and 2 on the object Phi). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
 sources still to read). Session 1 = seminar S1 (closed; summary rh/experiments/s1_seminar/socrates/CLOSING.md; my full
 answers in NOTES_session1.md). Session 2 = the structural task on one object, written up in OBJECT_PHI.md.
+
+## 0b. SESSION 3 (round 2 on the common object; OBJECT_PHI.md section "Round 2", 99 lines)
+Read: the other seats' OBJECT_PHI.md (operator: Phi is the FORM FACTOR of the point interaction at omega, zeros = where the
+two sheets of the Krein function agree, RH_K <=> Green function at omega cyclic for the outgoing semigroup; modular: Phi is a
+torus period, omega distinguished by RANK ONE of the Hecke module of delta_omega, impostor twin E*(i sqrt5, s), Bombieri-Garrett
+operator), HUNCHES F4-F5, H9 (linear identities return Phi(rho) = 0), NOTEBOOK N43-N46.
+Question: a non-linear object at omega, not a function of |Phi| on the line, zero-free. My answer:
+- R0 corrections: the wave kernel of delta_omega is positive definite only after removing the constant mode (cosh(u/2), one
+  negative square); the H^-1 divergence of delta_z sits in the cusp-form atoms.
+- The extra datum beyond |Phi| on the line = the atom of the spectral measure at the trivial representation (s = 1, 3/pi,
+  universal) + the exponential type log ht(z). Dfc compares tempered density with complementary atom through a log.
+- Four zero-free definitions: D1 Jensen; D1' a FAMILY Dfc(z; sigma) at evaluation point 1/2 + sigma = Poisson transform of the
+  off-line displacements (weight 2 delta sigma/(sigma^2 + gamma^2); uses only convergent lattice sums for sigma > 1/2); D2
+  Szego-Krein: lambda_T(z) = min of the Wiener-Hopf form of W_z(u) = <cos(uD) g_z, g_z>, g_z = (Delta+2)^-1 delta_z, subject to
+  int phi e^(-u/2) = 1; lambda_T decreases to (9/(32 pi^2)) ht^-1 e^(2 Dfc); RH_K <=> lambda_T(omega) -> bound; computable from the
+  orbit distance distribution only; D3 phase defect (Kramers-Kronig): Dfc = -log |Poisson mean of e^(i theta)|.
+- What differs at omega vs i sqrt5: not the definitions; the orbit counts. omega: eps(m) r_K(m) r_K(m+3), one shifted
+  convolution of one Hecke eigenfunction; i sqrt5: cosh d = 1 + N(beta)/10, N(alpha) - N(beta) = 20, counts = congruence-restricted
+  r_Q(m) r_Q(m+20), r_Q = 1*chi_-20 + chi_-4*chi_5 (formula checks passed, tests_orbit_isqrt5.log): four shifted convolutions.
+  And D2's extremal vector at omega under RH has Mobius-of-Z[omega] coefficients (1/G_omega = (s/(s-1)) zeta(2s)/(3 zeta_K(s))).
+- RISK R5: Mobius vector in the orbit form = a bilinear form in Mobius of Z[omega] against lattice counts of x^2+xy+y^2; it is
+  Nyman-Beurling for zeta_K translated; needs an asymptotic, not a power saving.
+HOLDING from session 3: (a) does sum m(a) m(b) eps r_K r_K(...) unfold into a single sum? (b) search Nyman-Beurling for Dedekind
+zeta functions; (c) SP-operator: is D2's limit his outgoing cyclicity, and does Krein's theory give a rate; (d) compute
+Dfc(i sqrt5; sigma) at sigma near the first off-line zero's height, blind prediction first; (e) CONJECTURE rate
+lambda_T/bound - 1 ~ C/T under RH (unsearched).
 
 ## 0. SESSION 2: the object Phi(s) = E*(omega, s) (owner rule 13; rh/HUNCHES.md part F)
 Task: express Phi and "Phi = 0 only on Re s = 1/2" in my toolkit, without reading the other specialists first. Done:
