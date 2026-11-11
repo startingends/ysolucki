@@ -1,0 +1,108 @@
+"""R2: archimedean 'local Riemann-Roch' = prolate count (REVERSE_R2.md). Part A: counting identity. Part B: near-null
+count of the actual window form against prolate defect counts.  usage: reverse_r2.py.txt A | B <kind> <L> <NB> <prec>"""
+import sys, json, math
+import mpmath as mp
+import numpy as np
+mp.mp.dps = 30
+ROOT = "/home/user/ysolucki/rh/experiments"
+def prolate_eigs(c, n=200):
+    """eigenvalues chi_n of the time-band limiting operator sin(c(x-y))/(pi(x-y)) on [-1, 1], split EXACTLY by parity
+    (even/odd kernels K(x, y) +- K(x, -y) on [0, 1], Nystrom); returns (list sorted decreasing, parity list)"""
+    x, w = np.polynomial.legendre.leggauss(n); x = (x + 1) / 2; w = w / 2
+    def k(d):
+        with np.errstate(invalid='ignore', divide='ignore'):
+            return np.where(d == 0, c / np.pi, np.sin(c * d) / (np.pi * np.where(d == 0, 1, d)))
+    out = []
+    for p, sg in ((0, 1), (1, -1)):
+        M = k(x[:, None] - x[None, :]) + sg * k(x[:, None] + x[None, :])
+        sw = np.sqrt(w)
+        out += [(e, p) for e in np.linalg.eigvalsh(sw[:, None] * M * sw[None, :])]
+    out.sort(key=lambda t: -t[0])
+    return [e for e, p in out], [p for e, p in out]
+FAM = {'zeta': dict(q=1, par=0, pole=1), 'chi5': dict(q=5, par=0, pole=0), 'dh': dict(q=5, par=1, pole=0)}
+def theta(kind, t):
+    q = FAM[kind]['q']; a = mp.mpf(1) / 4 if FAM[kind]['par'] == 0 else mp.mpf(3) / 4
+    return (t / 2) * mp.log(mp.mpf(q) / mp.pi) + mp.im(mp.loggamma(a + 1j * t / 2))
+def chi5(n): return {0: 0, 1: 1, 2: -1, 3: -1, 4: 1}[n % 5]
+def L_chi5(s):
+    return mp.power(5, -s) * (mp.zeta(s, mp.mpf(1) / 5) - mp.zeta(s, mp.mpf(2) / 5) - mp.zeta(s, mp.mpf(3) / 5) + mp.zeta(s, mp.mpf(4) / 5))
+def count_zeros(kind, T):
+    if kind == 'zeta':
+        return sum(1 for t in json.load(open(ROOT + "/foothold/zeta_zeros_200.json")) if mp.mpf(t) <= T)
+    if kind == 'dh':
+        d = json.load(open(ROOT + "/r1_A/dh_zeros.json"))
+        off = [0.808517 + 85.699348j, 0.650830 + 114.163343j, 0.574356 + 166.479306j, 0.724258 + 176.702461j]
+        return sum(1 for t in d['online'] if mp.mpf(t) <= T) + 2 * sum(1 for z in off if z.imag <= T)
+    # chi5: sign changes of the real function Z(t) = exp(i theta(t)) L(1/2 + it), fine grid
+    ts = mp.linspace(mp.mpf('0.01'), T, int(T * 40) + 1); cnt = 0; prev = None
+    for t in ts:
+        z = mp.re(mp.exp(1j * theta('chi5', t)) * L_chi5(mp.mpf(1) / 2 + 1j * t))
+        if prev is not None and prev * z < 0: cnt += 1
+        prev = z
+    return cnt
+def coef(kind, n):
+    # coefficient c_n of -L'/L (n >= 2)
+    if kind == 'zeta' or kind == 'chi5':
+        for p in range(2, n + 1):
+            if n % p == 0:
+                m = n
+                while m % p == 0: m //= p
+                if m != 1: return 0
+                return math.log(p) * (1 if kind == 'zeta' else chi5(n))
+    k = (math.sqrt(10 - 2 * math.sqrt(5)) - 2) / (math.sqrt(5) - 1)
+    a = lambda m: [0, 1, k, -k, -1][m % 5]
+    cc = {}
+    for m in range(2, n + 1):
+        v = a(m) * math.log(m)
+        for d in range(2, m):
+            if m % d == 0: v -= cc[d] * a(m // d)
+        cc[m] = v
+    return cc[n]
+def partA():
+    rows = []
+    for kind, Ls in (('zeta', (0.75, 1.0, 1.25)), ('chi5', (1.25, 1.5, 1.75)), ('dh', (1.25, 1.5, 1.75))):
+        F = FAM[kind]
+        for L in Ls:
+            c = 2 * math.pi * math.exp(2 * L) / F['q']
+            deg = c * L / math.pi
+            si = float(mp.si(2 * c))
+            tr_par = c / math.pi + (si if F['par'] == 0 else -si) / (2 * math.pi)
+            ev, par = prolate_eigs(c)
+            tr_nys = sum(e for e, p in zip(ev, par) if p == F['par'])
+            h0 = tr_par / 2
+            th = float(theta(kind, mp.mpf(c))) / math.pi
+            N = count_zeros(kind, mp.mpf(c))
+            S = N - th - F['pole']
+            res = h0 - (deg + F['pole'] - N + S)
+            pred = (-1 if F['par'] == 0 else 1) * math.cos(2 * c) / (8 * math.pi * c)
+            X = math.exp(2 * L)
+            SL = -sum(coef(kind, n) / math.sqrt(n) * math.sin(c * math.log(n)) / math.log(n) for n in range(2, int(X) + 1)) / math.pi
+            SL2 = -sum(coef(kind, n) / math.sqrt(n) * math.sin(c * math.log(n)) / math.log(n) for n in range(2, int(X * X) + 1)) / math.pi
+            print(f"{kind:4s} L={L:.2f} c={c:8.3f}: deg={deg:9.4f} h0=(1/2)Tr_par={h0:8.4f} (Nystrom {tr_nys/2:8.4f}) pole={F['pole']} N(c)={N:3d} theta/pi={th:8.4f} S={S:+.4f} | residual h0-(deg+pole-N+S)={res:+.5f} predicted {pred:+.5f} | window primes S_L={SL:+.4f} (n<=e^2L), {SL2:+.4f} (n<=e^4L)", flush=True)
+def partB(kind, Lstr, NB, prec):
+    sys.argv = ['pencil_ctl.py.txt', kind, Lstr, str(NB), '40', str(prec)]
+    src = open(ROOT + "/foothold/pencil_ctl.py.txt").read()
+    head = src.split("# ---------------- D_L")[0]
+    ns = {'__name__': 'qonly'}
+    exec(compile(head, 'pencil_ctl_head', 'exec'), ns)
+    Q = ns['Q']; prc = ns['prec']
+    Qm = mp.matrix(NB, NB)
+    for i in range(NB):
+        for j in range(NB):
+            Qm[i, j] = (mp.mpf(Q[i, j].mid().str(int(prc * 0.3), radius=False)) + mp.mpf(Q[j, i].mid().str(int(prc * 0.3), radius=False))) / 2
+    mp.mp.prec = prc - 40
+    qe = sorted(mp.eigsy(Qm, eigvals_only=True))
+    from fractions import Fraction
+    F = FAM[kind]; L = float(Fraction(Lstr))
+    c = 2 * math.pi * math.exp(2 * L) / F['q']
+    ev, par = prolate_eigs(c)
+    cls = [e for e, p in zip(ev, par) if p == F['par']]
+    if kind == 'zeta': cls = cls[2:]          # the two conditions remove the even prolates n = 0, 2
+    for eps in (1e-6, 1e-3, 1e-1):
+        nq = sum(1 for x in qe if x < eps); npr = sum(1 for e in cls if 1 - e < eps)
+        print(f"{kind} L={Lstr} c={c:.3f} NB={NB}: #eig(Q) < {eps:g}: {nq};  #prolates of the class with 1-chi < {eps:g}: {npr}")
+    print("  lowest 12 of Q:", [mp.nstr(x, 3) for x in qe[:12]])
+    print("  lowest 12 defects of the class:", ["%.3g" % (1 - e) for e in cls[:12]])
+if __name__ == "__main__":
+    if sys.argv[1] == 'A': partA()
+    else: partB(sys.argv[2], sys.argv[3], int(sys.argv[4]), int(sys.argv[5]))
