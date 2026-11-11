@@ -173,3 +173,29 @@ None of this is a proof of RH or a step that is known to lead to one. It is a ma
 - **Audit round 3**: 94 local ideas decided, 6 promoted (#28–#33); #34 (the short-family wall) added by the lead.
 Status against the goal: no proof of RH and no step known to lead to one. The project's map of where the difficulty
 lies is now detailed and cross-checked by independent seats and by the literature.
+
+## J8 · 2026-11-11 (afternoon): construction rounds under rules 14–15, and one obstruction from every side
+After the owner's two-scale ratings and the four process changes (A24, A25: `rh/CORE.md`, `rh/RATINGS.md`, hunches
+built to a target, construction before measurement, one seat resumed on one object), the session ran about a dozen
+construction rounds (NOTEBOOK N80–N103). Every one closed, and they converged:
+- Bridge 1's last gap (N80): the whole-space constant tracks the closest pair of zeros; no uniform margin (H11).
+- The two-zero model (N81–N82) and the local Weil discriminant (N85): the comparison constant is a Gram eigenvalue of
+  kernels at the zeros, vanishing at collisions in the model; as a criterion it misses the impostor's off-line zero.
+  The Möbius-norm kernel formula became a theorem (T131, corrected), and its proof showed why it cannot see the Euler
+  product (H13).
+- The triangle (N83, N86–N89): amplifiers exist over ℚ (scaling flow; Sym^k of the Eisenstein series at a zero) but
+  their bound moves; the missing fixed bound is cuspidality, absent because of the continuous archimedean height.
+- One chain (N90): the functional equation forces ∞, ∞ carries the uncertainty principle, which gives both the soft
+  positivity and the absence of a fixed bound. Known framing (Connes 1999; N92).
+- Levinson–Conrey (N93): θ is forced at ∞ in the main term; even 100% on the line is twist-blind.
+- The prime-sampling cone (N94–N97): keeps only the support of Λ; fake weights hide the impostor's quartet (H14).
+- Classification (N98, corrected by N100 after Guth–Maynard): linear uses of the Euler product are blind,
+  insufficient or the full problem; statistical ones are twist-blind except density counts, which separate via
+  |μ| ≤ 1 but only count; pretentious ones reach the edge; structural ones need a cusp form at a zero.
+- The hybrid Euler–Hadamard product (N99) and the analytic tensor-power trick (N101–N103): RH at height T reduces to
+  a pointwise prime-sum bound, i.e. to square-root variance of k-almost-primes in short intervals; no foothold
+  (Gorodetsky's unconditional variance lives only where the primes are tiny).
+Status against the goal: no breakthrough; "Toward RH" ceiling 2 (`rh/RATINGS.md`). New proved or checked statements:
+T129, T131 (corrected), T132, T134, T135, T139, T140 (THEORY). The obstruction is named precisely in `rh/CORE.md`:
+a use of the Euler product that is pointwise, in the bulk, beyond coefficient size, and not through automorphic
+Hilbert spaces. Nothing on the record supplies one.
