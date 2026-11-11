@@ -173,7 +173,38 @@ improving (Lenz-Stollmann-Veselic 2009, Thm 1.4, as cited) and the ground state 
 Applies to L(v) = (1/4) int int |v(x)-v(y)|^2/|x-y| - (1/2) int log(1-x^2)|v|^2. For the full Weil form:
 Q(|v|) <= Q(v) holds for arch and prime parts and fails for the pole term (my remark, B131).
 
-## Still to read (priority order for session 2)
+
+## F. Added in session 2 (bridge planks)
+
+**L19. The Poisson map E and the radical of the Weil form.** READ: digests rh/library/2106.01715.md and
+connes-consani-zeta-cycles.md (Connes-Consani, Spectral triples and zeta-cycles, sec. 3 and 6), not the paper.
+E(f)(u) = u^{1/2} sum_{n>0} f(nu); int E(f)(u) u^{-iz} d*u = zeta(1/2 - iz) int f(u) u^{1/2-iz} d*u; E(f) is
+supported in (0, lambda] if f is supported in [-lambda, lambda], and E(fhat)(x) = E(f)(1/x) (Poisson). My own
+proof of what I use, with hypotheses: PROOF_bridge.md Thm 5.1 (i)-(iii).
+
+**L20. Explicit formula in Barner's class.** from memory (Barner 1981; Lang, Algebraic Number Theory, ch. XVII).
+Test function h continuous and piecewise C^1 with one-sided limits, normalised at jumps, h and h' =
+O(e^{-(1/2+delta)|u|}), h(u) = h(0) + O(|u|): then sum over zeros = pole + arch - primes. TO READ.
+
+**L21. Brown-Halmos / Widom for co-analytic symbols.** from memory. T(ab) = T(a)T(b) whenever a is
+co-analytic or b analytic (the Hankel term H(a)H(b~) vanishes). Used as the interpretation of plank 7
+(PROOF_bridge.md sec. 3); the proof given there is direct and does not depend on this citation.
+
+**L22. Time-and-band limiting (Slepian-Pollak-Landau).** from memory. P = time-limiting to |y| <= a, B =
+band-limiting to |xi| <= b; PBP is compact with simple eigenvalues 1 > chi_0 > chi_1 > ... -> 0 depending on
+c = 2 pi a b only; ran P and ran B meet only in 0. Halmos' two-projection theory: PBP and (1-P)(1-B)(1-P)
+have the same spectrum in (0,1). Sonin space = ran(1-P) intersect ran(1-B) (infinite-dimensional). Used in
+PROOF_bridge.md Prop 6.1. TO READ: Slepian's survey; Burnol on Sonine spaces.
+
+**L23. Connes-Consani, archimedean Weil positivity (2006.13771).** READ: the digest
+rh/library/connes-consani-weil-positivity-archimedean.md parts 1-3 only. Thm 4.7: tr(theta(f) S) = W_inf(f) +
+int f eps d*rho for all f (S = projection on Sonin's space S(1,1), eps an explicit prolate functional at
+parameter 2 pi). Thm 1 (computer-assisted): for g supported in [2^{-1/2}, 2^{1/2}] with transform vanishing
+at i/2 and 0, W_inf(g * g*) >= Tr(theta(g) S theta(g)*).
+
+## Still to read (priority order)
+0. (session 2) Burnol: arXiv math/0203120, math/0112254, 'Co-Poisson intertwining' (Ann. Inst. Fourier 2007),
+   before any novelty statement on planks 5 and 7; Connes-Consani 2006.13771 sec. 4 (theta(f) and E).
 1. Burnol, Sonine spaces / "Scattering, determinants, hyperfunctions in relation to Gamma(1-s)/Gamma(s)" and
    the 2011 paper Suzuki builds on: the closed-form chain for the archimedean-only window (promised in B127).
 2. Suzuki, JLMS 2023 (screw function; Thm 1.2, 1.3) and Suzuki, Canad. J. Math. (Hilbert space from the Weil

@@ -38,7 +38,7 @@ def psihat(z):
     s = mp.mpf(0)
     for k in range(len(w)):
         a, b = w[k] - z, w[k] + z
-        s += co[k] * (mp.sin(a * Lm) / a + mp.sin(b * Lm) / b)
+        s += co[k] * ((mp.sin(a * Lm) / a if a != 0 else Lm) + (mp.sin(b * Lm) / b if b != 0 else Lm))
     return s
 Z = json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))
 on = [mp.mpf(t) for t in Z['online']]; off = [(mp.mpf(b), mp.mpf(t)) for b, t in Z['off']]

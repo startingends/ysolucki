@@ -1,0 +1,59 @@
+# Half-shift window instrument: lowest eigenvalue of 1 + K and 1 - K on L^2(-l, l), K the Hankel operator of the
+# pseudo-Eisenstein norm (NOTES D4): K(v,v') = sum_c (phi(c)/c) kappa(-(v+v') - 2 log c), kappa(w) = (1-e^-w)^(-1/2), w > 0.
+# Piecewise-constant Galerkin, exact cell integrals via the second antiderivative kappa2 of kappa (closed form).
+import sys, math
+import numpy as np
+from scipy.special import spence
+def li2(x): return spence(1.0 - x)
+def kappa2(w):
+    w = np.asarray(w, dtype=float)
+    out = np.zeros_like(w)
+    m = w > 0
+    wm = w[m]
+    th = np.arccosh(np.exp(wm/2))
+    out[m] = 4*(th*wm/2 - th*th/2 + th*math.log(2) - 0.5*li2(-np.exp(-2*th)) - math.pi**2/24)
+    return out
+def totient(c):
+    r, n, p = c, c, 2
+    while p*p <= n:
+        if n % p == 0:
+            while n % p == 0: n //= p
+            r -= r//p
+        p += 1
+    if n > 1: r -= r//n
+    return r
+def blocks(l, M):
+    h = 2*l/M
+    v = -l + h*(np.arange(M) + 0.5)
+    U = v[:, None] + v[None, :]
+    out = {}
+    c = 1
+    while 2*math.log(c) < 2*l:
+        s = -U - 2*math.log(c)
+        out[c] = (kappa2(s + h) - 2*kappa2(s) + kappa2(s - h))/h      # (1/h) int int over cells (second difference)
+        c += 1
+    return out
+def run(l, M):
+    B = blocks(l, M)
+    K = sum((totient(c)/c)*B[c] for c in B)
+    I = np.eye(M)
+    ep = np.linalg.eigvalsh(I + K); em = np.linalg.eigvalsh(I - K)
+    res = dict(l=l, M=M, cmax=max(B), mu_plus=ep[0], mu_minus=em[0], top=ep[-1])
+    if 2 in B:
+        # pinning of the weight at c = 2: (1 + K + eta B2) >= 0  <=>  eta in [-1/mu_max, -1/mu_min] of the pencil (B2, 1+K)
+        w, V = np.linalg.eigh(I + K)
+        if w[0] > 1e-13:
+            S = V/np.sqrt(w)
+            mu = np.linalg.eigvalsh(S.T @ B[2] @ S)
+            res['eta_lo'] = -1/mu[-1] if mu[-1] > 0 else -math.inf
+            res['eta_hi'] = -1/mu[0] if mu[0] < 0 else math.inf
+        K0 = K - 0.5*B[2]
+        res['mu_plus_no_c2'] = np.linalg.eigvalsh(I + K0)[0]
+    return res
+if __name__ == "__main__":
+    Ms = [int(x) for x in sys.argv[1].split(',')]
+    for l in [float(x) for x in sys.argv[2:]]:
+        for M in Ms:
+            r = run(l, M)
+            print("l = %.3f M = %4d cmax = %2d  mu(1+K) = %.6e  mu(1-K) = %.6e  top = %.4f" % (r['l'], r['M'], r['cmax'], r['mu_plus'], r['mu_minus'], r['top']),
+                  ("  eta in [%.3e, %.3e]  mu(1+K without c=2) = %.4e" % (r['eta_lo'], r['eta_hi'], r['mu_plus_no_c2'])) if 'eta_lo' in r else "")

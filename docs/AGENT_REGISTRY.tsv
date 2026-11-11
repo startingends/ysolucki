@@ -43,3 +43,4 @@ R2-AUD	2026-11-11	auditor: round-2 local idea logs (65 entries) into the main lo
 SP-modular	2026-11-11	persistent specialist: modular forms, Eisenstein series, Rankin-Selberg, converse theorems (session 1, in seminar S1 turn 3)	session model	rh/specialists/modular	running	-
 V-FH	2026-11-11	verifier: foothold theorems A (certified positivity L <= (1/2) log 3) and B (first atom forced into a box)	session model	rh/experiments/foothold/verifier	running	-
 READER-3	2026-11-11	reader: Connes-Consani-Moscovici 2511.22755 whole, then Bombieri if openly available	session model	rh/library	running	-
+READER-4	2026-11-11	reader: the October 2026 quasi-Riemann-hypothesis papers (zero-free half-plane 11/12 and 7/8), whole, with the proof skeleton and inputs per step	session model	rh/library	running	-

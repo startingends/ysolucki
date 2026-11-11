@@ -1,6 +1,7 @@
 # MEMORY of SP-operator
 
-Rewritten at the end of session 1 (2026-11-11, seminar S1; one container restart mid-session, nothing lost).
+Rewritten at the end of session 2 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
+6, 7 of bridge 1 (rh/BRIDGE.md, idea #27, owner's rule 12: one main line built in planks).
 A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDEAS_LOCAL.md.
 
 ## Files of this seat
@@ -9,12 +10,65 @@ A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDE
 - PROOFS.md: P1 window space is de Branges when Q_a > 0; P2 twist = conjugation, curvature sign;
   P3 multiplier duality; P4 Poisson splitting, Weyl function, class N_1; P5 Suzuki's dial; P6 derivative of the
   parity determinants; P7 odd block on the no-prime window has a simple positive ground state.
-- IDEAS_LOCAL.md: 5 entries (SP-operator/#1..#5). ladder.py.txt + ladder.log (one small computation).
+- IDEAS_LOCAL.md: 9 entries (SP-operator/#1..#9; #7-#9 are the bridge planks).
+- PROOF_bridge.md and bridge/ (session 2). ladder.py.txt + ladder.log (one small computation).
 - board_drafts/: texts of my board posts (p1..p12).
 - Library notes written for the project: rh/library/suzuki-2606.09096.md, rh/library/suzuki-1606.05726.md.
 - Sources under rh/library/src/: 2606.09096, 1606.05726 (both read in full), basor-chen-0202062 (read in
   full), kaltenbaeck-woracek-1998 (pp. 1-6 of 37 read), luger-ou-2202.13246 (sec. 3.2 read),
   1204.1827 and 2511.23257 (downloaded; only the abstract and theorem list of the latter read).
+
+## SESSION 2 (bridge 1): what I built, in one place
+Files: PROOF_bridge.md (theorems 5.1, 7.1, propositions 5.2, 5.3, 6.1, numerics, novelty), bridge/PREDICTION.md
+(five blind predictions, all HIT), bridge/bridge5.py.txt (closed-form prime-side evaluator of the Weil form on
+piecewise exponential sums; validated against lane A's q_00 to 8e-45), bridge/run_L0.5_K8.log,
+bridge/run_L0.75_K8.log. Board: results B205 (plank 5), B206 (planks 7 and 6), both re B199.
+- PLANK 5, PROVED (Thm 5.1): g even, C^1, piecewise C^2, supported in [-lambda, lambda], g(0) = ghat(0) = 0;
+  F = E(g) is a null vector (transform zeta(s) Mg(s)); f = F on the window, T = F below 1/lambda =
+  x^(-1/2) sum_m (B_perp ghat)(m/x); then Q_L(f) = W(T) = -Q(f,T) (coupling across the cut with the kernel
+  e^{t/2} - sum_{m>=1} e^{-(2m+1/2)t} - primes). Pole bookkeeping (Prop 5.2): with a = ghat(0)/2, b = g(0)/2,
+  Q_L(f) = W(T_0) + 2a l_1 - 2b l_0 + (a^2 lambda + b^2/lambda) 0.0461914 + 2ab (-0.0461543). Endpoint jumps
+  (Prop 5.3; e27's time-limited prolates): tail decays at the critical rate x^{1/2} (sawtooth), W(T) only
+  conditionally convergent, identity only as a limit over mollified g.
+- COMPUTED (g = s^2(1-7s^2)(1-s^2)^8 scaled): L = 0.5: 5.319033963532685e-8 vs 5.319033963532956e-8 (5e-14);
+  L = 0.75: 3.666016833422033e-11 vs ...022e-11 (3e-15). Window side: difference of terms 2400x larger; tail
+  side: pole 1.49e-8, arch 3.82e-8, primes -1.1e-10; W(T)/|T|^2 = 0.75 and 1.51.
+- PLANK 7, PROVED (Thm 7.1): V Z = [U, Z] (Lambda * 1 = log) and C V (1 - C) = 0, so Pi(T) = 2<T, T_log>,
+  T_log = x^(-1/2) sum_m (log m)(B_perp ghat)(m/x): prime-free, NO boundary term. COMPUTED to 3e-10 / 5e-11.
+  In my toolkit: multiplicativity of co-analytic Toeplitz operators on a half-line. W(T) = <T, Acal T> -
+  2<T, [U, T_zeta] psi>, Acal = compressed pole + Gamma operator. Not identified with Connes-Consani's Sonin
+  trace (digest only read); on the no-prime window their Theorem 1 gives a LOWER bound for W(T).
+- CORRECTION made in session 2: I posted in B206 that the primes cannot be removed on the window side
+  (two cuts -> Hankel term). WRONG: the window function E(g) has one effective cut; Corollary 7.2 (the lead's
+  plank 7(a)): Pi(f) = 2<f, f_log>, f_log = x^{1/2} sum (log n) g(nx); COMPUTED to 1e-48 at L = 0.75, 1.2
+  (bridge/plank7a.py.txt). Corrected on the board (B208) and in PROOF_bridge.md.
+- Prop 6.2: the foothold seat's corrected D_L (constraints int g = 0 and int_band ghat = 0) is bounded,
+  closed, everywhere defined, minimiser attained.
+- STATE OF THE BRIDGE when I stopped: the lead has ENDED bridge 1 (rh/BRIDGE.md 'where it ends'): planks 9,
+  10, 12 negative; the ladder is a property of the functional equation alone. My planks 5, 7 agree with that
+  (impostor-blind identities).
+- PLANK 6, PROVED (Prop 6.1): g is determined on 1/lambda <= |y| <= lambda by f (Moebius inversion), free
+  inside; D_L = Schur complement of 1 - PBP w.r.t. 1 - P_in B P_in (>= 1 - chi_0(2 pi) > 0): bounded, closed,
+  everywhere defined, strictly positive. So Q <= C D is FALSE (Q is of log order); g(0) = 0 is not closable in
+  L^2. Proposal (HEURISTIC): comparison form on the tail side.
+- PLANK 9 input: planks 5 and 7 use no Euler product, no sign, no root size; they hold for F_d and the
+  impostor (S1-mirror's B199 shows the impostor's Poisson map). All arithmetic must enter in plank 8.
+- Novelty: 2 web searches (snippets), digests of CC 2106.01715 and CCM 2511.22755: not found; NOT
+  established as new; Burnol (co-Poisson, Sonine; arXiv math/0203120, math/0112254; Ann. Inst. Fourier 2007)
+  must be read first.
+- Asked (B206): rerun e27 form.py with smooth companions so that planks 1-3 are statements about the W(T)
+  of Thm 5.1. Not answered when I stopped.
+
+## Holding after session 2 (in addition to the list below)
+A. Plank 8 on the tail side: is <T, Acal T> >= c |T|^2 for tails (Acal = pole + Gamma compressed to u < -L)?
+   The pole term 2<T,e^{u/2}><T,e^{-u/2}> has no sign a priori; in my two runs it is positive.
+B. Relation between Connes-Consani's scaling action theta(f) on L^2(R)_ev and the map E (needed to compare
+   the Sonin trace with D_L or with W(T)); read 2006.13771 sec. 4 myself.
+C. Read Burnol before any novelty statement. Read Barner's form of the explicit formula (cited from memory
+   in Thm 5.1) and Brown-Halmos (cited from memory in Thm 7.1's interpretation).
+D. Prop 5.2's prime-side form of l_0, l_1 (Chebyshev's psi) is formal; the size estimate of the corrections
+   on the e27 vectors is an order-of-magnitude argument, not computed.
+E. Controls: Thm 5.1 / 7.1 not written out for F_d and the impostor (only the remark that the proofs apply).
 
 ## What I now know about the project, through my toolkit
 1. The project's object is the Weil form Q on windows [-L, L] (log variable; primes <= e^(2L)), Q = pole + arch

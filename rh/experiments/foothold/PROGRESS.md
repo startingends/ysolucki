@@ -298,3 +298,55 @@ My prediction: nearly flat with a slow decrease: kappa_min in [0.30, 0.34] at L 
 6 rungs of Q), not the bulk. kappa_max between 2 and 4, attained on the highest-degree directions (Q grows like
 the log of the frequency, D is bounded), increasing with the degree.
 What would move the bridge: kappa_min(1.0) below 0.15, or a minimiser that sits in the bulk with D(v)/|v|^2 of order 1.
+
+### 20. Outcome: the whole-space pencil at L = 0.65, 0.75, 0.85, 1.0  (COMPUTED, multiprecision, ONE implementation)
+Script pencil_mp.py.txt (a NEW builder of Q: Gauss-Legendre quadrature of the x-space formula in Arb, all prime
+powers below e^(2L); D_L as in section 15 with the Moebius inverse for several integers; mpmath for the pencil).
+Commands: `flock <scratchpad>/heavy.lock python3 tools/memcap.py 2 python3 pencil_mp.py.txt <L> <NB> 40 <prec> <K1,K2>`
+with (L, NB, prec) = (13/20, 68, 360), (3/4, 80, 400), (17/20, 96, 440), (1/1, 116, 520). Logs pencil_mp_0p65.log,
+pencil_mp_0p75.log, pencil_mp_0p85.log, pencil_mp_1p0.log (18 s to 99 s each).
+Validation of the new builder: at L = 1/2, degree < 28 it gives kappa_min = 0.330738, kappa_max = 2.31888 against
+0.33074, 2.3189 from the exact rational matrix of forcing.py.txt (section 15). Lowest eigenvalues of Q: 3.696e-15
+(L = 0.75), 5.979e-30 (L = 1.0); r1_A's upper bounds were 3.68e-15 and 6.31e-30.
+
+(1) kappa_min and its stability in the degree
+| L | prime powers | lowest eig of Q | kappa_min at three degrees | second kappa |
+|---|---|---|---|---|
+| 0.34 | none | 1.6e-3 | 0.3317 (deg < 28) | |
+| 0.50 | 2 | 9.4e-7 | 0.33189, 0.33086, 0.33074 (12, 20, 28) | 0.3557 |
+| 0.54 | 2 | 1.08e-7 | 0.3281 (28) | 0.3466 |
+| 0.65 | 2, 3 | 3.98e-11 | 0.327977, 0.327954, 0.327945 (40, 54, 68) | 0.3421 |
+| 0.75 | 2, 3, 4 | 3.70e-15 | 0.326542, 0.326508, 0.326506 (48, 64, 80) | 0.3279 |
+| 0.85 | 2, 3, 4, 5 | 4.29e-20 | 0.301935, 0.301831, 0.301787 (64, 80, 96) | 0.3059 |
+| 1.00 | 2, 3, 4, 5, 7 | 5.98e-30 | 0.297958, 0.297900, 0.297833 (84, 100, 116) | 0.3002 |
+kappa_min does NOT fall like e^(-2L) (that law, from 0.33 at L = 0.5, gives 0.20 at 0.75 and 0.12 at 1.0) and does
+not grow. It decreases slowly: 0.33 up to L = 0.75, a step to 0.30 between 0.75 and 0.85 (the integer 5 enters at
+L = 0.805), 0.298 at 1.0. Against my prediction (section 19): all four inside the predicted ranges. Stable in the
+degree to 3 digits (the last digit still drifts down by about 1e-4 per 16 degrees).
+The ladders of Q and D are parallel over 24 orders at L = 1: Q: 5.98e-30, 1.53e-26, 2.23e-23, 2.25e-20, 1.44e-17,
+5.75e-15, 1.40e-12, 2.42e-10, 3.99e-8, 4.25e-6; D: 6.12e-30, 1.62e-26, 2.18e-23, 2.02e-20, 1.37e-17, 6.16e-15,
+1.47e-12, 2.37e-10, 4.08e-8, 4.61e-6 (rung-wise ratios between 0.92 and 1.12).
+
+(2) the minimiser. CORRECTION of section 15 (c) and of my session-2 report: "a small-leak combination, not the
+bulk" was an artefact of normalising by the L^2 norm. A generalised eigenvector can carry any amount of the
+bottom rungs for free (both forms are tiny there): at L = 1 the minimiser has 99.6% of its NORM on rung 1 and 1% of
+its ENERGY on rungs 1..6. By energy (share of Q(v) carried by the eigenvectors of Q):
+ L = 0.65: rungs 12, 16, 7 (eigenvalues 1.38, 1.60, 0.83): 48%, 18%, 11%; rungs 1..6: 4%.   -> bulk
+ L = 0.75: rungs 21, 12, 17 (1.69, 1.03, 1.53): 31%, 12%, 11%; rungs 1..6: 7%.             -> bulk
+ L = 0.85: rungs 5, 3 (4e-9, 3e-14): 23%, 15%; rungs 1..6: 46%; off-ladder part w (Q-eigenvalue >= 0.01): 48% of Q(v)
+           but only 31% of D(v), with Q(w)/|w|^2 = 1.23, D(w)/|w|^2 = 2.65 (ratio 0.46).  -> half ladder, half bulk
+ L = 1.00: rungs 13, 15 (0.158, 0.72): 20%, 9%; rungs 88..93 (3.7-3.9): 24%; rungs 1..6: 1%. -> transition + bulk
+So the binding direction is NOT on the ladder; it is a mixture of transition/bulk directions with ladder
+directions, and at L = 0.85 (the one window where I separated the parts) 53% of its leak D(v) is the CROSS TERM
+between the ladder part and the off-ladder part: D is not block-diagonal in the ladder/bulk splitting of Q, and
+the constant 0.30-0.33 is a coupling constant, lower than both the ladder ratios (0.92-1.12) and the bulk ratio of
+that vector (0.46). No monotone drift into the bulk with L is visible in four windows.
+
+(3) kappa_max: 3.05 (0.65), 3.18 (0.75), 3.56 (0.85), 4.19 (1.0) at the top degree, and NOT converged in the degree
+(L = 1: 3.21, 3.65, 4.19 at degree < 84, 100, 116). Its energy sits on the highest rungs of the truncated space
+(eigenvalues about 6) plus mid-bulk rungs. Reason: Q grows like the log of the frequency and D is bounded, so
+kappa_max -> infinity with the degree: the upper comparison Q <= C D is FALSE on the whole window space for a
+trivial reason, and would need D weighted by the log of the frequency off the band.
+
+Not done: a second implementation; the off-ladder decomposition at L = 0.65, 0.75, 1.0 (added to the script after
+those runs had started); any window above 1.0; any certificate.

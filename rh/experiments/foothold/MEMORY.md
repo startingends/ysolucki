@@ -1,4 +1,4 @@
-# FH seat MEMORY (rewritten at the end of session 2, 2026-11-11)
+# FH seat MEMORY (rewritten at the end of session 3, 2026-11-11)
 
 ## What exists (all in rh/experiments/foothold/ unless said)
 - PROGRESS.md: running log with predictions, commands, reading record, walls W-FH1, W-FH2.
@@ -34,6 +34,12 @@
   L = 17/50, 1/2, 27/50 on the full space of degree < 28; kappa_max 2.3-2.5 (log growth). Needs BOTH pole conditions
   as continuous functionals (int g = 0, int_band ghat = 0), else kappa_max = 1e7..1e10. D_L is not parity-diagonal.
   FOOTHOLDS.md entry FH-3 (candidate, float). PROGRESS.md sections 14-17.
+- SESSION 3: pencil_mp.py.txt <L> <NB> <nh> <prec> <K1,K2> (Arb + mpmath; own Q builder by Gauss-Legendre of the
+  x-space formula, all prime powers; Moebius companion). kappa_min = 0.3279 (L 0.65), 0.3265 (0.75), 0.3018 (0.85),
+  0.2978 (1.0); stable in degree to 3 digits; NOT e^(-2L). Ladders of Q and D parallel within 0.92-1.12 over 24
+  orders at L = 1. Minimiser = ladder/bulk mixture, half of D(v) is a cross term (measured at 0.85 only).
+  kappa_max unbounded in the degree. My session-2 statement "minimiser is a small-leak combination" was an
+  artefact of L^2 normalisation: corrected in PROGRESS 20. Logs pencil_mp_*.log.
 - Answers given to the coordinator: (1) Connes-Consani Thm 1 does not give plank 8 on the no-prime window as it
   stands (different comparison form, codimension-2 subspace, non-certified numerics); certificate recipe in
   PROGRESS 16 A. (3) The FH-1 certificate run on Q - kappa D does NOT escape the cost explosion (PROGRESS 17).
@@ -44,8 +50,9 @@
 ## Next steps, in order of value
 1. Certify FH-3 at L = 1/2 or 17/50: Q_R - 0.3 D_up >= 0 with an explicit linear companion (PROGRESS 16 A): needs
    rigorous entries of the D_up kernel in the Legendre basis (about 1000 two-dimensional integrals) + Lemma-4 type tail.
-2. Push the float pencil to L = 0.75, 1.0 (needs multiprecision: mpmath or Arb midpoints; Q from forcing.py.txt
-   generalised to several fixed atoms at irrational positions) and to degree 60; compare with the lead's kappa_4.
+2. DONE in session 3 up to L = 1.0. Open: rerun 0.65, 0.75, 1.0 with the off-ladder decomposition (script already
+   prints it); L = 1.25 (needs NB about 190, prec about 900); the step 0.3265 -> 0.3018 between 0.75 and 0.85: is it the
+   integer 5 entering (L = 0.805)? scan L = 0.78, 0.80, 0.81, 0.83.
 3. Test numerically "Sonin trace >= kappa D_L" on the no-prime window (Connes-Consani Thm 4.7 gives the Sonin trace
    as W_infty + an explicit prolate series).
 4. Inner bound for FH-2; second atom; T47 at L = 1 (as before).

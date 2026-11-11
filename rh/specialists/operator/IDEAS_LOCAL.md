@@ -69,6 +69,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - plain english: On the tail side the primes can be traded for the logarithms of all whole numbers, exactly, because the tail is a pile of shifted copies and the prime term only shifts further in the same direction, away from the cut. Example: at L = 0.5 the prime sum over the tail is -1.1044065020e-10 and the prime-free expression gives -1.1044065023e-10.
 - claim: PROVED (PROOF_bridge.md Thm 7.1): V Z = [U, Z] and C V (1-C) = 0. COMPUTED to 3e-10, 5e-11. In my toolkit: T_(-zeta'/zeta) T_zeta = T_(-zeta') for co-analytic Toeplitz operators on a half-line (no Hankel term). Also holds for the controls: all arithmetic is left for plank 8. Not identified with Connes-Consani's Sonin trace.
 - log:
+  - 2026-11-11: CORRECTION: my board post B206 said the elimination fails on the window side (two cuts). Wrong: the window function has one effective cut. Corollary 7.2 (PROOF_bridge.md): Pi(f) = 2<f, f_log> on the window for any g supported in [-lambda, lambda]; COMPUTED to 1e-48 at L = 0.75 and 1.2 (bridge/plank7a.py.txt). This is the lead's plank 7(a). Corrected in B208.
 
 ## #9 · Bridge plank 6: D_L (least L^2 leak) is a bounded closed form, a Schur complement of 1 - PBP; so Q <= C D is false, and g(0) = 0 is not closable; proposal: define the comparison form on the tail side
 - status: open

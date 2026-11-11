@@ -1,0 +1,8 @@
+L=0.75 K=8: prime powers in the window: [2, 3, 4]
+ Pi(f) = sum Lambda(n) n^(-1/2) 2 c_f(log n) = -0.00000045782609912421340152751984856
+ 2 <f, f_log> (no Lambda)                   = -0.00000045782609912421340152751984856
+ relative difference 9.8684e-49
+L=1.2 K=8: prime powers in the window: [2, 3, 4, 5, 7, 8, 9, 11]
+ Pi(f) = sum Lambda(n) n^(-1/2) 2 c_f(log n) = -0.000000685286772130308981667100208305
+ 2 <f, f_log> (no Lambda)                   = -0.000000685286772130308981667100208305
+ relative difference 1.6826e-48

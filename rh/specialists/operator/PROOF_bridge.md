@@ -154,6 +154,25 @@ COMPUTED (same runs): Pi(T) as a sum over prime powers = -1.104406501998788e-10 
 per piece, m <= 60 / 50: -1.1044065022843e-10 and -3.39879177067184e-14; relative differences 2.6e-10 and
 4.9e-11 (prediction P4, < 1e-9: HIT; the limit is the quadrature of the second expression).
 
+### Corollary 7.2 (WINDOW side; PROVED; this is the lead's plank 7(a), re-derived).
+Let g be any locally integrable even function supported in [-lambda, lambda] (no pole condition, no
+smoothness), f = E(g) on the window, and f_log(x) := x^{1/2} sum_{n>=2} (log n) g(n x) for x in the window
+(finite sums). Then Pi(f) = 2 int_window f f_log d*x, so
+   Q_L(f) = pole(f) + arch(f) - 2 <f, f_log>,
+with no Lambda: only the integers n <= e^{2L} and their logarithms.
+Proof. Pi(f) = 2 sum_k Lambda(k) k^{-1/2} int f(x) f(kx) d*x. For x in the window and k >= 1, kx >= 1/lambda, and
+E(g)(kx) = 0 if kx > lambda; so f(kx) = E(g)(kx) with no cut. Then sum_k Lambda(k) k^{-1/2} E(g)(kx) =
+x^{1/2} sum_k sum_n Lambda(k) g(nkx) = x^{1/2} sum_m (sum_{k|m} Lambda(k)) g(mx) = f_log(x). QED
+(In operator form: with shifts taken to the LEFT in u, C_low V_left (1 - C_low) = 0 for the cut below -L.)
+COMPUTED (bridge/plank7a.py.txt, plank7a.log; closed forms, 60 digits; prediction: equal to working
+precision): L = 0.75 (prime powers 2, 3, 4): Pi(f) = -4.5782609912421340152751984856e-7 both ways, relative
+difference 1e-48; L = 1.2 (2, 3, 4, 5, 7, 8, 9, 11): -6.85286772130308981667100208305e-7 both ways, 2e-48.
+Every window function is of this form (g = g_f by Moebius inversion, sec. 4), so this is a statement about
+the whole window space: the prime term of the window form is the bilinear pairing of E(g) with E_log(g).
+What it does NOT do: f_log is not a function of f through a local operation; in the variable g the window
+form becomes pole + arch + a lattice form with weights log n, i.e. the primes are repackaged as logarithms of
+integers, which is the unique-factorisation identity Lambda * 1 = log and nothing more.
+
 ### What kind of object this is, in my toolkit
 1. TOEPLITZ LANGUAGE (PROVED, same computation). On L^2(-inf, -L) put T_h := C h(shifts) C for a "symbol" h.
    Right shifts compressed to a LEFT half-line are backward shifts, so symbols built from right shifts
@@ -162,9 +181,12 @@ per piece, m <= 60 / 50: -1.1044065022843e-10 and -3.39879177067184e-14; relativ
    (the Dirichlet series -zeta'/zeta): T = T_{zeta-bar} psi and C V C T_{zeta-bar} = T_{nu-bar} T_{zeta-bar} =
    T_{nu-bar zeta-bar} = T_{-zeta'-bar} = [U, T_{zeta-bar}]. That is all plank 7 is: for co-analytic Toeplitz
    operators the product rule holds without Hankel correction (Brown-Halmos; in Widom's identity
-   T(ab) = T(a)T(b) + H(a)H(b~) the Hankel term vanishes when a is co-analytic). The cut is on the right side
-   of the tail for this to work; on the window side (cut on both sides) it fails, which is why the primes cannot
-   be eliminated from Q_L(f) itself.
+   T(ab) = T(a)T(b) + H(a)H(b~) the Hankel term vanishes when a is co-analytic). What is needed is that the
+   prime shifts and the lattice shifts move AWAY from the single cut. [CORRECTION, same session: I first wrote
+   here, and posted in B206, that the step fails on the window side because the window is cut on both sides.
+   That is wrong: f = E(g) on the window has only ONE effective cut, the lower one (the upper one is automatic
+   from the support of g), and with the shifts taken towards larger x the same argument works. See Corollary
+   7.2; the lead's plank 7(a) (notebook N41) is right.]
 2. So W(T) = <T_{zeta-bar} psi, Acal T_{zeta-bar} psi> - 2 <T_{zeta-bar} psi, [U, T_{zeta-bar}] psi>, where
    Acal := C (P + A) C is the compression to the half-line of the PRIME-FREE Weil operator (pole + Gamma,
    Fourier symbol Re psi_digamma(1/4 + ir/2) - log pi plus the rank-two pole term). The first term is "the
@@ -223,6 +245,20 @@ bounds: Sigma is a Schur complement of M and M >= (1 - chi_0(2 pi lambda^2)) on 
 Pollak-Landau: the top eigenvalue of PBP is chi_0(c) < 1, KNOWN, from memory); a Schur complement of M is
 >= the bottom of M and <= the corresponding diagonal block, which is <= 1. (b), (c) follow. (d) The set
 {h : h(0) = 0} is dense in L^2. QED
+
+Proposition 6.2 (the foothold seat's corrected definition, rh/BRIDGE.md plank 6; PROVED). Replace the pole
+conditions by the two functionals l_1(g) = int g and l_2(g) = int_band g^ = <g, k_lambda>, k_lambda(y) =
+sin(2 pi lambda y)/(pi y). Both are bounded on L^2(|y| <= lambda), and their restrictions to the inner space
+L^2(|y| < 1/lambda) are linearly independent (1 and k_lambda are not proportional there). Hence for every f the
+affine set {h : l_1(g_f + h) = 0 = l_2(g_f + h)} is non-empty, closed, of codimension 2, and
+D_L(f) := inf of ||B_perp (g_f + h)^||^2 over it is a quadratic form of g_f (a constrained minimum of a
+positive quadratic functional whose Hessian N is boundedly invertible), with
+(1 - chi_0(2 pi lambda^2)) ||g_f||^2 <= D_L(f) <= C ||g_f||^2. So this D_L is again BOUNDED, everywhere defined
+on L^2(window), CLOSED, strictly positive, and the infimum is attained (unique minimiser h*, affine-linear
+in g_f). The answer to "closed? domain?" is: closed, domain = all of L^2 of the window. It is not
+parity-diagonal for the reason the foothold seat gives. The upper comparison Q <= C D can therefore hold only
+on subspaces where Q is bounded (it is of logarithmic order): true on a finite ladder, false on the form
+domain.
 
 Consequences for the planks (PROVED from 6.1 unless marked).
  * UPPER COMPARISON Q_L <= C D_L (plank 6, "expected easy") is FALSE on the form domain: D_L is bounded on

@@ -1,1 +1,9 @@
 built even block, L=1.72 N=100 dps=120   (21s)
+eigenvalue of smallest modulus: -7.910853e-30 ; next three by modulus: ['2.397e-22', '7.554e-17', '4.891e-11']   (39s)
+psihat(0) = 1.26699 ; on-line energy 2 sum psihat(tau)^2 over 122 ordinates below 200 = 8.669048e-29
+   largest |psihat| at on-line ordinates: tau=87.6475: 2.396e-15 ; tau=89.4392: -2.388e-15 ; tau=90.7245: 2.356e-15 ; tau=81.9254: 2.277e-15 ; tau=83.1088: -2.176e-15 ; tau=80.3279: -1.639e-15
+   off-line zero 0.808517 + 85.699348 i: psihat(tau + ib) = (-2.8239e-16 + 4.8715e-15j) ; |psihat| = 4.8797e-15 ; phase/pi = 0.51843 ; contribution 4 Re[psihat^2] = -9.46087e-29
+   off-line zero 0.65083 + 114.16334 i: psihat(tau + ib) = (4.6015e-17 + 2.9252e-16j) ; |psihat| = 2.9611e-16 ; phase/pi = 0.45033 ; contribution 4 Re[psihat^2] = -3.337935e-31
+   off-line zero 0.574356 + 166.47931 i: psihat(tau + ib) = (-1.452e-17 - 3.292e-17j) ; |psihat| = 3.598e-17 ; phase/pi = -0.63222 ; contribution 4 Re[psihat^2] = -3.491718e-33
+   off-line zero 0.724258 + 176.70246 i: psihat(tau + ib) = (4.3176e-17 - 6.4006e-17j) ; |psihat| = 7.7207e-17 ; phase/pi = -0.3111 ; contribution 4 Re[psihat^2] = -8.930383e-33
+sum: on-line 8.669048e-29 + off-line -9.495491e-29 = -8.264439e-30 ; eigenvalue (Q(psi), |psi| = 1) = -7.910853e-30 ; difference (zeros above 200 + basis) = 3.54e-31   (40s)

@@ -49,3 +49,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: pencil.py.txt; second implementation by another seat; then the certificate described in PROGRESS.md section 16 (A)
 - kill line: kappa_min on degree < 60 at L = 1/2 below 0.2, or a second implementation disagreeing in the second digit
 - log:
+  - 2026-11-11: Session 3: multiprecision pencil at L = 0.65, 0.75, 0.85, 1.0: kappa_min = 0.3279, 0.3265, 0.3018, 0.2978 (degree < 68, 80, 96, 116; stable to 3 digits). Not e^(-2L). Minimiser is a ladder/bulk mixture; half of its leak is a cross term (measured at L = 0.85). kappa_max unbounded in the degree. PROGRESS.md section 20.

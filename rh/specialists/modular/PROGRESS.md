@@ -63,3 +63,20 @@ With a_n(m) = r_n(m)/(2n): multiplicativity at the first coprime pair (2,3) is a
 so a_n(2) a_n(3) = a_n(6) exactly for n in {1, 2, 4, 8}. PREDICTION: the exact-rational script confirms the identity
 at 12 rational values of n, and the analogous defect at the pair (2,5), 2n r_n(10) - r_n(2) r_n(5), also vanishes at
 n = 1, 2, 4, 8 (if it did not, n = 4 or 8 would fail to be multiplicative: contradiction with Jacobi's formulas).
+
+## 01:40 PREDICTION (P6) for the half-shift window instrument (idea SP-modular/#1), before computing
+Object: G_l = 1 + K on L^2(-l, l) (v = log y; functions supported between heights e^(-l) and e^l), K the Hankel operator
+of NOTES D4 (atoms phi(c)/c at -2 log c, kernel kappa). G_l is a Gram operator (norm of a pseudo-Eisenstein series), so
+its lowest eigenvalue mu(l) is > 0 (strictly, by the zero count of NOTES D7 (c)).
+First prediction (written in the idea log at 01:35): mu(l) decays only exponentially in l, about e^(-l/2), because the
+spectral side is absolutely continuous. SECOND THOUGHT before computing (01:40): the near-null vectors are functions
+supported in (-l, l) that are almost odd under the scattering involution; their obstruction is the discrete set of
+resonances rho/2 (same zero count as Suzuki's strictness argument), so the margin could collapse faster than any
+exponential, as for the Weil window. I now give 65% to FASTER than exponential (log mu(l) convex downward, |log mu| growing
+at least like l e^l), 35% to plain exponential. For 1 - K (no norm interpretation known to me): the same law (60%).
+Pinning of the totient weight at c = 2 (true value 1/2): admissible interval contains 0 and shrinks at the rate of mu(l).
+Impostor contrast: with the weight at c = 2 set to 0 ("missing denominator") the form goes negative at some l between
+log 2 and 1.5 (the atom enters at 2l = 2 log 2).
+Method: piecewise-constant Galerkin on M cells, exact cell integrals (second differences of the second antiderivative
+of kappa, closed form with a dilogarithm), double precision, M = 200, 400, 800 to see convergence. Rayleigh-Ritz gives
+UPPER bounds for mu(l).
