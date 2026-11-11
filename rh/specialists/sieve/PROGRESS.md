@@ -25,3 +25,4 @@
   Lemma 18.1 unchanged (optimistic). Part I alone (copy amplifier at H = D^(7/6), c = 1/3): 8/9.
   PREDICTION: best exponent in [0.80, 0.86], below 7/8 (at the paper geometry the low line alone is 1 - 13/48 + 1/48 + 1/12 = 5/6).
 - Session 7: cubic family C0/C1/C2: 0.7660/0.8136/0.7786; prediction hit; A5 (no dual large sieve) is the gap.
+- Session 8: LEVINSON_THETA.md (construction only, no numerics). Q4, T1.

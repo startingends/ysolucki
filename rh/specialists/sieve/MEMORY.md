@@ -3,6 +3,12 @@
 Rewritten at the end of session 3 (2026-11-11; 1 = seminar S2, 2 = TRANSPORT.md, 3 = COPY_BARRIER.md). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
 Files: S2_B10d.md (long form of everything below), typeII_exponents.py.txt / .log (exponent bookkeeping), IDEAS_LOCAL.md (SP-sieve/#1-#4).
 
+## 0''''''. SESSION 8 (LEVINSON_THETA.md; construction, no numerics): theta enters Levinson-Conrey twice: (A) main term 1/theta, forced by
+Radziwill's c/theta (uncertainty principle at infinity, impostor-blind); (B) the Type II error (theta < 4/7), technology. Euler-product
+mollifier decouples the main term exactly but is not localised (H12). Perfect mollifier B = 1/zeta makes Levinson a Littlewood identity
+about zeros (tautology). Not tight at collisions. Impostor: kappa = 1 is consistent with off-line zeros (Bombieri-Hejhal, from memory).
+Ratings Q4, T1.
+
 ## 0'''''. SESSION 7 (S3_SLOPE.md sec. 7): two-variable cubic family (CUBIC_ABSORB.md): model c = 1/3, cubic-sieve excess (half of
 M - 2/3) in the low estimate, Moebius side needs H >= D^(7/6) (rho = -1/7): best 0.8136 (prediction [0.80, 0.86] HIT); C2 0.7786, C0 0.7660.
 Below 7/8 in the bookkeeping; the killing term is outside it: after the theta step the cubic twist is a frequency shift, no character in h,

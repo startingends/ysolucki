@@ -1649,3 +1649,19 @@ the moving bound** (lead, after READER-10: `rh/library/haran-1508.04636.md`, `de
   over ℤ for a SINGLE structured family (not all of ψ), or an exact identity in the Levinson–Conrey setting that
   removes the dependence on θ. The third is the only one with a concrete starting object on the record (T118:
   RH ⇒ Levinson-weighted approximants bounded; the open part).
+
+**N93. Levinson–Conrey: θ enters twice, one part is forced by ∞, and even 100% on the line is not RH** (lead, after
+SP-sieve, `rh/specialists/sieve/LEVINSON_THETA.md`; construction only, several facts from memory).
+- (A) main term, FORCED: (1/T)∫|1 − ζ·M_θ|² ≥ c/θ for every Dirichlet polynomial of length T^θ (Radziwiłł, from
+  memory), by the uncertainty principle at ∞: CORE's tension appears inside Levinson's method. (B) error term,
+  TECHNOLOGY: θ < 4/7 comes from the Type II term T^(−½)·y^(7/8) (Deshouillers–Iwaniec after Vaughan); removing it
+  needs exact off-diagonal formulas for Möbius-type mollifiers at every length (from memory).
+- Euler-product mollifier: decouples the main term per prime, but its support is of length about e^y, the
+  off-diagonal is uncontrolled, and truncation re-couples the primes (H12 exactly). Reflected mollifier: impossible
+  (1/ζ has no functional equation). Levinson's step written as Littlewood's lemma for V·B: with B = 1/ζ it is a
+  tautology; not tight along colliding pairs (a collision moves κ by about 1/(T log T)).
+- **Decisive (Bombieri–Hejhal, from memory): almost all zeros of Davenport–Heilbronn-type combinations lie on the
+  line, yet they have ≫ T zeros off it. So κ = 1, even Farmer's θ = ∞, is consistent with off-line zeros: density
+  methods are twist-blind at 100%.** Ratings (seat): Quality 4, Toward RH 1.
+- With N92 this closes the third option. The first (an object where ∞ has a discrete target) has no known instance
+  (N89–N90); the second (a Stepanov bound for one structured family over ℤ) reduces to the Möbius wall (N79).

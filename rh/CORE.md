@@ -16,7 +16,8 @@ No step on the record does. (BRIDGE end; N80)
 density estimates, Nyman–Beurling, parity, the October 7/8 and 11/12 proofs: all are mean squares of Möbius-type
 sums, and all stop at the same wall (short families: the family is not longer than the sum; wall #34, eight
 languages). Copies cap amplifiers at 3/4 (proved, formal cores). The Euler product tells HOW MANY zeros are off
-the line, never WHETHER one is. Mechanism (N84): Λ ≥ 0 bites only on non-oscillating tests (a positive
+the line, never WHETHER one is. Even 100% of zeros on the line would not be RH: Davenport–Heilbronn-type
+functions have almost all zeros on the line and ≫ T off it (N93). Mechanism (N84): Λ ≥ 0 bites only on non-oscillating tests (a positive
 trigonometric polynomial has positive mean, which pairs with the pole), and the bulk is made of oscillating ones.
 
 **4. Zeta has no slack.** De Bruijn–Newman Λ ≥ 0 (Rodgers–Tao): zeta sits exactly on the edge. Every positivity

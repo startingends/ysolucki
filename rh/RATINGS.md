@@ -19,6 +19,7 @@ Out of 10 each; a breakthrough is 9–10 on both. Lead's honest ratings, 2026-11
 | Discrete orbit N89 | no T_p-equivariant truncation; the obstruction is the archimedean height, not density | 6 | 1 | known programme (F₁) |
 | Chain N90 | functional equation ⇒ ∞ ⇒ uncertainty principle ⇒ soft positivity and no fixed bound | 5 | 1 | known in spirit; link (3) heuristic |
 | H-3 separable form N91 | Landau–Gonek Gram on a divisor box decouples exactly over primes | 4 | 1 | sums over all zeros up to T: cannot detect one quartet |
+| Levinson θ N93 | θ forced at ∞ in the main term; technology in the error term; 100% on the line is twist-blind | 4 | 1 | density method |
 | **Ceiling now** | | 6 | **2** | no statement uses the Euler product in the bulk |
 
 What a 3 on "Toward RH" would be: a PROVED statement about individual zeros below the band edge that is true for ζ,
