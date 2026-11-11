@@ -142,3 +142,20 @@ half -2.57e-6, -4.47e-6, -5.05e-6 (atom at 4 is 0.0137 inside the edge). S1-mirr
  3. DONE (B61): v3 int/120 at x=2.008 gives -1.666e-6 infeasible; checker confirmed. Board posts of turn 1: B20-B25, B32-B35, B43, B44, B56-B59, B61.
  4. Possible own idea: 'mirror-only' regime: atoms in [e^L, e^2L) act only through h_n; block inequalities on the window written
     with T restricted to n < e^L. Smallest statement: positivity of folded ground states.
+
+## TURN 2 (2026-11-11)
+Coordinator: idea 21 killed (B69), barrier B11 added; specialists SP-reflection, SP-operator joined; Lean 4 project rh/formal.
+Tasks: (1) F_d computation (B59), (2) lead's B70 (lowest eigenvalue of each block of F_d at L = 0.75 vs d, real and imaginary d),
+(3) check the lead's remark in B69 (only the size of local roots is violated), answer B67 (S1-cubic), nominate a Lean statement.
+
+### M. BLIND PREDICTIONS for B70, written BEFORE any F_d code exists (time stamp printed by `date` just above this block in the shell: see below)
+ Zero side, real parity eigenfunction f: Q_d(f) = sum_gamma [fhat(gamma+id)^2 + fhat(gamma-id)^2] = 2 Q_0(f) - d^2 sum_gamma (fhat^2)''(gamma) + O(d^4).
+ P-F5. mu_b(d) (lowest eigenvalue of block b of F_d's form, L = 0.75) is a SMOOTH EVEN function of d, analytic in t = d^2: NO kink at d = 0.
+       mu_b(d) = 2 mu_b(0) - c_b d^2 + O(d^4) with c_b > 0 (on a near-null vector fhat(gamma) ~ 0 at the zeros it resolves, so
+       -(fhat^2)'' ~ -2 fhat'^2 < 0). 2 mu_e(0) = 9.2e-15, 2 mu_o(0) = 7.5e-12.
+ P-F6. imaginary d = i eps (zeta(s - i eps) zeta(s + i eps), zeros moved ALONG the line): mu_b = 2 mu_b(0) + c_b eps^2 + ...: POSITIVE for
+       every eps, same |slope| as the real side (the function of t = d^2 is analytic through 0).
+ P-F7. threshold at L = 0.75: real d fails for d > d_c with d_c = sqrt(2 mu_b(0)/c_b); guess c_b between 0.01 and 10, so
+       d_c(even) in (3e-8, 1e-6), d_c(odd) in (9e-7, 3e-5). So 'one-sided in d^2, smooth': zeta is NOT a kink point.
+ Would surprise me: a term linear in |d|; c_b < 0 (real tilt raising the eigenvalue); negative eigenvalue for imaginary d.
+prediction block M written at 00:08:40 UTC

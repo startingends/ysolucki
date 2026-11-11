@@ -21,7 +21,7 @@ REQUIRED = [
     "docs/AGENT_REGISTRY.tsv", "docs/SUBAGENT_PREAMBLE.md",
     "rh/PROJECT_BRIEF.md", "rh/RESUME_HERE.md", "rh/REVIEW_LEDGER.md", "rh/BRIEF_PROPOSALS.md",
     "rh/UNDERSTANDING.md", "rh/NOTEBOOK.md", "rh/THEORY.md", "rh/ATLAS.md", "rh/FOOTHOLDS.md", "rh/BIGGER.md",
-    "rh/specialists/ROSTER.md",
+    "rh/specialists/ROSTER.md", "rh/library/README.md",
 ]
 REG_COLS = ["id", "date", "role", "model", "folder", "status", "result"]
 REG_STATUS = {"running", "done", "failed", "cancelled"}

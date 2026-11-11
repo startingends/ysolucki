@@ -6,3 +6,4 @@ __pycache__/
 rh/board/*.seen.json
 .lake/
 lake-manifest.json.bak
+rh/library/src/

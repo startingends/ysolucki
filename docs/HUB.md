@@ -23,6 +23,7 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 | [`rh/BIGGER.md`](../rh/BIGGER.md) | what RH is a shadow of; base cases | none yet |
 | [`rh/specialists/ROSTER.md`](../rh/specialists/ROSTER.md) | persistent specialist seats, one toolkit each | 4 chartered; SP-reflection and SP-operator in session 1 |
 | [`rh/board/`](../rh/board/) | Socratic seminar boards | S1 open |
+| [`rh/library/`](../rh/library/README.md) | whole papers read in full, for understanding only | 17 sources listed, none read whole yet |
 
 ## The record
 | file | what |
@@ -67,32 +68,22 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 
 ## Running jobs
 **After any context summary or restart, read this section and `git log -5` before launching anything.**
-- **Creation run 1** (workflow `rh-creation-1`, run `wf_0afb126a-9cf`, started 23:20): three seats with no
-  lane, at least two hours each, no refuter (C1-blank: blank page / C1-inside: inside the project's
-  understanding / C1-data: the raw numbers); then a screen that asks only "is it new" and "is it precise
-  enough to compute". Folders `rh/experiments/c1_*`.
-- **Round-2 verification track** (same run id as the old round 2, `wf_39b9c4a2-4ff`, resumed 23:30 as
-  `rh-round2-verification`): the three finished seats cubic, curv, parity are kept; verifiers check their
-  PROOFS and NUMBERS only (60 to 90 minutes); a judge reports which statements are proved and which numbers
-  reproduced, with no ranking of ideas. The old round-2 free seat was withdrawn (it had a refuter and a
-  0-10 judge waiting, which the owner's split forbids); its partial files are in `rh/experiments/r2_free`.
-- **Socratic seminar S1** (board `rh/board/s1.md`, opened 23:50): five long-lived participants that are woken
-  turn by turn with their memory intact: S1-socrates (moderator, asks only), S1-cubic, S1-curv, S1-parity
-  (each speaks for a finished round-2 seat and answers its checker), S1-mirror (develops idea #21: proof of
-  the criterion, the two-prime model). The lead runs the turns (wake each participant when the board has
-  something for it) and closes the board with a summary. Folders `rh/experiments/s1_seminar/*`.
-- **Standing seats** (persistent; each has a MEMORY.md in its folder; launched 00:05): K-theory (builds
-  `rh/THEORY.md`), K-atlas (builds `rh/ATLAS.md` and runs the pairing job), FH (foothold hunt,
-  `rh/FOOTHOLDS.md`), BG (bigger statement, `rh/BIGGER.md`). Specialists SP-reflection and SP-operator are
-  chartered in `rh/specialists/ROSTER.md` and NOT yet started: they join seminar S1 at its second turn.
-- **Formal checking works** (decision A16): Lean 4.35.0 installed in this session with the owner's approval;
-  project `rh/formal/`; `RHFormal/Smoke.lean` machine-checked; mathlib fetched (7.3 GB under `rh/formal/.lake`, gitignored)
-  and `lake -d rh/formal build` succeeds on both check files. Seat FORMAL (launched 00:12) is formalising the
-  finite, algebraic lemmas first. No project lemma is formal yet.
-- **Seminar S1, turn 2** running (woken 00:04): socrates, curv, parity, mirror; cubic woken after its turn 1;
-  specialists SP-reflection and SP-operator join in this turn (first sessions).
-- Awaiting audit: ideas in the local logs of r2_cubic, r2_curv, r2_parity (and the creation seats when
-  they finish). The auditor's test for created ideas is the two questions, not likelihood.
+The container restarted at 00:09 on 2026-11-11; every agent stopped; nothing on disk was lost (Lean and the
+mathlib cache survived). Resumed afterwards, in this order:
+- **Seminar S1** (board `rh/board/s1.md`): S1-socrates, S1-cubic, S1-curv, S1-parity, S1-mirror in turn 2;
+  specialists SP-reflection and SP-operator in their first sessions. Resumed by message to their agent ids.
+- **K-atlas** (failure atlas and the pairing job) and **K-theory** (theory document): resumed.
+- **FH** (foothold hunt), **BG** (bigger statement), **FORMAL** (Lean): resumed.
+- **Round-2 verification track** (run `wf_39b9c4a2-4ff`): all three verifiers had finished; only the judge
+  (proofs and numbers only) reruns on resume.
+- **Creation run 1** (run `wf_0afb126a-9cf`): none of its three seats had finished; resumed, they restart
+  (seat `inside` finds its earlier files; seats `blank` and `data` had written nothing).
+- **Readers** R-read-1, R-read-2: whole papers into `rh/library/` (understanding only).
+- Rule after the restart: one heavy numerical job at a time across all seats
+  (`flock <scratchpad>/heavy.lock python3 tools/memcap.py 2 ...`).
+- Formal checking works (Lean 4.35.0 + mathlib, `lake -d rh/formal build`). No project lemma is formal yet.
+- Awaiting audit: about 80 ideas in agents' local logs. The auditor's test for created ideas is the two
+  questions (new? precise enough to compute?), not likelihood.
 
 ## Scheduled routines
 None.
