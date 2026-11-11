@@ -1,0 +1,2 @@
+L=1.0 c=46.426809 N=60 dps=118 ; lowest even 7.2974e-30 2.71754e-23 ; lowest odd 1.8028e-26 2.71989e-20
+ prolate n=4 (b=0), block even: 1-chi=1.512e-30 ; |v|^2=0.81934 captured even 1.0 odd 9.0427e-31 ; Rayleigh=1.07849e-29 ; Rayleigh/mu_1=1.47791 Rayleigh/mu_2=3.96863e-7 ; overlap^2 with eigvecs 1,2,3: 0.999999915082 8.49183e-8 3.883e-14 ; 1-ov1=8.4918e-8

@@ -66,3 +66,20 @@ So the comparison constant should be about 2L plus an average of log(xi/lambda) 
      at each of L = 0.5, 0.75, 1.0.
  Would surprise me: agreement to 2 digits (then the cross terms vanish for a reason), or a factor above 3 off
  (then the mechanism is wrong and plank 8 has no heuristic).
+
+## Plank 10 outcome (intruder_*.log) and plank 12 prediction, written 2026-11-11 before the scan
+Plank 10: (a) FAILED at L = 1.5 (no level without a rung below the bulk); an extra level appears only in the
+transition region just below the bulk at L = 1.65-1.70 (0.72, 0.55; 0.43, 0.65), not deep in the ladder; the ladder
+is regular with ratios of order 1 down to the bottom rung at L = 1.70, 0.01 before the failure. So the intruder
+picture as I wrote it is WRONG: there is no level descending through the rungs before failure.
+What the same logs show instead: the impostor's bottom-rung ratio (eigenvalue / defect n = 1) is 3.15, 2.71, 4.37,
+3.38, 3.26, 2.14, 4.48 at L = 1.2, 1.4, 1.5, 1.6, 1.65, 1.68, 1.70: it wobbles.
+PLANK 12, blind prediction. An off-line zero z = gamma_0 + i beta enters the form of a real even f through
+Re[fhat(z)^2], whose phase turns like 2 gamma_0 L, while an on-line zero enters through |fhat(gamma)|^2 with no
+phase. So the bottom-rung ratio of the impostor, as a function of the window, should be a slowly varying positive
+part plus an oscillation of period pi / gamma_0 = pi / 85.699 = 0.03666 in L.
+ P10. On the grid L = 1.200, 1.208, ..., 1.312 (15 points; even block, bottom level over defect n = 1) the ratio is
+      fitted by a + b cos(2 * 85.699 * L + phi) with |b| / a >= 0.10 and residual below 30% of |b|.
+ P11. The first failure at L = 1.71 is a minimum of that oscillation: 2 * 85.699 * 1.71 + phi is within 0.6 rad of
+      an odd multiple of pi (using phi fitted at L near 1.25, far from the failure).
+ Would end this line: no oscillation (|b|/a < 0.03), or a different period.

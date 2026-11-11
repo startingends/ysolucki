@@ -1,0 +1,37 @@
+"""plank 10: spectrum of the impostor's window form below its first failure, against band-limiting defects.
+usage: python3 intruder.py.txt L N dps"""
+import sys, math, importlib.util, importlib.machinery
+import flint, mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+L = float(sys.argv[1]); N = int(sys.argv[2]); dps = int(sys.argv[3])
+c = 2 * math.pi * math.exp(2 * L) / 5
+mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+q, _ = weil.build(L, N, kind='dh', pole=False, primes=True, arch=True)
+ev = sorted(mp.eigsy(to_mp(weil.even_block(q, N)), eigvals_only=True))[:9]
+od = sorted(mp.eigsy(to_mp(weil.odd_block(q, N)), eigvals_only=True))[:9]
+nodes = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(6, mp.mp.prec)
+xs = [x for x, w in nodes]; ws = [w for x, w in nodes]; n = len(xs); cc = mp.mpf(c)
+K = mp.matrix(n, n)
+for i in range(n):
+    for j in range(n):
+        d = xs[i] - xs[j]
+        K[i, j] = mp.sqrt(ws[i]) * (cc / mp.pi if i == j else mp.sin(cc * d) / (mp.pi * d)) * mp.sqrt(ws[j])
+chi = sorted(mp.eigsy(K, eigvals_only=True), reverse=True)
+defect = [1 - x for x in chi[:26]]
+print("impostor L=%g c=2 pi e^(2L)/5=%.4f N=%d dps=%d" % (L, c, N, dps))
+print(" defects n=0..25:", " ".join("%d:%s" % (i, mp.nstr(d, 3)) for i, d in enumerate(defect)))
+for name, vals in (("even", ev), ("odd", od)):
+    print(" %s block:" % name)
+    for k, v in enumerate(vals):
+        if v <= 0:
+            print("   #%d %s  (negative)" % (k + 1, mp.nstr(v, 5))); continue
+        j = min(range(26), key=lambda i: abs(mp.log(v / defect[i])))
+        print("   #%d %s  nearest defect n=%d (%s) ratio %s" % (k + 1, mp.nstr(v, 5), j, mp.nstr(defect[j], 3), mp.nstr(v / defect[j], 4)))

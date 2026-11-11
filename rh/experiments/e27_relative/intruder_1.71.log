@@ -1,0 +1,22 @@
+impostor L=1.71 c=2 pi e^(2L)/5=38.4147 N=100 dps=125
+ defects n=0..25: 0:1.87e-32 1:5.62e-30 2:8.3e-28 3:7.99e-26 4:5.64e-24 5:3.11e-22 6:1.4e-20 7:5.25e-19 8:1.68e-17 9:4.66e-16 10:1.13e-14 11:2.41e-13 12:4.56e-12 13:7.7e-11 14:1.16e-9 15:1.58e-8 16:1.92e-7 17:2.1e-6 18:2.05e-5 19:0.000179 20:0.00138 21:0.00919 22:0.0504 23:0.203 24:0.516 25:0.818
+ even block:
+   #1 6.1973e-30  nearest defect n=1 (5.62e-30) ratio 1.102
+   #2 5.506e-22  nearest defect n=5 (3.11e-22) ratio 1.768
+   #3 4.4674e-16  nearest defect n=9 (4.66e-16) ratio 0.9595
+   #4 1.5859e-10  nearest defect n=13 (7.7e-11) ratio 2.06
+   #5 3.6012e-6  nearest defect n=17 (2.1e-6) ratio 1.717
+   #6 0.012563  nearest defect n=21 (0.00919) ratio 1.368
+   #7 0.41648  nearest defect n=24 (0.516) ratio 0.8071
+   #8 0.56836  nearest defect n=24 (0.516) ratio 1.101
+   #9 1.1009  nearest defect n=25 (0.818) ratio 1.346
+ odd block:
+   #1 2.5386e-25  nearest defect n=3 (7.99e-26) ratio 3.178
+   #2 4.7913e-19  nearest defect n=7 (5.25e-19) ratio 0.9119
+   #3 4.4987e-13  nearest defect n=11 (2.41e-13) ratio 1.87
+   #4 2.0335e-8  nearest defect n=15 (1.58e-8) ratio 1.289
+   #5 0.00030688  nearest defect n=19 (0.000179) ratio 1.716
+   #6 0.19699  nearest defect n=23 (0.203) ratio 0.9727
+   #7 0.48863  nearest defect n=24 (0.516) ratio 0.9469
+   #8 0.76094  nearest defect n=25 (0.818) ratio 0.93
+   #9 1.1039  nearest defect n=25 (0.818) ratio 1.349
