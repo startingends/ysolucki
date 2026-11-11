@@ -1101,3 +1101,22 @@ is needed.
   L-function of degree 2 obtained without any degree-2 input. Scope: an extension of the quasi-RH theorem, not RH
   (owner's caution). It is the most concrete NEW theorem-shaped statement any seat has produced in this phase; its
   first test is whether the theta transformation with K-type k exists in print (Kubota–Patterson; Dunn–Radziwiłł §4).
+
+**N67. Transport closed; the copy principle, now argued structurally** (lead, after SP-sieve's
+`rh/specialists/sieve/TRANSPORT.md`, written without reading SP-modular's).
+- Two seats independently: at bounded height, "no zeros in Re s > σ" ⟺ I_N(0, T₀) = O(N^(2σ−1+ε)) (PROVED, Perron + a
+  1/ζ ≪ t^ε lemma one way, Bettin–Gonek with T fixed the other). The coupled all-heights form is STRICTLY stronger
+  (conjecture; needs a weighted density bound Σ N^(2β−1)|ζ(½+iγ)/ζ′(ρ)|² ≪ T^(1+ε)). So the October theorem's place on
+  the mollifier scale is a restatement, and the hybrid family gives exactly the 7/8 again.
+- THE COPY PRINCIPLE (SP-sieve, item 9, with N49 (c)): exact copies of the untwisted sum require the family to be
+  parametrised by a homomorphism whose kernel has INTERMEDIATE density: (i) trivial kernel (the t-family; Kronecker:
+  PROVED no copies); (ii) positive-density kernel ⇒ the family is a finite group and the copy bound is trivial or
+  circular (PROVED by orthogonality; depth-aspect/Postnikov families are of this kind); (iii) residue-symbol families
+  of order m have kernel = m-th powers, density H^(1/m), and need m-th roots of unity in the field (non-archimedean
+  structure), m ≥ 2. Hence δ ≤ ½ and the exponent 1 − δ/2 ≥ 3/4 for amplification by copies. The heuristic barrier of
+  N49 now has a structural argument, not a proof (it assumes every copy mechanism is a homomorphism kernel).
+- CONSEQUENCE FOR THE GOAL: the October method, as a method, cannot reach ½; the record now says why in three
+  independent ways (the (1+κ)/2 output, the copy principle, the dictionary's coupled form). What would be needed is a
+  copy mechanism that is NOT a homomorphism kernel — approximate copies of positive density, which in the t-family is
+  Bagchi recurrence (⟺ RH). The one concrete new theorem-shaped item this phase produced is an extension of the
+  quasi-RH theorem (N66: Grössencharacters of every infinity type, CM elliptic curves), which is not RH.

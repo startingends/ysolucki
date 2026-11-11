@@ -48,3 +48,19 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: PROVED (identity, algebra) + KNOWN (Saias-Weingartner 2009, abstract and citing summary read)
 - log:
   - 2026-11-11: audit: not promoted: merged into main #32
+
+## #5 · Bettin-Gonek dictionary is an equivalence at BOUNDED height; the T-coupled form needs a weighted zero-density bound beyond DH
+- status: open
+- source: SP-sieve
+- date: 2026-11-11
+- plain english: Knowing there are no zeros right of 7/8 tells you exactly how fast the mollified integral at low height can grow with the mollifier length N (like N^(3/4)), and conversely. It tells you nothing about the same integral up to height T with N = T^(4/3), because a few zeros just left of 7/8 at large heights would each cost about T there.
+- claim: PROVED (bounded-height equivalence); HEURISTIC (what the coupled form needs); TRANSPORT.md sec 1
+- log:
+
+## #6 · Copies need a homomorphic family parametrisation with kernel of intermediate density (m-th powers); t-family kernel trivial, depth family kernel positive density (circular)
+- status: open
+- source: SP-sieve
+- date: 2026-11-11
+- plain english: In the sextic family the rows that copy the untwisted sum are the sixth powers: rare but not too rare. In the height family no row is a copy; in the family of all characters mod p^k the copy is exact but the family is a finite group, and then the copy argument gives back only the trivial bound.
+- claim: PROVED (orthogonality for depth family; Kronecker for t); TRANSPORT.md sec 3
+- log:

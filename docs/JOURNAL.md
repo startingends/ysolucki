@@ -150,3 +150,26 @@ same concrete objects to several specialists at once (notebook N43–N56, `rh/HU
   structure); the Bohr lift and the Hecke module of δ_ω (both linear); the theta-kernel route (killed by the fake);
   Hunch 1's polynomial doubling law (doubling is quadratic and needs root size, not the functional equation).
 None of this is a proof of RH or a step that is known to lead to one. It is a map of where the difficulty is.
+
+## 2026-11-11 · J7 · Seminar S2, the dictionary, and the copy principle
+
+- **Seminar S2** (board `s2`, closed): one question (a structure controlling a sum longer than its family exactly,
+  with a property the impostor lacks). Six seats answered; every proposal was either exact and sign-free on the near
+  side, or sign-carrying and confined to the far side. Four seats named the near-side requirement as parity /
+  averaged Chowla / Type II at power strength specific to μ. On the Möbius side the impostor is excluded for free by
+  the size of its inverse's coefficients (its zeros reach real part ≈ 1.12), so there no controls exist at all (N60).
+- **Classical edge**: positive-weight explicit-formula methods see a zero only if it is more than halfway to the
+  edge, because the pole dominates (N62); the pole and positivity are one fact (Landau); the critical-line version is
+  a one-sided Mertens bound, believed false (N63, rule H10).
+- **Literature (READER-8, nine papers)**: the self-dual point θ = ½ for mollifiers was crossed without μ-structure
+  (Bettin–Chandee–Radziwiłł 17/33) and further with it (Conrey 4/7); nothing is known past about θ = 1; the
+  Nyman–Beurling open range is θ ≥ 3/2. Bettin–Gonek's dictionary: zero-free abscissa σ ↔ θ = 1/(2σ − 1); at bounded
+  height this is an equivalence (two seats, independently).
+- **Copy principle** (N67): amplification by exact copies needs a homomorphism family with kernel of intermediate
+  density; residue-symbol families give at most square-root density, so 3/4 is a structural ceiling for the October
+  method. Reaching ½ would need approximate copies of positive density (Bagchi recurrence, ⟺ RH).
+- **One candidate new theorem** (N66, risk): the October method extended to Grössencharacters of every infinity type
+  over ℚ(√−3), giving the 7/8 half-plane for CM elliptic curve L-functions. An extension of quasi-RH, not RH.
+- **Audit round 3**: 94 local ideas decided, 6 promoted (#28–#33); #34 (the short-family wall) added by the lead.
+Status against the goal: no proof of RH and no step known to lead to one. The project's map of where the difficulty
+lies is now detailed and cross-checked by independent seats and by the literature.

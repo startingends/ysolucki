@@ -1,7 +1,24 @@
 # MEMORY of SP-sieve
 
-Rewritten at the end of session 1 (2026-11-11, seminar S2). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
+Rewritten at the end of session 2 (2026-11-11; session 1 = seminar S2, session 2 = TRANSPORT.md). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
 Files: S2_B10d.md (long form of everything below), typeII_exponents.py.txt / .log (exponent bookkeeping), IDEAS_LOCAL.md (SP-sieve/#1-#4).
+
+## 0. SESSION 2 (TRANSPORT.md, 101 lines; same object as SP-modular, whose answer I did NOT read)
+Asked: (1) converse of Bettin-Gonek (zero-free half-plane => long-mollifier upper bounds?); (2) hybrid family (sextic u x t) for zeta_K;
+(3) exact copies inside a t-family (rule 13 (c)). Answered:
+- PROVED: at BOUNDED height the dictionary is an equivalence: no zeros in Re s > sigma <=> I_N(0,T0) = O(N^(2sigma-1+eps)) (Perron + the
+  Titchmarsh 14.2-type lemma 1/zeta << t^eps right of a zero-free half-plane, FROM MEMORY; Bettin-Gonek's proof with T fixed).
+  theta = 1/(2sigma-1) is just this growth with N = T^theta. Impostor-blind.
+- PROVED: the half-plane + MVT control no dyadic block at height T^x, x > 0, when theta = 1/(2sigma-1) > 1. HEURISTIC: the coupled form needs a
+  weighted zero-density bound sum N^(2beta-1)|zeta(1/2+i gamma)/zeta'(rho)|^2 << T^(1+eps), stronger than DH near 1/2 for theta > 1.
+  So N65's "October is ahead at theta = 4/3" is true only on the bounded-height axis, where BCR/Conrey do not operate.
+- Hybrid (u, t): Prop 3.1 survives for |t| <= D^(o(1)) (weights W(y)y^-it, finite derivative order; RISK beyond); gives zeta_K
+  I^K_N(0,T0) << N^(3/4+eps), equivalent to 7/8 (restatement). t dilutes copies.
+- Copies: none in t (Kronecker); depth/Postnikov family has exact copies but is a finite group: copy bound trivial or circular (PROVED,
+  orthogonality) = N49 (c). Structural: copies need a homomorphic parametrisation with kernel of intermediate density (m-th powers, mu_m).
+HOLDING from session 2: search whether the bounded-height equivalence (1a) is in print (Bettin-Gonek only state one direction);
+check the Titchmarsh 14.2 lemma under a general half-plane in the text; ask whether a weighted density bound of (1b)'s shape is known
+(Conrey-Ghosh-Gonek-type sums over zeros of 1/zeta'(rho)).
 
 ## 1. What I was asked (lead's brief, session 1)
 (1) create the seat; (2) answer SP-modular's B10 (d): does Vaughan / Type I-II give any power saving over D^2 for S(H, D) at
