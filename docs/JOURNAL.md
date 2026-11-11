@@ -174,7 +174,7 @@ None of this is a proof of RH or a step that is known to lead to one. It is a ma
 Status against the goal: no proof of RH and no step known to lead to one. The project's map of where the difficulty
 lies is now detailed and cross-checked by independent seats and by the literature.
 
-## J8 · 2026-11-11 (afternoon): construction rounds under rules 14–15, and one obstruction from every side
+## 2026-11-11 · J8 · construction rounds under rules 14–15, and one obstruction from every side
 After the owner's two-scale ratings and the four process changes (A24, A25: `rh/CORE.md`, `rh/RATINGS.md`, hunches
 built to a target, construction before measurement, one seat resumed on one object), the session ran about a dozen
 construction rounds (NOTEBOOK N80–N103). Every one closed, and they converged:
