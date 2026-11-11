@@ -1778,3 +1778,25 @@ after SP-sieve, `rh/specialists/sieve/HYBRID_FE.md`; construction only; GHK reca
   pointwise square-root bound for one short prime polynomial at one height.** The hybrid product reduces RH at
   height T exactly to that, with X = T^c; the Euler product enters only through Λ, linearly (H13–H14 again). N98's
   classification stands with one more entry (pointwise linear: reduces to the bound it needs).
+
+**N100. Guth–Maynard dissected; correction to N98: density COUNTS do separate ζ from the impostor, and the
+separating input is the SIZE of the inverse coefficients** (lead, after READER-11,
+`rh/library/guth-maynard-2405.20552.md`, v2 read whole).
+- Their theorem: for |b_n| ≤ 1, #large values ≤ T^(o(1))(N²V^(−2) + N^(18/5)V^(−4) + T N^(12/5)V^(−4)), giving the
+  zero-density exponent 30/13. Key idea: bound the top singular value of (n^(it))_{t∈W} through its cubic trace minus
+  the "flat" part; Poisson without stationary phase keeps three t-variables apart; additive energy of the
+  large-value set W split into high (Heath-Brown), low (L²/L⁴ of Σ_{t∈W} v^(it)) and intermediate (no sparse set
+  nearly invariant under u ↦ (m₁u + m₃)/m₂). Coefficients enter only through |b_n| ≤ 1, in one lemma; no Λ or μ.
+  It stops at a COUNT; pointwise it is trivial; and for bounded coefficients a count of zero is false (the paper
+  builds examples with ≫ N^(2−2σ) large values).
+- **Correction to N98.** "Statistical ⇒ twist-blind" holds for pair-correlation-type statistics and for proportions
+  on the line (N93), NOT for density counts: an exponent below 1 in N(σ, T) (already Ingham's, for every σ > ½)
+  separates ζ from Davenport–Heilbronn, which has ≍ T zeros in such strips (recalled, not read). The separating step
+  is the zero-detection by mollification, where the inverse coefficients must be BOUNDED: |μ| ≤ 1 for ζ, unbounded for
+  the impostor (consistent with N99, where |Λ| ≤ log n was the only impostor-sensitive line).
+- **Sharpened gap.** Every proved result that separates ζ from the impostor uses the Euler product only as a SIZE
+  bound on the inverse (or log-derivative) coefficients, and size alone cannot give a pointwise statement, because
+  bounded coefficients can have large values (Guth–Maynard's own examples). So the missing input is an arithmetic
+  property of μ (or Λ) BEYOND its size that forbids alignment with every n^(it) at square-root scale. Ratings: the
+  paper's method is Quality 9 (a real breakthrough on its own problem), Toward RH 2 for us (density, size only);
+  N100's correction: Quality 5, Toward RH 1.

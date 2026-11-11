@@ -50,8 +50,10 @@ F_q(t) the degree map goes to ℤ. The function-field proof's content is a Stepa
 ℚ-analogue is RH itself.
 
 Classification of every use of the Euler product (N98): linear ones are blind, insufficient, or the full problem;
-nonlinear statistical ones are twist-blind; pretentious ones reach only the edge; structural ones need a cusp
-form at a zero. Wanted: a use that is pointwise, in the bulk, and not through automorphic Hilbert spaces.
+nonlinear statistical ones are twist-blind (but density COUNTS separate ζ from the impostor, via |μ| ≤ 1:
+N100); pretentious ones reach only the edge; structural ones need a cusp
+form at a zero. Wanted: a use that is pointwise, in the bulk, and not through automorphic Hilbert spaces; size bounds such as
+|μ| ≤ 1 cannot give it (bounded coefficients can have large values; Guth–Maynard).
 
 **THE OPEN TENSION, in general.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's
