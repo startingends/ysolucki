@@ -55,3 +55,61 @@ Not used, as reported: the functional equation in the zero-free step; any positi
 - **H5. When an idea is recorded as failing, record what would have to be true for it to work**, as a statement
   someone could search for. (The atlas format already asks for this; apply it to dismissed ideas too.)
 - **H6. Pair the unused halves.** The next hunch should use the functional equation and the Möbius side together.
+
+## E. New hunches made with these rules (lead, 2026-11-11). HUNCHES, each with its plank zero. None is tested.
+
+**The observation they rest on.** On the Möbius side even the FULL Riemann hypothesis is a statement with room:
+RH ⟺ smoothed Möbius sums of length D are ≪ D^(1/2+ε) for every ε. On the positivity side (Weil's form, the
+window form, everything this project built) RH has no room at all (barrier B3). The quasi-RH proof lives entirely on
+the side with room. Our planks 5–7 already contain the dictionary between the two sides: the window form in the
+Möbius-inverted variable, f = Zψ, ψ = Z⁻¹f.
+
+### Hunch 1. RH as a growth rate, and the functional equation as a doubling law
+- STATEMENT. Let Z_L be the cut Dirichlet-convolution operator on the window (f = Z_Lψ; its inverse is the Möbius
+  sum of f). Let G(L) be the norm of Z_L⁻¹ on a fixed smooth class. A zero at distance β to the right of the line
+  makes G(L) grow like e^(2βL) (a resonance at the zero's height); zeros on the line make it grow polynomially.
+  So RH ⟺ G(L) = e^(o(L)); the October 2026 theorem is G(L) ≤ e^(3L/4 + o(L)).
+- THE HUNCH. Exponential growth means G(2L) ≈ G(L)²; RH means G(2L) ≤ (polynomial in L)·G(L). A doubling
+  inequality with polynomial loss, proved once, gives RH by iteration, and it has room (any polynomial). The
+  functional equation is the natural source of a doubling law: by plank 5 the window form of f is the Weil form of a
+  tail outside the window, and the seminar's doubling step writes the form on [−L, L] through the form on a window of
+  half the size and an explicit mirror form.
+- FAKE FIRST. Davenport–Heilbronn: 1/L has a pole at real part 0.808, so its G grows like e^(0.62 L): it fails the
+  very first statement. ζ(s−d)ζ(s+d): rate e^(2dL). The one-prime system has no functional equation, so no
+  doubling law. Passed.
+- ROOM. Any polynomial loss per doubling.
+- PLANK ZERO (computable now): G(L) for zeta, the impostor and F_d on windows up to L = 1.5 by our builders;
+  blind prediction to be written first: zeta's G(2L)/G(L) stays below 4 on L ∈ [0.25, 0.75]; the impostor's
+  ratio exceeds zeta's by a factor that grows with L. Then: does the half-window identity give ANY inequality
+  between G(2L) and G(L), even a bad one?
+- WHAT WOULD KILL IT: the impostor's G is indistinguishable from zeta's on all computable windows (then the
+  resonance is as invisible here as in the form), or the doubling identity relates G(2L) to G(L)² only.
+
+### Hunch 2. Positivity because it is a norm: the Weil form over ℚ(√−3) as a period of the cubic theta function
+- THE OBSERVATION. Every proof of a Riemann hypothesis in geometry gets its positivity from a quantity that is
+  non-negative because it is a degree, a dimension or a norm (notebook N38). Over ℚ we have never had such an
+  object. The quasi-RH proof shows that over K = ℚ(√−3) the Möbius function IS made of coefficients of an
+  automorphic form: μ(n) is, up to an elementary factor, the cube of a cubic Gauss sum, and cubic Gauss sums are the
+  Fourier coefficients of Kubota's theta function.
+- THE HUNCH. Write the prime term of the Weil form of ζ_K = ζ·L(χ₋₃) in the Möbius-inverted variable (planks 7),
+  replace μ by cubes of theta coefficients, and the window form becomes a TRILINEAR expression in an automorphic
+  form on the cubic cover. Trilinear periods of automorphic forms are the one place where squares of periods are
+  known to equal non-negative quantities (unfolding gives norms; triple-product formulas give |period|² = L-value).
+  The hunch is that the window form of ζ_K, or its tail form W(T), is the squared norm of an explicit vector built
+  from the cubic theta function and the test function.
+- FAKE FIRST. The impostor has no Gauss sums and no theta function; ζ(s−d)ζ(s+d) corresponds to a non-unitary
+  (complementary-series) parameter, where a norm does not exist. Passed, and for a structural reason.
+- ROOM. None is needed if it is an identity (as in geometry); that is also its risk.
+- PLANK ZERO (for the modular-forms specialist): (i) the exact identity between μ over the Eisenstein integers and
+  cubic Gauss sums, from the papers; (ii) the Weil explicit formula for ζ_K on a window, in the Möbius-inverted
+  variable, with that substitution made: what object is it? (iii) one numerical instance: the window form of ζ_K at
+  L = 0.5 by our builder against the candidate expression. Blind prediction before (iii).
+- WHAT WOULD KILL IT: the substitution produces a signed trilinear sum with no period interpretation; or the
+  expression makes sense equally for a non-unitary parameter.
+
+### Hunch 3 (smaller). Use the new theorem as an input on our own map
+The damping threshold is now ≤ 3/8 on every window (if the proof stands). Our planks were all built at ε = 0.
+Rebuild planks 3b and 8 at ε = 3/8, where positivity is a theorem: the whole-space comparison constant κ(L, ε) is
+then a quantity that is provably positive at ε = 3/8 and measured ≈ 0.30 at ε = 0. How it moves between the two is
+a curve nobody has, and its derivative in ε at 3/8 is a statement about the worst possible zeros.
+PLANK ZERO: κ_min(L, ε) at L = 0.5, 0.75 for ε = 0, 1/8, 1/4, 3/8 with the foothold seat's pencil.
