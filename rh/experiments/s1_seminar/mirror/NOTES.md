@@ -52,3 +52,46 @@ P4. Model B, eps = 0.05, F = lattice points with |i| <= 2, |j| <= 2 in [-1.5, 1.
     cannot tell. Would change my mind: 2.1 negative while 2 positive at the same eps.
 Meaning for the kill line of #21 if P1-P3 hold: "the shift inequality fails for some mirror-positive weights with the true
 log 2, log 3" is hit; what survives is the criterion as a control, and the question of what input breaks the twist symmetry.
+
+### RESULTS of turn 1 (2026-11-10 23:50 to 2026-11-11 00:05 UTC). Files: lib.py.txt, modelA.py.txt (+ logs modelA_*.log),
+### lead2.py.txt, modelB.py.txt (modelB_150.log, modelB_300.log), mirror2.py.txt, b40.py.txt, PROOF_mirror_criterion.md
+Predictions against results:
+- P1 (thresholds for the weight at 4, L = 0.75, both in [1e-15, 1e-7], within factor 1000): MISS on size, HIT on content.
+  Got eta in [-6.0e-5, +1.4e-5] (L = 0.75), [-3.9e-8, +6.1e-9] (L = 0.80). The mirror-preserving direction breaks FIRST.
+  Weight at 2: [-1.4e-11, +1.3e-13]; weight at 3: [-1.7e-9, +9.1e-11] (L = 0.75). Reproduced by S1-parity (B43), second
+  basis 5-15% narrower. L = 0.70 rows WITHDRAWN (not converged: atom at 4 is 0.0137 inside the edge; S1-parity B43).
+- P2 (twist at 2, interval width < 1e-6): HIT, [-1.4e-11, +1.3e-13].
+- P3 (Liouville twist negative in [-1, -0.01] at L = 0.5): HIT, -0.12 even / -0.74 odd.
+- P4 (Model B at eps = 0.05: true, eta = +-0.5, 2.1 all positive within 20%): MISS. Weight at 4 x 1.5 is negative (-0.025);
+  flipped to -log 2 stays positive (+0.022); 2.1 positive (+0.40): not detected. Self-energy is only ~ log(1/eps).
+- One-prime system (B5): fails between L = 0.54 and 0.56 (odd block first), when the missing 3 would enter.
+- Two-prime world without 5: true weights fail at L = 0.90 (-0.12 / -0.45).
+- Lead's test B12: (a) positive, (b) weight at 4 flipped: negative from 0.75, (c) 2.1: negative from 0.40. But weight at 4 doubled
+  (mirror positive) is negative too: -0.144 / -2.5e-4 at L = 0.75.
+Kill line of #21, first clause ("shift inequality fails for some mirror-positive weights with the true log 2, log 3"): MET.
+Posted as numbers (B47), not as a verdict; the lead decides.
+
+Proved / settled this turn:
+- PROOF_mirror_criterion.md: Theorem 1 KNOWN (Perfekt-Pushnitski 2018, Thm 3.3, Helson matrices); Theorem 2 (a, b >= 2 version:
+  sigma-finite measure + PSD term w at products of two primes); Corollary 3 (Euler product: real roots, positive multiplicity,
+  inertia count). Idea #21's claim field is FALSE outside the dial: mirror test = local roots, not zeros.
+  Fails: L(chi)L(chi-bar) mod 5 (-3.89), L(Delta) (-3.62). Passes: zeta(s)zeta(s-1), zeta(s-d)zeta(s+d), Liouville twist.
+- Dial n = 4 = (1 - 4^(1-s)) zeta(s) zeta(s-1): roots at 2 are +1 (m=+1), -2 (m=-1): exactly one negative square. (Also S1-parity.)
+- Obstruction to B3: real tilt F_d = zeta(s-d)zeta(s+d): kernel x 2cosh(du). Hypotheses closed under real exponentials,
+  conclusion only under imaginary ones. S1-parity's extra hypothesis "one wrong-sign square in the mirror form" kills F_d only.
+- Three meanings of "the integers": positions / completeness / weights; mirror matrix blind to all three (B50, asked the lead).
+- Shifted mirror (B40): mirror at log r is positive only on atoms at r * integers; r = 2, a,b = 3..12: min eig -1.33.
+- Two-sided form (B60): positivity on [-L, L] <=> |H_W(phi)| <= T_W(phi) on (0, L], H_W = sum_zeros phihat(g)^2,
+  T_W = Weil form on a half-size window; primes in (e^L, e^(2L)] enter only through the mirror form.
+- H_primes(phi) = E_+^2 - sum_{m>=1} E_m^2 - sum_zeros phihat(g)^2 on L^2(0, L]: each zero pair gives signature (1,1); explains "half negative".
+
+Open threads (for turn 2):
+- Asked: B48 (S1-parity: sign pattern even block caps increases / odd block caps decreases; H_n > T_n on the odd ground state?),
+  B49 (S1-cubic: can one fibre node be absorbed by the m = 0 Gamma square?), B50 (lead: which meaning of "the integers" is B10?).
+- Promised/accepted: S1-parity computes the first failing window of F_d, d = 0, 0.05, 0.1, 0.25 (B59).
+- Offered to S1-curv (B54): profile width at which the comb matrix [K_psi(log ab)] loses positivity. Not computed.
+- My own next step (IDEAS_LOCAL #2): doubling on L in (0.347, 0.693), where the half window has NO primes and T_W is purely
+  archimedean + pole; check how tight |H_W| <= T_W is and which phi saturate it.
+- Not done: Model B with all integer points (not only 3-smooth) and eps ~ e^(-2L) (S1-curv did the comb, B39);
+  a numerical check of Theorem 2's w-term (raise c(4), c(6), c(9) by a PSD pattern).
+- Literature: 5 queries recorded in the proof file. Not searched: Bisgaard / Ressel on semigroups without identity.

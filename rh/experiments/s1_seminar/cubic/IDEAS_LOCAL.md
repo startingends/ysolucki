@@ -46,3 +46,28 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - source: S1-cubic
 - date: 2026-11-10
 - log:
+
+## #7 · Block-averaged Bakry-Emery: the factor 2 is the theta->0 end of the curve (1+3theta)/(2+2theta); average the local inequality over a block of pi-share theta
+- status: open
+- source: S1-cubic
+- date: 2026-11-11
+- plain english: The curvature test asks every scale separately and gets 1/2 where 1 is needed. Ask groups of scales instead: the answer climbs with the size of the group. Example: split the window into two halves: the test gives 0.84 for zeta, and 5/6 = 0.833 on the simplest model; quarters give 0.70; only the whole window gives 1.
+- claim: PROVED on the resampling chain; COMPUTED for the Weil chain (L=1): sites 0.48-0.53, 8 blocks 0.60, quarters 0.70, two mirror halves 0.84 (mean field 5/6), one block = gap. Stable under refinement; blind to the Beurling control except at one block.
+- smallest: Is rho_half >= 5/6 a theorem for the Weil chain? It is the first constant of this family that does not drift under refinement.
+- log:
+
+## #8 · One fibre FIELD: pole + slowest Gamma exponential = the single kernel e^{|x-y|/2}, the growing fundamental solution of -d^2/dx^2 + 1/4 (p, q its harmonic functions); Weil positivity <=> [[N',E],[E,E]] has one positive eigenvalue, all off-diagonal >= 0. Kac-Baker direction: every Gamma exponential e^{-(2m+1/2)|u|} is the Green function of a local operator, so the whole archimedean part could be traded for a tower of local auxiliary fields, one per trivial zero
+- status: open
+- source: S1-cubic
+- date: 2026-11-11
+- new input: Locality: after the trade the only non-local couplings left are the prime atoms.
+- claim: PROVED + COMPUTED (TURN1.md 7) for m = 0. The tower for m >= 1 is NOT done.
+- novelty: UNSEARCHED.
+- log:
+
+## #9 · Odd block of Ntilde = (non-negative off-diagonal matrix) - (mirror matrix of the primes): method of images. Without primes the odd block is Metzler, so its negativity has a LINEAR certificate (Collatz-Wielandt: a positive vector x with A x <= 0); the primes destroy exactly that, through the mirror form
+- status: open
+- source: S1-cubic
+- date: 2026-11-11
+- claim: COMPUTED signs (TURN1.md 5). The Collatz-Wielandt certificate for the no-prime system at L < 0.37 not computed.
+- log:

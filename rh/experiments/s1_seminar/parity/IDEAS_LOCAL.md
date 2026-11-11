@@ -39,3 +39,17 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-10
 - claim: Repair by citation (sign changes of Z(t); or positive proportion of simple zeros on the line, Heath-Brown 1979 / Conrey 1989, from memory).
 - log:
+
+## #6 · Positivity of the folded ground states of both parity blocks explains every sign and every digit of the feasible intervals of idea 9
+- status: open
+- source: S1-parity
+- date: 2026-11-11
+- claim: COMPUTED: folded ground states of Q_even and Q_odd have one sign on (0,L] (L=0.75, 1). PROVED: tau_n = 0 for log n >= L (atoms in [e^L, e^2L) are mirror-only on parity eigenfunctions); first-order caps mu sqrt(n)/(2|g|) are rigorous outer bounds and reproduce the exact end points to 0.1-18%. OPEN: prove the positivity (Perron for Ntilde?).
+- log:
+
+## #7 · Exact inertia: kappa_+(N_e) = kappa_-(Q_e) + [t_e>1], kappa_+(N_o) = kappa_-(Q_o) - [t_o<-1]
+- status: open
+- source: S1-parity
+- date: 2026-11-11
+- claim: PROVED (Schur complement). Turns Prop 3(b) into equalities; WP1 becomes the computable condition t_e<1 and t_o<-1.
+- log:

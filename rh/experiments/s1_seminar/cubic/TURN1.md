@@ -119,3 +119,61 @@ Consequence (follows from M2 and M3, which are COMPUTED negative Rayleigh quotie
 rounding, with margins >= 7e-3): any statement "mirror positivity + H => block inequalities on every window" is false
 unless the hypothesis H fails for the no-prime system, for zeta(s)(1 - 2^{-s}) and for c_2 = 1.03; in particular H cannot be
 "the atoms sit at integers" and cannot be invariant under positive reweighting of the primes.
+
+## 5. Board B33: the odd block of Ntilde (`oddblock.py.txt`, oddblock.log)
+Folded basis (e_i +- e_Ji)/sqrt2, i a box in x > 0, and (F1 +- F2)/sqrt2. Entry between boxes at x, y > 0: K(|x-y|) +- K(x+y).
+COMPUTED: even block: 0 negative off-diagonal entries of 156 (24 boxes) and of 600 (48 boxes), L = 1. Odd block: 38 of 156, 108 of 600
+negative, smallest -0.505 / -0.398; L = 0.5: 12 of 156; no primes (L = 0.45): 0 of 156 (w is decreasing). So
+odd block = (non-negative off-diagonal) - (mirror matrix of the primes).
+Certificate and the odd block (PROVED, Lemma B steps 4 + 5): a = Perron vector is even, D commutes with J, so M_odd <= M_odd^2;
+Perron on the FULL matrix gives eigenvalue 1 simple with an even eigenvector; hence M_odd <= 0.
+CORRECTION of my wording in B52: the witness is v = D^{1/2} y, y an odd eigenvector of M = D^{1/2} H D^{1/2} with eigenvalue in (0,1)
+(it exists iff the odd block has a positive eigenvalue); then v^T (HDH - H) v = (mu^2 - mu)|y|^2 < 0. Not "the eigenvector of H itself".
+
+## 6. Board B42: block-averaged Bakry-Emery (`blockbe.py.txt meanfield|weil`, blockbe.log)
+Definition. For a partition of the sites into blocks S: rho_S := sup{rho : sum_{k in S} pi_k (Gamma_2 - rho Gamma)(f)(k) >= 0 for all f},
+rho* := min_S rho_S. PROVED (sum over blocks; R2-curv's C4 argument): gap >= rho*. Blocks = sites: pointwise Bakry-Emery.
+One block: rho* = gap exactly (sum_x pi_x Gamma_2 = ||Lf||^2).
+Mean field (PROVED): resampling chain, uniform pi, g = f - <f>, V = <g^2>: Gamma = (V + g_k^2)/2, Gamma_2 = (3V + g_k^2)/4, so
+sum_{k in S} pi_k (Gamma_2 - rho Gamma) = (3/4 - rho/2) theta V + (1/4 - rho/2) int_S g^2, theta = pi(S). For |S| >= 2 a mean-zero g
+supported in S exists (int_S g^2 = V), hence   rho_S = (1 + 3 theta)/(2 + 2 theta)   exactly: 1/2 at theta -> 0, 5/6 at theta = 1/2, 1 at theta = 1.
+COMPUTED m = 40: |S| = 2, 10, 20, 40: 0.54762, 0.70000, 0.83333, 1.00000 = formula.
+Weil chain (H = Ntilde, a = Perron, L = 1; rho*, and in brackets the mean-field value for the pi-share of the worst block):
+| partition | zeta n=24 | zeta n=48 | Beurling n=24 | Beurling n=48 |
+|---|---|---|---|---|
+| sites | 0.5280 (0.532) | 0.4816 (0.517) | 0.5230 | 0.4825 |
+| 8 box blocks + F1 + F2 | 0.6107 (0.588) | 0.6025 (0.588) | 0.5898 | 0.5833 |
+| quarters, fibres at the ends | 0.7034 (0.662) | 0.6976 (0.662) | 0.6920 | 0.6865 |
+| two mirror halves (x<0 + F2, x>0 + F1) | 0.8431 (0.833) | 0.8364 (0.833) | 0.8280 | 0.8204 |
+| boxes, F1, F2 | 0.6264 (0.587) | 0.6262 (0.587) | 0.6275 | 0.6274 |
+| one block | 1.0002 | 1.0000 | 0.9539 | 0.9281 |
+So "the factor 2" is the theta -> 0 end of a curve; the Weil chain follows the mean-field curve within 0.01 to 0.04; block values are
+stable under refinement where the site value is not; the control is separated only by the single block (the gap).
+Tensor version (PROVED, proof here). Let S_1..S_r be a partition of the indices, b_i := a restricted to S_i (so a = sum b_i),
+H_i := T.b_i = sum_{k in S_i} a_k T_k, l_i := H b_i, sigma_i := b_i.s > 0. Assume each H_i has at most one positive eigenvalue,
+H has off-diagonal >= 0, and the r x r matrix Hhat := (b_i^T H b_j) is irreducible and non-degenerate (its off-diagonal entries
+are >= 0 automatically, the supports being disjoint). Then H has exactly one positive eigenvalue.
+Proof. H_i a = l_i and a^T H_i a = sigma_i, so by step 2 of Lemma B H_i <= l_i l_i^T/sigma_i, and summing, H <= H D' H with
+D' := sum_i b_i b_i^T/sigma_i. On W := span(b_i) this reads Hhat <= Hhat C Hhat, C = diag(1/sigma_i); Hhat 1 = sigma, so steps 4-5 of
+Lemma B (Perron on the r x r matrix) give that Hhat has exactly one positive eigenvalue. Every x is z + x' with z in W and
+b_i^T H x' = 0 for all i (Hhat non-degenerate); then x'^T H x' <= x'^T H D' H x' = 0 and x^T H x = z^T H z + x'^T H x'.  QED
+r = n is Lemma B, r = 1 is "H <= l l^T/s", the conclusion itself. The cone tensor of Lemma C has T.b with at most one positive
+eigenvalue for EVERY b with l.b >= 0 (the proof of Lemma C with l_k replaced by l.b and H e_k by H b). So each of these
+intermediate conditions is, as an existence statement, again equivalent to the conclusion. For T^BE the block condition reads
+sum_{k in S} pi_k (Gamma_2 - Gamma)(k) >= sum_{k in S} pi_k (Kf)_k^2 - (sum_{k in S} pi_k (Kf)_k)^2/pi(S), which is stronger than
+block-averaged CD(1) (the right side is a variance, >= 0).
+
+## 7. Board B49: one fibre FIELD instead of two fibre nodes (`blockbe.py.txt E`)
+W0 := form of the kernel e^{-|x-y|/2} (the m = 0 term of w), P := pole form 2<f,p><f,q>. Kernel identity:
+   p(x)q(y) + q(x)p(y) - e^{-|x-y|/2} = e^{|x-y|/2} =: E(x,y).
+e^{-|x-y|/2} is the Green function of -d^2/dx^2 + 1/4 on the line (2 kappa = 1), p and q are its two harmonic functions, and -E is the
+growing fundamental solution (boundary conditions u' = +-u/2 at the ends). PROVED: E has exactly one positive eigenvalue on any
+window (E = P - W0, W0 > 0, P has one positive eigenvalue, <1, E 1> > 0); E has full rank, so NO single border node can replace
+the two fibres in the shift picture (a node contributes rank one to the Schur complement). In the mirror picture the same
+kernel is e^{(x+y)/2}, rank one: that is where S1-parity's cancellation (B25) lives.
+One-field form (PROVED, Haynsworth): N' := N - W0 = primes - (arch without its slowest exponential). Then N' - E = -Q and
+   #positive eigenvalues of [[N', E],[E, E]] = 1 + #negative eigenvalues of Q   (E non-degenerate of signature (1, n-1)).
+All off-diagonal entries of this 2n x 2n matrix are >= 0 (w - e^{-u/2} = sum_{m>=1} e^{-(2m+1/2)u} > 0; E > 0).
+COMPUTED 24 boxes: E = direct compression of e^{|x-y|/2} to 3e-15; eig(E) = 2.894, -5.9e-4, ...; min off-diagonal of N' 8.8e-4 (L = 1),
+4.5e-3 (L = 0.5); #pos = 1, 1, 5, 2 = 1 + #neg(Q) for zeta L = 1, 0.5, Beurling L = 1, no primes L = 0.45.
+The matrix inverse of the box compression of E is NOT tridiagonal (defect 1e2), so I make no claim about E^{-1} on boxes.

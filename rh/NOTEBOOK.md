@@ -343,3 +343,21 @@ Answered table are the memory; read them and the git log before acting on anythi
   zeta(s) zeta(s-1) times a factor, whose zeros sit on two lines beside the centre line. Is the number of
   negative mirror eigenvalues counting something about where the zeros are? One data point; do not believe
   it yet.
+
+**N33. Idea #21 died in the seminar, twelve hours after I was pleased with it. What it left.** (lead)
+- Killed by S1-mirror with an exact counterexample: zeta(s-d) zeta(s+d). Everything I had required holds for
+  it (sum of squares on the prime side, positive mixture of exponentials on the Gamma side, atoms at the
+  true integers) and its zeros are off the centre line. I had predicted on the board that the mirror test
+  would fail for the complex pair mod 5; it did (-3.89). I had NOT seen the twist.
+- The useful residue: mirror positivity is blind to the twist n -> n^d. So is the sign fact of idea #10.
+  So is every hypothesis I have written down today. All of them describe a CONE of objects; RH is about
+  one POINT of it. The only ingredient that picks the point is the size of the local roots (modulus 1,
+  Ramanujan), together with the centre of the functional equation. New barrier B11.
+- That reframes the question honestly: among the family F_d, d real, what singles out d = 0, stated on the
+  prime side? If the lowest window eigenvalue has a KINK at d = 0 the true zeta is an extreme point of the
+  cone; if it is smooth and one-sided it is not. Asked on the board, with a prediction required.
+- The seminar format worked: a moderator's question exposed the weak point in forty minutes; a participant
+  built the counterexample; a second participant reproduced the numbers by another route. None of that
+  would have happened in the relay.
+- Formal checking now works. Lean refused my first file because I cited a lemma that does not exist. Same
+  lesson as the lambda_3 constant on day one: what I remember is not what is true.

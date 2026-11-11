@@ -82,6 +82,15 @@ Each new idea is run against this list. "Cannot answer yet" is allowed, but the 
   side; Beurling systems have the multiplicative side without the additive one. RH lives only where both
   hold. → *Where does your argument use the additive structure of ℤ and the primes together?*
 
+- **B11 The centre must be used (seminar S1, 2026-11-11).** F_d(s) = ζ(s−d)ζ(s+d), 0 < d < 1/2, has an Euler
+  product with real local roots p^(±d), non-negative log-derivative coefficients, atoms at the logs of the
+  true integers, a functional equation s ↔ 1−s, and its zeros lie on Re s = 1/2 ± d. Its Weil kernel is ζ's
+  multiplied by 2cosh(du). It fails only the size normalisation of the local roots (Ramanujan: modulus 1).
+  → *Run the argument on F_d. Any hypothesis invariant under the twist n ↦ n^d cannot work: where does your
+  argument use the size of the local roots, i.e. where does it know which line is the centre?*
+  Three things had been lumped together as "the integers" and are now separated (S1-mirror): POSITIONS of the
+  atoms (lost by Beurling systems, B10), COMPLETENESS of the set of primes, and the exact WEIGHTS log p.
+
 ## 4. Numbers worth having at hand
 
 - γ₁ = 14.134725141734693…, γ₂ = 21.022039638771555…, γ₃ = 25.010857580145688… ✔ (tests)

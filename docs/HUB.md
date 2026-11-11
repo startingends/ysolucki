@@ -29,7 +29,7 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 |---|---|
 | [`IDEAS.md`](IDEAS.md) | **the hub of the work**: the MAIN idea log (audited entries only), plain-English first, each with test and kill line |
 | `rh/experiments/<job>/IDEAS_LOCAL.md` | each agent's own unreviewed idea log; `python3 tools/hubcheck.py` lists what still awaits audit |
-| [`KNOWLEDGE.md`](KNOWLEDGE.md) | equivalents of RH, what is proved, barriers B1–B10 every idea must face |
+| [`KNOWLEDGE.md`](KNOWLEDGE.md) | equivalents of RH, what is proved, barriers B1–B11 every idea must face |
 | [`DECISIONS.md`](DECISIONS.md) | open decisions with the default in use |
 | [`JOURNAL.md`](JOURNAL.md) | append-only record of finished jobs |
 | [`AGENT_REGISTRY.tsv`](AGENT_REGISTRY.tsv) | every agent / workflow spawned |
@@ -38,11 +38,11 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 ## Idea board (keep in step with `python3 tools/ideas.py list`)
 | status | ideas |
 |---|---|
-| testing | **#21 two positivities of one kernel: primes as the mirror spectrum, zeros as the shift spectrum** (built on round-2 results; 5 of 6 blind predictions hit; the bridge is unproved) · #1 control-group lab (instrument) · #8 first-failure window · **#9 bootstrap: positivity forces the primes and their positions** (core found in an unreviewed 2026 preprint) · #14 missing-prime law |
+| testing | #1 control-group lab (instrument) · #8 first-failure window · **#9 bootstrap: positivity forces the primes and their positions** (core found in an unreviewed 2026 preprint) · #14 missing-prime law |
 | alive (instruments and controls) | #12 theta-power dial (a family through ζ with off-line zeros at n = 1.4) · #17 zero-surgery controls · #19 pencil lab |
 | open | #4 heat-flow particles · #5 Nyman–Beurling least squares · #7 one prime at a time · #13 the dial is rigid yet loses RH · #15 one price list for missing primes · #16 two-regime visibility law |
 | parked | #10 arithmetic Lorentzian geometry (round 2: a certificate exists whenever positivity holds, so it is a reformulation; the one cubic with a formula loses a factor 2) · #2 truncated Weil positivity (already in the literature) · #6 Lee–Yang in Bohr's variables (owner rule 1) |
-| killed (reason kept) | #11 prime jump process / curvature (structural factor 2; blind to the Beurling control; process picture already published) · #3 Li split (pure reformulation) · #18 horizon lemma (judge's counterexample: two regimes of visibility) · #20 one-gap reduction (hypothesis already contains RH) |
+| killed (reason kept) | **#21 mirror positivity** (seminar S1: the bridge is false; counterexample ζ(s−d)ζ(s+d); everything assumed so far is blind to the twist n ↦ n^d: barrier B11) · #11 prime jump process / curvature (structural factor 2; blind to the Beurling control; process picture already published) · #3 Li split (pure reformulation) · #18 horizon lemma (judge's counterexample: two regimes of visibility) · #20 one-gap reduction (hypothesis already contains RH) |
 
 Round-1 audit: 33 agent ideas decided: 9 promoted (#12–#20), 20 merged into existing ideas as notes,
 4 skipped (`rh/experiments/r1_audit/AUDIT.md`). `python3 tools/ideas.py check` lists 18 recorded rule failures.
@@ -85,9 +85,11 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
   `rh/THEORY.md`), K-atlas (builds `rh/ATLAS.md` and runs the pairing job), FH (foothold hunt,
   `rh/FOOTHOLDS.md`), BG (bigger statement, `rh/BIGGER.md`). Specialists SP-reflection and SP-operator are
   chartered in `rh/specialists/ROSTER.md` and NOT yet started: they join seminar S1 at its second turn.
-- **Formal checking: configured by the owner, not usable in this session** (decision D8). The environment's
-  setup script now installs Lean, but it runs only when a container is built; in-session installation was
-  refused three times by the permission classifier and was not worked around. A new session will have Lean.
+- **Formal checking works** (decision A16): Lean 4.35.0 installed in this session with the owner's approval;
+  project `rh/formal/`; `RHFormal/Smoke.lean` machine-checked; mathlib fetch running in the background
+  (`lake -d rh/formal update`). No project lemma is formal yet.
+- **Seminar S1, turn 2** running (woken 00:04): socrates, curv, parity, mirror; cubic woken after its turn 1;
+  specialists SP-reflection and SP-operator join in this turn (first sessions).
 - Awaiting audit: ideas in the local logs of r2_cubic, r2_curv, r2_parity (and the creation seats when
   they finish). The auditor's test for created ideas is the two questions, not likelihood.
 

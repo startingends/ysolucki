@@ -1,0 +1,9 @@
+EVEN ground state, L=0.75 N=40: eigenvalue 4.59826e-15 (second 1.327e-9); folded phi on (0,L]: min 3.328e-7 max 1.648, sign changes on a 400-point grid: 0   (3s)
+   n=2: g(log n) = 0.036289 ; shift tau = 3.8649e-6 ; mirror h = 0.036285 ; h/tau = 9388.0 ; first-order cap mu/(2 n^-1/2 g) = 8.96e-14 (RAISING the weight)
+   n=3: g(log n) = 3.9876e-5 ; shift tau = -7.5663e-82 ; mirror h = 3.9876e-5 ; h/tau = tau=0 ; first-order cap mu/(2 n^-1/2 g) = 9.986e-11 (RAISING the weight)
+   n=4: g(log n) = 4.3793e-10 ; shift tau = -1.428e-81 ; mirror h = 4.3793e-10 ; h/tau = tau=0 ; first-order cap mu/(2 n^-1/2 g) = 1.05e-5 (RAISING the weight)
+ODD ground state, L=0.75 N=40: eigenvalue 3.72659e-12 (second 2.839e-7); folded phi on (0,L]: min 2.448e-6 max 1.43, sign changes on a 400-point grid: 0   (4s)
+   n=2: g(log n) = -0.26259 ; shift tau = 4.6026e-6 ; mirror h = 0.2626 ; h/tau = 5.705e+4 ; first-order cap mu/(2 n^-1/2 g) = 1.003e-11 (LOWERING the weight)
+   n=3: g(log n) = -0.0016939 ; shift tau = 4.6534e-82 ; mirror h = 0.0016939 ; h/tau = tau=0 ; first-order cap mu/(2 n^-1/2 g) = 1.905e-9 (LOWERING the weight)
+   n=4: g(log n) = -8.3481e-8 ; shift tau = -1.6254e-81 ; mirror h = 8.3481e-8 ; h/tau = tau=0 ; first-order cap mu/(2 n^-1/2 g) = 4.464e-5 (LOWERING the weight)
+total 5s

@@ -24,7 +24,7 @@ PROOF_uniqueness.md: Theorem U, all three steps re-derived (g-hat = |fhat|^2; E(
 
 ### B. Reruns of the seat's numbers (copies wb/v1/v2/v3 .py.txt here, driver rerun_all.sh.txt, logs in rerun/)
 v1, v2 a, v2 bg, v2 sieve int, v2 sieve half, v2 joint int 40: output IDENTICAL to the seat's logs (diff, timing stripped).
-v3 int/half at L=0.5 (subset of positions): identical lines. v2 joint half 60: (fill in when finished; see rerun/).
+v3 int/half at L=0.5 (subset of positions): identical lines. v2 joint half 60: identical (0 differing lines).
 One cosmetic difference: PROGRESS table says -2.3e-6 at x=1.9995 (int 30); v3 at dps 22 gives -2.443e-6 (the table value
 came from the coarser v2 'pos' golden section). Sign and conclusion unchanged.
 Lead's quoted numbers found in the lead's own logs: e10 test_a.log (-0.01203, -9.051e-10, -2.105e-23), e9 boot_L1.0.log
@@ -95,3 +95,50 @@ on every window. This removes wall WP1 as a wall of bookkeeping: the right signa
  * Offered to S1-mirror: first failing window of F_d = zeta(s-d) zeta(s+d) with implementation B (kernel x 2cosh(du)).
  * Watch: refuter r2_parity/refuter/PROGRESS.md (only predictions V1-V7 so far, no findings at 23:40).
  * To do next turn: answer replies; if asked, compute F_d first-failure window; two-prime model recomputation for S1-mirror.
+
+### G. Second-route recomputation of S1-mirror's B18/B19 (b19check.py.txt/.log, b19conv.py.txt/.log)
+All printed numbers REPRODUCED in the same basis (int N=40). Thresholds (exact pencil): weight at 4: L=0.75 [-6.02e-5, +1.419e-5],
+L=0.80 [-3.882e-8, +6.126e-9]; weight at 2, L=0.75 [-1.448e-11, +1.292e-13]; half/60: [-5.696e-5, 1.191e-5], [-3.984e-8, 5.465e-9],
+[-1.428e-11, 1.122e-13]. NOT CONVERGED row: L=0.70 flipped weight at 4, odd block: int -1.73e-10, -1.33e-9, -3.53e-9 (N=40,80,120),
+half -2.57e-6, -4.47e-6, -5.05e-6 (atom at 4 is 0.0137 inside the edge). S1-mirror withdrew the L=0.70 rows (B55).
+
+### H. Answer to B41 (S1-curv): exact inertia (inertia.py.txt/.log). PROVED (Schur complement / Haynsworth):
+   kappa_+(N_e) = kappa_-(Q_e) + [t_e > 1],  kappa_+(N_o) = kappa_-(Q_o) - [t_o < -1],  t_e = 2<c,Q_e^-1 c>, t_o = 2<s,Q_o^-1 s>.
+   0 failures in 20000 random indefinite cases; zeta windows: t_e = 0.198 (L=.05), 0.842 (.10), 1.345 (.12), 7.83 (.20), 1.3e6 (.5), 1.15e29 (1).
+   One-quartet config has kappa_+(N) = 1 iff t_e < 1 and t_o < -1 (WP1 as a computable condition).
+   At a first failure with null vector psi not orthogonal to cosh: second eigenvalue of N_e at L_0 strictly negative (PROVED);
+   persistence past L_0 needs continuity of eigenvalues of N_L in L (not cited) -> HEURISTIC beyond L_0 (corrected in B57).
+
+### I. Reply to my seat's checker (R2-parity-ref) posted as B57. CONCEDED: position right end (feasible positions inside
+   (1.9996, 2.0080), not [1.9996, 2.0085]); P5 control never computed; C2 'cannot be improved' is an observation; Lemma 2 label
+   needs 'given S1, CORE' + distinct zeros; attributions (CC Prop 2.1, CCM Thm 3.6); 'one parity block suffices' KNOWN (Yoshida 1992
+   Prop 1); first-failure Thm 3 KNOWN in substance (Suzuki p.5, Yoshida Thm 2); Theorem U 'false on every window' now has the checker's
+   one-line proof. DEFENDED and reproduced by the checker: Lemma 1, Prop 3, Theorem 4, Theorem U, V1-V7.
+
+### J. Answer to B48 (S1-mirror) (b48.py.txt, b48_L1.log, b48_L075.log)
+ g = autocorrelation of a block ground state at log n = tau + h (even), tau - h (odd). FACT 1 (PROVED): tau_n = 0 if log n >= L:
+ prime powers in [e^L, e^2L) act on parity eigenfunctions only through the mirror form. FACT 2 (COMPUTED): folded ground states of both
+ blocks have one sign on (0,L] (L = 0.75, 1). FACT 3 (PROVED, trial vector): weight at n can rise by <= mu_e sqrt(n)/(2 g_e), fall by
+ <= mu_o sqrt(n)/(2|g_o|); these caps reproduce the checker's exact end points to 0.1% (n<=5), 2% (6), 18% (7) at L=1.
+ L=1 even: h = 0.051514, 2.1325e-4, 2.0018e-7, 3.6748e-11, 5.4277e-16, 1.4011e-23 (n=2..7), tau_2 = 1.0583e-4.
+ L=1 odd: h = 0.3056, 5.8925e-3, 1.5003e-5, 6.3572e-9, 2.1416e-13, 1.593e-20, tau_2 = 1.7917e-4.
+ OPEN (named): prove that the folded ground states of Q_even and Q_odd are positive on (0, L].  (S1-parity/#6)
+
+### K. BLIND PREDICTION for F_d = zeta(s-d) zeta(s+d) (requested by S1-mirror in B55; written 2026-11-11 00:03 UTC, NOTHING computed yet)
+ Kernel = zeta kernel x 2cosh(du). To first order Q_d(f) = 2 Q_0(f) + d^2 * W(u^2 g_f): fails when d^2 |X| > 2 mu(L), X = u^2-weighted
+ form on the ground state, IF X < 0 (sign not known to me; guess X < 0 on the even ground state).
+ P-F1. d = 0: positive at every L tested, lowest eigenvalues exactly 2 x zeta's (4.6e-15 x 2 at L = 0.75).
+ P-F2. first failing window L_0(d): d = 0.25: in (0.30, 0.50); d = 0.10: in (0.35, 0.60); d = 0.05: in (0.40, 0.70); decreasing in d.
+ P-F3. the EVEN block fails first for all three d.
+ P-F4. negative squares per block at L = 1: d = 0.25: between 2 and 10 (guess 4); d = 0.05: between 1 and 5 (guess 2);
+       at L = 1.5 at least as many, guess double. even count = odd count +- 1.
+ Control: Beurling-type control is not available for a tilt; the control is d = 0 (must give zero negative squares).
+ What would surprise me: L_0(d) > 0.8 for d = 0.25, or the odd block failing first, or X > 0.
+
+### L. TO DO next turn
+ 1. F_d computation (generalise phi_arch to exponents 2m + a0, a0 = 1/2 +- d; pole exponents 1/2 +- d; atoms x 2cosh(d log n);
+    validate against the zero side with zeros gamma +- i d). Post result re B55.
+ 2. Read replies to B33 (cubic answered: B52), B34 (mirror answered: B45), B35 (curv answered: B53), B58 (positivity of ground states).
+ 3. DONE (B61): v3 int/120 at x=2.008 gives -1.666e-6 infeasible; checker confirmed. Board posts of turn 1: B20-B25, B32-B35, B43, B44, B56-B59, B61.
+ 4. Possible own idea: 'mirror-only' regime: atoms in [e^L, e^2L) act only through h_n; block inequalities on the window written
+    with T restricted to n < e^L. Smallest statement: positivity of folded ground states.

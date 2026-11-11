@@ -1,0 +1,29 @@
+import sys, math, numpy as np, scipy.linalg as sl
+from scipy.optimize import minimize
+exec(open("/home/user/ysolucki/rh/experiments/r2_judge/j3.py.txt").read().split('which = sys.argv[1]')[0])
+M = 40; h = 2.0 / M
+for name, shift in (("zeta", None), ("beurling", 2.1), ("arch only", "none")):
+    if shift == "none":
+        saved = jb.primes; jb.primes = lambda X, s=None: {}; N, p, q_ = jb.boxN(1.0, M); jb.primes = saved
+    else:
+        N, p, q_ = jb.boxN(1.0, M, shift)
+    Hk = np.array([[N[20 + i, 19 - j] for j in range(20)] for i in range(20)])
+    e = np.linalg.eigvalsh((Hk + Hk.T) / 2)
+    print("J14 Hankel %s: min %.4f, negative %d of 20 (threshold -1e-10)" % (name, e[0], (e < -1e-10).sum()))
+    if shift == "none": continue
+    x = (np.arange(M) + 0.5) * h - 1.0
+    sh = (p - q_) / 2
+    print("   odd margin 1 - 2 s^T(-N)^-1 s = %.6e" % (1 + 2 * sh @ np.linalg.solve(N, sh)))
+    ev, lam1, u, q, Lg = chain(N); Gs, G2 = gam_mats(q, Lg); pi = u ** 2 / (u ** 2).sum()
+    A = [np.outer(np.eye(M)[y] - pi, np.eye(M)[y] - pi) for y in range(M)]
+    LA = [sum(Lg[x_, y] * A[y] for y in range(M)) for x_ in range(M)]
+    LG = [sum(Lg[x_, y] * Gs[y] for y in range(M)) for x_ in range(M)]
+    def rho(cc):
+        c, c2 = cc
+        return min(be_const(G2[i] - c * LA[i] - c2 * LG[i], Gs[i], i) for i in range(M)) / lam1
+    best = None
+    for start in ((0.3, 0.2), (1.0, 0.2), (0.3 * lam1, 0.2), (0.0, 0.0)):
+        r = minimize(lambda cc: -rho(cc), start, method="Nelder-Mead", options={"xatol": 1e-5, "fatol": 1e-7, "maxiter": 600})
+        if best is None or -r.fun > best[0]: best = (-r.fun, r.x)
+    print("   calibrated BE: plain %.4f ; c=lam1/4 only %.4f ; sup over (c,c') = %.4f at (%.3f, %.3f) ; as a fraction of own gap %.4f" % (
+        rho((0, 0)), rho((lam1 / 4, 0)), best[0], best[1][0], best[1][1], best[0] * lam1 / (lam1 - ev[-2])))

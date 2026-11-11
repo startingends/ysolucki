@@ -25,7 +25,7 @@ Owner's standing instructions:
    rejected on sight.
 2. **No pure reformulations.** "RH is equivalent to X" counts only if X brings in an input the original
    did not have, and the idea names that input.
-3. **Work backwards from the constraints.** Given B1–B10, what must the key lemma of any proof look like?
+3. **Work backwards from the constraints.** Given B1–B11, what must the key lemma of any proof look like?
    Design to that shape (`rh/KEY_LEMMA_SHAPE.md`), not from what is familiar.
 4. **A surprising prediction.** Each idea states a number before computing it, one that would come out
    differently for the impostor. If nothing could surprise us, the idea says nothing.
@@ -76,7 +76,7 @@ Every claim carries its level. Nothing is reported above the level it has earned
 
 ## Standard for a claimed proof (any step at L2 or above)
 1. Written out in full, every inequality with its constants.
-2. Passed through barriers B1–B10 in `docs/KNOWLEDGE.md`, in writing.
+2. Passed through barriers B1–B11 in `docs/KNOWLEDGE.md`, in writing.
 3. Run on the control group; the failing step for the counterexample is exhibited.
 4. Three independent refuters with different lenses (logic / analysis estimates / "does it prove too much"),
    then a judge. Survives only if no reproduced gap remains.

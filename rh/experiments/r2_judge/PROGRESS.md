@@ -36,3 +36,22 @@ J10 determinant identity: 2 c^T N_e^-1 c - 1 = det(Q_e)/|det N_e| in my box basi
 J11 my box matrix (third implementation: diagonal from Theorem E with a closed form for the tail integral) against the
    seats: zeta L = 1 M = 40: lambda_1 = 4.303094, gap/lambda_1 - 1 = 3.36e-3, BE worst 0.4963, centre 0.5222;
    Ntilde n = 12: 5.305946, -1.8115e-3. Beurling L = 1 M = 40: 5 positive eigenvalues, gap/lambda_1 = 0.9141, BE 0.4989.
+
+J12 (written 00:02 UTC 11-11, before computing) feasible interval of the weight at 6, L = 1, N = 40, lead's Arb builder,
+   end points from the generalised eigenvalues of (shift form at 6, Weil form), no bisection, 90 digits.
+   Predict: [-1.250e-13, +1.824e-14] in units of c_6 (the checker's exact values; lead recorded [-1.15e-13, 1.78e-14],
+   seat [-1.241e-13, 1.811e-14]); lowest Weil eigenvalue 8.2493e-30.
+   Control (named in the seat's P5 but without a log line, per the checker): with the prime 2 moved to 2.1 no value of
+   the weight at 6 makes the form non-negative; predicted best lowest eigenvalue below -0.01.
+
+J13 (written 00:04 UTC 11-11, before computing) toy sanity check of Theorem 4's count on the zero-side form alone:
+   zero set = 40 real ordinates +-(14 + 3j), j = 0..19, plus quartets at a + ib = 20.5 + 0.3i and 33.3 + 0.2i; Fourier
+   basis with 81 modes on [-L, L], L = 0.5, 1, 2, 4; count eigenvalues below -1e-8 in each parity block.
+   Predict: (even, odd) = (2, 2) at every L, never 3; with one quartet only (1, 1); quartet multiplicity 3 changes
+   nothing. Control: both quartets moved onto the line (b = 0): (0, 0).
+
+J14 (written 00:06 UTC 11-11, before computing), my box matrix, L = 1, M = 40:
+   Hankel (reflection) matrix K(x_i + x_j) on the 20 positive boxes: arch part 0 negative eigenvalues; with zeta atoms
+   smallest -1.1227 and 9 of 20 negative; Beurling smallest -1.1725. Odd sum-rule margin 1 - 2 s^T(-N)^-1 s = 3.2074e-2.
+   Calibrated Bakry-Emery, sup over (c, c') of the pointwise constant / lambda_1: zeta 0.7923, Beurling 0.7694.
+   (All are the seat's and the checker's common values; the control is the Beurling column.)
