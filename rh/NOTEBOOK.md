@@ -774,3 +774,9 @@ SP-operator's round 2; labels on each line; novelty NOT searched).
   exactly the kind of sum the quasi-RH tools bound (twisted Möbius sums over ℤ[ω] in families). SP-reflection's
   round 3 item (2) asks for this double sum and for what the 7/8 theorem gives for it. That is the next plank, and
   the first point in this whole line where the October 2026 input could enter OUR object.
+- SP-MODULAR ROUND 2b (`rh/specialists/modular/OBJECT_PHI.md`): correction accepted and checked (Gröchenig
+  2007.12889); the "every zero twice" structure is a union Z(F) ∪ Z(F)/3, not an invariance; the kernel factors
+  K ⋆ K(3·), and the impostor at i√5 gives a positive kernel K₁ ⋆ K₁(3·) with off-line zeros, so NO theorem "positivity
+  of one factor forces real zeros of the other" can exist (proved by the fake). The theta adds only Landau's lemma at
+  Re s = 1. The one positivity tied to θ₃ that does not factor through K is the cusp part ⟨|θ₃|², u_j⟩ (Ichino-type
+  triple products); unexamined. Recorded as dead except for that item.
