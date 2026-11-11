@@ -83,3 +83,12 @@ part plus an oscillation of period pi / gamma_0 = pi / 85.699 = 0.03666 in L.
  P11. The first failure at L = 1.71 is a minimum of that oscillation: 2 * 85.699 * 1.71 + phi is within 0.6 rad of
       an odd multiple of pi (using phi fitted at L near 1.25, far from the failure).
  Would end this line: no oscillation (|b|/a < 0.03), or a different period.
+
+## Plank 12 outcome (scan_dh.log, scan_zeta.log)
+P10 FAILED. Impostor, even bottom-rung ratio on L = 1.200 ... 1.312: 3.15, 3.11, 3.10, 3.07, 3.11, 3.19, 3.28, 3.38,
+3.56, 3.79, 3.99, 4.03, 3.85, 3.60, 3.51: one slow hump of scale about 0.1 in L, relative size 14%; nothing with
+period 0.0367. Zeta, same quantity on L = 0.600 ... 0.712: 3.48, 3.59, 3.74, 3.94, 4.23, 4.47, 4.52, 4.39, 4.10, 3.76,
+3.68, 3.81, 3.86, 3.89, 4.24: a hump of the same size and scale. So the wobble is generic (zeros passing the band
+edge) and is NOT a signature of the off-line zero. P11 is moot. No early warning in the ratio either.
+Convergence of plank 2 at L = 1.0 with 60 modes and fine quadrature: Rayleigh quotient 1.078e-29, i.e. 1.48 times
+the eigenvalue in that basis (7.30e-30) and 1.71 times the converged value 6.31e-30.

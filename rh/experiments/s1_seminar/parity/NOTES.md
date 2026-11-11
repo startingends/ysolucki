@@ -282,3 +282,36 @@ Foothold second route (fh_*.py.txt, logs): see section V below (written when the
      d = 9.5e-6 (the explicit vector is not the ground state, so later than d_c = 7.93e-6); kappa_4(d) changes sign between
      7.93e-6 and 9.5e-6; at d = 7e-6: kappa_4 between 0.05 and 0.4, kappa_1 between 0.7 and 1.1 (zeta: 0.675, 1.92).
      NOTE: 'the one-prime system at L = 0.5' is IDENTICAL to zeta there (3 enters at 0.549), so it is not a control; I use F_d.
+
+### V. FOOTHOLD SEAT, second route (posted B196). Files fh_check.py.txt (A: fh_check_A.log), fh_x.py.txt/.log, fh_poly.py.txt (fh_poly_half.log,
+###    fh_poly_054.log), fh_poly2.py.txt/.log, fh_poly3.py.txt (fh_poly3_half.log; hull scan killed for time).
+ REPRODUCED: a(40), 2m; Lemma 5 vs implementation B on edge-nonvanishing functions (1e-30, six cases); Theorem B(iii) no-atom bottoms
+ (-0.0323519539, -0.322228345; -0.0650680866, -0.410363726); Theorem B(ii) L=1/2 in the same polynomial space: feasible e^y in
+ [1.9996146, 2.0080402] (certified residual (1.999585, 2.008058)), weights at y=log 2: [0.489531, 0.490166]; Theorem A consistent
+ (my Rayleigh-Ritz at (1/2)log 3: 5.55e-8 / 1.50e-5 at N=120 >= certified 9.9998e-9 / 3.9999e-6).
+ NOT REPRODUCED (outside the proofs): quoted float Rayleigh-Ritz 'true atom' values 9.0567e-7 / 1.9601e-4 (L=1/2), 6.447e-8 / 2.4997e-5 (27/50).
+ Mine in the same polynomial spaces: 9.41663e-7 / 1.9573e-4 ; 1.07699e-7 / 2.47159e-5. With y = 0.693147, m = 0.490129: 9.075e-7 / 1.95986e-4 ;
+ 6.69e-8 / 2.49706e-5 -> diagnosis (HEURISTIC): they were computed at a rounded position.
+ Trig Rayleigh-Ritz (atom 2 only): L=1/2: int 40/80/120: 9.4996e-7, 9.3744e-7, 9.3519e-7; half: 1.0189e-6, 9.820e-7, 9.670e-7.
+ L=0.54: int 1.0988e-7, 1.0714e-7, 1.0666e-7. L=(1/2)log 3: int 5.757e-8, 5.579e-8, 5.552e-8; odd 1.708e-5, 1.615e-5, 1.578e-5.
+
+### W. PLANK 4 RESULTS (posted B203, B204). plank4.py.txt, logs plank4_L05_int28, _L075_int28_K8, _L1_int34, _L05_int120, _L05_half60,
+###    _L075_int80_K8, _L1_int80.
+ At the lead's basis: every number of planks 1-3 reproduced to printed digits (two independent implementations).
+ Refinement: lowest even eigenvalue -3.5% (L=.5, N=120), -19% (L=.75, N=80), -32% (L=1, N=80). Rayleigh/mu_1 even/odd: 1.218/1.105 (L=.5),
+ 1.142/1.157 (.75), 1.494/1.361 (1.0). kappa_4 even/odd: 0.366/0.322, 0.675/0.594, 0.842/0.837.
+ K to 8 at L=.75, N=80: even 1.30, 1.03, .714, .675, .369, .336, .327, .293; odd 1.53, .931, .672, .594, .332, .326, .322, .268. (N=28 values
+ for K>4 are truncation artefacts: .136 / .052 at K=8.)
+ PROVED remark: E(g)|window = 0 for g supported in (-1/lambda, 1/lambda) (unscaled), so with fixed companions inf Q/leak = 0; kappa_K -> 0
+ is forced for the Gram-matrix D of plank 3; plank 6's D_L (inf over companions) is the object to test.
+ Control F_d/2, L=.75, even block kappa_1/kappa_4/kappa_8: N=28: d=5e-6: 1.40/.653/.136; 7e-6: .889/.333/.133; 7.9e-6: .605/.104/.076;
+ 1e-5: -.188/-.583/-.589. N=80, d=7e-6: .268/.147/.125 (zeta 1.30/.675/.293). kappa_1 linear in d^2, zero at 9.54e-6.
+ Scoring of section U: reproduction expectations all HIT; BLIND eigenvalue falls: L=.5 HIT, L=.75 MISS (19% not 10%), L=1 HIT;
+ BLIND ratio growth 1.3-2.5: MISS (stable at L=.5, falls at .75, rises at 1.0); BLIND kappa_8 levelling: MISS (0.293 / 0.268, still creeping);
+ BLIND control: kappa_1(7e-6) in (0.7, 1.1): HIT (0.889 at N=28); kappa_4(7e-6) in (0.05, 0.4): HIT (0.333); zero of kappa_1 at 9.5e-6: HIT.
+
+### X. B188 (K-atlas): b188.py.txt, b188_cone.log, b188_shares.log. (N) = odd minimiser nodeless; (C) = odd block >= 0 on one-signed phi.
+ Failed rows: (N) ok, (C) fails: no primes .45, Beurling .50, Liouville .5. (N) fails, (C) holds (PROVED via zeta's (C) + extra mirror
+ mass): weight at 4 doubled. BOTH fail: weight at 4 flipped (zeta's odd ground state has energy -1.157e-7 there), one-prime .60 (-1.41e-4),
+ Beurling L=1 (-0.058). Impostor 1.8: (N) fails, (C) untested. So 'exactly one' is false on 3 rows.
+ Shares at L=1 (N=40): T_W .0569 + Gamma .4304 + primes .5127; prime 2: 97.6% of the prime term, 3: 2.4%; E_0^2/E_+^2 = .591; centre of mass .246.

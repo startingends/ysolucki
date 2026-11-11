@@ -1,2 +1,6 @@
 zeta odd ground state, L=1.0 N=40: mu = 2.228e-26 ; shares of E_+^2: T_W 0.05689 + Gamma squares (m>=1) 0.4304 + prime mirror 0.5127 (sum - 1 = 3.72e-26) ; E_0^2/E_+^2 = 0.5907 ; centre of mass of phi^2: x = 0.2462 (L = 1.0)
    prime shares of the mirror term: 2: 0.976 ; 3: 0.0243 ; 4: 3.39e-5 ; 5: 2.98e-8 ; 7: 7.63e-20   (16s)
+zeta odd ground state, L=1.25 N=50: mu = 3.3314e-50 ; shares of E_+^2: T_W 0.04947 + Gamma squares (m>=1) 0.4127 + prime mirror 0.5378 (sum - 1 = 5.37e-50) ; E_0^2/E_+^2 = 0.5834 ; centre of mass of phi^2: x = 0.251 (L = 1.25)
+   prime shares of the mirror term: 2: 0.963 ; 3: 0.0366 ; 4: 0.000125 ; 5: 6.2e-7 ; 7: 2.88e-13 ; 8: 1.53e-17 ; 9: 9.86e-22 ; 11: 2.47e-33   (30s)
+zeta odd ground state, L=1.5 N=70: mu = 2.6395e-83 ; shares of E_+^2: T_W 0.04508 + Gamma squares (m>=1) 0.4009 + prime mirror 0.554 (sum - 1 = 4.16e-83) ; E_0^2/E_+^2 = 0.5783 ; centre of mass of phi^2: x = 0.2544 (L = 1.5)
+   prime shares of the mirror term: 2: 0.954 ; 3: 0.0461 ; 4: 0.000246 ; 5: 2.48e-6 ; 7: 1.51e-11 ; 8: 6.89e-15 ; 9: 9.85e-18 ; 11: 5.62e-24 ; 13: 2.59e-31 ; 16: 3.53e-45 ; 17: 5.14e-50 ; 19: 1.33e-64   (98s)

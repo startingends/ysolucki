@@ -2,3 +2,16 @@ L = 1/1, lam^2 = 7.3891, NB = 116, nh = 40, prec = 520; prime powers [2, 3, 4, 5
 D built 20s (x nodes 1176, xi nodes 206)
  degree < 84: kappa_min = 0.297958  second = 0.300318  kappa_max = 3.20878   (24s)
  degree < 100: kappa_min = 0.2979  second = 0.300249  kappa_max = 3.6517   (31s)
+ degree < 116: kappa_min = 0.297833  second = 0.300232  third = 0.314164  kappa_max = 4.19355   (67s)
+ ladder of Q (10 lowest): ['5.979e-30', '1.534e-26', '2.234e-23', '2.251e-20', '1.438e-17', '5.75e-15', '1.396e-12', '2.415e-10', '3.987e-8', '4.247e-6']
+ ladder of D (10 lowest): ['6.124e-30', '1.615e-26', '2.183e-23', '2.015e-20', '1.372e-17', '6.156e-15', '1.465e-12', '2.366e-10', '4.078e-8', '4.609e-6']
+ MINIMISER: kappa = 0.297833; D(v)/|v|^2 = 2.093e-25; Q(v)/|v|^2 = 6.235e-26; even share 0.996; share in Legendre degrees >= NB/2: 5.45e-25;
+      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): [(13, '0.196', '0.158'), (90, '0.0923', '3.72'), (15, '0.0904', '0.72'), (88, '0.0751', '3.66'), (93, '0.0717', '3.89')]; energy share in rungs 1..6: 0.0103, in rungs 1..12: 0.114
+      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): ['0.9957', '1.0', '1.0', '1.0', '1.0', '1.0']; largest overlaps at Q-rungs [(1, '0.996', '5.98e-30'), (2, '0.00433', '1.53e-26'), (3, '8.84e-7', '2.23e-23'), (4, '7.72e-9', '2.25e-20')]
+ second: kappa = 0.300232; D(v)/|v|^2 = 5.413e-25; Q(v)/|v|^2 = 1.625e-25; even share 1.0; share in Legendre degrees >= NB/2: 8.57e-25;
+      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): [(12, '0.161', '0.00838'), (93, '0.11', '3.89'), (16, '0.0893', '0.735'), (14, '0.0826', '0.541'), (90, '0.0676', '3.72')]; energy share in rungs 1..6: 0.00964, in rungs 1..12: 0.219
+      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): ['1.0', '1.0', '1.0', '1.0', '1.0', '1.0']; largest overlaps at Q-rungs [(1, '1.0', '5.98e-30'), (2, '1.1e-5', '1.53e-26'), (3, '7.72e-6', '2.23e-23'), (4, '5.52e-9', '2.25e-20')]
+ MAXIMISER: kappa = 4.19355; D(v)/|v|^2 = 2.301e-28; Q(v)/|v|^2 = 9.649e-28; even share 1.0; share in Legendre degrees >= NB/2: 7.96e-26;
+      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): [(22, '0.234', '1.16'), (21, '0.168', '1.15'), (104, '0.129', '4.4'), (20, '0.104', '1.03'), (103, '0.0405', '4.39')]; energy share in rungs 1..6: 0.0172, in rungs 1..12: 0.0354
+      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): ['1.0', '1.0', '1.0', '1.0', '1.0', '1.0']; largest overlaps at Q-rungs [(1, '1.0', '5.98e-30'), (2, '9.42e-6', '1.53e-26'), (3, '1.8e-7', '2.23e-23'), (4, '1.51e-10', '2.25e-20')]
+total 99s

@@ -79,8 +79,35 @@ negative. If so, an off-line zero is visible BEFORE the first failure as a level
 | # | plank | status | confirmation demanded | outcome |
 |---|---|---|---|---|
 | 10 | The intruder: before its first failure the impostor's spectrum is the ladder plus one extra level descending through the rungs | **FAILED** (lead's runs, `e27_relative/intruder_*.log`, L = 1.2, 1.4, 1.5, 1.6, 1.65, 1.68, 1.70) | blind (a), (b), (c) as written when the plank was laid | (a) failed: at L = 1.5 there is no level without a rung below the bulk. An extra level appears only just below the bulk at L = 1.65–1.70 (0.72, 0.55; 0.43, 0.65). The ladder is regular, with ratios of order 1, down to the bottom rung at L = 1.70, which is 0.01 before the failure. The picture of a level descending through the rungs is wrong; wall WJ1 (no early warning in the SIZE of eigenvalues) stands |
-| 12 | The wobble. The impostor's bottom-rung RATIO (eigenvalue over its defect) is 3.15, 2.71, 4.37, 3.38, 3.26, 2.14, 4.48 at L = 1.2 … 1.70: it wobbles. Reason proposed: an off-line zero z enters the form of a real even f through Re[f̂(z)²], whose phase turns like 2γ₀L; an on-line zero enters through |f̂(γ)|², with no phase. So the ratio = slowly varying positive part + oscillation of period π/γ₀ in the window; the form fails at the first minimum that reaches zero | scan running | blind (committed before the scan): on L = 1.200 … 1.312, step 0.008, the ratio fits a + b·cos(2·85.699·L + φ) with |b|/a ≥ 0.10; and L = 1.71 is within 0.6 rad of a minimum of the fitted oscillation. Control: the same scan for zeta on L = 0.600 … 0.712 | — |
+| 12 | The wobble of the impostor's bottom-rung ratio is an oscillation at twice the height of its off-line zero (an early warning in a RELATIVE quantity) | **FAILED** (`e27_relative/scan_dh.log`, `scan_zeta.log`) | blind, committed before the scan | the impostor's ratio on L = 1.200–1.312 is one slow hump (3.07 → 4.03 → 3.51), nothing at period 0.0367; zeta's ratio on L = 0.600–0.712 shows a hump of the same size (3.48 → 4.52 → 3.68). The wobble is generic. There is no early warning in the ladder, in size or in ratio |
 | 11 | If plank 10 holds: RH is "the window form has no level without a rung", a statement about a COUNT (number of eigenvalues below a threshold equals the number of defects below a comparable threshold, for every window and threshold). Counts are what index arguments and continuity arguments can reach, and the Euler product has to be what forbids the intruder | idea, not a statement yet | make it precise enough to compute for the F_d and theta-dial families (how many intruders, entering where) | — |
+
+### Bridge 1: where it ends, and what it charted (lead, 2026-11-11)
+**It does not reach the island, and the record now says why.** Three confirmations in a row came back negative for
+the part that mattered: plank 9 (the impostor shares the ladder, its constant and its summation map), plank 10 (no
+level descends through the rungs before failure), plank 12 (no oscillation in the ratio). Together with the foothold
+seat's analysis (plank 8b) the conclusion is:
+- **The near-null ladder is a property of the functional equation alone** (Poisson summation). Its positivity is of
+  the classical unconditional kind: by plank 5 the energy of a rung is the Weil form of a tail of bounded duration
+  living at frequencies above the band edge c = 2π e^(2L), where the archimedean term log(c/2π) = 2L wins. That is
+  why every function with a functional equation has it, zeros on the line or not.
+- **The band edge is Montgomery's line.** c = 2π e^(2L) is exactly the height t at which the window length 2L equals
+  log(t/2π). Above it (the ladder's side) a window function cannot resolve individual zeros and positivity is
+  soft; below it the window resolves the zeros, and a window function can be built that vanishes at every on-line
+  zero in the band and keeps one off-line pair. RH is decided there, in the bulk, and on the prime side that is the
+  regime where correlations between prime powers at nearby integers enter (test-function length beyond log of the
+  height). No plank of this bridge contains a step that uses the Euler product (S1-mirror's sentence, which stands).
+- **No early warning exists in this structure**, in absolute size (wall WJ1) or relative to the ladder (planks 10,
+  12): the impostor's ladder is regular 0.01 before its failure.
+**What the bridge leaves standing, as understanding:** an explanation, with numbers, of the tiny eigenvalues and of
+their constant (about 2L per unit of leak; κ linear in L); the explicit near-null vectors to 20–50% on three windows;
+the change of variable that removes the primes from the window form; a two-sided comparison Q ≍ D_L on small
+windows by two implementations; two checked computer-assisted theorems on windows with one prime; and a sharper
+map of where the difficulty is. **What it tells the next bridge:** aim at the bulk below the band edge, with an
+input that the impostor lacks. The inputs the impostor lacks, on the record: non-negativity of the prime weights and
+their bound by the logarithm (0 ≤ Λ ≤ log), support on prime powers, complete multiplicativity of the summation
+weights. The one-prime system has all of those and lacks the functional equation. So the next hunch must use the
+functional equation AND one of these together, in the bulk. No such hunch is formulated yet.
 
 ### What would end this bridge
 - κ_K falling without bound as K grows at fixed L (plank 3 extended to K = 8, 12).

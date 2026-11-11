@@ -53,3 +53,27 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - plain english: In the odd half of the problem the troublesome pole term has the friendly sign, so a classical theorem about heat-like flows (they keep positive functions positive) applies with no smallness assumption: the lowest odd vibration has no sign change until the first prime enters the window. Example: at L = 0.3 the window contains no prime and the odd ground state is of one sign; at L = 0.35 the prime 2 enters with a term of the unfriendly sign and the theorem no longer applies, although the computed ground state is still of one sign.
 - claim: PROVED given two theorems cited from memory (Reed-Simon IV XIII.43-44, XIII.50) and one unchecked core statement: PROOFS.md P7, board B163. Not arithmetic (holds for the impostor's Gamma factor); so it fails the lead's third condition; its value is the exact place where it stops.
 - log:
+
+## #7 · Bridge plank 5: Q_L(f) = W(T) = -Q(f,T): the window form equals the Weil form of the Poisson tail, and equals minus the coupling across the cut
+- status: open
+- source: SP-operator
+- date: 2026-11-11
+- plain english: Take a profile g living on [-lambda, lambda], pile up its rescaled copies (the map E), and cut the result at the window edge. The piece inside the window is f, the piece below is the tail T. Because the whole pile has zero energy against everything, the energy of f equals the energy of T. Example: at L = 0.5 with g = s^2(1-7s^2)(1-s^2)^8 both energies are 5.319033963532e-8 to 13 digits; on the window side this number is a difference of terms 2400 times larger, on the tail side every term has its size.
+- claim: PROVED for g in C^1, piecewise C^2, supported in [-lambda, lambda], g(0) = ghat(0) = 0 (PROOF_bridge.md Thm 5.1); explicit corrections otherwise (Prop 5.2); only a limit statement for g with endpoint jumps (Prop 5.3). COMPUTED: rel. difference 5e-14 (L = 0.5), 3e-15 (L = 0.75); five blind predictions hit (bridge/PREDICTION.md). Holds for any Dirichlet series with an explicit formula (controls included). Novelty: not found in two searches; not established.
+- log:
+
+## #8 · Bridge plank 7: on the tail the prime term is 2<T, T_log>, T_log = x^(-1/2) sum (log m) phi(m/x): primes eliminated with no boundary term (co-analytic Toeplitz multiplicativity)
+- status: open
+- source: SP-operator
+- date: 2026-11-11
+- plain english: On the tail side the primes can be traded for the logarithms of all whole numbers, exactly, because the tail is a pile of shifted copies and the prime term only shifts further in the same direction, away from the cut. Example: at L = 0.5 the prime sum over the tail is -1.1044065020e-10 and the prime-free expression gives -1.1044065023e-10.
+- claim: PROVED (PROOF_bridge.md Thm 7.1): V Z = [U, Z] and C V (1-C) = 0. COMPUTED to 3e-10, 5e-11. In my toolkit: T_(-zeta'/zeta) T_zeta = T_(-zeta') for co-analytic Toeplitz operators on a half-line (no Hankel term). Also holds for the controls: all arithmetic is left for plank 8. Not identified with Connes-Consani's Sonin trace.
+- log:
+
+## #9 · Bridge plank 6: D_L (least L^2 leak) is a bounded closed form, a Schur complement of 1 - PBP; so Q <= C D is false, and g(0) = 0 is not closable; proposal: define the comparison form on the tail side
+- status: open
+- source: SP-operator
+- date: 2026-11-11
+- plain english: The 'least leak' of a window function is a perfectly good positive quantity, but it is a tame one: it never exceeds a fixed multiple of the size of the function, whereas the Weil energy grows without bound on fast oscillations. So the two cannot be comparable from above. And one of the two pole conditions (g vanishing at 0) cannot be felt by an L^2 leak at all. Example: wiggle g near 0 on a set of tiny length: the leak changes by almost nothing, g(0) changes by anything.
+- claim: PROVED (PROOF_bridge.md Prop 6.1). HEURISTIC proposal: D_tail(f) = inf over admissible companions of |T|^2 or <T, A T>; then plank 8 compares two forms of the same order on the tail.
+- log:

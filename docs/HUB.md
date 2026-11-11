@@ -37,11 +37,16 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 | [`SUBAGENT_PREAMBLE.md`](SUBAGENT_PREAMBLE.md) | rules at the top of every agent brief |
 
 ## The bridge (owner's rule 12)
-`rh/BRIDGE.md`. **Bridge 1 = idea #27**: the Weil form on a window is comparable, up to a constant factor, to the
-least band-limiting leak of a companion function. Planks 1–3 computed and confirmed against blind predictions
-(e27: the explicit vectors are near-null within 10–41% down to 1e-29; form-level ratio between 0.9 and 4.6 across
-18 orders of magnitude at L = 1). Next planks: second implementation; the exact identity; elimination of the primes
-on the tail side; the comparison itself on the no-prime and one-prime windows; what a control violates.
+`rh/BRIDGE.md`. **Bridge 1 (idea #27) has been built as far as it goes and does not reach the island.** Planks 1–7
+confirmed (the tiny eigenvalues, their explicit vectors, their constant ≈ 2L per unit of leak, the change of
+variable that removes the primes; a whole-space comparison Q ≍ D by two implementations on small windows). Then three
+confirmations failed where it mattered: the impostor shares the whole ladder (plank 9), no level descends before
+its failure (plank 10), no oscillation in the ratio (plank 12). Conclusion: the ladder is a property of the functional
+equation; RH is decided in the bulk below the band edge c = 2π e^(2L) (Montgomery's line: window length = log of the
+height), where correlations of primes enter; nothing in bridge 1 uses the Euler product. The next bridge must aim at
+the bulk with an input the impostor lacks (0 ≤ Λ ≤ log, prime-power support) together with the functional equation.
+No such hunch is formulated yet. Still out: the foothold seat's whole-space pencil at L = 0.65–1.0, SP-operator on
+the exact identity, S1-parity's reproduction, SP-modular.
 
 ## Idea board (keep in step with `python3 tools/ideas.py list`)
 | status | ideas |

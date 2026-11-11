@@ -152,6 +152,13 @@ def describe(i, name):
     en = [ov[r] * qe[r] / qv for r in range(NB)]
     topen = sorted(range(NB), key=lambda r: -abs(en[r]))[:5]
     print(f"      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): {[(r + 1, mp.nstr(en[r], 3), mp.nstr(qe[r], 3)) for r in topen]}; energy share in rungs 1..6: {mp.nstr(sum(en[:6]), 3)}, in rungs 1..12: {mp.nstr(sum(en[:12]), 3)}")
+    keep = [r for r in range(NB) if qe[r] >= mp.mpf(1) / 100]          # off-ladder part: Q-eigenvalue >= 0.01
+    wv = mp.matrix(NB, 1)
+    for r in keep:
+        cr = (v.T * QV[:, r])[0]
+        for j in range(NB): wv[j] += cr * QV[j, r]
+    w2 = (wv.T * wv)[0]
+    print(f"      OFF-LADDER PART w (components on Q-eigenvalues >= 0.01, {len(keep)} of {NB}): |w|^2/|v|^2 = {mp.nstr(w2 / n2, 3)}; Q(w)/|w|^2 = {mp.nstr((wv.T * Qm * wv)[0] / w2, 4)}; D(w)/|w|^2 = {mp.nstr((wv.T * Dm * wv)[0] / w2, 4)}; Q(w)/Q(v) = {mp.nstr((wv.T * Qm * wv)[0] / (qv * n2), 3)}; D(w)/D(v) = {mp.nstr((wv.T * Dm * wv)[0] / (v.T * Dm * v)[0], 3)}")
     print(f"      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): {[mp.nstr(c, 4) for c in cum]}; largest overlaps at Q-rungs {[(r + 1, mp.nstr(ov[r], 3), mp.nstr(qe[r], 3)) for r in top]}")
 describe(0, "MINIMISER"); describe(1, "second"); describe(NB - 1, "MAXIMISER")
 print(f"total {time.time()-t0:.0f}s")
