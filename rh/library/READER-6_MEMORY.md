@@ -20,3 +20,16 @@ at src/sp_modular_lagarias_suzuki/paper.tex. I read it whole myself.
 
 ## Log
 - 2026-11-11: seat started.
+- READ WHOLE: Lagarias-Suzuki math/0412039 (src/math0412039/paper.tex, 70,841 ch, 1 Nov 2005 post-referee
+  version); Lee 1204.6297 (75,460); Betermin-Samaj-Travenec 2110.09368 (73,411; figures not opened); McPhedran
+  1601.01724 (33,373; figures not opened); Ki CRAS 342 (2006) 79-81 (numdam PDF, 3 pp.); Reznikov 1008.0995
+  (74,359 incl. text after \end{document}).
+- PARTLY: Rezvyakova 2411.18492 sections 1-4 + bibliography (44,248 / 203,396); Nakamura 2001.01981 subsection
+  "The Epstein zeta function" only (5,658 / 56,377).
+- NOT OBTAINED: Ki, Acta Arith. 124 (2006) 197-204 (impan shop + captcha: not pursued); Ki PLMS 90 (2005)
+  (paywall); Davenport-Heilbronn JLMS 1936; Bombieri-Hejhal Duke 1995; Bateman-Grosswald 1964; Hejhal 1990;
+  Steuding Math. Ann. 2005; Reznikov dir.pdf on u.math.biu.ac.il (connection reset twice).
+- COMPUTED (scratchpad dc.py.txt, mpmath 50 digits): zero of y -> E*(iy,1/2) is y = 4 pi e^-gamma (1 - 4.196e-20);
+  so Betermin et al.'s Conjecture 1.1 (Delta_c* = e^gamma/4pi exactly) is false at the 20th digit.
+- NEXT: write digests math0412039.md, 1204.6297.md, 2110.09368.md, 1601.01724.md, ki-cras-2006.md, 1008.0995.md,
+  2411.18492.md (partial), 2001.01981.md (partial); INDEX rows; report.

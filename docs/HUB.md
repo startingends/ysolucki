@@ -105,6 +105,9 @@ State at 2026-11-11, about 02:10 UTC.
   **Φ(s) = E*(ω, s) = completed Dedekind zeta of ℚ(√−3)**. SP-operator (session 3), SP-reflection (session 2) and
   SP-modular each write `OBJECT_PHI.md` in their folder WITHOUT reading the others. NEXT: when all three are in,
   lay them side by side (that comparison is the test), and only then decide on bridge 2.
+- **Container restart ~02:40 UTC:** SP-operator, SP-reflection, SP-modular (round 2 on the common object: a
+  NON-LINEAR invariant at ω that separates it from the degree-two impostor E*(i√5, s)), READER-5 (Bombieri–Garrett
+  pseudo-Laplacians), READER-6 (zeros of E(z, s) as z varies) were resumed from their transcripts.
 - **READER-4: done.** Quasi-RH papers: `rh/library/openai-qrh-11-12.md` (whole), `openai-qrh-7-8.md` (45%).
 - **Measurements already running when rule 13 arrived:** S1-parity on the growth of the windowed Möbius inverse
   (Hunch 1 plank zero); the foothold seat's damped pencil is in (dμ/dε ≈ 0.10 at ε = 0, the ladder dissolves at once,

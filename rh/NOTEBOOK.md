@@ -611,3 +611,13 @@ mode, rule 13; RISK labels as stated).
   of the density, Φ(s)², i.e. the sheet difference of the Krein function, and its analytic continuation off the line
   is the whole problem. Rule H9 (proposed): before building on an identity, check whether it is linear in the
   object whose zeros are sought; if it is, it cannot see them.
+
+**N47. A prediction about round 2, written before any specialist answers** (lead, 2026-11-11, after a container
+restart at about 02:40 UTC; all five seats resumed from their transcripts).
+The cheapest non-linear object in the spectral data of δ_ω is the LOGARITHM: log Φ_ω = log ζ + log L(·, χ₋₃) has
+Dirichlet coefficients supported on prime powers; log Φ_{i√5} does not (it is the log of a sum of two products).
+Φ′/Φ is the input of Weil's explicit formula. So my prediction: the separating non-linear invariants the three
+seats propose will each turn out to be, after unfolding, a functional of Φ′/Φ, i.e. the Weil form in another
+language, and the circle closes: positivity of that form is what the project started from. If one of them is NOT a
+functional of Φ′/Φ (genuinely higher order: a determinant, a product of two Green functions at different points,
+a Rankin–Selberg square), that one is the lead to follow. Scored when the three "Round 2" sections are in.
