@@ -39,6 +39,9 @@ operators at the primes).
    hypotheses, and run it on a control.
 5. Supply exact norm identities in which arithmetic enters through geometry (cusp neighbourhoods, horoballs, Farey
    fractions, Heegner points, closed geodesics), and check their constants numerically by two routes.
+6. Say which PERIOD of an automorphic family carries which L-function at which parameter (unipotent period: 2s;
+   torus periods and Rankin-Selberg periods: s), and what a point of the modular surface is in Hecke terms (CM point,
+   class number, rank of its Hecke module). Added at the end of session 1 (OBJECT_PHI.md).
 
 ## What it CANNOT do
 - No theorem in it locates a zero inside the critical strip. Its positivities live on the unitary axis (zeta on

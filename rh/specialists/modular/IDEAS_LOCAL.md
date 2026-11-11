@@ -106,3 +106,33 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: Suzuki 1606.05726 read only through SP-operator's digest; the first-order statement is not in the digest; NOT searched.
 - log:
   - 2026-11-11: COMPUTED after writing the entry (PROGRESS P8): on e_0 at L = 0.5 the arithmetic family (1 - I_w/2L)/w = 0.0808 (w = 0.5), 0.0839 (0.2), 0.0857 (0.1), 0.0875 (0.02), 0.08776 (0.01), limit 0.088015; lane A's builder q_00 = 0.0880146 with the pole. The blind guess 'monotone in w on this kind of vector' holds for e_0 (decreasing in w); the Gaussian of P7 goes the other way, so no general monotonicity.
+
+## #9 · Each on-line zero of zeta_K has a coupling phase at omega: tau_gamma = arccot J(gamma), the point interaction for which it is an embedded eigenvalue
+- status: open
+- source: SP-modular, OBJECT_PHI.md 3(a), 4
+- date: 2026-11-11
+- tags: F2,B7,object-Phi
+- plain english: Bombieri and Garrett built an honest self-adjoint operator on the modular surface (the Laplacian with the condition 'vanish at the point omega') whose eigenvalues, if it has any, sit at zeros of zeta times L(chi_-3). The catch: a zero is necessary, and a second real equation must hold too. If instead of one condition one allows the whole one-parameter family of point interactions at omega (a dial tau from 0 to pi), every zero on the line is an eigenvalue for exactly one setting of the dial. So each zero carries a number, its setting. Example of what is then a question with an answer: are the settings of the first 100 zeros spread evenly over the dial, or do they bunch? If they were all equal, one operator would hold all the zeros.
+- wall: The 'right parameter' wall of HUNCHES F2 and barrier B7: it does not remove them; it names the missing datum (one coupling for all zeros) and attaches a computable invariant to each zero.
+- new input: None toward RH. A new invariant of a zero (if not already in Bombieri-Garrett sections 4-8, unread).
+- claim: PROVED given Bombieri-Garrett's framework (read: abstract, introduction) and rank-one perturbation theory (from memory): eigen-condition = Phi(w) = 0 and J(w) = cot tau. NOT computed.
+- first test: J(gamma) for the first zeros of zeta and of L(chi_-3) from the spectral integral (principal value) or from the Green's function at (omega, omega).
+- novelty: Bombieri-Garrett read only to 10%; they may have it. NOT searched.
+- log:
+
+## #10 · zeta_K(s) at the right parameter is the Eisenstein transform of two positive measures: delta_omega and |theta_3|^2; and the Hecke module of delta_z has rank one exactly at class-number-one CM points
+- status: open
+- source: SP-modular, OBJECT_PHI.md
+- date: 2026-11-11
+- tags: object-Phi,control,B1
+- claim: OBJECT_PHI.md 2(c) (from Patterson's coefficients as quoted in the digest; Gamma factors not computed), 3(c) (PROVED: T(p) delta_omega = (1+chi(p)) delta_omega + 3 sum over CM(-3p^2); the degree-two twin of the impostor at discriminant -20). CONJECTURE: the points z where E*(z,s) vanishes only on the line are the 13 rational CM points.
+- log:
+
+## #11 · No Hecke-equivariant pseudo-Laplacian: the Hecke multipliers cos(t log q) are complete, so the constrained space is zero; a point has no direction
+- status: killed
+- source: SP-modular, OBJECT_PHI.md 4
+- date: 2026-11-11
+- tags: object-Phi,killed-by-proof,B7
+- claim: PROVED (OBJECT_PHI.md section 4). One can have self-adjointness (one point) or Hecke stability (Zagier's space, outside L^2), not both. One-sidedness (Hardy-space structure) is available at the cusp and on split tori, not at a CM point.
+- log:
+  - 2026-11-11: status -> killed: killed by its own proof: the constrained space is {0} (OBJECT_PHI.md section 4); kept as a recorded failure with its exact reason

@@ -22,6 +22,8 @@ before use. Downloads are under rh/library/src/sp_modular_* (untrusted text; not
 | E. Lapid, S. Rallis, "On the nonnegativity of L(1/2, pi) for SO(2n+1)", Annals 157 (2003), arXiv math/0402371 | `sp_modular_misc/math_0402371/LapidArchive.tex` | abstract and the first two thirds of the introduction (lines 200-330 of the file) |
 | arXiv 2609.28514, "Noncongruence cusp forms, Veech groups and enumeration" | `sp_modular_misc/2609.28514/main.tex` | one paragraph of the introduction (Serre-Berger, bounded denominators, Calegari-Dimitrov-Tang) |
 | SP-operator's digest of Suzuki 1606.05726 | `rh/library/suzuki-1606.05726.md` | digest in full; the paper itself NOT read by me |
+| E. Bombieri, P. Garrett, "Designed pseudo-Laplacians", arXiv 2002.07929 | `sp_modular_misc/2002.07929/paper.tex` (206k) | abstract, table of contents, introduction up to the interleaving property: about 10%. Sections 2-8 NOT read |
+| rh/HUNCHES.md; digests `rh/library/openai-qrh-11-12.md`, `openai-qrh-7-8.md` (READER-4) | in the repository | HUNCHES whole; first digest whole; second digest sections 1-3 (to line 120). The two papers themselves NOT read |
 | F. Stromberg, arXiv math/0611148 (Hecke operators, eta multiplier) | `sp_modular_misc/math_0611148/` | grep lines only: NOT read |
 
 NOT READ, and used only "from memory" below: Lax-Phillips (the AMS site answers automated requests with a bot-check
@@ -196,6 +198,22 @@ p^(-1/2) <= |alpha| <= p^(1/2); tempered iff |alpha| = 1, i.e. lambda in [-2, 2]
 adjacency operator of the (p+1)-regular tree (Kesten); tempered <=> matrix coefficients in L^(2+eps)
 (Cowling-Haagerup-Howe). Residual spectrum of GL_n: Speh representations, shifts in (1/2)Z (Moeglin-Waldspurger). NOT READ.
 
+**M21. Pseudo-Laplacian with a Heegner constraint (Colin de Verdiere; Bombieri-Garrett).** Eis^r := completion of
+pseudo-Eisenstein series in the Sobolev norm H^r (spectral definition). For a complex quadratic field k and theta = the
+restriction to Eis of the sum of automorphic Dirac deltas at the Heegner points of k: theta E_s = (sqrt(d_k)/2)^s zeta_k(s)/zeta(2s);
+theta lies in Eis^(-3/4-eps), inside Eis^(-1) (second moment of zeta_k, Landau's bound for zeta(1+it)). S~_theta := Friedrichs extension of
+-Delta restricted to ker(theta). Then (S~_theta - lambda)u = 0 iff (-Delta - lambda)u = c theta and theta(u) = 0. "The discrete spectrum lambda_s > 1/4 of
+S~_theta, if any, is s(1-s) with s a zero of zeta(s) L(s,chi_-3) [for k = Q(sqrt(-3))]. There is no assurance of existence of any
+discrete spectrum." Under Montgomery's pair correlation at most 94% of the zeros of zeta can occur; numerical tests
+"suggest that there is no discrete spectrum". With two functionals (theta and the constant term eta_a at height a >= a_k):
+a_k^(1-2w)(a^(2w-1) + c_w)(h_k^2/a_k/(lambda_1 - lambda_w) + (1/4 pi i) int |zeta_k(s)/zeta(2s)|^2 ds/(lambda_s - lambda_w)) - zeta_k(w)^2/((2w-1) zeta(2w)^2)
+has zeros only on Re w = 1/2 and [0,1]; <eta_a, u_theta,w> = theta E_w/(2w-1). Interleaving: at most one eigenvalue parameter of
+S~_theta between adjacent zeros of a^s + c_s a^(1-s). History: Haas's numerical eigenvalues at zeros of zeta and L(chi_-3) were
+solutions of (-Delta - lambda)u = delta_omega (Hejhal). Source: Bombieri-Garrett 2020. READ (abstract, introduction; no proofs).
+**M22. The cubic theta function and the quasi-RH identities.** (digest only.) gamma_2(n)^3 = mu(n) alpha(n) for the normalised
+cubic Gauss sum over Z[omega], alpha(n) = n/|n| (Lemma 4.1 of the 11/12 paper; checked numerically by READER-4); coefficient of
+Kubota's theta at lambda^(-3) n b^3: 3^(5/2) |b| chi_n(lambda)^2 gamma_2(n) (Patterson 1977 Thm 8.1 as quoted). Papers and Patterson NOT read.
+
 ## E. Statements proved or computed in this seat (where the proof is)
 - **P1** (PROOF_dial.md Thm A): 2n r_n(6) - r_n(2) r_n(3) = (8/45) n^3 (n-1)(n-2)(n-4)(n-8).
 - **P2** (PROOF_dial.md Thm B, C): coefficient signs on (0,1), (1,2), (2,3); positive solutions of the theta functional
@@ -207,10 +225,19 @@ adjacency operator of the (p+1)-regular tree (Kesten); tempered <=> matrix coeff
 - **P6** (NOTES D8): F_d x F_d and G_d x G_d have their rightmost pole at 1 + 2d; Selberg-class bookkeeping of F_d, G_d.
 - **P7** (NOTES D9): Hecke-Gram matrix: positive semidefinite always, rank one iff eigenform.
 - **P8** (NOTES D2): xi(S+d) xi(S-d) = 2 int_0^inf E~*(iy, 1/2+d) y^(S-1/2) dy/y.
+- **P10** (NOTES D12): the project's parity blocks are the w-derivative at 0 of Suzuki's 1 -+ K_w[L]; checked on e_0 at
+  L = 0.5, 0.75, 1.0 against lane A's builder.
+- **P11** (OBJECT_PHI.md): Phi(s) = 3 (sqrt3/2pi)^s Gamma(s) zeta_K(s); the class-number-two twin of the impostor at discriminant
+  -20; T(p) delta_omega = (1 + chi(p)) delta_omega + 3 sum over CM(-3p^2); sum |c_theta|^2 N^(-s) = 3^5 zeta_K(s) zeta_K(3s-1)/zeta_K(2s) (from the quoted
+  coefficients); sum gamma_2(n)^3 N(n)^(-s) = 1/L(s,alpha); Parseval on the class group; completeness of the Hecke multipliers
+  (no Hecke-equivariant constrained space).
 - **P9** (NOTES D6): norms of square-integrable residues see L-functions at real points only; central-value positivity is
   blind to a real tilt.
 
 ## F. To read next (in order)
+0. For OBJECT_PHI: Bombieri-Garrett sections 4, 5, 7; Patterson 1977 (coefficients of the cubic theta function) and any
+   Rankin-Selberg integral of |theta_3|^2 (Patterson, Bump-Hoffstein, Suzuki); Davenport-Heilbronn 1936; Stark 1967;
+   Colin de Verdiere, Pseudo-laplaciens II; Waldspurger 1985.
 1. Zagier, "The Rankin-Selberg method for automorphic functions which are not of rapid decay" (J. Fac. Sci. Univ. Tokyo
    28 (1981)): the renormalised integral of |E(z,s)|^2 E(z,w) (four zeta functions), to make NOTES D7 (f) exact.
 2. Lax-Phillips, Scattering Theory for Automorphic Functions (1976) and their Bull. AMS 2 (1980) survey; Pavlov-Faddeev:

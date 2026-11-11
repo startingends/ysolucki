@@ -1,8 +1,44 @@
 # MEMORY of SP-reflection
 
-Rewritten at the end of session 1 (2026-11-11). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
-sources still to read), then NOTES_session1.md if a detail is needed. Board: `python3 tools/board.py --board s1 read
---me SP-reflection --unread`. The container was restarted once during session 1; nothing was lost.
+Rewritten at the end of session 2 (2026-11-11). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
+sources still to read). Session 1 = seminar S1 (closed; summary rh/experiments/s1_seminar/socrates/CLOSING.md; my full
+answers in NOTES_session1.md). Session 2 = the structural task on one object, written up in OBJECT_PHI.md.
+
+## 0. SESSION 2: the object Phi(s) = E*(omega, s) (owner rule 13; rh/HUNCHES.md part F)
+Task: express Phi and "Phi = 0 only on Re s = 1/2" in my toolkit, without reading the other specialists first. Done:
+rh/specialists/reflection/OBJECT_PHI.md (173 lines). I have NOT yet read SP-modular's and SP-operator's answers.
+What I established (labels as in the file):
+- PROVED: Phi(s) = 3 Lambda_K(s), K = Q(sqrt-3); Phi is a function Psi of lambda = s(1-s).
+- KNOWN (from memory) + reading: the spherical unitary dual of PSL_2(R) is {lambda real >= 0}; RH+ (zeros on the line or
+  real) <=> phi_rho positive definite at every zero <=> zeros of Psi(lambda) real. The complementary series = Siegel zeros.
+- KNOWN + COMPUTED: the Gamma-orbit of omega is a positive definite measure on K\G/K (matrix coefficient of L^2(Gamma\G) at
+  delta_omega); orbit counts = eps(m) r(m) r(m+3) (shifted convolution of the norm form; exact check m <= 40); its
+  Bochner-Godement measure mu_omega has continuous density (1/4pi)|Phi(1/2+it)|^2/|xi*(1+2it)|^2, atoms |u_j(omega)|^2 and
+  3/pi at lambda = 0. This positivity is FREE and sees only |Phi|^2 on the line.
+- Ideal semigroup of Z[omega]: three involutions (identity, inverse, Galois conjugation with a a* = N a). Trivially true:
+  zeta_K has degree one over K (rank-one mirror squares, roots 1; pushed to norms: roots (1,1), (1,-1), (1)); cubic residue
+  characters are positive for the inverse involution (and Galois for rational u), not for the identity; |g|^2 = N is
+  Plancherel on O/c; normalised Gauss sums are a character of a central extension by mu_3. I found NO positive-definiteness
+  on the semigroup equivalent to RH: there the equivalents are CYCLICITY statements (Nyman-Beurling / Baez-Duarte). The
+  continuous part of mu_omega is, up to the outer weight 1/|zeta(1+2it)|^2, the Nyman-Beurling measure of zeta_K; n^-it is the
+  one-sided dilation y -> ny, not a Hecke operator.
+- Wall B3: PROVED: RH+ <=> Theta_Phi(t) = sum e^(-t rho(1-rho)) completely monotone (a Grommer-type reformulation). Candidate
+  representation L^2(Gamma\H) with delta_omega; missing exactly: (a) the vector is not in the space (twice), (b) zeros are
+  zeros of a DENSITY, not atoms, (c) a SIGN: Phi(1/2+it) is real, the free object knows Phi^2, RH <=> E(omega, .) is the
+  minimum-phase (outer) square root. Trivialising object = a causal (Lax-Phillips outgoing) structure + cyclicity, not a
+  positivity. Reversal against session 1: the zero measure fails the Szego condition; mu_omega satisfies it.
+- RISK (idea SP-reflection/#5): A(z) := (1/2pi) int log|E(z,1/2+it)| dt/(1/4+t^2) = log(3/pi) - (1/2) log ht(z) + Dfc(z),
+  Dfc(z) = sum over zeros with Re > 1/2 of log|rho/(1-rho)| >= 0: a defect function on the modular surface, zero exactly at
+  RH points. Constant checked exactly at omega (special values) and crudely numerically (A(i) = -0.04609 vs -0.04612).
+  At one point it is Balazard-Saias-Yor; new only as a family in z. Two searches: not found; Lagarias-Suzuki
+  arXiv math/0412039 found and NOT READ (must be read first next session).
+HOLDING from session 2: (1) read Lagarias-Suzuki math/0412039; (2) compare with SP-modular (is A(z) a known automorphic
+function, a companion of Kronecker's limit formula?) and SP-operator (does delta_omega lie in the Lax-Phillips outgoing
+subspace after a shift by log ht?); (3) regularity of A and a formula for its Laplacian in z; (4) Dfc at a class number 2
+CM point, with a blind prediction first; (5) the instance "r(m) r(m+3) has spectral density |zeta_K|^2/|zeta(1+2it)|^2" was
+not searched; (6) Waldspurger's local statement (1.6) and the spherical dual (1.1) are from memory: read a source.
+Reliability note: the first numerical run at omega was 50 percent off at N = 500 and oscillates (0.0395, 0.0287, 0.0252
+against 0.0258); the rule is crude; the exact check is the special-value one.
 
 ## 1. What the project is doing, seen through my toolkit
 - Idea #21 (mirror positivity of the prime kernel on the integers as a bridge to Weil positivity) is KILLED: the hypotheses
@@ -81,7 +117,7 @@ Wanted and absent: moment-problem determinacy (Carleman, Krein), Berg-Maserick, 
 
 ## 6. Files of this seat
 CHARTER.md (fixed) · LIBRARY.md (23 entries + 6 own statements) · NOTES_session1.md (N1-N9: full answers and proofs) ·
-IDEAS_LOCAL.md (4 ideas: #1 two involutions, #2 F^t and the generator, #3 ratio dial / product measure, #4 inverse
-propagator) · posts/ (texts as posted) · tests_*.py.txt with logs (all small, double precision or mpmath 50-80 digits,
+IDEAS_LOCAL.md (5 ideas: #1 two involutions, #2 F^t and the generator, #3 ratio dial / product measure, #4 inverse
+propagator, #5 defect function on the modular surface) · OBJECT_PHI.md (session 2) · posts/ (texts as posted) · tests_*.py.txt with logs (all small, double precision or mpmath 50-80 digits,
 one implementation each, run under tools/memcap.py 1). Sources downloaded to rh/library/src/sp_reflection_* (untrusted
 text: Perfekt-Pushnitski, Biskup, Neeb-Olafsson, Ressel 1976).

@@ -162,3 +162,20 @@ a peak of height 8 = 4 x (1/2)/(1/4) at 2t = gamma_1: a zero seen from the line 
 Atoms n <= e^(2L): n <= 4 and n <= 7; q_w(n) = n^w prod_{p|n}(1 - p^(-2w)).
 PREDICTION: (i) at w = 0.01 the value is within 0.5% of lane A's q_00 (pole included); (ii) the curve is monotone
 decreasing in w on [0.01, 0.5] as at L = 0.5; (iii) the w = 1/2 end is within 20% of q_00 at both windows.
+
+## Result of P9 (d12_family.log, weil_q00.log; mpmath 20 digits; builder with Arb 200 bits)
+   L = 0.75 (atoms n <= 4): 0.057726 (w = 0.5), 0.058225 (0.2), 0.059335 (0.05), 0.059763 (0.01); builder q_00 = 0.0598792939.
+   L = 1.0  (atoms n <= 7): 0.050510 (w = 0.5), 0.052407 (0.2), 0.053174 (0.05), 0.053312 (0.01); builder q_00 = 0.0533411242.
+(i) HIT: 0.19% and 0.05% off at w = 0.01. (ii) HIT: monotone decreasing in w on the points computed. (iii) HIT: the
+w = 1/2 end is 3.6% and 5.3% below q_00 (8.2% at L = 0.5). So on e_0, at three windows, the Weil matrix element is the
+w -> 0 end of Suzuki's arithmetic family, and the half-shift end is within 10% of it. One vector; no claim beyond it.
+
+## 01:59 (clock) NEW MAIN TASK from the coordinator (owner's rule 13: fewer measurements, more structure; one object,
+three toolkits): Phi(s) = E*(omega, s). Read rh/HUNCHES.md whole, digest openai-qrh-11-12.md whole, openai-qrh-7-8.md
+to line 120, Bombieri-Garrett arXiv 2002.07929 (abstract, contents, introduction). Wrote OBJECT_PHI.md (221 lines).
+Sanity checks of formulas only (phi_check.py.txt, phi_check.log; mpmath 20 digits, lattice sums |m|,|n| <= 400, s = 2.5):
+E*(omega,s) = 0.1793191816 (lattice) against 0.1793191826 by both closed forms; E*(i sqrt5, s) = 0.6219439099 against
+0.6219439117; E*((-1 + i sqrt5)/2, s) = 0.1946334709 against 0.194633472 (differences = truncation of the lattice sums).
+Found while writing: my recollection of the formula for L(s, D f^2)/L(s, D) was wrong by a term p^(-s); the lattice
+count (Hecke operator on delta_omega) and the classical identity for x^2 + 3y^2 agree with each other, and that is what
+OBJECT_PHI 3(c) states. No prediction was made for this file (no measurement).

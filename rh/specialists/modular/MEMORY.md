@@ -1,6 +1,6 @@
 # MEMORY of SP-modular
 
-Rewritten at the end of session 1 (2026-11-11, 00:49 to about 02:20 UTC). Read this first, then CHARTER.md, then
+Rewritten at the end of session 1 (2026-11-11, 00:49 to 02:20 UTC). Read this first, then CHARTER.md, then
 LIBRARY.md (section F lists what to read next), then NOTES_session1.md (D1-D13: every derivation behind the posts) and
 PROOF_dial.md. PROGRESS.md has the predictions (written before computing) and their outcomes.
 Seminar S1 was CLOSED by the moderator at B218 (01:44 UTC) while I was posting: see section 3.
@@ -29,6 +29,24 @@ Seminar S1 was CLOSED by the moderator at B218 (01:44 UTC) while I was posting: 
 | Q2: the norm identities, their line, T < 1, Zagier against the Weil form | B212, B213, B214 | four identities with their lines; Lagarias-Suzuki / Hejhal: zeros on the line for T >= 1, FAILS for every T < 1 (computed: zero at 4.7069 + 18.1261 i for y = 0.9); below height 1 the arithmetic that enters is totients phi(c)/c, c < 1/T, in a mirror form, still on Re w = 1; a POSITIVE CONTROL (the half-shift Gram form shows margin collapse, pinning of weights, missing-atom failure, one wrong-sign pole square); Zagier's form = Weil form on S-even functions, never on a window; Cornelissen-Lorscheid's automorphic proof for three elliptic curves. |
 | Q3: what singles out the special points of the dial; is "Euler product" a positivity | B215, B216 | 2n r_n(6) - r_n(2) r_n(3) = (8/45) n^3 (n-1)(n-2)(n-4)(n-8) (PROVED); three levels (no Hecke operators / T(p^2) only / full Euler product); coefficient positivity singles out {1,2,3} on (0,3] (PROVED, with BRS Prop. 3.1), blind above 4 (computed); Euler product = rank-one point of the Hecke-Gram cone, not an inequality; the roster's pairing sentence corrected (cusp forms are mirror negative). Nominated to FORMAL: PROOF_dial.md F1-F3. |
 
+## 2b. Second task of the session (coordinator, 01:59 UTC; owner's rule 13: structure, not measurement)
+"One object, three toolkits": Phi(s) = E*(omega, s) = 3 (sqrt3/2pi)^s Gamma(s) zeta_K(s), K = Q(sqrt(-3)). My text: OBJECT_PHI.md
+(221 lines; I did not read the other two seats' texts). Its content in six lines:
+- parameter s: torus periods and Rankin-Selberg periods; parameter 2s: the unipotent period (all my norms).
+- the cubic cover sees zeta_K at 3w (worse) in its constant term; but sum |c_theta|^2 N^(-s) = 3^5 zeta_K(s) zeta_K(3s-1)/zeta_K(2s):
+  zeta_K(s) is the Eisenstein transform of the positive measure |theta_3|^2, as of delta_omega. (From quoted coefficients.)
+- the bridge between omega and the Gauss sums is the CM curve at omega: gamma_2^3 = mu alpha; sum gamma_2^3 N^(-s) = 1/L(s,alpha): a
+  statement about local roots. theta_3^3 is not an automorphic form. Hunch 2 has no object in my toolkit.
+- wall (a): the operator with the right parameter exists (Bombieri-Garrett 2020, read in part): zeros necessary, a
+  second real equation needed; each on-line zero has its own coupling tau_gamma = arccot J(gamma).
+- wall (c): the project's impostor is degree one; its degree-two twin is E*(i sqrt5, s); omega is distinguished by rank
+  one of the Hecke module of delta_omega; expected set of good points: the 13 rational CM points.
+- risk taken and resolved: a Hecke-equivariant point interaction has NO Hilbert space (Hecke multipliers cos(t log q)
+  are complete). A point has no direction; one-sidedness lives on split tori (geodesics).
+HOLDING from it: distribution of tau_gamma; a group-side (prime-side) formula for J at a zero; Patterson's theorem in full;
+whether the Rankin-Selberg integral of |theta_3|^2 is in print; status of the set S at non-CM points.
+I corrected one of my own recollections while writing (the Euler factor of L(s, D f^2): the lattice count is right).
+
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of
    Frobenius of a one-point curve); RH follows because q <= 2 sqrt(q) for q <= 4, by inspection, and the list of curves
@@ -48,7 +66,8 @@ Seminar S1 was CLOSED by the moderator at B218 (01:44 UTC) while I was posting: 
    family: for f on (-L, L), even: <f,(1 - K_w[L]) f> = w Q_W(f) + o(w); odd: <f,(1 + K_w[L]) f> = w Q_W(f) + o(w). The
    Gram form (+) continues to the ODD block, the - form to the EVEN block. Unitary side checked numerically (ratio
    1.040 at w = 0.01, deviation linear in w). PRIME side checked on ONE vector against lane A's builder: on e_0 at
-   L = 0.5 the family runs 0.0808 (w = 1/2) .. 0.08776 (w = 0.01) -> 0.088015; builder q_00 = 0.0880146 (with pole).
+   L = 0.5 the family runs 0.0808 (w = 1/2) .. 0.08776 (w = 0.01) -> 0.088015; builder q_00 = 0.0880146 (with pole);
+   same at L = 0.75 (0.0577 .. 0.05976; q_00 = 0.059879) and L = 1 (0.0505 .. 0.05331; q_00 = 0.053341).
    No monotonicity in w in general (the Gaussian of P7 goes the other way). Derivation still formal on the prime side. NEXT: extend halfshift_window.py.txt to general w
    (kernel G_w = 2 e^((w-1/2)x)(1 - e^(-2x))^(w-1)/Gamma(w), atoms q_w(n) = n^w prod_{p|n}(1 - p^(-2w)), pole factor
    (s-w-1)/(s+w-1)); follow the lowest eigenvalue of (1 -+ K_w)/w from w = 1/2 to 0.05; idea SP-modular/#8.
@@ -83,13 +102,15 @@ Seminar S1 was CLOSED by the moderator at B218 (01:44 UTC) while I was posting: 
   against Lagarias-Suzuki's statement of the same objects where possible.
 
 ## 6. Files of this seat
-CHARTER.md (fixed) · LIBRARY.md (20 entries M1-M20, 9 own statements, reading list) · NOTES_session1.md (D1-D13) ·
-PROOF_dial.md (Theorems A, B, C; nomination F1-F3) · PROGRESS.md (predictions P1-P7 and outcomes) · IDEAS_LOCAL.md
+CHARTER.md (fixed; one line added on periods) · LIBRARY.md (22 entries M1-M22, 11 own statements, reading list) ·
+OBJECT_PHI.md (the object Phi, 221 lines) · NOTES_session1.md (D1-D13) ·
+PROOF_dial.md (Theorems A, B, C; nomination F1-F3) · PROGRESS.md (predictions P1-P9 and outcomes) · IDEAS_LOCAL.md
 (8 ideas: #1 positive control, #2 two involutions, #3 dial identities, #4 sign/rate framing, #5 function-field twin,
 #6 Hecke-Gram rank test, #7 caution for N38, #8 the family in w) · posts/ (q1, q2a, q2b, q2c, q3a, q3b as posted;
 q_operator, q_reflection, UNPOSTED.md not posted) · scripts with logs: dial_coeffs, hejhal_check, gram_check,
-halfshift_window, halfshift_window2, hecke_integral_check, d12_check (all `python3 tools/memcap.py 1 python3 X.py.txt`;
+halfshift_window, halfshift_window2, hecke_integral_check, d12_check, d12_prime_check, d12_family, weil_q00,
+maass_selberg_check, phi_check (all `python3 tools/memcap.py 1 python3 X.py.txt`;
 mpmath or numpy; one implementation each; nothing interval-certified).
 Sources downloaded (untrusted text): rh/library/src/sp_modular_zagier1981, sp_modular_lagarias_suzuki,
 sp_modular_conrey_ghosh, sp_modular_misc/{1003.0559, 1509.00797, 1809.07605, 0707.3315, 2011.07796, 0710.2994,
-1012.3223, 0906.5284, math_0402371, 2609.28514, math_0611148}.
+1012.3223, 0906.5284, math_0402371, 2609.28514, math_0611148, 2002.07929}.
