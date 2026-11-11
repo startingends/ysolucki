@@ -621,3 +621,32 @@ seats propose will each turn out to be, after unfolding, a functional of Φ′/�
 language, and the circle closes: positivity of that form is what the project started from. If one of them is NOT a
 functional of Φ′/Φ (genuinely higher order: a determinant, a product of two Green functions at different points,
 a Rankin–Selberg square), that one is the lead to follow. Scored when the three "Round 2" sections are in.
+
+**N48. Bombieri–Garrett read whole: N43 is in print, and one open convergence question is worth stating exactly**
+(lead, after READER-5's digests `rh/library/2002.07929.md`, `garrett-notes.md`, `cdv-pseudo-laplaciens-198{2,3}.md`).
+- ALREADY KNOWN (credit, and stop re-deriving): the two-sheet identity is Bombieri–Garrett Cor. 46–47 and Remark 14;
+  the Krein function at ω is Colin de Verdière's F(s, j) (1982, Thm 3 Cor.); "an eigenvalue needs a second real
+  condition" is their Cor. 52; the operator with boundary condition "vanish at the CM points" exists (S̃_θ, on the
+  non-cuspidal part E⁰, Friedrichs extension; the delta is in E^(−1/2−ε) only after the cusp forms are removed); its
+  discrete spectrum is contained in the zeros on the line and may be EMPTY (their numerics suggest empty); at most
+  94% of zeros could occur (RH + pair correlation); one operator carrying all zeros was Colin de Verdière's 1983
+  conjecture, reported false by Bombieri (2011). §6.7: the symmetric reading u_w = u_{1−w} is "fundamentally
+  flawed" because the correction vanishes exactly at the zeros, and would "prove" RH for Epstein zeta functions too
+  (that is rule H9 and the impostor test, found by them in 2020). None of it uses the Euler product or Hecke operators.
+- THE ONE THING LEFT OPEN THAT HAS THE SHAPE RULE 13 (c) ASKS FOR. Cor. 30 (unconditional): a symmetric meromorphic
+  G(w, a), built from ζ_K data, has all its zeros on the line or in [0, 1], for every cut-off a. READER-5's algebra (not
+  in the paper): G = J − r_a X with X = θE_w θE_{1−w}/(2(1 − 2w)) and r_a → 1. So a family with zeros on the line
+  CONVERGES POINTWISE to the second-sheet function J − X. By Hurwitz, IF the convergence is locally uniform on a domain
+  off the line, the limit has no zeros there (or vanishes identically). This is wall W1 in its sharpest known form,
+  with the limiting function explicit. To make it useful two facts are needed and neither is in the paper:
+  (a) is G(·, a) → J − X locally uniformly on Re w > ½, away from the line? (a convergence question about one
+      explicit family, of the kind the impostor cannot settle in our favour: the same G exists for Epstein data, so
+      uniformity must FAIL there, and where it fails is computable);
+  (b) what are the zeros of J − X? At a zero ρ of ζ_K off the line X(ρ) = 0, so (J − X)(ρ) = J(ρ): the limit sees ρ
+      only if J(ρ) = 0, i.e. only if the continued solution satisfies the second condition there. So even (a) would
+      prove only that off-line zeros of ζ_K are not common zeros of J. Recorded as the exact distance between this
+      object and RH.
+- CHEAP COMPUTATION THAT WOULD DECIDE (a) FOR THE IMPOSTOR (allowed under rule 13: it decides a structural question):
+  for the class-number-2 CM data (d = −20), G(·, a) at a = 2, 4, 8 near the impostor's off-line zero: if uniformity
+  fails there, it fails at a rate a computation can see, and the rate is the invariant that separates ω from i√5.
+  Not started; will be assigned once round 2 is in.
