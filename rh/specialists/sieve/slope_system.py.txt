@@ -1,0 +1,82 @@
+# Reconstructed exponent comparison system of the 7/8 paper (Prop 19.2, Lemma 20.1/(20.4), Prop 15.3, Lemma 10.4), with parameters:
+#   csig : density of sixth powers in the signal (h/6 in C(sigma0)) and in the low estimate (b/12 = c b/2)
+#   alpha: slope of Lemma 17.6 (sixth-power amplification), alpha = 5/6 in the paper
+#   rho  : relaxation of Lemma 17.1's length condition r + 2z <= 1 + rho (paper: rho = 0)
+#   sixk : plain capacity denominator 6*kappa, kappa = 2 sigma0 - 1 (paper uses the dynamic value)
+# Geometry: l_x, b free; l = 1 - 2 l_x - b; h = 1 - l_x + l; l_y = l_x + b (Eq. 12.4 relations).
+import numpy as np, sys
+def Rstar(delta, x, alpha, rho, sixk, cap, lam=0.5, nt=61, nr=81):
+    # delta, x: 1-d arrays broadcast as (D,X,1,1); t: (1,1,T,1); r offset: (1,1,1,R)
+    d = delta[:,None,None,None]; xx = x[None,:,None,None]
+    t = np.linspace(1.0, 1.5, nt)[None,None,:,None]
+    s = np.linspace(0.0, 0.5, nr)[None,None,None,:]   # m = s, r = t - s
+    m = s; r = t - s
+    q = xx*d
+    big = 10.0
+    inv_slot = 1 - d*r - 2*q*np.minimum(lam*np.clip(1+rho-r,0,None), cap)
+    inv_noslot = 1 - d*r
+    short = r < 1 + rho - 1e-12
+    c17 = 1 - alpha
+    inv_long = c17 + ((1-c17)/(1+rho) - d)*r
+    inv = np.where(short, np.minimum(inv_slot, inv_noslot), inv_long)
+    pl = 1 - 2*d*m - 2*q*np.minimum((1-2*m)/sixk, cap)
+    cnt = np.minimum(inv, pl)
+    Rt = cnt.max(axis=3)          # worst witness split for given t
+    return Rt.min(axis=2)          # best t
+def Emax(sigma0, lx, b, csig, alpha, rho, delta0=1/50, nd=161, nx=11, use_dyn_kappa=True):
+    ell = 1 - 2*lx - b; h = 1 - lx + ell; ly = lx + b
+    if ell < 0 or b < 0 or lx <= 0: return 1e9
+    kappa = 2*sigma0 - 1 if use_dyn_kappa else 0.75
+    sixk = 6*max(kappa, 1e-6)
+    cap = ell/h
+    delta = np.linspace(delta0, alpha, nd); x = np.linspace(0, 0.5, nx)
+    R = Rstar(delta, x, alpha, rho, sixk, cap)
+    D = delta[:,None]; X = x[None,:]
+    E = (1+D)*(1-ly)/2 - sigma0 - h*csig - ell/2 + X*D*ell + h*R + h*D/2
+    # floor bin: R = 1, q <= delta0/2
+    Ef = (1+delta0)*(1-ly)/2 - sigma0 - h*csig - ell/2 + 0.5*delta0*ell + h + h*delta0/2
+    return max(E.max(), Ef)
+def sigma_low(lx, b, csig):
+    ell = 1 - 2*lx - b; h = 1 - lx + ell
+    return 1 - csig*h + csig*b/2
+def sigma_best_geom(lx, b, csig, alpha, rho):
+    lo, hi = 0.5, 1.0
+    if Emax(hi, lx, b, csig, alpha, rho) > 0: return 1.0
+    for _ in range(40):
+        mid = (lo+hi)/2
+        if Emax(mid, lx, b, csig, alpha, rho) <= 0: hi = mid
+        else: lo = mid
+    return max(hi, sigma_low(lx, b, csig))
+def optimise(csig, alpha, rho, grid=25):
+    best = (9, None)
+    for lx in np.linspace(0.05, 0.5, grid):
+        for b in np.linspace(0.0, 0.4, grid):
+            if 1 - 2*lx - b < 0: continue
+            s = sigma_best_geom(lx, b, csig, alpha, rho)
+            if s < best[0]: best = (s, (lx, b))
+    # local refinement
+    s0, (lx0, b0) = best
+    step = 0.45/grid
+    for _ in range(4):
+        for lx in np.linspace(lx0-step, lx0+step, 9):
+            for b in np.linspace(max(0,b0-step), b0+step, 9):
+                if 1 - 2*lx - b < 0 or lx <= 0: continue
+                s = sigma_best_geom(lx, b, csig, alpha, rho)
+                if s < best[0]: best = (s, (lx, b))
+        s0, (lx0, b0) = best; step /= 4
+    return best
+if __name__ == '__main__':
+    mode = sys.argv[1] if len(sys.argv) > 1 else 'check'
+    if mode == 'check':
+        lx, b = 17/48, 1/8
+        print("paper geometry, csig=1/6, alpha=5/6, rho=0:")
+        print("  Emax at sigma0 = 7/8      :", Emax(7/8, lx, b, 1/6, 5/6, 0.0))
+        print("  Emax at sigma0 = 7/8, kappa=3/4 baseline:", Emax(7/8, lx, b, 1/6, 5/6, 0.0, use_dyn_kappa=False))
+        print("  paper's certificate -E* >= 49/440640 =", 49/440640)
+        print("  sigma_low =", sigma_low(lx, b, 1/6), " sigma_best(geometry fixed) =", sigma_best_geom(lx, b, 1/6, 5/6, 0.0))
+        print("  Part I geometry (lx=1/2, b=0): sigma_best =", sigma_best_geom(0.5, 0.0, 1/6, 5/6, 0.0))
+    elif mode == 'opt':
+        csig, alpha, rho = float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4])
+        s, g = optimise(csig, alpha, rho)
+        print(f"csig={csig:.4f} alpha={alpha:.4f} rho={rho:.3f}: best sigma0 = {s:.6f} at (l_x, b) = ({g[0]:.5f}, {g[1]:.5f}); "
+              f"sigma_low there {sigma_low(g[0], g[1], csig):.6f}")

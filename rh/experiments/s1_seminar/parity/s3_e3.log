@@ -1,0 +1,16 @@
+H = 10000: copies (u with u_3 a square = sums of two squares) C = 2749 ; C/H = 0.2749 ; log C/log H = 0.8598 ; Landau-Ramanujan 0.76422 H/sqrt(log H) = 2518
+   cross-check: #{1 <= u <= H : u = a^2 + b^2} = 2749
+distinct members (distinct real characters (./r)): 1381 ; largest multiplicities: [(1, 2749), (3, 992), (7, 456), (11, 303), (19, 184), (21, 168), (23, 155), (31, 119)]
+   multiplicity of (./3): 992
+   multiplicity of (./7): 456
+   multiplicity of (./11): 303
+   multiplicity of (./19): 184
+   multiplicity of (./21): 168
+first members u = 1..30 as (u, r) with psi_u = (./r) on n coprime to u: [(1, 1), (2, 1), (3, 3), (4, 1), (5, 1), (6, 3), (7, 7), (8, 1), (9, 1), (10, 1), (11, 11), (12, 3), (13, 1), (14, 7), (15, 3), (16, 1), (17, 1), (18, 1), (19, 19), (20, 1), (21, 21), (22, 11), (23, 23), (24, 3), (25, 1), (26, 1), (27, 3), (28, 7), (29, 1), (30, 3)]
+first copies: [1, 2, 4, 5, 8, 9, 10, 13, 16, 17, 18, 20, 25, 26, 29, 32, 34, 36, 37, 40, 41, 45, 49, 50, 52, 53, 58]
+   C(100) = 43  (C/X^(1/2) = 4.30, C/X = 0.430)
+   C(1000) = 330  (C/X^(1/2) = 10.44, C/X = 0.330)
+   C(10000) = 2749  (C/X^(1/2) = 27.49, C/X = 0.275)
+Poisson-ability check: psi_p(3) = (3/p) for primes p = 3 mod 4: [(7, -1), (11, 1), (19, -1), (23, 1), (31, -1), (43, -1), (47, 1), (59, 1), (67, -1), (71, 1), (79, -1), (83, 1), (103, -1), (107, 1)]
+   a Dirichlet character in u trivial on all primes p = 1 mod 4 factors through (Z/4)^* and is constant on p = 3 mod 4; observed values: [-1, 1]
+multiplicity x r / H for r = 3, 7, 11, 19, 23, 31, 43: [0.298, 0.319, 0.333, 0.35, 0.356, 0.369, 0.383]

@@ -359,3 +359,19 @@ Foothold second route (fh_*.py.txt, logs): see section V below (written when the
  L=1.72: Gamma 1.1166, H_c -.1166 (n=2 +.0606, n=4 -.0601, n=3 -.0412 absolute).
  Predictions: Q1 MISS (H_c negative), Q2 MISS, Q3 half (H_Lambda/E_+^2 HIT, Q/E_+^2 MISS).
  By the lead's B9 criterion the proposal is a reformulation at each level; residue = copositive rank-one domination on the cone.
+
+## SEMINAR S3 (board s3), my question B6 (exit E3, P_0 infinite). Files: S3_B6.md (to be written), s3_e3.py.txt.
+### PREDICTIONS, written 05:23:07 UTC 2026-11-11, before s3_e3.py.txt exists
+ Smallest homomorphic family over Q with P_0 of positive density that I can write: S = {2}, psi_u(n) = (n / u_3) (Jacobi symbol),
+ u_3 = the part of u made of primes = 3 mod 4. psi_p = (./p) for p = 3 mod 4 (ramified, m_p = 2), psi_p trivial for p = 1 mod 4, so
+ P_0 = {p = 1 mod 4} (density 1/2). Copies (psi_u trivial) = u with u_3 a square = the sums of two squares.
+ R1. copies up to H = 10^4: 2749 (memory of B(10^4)); Landau-Ramanujan leading term 0.7642 H/sqrt(log H) = 2518. Exponent log C/log H ~ 0.86.
+ R2. distinct members (distinct squarefree kernels r of u_3, i.e. distinct real characters (./r)) up to 10^4: between 1000 and 1800 (guess 1300).
+ R3. multiplicity of the member (./3): between 850 and 1050; of (./7): between 400 and 550.
+ R4. the family is NOT Poisson-able (u -> psi_u(3) is not a Dirichlet character in u): (3/p) takes both signs on p = 3 mod 4.
+### S3 RESULTS (posted B15 answer to B6, B16 question to SP-modular; detail S3_B6.md; s3_e3.log)
+ PROVED: Lemma C (copy rows of S are the conclusion); Theorem A (rough copies of density H^(-eps) + diagonal => RH, bootstrap absorbs copy
+ errors); Rankin corollary delta <= max(1/2, sigma_0(P_0)); Theorem B (Poisson-able + bounded order + P_0 positive density => degenerate:
+ O(1) distinct characters; then diagonal <=> RH + GRH for finitely many fixed characters at each level: circular exactly).
+ COMPUTED smallest family psi_u = (./u_3): C(10^4) = 2749, 1381 members, multiplicities 2749, 992, 456, 303 (r = 1, 3, 7, 11); not Poisson-able.
+ R1-R4 all HIT. Open: density-0 P_0 with sigma_0 > 1/2; unbounded order.

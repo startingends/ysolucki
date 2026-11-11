@@ -1221,3 +1221,13 @@ An exit would need an orthogonality relation whose diagonal is the trivial chara
   "level above ½ for weights that are not well-factorable". RISK flagged by the seat: by exactness, the 7/8 theorem
   would imply asymptotics for those correlations at levels in (½, 4/7) — a new consequence, or a scaling error.
   Decisive check approved (one computation, prediction first).
+- S3 exit E3 closed (S1-parity, B15, `rh/experiments/s1_seminar/parity/S3_B6.md`). PROVED: in any copy amplifier the
+  conclusion is just the copy-row part of the mean-square hypothesis (Theorem A: near-full-density copies + μ-specific
+  diagonal ⇒ RH directly); copy density ≤ max(½, convergence exponent of P₀), so "P₀ infinite" is not enough — one needs
+  Σ_{p∈P₀} p^(−s) divergent for some s > ½; a Poisson-able family of bounded order with P₀ of positive density takes only
+  finitely many distinct characters (settles the barrier file's open conjecture in that case), so its diagonal is RH +
+  GRH for finitely many characters: circular. Smallest case computed (all four predictions hit): ψ_u(n) = (n/u₃),
+  copies = sums of two squares, exponent 0.86, provably not Poisson-able. Open: P₀ of density zero with convergence
+  exponent > ½, and families of unbounded order (asked of SP-modular, B16).
+- S3 so far: E1, E3, E5, E6 closed with proofs; the form-positivity answer (H10) is the one open line, pending a scaling
+  check; E2 is the short-family wall itself.

@@ -1,0 +1,54 @@
+"""S1-parity, seminar S3, B6 (exit E3): the smallest homomorphic family over Q with P_0 of positive density.
+psi_u(n) = (n / u_3), u_3 = part of u made of primes = 3 mod 4 (Jacobi symbol; S = {2}). P_0 = {p = 1 mod 4}.
+Copies: psi_u trivial <=> u_3 is a square <=> u is a sum of two squares.  Counts up to H, members, multiplicities, Poisson-ability check."""
+import math
+from collections import Counter
+H = 10 ** 4
+spf = list(range(H + 1))
+for i in range(2, int(H ** 0.5) + 1):
+    if spf[i] == i:
+        for j in range(i * i, H + 1, i):
+            if spf[j] == j: spf[j] = i
+def fac(n):
+    f = {}
+    while n > 1:
+        p = spf[n]; f[p] = f.get(p, 0) + 1; n //= p
+    return f
+def kernel_r(u):
+    """squarefree kernel of u_3 = product of p = 3 mod 4 with odd exponent: the member is the real character (./r) (times coprimality to u)"""
+    r = 1
+    for p, e in fac(u).items():
+        if p % 4 == 3 and e % 2 == 1: r *= p
+    return r
+def jacobi(a, n):
+    assert n > 0 and n % 2 == 1
+    a %= n; t = 1
+    while a:
+        while a % 2 == 0:
+            a //= 2
+            if n % 8 in (3, 5): t = -t
+        a, n = n, a
+        if a % 4 == 3 and n % 4 == 3: t = -t
+        a %= n
+    return t if n == 1 else 0
+mult = Counter(kernel_r(u) for u in range(1, H + 1))
+C = mult[1]
+print("H = %d: copies (u with u_3 a square = sums of two squares) C = %d ; C/H = %.4f ; log C/log H = %.4f ; Landau-Ramanujan 0.76422 H/sqrt(log H) = %.0f" % (
+      H, C, C / H, math.log(C) / math.log(H), 0.764223653 * H / math.sqrt(math.log(H))))
+# cross-check against the definition 'sum of two squares'
+s2 = set(a * a + b * b for a in range(0, 101) for b in range(0, 101)) - {0}
+print("   cross-check: #{1 <= u <= H : u = a^2 + b^2} = %d" % sum(1 for u in range(1, H + 1) if u in s2))
+print("distinct members (distinct real characters (./r)): %d ; largest multiplicities: %s" % (len(mult), mult.most_common(8)))
+for r in (3, 7, 11, 19, 21):
+    print("   multiplicity of (./%d): %d" % (r, mult[r]))
+print("first members u = 1..30 as (u, r) with psi_u = (./r) on n coprime to u: %s" % [(u, kernel_r(u)) for u in range(1, 31)])
+print("first copies: %s" % [u for u in range(1, 60) if kernel_r(u) == 1])
+for X in (10 ** 2, 10 ** 3, 10 ** 4):
+    c = sum(1 for u in range(1, X + 1) if kernel_r(u) == 1)
+    print("   C(%d) = %d  (C/X^(1/2) = %.2f, C/X = %.3f)" % (X, c, c / X ** 0.5, c / X))
+# Poisson-ability: would need u -> psi_u(3) = (3 / u_3) to be a Dirichlet character in u with conductor | (3*2)^inf.
+vals = [(p, jacobi(3, p)) for p in range(5, 120) if spf[p] == p and p % 4 == 3]
+print("Poisson-ability check: psi_p(3) = (3/p) for primes p = 3 mod 4: %s" % vals)
+print("   a Dirichlet character in u trivial on all primes p = 1 mod 4 factors through (Z/4)^* and is constant on p = 3 mod 4; observed values: %s" % sorted(set(v for _, v in vals)))
+# weighted structure of the mean square: multiplicity of (./r) is about (H/r) times a slowly varying factor
+print("multiplicity x r / H for r = 3, 7, 11, 19, 23, 31, 43: %s" % [round(mult[r] * r / H, 3) for r in (3, 7, 11, 19, 23, 31, 43)])
