@@ -1342,3 +1342,11 @@ adversarial verification** (lead, after `rh/specialists/modular/H_CUB.md`).
   Poisson summation that destroys the gain. The October family remains the only one in sight.
 - Process note: the chain N73 → N76 → N77 was carried by three seats agreeing; the adversarial verifier caught an error
   none of them saw. The verification track is doing its job; nothing of N76–N77 had been built on.
+
+**N79. The Stepanov asymmetry does not escape the wall** (lead, 2026-11-11). Over ℤ only the upper bound
+ψ(x) ≤ x + O(x^(1/2+ε)) is needed (N74). The ℤ-analogue of Stepanov's auxiliary object is an integer divisible by p^m
+for all p ≤ x whose size is known independently: factorial ratios (Chebyshev, Diamond–Erdős), sizes by Stirling,
+valuations by Legendre. Their exponents are Chebyshev's identity log⌊x⌋! = Σ_k ψ(x/k) inverted by Möbius: an
+auxiliary integer of square-root quality is a combination of factorial ratios whose coefficients reproduce μ up to
+length x with square-root cancellation. So the construction step IS the Möbius wall (#34), and the asymmetry buys
+nothing. Recorded as the eighth language of the same wall.
