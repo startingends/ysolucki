@@ -1,0 +1,26 @@
+"""psi-coordinates (plank 7's change of variable f = Z psi): D(Z psi) = 2|psi|^2 in the bulk; is Q(Z psi) a sampling sum
+of Psi at the zeros?  Packets psi = Hann window * cos/sin(t u)."""
+import sys, math, json, numpy as np
+from numpy.polynomial.legendre import leggauss, legval
+fn, L = sys.argv[1], float(sys.argv[2])
+Q, D = np.load(fn); NB = Q.shape[0]
+xg, wg = leggauss(800); u = L * xg; w = L * wg
+P = np.array([legval(xg, [0] * j + [1]) * math.sqrt((2 * j + 1) / (2 * L)) for j in range(NB)])
+ZS = [float(t) for t in json.load(open('/home/user/ysolucki/rh/experiments/foothold/zeta_zeros_200.json'))]
+N = int(math.exp(2 * L))
+env = lambda x: np.where(np.abs(x) <= L, np.cos(math.pi * x / (2 * L)) ** 2, 0.0)
+def FT(fv, z):   # int f(u) e^{i z u} du
+    return np.sum(w * fv * np.exp(1j * z * u))
+print(f"{fn}: N = {N}; columns: t | D/(2|psi|^2) | Q/D | pi sum_gamma |Psi|^2/int|Psi|^2 (flat sampling of psi) | zero-side check sum 2|F|^2 / Q")
+for t in np.arange(30, 100, 2.5):
+    acc = np.zeros(5)
+    for tr in (np.cos, np.sin):
+        ps = env(u) * tr(t * u)
+        f = sum(n ** -0.5 * env(u + math.log(n)) * tr(t * (u + math.log(n))) for n in range(1, N + 1))
+        c = P @ (w * f); n2p = np.sum(w * ps ** 2)
+        qv = c @ Q @ c; dv = c @ D @ c
+        samp = sum(abs(FT(ps, g)) ** 2 for g in ZS)       # one side; Psi(-g) = conj: factor 2 cancels against int over R
+        intP = 2 * math.pi * n2p                           # int |Psi|^2 dt over R = 2 pi |psi|^2; half on each side
+        zs = sum(2 * abs(FT(f, g)) ** 2 for g in ZS)
+        acc += np.array([dv / (2 * n2p), qv, dv, math.pi * 2 * samp / intP, zs / qv])
+    print(f"  {t:5.1f}  {acc[0]/2:7.4f}  {acc[1]/acc[2]:7.4f}  {acc[3]/2:7.4f}  {acc[4]/2:7.4f}")

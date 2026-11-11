@@ -1,0 +1,73 @@
+CHECK: W small enough to hold only the pair, no actual neighbours -> closed form
+   local 0.515407  closed 0.515407
+   actual zeros = lattice: rho = 1.000000 (must be 1)
+
+DATA POINTS, two-zero model (W = 0.99 s: only the pair) and local-zeros model (W = 4, 8, 16, 30)
+ zeta 59.35/60.83, relative gap 0.5337
+  two-zero: L = 1.0, W = 2.754857846546659: s = 2.7827, r = 1.1290, rho = 0.51541; shares of Q at the minimiser: lattice rest: 0.441, on 60.832: 0.279, on 59.347: 0.279
+  local: L = 1.0, W = 4: s = 2.7827, r = 1.1290, rho = 0.56838; shares of Q at the minimiser: lattice rest: 0.491, on 60.832: 0.303, on 59.347: 0.178, on 56.446: 0.028
+  local: L = 1.0, W = 8: s = 2.7827, r = 1.1290, rho = 0.33370; shares of Q at the minimiser: on 60.832: 0.346, on 65.113: 0.266, on 59.347: 0.165, on 67.080: 0.115, lattice rest: 0.093
+  local: L = 1.0, W = 16: s = 2.7827, r = 1.1290, rho = 0.08303; shares of Q at the minimiser: lattice rest: 0.494, on 48.005: 0.207, on 49.774: 0.137, on 59.347: 0.060, on 60.832: 0.037
+  local: L = 1.0, W = 30: s = 2.7827, r = 1.1290, rho = 0.18618; shares of Q at the minimiser: lattice rest: 0.246, on 48.005: 0.159, on 30.425: 0.158, on 32.935: 0.155, on 49.774: 0.094
+ zeta 111.03/111.88, relative gap 0.3867
+  two-zero: L = 1.25, W = 2.1630584244225135: s = 2.1849, r = 1.1503, rho = 0.40942; shares of Q at the minimiser: lattice rest: 0.630, on 111.030: 0.185, on 111.875: 0.185
+  local: L = 1.25, W = 4: s = 2.1849, r = 1.1503, rho = 0.05088; shares of Q at the minimiser: lattice rest: 0.355, on 111.030: 0.352, on 111.875: 0.278, on 114.320: 0.015
+  local: L = 1.25, W = 8: s = 2.1849, r = 1.1503, rho = 0.20276; shares of Q at the minimiser: on 111.030: 0.289, on 107.169: 0.224, lattice rest: 0.161, on 105.447: 0.148, on 111.875: 0.110
+  local: L = 1.25, W = 16: s = 2.1849, r = 1.1503, rho = 0.18327; shares of Q at the minimiser: on 111.030: 0.260, on 107.169: 0.194, on 105.447: 0.163, on 111.875: 0.122, lattice rest: 0.067
+  local: L = 1.25, W = 30: s = 2.1849, r = 1.1503, rho = 0.18332; shares of Q at the minimiser: on 111.030: 0.271, on 107.169: 0.183, on 105.447: 0.144, on 111.875: 0.126, on 103.726: 0.054
+ DH on-line 40.163/40.683, relative gap 0.2873
+  two-zero: L = 1.4, W = 1.7921133794883004: s = 1.8102, r = 1.2396, rho = 0.44396; shares of Q at the minimiser: lattice rest: 0.845, on 40.683: 0.078, on 40.163: 0.078
+  local: L = 1.4, W = 4: s = 1.8102, r = 1.2396, rho = 0.37190; shares of Q at the minimiser: lattice rest: 0.416, on 37.455: 0.285, on 40.163: 0.123, on 43.081: 0.120, on 40.683: 0.057
+  local: L = 1.4, W = 8: s = 1.8102, r = 1.2396, rho = 0.36966; shares of Q at the minimiser: on 37.455: 0.261, on 43.081: 0.126, lattice rest: 0.123, on 40.163: 0.122, on 44.947: 0.119
+  local: L = 1.4, W = 16: s = 1.8102, r = 1.2396, rho = 0.34017; shares of Q at the minimiser: on 37.455: 0.182, lattice rest: 0.133, on 40.163: 0.108, on 44.947: 0.094, on 43.081: 0.087
+  local: L = 1.4, W = 30: s = 1.8102, r = 1.2396, rho = 0.12383; shares of Q at the minimiser: lattice rest: 0.623, on 22.160: 0.100, on 23.345: 0.069, on 27.924: 0.028, on 31.964: 0.027
+ DH on-line 40.163/40.683, relative gap 0.2873
+  two-zero: L = 1.5, W = 1.7921133794883004: s = 1.8102, r = 1.1570, rho = 0.35169; shares of Q at the minimiser: lattice rest: 0.760, on 40.683: 0.120, on 40.163: 0.120
+  local: L = 1.5, W = 4: s = 1.8102, r = 1.1570, rho = 0.29447; shares of Q at the minimiser: lattice rest: 0.453, on 37.455: 0.207, on 40.163: 0.166, on 40.683: 0.103, on 43.081: 0.070
+  local: L = 1.5, W = 8: s = 1.8102, r = 1.1570, rho = 0.29008; shares of Q at the minimiser: lattice rest: 0.178, on 40.163: 0.172, on 37.455: 0.165, on 40.683: 0.107, on 44.947: 0.102
+  local: L = 1.5, W = 16: s = 1.8102, r = 1.1570, rho = 0.29645; shares of Q at the minimiser: on 37.455: 0.187, on 40.163: 0.165, on 40.683: 0.102, lattice rest: 0.087, on 44.947: 0.085
+  local: L = 1.5, W = 30: s = 1.8102, r = 1.1570, rho = 0.03241; shares of Q at the minimiser: lattice rest: 0.730, on 31.964: 0.025, on 40.163: 0.021, on 22.160: 0.021, on 33.700: 0.018
+ DH on-line 40.163/40.683, relative gap 0.2873
+  two-zero: L = 1.6, W = 1.7921133794883004: s = 1.8102, r = 1.0847, rho = 0.25708; shares of Q at the minimiser: lattice rest: 0.605, on 40.683: 0.198, on 40.163: 0.198
+  local: L = 1.6, W = 4: s = 1.8102, r = 1.0847, rho = 0.22148; shares of Q at the minimiser: lattice rest: 0.425, on 40.163: 0.243, on 40.683: 0.186, on 37.455: 0.115, on 43.081: 0.031
+  local: L = 1.6, W = 8: s = 1.8102, r = 1.0847, rho = 0.21352; shares of Q at the minimiser: lattice rest: 0.265, on 40.163: 0.254, on 40.683: 0.189, on 37.455: 0.089, on 33.700: 0.067
+  local: L = 1.6, W = 16: s = 1.8102, r = 1.0847, rho = 0.15093; shares of Q at the minimiser: on 40.163: 0.275, lattice rest: 0.270, on 40.683: 0.227, on 50.240: 0.065, on 51.292: 0.051
+  local: L = 1.6, W = 30: s = 1.8102, r = 1.0847, rho = 0.00181; shares of Q at the minimiser: lattice rest: 0.624, on 40.683: 0.106, on 40.163: 0.097, on 58.395: 0.019, on 44.947: 0.018
+
+IMPOSTOR QUARTET 85.70 (beta = 0.3085): sign of the model's lowest eigenvalue against L (no fitted constant)
+ L = 1.6: two-zero closed form rho = 0.3329
+  local: L = 1.6, W = 8: s = 1.4881, r = 1.3195, rho = 0.24940; shares of Q at the minimiser: on 83.109: 0.496, off 85.70: -0.399, lattice rest: 0.236, on 87.647: 0.228, on 81.925: 0.224
+  local: L = 1.6, W = 16: s = 1.4881, r = 1.3195, rho = 0.22002; shares of Q at the minimiser: off 85.70: -0.358, on 83.109: 0.344, lattice rest: 0.233, on 87.647: 0.178, on 81.925: 0.172
+  local: L = 1.6, W = 30: s = 1.4881, r = 1.3195, rho = 0.22626; shares of Q at the minimiser: on 83.109: 0.424, off 85.70: -0.415, on 87.647: 0.212, on 81.925: 0.208, on 89.439: 0.149
+ L = 1.65: two-zero closed form rho = 0.2787
+  local: L = 1.65, W = 8: s = 1.4881, r = 1.2795, rho = 0.20392; shares of Q at the minimiser: off 85.70: -0.554, on 83.109: 0.502, on 81.925: 0.272, lattice rest: 0.245, on 87.647: 0.236
+  local: L = 1.65, W = 16: s = 1.4881, r = 1.2795, rho = 0.18305; shares of Q at the minimiser: off 85.70: -0.532, on 83.109: 0.425, on 81.925: 0.258, on 87.647: 0.198, on 89.439: 0.157
+  local: L = 1.65, W = 30: s = 1.4881, r = 1.2795, rho = 0.18824; shares of Q at the minimiser: off 85.70: -0.564, on 83.109: 0.471, on 81.925: 0.280, on 87.647: 0.214, on 89.439: 0.166
+ L = 1.68: two-zero closed form rho = 0.2453
+  local: L = 1.68, W = 8: s = 1.4881, r = 1.2567, rho = 0.17693; shares of Q at the minimiser: off 85.70: -0.686, on 83.109: 0.502, on 81.925: 0.301, lattice rest: 0.256, on 87.647: 0.248
+  local: L = 1.68, W = 16: s = 1.4881, r = 1.2567, rho = 0.16591; shares of Q at the minimiser: off 85.70: -0.682, on 83.109: 0.478, on 81.925: 0.308, on 87.647: 0.226, on 89.439: 0.189
+  local: L = 1.68, W = 30: s = 1.4881, r = 1.2567, rho = 0.16606; shares of Q at the minimiser: off 85.70: -0.715, on 83.109: 0.495, on 81.925: 0.316, on 87.647: 0.237, on 89.439: 0.199
+ L = 1.7: two-zero closed form rho = 0.2225
+  local: L = 1.7, W = 8: s = 1.4881, r = 1.2419, rho = 0.15883; shares of Q at the minimiser: off 85.70: -0.802, on 83.109: 0.503, on 81.925: 0.320, lattice rest: 0.268, on 87.647: 0.260
+  local: L = 1.7, W = 16: s = 1.4881, r = 1.2419, rho = 0.15271; shares of Q at the minimiser: off 85.70: -0.816, on 83.109: 0.500, on 81.925: 0.333, on 87.647: 0.253, on 89.439: 0.221
+  local: L = 1.7, W = 30: s = 1.4881, r = 1.2419, rho = 0.14881; shares of Q at the minimiser: off 85.70: -0.855, on 83.109: 0.492, on 81.925: 0.326, on 87.647: 0.263, on 89.439: 0.236
+ L = 1.72: two-zero closed form rho = 0.1995
+  local: L = 1.72, W = 8: s = 1.4881, r = 1.2274, rho = 0.14055; shares of Q at the minimiser: off 85.70: -0.949, on 83.109: 0.506, on 81.925: 0.342, lattice rest: 0.287, on 87.647: 0.277
+  local: L = 1.72, W = 16: s = 1.4881, r = 1.2274, rho = 0.13593; shares of Q at the minimiser: off 85.70: -0.983, on 83.109: 0.501, on 81.925: 0.346, on 87.647: 0.280, on 89.439: 0.258
+  local: L = 1.72, W = 30: s = 1.4881, r = 1.2274, rho = 0.13063; shares of Q at the minimiser: off 85.70: -1.024, on 83.109: 0.482, on 81.925: 0.333, on 87.647: 0.290, on 89.439: 0.276
+ L = 1.75: two-zero closed form rho = 0.1645
+  local: L = 1.75, W = 8: s = 1.4881, r = 1.2064, rho = 0.11263; shares of Q at the minimiser: off 85.70: -1.268, on 83.109: 0.517, on 81.925: 0.382, lattice rest: 0.337, on 87.647: 0.313
+  local: L = 1.75, W = 16: s = 1.4881, r = 1.2064, rho = 0.10494; shares of Q at the minimiser: off 85.70: -1.343, on 83.109: 0.491, on 81.925: 0.367, on 87.647: 0.325, on 89.439: 0.320
+  local: L = 1.75, W = 30: s = 1.4881, r = 1.2064, rho = 0.10276; shares of Q at the minimiser: off 85.70: -1.371, on 83.109: 0.489, on 81.925: 0.370, on 87.647: 0.329, on 89.439: 0.327
+ L = 1.8: two-zero closed form rho = 0.1046
+  local: L = 1.8, W = 8: s = 1.4881, r = 1.1729, rho = 0.06441; shares of Q at the minimiser: off 85.70: -2.469, on 83.109: 0.602, lattice rest: 0.583, on 81.925: 0.523, on 89.439: 0.456
+  local: L = 1.8, W = 16: s = 1.4881, r = 1.1729, rho = 0.05249; shares of Q at the minimiser: off 85.70: -2.884, on 83.109: 0.611, on 81.925: 0.557, on 89.439: 0.495, on 87.647: 0.491
+  local: L = 1.8, W = 30: s = 1.4881, r = 1.1729, rho = 0.05271; shares of Q at the minimiser: off 85.70: -2.897, on 83.109: 0.639, on 81.925: 0.593, on 87.647: 0.480, on 89.439: 0.473
+ L = 1.85: two-zero closed form rho = 0.0430
+  local: L = 1.85, W = 8: s = 1.4881, r = 1.1412, rho = 0.01397; shares of Q at the minimiser: off 85.70: -12.586, lattice rest: 3.000, on 81.925: 1.742, on 83.109: 1.641, on 89.439: 1.636
+  local: L = 1.85, W = 16: s = 1.4881, r = 1.1412, rho = 0.00807; shares of Q at the minimiser: off 85.70: -20.835, on 81.925: 2.991, on 83.109: 2.660, on 87.647: 2.482, on 89.439: 2.371
+  local: L = 1.85, W = 30: s = 1.4881, r = 1.1412, rho = 0.01003; shares of Q at the minimiser: off 85.70: -17.160, on 81.925: 2.436, on 83.109: 2.212, on 87.647: 2.093, on 89.439: 2.019
+ L = 1.9: two-zero closed form rho = -0.0203
+  local: L = 1.9, W = 8: s = 1.4881, r = 1.1112, rho = -0.03833; shares of Q at the minimiser: off 85.70: 5.038, lattice rest: -1.273, on 87.647: -0.437, on 90.725: -0.436, on 81.925: -0.412
+  local: L = 1.9, W = 16: s = 1.4881, r = 1.1112, rho = -0.03986; shares of Q at the minimiser: off 85.70: 4.820, lattice rest: -0.574, on 87.647: -0.401, on 81.925: -0.399, on 90.725: -0.382
+  local: L = 1.9, W = 30: s = 1.4881, r = 1.1112, rho = -0.04900; shares of Q at the minimiser: off 85.70: 3.921, lattice rest: -0.312, on 87.647: -0.307, on 90.725: -0.299, on 81.925: -0.281

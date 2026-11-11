@@ -1,0 +1,18 @@
+import sys
+sys.argv = ['h', 'QDmp_zeta_1_1_116.pkl', '60.0895', 'on:59.347000,60.832000', '0.5513']
+src = open('hybrid.py.txt').read().split("for us in sys.argv[4]")[0]
+exec(src)
+import json
+ev, V = np.linalg.eigh(Abg); v = V[:, 0]
+cvec = Li.T * mp.matrix([mp.mpf(x) for x in v])
+def Fat(t):
+    p = phi(t); return sum(cvec[k] * p[k] for k in range(NB))
+qv = (cvec.T * Q * cvec)[0]; dv = (cvec.T * D * cvec)[0]
+pr = 2 * abs(Fat(59.347)) ** 2 + 2 * abs(Fat(60.832)) ** 2
+ZS = [mp.mpf(t) for t in json.load(open('/home/user/ysolucki/rh/experiments/foothold/zeta_zeros_200.json'))]
+zs = [(float(t), float(2 * abs(Fat(t)) ** 2 / dv)) for t in ZS]
+print("background eigenvalue", ev[0], " Q/D =", float(qv / dv), " pair/D =", float(pr / dv), " (Q - pair)/D =", float((qv - pr) / dv))
+print(" sum over zeros < 200 of 2|F|^2 / D =", sum(x for _, x in zs), "; largest:", sorted(zs, key=lambda a: -a[1])[:5])
+print(" D(v)/|c|^2 =", float(dv / (cvec.T * cvec)[0]), " Legendre degree profile (share of |c|^2 in degree blocks of 20):", [round(float(sum(cvec[k] ** 2 for k in range(b, min(b + 20, NB))) / (cvec.T * cvec)[0]), 3) for b in range(0, NB, 20)])
+for t in (100, 116, 130, 150, 200, 300):
+    print(f"  |F({t})|^2 / D = {float(abs(Fat(t))**2 / dv):.3e}")

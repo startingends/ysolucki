@@ -1,0 +1,68 @@
+"""HYBRID two-zero model (TWO_ZERO.md section 5): the exact comparison form D_L and the exact Weil form Q of the
+foothold seat (dumped by dumpQDmp.py.txt), with ONE pair of zeros moved along the heat-flow parameter u:
+   Q_u = Q - (zero-side terms of the actual pair) + (zero-side terms of a pair at c +- sqrt(u)),
+u > 0: on-line pair c +- delta (2|F|^2 each, f real); u < 0: off-line quartet c +- i beta, -c +- i beta (4 Re F(z) conj F(conj z)).
+Everything else (all other zeros, the archimedean term, the primes) is exact. kappa_min(u) = lowest eigenvalue of the pencil
+(Q_u, D). The u-dependence is a rank-4 perturbation, so kappa(u) is a root of the 4x4 secular equation
+det(I + M W^T (A_bg - kappa)^(-1) W) = 0; here it is simply computed as the lowest eigenvalue of A_bg + W M W^T.
+usage: hybrid.py.txt <pkl> <c> <actual: 'on:g1,g2' or 'off:beta'> <list of u values as comma list>"""
+import sys, pickle, math, time
+import numpy as np, mpmath as mp
+t0 = time.time()
+d = pickle.load(open(sys.argv[1], 'rb'))
+NB = int(sys.argv[5]) if len(sys.argv) > 5 else d['NB']; mp.mp.prec = d['prec'] - 40
+L = mp.mpf(d['L'].split('/')[0]) / (mp.mpf(d['L'].split('/')[1]) if '/' in d['L'] else 1)
+Q = mp.matrix(NB, NB); D = mp.matrix(NB, NB)
+for i in range(NB):
+    for j in range(NB):
+        Q[i, j] = (mp.mpf(d['Q'][i][j]) + mp.mpf(d['Q'][j][i])) / 2; D[i, j] = (mp.mpf(d['D'][i][j]) + mp.mpf(d['D'][j][i])) / 2
+Li = mp.inverse(mp.cholesky(D))
+print(f"{sys.argv[1]}: kind {d['KIND']}, L = {d['L']}, NB used = {NB} (of {d['NB']}); whitening done {time.time()-t0:.0f}s", flush=True)
+def phi(z):
+    z = mp.mpc(z); w = z * L; out = []
+    for n in range(NB):
+        jn = mp.sqrt(mp.pi / (2 * w)) * mp.besselj(n + mp.mpf(1) / 2, w)
+        out.append((1j) ** n * mp.sqrt(2 * L * (2 * n + 1)) * jn)
+    return out
+def terms_online(t):
+    """2|F(t)|^2 = c^T (2 Re phi phi^H) c = sum of two rank-one terms (real part vector, imaginary part vector)"""
+    p = phi(t); a = [mp.re(x) for x in p]; b = [mp.im(x) for x in p]
+    return [(2, a), (2, b)]
+def terms_offline(c, beta):
+    """4 Re F(z) conj F(conj z), z = c + i beta: symmetric bilinear form 4 Re[(phi(z) . c)(conj phi(conj z) . c)]
+    = 4[(a1.c)(a2.c) + (b1.c)(b2.c)] with phi(z) = a1 + i b1, conj phi(conj z) = a2 - i b2 ... written as differences of squares"""
+    p = phi(mp.mpc(c, beta)); q = [mp.conj(x) for x in phi(mp.mpc(c, -beta))]
+    a1 = [mp.re(x) for x in p]; b1 = [mp.im(x) for x in p]; a2 = [mp.re(x) for x in q]; b2 = [mp.im(x) for x in q]
+    # Re[(a1 + i b1).c * (a2 + i b2).c] = (a1.c)(a2.c) - (b1.c)(b2.c);  xy = ((x+y)^2 - (x-y)^2)/4
+    out = []
+    for (x, y, sg) in ((a1, a2, 1), (b1, b2, -1)):
+        s_ = [x[k] + y[k] for k in range(NB)]; d_ = [x[k] - y[k] for k in range(NB)]
+        out += [(sg * 1, s_), (-sg * 1, d_)]          # 4 * (1/4)
+    return out
+def whiten(terms):
+    W = []; M = []
+    for m, v in terms:
+        vv = mp.matrix(v); w = Li * vv
+        W.append([float(w[k]) for k in range(NB)]); M.append(float(m))
+    return np.array(W).T, np.array(M)
+def pert(terms):
+    W, M = whiten(terms); return (W * M) @ W.T
+A = Li * Q * Li.T
+Af = np.array([[float(A[i, j]) for j in range(NB)] for i in range(NB)]); Af = (Af + Af.T) / 2
+c = mp.mpf(sys.argv[2]); act = sys.argv[3]
+if act.startswith('on:'):
+    g1, g2 = [mp.mpf(x) for x in act[3:].split(',')]; P0 = pert(terms_online(g1) + terms_online(g2)); u0 = float(((g2 - g1) / 2) ** 2)
+else:
+    b0 = mp.mpf(act[4:]); P0 = pert(terms_offline(mp.mpf(sys.argv[2]), b0)); u0 = -float(b0) ** 2
+Abg = Af - P0
+ev, V = np.linalg.eigh(Af)
+print(f" check: pencil with the actual zeros: kappa_min = {ev[0]:.6f}, second {ev[1]:.6f}; u0 = {u0:.5f}; background alone: kappa_min = {np.linalg.eigvalsh(Abg)[0]:.6f}  ({time.time()-t0:.0f}s)", flush=True)
+for us in sys.argv[4].split(','):
+    u = float(us)
+    if u >= 0:
+        dl = mp.sqrt(u); P = pert(terms_online(c - dl) + terms_online(c + dl)) if u > 0 else 2 * pert(terms_online(c))
+    else:
+        P = pert(terms_offline(c, mp.sqrt(-u)))
+    ev, V = np.linalg.eigh(Abg + P); v = V[:, 0]
+    share = (v @ P @ v) / ev[0] if abs(ev[0]) > 1e-12 else float('nan')
+    print(f"  u = {u:+.5f} ({'delta' if u >= 0 else 'beta'} = {math.sqrt(abs(u)):.4f}): kappa_min = {ev[0]:+.6f}, second = {ev[1]:+.6f}; share of the moved pair in Q(v_min) = {share:+.3f}   ({time.time()-t0:.0f}s)", flush=True)

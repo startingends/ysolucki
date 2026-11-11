@@ -1,0 +1,86 @@
+"""Local-zeros refinement of the two-zero model (TWO_ZERO.md section 4).
+Q~(F) = ||F||^2 - s sum_{lattice points within W of c} |F(p)|^2 + s sum_{actual on-line zeros within W} |F(gamma)|^2
+        + s sum_{off-line points z = gamma + i b within W} 2 Re F(z) conj F(conj z),
+on PW_L (||F||^2 = int |F|^2 dt), lattice c + s(Z + 1/2) beyond W (tight frame part). Exact finite eigenproblem:
+spectrum = {1} u {1 + eig(Gamma^(1/2) H Gamma^(1/2))}, Gamma_ij = s K(z_i, z_j), K(z, w) = sin(L(z - conj w))/(pi(z - conj w)).
+With W = 0 (no actual zeros) and a single pair this is the closed form of model.py.txt (checked below)."""
+import sys, json, math, cmath
+import numpy as np
+import scipy.linalg as sl
+sys.argv_ = sys.argv
+exec(open('/home/user/ysolucki/rh/specialists/operator/two_zero/model.py.txt').read().split("if __name__")[0])
+
+ZETA = [float(t) for t in json.load(open('/home/user/ysolucki/rh/experiments/foothold/zeta_zeros_200.json'))]
+DH = json.load(open('/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json'))
+DHON = [float(t) for t in DH['online']]
+DHOFF = [(0.808517 - 0.5, 85.699348), (0.650830 - 0.5, 114.163343), (0.574356 - 0.5, 166.479306), (0.724258 - 0.5, 176.702461)]
+
+def Kf(z, w, L):
+    d = z - complex(w).conjugate()
+    return L / math.pi if abs(d) < 1e-14 else cmath.sin(L * d) / (math.pi * d)
+
+def local_model(L, q, c, onl, offl, W, s=None):
+    """returns (rho = min eigenvalue of Q~, shares dict for the minimiser, s, r)"""
+    if s is None: s = 2 * math.pi / math.log(q * c / (2 * math.pi))
+    r = math.pi / (L * s)
+    pts = []; H = []
+    K = int(W / s) + 2
+    lat = [c + s * (k + 0.5) for k in range(-K, K) if abs(s * (k + 0.5)) < W]
+    for p in lat: pts.append(p); H.append(('lat', -1.0))
+    for g in onl:
+        if abs(g - c) < W: pts.append(g); H.append(('on', 1.0))
+    offidx = []
+    for b, g in offl:
+        if abs(g - c) < W:
+            offidx.append((len(pts), len(pts) + 1)); pts.append(complex(g, b)); pts.append(complex(g, -b)); H.append(('off', 0)); H.append(('off', 0))
+    n = len(pts)
+    Hm = np.zeros((n, n), dtype=complex)
+    for i, (kind, e) in enumerate(H):
+        if kind != 'off': Hm[i, i] = e
+    for i, j in offidx: Hm[i, j] = 1; Hm[j, i] = 1
+    G = np.array([[s * Kf(pts[i], pts[j], L) for j in range(n)] for i in range(n)])
+    G = (G + G.conj().T) / 2
+    w, U = np.linalg.eigh(G); w = np.clip(w, 0, None)
+    G12 = (U * np.sqrt(w)) @ U.conj().T
+    A = G12 @ Hm @ G12; A = (A + A.conj().T) / 2
+    ev, Y = np.linalg.eigh(A)
+    lam = ev[0]; rho_ = min(1.0, 1 + lam)
+    y = Y[:, 0]; v = G12 @ y            # evaluations (scaled by sqrt(s)); ||F||^2 = |y|^2 = 1
+    qtot = 1 + lam
+    sh = {'lattice rest': (1 - sum(abs(v[i]) ** 2 for i, (k, e) in enumerate(H) if k == 'lat')).real}
+    for i, (k, e) in enumerate(H):
+        if k == 'on': sh[f'on {pts[i].real if isinstance(pts[i], complex) else pts[i]:.3f}'] = abs(v[i]) ** 2
+    for i, j in offidx: sh[f'off {pts[i].real:.2f}'] = (2 * (v[i] * np.conj(v[j])).real)
+    return rho_, {k: x / qtot for k, x in sh.items()}, s, r
+
+def show(name, L, q, c, onl, offl, W):
+    rh, sh, s, r = local_model(L, q, c, onl, offl, W)
+    big = sorted(sh.items(), key=lambda kv: -abs(kv[1]))[:5]
+    print(f"  {name}: L = {L}, W = {W}: s = {s:.4f}, r = {r:.4f}, rho = {rh:.5f}; shares of Q at the minimiser: " + ", ".join(f"{k}: {x:.3f}" for k, x in big), flush=True)
+    return rh
+
+if __name__ == '__main__':
+    print("CHECK: W small enough to hold only the pair, no actual neighbours -> closed form")
+    s = 2 * math.pi / math.log(60.0895 / (2 * math.pi)); L = 1.0
+    rh, sh, s_, r = local_model(L, 1, 60.0895, [59.347, 60.832], [], 0.99 * s, s)
+    print(f"   local {rh:.6f}  closed {rho(r, ((60.832 - 59.347) / 2 / s) ** 2)[0]:.6f}")
+    rh, sh, s_, r = local_model(L, 1, 60.0, [60.0 + s * (k + .5) for k in range(-30, 30)], [], 20 * s, s)
+    print(f"   actual zeros = lattice: rho = {rh:.6f} (must be 1)")
+    print("\nDATA POINTS, two-zero model (W = 0.99 s: only the pair) and local-zeros model (W = 4, 8, 16, 30)")
+    cases = [("zeta 59.35/60.83", 1.0, 1, ZETA, [], (59.347, 60.832)),
+             ("zeta 111.03/111.88", 1.25, 1, ZETA, [], (111.030, 111.875)),
+             ("DH on-line 40.163/40.683", 1.4, 5, DHON, [], (40.163, 40.683)),
+             ("DH on-line 40.163/40.683", 1.5, 5, DHON, [], (40.163, 40.683)),
+             ("DH on-line 40.163/40.683", 1.6, 5, DHON, [], (40.163, 40.683))]
+    for name, L, q, onl, offl, (a, b) in cases:
+        c = (a + b) / 2; s = 2 * math.pi / math.log(q * c / (2 * math.pi))
+        print(f" {name}, relative gap {(b - a) / s:.4f}")
+        show("two-zero", L, q, c, [a, b], [], 0.99 * s)
+        for W in (4, 8, 16, 30): show("local", L, q, c, onl, offl, W)
+    print("\nIMPOSTOR QUARTET 85.70 (beta = 0.3085): sign of the model's lowest eigenvalue against L (no fitted constant)")
+    c = 85.699348
+    for L in (1.60, 1.65, 1.68, 1.70, 1.72, 1.75, 1.80, 1.85, 1.90):
+        s = 2 * math.pi / math.log(5 * c / (2 * math.pi))
+        r2 = rho(math.pi / (L * s), -(0.308517 / s) ** 2)[0]
+        print(f" L = {L}: two-zero closed form rho = {r2:.4f}", flush=True)
+        for W in (8, 16, 30): show("local", L, 5, c, DHON, DHOFF, W)

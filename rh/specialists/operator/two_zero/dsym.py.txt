@@ -1,0 +1,36 @@
+"""Test: in the bulk, D_L(f) ~ 2 * int_{-L}^{L} |sum_n mu(n) n^(-1/2) f(v + log n)|^2 dv (the determined part of the
+companion, Moebius inverse on [1/lam, lam], counted on both sides), i.e. |F|^2 weighted by a mollifier |M_N|^2, N = e^(2L)."""
+import sys, math, numpy as np
+from numpy.polynomial.legendre import leggauss, legval
+fn, L = sys.argv[1], float(sys.argv[2]); kind = sys.argv[3] if len(sys.argv) > 3 else 'zeta'
+Q, D = np.load(fn); NB = Q.shape[0]
+xg, wg = leggauss(600); u = L * xg; w = L * wg
+P = np.array([legval(xg, [0] * j + [1]) * math.sqrt((2 * j + 1) / (2 * L)) for j in range(NB)])
+def mob(n):
+    r, d, m = 1, 2, n
+    while d * d <= m:
+        if m % d == 0:
+            m //= d
+            if m % d == 0: return 0
+            r = -r
+        d += 1
+    return -r if m > 1 else r
+N = int(math.exp(2 * L))
+if kind == 'zeta':
+    co = {n: mob(n) for n in range(1, N + 1) if mob(n)}
+else:   # Davenport-Heilbronn: Dirichlet inverse of a_n
+    k = (math.sqrt(10 - 2 * math.sqrt(5)) - 2) / (math.sqrt(5) - 1); a = lambda n: [0, 1, k, -k, -1][n % 5]
+    b = {1: 1.0}
+    for n in range(2, N + 1): b[n] = -sum(a(d) * b[n // d] for d in range(2, n + 1) if n % d == 0)
+    co = {n: v for n, v in b.items() if abs(v) > 0}
+env = lambda x: np.where(np.abs(x) <= L, np.cos(math.pi * x / (2 * L)) ** 2, 0.0)
+print(f"{fn}: N = {N}, coefficients {co}")
+print("    t    D/|f|^2   Ddet/|f|^2   ratio     Q/|f|^2")
+for t in list(np.arange(10, 150, 5)):
+    out = []
+    for tr in (np.cos, np.sin):
+        fv = env(u) * tr(t * u); c = P @ (w * fv); n2 = np.sum(w * fv ** 2)
+        gd = sum(m * n ** -0.5 * env(u + math.log(n)) * tr(t * (u + math.log(n))) for n, m in co.items())
+        out.append((c @ D @ c / n2, 2 * np.sum(w * gd ** 2) / n2, c @ Q @ c / n2))
+    d, dd, qq = [sum(x[i] for x in out) / 2 for i in range(3)]
+    print(f"  {t:5.1f}  {d:8.4f}  {dd:8.4f}   {dd / d:7.3f}  {qq:8.4f}")

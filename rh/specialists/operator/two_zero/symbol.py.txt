@@ -1,0 +1,17 @@
+"""D-symbol and Q-symbol on wave packets (float64 from the foothold matrices; O(1) level only)."""
+import sys, math, numpy as np
+from numpy.polynomial.legendre import leggauss, legval
+fn, L = sys.argv[1], float(sys.argv[2]); q = float(sys.argv[3]) if len(sys.argv) > 3 else 1.0
+Q, D = np.load(fn); NB = Q.shape[0]
+xg, wg = leggauss(400); u = L * xg; w = L * wg
+P = np.array([legval(xg, [0] * j + [1]) * math.sqrt((2 * j + 1) / (2 * L)) for j in range(NB)])
+def coef(fv): return P @ (w * fv)
+env = np.cos(math.pi * u / (2 * L)) ** 2
+print(f"{fn}: packets cos/sin(t u) * Hann window; band edge 2 pi e^(2L)/q = {2*math.pi*math.exp(2*L)/q:.1f}, 4 pi e^(2L)/q = {4*math.pi*math.exp(2*L)/q:.1f}")
+print("    t   D/|f|^2 (cos, sin)    Q/|f|^2 (cos, sin)   log(qt/2pi)   resid(trunc)")
+for t in list(np.arange(2, 20, 4)) + list(np.arange(20, 150, 5)):
+    row = []
+    for tr in (np.cos, np.sin):
+        fv = env * tr(t * u); c = coef(fv); n2 = np.sum(w * fv ** 2); res = 1 - (c @ c) / n2
+        row.append((c @ D @ c / n2, c @ Q @ c / n2, res))
+    print(f"  {t:5.1f}  {row[0][0]:8.4f} {row[1][0]:8.4f}     {row[0][1]:8.4f} {row[1][1]:8.4f}     {math.log(q*t/(2*math.pi)):7.3f}     {max(row[0][2], row[1][2]):.1e}")

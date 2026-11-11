@@ -1,0 +1,10 @@
+"""K_D(t) = sup_f |F(t)|^2 / D(f) on the window space (D-normalised evaluation kernel), t near the zeros."""
+import sys
+args = sys.argv[1:]
+sys.argv = ['h'] + args[:3] + ['0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("for us in sys.argv[4]")[0]
+exec(src)
+for ts in args[3].split(','):
+    t = mp.mpf(ts); W, M = whiten(terms_online(t))   # columns: whitened Re, Im functionals (weight 2 not included)
+    G = W.T @ W; kd = np.linalg.eigvalsh(G)[-1]
+    print(f"  t = {ts}: K_D(t) = sup |F(t)|^2/D = {np.trace(G):.4e}   (largest of Re/Im parts {kd:.4e})")

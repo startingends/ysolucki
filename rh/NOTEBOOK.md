@@ -1383,3 +1383,25 @@ meets is de Bruijn–Newman's** (lead, after the foothold seat's FH session 5; `
   [−L, L] when the zero side is reduced to one pair (γ ± δ, or a quartet ½ ± β + i(γ ± δ)) plus the archimedean
   term. That is a 2×2 or 4×4 prolate Gram problem with a closed form in (δ, β, L). It would make the de Bruijn–Newman
   link exact in a model: κ as a function of the pair's position along the heat flow, through the collision.
+
+**N81. The two-zero model: the comparison constant is a Gram eigenvalue at the zeros, and it vanishes exactly at a
+collision** (lead, after SP-operator session 2, `rh/specialists/operator/TWO_ZERO.md`).
+- Found: D_L is NOT a neutral norm. On packets above the band edge D = 2‖Möbius-inverse of f‖² (4 digits), and below
+  a pinning height T_D(L) ≈ 1.55·2πe^(2L)/q its evaluation kernel is O(1) at every zero and up to 1e23 between zeros
+  (impostor included). So D "knows" the zeros, and κ_min is the bottom of the Gram matrix of D-kernels at the zeros
+  (model M3: the closest pair alone gives 0.336/0.229/0.169 against measured 0.298/0.205/0.138; with neighbours, 1.5%).
+  The flat model M1 (closed form, proved) misses the data; it is kept as the exactly solvable caricature.
+- PROVED inside M3 (elementary): for a pair, κ₂ = 4J·u + O(u²) with u = δ² on the line and −β² off it. So κ vanishes
+  exactly at the collision and changes sign continuously, linearly in the heat-flow parameter. This makes N80's
+  de Bruijn–Newman reading exact INSIDE the model: the margin of the comparison is u·J.
+- Candidate statement (S), conjecture on three points: c·Δ ≤ κ_min(L) ≤ C·Δ with Δ = −Z′(γ₁)Z′(γ₂)/log²(qγ/2π) for the
+  binding consecutive pair in the pinned band (negative for an off-line quartet). Measured κ/Δ = 0.65, 0.78, 0.91.
+  Its content: the upper bound forbids any uniform margin; the lower bound is an interpolation inequality whose
+  constant is the local discriminant of the pair. Not RH-equivalent. Transfer needs small normalised gaps or a
+  Rodgers–Tao-type averaged argument (not attempted). Literature from memory only (liminf of normalised gaps on RH).
+- Odd and worth keeping: at the true zeta positions κ is a SPIKE; moving the pair by 0.01 collapses it to 0.02. The
+  D-geometry is rigid at scale 1e-3, because D's kernel is pinned to the actual zeros. This is the first object on the
+  record whose geometry is tied to the true zero positions rather than to their density.
+- Prediction score of the seat: 2 hits, 2 partial, 3 misses (main miss: it predicted κ > 0 at the collision).
+- Next (rule 12, confirm before building): an independent verifier tests (S) at new binding pairs with the kill
+  line κ/Δ ∉ [0.3, 2]. Sent.
