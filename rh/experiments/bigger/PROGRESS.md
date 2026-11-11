@@ -219,3 +219,14 @@ q*_L(even, 0) = 4.03628 +- 0.00001. If the defect stops shrinking (above 1e-6) t
    zeta(s,F_p) (x) zeta(s,F_q); Akatsuka: Euler product for the double Riemann zeta function. The Kunneth
    route of 2.3 is a known programme; no result found that gives a convergence half-plane with a loss
    independent of the number of factors.
+
+### 3.8 Result of P6 (threshold_d.log, threshold_e.log): the linear law is NOT exact
+COMPUTED: L = 1.5, N = 60: lambda*(0) = -1.39532245977 (q* = 4.0362759: P6 on the threshold value HIT),
+lambda*(0.5) = -0.697660097313, lambda*(1) = -7.7e-12. Defect d = 1.13e-6. P6 on the defect MISSED: I
+predicted below 1.5e-7. Basis-size check: L = 1.25 with N = 60 gives d = 1.43e-6 (N = 40: 1.48e-6);
+L = 1.5 with N = 80 gives d = 1.13e-6 (lambda*(0) = -1.39532246016, lambda*(0.5) = -0.697660097594). So the
+defect is not a truncation effect: it falls 1.3e-2, 9.9e-4, 2.6e-5, 1.4e-6 and then stalls near 1.1e-6.
+Honest statement: log q*(r) = (1 - r) c0 holds to about 1e-6 at r = 0.5, not exactly; the curve between
+r = 0 and r = 1 is very slightly concave. The corner at r = 1 does not depend on this (left slope about
+1.3953, right slope minus infinity in the limit). One implementation, float64, no certification.
+The run "L = 1.5, N = 100" for r = 0.5 exceeded 10 minutes and was stopped (not needed).

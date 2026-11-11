@@ -41,3 +41,13 @@ Wed Nov 11 01:08:01 UTC 2026
   y = 0.5: four zeros with real part 1.259 .. 1.458 for 15 <= Im s <= 30; y = 1.1: none found by the same search.
   mpmath, 30 digits, not interval-certified; "none found" is not a proof of absence (the theorem for y >= 1 is
   Hejhal / Lagarias-Suzuki).
+
+## 01:37 PREDICTION (P4), before computing: two-route check of the norm identity for pseudo-Eisenstein series
+Identity derived by unfolding (NOTES D2): for psi(y) = y^(1/2) f(log y), f real, smooth, compactly supported,
+  ||E_psi||^2 = int f^2 dv + sum_{c>=1} (phi(c)/c) int int f(v) f(v') kappa(-(v+v') - 2 log c) dv dv',
+  kappa(w) = (1 - e^(-w))^(-1/2) for w > 0, 0 otherwise   [GEOMETRIC ROUTE: totients, finitely many c]
+and by the spectral theorem
+  ||E_psi||^2 = (3/pi) (int f(v) e^(-v/2) dv)^2 + (1/4pi) int |fhat(-t) + phi(1/2 - it) fhat(t)|^2 dt,
+  phi(s) = xi(2s-1)/xi(2s), xi(w) = pi^(-w/2) Gamma(w/2) zeta(w), fhat(t) = int f(v) e^(itv) dv   [SPECTRAL ROUTE: zeta on Re = 1].
+PREDICTION: the two routes agree to at least 6 digits for a bump f supported in [-1.2, 0.3] (c = 1, 2, 3 contribute).
+If they differ by a clean factor (2, pi, 3/pi) one of my constants is wrong and the identity is not to be posted.

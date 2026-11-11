@@ -1,0 +1,34 @@
+"""V-FH: Theorem B at L = 27/50 (degree < 32): the four edges of the claimed box, my polynomial code only."""
+import time
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+t0 = time.time(); mp.mp.dps = 34
+L = mp.mpf(27) / 50; NB = 32
+Pb = Poly(L, NB); A = Pb.blocks()
+def Gblocks(y):
+    g = Pb.gamma(mp.mpf(y)); out = []
+    for idx in (range(0, NB, 2), range(1, NB, 2)):
+        idx = list(idx); B = mp.matrix(len(idx), len(idx))
+        for a_, j in enumerate(idx):
+            for b_, k in enumerate(idx): B[a_, b_] = (g[j, k] + g[k, j]) / 2
+        out.append(B)
+    return out
+def lamP(G, m): return min(min(mp.eigsy(A[b] - 2 * mp.mpf(m) * G[b], eigvals_only=True)) for b in (0, 1))
+def gold(f, a, b, it=70):
+    gr = (mp.sqrt(5) - 1) / 2
+    c = b - gr * (b - a); d = a + gr * (b - a); fc = f(c); fd = f(d)
+    for _ in range(it):
+        if fc > fd: b, d, fd = d, c, fc; c = b - gr * (b - a); fc = f(c)
+        else: a, c, fc = c, d, fd; d = a + gr * (b - a); fd = f(d)
+    x = (a + b) / 2; return x, f(x)
+yl = mp.mpf(35487) / 51200; yr = mp.mpf(71033) / 102400; mlo = mp.mpf('0.489943'); mhi = mp.mpf('0.492420')
+for name, y in (("left edge", yl), ("left edge - 1e-5", yl - mp.mpf('1e-5')), ("right edge", yr), ("right edge + 1e-5", yr + mp.mpf('1e-5'))):
+    G = Gblocks(y); m, v = gold(lambda m: lamP(G, m), mp.mpf(0), mp.mpf(6))
+    print(f"{name:18s} y={mp.nstr(y, 10)}: best m={mp.nstr(m, 8)}  max_m min eig = {mp.nstr(v, 6)}   t={time.time()-t0:.0f}s", flush=True)
+for name, m in (("m = lower", mlo), ("m = lower - 1e-5", mlo - mp.mpf('1e-5')), ("m = upper", mhi), ("m = upper + 1e-5", mhi + mp.mpf('1e-5'))):
+    lo, hi = yl - mp.mpf('2e-4'), yr + mp.mpf('2e-4'); best = None
+    for rnd in range(6):
+        pts = [lo + (hi - lo) * i / 24 for i in range(25)]
+        best = max(((y, lamP(Gblocks(y), m)) for y in pts), key=lambda t: t[1])
+        w = (hi - lo) / 12; lo, hi = best[0] - w, best[0] + w
+    print(f"{name:18s} m={mp.nstr(m, 9)}: best y={mp.nstr(best[0], 10)}  max_y min eig = {mp.nstr(best[1], 6)}   t={time.time()-t0:.0f}s", flush=True)
+G = Gblocks(mp.log(2)); print("true prime:", mp.nstr(lamP(G, mp.log(2) / mp.sqrt(2)), 8))

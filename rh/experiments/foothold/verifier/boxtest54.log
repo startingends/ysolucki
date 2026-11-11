@@ -1,0 +1,7 @@
+left edge          y=0.6931054687: best m=0.48988222  max_m min eig = -1.54289e-6   t=9s
+left edge - 1e-5   y=0.6930954687: best m=0.4898379  max_m min eig = -2.41314e-6   t=12s
+right edge         y=0.6936816406: best m=0.49236758  max_m min eig = -6.26079e-6   t=15s
+right edge + 1e-5  y=0.6936916406: best m=0.49237011  max_m min eig = -2.09145e-5   t=17s
+m = lower          m=0.489943: best y=0.693119158  max_y min eig = -3.54554e-7   t=33s
+m = lower - 1e-5   m=0.489933: best y=0.6931169088  max_y min eig = -5.49361e-7   t=51s
+m = upper          m=0.49242: best y=0.6936555389  max_y min eig = -1.49344e-5   t=68s
