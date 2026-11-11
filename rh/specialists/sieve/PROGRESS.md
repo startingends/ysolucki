@@ -8,3 +8,4 @@
 - Session 2: read N62-N65 and five mollifier digests; wrote TRANSPORT.md (no numerics); ideas SP-sieve/#5, #6.
 - Session 3: COPY_BARRIER.md; squarefull_check.py.txt (memcap 1 GB, seconds); idea #7.
 - Session 4: LEMMA_T115.md (proof of T115, no numerics).
+- Session 5: seminar S3, B9/B10, S3_B2.md.

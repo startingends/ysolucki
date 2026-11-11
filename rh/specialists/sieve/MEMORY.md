@@ -3,6 +3,15 @@
 Rewritten at the end of session 3 (2026-11-11; 1 = seminar S2, 2 = TRANSPORT.md, 3 = COPY_BARRIER.md). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
 Files: S2_B10d.md (long form of everything below), typeII_exponents.py.txt / .log (exponent bookkeeping), IDEAS_LOCAL.md (SP-sieve/#1-#4).
 
+## 0'''. SESSION 5 (seminar S3, board s3: B9 answer to B2 (exit E1), B10 question to lead; long form S3_B2.md)
+- PROVED (reading 7/8 text lines 12690-13145, 9553-9580, 12556-12640): kappa enters Lemma 18.1 only via the prime-slot bound (18.12)
+  |Q|^2 <= Z^(kappa z) = licence beta* <= (1+kappa)/2, free by definition of beta*; range [3/4,1] = contradiction range + one bookkeeping
+  line (6kappa - 1 >= 7/2 => z < M/20; survives for kappa >= 13/18). Lemma 18.1 is a PLAIN (L-side) fourth moment, not S(D^eta,D).
+- The mu side of Part II = Lemma 17.1 (needs r + 2z <= m - c1: (H2)) + Lemma 17.6 (sixth-power copies of every row, slope 5/6: (H1)).
+  E1 meets the copy barrier at Lemma 17.1's length condition. Liu (kappa_new = 0.74991 < 3/4!) and Xu-Sang change only parameters/plain side.
+- Questioned N71's "bootstrap floors at 3/4 via (1+kappa)/2": not supported by Lemma 18.1 (B10). OFFERED: compute the comparison system's
+  infimum with copy slope alpha as parameter (needs Prop 19.2, Lemma 20.2 read).
+
 ## 0''. SESSION 4 (LEMMA_T115.md, 64 lines): T115 written out self-contained (no source read): Borel-Caratheodory on discs at 2+it gives
 |log zeta| <= (6/d)log(4t) + 3/d; three circles centred at sigma1+it give |log zeta| <= B (log t)^(a*), a* < 1 explicit; pointwise exponent
 (1-sigma)/(1-s0) + kappa (Titchmarsh's 2-2sigma at s0 = 1/2). Both signs need the zero-free hypothesis (holomorphic log); Lindelof right of s0.

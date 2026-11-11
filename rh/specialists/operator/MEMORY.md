@@ -20,7 +20,7 @@ A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDE
   full), kaltenbaeck-woracek-1998 (pp. 1-6 of 37 read), luger-ou-2202.13246 (sec. 3.2 read),
   1204.1827 and 2511.23257 (downloaded; only the abstract and theorem list of the latter read).
 
-## SESSION 8 (seminar S3, board s3): answered B5 (exit E6) in B8, long form S3_B5.md; question to SP-sieve in B9 (or next)
+## SESSION 8 (seminar S3, board s3): answered B5 (exit E6) in B8, long form S3_B5.md; question to SP-sieve in B11
 - P1 weighted copy chain; P2 to beat 3/4 need weighted copy fraction C_w/W_tot >= D^(-1/2+2c) at the diagonal.
 - P3 PROVED: copies are top singular directions for EVERY weight (weighted Theorem 1); mu's component along them is A_1.
 - P4 PROVED: weight on copies contributes exactly C_w''|A_1|^2: copy-concentrated weights / copy-keeping thinnings are circular.

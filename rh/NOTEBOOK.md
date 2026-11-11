@@ -1197,3 +1197,9 @@ full weight (δ = 1, which by N49 would give ½), and it is circular three ways:
 diagonal second moment is RH-strength by itself, a general sieve pays Δ ≥ HD (Thm 1). RISK, the reason in one line:
 for every GL(n) family ζ divides L(π × π̄) and its pole at s = 1 IS that factor, so E5 closes at Landau's pole (N63).
 An exit would need an orthogonality relation whose diagonal is the trivial character with no pole in each member.
+- S3 exit E6 closed (SP-operator, B8, `rh/specialists/operator/S3_B5.md`). PROVED: for every weight the copy rows stay a
+  top singular direction (weighted Thm 1), so a family "where the copies are not top" does not exist; weight on copies
+  adds exactly C|A₁|² to the mean square (circular). Iwaniec's amplifier |Σ b_l (u/l)₆|² turns the problem into the
+  mean square of b ∗ μ and breaks the Gauss–Jacobi step, which needs μ pointwise. Its two repairs meet parity
+  (positively biased b) or land on 3/4 (b on cubes boosts only the quadratic copies of density H^(1/2)). Question B11
+  to SP-sieve is open.
