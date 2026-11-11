@@ -1,0 +1,28 @@
+# q_d = Dirichlet coefficients of zeta(s-d)/zeta(s+d): multiplicative, q(p^k) = (1 - p^(-2d)) p^(kd), k >= 1.
+# Claim (SP-reflection): Helson matrix [q_d(nm)]_{n,m=1..A} >= 0 for d > 0 (product measure: independent X_p in {0, p^d},
+# P(X_p = p^d) = 1 - p^(-2d)), = e_1 e_1^T at d = 0, not >= 0 for d < 0. Also with the weight (nm)^(-1/2) (a congruence).
+from mpmath import mp, mpf, matrix, eigsy
+from sympy import factorint
+mp.dps = 50
+def q(n, d):
+    r = mpf(1)
+    for p, k in factorint(n).items():
+        r *= (1 - mpf(p)**(-2 * d)) * mpf(p)**(k * d)
+    return r
+def check_series(d, A=40):
+    # verify against zeta(s-d)/zeta(s+d) coefficients by Dirichlet convolution: n^d * mu(n) n^(-d)
+    from sympy import mobius, divisors
+    bad = 0
+    for n in range(1, A + 1):
+        direct = sum(mpf(m)**d * mobius(n // m) * mpf(n // m)**(-d) for m in divisors(n))
+        if abs(direct - q(n, d)) > mpf(10)**(-40): bad += 1
+    return bad
+for d in (mpf('0.1'), mpf('0.3'), mpf('0'), mpf('-0.1')):
+    for A in (12, 30):
+        M = matrix(A, A)
+        for i in range(A):
+            for j in range(A):
+                M[i, j] = q((i + 1) * (j + 1), d)
+        ev = eigsy(M, eigvals_only=True)
+        neg = sum(1 for e in ev if e < -mpf(10)**(-30))
+        print(f"d={mp.nstr(d,3)} A={A}: min eig {mp.nstr(ev[0],6)}, #negative {neg}, rank {sum(1 for e in ev if abs(e) > mpf(10)**(-30))}, formula check failures {check_series(d)}")

@@ -47,3 +47,41 @@ Newest at the bottom. Lead only. No secrets. Unconfirmed leads go to IDEAS.md, n
   integer enters (2 to 10 digits for n = 2..13); with one free atom, positivity is possible only at
   position 2.000 (1.994 and 2.014 fail); primes - arch has exactly one positive eigenvalue on windows up to
   L = 1.25; the Gamma factor and pole alone turn negative at L about 0.362.
+
+## 2026-11-11 · J4 · Whole papers read; round-2 proofs and numbers judged; what in our record was wrong
+
+**Readers** (four seats, two by the lead's mistake after a restart; the double readings agree). Read whole:
+Johns Part I + N3, Suzuki 2606.09096, Connes–van Suijlekom 2511.23257, Connes–Consani 2106.01715 and 2006.13771,
+Connes–Consani–Moscovici 2310.18423, Burnol math/9809119, Perfekt–Pushnitski 1611.03772,
+Bondarenko–Radchenko–Seip 2005.02996, Rodgers–Tao 1801.05914, Miller math/0112196; Brändén–Huh in part.
+Digests: `rh/library/`. What changed in the record (details as dated notes on the ideas named):
+- **Already published, which we had as ours:** positions forced and "the form goes negative if a prime's term is
+  omitted" (numerics, Connes–Consani 2106.01715 §2.2–2.3; ideas #9, #10c); the lattice Loewner identity
+  (2511.23257 Prop. 4.1; idea #2); the explanation of the tiny eigenvalues (2106.01715 §3); the heat-flow monotone
+  quantities (Rodgers–Tao Lemma 12; idea #4); Lemma B (Brändén–Leake Lemma 2.8) and Lemma D3 (Brändén–Huh
+  Lemma 2.15); the theta-dial dimension count (BRS Prop. 3.1; idea #13); the mirror criterion for a, b ≥ 1
+  (Perfekt–Pushnitski Thm 3.3 and older; idea #21).
+- **Wrong in our record:** "window positivity published up to log 100" (nothing is proved for any window that
+  contains a prime; proved range is λ² ≤ 2); "Connes–Consani 2021 / CCM 2022 prove archimedean positivity via the
+  prolate operator" (the theorem is 2006.13771, on the no-prime window); Burnol row; Johns title and the
+  "ladder ending at RH" line; atlas F1's "real zeros for free" (needs a simple isolated even lowest eigenvalue).
+- **Still only ours after all of this:** intervals for the weights on a finite window and the sieve's room law;
+  every impostor/control computation; the twisted control F_d and barrier B11; the a, b ≥ 2 mirror criterion;
+  Lemma C (certificates are vacuous); Theorem F (Bakry–Émery cubic). None of these is a step towards RH yet.
+- **Unread and directly relevant:** X. Zhu, arXiv 2608.24827 (certified bounds and a decay law for the lowest
+  window eigenvalue). Queued first.
+
+**Round 2, verification track** (`rh/experiments/r2_judge/JUDGEMENT.md`; proofs and numbers only). Proved and
+checked by the judge: Lemmas A–E, Theorem F (cubic seat); Theorems B–E (curvature seat); parity lemma,
+Proposition 3, Theorem 4 (negative squares of the window form ≤ number of off-line zeros, ≤ half of it per
+parity block, attained for large windows), Corollaries C1, C3, first-failure template, Theorem U (parity seat).
+Gaps found: Theorem A's use of λ₁ > 0 (false for L ≤ 0.10); "cannot be improved by linear algebra" (C2);
+"false on every single window" (Theorem U's scope); the CD(ρ, n) sentence is wrong as written.
+**Nothing earned ladder level L2 or L3.** Nearest: Corollary C1 ("at most one negative square on every window"
+⟺ RH) and the per-block count of Theorem 4, both waiting on Yoshida 1992 and Bombieri 2000.
+Prediction record: cubic 5 of 13, curvature 7 of 14, parity 5 of 11 hit; only some can be shown to precede
+their results (one git commit separates them).
+
+**Lead's computation e22** (`rh/experiments/e22_rootplane/`): two of three blind predictions missed. A window pins
+each atom at a rate set by how long it has been inside; tilting one prime alone is caught ten times earlier than
+tilting everything together (F_d).

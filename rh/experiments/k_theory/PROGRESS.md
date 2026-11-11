@@ -93,3 +93,15 @@ Schur complement in Q_e: In(M_e) = In(Q_e) + In(1 - t_e). Count negative eigenva
 M_o := [[Q_o, sqrt2 s],[sqrt2 s^T, -1]]. In(M_o) = (0,1,0) + In(Q_o + 2ss^T) = (0,1,0) + In(-N_o) = In(Q_o) + In(-1 - t_o).
 Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+(N_o) = kappa_-(Q_o) - [t_o < -1]   (t_o != -1).
 (Haynsworth's inertia additivity; both Schur complements exist because 1, -1, Q_e, Q_o are invertible.)  This needs an independent check.
+
+### 00:22-00:36 UTC entries made (batch1..batch6), statuses set, STRUCTURE.md written
+- Entered T7-T80 and updated the seeds: T3 REFUTED (Finding 1), T6 REFUTED (zeta(s-d) zeta(s+d), board B15/B69; tilt identity T79),
+  T4 and T5 checked.
+- Coordinator's corrections applied after reading the digests myself: T19 (credit, part (ii), sketch only), T18 (source for the modular-form
+  count; stays open), T76 (the a, b >= 2 variant is the project's own, proved by one seat).
+- Found while reading rh/library/2606.09096.md (READER-1, whole paper): the zero-side formula (3.1) is not stated on the form domain.
+  New open entry T80; T36, T37, T39, T44 downgraded from checked to proved; T10 and T38 restated without that clause.
+- Formal: nothing marked. rh/formal/MEMORY.md lists nothing as formal; no build products for D1, C1, LemmaA, LemmaC at 00:34.
+  I did not run Lean (the formal seat allows one Lean process at a time). The Lean files and their differences are recorded in the notes of
+  T70, T65, T50, T52, T51.
+- Final `records.py theory check`: 80 entries, 0 errors; 17 open, 9 proved, 43 checked, 9 known, 2 refuted.

@@ -45,3 +45,15 @@ insight on what is known.
 | Bombieri, Hejhal, "On the distribution of zeros of linear combinations of Euler products" (1995) | barrier B2 | from memory only |
 | Guo Chen, Zenodo preprint (May 2026) on the Weil form as a Dirichlet form | overlaps idea #11 | abstract only |
 | Kim et al., "A numerical realization of Suzuki's Weil-quadratic-form operator", arXiv 2607.24830 | numerics of the lowest eigenvalue | partly read |
+
+## Queue (found while reading; not yet read)
+- X. Zhu, arXiv 2608.24827, "Weil positivity in compact windows: a finite reduction, certified two-sided bounds,
+  and a Landau–Widom decay law". Cited by Johns. Bears on the record's decay law for the lowest window eigenvalue
+  (idea #2) and on every "outer bound" figure of idea #9. READ THIS NEXT.
+- Yoshida 1992, "On Hermitian forms attached to zeta functions", Adv. Stud. Pure Math. 21, 281–325 (no arXiv).
+- Bombieri 2000, "Remarks on Weil's quadratic functional in the theory of prime numbers, I".
+- Connes–Consani–Moscovici arXiv 2511.22755 (cited by idea #20; attribution unverified).
+- Bondarenko–Radchenko–Seip sections 4–7 were read by R-read-2 (`brs-fourier-interpolation.md`); READER-2's
+  digest `2005.02996.md` covers sections 1–3 only.
+- Corrections to this file's list: Connes–Consani "Weil positivity and trace formula, the archimedean place" is
+  arXiv 2006.13771 (not 2106.01715).

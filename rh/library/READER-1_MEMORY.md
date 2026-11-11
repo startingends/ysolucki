@@ -27,8 +27,8 @@ only (owner rule 10): what a paper establishes and where it stops; never a recom
 | 2 | Connes, van Suijlekom, arXiv 2511.23257 v1 | DONE, whole (98,854 / 98,854) | `2511.23257.md` |
 | 3a | Connes, Consani, arXiv 2106.01715 v1 | DONE, whole (147,007 / 147,007; figures not opened) | `2106.01715.md` |
 | 3b | Connes, Consani, Moscovici, arXiv 2310.18423 v2 | DONE, whole (99,326 / 99,326) | `2310.18423.md` |
-| 4 | Suzuki, Hamiltonians, arXiv 1606.05726 | **IN PROGRESS by READER-1 (started 2026-11-11 after the coordinator's overlap notice; no other reader has it: checked R-read-1_PROGRESS.md, R-read-2_PROGRESS.md, READER-2_MEMORY.md, INDEX.md)** | |
-| 5 | Yoshida 1992 (full reference: "On Hermitian forms attached to zeta functions", Adv. Stud. Pure Math. 21, 281-325) | not started; search whether a full text exists | |
+| 4 | Suzuki, Hamiltonians, arXiv 1606.05726 v3 | DONE, whole (109,006 / 109,006) | `1606.05726.md` |
+| 5 | Yoshida 1992 ("On Hermitian forms attached to zeta functions", Adv. Stud. Pure Math. 21, 281-325) | **IN PROGRESS by READER-1: searching for a full text (no other reader has it)** | |
 
 ## Record read before starting
 rh/library/INDEX.md, README.md; claude.md "Reading"; docs/KNOWLEDGE.md (all); docs/IDEAS.md titles and novelty
