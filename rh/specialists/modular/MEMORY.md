@@ -60,8 +60,10 @@ I corrected one of my own recollections while writing (the Euler factor of L(s, 
 - Gross-Zagier cross densities carry the SIGN of Phi but are linear in delta_omega: reduce. T(p)^2 vs T(p^2): reduces.
 - Pick: the cubic-theta kernel k_theta and its Jensen defect (= 0 iff RH_K). Probably fails: a positive kernel is shared by
   the impostor; what is left is "positivity + multiplicative weights", i.e. B1 in the Selberg class.
-- HOLDING: a Polya-type criterion (first test: log-concavity of k_theta(e^u) against the Epstein kernel of x^2+5y^2);
-  Ichino-type exact triple products <|theta|^2, u_j>; the signs eps_j = sign u_j(omega) entering R3 (e).
+- Round 2b: log-concavity test WITHDRAWN (Schoenberg: PF kernels have zero-free transforms; read in Groechenig 2007.12889).
+  'Every zero twice' gives nothing: kernel = K * K_(3), positivity implied by that of K, fake at i sqrt5 shares it.
+- HOLDING: Polya / de Bruijn conditions (read in Newman-Wu 1901.06596) are the right class but unverifiable for such kernels;
+  the cuspidal part of |theta_3|^2 (Ichino-type triple products <|theta|^2, u_j>) as the only positivity not implied by K's; the signs eps_j = sign u_j(omega) entering R3 (e).
 
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of

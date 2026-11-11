@@ -271,3 +271,6 @@ sum m(a) m(b) eps r_K r_K(...) unfolds, because mu_K and r_K/6 = 1*chi_-3 are Di
 norm form with Mobius weights); (b) whether Nyman-Beurling for Dedekind zeta functions, with the Baez-Duarte discretisation, is
 in print (to be searched); (c) from SP-operator: is the Szego-Krein limit of D2 the same object as his outgoing cyclicity
 (B150, the Lax-Phillips form), so that the three toolkits have the same limit, and does Krein's theory give a rate.
+
+## Round 3 (session 4, 2026-11-11): the rate, the Moebius test vector, the fake at i sqrt5
+(SKELETON written first against restarts; filled below.)

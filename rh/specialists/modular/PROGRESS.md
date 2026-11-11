@@ -190,3 +190,7 @@ Result: the Rankin-Selberg identity of the cubic theta function is exact with Ga
 the factor at 3 is (1 + 3^(1-2s))(1 - 3^(-s)) after completion.
 Corrected while writing: I first wrote that the second zero (rho+1)/3 "contracts" the Jensen defect; to first order it
 contributes about three times as much as rho (it is three times closer to the line and three times lower).
+
+## Round 2b (02:40-02:50 UTC): lead's correction (Schoenberg) checked by reading Groechenig arXiv 2007.12889 (theorem
+statements) and Newman-Wu arXiv 1901.06596 (Polya, de Bruijn sections). Log-concavity test withdrawn. "Every zero twice"
+examined: union of two copies, kernel = K * K dilated by 3; no theorem of the asked shape can exist (Epstein fake). No numerics.

@@ -349,3 +349,60 @@ cuspidal triple products <|theta|^2, u_j> exact (Ichino-type); they would be the
    weights, i.e. B1 in the Selberg class.
 10. To decide: a Polya-type criterion passed by k_theta and failed by the Epstein kernel of x^2 + 5y^2 (first test:
     log-concavity), and Ichino-type exact triple products for <|theta|^2, u_j>.
+
+## Round 2b (2026-11-11): the lead's correction checked; does "every zero twice" give anything?
+Read this round: K. Groechenig, "Schoenberg's theory of totally positive functions and the Riemann zeta function", arXiv
+2007.12889 (TeX source: abstract, introduction, the theorem statements); C. Newman, W. Wu, "Constants of de Bruijn-Newman
+type ...", arXiv 1901.06596 (sections on Polya's universal factors and de Bruijn's results, lines 332-600 of the source).
+One web search (summaries): nothing on products of dilates; it pointed to Dimitrov-Xu (Trans. AMS 2019, arXiv 1606.05011)
+and the Dimitrov-Rusev survey (2011), NOT read.
+
+### 2b.1 The correction is right; my proposed test is withdrawn
+KNOWN, read (Groechenig, Thm "tm:tp", Schoenberg 1951): Lambda is a Polya frequency function iff its two-sided Laplace transform
+is 1/Psi on a strip around the imaginary axis with Psi in the Laguerre-Polya class, Psi(0) > 0. So a PF kernel has a ZERO-FREE
+transform; log-concavity (PF_2) is the order-2 shadow of that and points the wrong way for a transform with zeros. My
+"first test: log-concavity of k_theta(e^u)" (R4) is WITHDRAWN. Where PF does enter correctly (read there): RH <=> the inverse
+Fourier transform of 1/xi(1/2 + tau) is a PF function. KNOWN, read (Newman-Wu): the sufficient conditions for "the Fourier
+transform of a positive even kernel has only real zeros" are Polya's (universal factors phi, characterised by: phi(iz) in
+the Laguerre-Polya class; examples e^(B t^2), cosh(at); kernels cosh(at) exp(-a cosh t), exp(-t^(2q))) and de Bruijn's
+(exp(-f(t)) with f even, >= 0, f' a limit of polynomials with all roots on the imaginary axis; strong universal factors);
+for Riemann's kernel Phi "the conditions ... were too involved to be applied" (their words on Polya's programme).
+Applied to (R1), PROVED from Schoenberg's theorem: Laguerre-Polya is closed under products and under s -> 3s - 1 about 1/2, and a
+factor of an LP function with real zeros is LP; hence, with G(s) := Lambda_K(s) Lambda_K(3s-1) (the factor at 3 removed; it is not in
+LP: 1 - 3^(-s) vanishes on Re s = 0):  RH_K <=> G in LP (centred at 1/2) <=> the inverse transform of 1/G is PF. No gain over Lambda_K.
+
+### 2b.2 "Every zero appears twice": is there a theorem? No, and the fake shows none of the asked shape can exist
+In the line variable s = 1/2 + it, with F(t) := Lambda_K(1/2+it) (real, even): G(1/2+it) = F(t) F(3t). In kernels (log variable u):
+   k_G = K * K_(3),   K_(3)(u) := K(u/3)/3,   K >= 0 the theta kernel of Lambda_K (PROVED: Mellin convolution <-> product of transforms).
+(a) PROVED. The zero set is a UNION of two copies, Z(G) = Z(F) u Z(F)/3, not a set invariant under a dilation; G satisfies no
+    q-difference equation G(3t) = R(t) G(t) (that would need F(9t)/F(t) rational). The theorems I know with real zeros forced
+    by a functional relation are of that q-difference kind (Jacobi triple product, q-exponentials: zeros on geometric
+    progressions read off the relation; FROM MEMORY); they do not apply.
+(b) PROVED (by the fake, rule H1). "Positivity of one factor's kernel, or of k_G, forces real zeros of the other factor" is
+    false as a general statement: at i sqrt5, E*(z_1, s) is the Mellin transform of the positive kernel K_1 (theta series of
+    x^2 + 5y^2 minus 1), so G_1(s) := E*(z_1,s) E*(z_1,3s-1) has the positive kernel K_1 * K_1,(3) and zeros off the line. Every
+    property derivable from "k_G is a positive convolution of a positive kernel with its dilate" is shared by G_1.
+(c) PROVED. Positivity of k_G is IMPLIED by positivity of K (a convolution of positive kernels). So the cubic theta's
+    positivity |theta_3|^2 >= 0, read through (R1), carries no information beyond the positivity of the theta kernel of zeta_K.
+
+### 2b.3 What the cubic theta adds over the fake, exactly
+(i) ORIGIN (PROVED, R2 (a)): G is the Eisenstein transform of |f|^2 for ONE automorphic form f with coefficients of constant
+    modulus on squarefree indices; for G_1 no form with twisted-multiplicative coefficients exists. (ii) The renormalisation
+    poles s = 1/3, 2/3 of the second factor are Kubota's residue point (theta = Res_(2/3) of the cubic Eisenstein series): the
+    factor Lambda_K(3s-1) is the residue datum, which G_1 has no analogue of. (iii) What (i)-(ii) buy, honestly: the Rankin-Selberg
+    shape, whose known consequence of positivity is Landau's lemma at the abscissa Re s = 1 (nothing in the strip), and an
+    exact equivalence RH_K <=> (zeros of the transform of |theta_3|^2 on the line). Neither sees more than Phi.
+WHAT WOULD CHANGE THIS: a positivity attached to theta_3 that is NOT implied by positivity of K, i.e. one that does not factor
+through k_G = K * K_(3). The candidates are the CUSPIDAL coefficients of |theta_3|^2: <|theta_3|^2, u_j> for Maass cusp forms u_j
+of Gamma_2\H^3, whose squares should be central L-values by an Ichino-type triple-product formula (FROM MEMORY; for a
+metaplectic theta not known to me). They live in the part of the spectrum that R3 (a) showed drops out of sheet
+comparisons; whether they constrain the Eisenstein part through the Plancherel identity ||theta_3||^4-type moments
+(sum over the whole spectrum of |<|theta_3|^2, .>|^2) is the one question I can still state precisely. Not examined.
+
+### 2b.4 Summary (six lines)
+1. Correction confirmed by reading Groechenig (Schoenberg: PF <-> 1/LP, zero-free transform); log-concavity test withdrawn.
+2. Polya's and de Bruijn's sufficient conditions (read in Newman-Wu) are the right class; they are not checkable for Riemann's kernel.
+3. For (R1): RH_K <=> Lambda_K(s)Lambda_K(3s-1) in LP <=> the inverse transform of its reciprocal is PF; an equivalence, no gain.
+4. "Every zero twice" is a union of two copies, not a q-difference relation; kernel = K * (K dilated by 3).
+5. No theorem of the shape "positivity of one factor gives real zeros of the other" can exist: the Epstein fake at i sqrt5 has it.
+6. The theta adds an automorphic origin and Kubota's residue point, buying only Landau at Re s = 1; the open lever is the cuspidal part of |theta_3|^2.
