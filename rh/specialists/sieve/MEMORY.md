@@ -3,6 +3,11 @@
 Rewritten at the end of session 3 (2026-11-11; 1 = seminar S2, 2 = TRANSPORT.md, 3 = COPY_BARRIER.md). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
 Files: S2_B10d.md (long form of everything below), typeII_exponents.py.txt / .log (exponent bookkeeping), IDEAS_LOCAL.md (SP-sieve/#1-#4).
 
+## 0''. SESSION 4 (LEMMA_T115.md, 64 lines): T115 written out self-contained (no source read): Borel-Caratheodory on discs at 2+it gives
+|log zeta| <= (6/d)log(4t) + 3/d; three circles centred at sigma1+it give |log zeta| <= B (log t)^(a*), a* < 1 explicit; pointwise exponent
+(1-sigma)/(1-s0) + kappa (Titchmarsh's 2-2sigma at s0 = 1/2). Both signs need the zero-free hypothesis (holomorphic log); Lindelof right of s0.
+T117's Perron direction goes through (needs only the -1 power on one line). Impostor-blind.
+
 ## 0'. SESSION 3 (COPY_BARRIER.md, 96 lines; idea SP-sieve/#7)
 - Thm 1 PROVED: Delta(F,D) >= (1-2eta)^2 C_eta D for any multiset F (test vector 1): copy amplification needs a mu-specific mean square.
 - Thm 2 PROVED: for multiplicative, local families u -> psi_u (conductor supported on u and a fixed S), a principal psi_u forces
