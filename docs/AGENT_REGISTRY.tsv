@@ -39,3 +39,4 @@ SP-operator	2026-11-11	persistent specialist: de Branges/Krein, negative squares
 FORMAL	2026-11-11	persistent seat: machine-checking lemmas in Lean 4 + mathlib	session model	rh/formal	running	-
 READER-1	2026-11-11	persistent reader: whole papers in full (window forms: Suzuki, Connes et al., Yoshida)	session model	rh/library	running	-
 READER-2	2026-11-11	persistent reader: whole papers in full (Johns preprint, Helson matrices, Rodgers-Tao, Lorentzian polynomials)	session model	rh/library	running	-
+R2-AUD	2026-11-11	auditor: round-2 local idea logs (65 entries) into the main log	session model	rh/experiments/r2_audit	running	-

@@ -28,7 +28,7 @@ RH = the primes are as evenly spread as they can possibly be.
 **U-3. Getting all zeros onto the line is cheap for look-alikes; one rule explains every case we know.**
 Rule (PROVED, classical: Hermite–Biehler / Pólya; argument in NOTEBOOK N2): take any sum
 A(s) = Σ c_n n^(−s) with real c_n, length N, that has no zeros to the right of the line (Re s > 1/2). Then the
-symmetrised wave f(t) = 2 Re[e^(iωt) A(1/2 + it)], ω ≥ ½ log N, has **only real zeros**.
+symmetrised wave f(t) = 2 Re[e^(iωt) A(1/2 + it)], ω ≥ ½ log N, has **only real zeros**. [CORRECTION 2026-11-11: false as stated without the hypothesis c_1 ≠ 0 (counterexample in NOTEBOOK N2 and THEORY T3); the repaired statement T25 is open.]
 Checked (`rh/experiments/u1_understanding/leeyang.py.txt`, COMPUTED, zeros counted on 0 < t < 20000):
 
 | A | zeros found on the line | expected if all on the line | missing |

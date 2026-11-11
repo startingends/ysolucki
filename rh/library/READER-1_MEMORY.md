@@ -28,7 +28,8 @@ only (owner rule 10): what a paper establishes and where it stops; never a recom
 | 3a | Connes, Consani, arXiv 2106.01715 v1 | DONE, whole (147,007 / 147,007; figures not opened) | `2106.01715.md` |
 | 3b | Connes, Consani, Moscovici, arXiv 2310.18423 v2 | DONE, whole (99,326 / 99,326) | `2310.18423.md` |
 | 4 | Suzuki, Hamiltonians, arXiv 1606.05726 v3 | DONE, whole (109,006 / 109,006) | `1606.05726.md` |
-| 5 | Yoshida 1992 ("On Hermitian forms attached to zeta functions", Adv. Stud. Pure Math. 21, 281-325) | **IN PROGRESS by READER-1: searching for a full text (no other reader has it)** | |
+| 5 | Yoshida 1992 ("On Hermitian forms attached to zeta functions", Adv. Stud. Pure Math. 21, 281-325, DOI 10.2969/aspm/02110281) | NOT READ: Project Euclid blocks automated download (bot check; do not try to get around it). Secondary reports collected | `yoshida-1992.md` |
+| 6 | X. Zhu, arXiv 2608.24827, "Weil positivity in compact windows ..." (assigned by the coordinator 2026-11-11) | **IN PROGRESS by READER-1** | |
 
 ## Record read before starting
 rh/library/INDEX.md, README.md; claude.md "Reading"; docs/KNOWLEDGE.md (all); docs/IDEAS.md titles and novelty
@@ -43,3 +44,12 @@ and 2310.18423 were already written (independent second notes next to R-read-1's
 Suzuki 1606.05726 (mine, in progress), Yoshida 1992 (mine, next). Not mine and not to be started without
 checking: Bondarenko-Radchenko-Seip sections 4-7, Guo Chen (Zenodo), Zhu arXiv 2608.24827, Suzuki 1204.1827,
 Bombieri 2001/2003, Connes-Consani-Moscovici arXiv 2511.22755 ("Zeta spectral triples").
+
+## Yoshida 1992: how far it got
+- Project Euclid chapter page / download link / DOI all return an Incapsula bot-check page to curl. A retry with
+  a browser user-agent was refused by the session's permission system (bot-check circumvention): do not retry.
+  If a person drops the PDF at `rh/data/papers/yoshida1992/yoshida1992.pdf`, read it and replace the note.
+- Secondary passages used: Suzuki 2606.09096 intro; Suzuki arXiv 2206.03682 (PDF + text at
+  `rh/data/papers/yoshida1992/su23/`, only sections 3.2, 4.2, 5.4 read); Connes-Consani 2006.13771 intro and
+  Appendix C (from `rh/library/src/2006.13771/weil-compo.tex`); Connes-Consani 2106.01715 intro; Zhu and Johns
+  one line each. Crossref record saved at `rh/data/papers/yoshida1992/crossref.json`.

@@ -13,7 +13,7 @@ and zeros from primes ourselves. Done (U-1). Thirty-five prime powers already lo
 Thought: the "primes → zeros" sum is a spectrometer. RH is a statement about the *width* of its spectral
 lines as more primes are added. Is there a sharp statement? → Q1.
 
-**N2. One rule behind every "all zeros real" result.** (lead) PROVED (classical). Let A(s) = Σ_{n≤N} c_n n^(−s),
+**N2. One rule behind every "all zeros real" result.** (lead) ~~PROVED (classical)~~ **FALSE AS STATED** (found by the theory keeper, 2026-11-11: A(s) = 2^-s + 4^-s, ω = log 2 gives f(t) = √2 + cos(t log 2), no real zero; the proof needs c_1 ≠ 0 and its Phragmén–Lindelöf step was only a sketch; repaired statement is THEORY T25, open). Let A(s) = Σ_{n≤N} c_n n^(−s),
 c_n real, zero-free in Re s > 1/2. Put E(z) = e^(iωz) A(1/2 + iz), E*(z) = e^(−iωz) A(1/2 − iz), so
 f = E + E* on the real axis. R = E/E* is analytic in the upper half-plane (A(1/2 − iz) has real part of its
 argument > 1/2 there), |R| = 1 on the real axis, and |R| is bounded as Im z → ∞ when ω ≥ ½ log N. By

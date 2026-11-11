@@ -68,23 +68,22 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 
 ## Running jobs
 **After any context summary or restart, read this section and `git log -5` before launching anything.**
-The container restarted on 2026-11-11 at about 00:09. Disk, repository, Lean and the mathlib cache survived.
-Most seats turned out to be still alive and received a "continue" message; two things were restarted.
-- **Seminar S1** (board `rh/board/s1.md`), turn 2: S1-socrates (moderator), S1-cubic, S1-curv, S1-parity,
-  S1-mirror, and the two specialists SP-reflection and SP-operator (first sessions). Open question after
-  idea #21 was killed: every hypothesis used so far is blind to the twist n ↦ n^d (barrier B11); what,
-  stated on the prime side, singles out d = 0?
-- **Standing seats:** K-atlas (failure atlas and the pairing job), K-theory (theory document), FH (foothold
-  hunt), BG (bigger statement), FORMAL (Lean; one Lean process at a time). Each was told to save its memory
-  file as it goes; before the restart several had nothing on disk.
-- **Reader seats** (new, owner's instruction A17): READER-1 and READER-2 read whole papers in full and write
-  digests in `rh/library/` (background knowledge only, never a direction).
-- **Verification track of round 2** (run `wf_39b9c4a2-4ff`): verifiers of all three seats have finished; the
-  judge (proofs and numbers only) is running.
-- **Creation run 1** (run `wf_0afb126a-9cf`): restarted from the beginning after the container restart; its
-  three unlaned seats had left nothing on disk. At least two hours each, no refuter, then the two-question
-  screen.
-- Awaiting audit: 83 ideas in agents' local logs. Next audit after seminar turn 2.
+State at 2026-11-11, about 01:10 UTC (journal J4 has what the last hours produced).
+- **Seminar S1** (board `rh/board/s1.md`, about 140 messages): turn 2 done for S1-mirror, S1-curv, S1-cubic;
+  S1-parity and the specialists SP-reflection, SP-operator still posting. The moderator S1-socrates was woken
+  to open **turn 3** with the owner's rule 6 as its aim: name ONE small statement, not in the papers read, that
+  a control would violate, and prove it or find the step that breaks. Next: when the moderator hands back,
+  wake the seats it questioned.
+- **Standing seats:** K-atlas (running), K-theory (80 lemmas; woken to ingest the judge's verdicts and the
+  readers' corrections), FH (foothold hunt, running), BG (bigger statement, running), FORMAL (Lean; five
+  project files check file by file; a full `lake build` is requested before anything is marked `formal`).
+- **Readers:** four seats ran (two by mistake; double readings agree). Three finished. READER-1 is reading
+  X. Zhu, arXiv 2608.24827 next. Queue: end of `rh/library/README.md`.
+- **Verification track of round 2: finished.** `rh/experiments/r2_judge/JUDGEMENT.md`. Nothing reached L2/L3.
+- **Audit:** R2-AUD is auditing the 65 round-2 local ideas (`rh/experiments/r2_audit/`). The seminar's and
+  specialists' logs (about 30 entries) are audited after S1 closes.
+- **Creation run 1** (run `wf_0afb126a-9cf`): restarted after the container restart; three unlaned seats, at
+  least two hours each, then the two-question screen. No result yet.
 - Load: every numerical job runs under `tools/memcap.py 1`; one Lean process at a time.
 
 ## Scheduled routines
