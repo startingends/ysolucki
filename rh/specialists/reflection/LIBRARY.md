@@ -29,7 +29,7 @@ arXiv 2510.23897, 1512.09258, 2205.04211); (4) Jorgensen Olafsson ... complement
 mu >= 0 on R with t^k in L^1(mu) for all k and beta(k) = int t^k dmu(t).
 (ii) H_1(beta) >= 0 and H_1(beta(1 + .)) >= 0 iff such a mu exists supported on [0, inf).
 Uniqueness is not asserted in general ("unique if the moment sequence does not grow extremely fast").
-Source: Perfekt-Pushnitski Thm 3.1 (label thm:hankmoment), as a classical result. READ.
+Source: Perfekt-Pushnitski, first theorem of Section 3 (label thm:hankmoment), as a classical result. READ.
 
 **L2. Hamburger in d variables under a growth condition.** Let beta on N_0^d satisfy
 |beta(kappa)| <= C^(|kappa|) kappa_1^kappa_1 ... kappa_d^kappa_d. (i) H_d(beta) >= 0 iff beta(kappa) = int_{R^d} t^kappa dmu
@@ -89,14 +89,14 @@ Use here: Theorem D3 (Gamma kernel); "decreasing" = "bounded" is the condition a
 
 **L10. Finite rank (Kronecker) and bounded non-negative (Widom, Carleson) forms.** (a) Kronecker: a one-variable Hankel
 form has finite rank iff it is a finite sum of derivatives of point evaluations, sum_j sum_k c_j(k) d^k(fg)(lambda_j);
-it is bounded on l^2 iff all |lambda_j| < 1 (PP Thm 6.1). A finite rank Helson form is non-negative iff
-[f,g] = sum_l c_l f(lambda_l) g(lambda_l) with finitely many lambda_l in R^infinity, c_l > 0 (PP corollary after Thm 6.2).
+it is bounded on l^2 iff all |lambda_j| < 1 (PP, label thm.kronecker). A finite rank Helson form is non-negative iff
+[f,g] = sum_l c_l f(lambda_l) g(lambda_l) with finitely many lambda_l in R^infinity, c_l > 0 (PP, last corollary of Section 6).
 (b) Widom: for mu finite positive on (-1,1), beta(k) = int t^k dmu: H_1(beta) bounded on l^2 <=> mu Carleson for H^2(T)
-<=> mu(-1,-1+eps) + mu(1-eps,1) = O(eps) <=> beta(n) = O(1/n) (PP Thm 4.2). (c) If M(alpha) >= 0 is bounded on l^2 then
+<=> mu(-1,-1+eps) + mu(1-eps,1) = O(eps) <=> beta(n) = O(1/n) (PP, label thm.e1; second theorem of Section 4.2). (c) If M(alpha) >= 0 is bounded on l^2 then
 alpha(n) -> 0 and mu is concentrated on (-1,1)^infinity; bounded <=> mu is a Carleson measure for H^2(T^infinity)
-(PP Thm 4.5). (d) Bohr lift: for nu finite positive on (1/2, inf), alpha(n) = int n^(-s) dnu(s): M(alpha) bounded <=>
-nu((1/2, s]) <= C (s - 1/2) <=> alpha(n) <= C/(sqrt(n) log n) (PP Thm 5.1). Multiplicative Hilbert matrix
-[1/(sqrt(nm) log(nm))]_{n,m>=2}: bounded, spectrum [0, pi], purely absolutely continuous (PP Thm 5.2, citing Brevig et al.).
+(PP, label thm:carleson). (d) Bohr lift: for nu finite positive on (1/2, inf), alpha(n) = int n^(-s) dnu(s): M(alpha) bounded <=>
+nu((1/2, s]) <= C (s - 1/2) <=> alpha(n) <= C/(sqrt(n) log n) (PP, first theorem of Section 5). Multiplicative Hilbert matrix
+[1/(sqrt(nm) log(nm))]_{n,m>=2}: bounded, spectrum [0, pi], purely absolutely continuous (PP, second theorem of Section 5, citing Brevig et al.).
 Source: Perfekt-Pushnitski. READ (statements; proofs of (b)-(d) read, of (a) not).
 
 **L11. Schur product theorem.** The entrywise product of two positive semidefinite matrices is positive semidefinite;

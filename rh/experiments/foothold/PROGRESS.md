@@ -104,3 +104,33 @@ Result: M_even - 1e-8 I and M_odd - 4e-6 I certified positive definite by interv
 Float eigenvalues of the midpoint matrices: 1.6053e-8 (even), 5.591e-6 (odd): agree with explore.py.txt (1.608e-8,
 5.60e-6), an independent numpy/scipy implementation.
 Proof text: PROOF_window_prime2.md.
+
+### 7. "Positivity forces the prime 2": certified OUTER bounds  [COMPUTED with Arb balls + exact rationals]
+PREDICTION (2026-11-11, before the run; the S1-parity outer bound (1.9996, 2.0080) was known to me from the
+coordinator's message, so this is a reproduction target, not a blind one): on L = 1/2 the certified infeasible
+set will leave a residual position interval inside (1.999, 2.009). Blind part: at L = 27/50 the residual
+interval is at least 3 times narrower than at L = 1/2 (Connes-Consani report < 1e-3 at L = (1/2) log 3 with the
+weight tied to the position).
+Method (script forcing.py.txt): the EXACT form (no cap) on polynomials of degree < NB via the x-space formula
+  Q_{y,m}(v) = A(v) - 2 m g_v(y);  A as a matrix of Arb balls, g_v(y) a polynomial with rational coefficients;
+  with m' = m (2L - y) and q_v = g_v/(2L - x) the box (y-interval) x (all m >= 0) is refuted by explicit rational
+  test vectors.  Commands and logs:
+  `python3 tools/memcap.py 1 python3 forcing.py.txt 28 600 1/2`    -> forcing_half.log (7 s, 66 intervals)
+  `python3 tools/memcap.py 1 python3 forcing.py.txt 32 800 27/50`  -> forcing_0p54.log (12 s, 70 intervals)
+| L | certified: no m >= 0 is feasible for | residual position e^y | residual weight m | true (2, 0.4901291) |
+|---|---|---|---|---|
+| 1/2 | y in (0, 0.6929395] and y in [0.6971680, 1) | (1.999585, 2.008058) | [0.488558, 0.510367] | inside |
+| 27/50 | y in (0, 0.6931055] and y in [0.6936816, 1.08) | (1.999917, 2.001069) | [0.489943, 0.492420] | inside |
+Also certified: with NO atom (or the atom outside the window, y >= 2L) the form is negative on an explicit
+vector in BOTH parity sectors: A(v)/||v||^2 = -0.03235 (even), -0.32223 (odd) at L = 1/2.
+Against the prediction: L = 1/2 residual (1.999585, 2.008058): inside (1.999, 2.009), agrees with S1-parity;
+L = 27/50: width 1.15e-3 against 8.5e-3: 7.4 times narrower (predicted >= 3).  Note m < 0 must be excluded:
+a negative atom near y = 0 raises the low-frequency symbol and can be feasible (first version of the sweep
+found the float optimum at m = -2); the statement is for m >= 0.
+Rayleigh-Ritz values of the exact form with the true atom (float, polynomials of degree < 28 / 32):
+L = 1/2: 9.0567e-7 (even), 1.9601e-4 (odd); L = 27/50: 6.447e-8, 2.4997e-5.  Consistent with r1_A (9.34e-7,
+2.00e-4, periodic basis) and with the capped lower values (8.77e-7, 1.81e-4 at R = 160).
+Validation of the x-space formula and of the ball matrix (validate_x.py.txt, mpmath, 25 digits, v = (1/4 - t^2)^4 and
+t(1/4 - t^2)^4, true atom): frequency side 1.17532888468e-8 / x side 1.1753288841703535145e-8 / Arb code
+1.1753288841703535145e-8 (even); 5.3447425664043e-9 / 5.344742566406390918e-9 / 5.3447425664063909180e-9 (odd).
+The x side and the Arb code agree to 20 digits; the frequency-side quadrature agrees to 9 and 12 digits.

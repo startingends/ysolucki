@@ -1,0 +1,16 @@
+"""convergence of log t_1 in the basis size N (zeta), to see how far one-sided slopes over 0.01 can be trusted."""
+import sys, importlib.util, importlib.machinery, time
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+sys.argv = [sys.argv[0], "none"]
+src = open("/home/user/ysolucki/rh/experiments/s1_seminar/parity/b135.py.txt").read().split('if sys.argv[1] == "grid":')[0]
+exec(src)
+mp.mp.dps = 50
+for L in (0.51, 0.52, 0.53, 0.56, 0.57):
+    row = []
+    for N in (40, 80, 120):
+        row.append(mp.log(t1('zeta', L, N)[0]))
+    print("L=%.2f: log t_1 at N = 40, 80, 120: %s, %s, %s ; differences %s, %s   (%.0fs)" % (L, mp.nstr(row[0], 9), mp.nstr(row[1], 9), mp.nstr(row[2], 9),
+          mp.nstr(row[1] - row[0], 3), mp.nstr(row[2] - row[1], 3), time.time() - t0), flush=True)

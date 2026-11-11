@@ -1,0 +1,47 @@
+"""K-atlas: no-prime form Q_bg = pole + arch on odd polynomials x, x^3, x^5 (and x^7) on [-L, L]; explicit witness.
+usage: python3 bg2.py.txt L deg"""
+import mpmath as mp, sys
+mp.mp.dps = 25
+L = mp.mpf(sys.argv[1]); deg = int(sys.argv[2])
+ps = list(range(1, deg + 1, 2))
+cinf = mp.log(mp.pi) - mp.digamma(mp.mpf(1) / 4)
+w = lambda u: mp.exp(u / 2) / (2 * mp.sinh(u))
+def gfh(j, k, u):      # int f(x) h(x-u) dx over the overlap, f = x^j, h = x^k, 0 <= u < 2L
+    return mp.quad(lambda x: x ** j * (x - u) ** k, [-L + u, L])
+n = len(ps)
+G = mp.matrix(n, n); A = mp.matrix(n, n)
+sv = [mp.quad(lambda x: x ** j * mp.sinh(x / 2), [-L, L]) for j in ps]
+tail = mp.quad(w, [2 * L, 4, mp.inf])
+for a, j in enumerate(ps):
+    for b, k in enumerate(ps):
+        if b < a: continue
+        g0 = 2 * L ** (j + k + 1) / (j + k + 1)
+        I1 = mp.quad(lambda u: w(u) * (2 * g0 - gfh(j, k, u) - gfh(k, j, u)), [0, L / 4, L, 2 * L])
+        val = -2 * sv[a] * sv[b] - cinf * g0 + I1 + 2 * g0 * tail
+        G[a, b] = G[b, a] = g0; A[a, b] = A[b, a] = val
+# generalised eigenproblem A c = lam G c via Cholesky
+Lc = mp.cholesky(G); Li = Lc ** -1
+M = Li * A * Li.T
+E, V = mp.eigsy(M)
+i = min(range(n), key=lambda t: E[t])
+c = Li.T * V[:, i]
+c = c / c[0]
+print("L=%s odd polynomials of degree <= %d: lowest Rayleigh quotient %s ; coefficients (c1=1): %s" % (mp.nstr(L, 4), deg, mp.nstr(E[i], 10), [mp.nstr(x, 8) for x in c]))
+# re-evaluate with coefficients rounded to 3 significant digits (the explicit witness)
+cr = [mp.mpf(mp.nstr(x, 3)) for x in c]
+num = sum(cr[a] * cr[b] * A[a, b] for a in range(n) for b in range(n)); den = sum(cr[a] * cr[b] * G[a, b] for a in range(n) for b in range(n))
+pole = -2 * sum(cr[a] * sv[a] for a in range(n)) ** 2
+print("   rounded witness c = %s : |f|^2 = %s, pole = %s, arch = %s, Q_bg(f) = %s, Q_bg/|f|^2 = %s"
+      % ([mp.nstr(x, 3) for x in cr], mp.nstr(den, 10), mp.nstr(pole, 10), mp.nstr(num - pole, 10), mp.nstr(num, 10), mp.nstr(num / den, 8)))
+# autocorrelation of the witness: sign and size where an atom would act
+f = lambda x: sum(cr[a] * x ** ps[a] for a in range(n))
+g = lambda u: mp.quad(lambda x: f(x) * f(x - u), [-L + u, L])
+us = [mp.mpf(t) / 100 for t in range(1, int(200 * L))]
+gv = [g(u) for u in us]
+u0 = next(us[t] for t in range(len(us) - 1) if gv[t] > 0 >= gv[t + 1])
+tm = min(range(len(us)), key=lambda t: gv[t])
+print("   g(u) > 0 for u < about %s, < 0 beyond; most negative g = %s at u = %s (x = %s); g(log 2) = %s"
+      % (mp.nstr(u0, 3), mp.nstr(gv[tm], 8), mp.nstr(us[tm], 3), mp.nstr(mp.exp(us[tm]), 5), mp.nstr(g(mp.log(2)), 8)))
+m2 = mp.log(2) / mp.sqrt(2)
+print("   weight needed on u in (u0, 2L) if all weights >= 0: sum m_j >= |Q_bg|/(2 max|g|) = %s ; zeta's atom at 2: m = %s, Q(f) with it = Q_bg - 2 m g(log 2) = %s"
+      % (mp.nstr(abs(num) / (2 * abs(gv[tm])), 8), mp.nstr(m2, 8), mp.nstr(num - 2 * m2 * g(mp.log(2)), 10)))

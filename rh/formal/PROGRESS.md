@@ -147,3 +147,112 @@ DIFFERENCES:
     the slice form is (l_k/s) x^T H x, and x^T H x <= 0 there by reverse Cauchy-Schwarz against a. The written
     route (negative semidefinite + rank two, Weyl) was not formalised; its "expand to check" identity was.
 GAP IN THE WRITTEN PROOF: none.
+
+### 00:30 board read; nominations arrived (B82 S1-mirror, B92 S1-parity, B98 S1-curv, B109 S1-cubic)
+and the coordinator passed on the theory keeper's order for LIVE routes (k_theory/STRUCTURE.md (e)):
+T45, T32, T74, T26; then T27, T44, T35. Files 6-13 below follow those two lists.
+Added to file 1 (D1): `mirror_form_eq_sum_squares_unweighted`, S1-mirror's wording of B82 (no 1/sqrt weights).
+
+### FILE 6 DONE: `RHFormal/B56_BorderedIdentity.lean`  (board B92 first step; board B98 "F1, step"; part of T32, T33)
+INFORMAL (B92): B(x,y) = x^T Q x + 2 y c^T x + y^2/2 = (x + y Q^-1 c)^T Q (x + y Q^-1 c) + (1 - t) y^2/2
+  = x^T (Q - 2cc^T) x + (y + 2c^T x)^2/2, t = 2 c^T Q^-1 c.
+INFORMAL (B98, F1 step): Q symmetric invertible, t != 1, N = 2cc^T - Q: N invertible, 2 c^T N^-1 c - 1 = 1/(t-1);
+  twin: t' = 2 s^T Q^-1 s != -1, M' = Q + 2ss^T: 1 - 2 s^T M'^-1 s = 1/(1 + t').
+LEAN (namespace RHFormal.B56; V any real vector space, Q : BilinForm, c : V →ₗ ℝ, w : V with hw : ∀ x, Q w x = c x):
+  `bordered_eq_shift`, `bordered_eq_border` (the two identities); `rankOne_solve` (N(w/(t-1), z) = c z),
+  `rankOne_value` (2 c(w/(t-1)) - 1 = 1/(t-1)), `rankOne_solve_twin`, `rankOne_value_twin`,
+  `rankOne_nondegenerate` (Q non-degenerate, t != 1 => N non-degenerate), `nonpos_of_nonneg` (Q >= 0, t <= 1 => N <= 0).
+DIFFERENCES: coordinate-free; "Q^-1 c" is "a vector w with Q(w, .) = c" (for an invertible matrix: w = Q^-1 c, unique);
+  "N^-1 c = w/(t-1)" is stated as "N(w/(t-1), .) = c"; "N invertible" as "N non-degenerate" (same thing in finite
+  dimension). No finite dimension used. GAP: none.
+
+### FILE 7 DONE: `RHFormal/B25_Folding.lean`  (board B92 "B25: the folding identity"; finite form of T74 / D5; step of F3, F4)
+INFORMAL: K real symmetric on {-n..-1} u {1..n} with K(i,j) = K(-i,-j); f_e(+-i) = phi_i, f_o(+-i) = +-phi_i. Then
+  f_e^T K f_e - f_o^T K f_o = 4 sum_{i,j>0} phi_i phi_j K(i,-j), f_e^T K f_e + f_o^T K f_o = 4 sum_{i,j>0} phi_i phi_j K(i,j).
+LEAN (namespace RHFormal.B25; index set ι ⊕ ι, inl i = +i, inr i = -i; hK : ∀ a b, K (swap a) (swap b) = K a b):
+  `quad_even`, `quad_odd`, `quad_even_sub_odd`, `quad_even_add_odd`.
+DIFFERENCES: symmetry of K is NOT a hypothesis (not needed). This is the FINITE (matrix) form of T74; the continuum
+  statement of T74 (integrals over (0, L], the exponential sums E_+, E_m, the m = 0 cancellation, the prime atoms)
+  is NOT formalised. GAP: none.
+
+### FILE 8 DONE: `RHFormal/B32_NegativeSubspaceDim.lean`  (board B92, Step 2 of Theorem 4 of PROOF_parity_index.md; part of T29)
+INFORMAL: on a real vector space, if Q = Q+ + sum_{i=1..nu} m_i (a_i^2 - b_i^2), Q+ >= 0, m_i > 0, a_i, b_i linear, then
+  every subspace on which Q is negative definite has dimension <= nu.
+LEAN (namespace RHFormal.B32): `finrank_le_of_negDef`: ... (W : Submodule ℝ V) (hW : ∀ x ∈ W, x ≠ 0 → Q x < 0) :
+  FiniteDimensional ℝ W ∧ Module.finrank ℝ W ≤ ν;  `b_injective`: x ↦ (b_i x)_i is injective on W.
+DIFFERENCES: none in content; Q+ is any non-negative FUNCTION (no quadratic structure needed); any dimension. GAP: none.
+
+### FILE 9 DONE: `RHFormal/HankelPowerSums.lean`  (lead's list; board B82 (b); Corollary 3 of PROOF_mirror_criterion.md; part of T77)
+INFORMAL: alpha_1..alpha_r distinct non-zero reals, m_j non-zero reals, s_k = sum_j m_j alpha_j^k, n >= r, H = [s_(i+j)]_{i,j=1..n}:
+  (i) x^T H x = sum_j m_j P_x(alpha_j)^2, P_x(z) = sum_i x_i z^i; (ii) H >= 0 iff every m_j > 0; (iii) #negative eigenvalues = #{m_j < 0}.
+LEAN (namespace RHFormal.Hankel; `powerSum m α k = ∑ j, m j * α j ^ k`, `genPoly e x z = ∑ i, x i * z ^ e i`,
+  `hankelForm m α e x = ∑ i, ∑ j, x i * powerSum m α (e i + e j) * x j`):
+  `hankelForm_eq` (i) for ANY finite index types and ANY exponent map e : ι → ℕ, any reals m, α;
+  `hankelForm_nonneg` (m >= 0 => form >= 0: "the Hankel matrix of power sums of real roots is a Gram matrix");
+  `exists_interp` (interpolation, exponents 1..n); `nonneg_of_hankelForm_nonneg`; `hankelForm_nonneg_iff` (ii).
+DIFFERENCES: (i) and the Gram direction are MORE general (any exponents, no distinctness). (ii) exactly as stated
+  (exponents i+1, i : Fin n). NOT formal: (iii), the complex-root clause of T77, the direct-sum-over-primes clause of T77
+  (that part is file 1). GAP: none.
+
+### FILE 10 DONE: `RHFormal/T45_FirstOrderCaps.lean`  (T45; board B58 Fact 1, Fact 3; live route #9)
+INFORMAL: see THEORY.md T45. Q^(delta)(f) = Q(f) - 2 delta n^(-1/2) G_f; if Q^(delta) >= 0 on a parity class and f in it
+  has Q(f) = mu and G_f > 0 (resp. < 0) then delta <= mu sqrt(n)/(2 G_f) (resp. delta >= -mu sqrt(n)/(2|G_f|)).
+  Fact 1: phi supported in (0, L], u >= L => phi(x) phi(x+u) = 0.
+LEAN (namespace RHFormal.T45): `trial_bound`, `cap_upper`, `cap_lower` (with a weight w > 0), `cap_upper_sqrt`,
+  `cap_lower_sqrt` (w = 1/√n), `support_shift` (Fact 1).
+DIFFERENCES: only the DEDUCTION is formal. The identity Q^(delta)(f) = Q(f) - 2 delta n^(-1/2) G_f is the hypothesis
+  (it is the definition of the perturbed form); trial vectors are an arbitrary set with a subclass S ("even", "odd").
+  Neither "Q v = mu v" nor "|v| = 1" is needed, only the value Q(f) = mu. The signs of G (T46) are hypotheses. GAP: none.
+
+### FILE 11 DONE: `RHFormal/T26_ParityDecomposition.lean`  (T26; PROOF_parity_index.md Lemma 1; live routes #8, #9)
+INFORMAL: R f(x) = f(-x). (i) q(Rf, Rh) = q(f, h) => q(f_e, h_o) = 0 and q(f) = q(f_e) + q(f_o).
+  (ii) P(f) = 2<f_e,c>^2 - 2<f_o,s>^2 for real f (P(f) = 2<f,e^{x/2}><f,e^{-x/2}>, c = cosh(x/2), s = sinh(x/2)).
+LEAN (namespace RHFormal.T26; V real vector space, R : V →ₗ V with hR : ∀ f, R (R f) = f, evenPart = (f + Rf)/2,
+  oddPart = (f - Rf)/2): `evenPart_add_oddPart`, `R_evenPart`, `R_oddPart`, `cross_eq_zero`, `cross_eq_zero'`,
+  `form_eq_even_add_odd`, `pole_eq` (2 p(f) p(Rf) = 2 c(f_e)^2 - 2 s(f_o)^2 with c = (p + p∘R)/2, s = (p - p∘R)/2),
+  `cosh_sinh_parts`.
+DIFFERENCES: linear algebra only. That the concrete forms P, A, Pi, N, Q are R-invariant, and that
+  <f, e^{-x/2}> = <Rf, e^{x/2}>, are hypotheses (integral changes of variable, not formalised). Real case only. GAP: none.
+
+### FILE 12 DONE: `RHFormal/T32_InertiaRankOne.lean`  (T32; board B56, B92; live route #9; nominated by S1-parity)
+INFORMAL: see THEORY.md T32: pos(N_e) = neg(Q_e) + [t_e > 1], pos(N_o) = neg(Q_o) - [t_o < -1], for Q blocks invertible,
+  t_e != 1, t_o != -1, N_e = 2cc^T - Q_e, N_o = -2ss^T - Q_o.
+LEAN (namespace RHFormal.T32):
+  `NegDim q k := ∃ W : Submodule ℝ V, FiniteDimensional ℝ W ∧ k ≤ finrank ℝ W ∧ ∀ x ∈ W, x ≠ 0 → q x < 0`  ("neg(q) >= k"),
+  `PosDim q k` likewise with 0 < q x.  With Q symmetric bilinear, c linear, w with Q(w,.) = c, t = 2 c(w):
+  `even_le` (t ≤ 1): ∀ k, NegDim (Q x x) k ↔ PosDim (2 c(x)^2 - Q x x) k
+  `even_gt` (t > 1): ∀ k, NegDim (Q x x) k ↔ PosDim (2 c(x)^2 - Q x x) (k+1)
+  `odd_gt` (t > -1): ∀ k, NegDim (Q x x) k ↔ PosDim (-2 c(x)^2 - Q x x) k
+  `odd_le` (t ≤ -1): ∀ k, NegDim (Q x x) (k+1) ↔ PosDim (-2 c(x)^2 - Q x x) k
+  plus the tools: `negDim_of_map`, `negDim_of_pullback`, `negDim_sumForm_of_nonneg`, `negDim_sumForm_of_neg`
+  (adding a 1-dimensional form d y^2 changes neg by [d < 0]), `negDim_congruence`.
+DIFFERENCES:
+  - indices = largest dimension of a definite subspace (S1-parity's formulation of B92), not eigenvalue counts; the
+    identification with eigenvalue counts in finite dimension is Sylvester's law (`known`, not formalised).
+  - MORE GENERAL than T32: any dimension; invertibility of Q NOT assumed (only existence of w with Q w = c);
+    the excluded cases t_e = 1 and t_o = -1 ARE covered (t_e = 1 behaves like t_e < 1, t_o = -1 like t_o < -1).
+  - both halves (even AND odd) are machine-checked; the keeper noted the odd half had been written out only by K-theory.
+  - the parity structure is not in the file (apply it to each block).
+GAP IN THE WRITTEN PROOF: none. (Remark for the keeper: T32's hypotheses "invertible", "t_e != 1", "t_o != -1" can be
+  weakened as above.)
+
+### FILE 13 DONE: `RHFormal/T50_FibreClassesCount.lean`  (T50 = Lemma A, the COUNT; what B32 / T61 use)
+INFORMAL: (number of positive eigenvalues of Ntilde) = 1 + (number of negative eigenvalues of Q).
+LEAN (namespace RHFormal.T50): `negDim_weil_iff_posDim_Ntilde`: ∀ k, NegDim (weil N p q) k ↔ PosDim (fun x => Ntilde N p q x x) (k+1);
+  `posDim_Ntilde_one`: PosDim Ntilde 1.  (V any real vector space; no symmetry of N needed for this statement.)
+DIFFERENCES: indices as in file 12. NOT formal: the equality of the numbers of ZERO eigenvalues. GAP: none.
+
+### FILE 14 DONE: `RHFormal/T27_KappaInequalities.lean`  (T27; PROOF_parity_index.md Prop. 3 (b), (c))
+INFORMAL: kappa_-(Q_even) <= kappa_+(N_even); kappa_-(Q_odd) <= kappa_+(N_odd) + 1; kappa_-(Q) <= kappa_+(N) + 1;
+  'kappa_+(N) <= 1' implies kappa_-(Q) <= 2.
+LEAN (namespace RHFormal.T27; Q, N : V → ℝ any functions, c, s linear functionals):
+  `even` (N = 2c^2 - Q): NegDim Q k → PosDim N k;  `odd` (N = -2s^2 - Q): NegDim Q (k+1) → PosDim N k;
+  `full` (Q = 2c^2 - 2s^2 - N): NegDim Q (k+1) → PosDim N k;  `at_most_two`: ¬ PosDim N 2 → ¬ NegDim Q 3.
+DIFFERENCES: real forms (not hermitian); kappa >= k witnessed by a finite-dimensional definite subspace. The Lean
+  proof of `full` cuts by the one functional s and does not use the parity blocks, so the step the checker called
+  "unwritten" (kappa_-(Q) <= kappa_-(Q_e) + kappa_-(Q_o)) is not needed. GAP: none.
+
+### 00:43 sanity check of the pipeline
+A scratch file (outside the repo) stating `even_gt` WITHOUT the +1 was rejected by Lean (type mismatch), and
+`#print axioms RHFormal.T32.even_gt` gives [propext, Classical.choice, Quot.sound] (the three standard axioms of
+Lean/mathlib; no `sorryAx`, no extra axiom).

@@ -29,7 +29,7 @@ only (owner rule 10): what a paper establishes and where it stops; never a recom
 | 3b | Connes, Consani, Moscovici, arXiv 2310.18423 v2 | DONE, whole (99,326 / 99,326) | `2310.18423.md` |
 | 4 | Suzuki, Hamiltonians, arXiv 1606.05726 v3 | DONE, whole (109,006 / 109,006) | `1606.05726.md` |
 | 5 | Yoshida 1992 ("On Hermitian forms attached to zeta functions", Adv. Stud. Pure Math. 21, 281-325, DOI 10.2969/aspm/02110281) | NOT READ: Project Euclid blocks automated download (bot check; do not try to get around it). Secondary reports collected | `yoshida-1992.md` |
-| 6 | X. Zhu, arXiv 2608.24827, "Weil positivity in compact windows ..." (assigned by the coordinator 2026-11-11) | **IN PROGRESS by READER-1** | |
+| 6 | X. Zhu, arXiv 2608.24827 v2 (assigned by the coordinator) | DONE, whole (122,242 / 122,242; figures not opened) | `2608.24827.md` |
 
 ## Record read before starting
 rh/library/INDEX.md, README.md; claude.md "Reading"; docs/KNOWLEDGE.md (all); docs/IDEAS.md titles and novelty
@@ -53,3 +53,22 @@ Bombieri 2001/2003, Connes-Consani-Moscovici arXiv 2511.22755 ("Zeta spectral tr
   `rh/data/papers/yoshida1992/su23/`, only sections 3.2, 4.2, 5.4 read); Connes-Consani 2006.13771 intro and
   Appendix C (from `rh/library/src/2006.13771/weil-compo.tex`); Connes-Consani 2106.01715 intro; Zhu and Johns
   one line each. Crossref record saved at `rh/data/papers/yoshida1992/crossref.json`.
+
+## State at the end of the session of 2026-11-11
+- All of my list is done except Yoshida 1992 (text not obtainable by this seat). Digests: `2606.09096.md`,
+  `2511.23257.md`, `2106.01715.md`, `2310.18423.md`, `1606.05726.md`, `yoshida-1992.md`, `2608.24827.md`;
+  seven rows appended to INDEX.md.
+- Texts: PDFs, `pdftotext` outputs and comment-stripped TeX under `rh/data/papers/` (`<id>.pdf/.txt/.tex`);
+  Zhu's unpacked source in `rh/data/papers/zhu_src/x/` (arXiv e-print: `curl -sSL https://arxiv.org/e-print/<id>`
+  gives a gzip tar; unpack into its own directory, read as text only).
+- arXiv API for metadata (journal reference, comment): `https://export.arxiv.org/api/query?id_list=<id>`.
+- Unread items met on the way (not on my list; check INDEX.md and the Queue in README.md before starting any):
+  Connes-Consani-Moscovici "Zeta spectral triples" arXiv 2511.22755 (cited by Suzuki and Zhu as the source of
+  the window operator A_a, its discrete spectrum, and the 'simple even ground state' hypothesis);
+  Suzuki's companion "An inverse problem for a class of canonical systems having Hamiltonians of determinant
+  one", J. Funct. Anal. 279 (2020) 108699 (all inverse-problem theorems used in 1606.05726);
+  Suzuki arXiv 2206.03682 (screw function, JLMS 2023; only its Yoshida passages read) and his Canad. J. Math.
+  paper "On the Hilbert space derived from the Weil distribution"; Suzuki arXiv 1204.1827;
+  Bombieri 2001 (Rend. Lincei) and 2003 (CPAM); Groskin arXiv 2607.02828; Landau-Widom 1980.
+- Arithmetic done by me inside a digest is always marked "this reader" (e.g. the kappa table in
+  `2608.24827.md`); nothing in any digest was recomputed from scratch.

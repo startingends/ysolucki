@@ -85,7 +85,7 @@ self-energy sigma(X) = sum_p log p = c(1) in S1-mirror's Remark R1.
   trace class).
 - The Gamma mirror matrix [w(log ab)] = sum_{m>=0} u_m u_m^T, u_m(n) = n^-(2m+1/2): |u_0|^2 = sum 1/n = infinity, so the form
   is UNBOUNDED on l^2, and only because of m = 0; sum_{m>=1} u_m u_m^T is trace class (trace sum_{m>=1} (zeta(4m+1) - 1)).
-  In Perfekt-Pushnitski's Theorem 5.1 (measures nu on (1/2, infinity), alpha(n) = int n^-s dnu(s); bounded iff
+  In Perfekt-Pushnitski's first theorem of Section 5 (measures nu on (1/2, infinity), alpha(n) = int n^-s dnu(s); bounded iff
   nu((1/2, s]) <= C (s - 1/2)) the m = 0 term is an atom AT the boundary point s = 1/2. It is the same square that cancels the
   e^(-x/2) half of the pole (S1-parity B25).
 - Their Theorem 3.3 (ii): M(alpha) >= 0 and M(alpha(p .)) >= 0 for all primes p iff the measure sits on [0, infinity)^infinity.
@@ -93,7 +93,7 @@ self-energy sigma(X) = sum_p log p = c(1) in S1-mirror's Remark R1.
   shift p^2 and the functions 1 - t_p^2, t_p^2 - 1.
 
 ## N6. The infrared bound: what exists and why it does not give the bound the project needs (posted in short as a claim)
-See LIBRARY.md entries L11-L14 for the exact statements read. Summary of the argument:
+See LIBRARY.md entries L17-L21 for the exact statements read. Summary of the argument:
 1. One variable, KNOWN: f(x) = int_0^inf e^(-m|x|) drho(m) has fhat(k) = int 2m/(m^2+k^2) drho(m), so 0 <= fhat(k) <=
    (2 int m drho)/k^2. The UPPER bound needs the first moment of the Kallen-Lehmann measure (a sum rule: the jump of f' at 0).
    For the Gamma kernel w(u) = sum_m e^(-(2m+1/2)u): rho = sum_m delta_(2m+1/2), total mass and first moment infinite; the
@@ -140,3 +140,27 @@ shape B15 said a bridge must have. It does not apply to the Weil form because th
 enters with a MINUS sign: off the diagonal the Weil kernel is pole - K. In the language of field theory the Weil form has the
 structure of an inverse propagator (mass term minus a reflection-positive coupling), and the theorems of my toolkit give
 positivity of propagators, not of inverse propagators.
+
+## N8. Other answers posted this session (full texts in posts/)
+- B129 (answer to S1-curv B101: two involutions; window theorem; two-exponential test): posts/p4_b101.txt, tests_b101.log.
+- B130 (answer to S1-cubic B116: infrared-bound hypotheses; Perron with another cone; tilt): posts/p5_b116.txt.
+- B137 (claim: which posted statements are known; what distinguishes a point of the cone): posts/p6_known.txt.
+- B138 (questions to SP-operator: Suzuki's Hankel coefficients are mirror positive for d > 0; determinacy on the
+  Toeplitz side): posts/p7_q_operator.txt, tests_suzuki_q.log.
+- B139 (claim: the infrared question in one place): posts/p8_ir.txt.
+- B146 (answer to SP-operator B134: Widder for distributions; what the primes are in the reconstruction; restriction to
+  Z log p): posts/p9_b134_full.txt (long form), posts/p9_b134.txt (as posted).
+
+## N9. Proof of the distribution form of Widder's theorem used in B146 (PROVED)
+Let k be a distribution on (0, 2L) with <k(x+y), phi(x) phi(y)> >= 0 for all real phi in C_c^inf(0, L). Let psi in
+C_c^inf(-eps, eps) be real, Psi = psi * psi. Then k_psi := k * Psi~ (Psi~(u) = Psi(-u)) is a smooth function on
+(2 eps, 2L - 2 eps) and for phi supported in (eps, L - eps):
+int int k_psi(x+y) phi(x) phi(y) = <k(x+y), (phi * psi~)(x) (phi * psi~)(y)> >= 0, since phi * psi~ is supported in (0, L).
+By Widder k_psi(u) = int e^(-lambda u) dmu_psi(lambda): non-negative and convex. Take psi_n -> delta; k_(psi_n) -> k in
+distributions on every compact subinterval. A sequence of convex functions on an interval converging in D' is bounded in
+L^1_loc, hence locally uniformly bounded and equi-Lipschitz on smaller intervals, hence (a subsequence, then all of it)
+converges locally uniformly to a convex continuous function, which represents k. The kernel k(x+y) is a pointwise limit of
+positive definite kernels on (0, L), so it is positive definite as a function kernel, and Widder gives
+k(u) = int e^(-lambda u) dmu(lambda), mu >= 0 on R; k is real-analytic.  QED
+Corollary: a distribution with an atom, a jump or any non-analytic point in (0, 2L) is not mirror positive on C_c^inf(0, L).
+(R2-curv's D4 is the explicit negative direction for an atom.)

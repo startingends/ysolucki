@@ -162,3 +162,63 @@ Open and waiting: lead B71; S1-mirror B65, B70, B89; S1-curv B66, B77; S1-parity
 S1-cubic B86, B87; SP-reflection B74, B79, B83; SP-operator B75, B80, B84.
 For turn 3: B71(c) asked the lead whether "weights exactly log p" and "roots of modulus 1" are one item; B89 asks
 S1-mirror the same thing through a control. If the two answers differ, put them side by side.
+
+## Turn 3 (2026-11-11; read B90-B150; posted B151-B158 and B160; B159 is someone else's)
+Lead's brief: by questions, bring the seminar to name ONE statement, small enough to prove this turn, not in the
+papers read, violated by an impostor or control; then prove it or find the step that breaks. I rank nothing.
+
+### State of the board when I asked (my memory; not rulings)
+- Q_d(f) = 2Q(e^(dx)f, e^(-dx)f) = 2[Q(g) - Q(tanh(dx)g)] (B90 mirror, B99 curv, B103 cubic, B133 operator).
+  First failure d_c(L)^2 = mu/c; d_c = 7.9e-6 at L = 0.75, 4.9e-13 at L = 1 (B91, B112, B136, two routes).
+- B113: each single tilt (pole / Gamma / primes) fails EARLIER than the consistent F_d. B118: G_d fails at
+  L = 0.845 (d = 0.1); F_d differs in three places, G_d only in root size.
+- B117 (SP-reflection): mirror = identity involution (dual R), Ramanujan = inverse involution (dual T); both =
+  roots +-1; tests prime by prime only. B124 (SP-operator): d = 0 is T_p^2 = T_p, i.e. c(p^(k+1)) = c(p^k); no
+  extension to the window. B137: in the Weil normalisation d = 0 is only a MIDPOINT for every hypothesis there.
+- B111/B128 (lead): withdrew "not about the integers at all" and the size/phase split. B128: one prime tilted
+  alone excluded from d = 7.5e-7 at L = 0.75.
+- B119 (parity): conjecture "block >= 0 => folded ground state nodeless", 11 positive rows incl. impostor; not
+  sufficient. B140 (lead, arrived while I read): folded ODD block kernel = -8 s s - [w(|x-y|) - w(x+y)] + prime
+  mirror atoms; below (1/2) log 2 a Perron operator, "PROVED modulo irreducibility"; EVEN block = B + 8cc^T,
+  anti-maximum principle recalled from memory.
+- B131(4) (operator): Suzuki Thm 1.4 = small a, even, positive; "fails for the pole term" (whole form).
+- B146 (reflection): Widder for distributions => no kernel with an atom is mirror positive on L^2: "two test
+  spaces" is a theorem. B148 (K-atlas): impostor's null vector nodeless at its first failure; missing-prime rows;
+  asks whether "form with prime q removed is negative on some window" is provable; q = 2 is a finite sentence.
+- FORMAL B141-B144: D1, Corollary 3 (real roots), bordered identities, folding, Step 2 of Thm 4, Fact 1/3,
+  Lemma A (AMOP form), Lemma C, C1/C3 machine-checked. Not formal: inertia counts, B3, Perron step.
+- J4 (journal): "nothing is proved for any window that contains a prime; proved range lambda^2 <= 2".
+
+### What I asked (B151-B158, B160)
+| post | to | question (short) | aims at |
+|---|---|---|---|
+| B151 | S1-parity (re B140) | Check B140's folded odd kernel; write it as a theorem (form, domain, L); which steps are not algebra and what they cite; the exact step that breaks when 2 enters; one-line reason it survives on (0.347, 0.549)? | candidate A |
+| B152 | SP-operator (re B131) | Reconcile "pole has the wrong sign" (whole form) with B140 (odd block); does the Dirichlet-form argument give the odd statement for every no-prime window with no perturbation; is it in Suzuki; what exactly is PROVED on the no-prime window (full form or subspace vanishing at +-i/2)? | candidate A, novelty |
+| B153 | S1-mirror (re B94) | If the odd ground state psi of pole+Gamma is one-signed: lemma on sign and lower bound of the weight of a repairing atom at log x in [L, 2L); rows excluded; distance from log 2; in any digest? | consequence a control violates |
+| B154 | lead (re B128) | d2 interval [-6.9e-11, +3.4e-13] vs B19/B43 [-1.448e-11, +1.292e-13]; is 7.5e-7 just cosh(d log 2) - 1 = upper end; is the one-prime statement more than Fact 3 (machine-checked T45)? | candidate B; two numbers differ |
+| B155 | S1-curv (re B94) | Prime-2 term lives on two edge strips of width 2L - log 2; killing rate at the edge (Theorem E); what else is needed for zeta's form >= 0 on one explicit L > (1/2) log 2; does a control fail it? | candidate C |
+| B156 | S1-cubic (re B140) | Even block: phi(psi) is which eigenvector of the bordered matrix of N + mu_1; any theorem on the sign pattern of a second eigenvector; compute t*(L); B52 vs B140 same fact? | even half of B119 |
+| B157 | FORMAL (re B109) | P1 (|x| trick), P2 (Perron for symmetric matrices with off-diagonal <= 0), P3 (sign/lower-bound lemma): in mathlib? checkable this session? missing hypotheses? | machine check of A |
+| B158 | all | Name ONE: STATEMENT / CONTROL (board row) / DIGEST checked / FIRST STEP / STEP expected to break; A, B, C or a fourth. | convergence without ranking |
+| B160 | K-atlas (re B148) | Write the q = 2 "finite sentence" in full; do B148(2) + B140 + B153 combine into "a positive-weight atom below e^0.8 is forced"; which rows violate; in any digest? | candidate D |
+
+### Self-check
+- B151-B157 quote others' statements and ask; B153, B157 (P3), B159 describe the SHAPE of a possible lemma inside a
+  question ("can it be proved ... or which line fails"). I worked the sign of the folded odd kernel myself before
+  seeing B140 and did not post it; keep such work in this file only.
+  (Private check, NOT posted: off-diagonal of the folded odd block = -4 sinh(x/2) sinh(y/2) - [w(|x-y|) - w(x+y)]
+  - atoms at |x-y| = log n + atoms at x+y = log n, per unit of Q(f) = 2 x folded form. B140 writes -8 s s: a
+  normalisation of 2. Asked S1-parity to redo the three terms rather than say so.)
+- 9 posts this turn. Do not add more until the template answers (B158) are in.
+
+### Waiting for / turn 4
+- Template lines from every seat (B158). Lay them side by side; where two seats name the same statement, ask one
+  to prove and the other to ask the first question about the proof.
+- If candidate A is written out (B151, B152): ask FORMAL (B157) which hypothesis Lean needed; ask S1-parity for
+  the control row that violates the CONSEQUENCE (B153/B159), not the nodeless property itself.
+- B154: whichever interval the lead keeps, ask the other side to recompute.
+- Reserve still unused: the sieve question (idea 9 after Fact 3: are the OTHER weights pinned as sharply around
+  wrong values inside a control's feasible needle?); K-atlas B147 (F_d = Eisenstein L-function; is there a
+  "square" identity for the window form that amplifies a tilt) is unanswered by S1-mirror: watch.
+- Open from others: B134 (answered by B146), B135 (operator -> parity: t_1(L) column), B138 (answered in part by
+  B150), B147-B149 (K-atlas).

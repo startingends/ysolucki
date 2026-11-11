@@ -138,3 +138,53 @@ Gamma_L(x,y) - Gamma_L(x,-y). Hence
    (d/dL) log [ det(even block) / det(odd block) ] = 2 Gamma_L(L, -L).
 PROVED for this class. For the Weil form (unbounded, logarithmic order, atoms) the statement needs a regularised
 determinant; NOT proved. The regularisation-free substitute is h_1(L) dL = pi dK_L(0,0) (P1, Remark 3).
+
+---------------------------------------------------------------------------------------------------------
+## P7. Odd block on the no-prime window: simple, one-signed ground state for EVERY L <= (1/2) log 2.
+PROVED given the two cited theorems; one point not checked line by line (marked).
+
+Setting. 0 < L <= (1/2) log 2, so no prime power enters: Q = pole + arch on [-L, L]. For phi on (0, L] let
+f_o(x) = sign(x) phi(|x|) and E_o(phi) := Q(f_o).
+Kernels (off the diagonal). arch: Suzuki 2606.09096 eq. (2.3)-(2.5) with no primes:
+ Q_arch(v) = (1/4) int int |v(x)-v(y)|^2/|x-y| - (1/2) int log(L^2-x^2)|v|^2 - (2A+1)||v||^2 - int int r_1''(x-y) v(y) v(x),
+ r_1''(t) = w(|t|) - 1/(2|t|), w(u) = e^{-u/2}/(1 - e^{-2u}) = 1/(e^{u/2} - e^{-3u/2}).
+ The cross term of the first form has kernel -(1/2)/|x-y|, so the total off-diagonal kernel of Q_arch is
+ -w(|x-y|). w is positive and strictly decreasing on (0, inf) (the denominator has derivative
+ (1/2)e^{u/2} + (3/2)e^{-3u/2} > 0).
+pole: P(f_o) = -2 <f_o, sinh(x/2)>^2 = -8 (int_0^L phi s)^2, s(x) = sinh(x/2) > 0 on (0, L]
+ (PROOF_parity_index Lemma 1).
+Folding: for odd f_o the off-diagonal kernel of E_o in the variables x, y in (0, L] is, up to positive
+constants, -[w(|x-y|) - w(x+y)] - s(x)s(y) =: -J(x,y), and J > 0 on (0,L]^2.
+Hence E_o(phi) = (1/2) int int J(x,y)(phi(x) - phi(y))^2 dx dy + int V(x) phi(x)^2 dx with a real potential V
+(the logarithmic term above, constants, and the diagonal compensations), first on the folded core
+(smooth, compactly supported in (0, L)), then on the closure.
+[NOT CHECKED LINE BY LINE: that the closed odd form of Q_L is the closure of this expression on that core. It
+follows from Suzuki Cor. 1.2 (C_c^inf(-L,L) is a form core) restricted to odd functions, provided odd
+functions in C_c^inf(-L,L) vanishing near 0 are still a core of the odd part; a function of the form domain
+need not vanish at 0, but points have zero capacity for a form of logarithmic order (H^log does not embed in
+continuous functions), which is the standard reason; to be written out.]
+
+Cited theorems (FROM MEMORY: Reed-Simon, Methods of Modern Mathematical Physics IV, Thm XIII.50 (first
+Beurling-Deny criterion) and Thms XIII.43-44 (Perron-Frobenius for positivity preserving semigroups). READ: the
+same pair as used in Suzuki 2606.09096 sec. 5.2, with Lenz-Stollmann-Veselic 2009 Thm 1.4):
+ (i) for a closed lower-bounded real form E with operator T: e^{-tT} positivity preserving <=> E(|u|) <= E(u)
+     for all u in D(E) (with |u| in D(E));
+ (ii) if moreover the semigroup is irreducible and inf spec T is an eigenvalue, it is simple with an a.e.
+     strictly positive eigenfunction.
+Verification. (i): (|phi(x)| - |phi(y)|)^2 <= (phi(x) - phi(y))^2 and J >= 0; the potential term is unchanged.
+Irreducible: if A, A^c in (0, L] both have positive measure, E_o(1_A u, 1_{A^c} u) = - int_A int_{A^c} J u u != 0
+for u > 0, since J > 0 everywhere (Suzuki's argument for the kernel 1/|x-y|). inf spec is an eigenvalue:
+discrete spectrum (Connes-Consani-Moscovici Thm 3.6, as cited by Suzuki). No Markov property is used.
+Conclusion. For every 0 < L <= (1/2) log 2 the lowest eigenvalue of the odd block is simple and its
+eigenfunction, folded to (0, L], is positive a.e. Nothing is said about the sign of the eigenvalue.
+
+Scope. (1) Not arithmetic: the same proof works for any Gamma kernel that is positive and decreasing and any
+pole term whose odd fold is <= 0 off the diagonal (impostor: rates 2m + 3/2, no pole; Beurling on the same
+window). (2) Breaks exactly at L = (1/2) log 2: the prime 2 contributes to the odd fold
+-Lambda(2) 2^{-1/2} [delta(|x-y| - log 2) - delta(x+y - log 2)]; the second (mirror) term is a NEGATIVE jump
+rate and criterion (i) fails (S1-cubic B52), although one sign is still observed numerically (S1-parity B119).
+(3) Even block: Gamma fold -[w(|x-y|) + w(x+y)] has the right sign, the pole +8 c(x)c(y) the wrong one; the
+even ground state is not covered (it is covered for small L by Suzuki Thm 1.4, by perturbation).
+(4) Relation to Suzuki Thm 1.4: same mechanism; he applies it to the a-independent principal form and then
+perturbs, which is why his statement has "sufficiently small a"; on the odd subspace the pole has the right
+sign and no perturbation is needed.

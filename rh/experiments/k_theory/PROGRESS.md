@@ -105,3 +105,13 @@ Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+
   I did not run Lean (the formal seat allows one Lean process at a time). The Lean files and their differences are recorded in the notes of
   T70, T65, T50, T52, T51.
 - Final `records.py theory check`: 80 entries, 0 errors; 17 open, 9 proved, 43 checked, 9 known, 2 refuted.
+
+### Later in session 1: round-2 judgement and readers' addenda ingested (batch7_judge_readers.py.txt)
+- JUDGEMENT.md read: sections 1 (all verdict tables), 1.4, 2 (2.1-2.14), 4. Judge's verdicts appended to `checked by` of 28 entries.
+- T32 -> checked (judge's independent derivation J18). New open T81 (C2's second half, labelled open by the judge).
+- Readers' addenda checked against the digests and applied: T16 -> known (Thm 2.4 quoted), T18 -> known (BRS Prop. 3.1 + Remark after
+  Prop. 4.1, complete note by R-read-2), T17 statement with theorem numbers (stays open), notes/sources on T1, T4, T10, T22, T43, T44, T47,
+  T48, T52, T53, T71, T77, T80.
+- NOT changed although the coordinator's wording suggested `known`: T51, T53, T30 keep `checked` (stronger in-project status; citation in
+  `source`), because the tool defines `known` as "not reproved here".
+- Final check: 81 entries, 0 errors; 16 open, 8 proved, 44 checked, 11 known, 2 refuted.

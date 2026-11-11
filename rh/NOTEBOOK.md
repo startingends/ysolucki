@@ -361,3 +361,55 @@ Answered table are the memory; read them and the git log before acting on anythi
   would have happened in the relay.
 - Formal checking now works. Lean refused my first file because I cited a lemma that does not exist. Same
   lesson as the lambda_3 constant on day one: what I remember is not what is true.
+
+
+---
+## 2026-11-11 (lead), after seminar turn 2: thinking with the record open. None of this is proved unless marked.
+
+**N34. Where Perron breaks, block by block.** (PROVED modulo irreducibility; posted B140.) Fold to (0, L]; k = prime
+atoms + Gamma jump kernel 2w ≥ 0. Even block = (Perron operator) + 8 c cᵀ with c = cosh(x/2) > 0: the only wrong-sign
+term is the pole. Odd block: pole has the right sign, Gamma part is w(|x−y|) − w(x+y) ≥ 0 because w decreases (method of
+images), and the only wrong-sign entries are the prime mirror atoms on x + y = log n. So below L = ½ log 2 the odd
+block is a Perron operator. In the even block the ground state is (B − μ)⁻¹c with μ between the first two eigenvalues
+of B: the anti-maximum principle (name recalled, unsearched). A rank-one push of arbitrary strength does NOT keep one
+sign, so "block ≥ 0 ⇒ nodeless" is a statement about the pole strength 8 against a threshold t*(L).
+
+**N35. The damping plane (L, ε).** Multiply the Weil kernel by e^(−ε|u|): atoms become Λ(n) n^(−1/2−ε), the form is
+that of the line Re s = ½ + ε. FACTS: (i) e^(−δ|u|) is positive definite, so by the Schur product theorem the set of
+ε for which the window form is ≥ 0 is a ray [ε*(L), ∞), and ε*(L) is non-decreasing in L (PROVED, two lines).
+(ii) ε*(L) ≤ ½ for every L unconditionally (classical positivity of Re(−ζ′/ζ) right of 1). (iii) sup_L ε*(L) = Θ − ½,
+Θ the supremum of real parts of zeros (standard). So RH ⟺ ε* ≡ 0⁻, a zero-free strip ⟺ sup ε* < ½, and the classical
+world sits at ε = ½. (iv) The tilted control is the same family: kernel of F_d = W·2cosh(du) = W_(−d) + W_(+d), so
+"F_d ≥ 0 on a window" is "damped + anti-damped ≥ 0", and tilting ONE prime is damping one prime's atoms only.
+For zeta, ε*(L) is negative and of the size of the lowest eigenvalue over its ε-derivative. STATUS: a reformulation
+(rule 2) until it brings an input. What it offers that the window picture did not: a scalar that interpolates between
+theorems we have (ε = ½) and RH (ε = 0), with one free monotonicity. NOT SEARCHED. A computable first test:
+ε*(L) for the impostor, F_d, G_d and the one-prime system, and ∂μ/∂ε for zeta.
+
+**N36. The multiplier cone.** More generally S_L = {even φ on (−2L, 2L): W·φ is ≥ 0 on the window}. Under RH it
+contains every positive definite φ (Schur) and is strictly bigger: on the zero side W·φ ≥ 0 says Σ_γ φ̂(t − γ) ≥ 0,
+which holds for many signed φ̂ because the zeros are dense and regular. 2cosh(du) is in S_L exactly for d ≤ d_c(L).
+The cone S_L is a new invariant of an L-function on a window; the seminar's tables (tilt thresholds, hybrids) are
+points on its boundary. Not searched.
+
+**N37. The natural cubic has mirror slices.** Composition of correspondences is convolution; the trace form
+T(f, g, h) = N(f∗g, h) contracts with the identity δ₀ to N. Its slices in (f, g) have kernels depending on a + b: they
+are MIRROR (Hankel) forms, and the mirror form of the Weil kernel is pole square minus squares (one positive square,
+B25/B45, unconditional). So the unconditional "one positive square" lives on the slices of the trace cubic, while RH
+is the same statement for its contraction. Sign bookkeeping kills the direct use of the trickle-down lemma (the
+slices of the cubic that contracts to N are positive semidefinite of high rank, not Lorentzian; in the continuum the
+prime mirror form is not even semidefinite, T72). Recorded as a failure with its exact step, for the atlas:
+the mirror form and the shift form of N have OPPOSITE signs on the primitive part (S1-mirror's complementarity).
+
+**N38. Barrier B11 has a function-field twin, and the proof there says what kind of input is missing.**
+P(T) = (1 − T)(1 − qT): rational, functional equation, integral, point counts N_k = 0 ≥ 0 for all k, roots 1 and q
+instead of modulus √q. It is "ζ(s − ½)ζ(s + ½)" for a curve: every hypothesis that does not use an actual curve is
+satisfied. What excludes it in geometry is never a count or a functional equation; it is (a) Riemann–Roch on the
+SURFACE (a dimension is ≥ 0), (b) Stepanov's auxiliary polynomial (uses x ↦ x^q on functions), or (c) Manin's proof
+of Hasse: deg(mφ + n) is a degree, hence ≥ 0, and satisfies d_(n+1) − 2d_n + d_(n−1) = 2 by the group law, hence is
+the quadratic n² − a n + q. Common shape: a quantity that is non-negative BECAUSE IT COUNTS SOMETHING, computed by
+an exact recursion to be the quadratic form. Hasse's bound is the 2×2 Toeplitz positivity (c₀ = 2, c₁ = a/√q). For ℚ
+the analogue would be: a family of non-negative integers or dimensions d(f), attached to window functions f, with an
+exact second-difference law coming from the additive structure of ℤ, equal to the Weil form. In the record the only
+quantities that are counts are the negative-square indices (Theorem 4) and the sieve weights (non-negative sums over
+integers, which lose a factor 2 to parity). Nobody in the record has looked for the recursion. Worth a creation seat.

@@ -62,5 +62,5 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - prediction: none
 - smallest: none
 - novelty: One query pre-existing on the board (S1-mirror) found nothing on reflection positivity with the explicit formula; I ran none of my own on this.
-- evidence: KNOWN statements read (LIBRARY.md L8-L14). PROVED: prime coupling on the lattice of rationals satisfies the FSS hypothesis for coordinate mirrors (NOTES N6.3).
+- evidence: KNOWN statements read (LIBRARY.md L17-L21). PROVED: prime coupling on the lattice of rationals satisfies the FSS hypothesis for coordinate mirrors (NOTES N6.3).
 - log:

@@ -1,8 +1,8 @@
-# STRUCTURE of the theory document (K-theory, 2026-11-11 00:40 UTC)
+# STRUCTURE of the theory document (K-theory, 2026-11-11; revised after the round-2 judgement and the readers' addenda)
 
-Source of truth: `rh/THEORY.md` (80 entries). Commands run: `records.py theory check` (0 errors), `tree`
-(saved as `tree_2026-11-11.txt` in this folder), `frontier`. Counts: **43 checked, 9 known** (52 established),
-**9 proved** (written proof, not independently checked or resting on an open input), **17 open**, **2 refuted**,
+Source of truth: `rh/THEORY.md` (81 entries). Commands run: `records.py theory check` (0 errors), `tree`
+(saved as `tree_2026-11-11.txt` in this folder), `frontier`. Counts: **44 checked, 11 known** (55 established),
+**8 proved** (written proof, not independently checked or resting on an open input), **16 open**, **2 refuted**,
 **0 formal**. Labels below: everything is a statement about the record, not new mathematics.
 
 Nothing in the established part is a case of RH. It consists of (i) dictionaries (what a signature or a null vector
@@ -49,18 +49,18 @@ proof is a sketch). T6 (the bridge of idea #21) is refuted by zeta(s-d) zeta(s+d
 
 ## (b) Islands, and what would connect them
 
-An island here = an entry that uses nothing and is used by nothing (22 of 80). Grouped:
+An island here = an entry that uses nothing and is used by nothing (21 of 81). Grouped:
 
 | islands | why they are isolated | a statement that would connect them |
 |---|---|---|
 | T20 (D_S > 0), T21 (off-line zero floor) [both checked]; T13 (Burnol, open) hangs on T12 beside them | lane B (Nyman-Beurling) has no stated link to the window form | An identity between the Nyman-Beurling Gram form and the Weil form on a window (both are quadratic forms whose kernels are made of zeta on the line). None is recorded. A weaker link inside the lane: "D_S^2 <= kappa x local fee" (wall WJ4), which would connect T20 to RH-with-a-rate. |
 | T22 (dissipation for the heat flow) [checked] | idea #4 has only this lemma | A functional F with F(t) <= F(0), bounded by arithmetic, excluding a double real zero for t > 0 (wall WJ10). |
-| T32 [proved], T33, T34 [checked] (inertia and sum rules) | stated in an abstract finite setting; nothing cites them | They become part of the main body the moment someone states them for the window form in infinite dimension: "kappa_+(N_L,e) = kappa_-(Q_L,e) + [t_e(L) > 1]" needs Q_L,e^-1 cosh to make sense on the window (T10 gives a bounded inverse when lambda_L > 0). That statement would join T32 to T27, T29 and T31 and decide wall WP1 (when is one quartet invisible to N). |
+| T33, T34 [checked] (sum rules); T32 (exact inertia, now checked: seat, judge and K-theory agree) is used only by the open T81 | stated in an abstract finite setting; nothing proved cites them | They become part of the main body the moment someone states them for the window form in infinite dimension: "kappa_+(N_L,e) = kappa_-(Q_L,e) + [t_e(L) > 1]" needs Q_L,e^-1 cosh to make sense on the window (T10 gives a bounded inverse when lambda_L > 0). That statement would join T32 to T27, T29 and T31 and decide wall WP1 (when is one quartet invisible to N). |
 | T45 (first-order caps) [checked] and T46 (positive folded ground states) [open], T47 (certified box) [open] | the bootstrap's window statements are not tied to anything proved on the window | T46 itself is the connector: with it T45 gives the sign pattern of every feasible interval (even block caps the increase, odd block the decrease) through the mirror part of T74. So "T46 for every L" joins T45, T74 and T44. |
 | T59 (one fibre field) [checked] | an alternative to T50 that nobody uses yet | "T52/T55 for the doubled matrix [[N', E],[E, E]]": S1-cubic says the lemmas apply unchanged; nobody computed that chain's constant. |
 | T72 (primes not mirror positive on L^2) [checked] | a negative statement | It is the other half of T70; the connector would have been a pairing between L^2(0, L] and atoms at log-integers, which is exactly what the refuted bridge T6 lacked. |
 | T76, T77 (mirror criterion) [proved], T19 [known] | idea #21's criterion, with no consumer after the kill | Only a statement that uses "local roots real and of modulus exactly 1" (barrier B11) would give them a consumer; none is stated. |
-| T14, T15, T16, T17, T18 [open, literature from memory or unreviewed], T24 [open] | cited in discussions, used by no proved lemma | Reading the sources. T18 would connect to idea #13 once the Hecke correspondence passage is read; T17 must not be connected to anything until a human has checked the preprint. |
+| T14, T15 [open, from memory], T17 [open, unreviewed preprint], T24 [open]; T16, T18 [known since the readers' digests] | cited in discussions, used by no proved lemma | Reading the sources for T14, T15. T18 now supports idea #13's control in its exact form (unique once the poles are prescribed). T17 must not be connected to anything until a human has checked the preprint. |
 | T25 (repaired symmetrisation) [open], T3 [refuted] | idea #6 is parked | Writing the Nevanlinna-factorisation step. |
 | T4 is no longer an island (it feeds T62). | | |
 
@@ -121,10 +121,14 @@ T58 necessary conditions (checked) -> **T62 a structured certificate given by a 
    the computed sign pattern of idea #9 into a theorem. Unlike 1 and 2 it needs an idea (Perron-Frobenius is not
    available for Q), and it is COMPUTED at two windows only.
 
-Not "open" but unestablished, and cheap: an independent check (or Lean) of **T32** (exact inertia; the odd half
-is written only by K-theory), **T76/T77** (mirror criterion; one seat), **T68** (integrated open path), **T23**
-(Fejer equivalence; the limiting step). And two literature entries would become `known` by reading one source
-each: T13 (Burnol's theorem, full text) and T18 (Bondarenko-Radchenko-Seip sections 4 to 7 or Berndt-Knopp).
+Not "open" but unestablished, and cheap: an independent check (or Lean) of **T76/T77** (mirror criterion; one
+seat), **T68** (integrated open path), **T23** (Fejer equivalence; the limiting step). One literature entry would
+become `known` by reading one source: T13 (Burnol's theorem, full text).
+
+A fourth open lemma was added from the round-2 judgement: **T81** (does "N has at most one positive direction on
+every window" imply RH?). It is the open half of the parity seat's C2; the judge's surgery computations find three
+positive directions with one quartet. It would decide whether idea #10's signature claim is equivalent to RH; the
+idea is parked, so it is not in the top three.
 
 ## (e) What to formalise first (lemmas a LIVE route depends on), with difficulty
 
@@ -135,7 +139,7 @@ the count, Lemma C = T52, reverse Cauchy-Schwarz = Step 2 of T51) serve #21 (kil
 | order | entry | used by | difficulty in Lean 4 + mathlib | note |
 |---|---|---|---|---|
 | 1 | T45 first-order caps | #9 | trivial (one bilinear expansion) in the finite-matrix form | state it for a real symmetric matrix Q and a perturbation -2 delta n^-1/2 G |
-| 2 | T32 exact inertia (and with it T33, T34) | #9, #10 | easy to medium: one polynomial identity (board B92) plus Sylvester's law of inertia; the count needs "largest dimension of a positive definite subspace", which mathlib has only in part | nominated by S1-parity; would also give T50's missing count and so T61 |
+| 2 | T32 exact inertia (and with it T33, T34); now `checked` on paper (judge J18) | #9, #10 | easy to medium: one polynomial identity (board B92) plus Sylvester's law of inertia; the count needs "largest dimension of a positive definite subspace", which mathlib has only in part | nominated by S1-parity; would also give T50's missing count and so T61 |
 | 3 | T74 parity difference = mirror form, finite folding identity | #9 (through T45, T46), all window work | easy as a matrix identity (board B92 gives the finite form); the exponential-sum part (m = 0 cancellation) is a scalar identity | the continuum version needs integrals: medium |
 | 4 | T26 parity decomposition and the pole | #8, #9 | easy for matrices; medium with integrals over C_c^inf | |
 | 5 | T27 kappa inequalities | #10, T31 | medium: subspace-dimension arguments | |
@@ -148,3 +152,15 @@ the count, Lemma C = T52, reverse Cauchy-Schwarz = Step 2 of T51) serve #21 (kil
 
 A statement is `formal` only when its file is imported from `rh/formal/RHFormal.lean`, the full build succeeds
 and the formal seat's MEMORY.md lists it; on 2026-11-11 00:33 UTC none met all three (files checked singly only).
+
+## Revision note (after rh/experiments/r2_judge/JUDGEMENT.md and the readers' addenda in rh/library/)
+- The judge re-derived every round-2 statement by hand; his verdicts are now in the `checked by` fields. No status
+  fell. One rose: T32 (the judge derived the same signature identity independently, J18).
+- Gaps the judge names are carried as follows: Theorem A's missing lambda_1 > 0 -> T34 is stated with the hypothesis,
+  the counterexample is in its note; C2's "cannot be improved" -> new open T81; Theorem U's "false on every window"
+  -> T44 (the checker's one-line proof), which stays `proved` only because of T80.
+- T80 is NOT in the judge's file: he accepted "the domain facts" as cited. It comes from READER-1's full reading.
+- Entries that are both proved here and in print (T51 = Braenden-Leake Lemma 2.8; T53 (D3) = Braenden-Huh Lemma
+  2.15; T30 (2) = Yoshida 1992 Prop. 1 via Suzuki p. 2; T65 (C1, C2) = Schmuckenschlaeger 1998) keep the status
+  `checked`, with the citation in `source`: the tool's `known` means "not reproved here".
+- T16 and T18 became `known` with exact statements from papers read in full by the reader seats.

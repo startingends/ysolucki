@@ -11,3 +11,6 @@ import RHFormal.B32_NegativeSubspaceDim
 import RHFormal.HankelPowerSums
 import RHFormal.T45_FirstOrderCaps
 import RHFormal.T26_ParityDecomposition
+import RHFormal.T32_InertiaRankOne
+import RHFormal.T50_FibreClassesCount
+import RHFormal.T27_KappaInequalities

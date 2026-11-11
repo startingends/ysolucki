@@ -173,3 +173,42 @@ prediction block M written at 00:08:40 UTC
      All six hybrids fail before L = 0.75; none fails later than the full tilt by more than 0.05.
  Reading I expect: all three parts carry the information (each single mismatch is detected at about the same window).
  Would surprise me: a hybrid that stays positive to L = 0.75; a hybrid failing LATER than the consistent tilt F_d.
+
+### O. TURN 2 RESULTS (all COMPUTED with fd.py.txt = implementation B at complex frequencies w +- i delta; memcap 1; two container restarts,
+###    every number below was (re)computed after them and is in a log in this folder)
+VALIDATION (fd_val.log): F_0 = 2 x zeta entrywise (0.0); prime side vs zero side sum_gamma fhat(gamma+id)^2 + fhat(gamma-id)^2, 5000 zeros:
+ rel 1e-15 for d = 0, 0.1, 0.25, 0.3i, 2i; control (only primes tilted) disagrees at order 1.
+B70 (fd_b70.log, L = 0.75, N = 40, dps 80): mu_e(d) = 9.1965e-15 - 1.46289e-4 d^2, mu_o(d) = 7.4532e-12 - 2.45385e-3 d^2; imaginary d: same
+ coefficients with + sign, positive for all eps tried (1e-9 .. 0.1). No kink. d_c = 7.93e-6 (even), 5.51e-5 (odd). S1-mirror got the
+ same coefficients independently (B90). P-F5 HIT, P-F6 HIT, P-F7 MISS (c 100x smaller than guessed). Posted B91.
+FIRST FAILING WINDOW (fd_first.log, N = 30; int / half): d=0.05: even 0.5053/0.5064, odd 0.5623/0.5607; d=0.1: 0.4764/0.4779, 0.5311/0.5295;
+ d=0.25: 0.4357/0.4373, 0.4924/0.4904; d=0: positive to 0.9. P-F2 HIT (all three), P-F3 HIT (even first).
+NEGATIVE SQUARES (fd_count_*.log; even ; odd): L=1 (N=40, 60): d=0: 0;0. 0.05: 5;4. 0.1: 5;5. 0.25: 5;5.  L=1.5 (N=70, dps 220): 0;0. 17;17. 17;17. 18;17.
+ P-F4: L=1 inside ranges (HIT), L=1.5 'double' MISS (x3.4). Ladder check (ladder.log): counts = number of zeta rungs below c d^2 (SP-operator's
+ reading, B125): L=1 even rungs 1e-28.8, -22.3, -16.5, -11.5, -7.0, -3.3, -0.5; odd -25.4, -19.3, -13.9, -9.3, -5.0, -1.7. Posted B112, B162.
+RATE (fd_rate.log): d_c(L) even = 0.056, 3.4e-3, 7.2e-5, 7.9e-6, 5.6e-7, 1.1e-9, 4.9e-13 at L = .5, .6, .7, .75, .8, .9, 1.0;
+ c_e(L) = 6.1e-4, 3.0e-4, 1.8e-4, 1.46e-4, 1.2e-4, 8.9e-5, 6.9e-5. log(1/d_c) ~ 3.8 L e^(2L) (fit). Prediction N(a): shape HIT.
+HYBRIDS d = 0.1 (fd_hyb.log), first failing window (first block): pole only 0.4760 (odd); Gamma only 0.3885 (even; odd never to 0.9);
+ primes only 0.4479 (even); pole+Gamma 0.4885 (odd); pole+primes 0.4865 (odd); Gamma+primes 0.3881 (even); all three 0.4764 (even).
+ Two hybrids fail LATER than F_d (by 0.010, 0.012): listed as 'would surprise me'. Posted B113.
+LEAD'S REMARK (B69): F_d differs in 3 places (roots, pole positions, Gamma shift sign); the clean witness is S1-mirror's
+ G_d = zeta L(s-d,chi4) L(s+d,chi4): gd.py.txt/gd.log: d=0 and d=0.3i positive to L=0.9; d=0.1 fails (even) at [0.845,0.847]; d=0.25 even
+ [0.758,0.759], odd [0.883,0.884]. Not validated on the zero side (no chi_4 zeros). Posted B118.
+B67 (b67.log, b67dh.log): folded ground states nodeless in ALL positive cases (zeta .5/.75/1; no primes .36; one-prime .54; impostor
+ .5/1/1.3/1.6), nodes appear after failure in most failed cases (not: no primes .45; odd block of Beurling .50 and Liouville).
+ CONJECTURE: block >= 0 => ground state nodeless. No proof (Perron and Beurling-Deny both fail). Posted B119.
+B102 (b102_L075.log, b102_L1.log): zero-side Q0_o(x v_e) = 1.4628861e-4 = measured slope (8 digits); Q0_e(x v_o) = 2.4538506e-3 idem; L=1:
+ 6.9476802e-5, 1.2286467e-3. Exact d*: L=.75 even 7.9269169e-6 (0.999765 x first order), odd 5.5097155e-5; L=1: 4.8729893e-13, 6.0221344e-12.
+ Posted B136.
+B135 (b135_*.log): t_1(L) = <1,Q^-1 1> tables for zeta and impostor; t_1 x mu = 0.1..0.73 (zeta), 0.2..1.6 (impostor). Slope of log t_1 not
+ smooth at L_n but no rule fits n = 2, 3, 4; resolution +-0.01. Posted B159.
+NOMINATION (B92): bordered-inertia lemma (B56 even/odd) in definite-subspace form; first step = completing the square two ways.
+SP-operator (B125, B131): B56 and Lemma A = Haynsworth 1968; m(z) = 1 = Aronszajn-Krein; Theorem 4 = explicit case of Krein-Langer
+ (RH <=> q = i Lambda'/Lambda(1/2 - iz) in N_1). So B32, B56 are KNOWN; recorded as such. Open on both sides: the window at which a
+ non-real point is first counted.
+WITHDRAWN by me: 'the caps ARE the feasible intervals' (B58): proved is one inequality (outer bound) + computed agreement.
+
+### P. Open items for turn 3
+ * S1-cubic may reply to B119 (nodeless conjecture); SP-operator may supply one-sided derivative formula for t_1 (B159).
+ * If asked: scan t_1 slopes with N of several hundred near L_2, L_3, L_4; zero-side validation of G_d (needs chi_4 zeros).
+ * Own question worth asking next: does the ladder spacing (4-7 orders per rung) have a formula? (rungs at L=1.5: 19 below 1, zeta has 20 zeros below 77.2.)
