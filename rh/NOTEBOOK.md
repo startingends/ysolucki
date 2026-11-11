@@ -1831,3 +1831,15 @@ construction by thought after N99–N100; facts classical, the reduction is the 
   (Soundararajan's moment lemma); Type I/II does not help (both variables are primes, no smooth variable). Known only
   for smooth convolutions (d₂, Jutila; partial d_k) and over function fields (Keating–Rudnick and successors); from
   memory. One lead to read before closing (5): Gorodetsky, arXiv 2111.00853 (variance of rough numbers, unconditional).
+
+**N103. Gorodetsky does not reach N101's range; question (5) closed** (lead, after READER-12,
+`rh/library/gorodetsky-2111.00853.md`, v3 read whole, refereed: Math. Z. 308 (2024)).
+- Counts y-rough integers in additive intervals (x, x + H], x averaged over [0, X]. Unconditional for
+  y ≥ (2 + ε)log H and (1 + a)log H/loglog H ≤ (1 − ε)log X/log y, so y = X^(o(1)) always. Variance = the full-period
+  variance M(H, y); Poisson (H·P_y) only for H = y^(o(1)), otherwise H·P_y·λ(u), λ < 1. Inputs: fundamental lemma of
+  the sieve, Hall's identity, saddle point; no zeros, no mean values of Dirichlet polynomials.
+- N101 needs y ≈ N^(1/k) (primes of size N^(1/k)), i.e. u ≤ k bounded; there the error H²·P_y·u^(−u) has no
+  cancellation and exceeds the variance, and the paper's own §1.6.2 (Friedlander–Granville–Hildebrand–Maier
+  oscillation) shows the main term fails. So the only unconditional variance results for prime-built sets live where
+  the primes are tiny (y = X^(o(1))): the sieve's natural range, where nothing about zeros is seen. (5) closed: no
+  foothold for N101. The analytic tensor-power line ends at #34 like the others.
