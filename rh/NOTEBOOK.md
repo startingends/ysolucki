@@ -689,3 +689,39 @@ SP-operator's round 2; labels on each line; novelty NOT searched).
   automorphic coefficients whose families contain the constant term with positive spectral weight? approximate
   copies coming from a group action with a spectral gap, where "near-copy" is quantitative mixing rather than
   exact triviality). NONE examined yet. This is the structural question I now hold.
+
+**N50. Round 2 lands; my N47 prediction partly fails, and the failure is the lead** (lead, 2026-11-11).
+- READER-6 CORRECTIONS TO N45 (digests `rh/library/math0412039.md`, `1204.6297.md`, `2110.09368.md`, `1601.01724.md`,
+  `ki-cras-2006.md`, `1008.0995.md`, `2411.18492.md`): collisions and square-root branching of zeros of E(z, ·) are
+  KNOWN (McPhedran Thm 1; Bétermin–Šamaj–Travěnec Lemmas 4.1–4.2); Hecke's expansion at CM points is a K-type
+  expansion, coefficients = Grössencharacter L-functions (Reznikov, Prop. (Hecke)); class number > 1 has cT + o(T)
+  off-line zeros in every strip (Voronin, Lee Thm 1.3); my Bombieri–Hejhal citation was wrong in direction; the cusp
+  is OUTSIDE the RH set (real zero in (½, 1) for reduced y ≥ 7.0556; Lagarias–Suzuki's statement is about an integral
+  in T, not about E); the de Bruijn–Newman framing of the z-family and any flow in z were NOT found.
+- THE QUASI-RH EXPONENTS, READ CORRECTLY (from READER-4's digest of the 7/8 paper, Lemma 18.1: "Let 3/4 ≤ κ ≤ 1 … with
+  the hypothesis β* ≤ (1 + κ)/2", applied with κ = 2β* − 1): the method outputs β* = (1 + κ)/2 where κ is the
+  exponent of an auxiliary moment. The halving is the Cauchy–Schwarz of the amplifier. Square-root cancellation in the
+  auxiliary sums (κ = ½) would give 3/4: that is the natural reading of "a barrier at 3/4" (mine, not the authors').
+  So: **every argument of the form "an individual sum bounded by a family's mean square" loses a square root and
+  is capped at 3/4; rule H9 says purely linear identities see nothing; RH needs a sign-sensitive object that is
+  neither linear nor a mean square.**
+- SCORE OF N47: SP-operator's invariant (the cyclicity angle, = Dfc) is defined through the zeros or the outer
+  factorisation: as predicted, a function of Φ′/Φ-type data. **SP-reflection's is NOT** (round 2,
+  `rh/specialists/reflection/OBJECT_PHI.md`): λ_T(z) := min of the Wiener–Hopf form of W_z(u) = ⟨cos(uD) g_z, g_z⟩,
+  g_z = (Δ + 2)^(−1) δ_z, under ∫₀^T φ e^(−u/2) = 1: a RATIO OF DETERMINANTS built only from the distances in the orbit
+  of z. It decreases to (9/(32π²)) ht(z)^(−1) e^(2 Dfc(z)) (proved given Krein's theorem), so RH_K ⟺ λ_T(ω) tends to
+  the explicit constant. Its minimiser at ω, under RH_K, has the Möbius function of ℤ[ω] as coefficients. At ω the
+  orbit counts are ONE shifted convolution of one Hecke eigenfunction, ε(m) r_K(m) r_K(m+3); at i√5 they are FOUR.
+  Prediction half wrong; that half is exactly a determinant, the exception I named. Follow it.
+- WHY IT IS THE RIGHT KIND OF OBJECT (lead). A Toeplitz/Wiener–Hopf determinant is quadratic in the data without a
+  Cauchy–Schwarz loss (it is exact), sign-sensitive through its limit (Szegő), and its symbol on the line is
+  |Φ(½+it)|²/|ξ(1+2it)|², which has a ZERO OF ORDER TWO at every zero of Φ on the line. Determinants of symbols with
+  zeros are the Fisher–Hartwig problem; their asymptotics are known for finitely many singularities (Barnes G-factors,
+  Widom, Basor, Ehrhardt, Deift–Its–Krasovsky) and they are the origin of the Keating–Snaith moment conjectures. So:
+  **RH_K ⟺ a Wiener–Hopf determinant whose symbol has infinitely many Fisher–Hartwig singularities (one per zero on
+  the line) converges to the value Szegő predicts; an off-line zero is invisible in the symbol and shows up only as a
+  missing amount e^(2Dfc) in the limit.** The open question with room: is there an UNCONDITIONAL rate for λ_T(ω) →
+  limit (a Fisher–Hartwig asymptotic with infinitely many singularities, uniform in their number up to height T)?
+  If the rate is controlled by the singularities alone (which are on the line by definition), the limit cannot carry an
+  extra e^(2Dfc). That is the first bridge-2 hunch with a sign-sensitive, loss-free object. Assigned to SP-operator
+  (who has read Basor–Chen and Basor–Ehrhardt) and SP-reflection (who built λ_T).
