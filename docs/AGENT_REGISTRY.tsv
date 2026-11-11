@@ -46,3 +46,4 @@ READER-3	2026-11-11	reader: Connes-Consani-Moscovici 2511.22755 whole, then Bomb
 READER-4	2026-11-11	reader: the October 2026 quasi-Riemann-hypothesis papers (zero-free half-plane 11/12 and 7/8), whole, with the proof skeleton and inputs per step	session model	rh/library	done	-
 READER-5	2026-11-11	reader: Bombieri-Garrett pseudo-Laplacians and Garrett notes	session model	rh/library	running	-
 READER-6	2026-11-11	reader: zeros of E(z,s) as z varies; Epstein; Hecke Grossencharacter expansion at CM points	session model	rh/library	running	-
+SP-sieve	2026-11-11	persistent specialist: sieve methods, bilinear forms, dispersion, parity (session 1, seminar S2)	session model	rh/specialists/sieve	running	-

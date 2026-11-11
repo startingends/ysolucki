@@ -72,6 +72,13 @@ I corrected one of my own recollections while writing (the Euler factor of L(s, 
 - No exact formula for H < D in anything read; both dualities have self-dual point H = D. Impostor visible exactly for H < D^0.617.
 - HOLDING: whether a Gauss-sum-to-Kloosterman identity puts S into Kuznetsov form on the cubic cover (Kodama 2004, Livne-Patterson: unread).
 
+## 2e. Seminar S2 (board s2), B3 answered as B10 (long form S2_B3.md)
+- Structure: long sums over MODULI governed by the bottom of a fixed spectrum (Kuznetsov; Patterson bias X^(5/6) from theta_3,
+  proved under GRH by Dunn-Radziwill, read). Near side: the alpha that mu produces kills exactly the theta term (A.2: T(s,Psi)
+  entire); GRH forces this (else S >= D^(23/12) at H = D^(1/2)). Gives no exponent: the dual sums live at level ~h (family >= D).
+- Impostor: same line as SHORT_FAMILY 4(b). Analogy (RISK): zero-free region <-> no exceptional spectrum.
+- Asked (d): Vaughan + sextic large sieve for the sparse family of H = D^(1/2) sextic characters.
+
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of
    Frobenius of a one-point curve); RH follows because q <= 2 sqrt(q) for q <= 4, by inspection, and the list of curves

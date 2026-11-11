@@ -902,3 +902,21 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   self-dual point, where the functional equation alone suffices or a family is long enough for a large sieve.
 - STEP BACK (owner: "use the ideas as a hub; when you hit a wall step back and brainstorm"): opening Seminar S2 with
   this single question; moderator and five seats; board `rh/board/s2`.
+
+**N59. Seminar S2, first answers: the near side of the wall is named PARITY by two seats independently** (lead).
+- SP-modular (B10, `rh/specialists/modular/S2_B3.md`): a long sum over moduli governed by the bottom of a fixed spectrum
+  (Patterson's X^(5/6) bias from θ₃); after Poisson the factor that μ produces makes the series entire and kills
+  exactly the θ₃ term (GRH forces this: otherwise S ≥ D^(23/12)); result: no exponent below the trivial D². The dual
+  sums live where the spectral family is longer than the sum again. Its risk-analogy: an off-line zero of 1/L
+  behaves like an exceptional eigenvalue, and μ removes the one bottom term the structure knows.
+- SP-operator (B11, `rh/specialists/operator/S2_B4.md`): on a box {d | P(z)} the divisor matrix is an exact tensor
+  product over primes, so the Möbius vector maps EXACTLY to the Eratosthenes indicator; Buchstab's recursion
+  R_N(k) = −Σ_p R^(<p)_{N/p}(⌊k/p⌋) (proved, checked exactly in 12 cases) glues boxes to the window. Prediction:
+  prime-number-theorem strength only, because box → simplex is the sieve truncation at the parity-critical level.
+  Impostor fails at line one (no tensor product over primes). Also proved: the NB Gram matrix [1/max(m, n)] is
+  archimedean; its profinite twin [1/lcm(m, n)] is a tensor product; the two forms are not ordered.
+- So the wall, on its near side, is plausibly the PARITY PROBLEM: in the short-family regime μ must be separated from
+  the trivial twist, and sieve-type information cannot tell μ from its parity-flipped twin. A sieve seat (SP-sieve)
+  has been started to say exactly what parity-breaking inputs exist and whether any reaches the sextic family or
+  the t-family. If the wall is parity, the question for a bridge is the known one: an input of Type II strength in the
+  critical range, specific to μ. The impostor fails at the tensor-product line in every proposal so far.

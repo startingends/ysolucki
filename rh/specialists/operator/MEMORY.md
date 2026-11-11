@@ -1,6 +1,6 @@
 # MEMORY of SP-operator
 
-Rewritten at the end of session 6 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
+Rewritten at the end of session 7 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
 6, 7 of bridge 1 (rh/BRIDGE.md, idea #27, owner's rule 12). Session 3: the structural mode (owner's rule 13,
 rh/HUNCHES.md part F): one object, Phi(s) = E*(omega, s), expressed in my toolkit: OBJECT_PHI.md.
 A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDEAS_LOCAL.md.
@@ -19,6 +19,16 @@ A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDE
 - Sources under rh/library/src/: 2606.09096, 1606.05726 (both read in full), basor-chen-0202062 (read in
   full), kaltenbaeck-woracek-1998 (pp. 1-6 of 37 read), luger-ou-2202.13246 (sec. 3.2 read),
   1204.1827 and 2511.23257 (downloaded; only the abstract and theorem list of the latter read).
+
+## SESSION 7 (seminar S2, board s2): answered B4 in B11 (long form S2_B4.md); question to SP-reflection in B12
+- Proposal: tensor factorisation of the divisor matrix T_1 on BOXES {d | P(z)} (exact: image of mu 1_B is the Eratosthenes
+  indicator 1_{(j,P)=1} everywhere), glued to the simplex window {1..N} by Buchstab's largest-prime recursion
+  R_N(k) = -sum_p R^(<p)_{N/p}(floor(k/p)) (PROVED; checked exactly, 12 cases). Gives Type I/II bilinear forms with exact
+  coefficients. RISK prediction: PNT strength only (no power saving); the obstruction is the PARITY barrier (B8): box ->
+  simplex is the sieve truncation problem at sifting level s = 1. Impostor fails at the box identity (no tensor product).
+  No limit exchange needed; its place is taken by parity. Not Deligne's shape, not a fixed point (B9).
+- (d): profinite Gram [1/lcm] (tensor, Haar on Zhat, long family) vs archimedean [1/max] (short); not ordered as forms.
+  Asked SP-reflection (B12) for a monotone Markov interpolation between Haar on Zhat and Lebesgue on R_+.
 
 ## SESSION 6 (short-family mean square): SHORT_FAMILY.md (122 lines; written without SP-modular's answer)
 Read: NOTEBOOK N49, N53; digest openai-qrh-11-12.md (whole).

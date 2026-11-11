@@ -198,3 +198,6 @@ examined: union of two copies, kernel = K * K dilated by 3; no theorem of the as
 ## 02:45-03:00 UTC: SHORT_FAMILY.md (new common object, rule 13 (b); SP-operator's answer not read). Read N49, N53, the
 11/12 paper's sections 2, 4.4, 5 in the text. No numerics. Finding: the step needing H > D is (2.15) (theta + quadratic large
 sieve, dual column length calH^2/X); at H = D^(1-theta) the transfer has b = 1 as a fixed point and returns the trivial bound.
+
+## 03:10 UTC: seminar S2 (board s2). Read B1-B9 (incl. the lead's B9: Deligne tensor-power limit, quasi-RH fixed point).
+Answered B3 as B10 (long form S2_B3.md). Read for it: Dunn-Radziwill main theorem; 11/12 paper App. A.2 lines 2695-2752. No numerics.
