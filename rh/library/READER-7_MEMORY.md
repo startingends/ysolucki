@@ -37,3 +37,29 @@ INDEX.md (55 lines): no digest on cubic Gauss sums, metaplectic forms, Kuznetsov
   NOT read: sec 5-12 (circle method, Voronoi for cusp forms, Type I/II proofs). No Kuznetsov, no spectral large sieve.
 - Next: search Lokvenec-Guleska thesis (Utrecht 2004) = likely the actual source of "Kuznetsov with multiplier over Q(omega)";
   search spectral large sieve on metaplectic cover; try Livne-Patterson open copy once more.
+- FOUND Lokvenec-Guleska thesis (Utrecht 2004, handle 1874/1154, src/lokvenec-guleska-2004/full.pdf, 181 pp): scope =
+  Gamma_0(I) over any imag. quadratic field, characters chi of (O/I)^* (Nebentypus) -- NOT the Kubota character.
+  Only intro (pp. vii-viii) read. => Louvel's Thm 4.1 for the Kubota multiplier is cited to a source that does not
+  state it for that multiplier (Proskurin did SL2(R) with multipliers). Reliability point for the digest.
+- READ WHOLE: Heath-Brown-Patterson 1979 (GDZ scan, all 20 pages as images, no text layer). Thm 1: sum g~(c)Lambda(c)(c/|c|)^l
+  << X^{30/31+e}+|l|X^{29/31+e}; Thm 2 equidistribution; Thm 3 Vaughan; Thm 4: F_l(X,alpha)=sum_{N(c)<=X, c=0(alpha)} g~_l(c)
+  << delta_l X^{5/6}/N(alpha) + N(alpha)^{-5/8}X^{3/4+e} + |l|N(alpha)^{-1/4}X^{1/2+e}, N(alpha)<=X^{2/3}; spectral input =
+  Patterson 1977 Thm 6.1 (continuation/FE of Eisenstein-series Gauss-sum Dirichlet series psi(r,s,l)), Thm 9.1 (residue at 4/3).
+- NOT OBTAINED: Livne-Patterson Invent 2002 (Springer paywall); Patterson Exp. Math 2003 (Project Euclid bot check, not pursued).
+- Next: check 2607.07911 (de Faveri-Dunn-Hoffstein) for spectral large sieve; then write digests.
+- de Faveri-Dunn-Hoffstein 2607.07911 (150,404 ch TeX v2): READ sec 1-2 (intro, Thm 1.1 cubic sieve lower bound
+  UNCONDITIONAL Xi_3 >> (AB)^{-e}(A+B+(AB)^{2/3}), Thm 1.2 quartic, Conj 1.3, general-n conjecture (1.6)
+  Xi_n = A+B+A^{1-1/n}B^{2/n}+A^{2/n}B^{1-1/n}, proof of Thm 1.1, discussion). sec 3-8 (quartic, Gaussian field) NOT read.
+- DDDS24 = arXiv 2410.03048 (non-vanishing cubic Hecke L): only Thm 1.1 + sec 6 statements (Lemma: psi(r,s) pole at 4/3,
+  residue c0 tau_3(r)/N(r)^{1/6}; convexity; Lindelof-on-average sum_{N(m)<=M}|psi(hm,sigma+it)|^2 << N(h)^{1/2}M^{1+e}).
+  No digest (statements only).
+- Writing digests now: louvel-1107.0197.md, hbp-1979.md, dunn-radziwill-2109.07463.md, dunn-2403.13151.md,
+  kodama-2004.md, dfdh-2607.07911.md.
+- DONE: digests louvel-1107.0197.md, hbp-1979.md, dunn-radziwill-2109.07463.md (partial), dunn-2403.13151.md (partial),
+  kodama-2004.md (partial), dfdh-2607.07911.md (partial); 6 INDEX rows appended.
+- Searches run (WebSearch): Livne Patterson cubic exp sums spectral; Kuznetsov cubic metaplectic Q(omega); Dunn-Radziwill;
+  Kodama Kuznetsov metaplectic Eisenstein integers; "spectral large sieve" metaplectic cubic Gauss sums; Livne-Patterson
+  pdf; Kodama Kyushu/Nagoya; HBP digizeitschriften; Patterson Gottingen sum formula cubic cover; Lokvenec-Guleska thesis
+  (x2); large sieve Fourier coefficients cubic metaplectic Maass Kubota spectral. arXiv API author search Patterson: none.
+- Result: no spectral large sieve on the cubic cover found; no exact formula for a mean square over a twist family.
+- Next: final report via SubagentHandback.

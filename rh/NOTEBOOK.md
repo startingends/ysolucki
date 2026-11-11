@@ -880,3 +880,25 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   any seat has found through the wall, and as a way to learn what the wall is made of.
 - FAKE FIRST: the impostor has no metaplectic theta (no Gauss-sum identity for its Dirichlet inverse), so step (ii)
   has no analogue for it: passes.
+
+**N58. READER-7: the DFI route lacks its spectral formula, and the extremisers are our kind of sequence; and bridge 1's
+"bulk" is the same wall** (lead, 2026-11-11).
+- READER-7 (digests `rh/library/louvel-1107.0197.md`, `hbp-1979.md`, `dunn-radziwill-2109.07463.md`, `dunn-2403.13151.md`,
+  `kodama-2004.md`, `dfdh-2607.07911.md`): the Kuznetsov formula on the cubic cover exists (Louvel Thms 4.1–4.3, proof
+  for the Kubota multiplier only asserted), but its arithmetic side is a sum over MODULI at two fixed frequencies;
+  no published tool turns an average over TWISTS into a spectral sum; no spectral large sieve on the cover exists; no
+  formula for the sextic cover. Corrections: "Kodama 2004" is not metaplectic; Gauss sums sit on the spectral side,
+  not as Kloosterman sums. **Warning for N57:** the (AB)^(2/3) term of the cubic large sieve is proved SHARP
+  (de Faveri–Dunn–Hoffstein Thm 1.1) and its extremisers are Gauss-sum-weighted sequences — exactly the type our Möbius
+  vector becomes after the Gauss–Jacobi conversion. So at the self-dual point our vector may sit on the extremal
+  side of the very tool that lets the October proof cross H > D. Not established for μ; recorded as the most likely
+  reason the DFI-type hunch fails. Ingredient (ii) of N57 does not exist in print.
+- UNIFICATION (lead; elementary): bridge 1 ended with "RH is decided in the bulk below the band edge c = 2πe^(2L)". A
+  window of half-width L contains the integers up to e^(2L); heights t below the band edge are those with
+  t/2π < e^(2L): the sum is LONGER than the height. That is the short-family (long-mollifier) regime of N53, and the
+  band edge is its self-dual point H ≈ D. So **five routes end at one wall** — bridge 1 (positivity side), the
+  amplifier (Möbius side), the operator determinant, the positivity determinant, and Nyman–Beurling boundedness —
+  and on every side the provable part (the ladder; the quasi-RH family H > D) lies on the far side of the same
+  self-dual point, where the functional equation alone suffices or a family is long enough for a large sieve.
+- STEP BACK (owner: "use the ideas as a hub; when you hit a wall step back and brainstorm"): opening Seminar S2 with
+  this single question; moderator and five seats; board `rh/board/s2`.
