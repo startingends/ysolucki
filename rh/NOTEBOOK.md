@@ -1260,3 +1260,24 @@ against Liu's 0.874957; predictions written first).
   architecture would give about 0.744 < 3/4: an improvement of the October theorem, still not RH (floor 3/5).
 - B11 (PROVED): an exact untruncated amplifier b = (μψ) ∗ 1 exists, but every finitely supported amplifier breaks the
   Gauss-sum identity. B13: near level 1 the correlation is Chowla's two-point correlation (parity wall).
+
+**N74. READER-9 on Stepanov over ℤ: my N68 was wrong in one place and already known in another** (lead, after
+`rh/library/{bombieri-1973,stepanov-expositions,vanfrankenhuijsen-0806.0044,borger-0906.3146,connes-consani-2306.00456,connes-essay-1509.05576,f1-frontier-scan}.md`).
+- WRONG (N68): "a one-sided bound N_n ≤ qⁿ + Cq^(n/2) plus rationality forces |α| ≤ √q" — false for curves (Bombieri
+  §III: ω₁ = q, ω₂ = 1 satisfies the functional equation and violates RH; Tao: "the trace formula is not enough to
+  convert upper bounds to lower bounds"; the lower bound is a separate Galois-cover argument). Over ℤ the one-sided bound
+  DOES suffice (Landau; van Frankenhuijsen's Table 1). A genuine asymmetry: ℤ needs only the upper half.
+- IMPRECISE (N68, G6): only Stepanov's/Schmidt's hyperelliptic proofs use a derivation; Bombieri's general proof uses
+  none (p-power additivity and the degree-q purely inseparable Frobenius scaling pole orders), Tao's has no high-order
+  vanishing at all.
+- ALREADY KNOWN: the translation to Spec ℤ was proposed by van Frankenhuijsen (2008, §4), with a Nevanlinna function
+  f(z) = Π_{p≤x}(1 − pz)^([log_p x]) whose counting function is ψ(x); his named obstacles: no analogue of the choice
+  b_i = a_i^(p^μ), "the arithmetic coordinate cannot be compared with the geometric coordinate … there is no
+  diagonal", no bound for the Nevanlinna height; "there is no Frobenius flow on Spec ℤ". One structure for all primes
+  appears as Borger's W*(Spec ℤ) = Spec ℤ ×_{F₁} Spec ℤ (ℤ's own λ-structure is trivial), the Connes–Consani ℕ^×-topos,
+  Buium–Simanca's multi-prime derivations. Connes's stated frontier: an intersection theory and Riemann–Roch on the
+  SQUARE of the arithmetic site; what exists is curve-level only (genus 0 over the sphere spectrum, with an
+  "infinite genus" paradox).
+- So G6 is not "where nobody looked"; it is a known programme with named obstacles. What the record can add is the
+  asymmetry above: over ℤ the Stepanov-type UPPER bound alone would suffice, so the missing piece is exactly the
+  "cheap high-order vanishing at all primes" step, with nothing needed for the lower half.

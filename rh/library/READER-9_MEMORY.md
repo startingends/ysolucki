@@ -70,3 +70,6 @@ INDEX.md: no digest on function fields, Stepanov, Bombieri 1973, Borger, Buium, 
   Galois-cover twisted Frobenius. Over Z, one-sided suffices (vF table; N68's own Landau correction).
 - NEXT: write digests (bombieri-1973, vanfrankenhuijsen-0806.0044, borger-0906.3146, stepanov-expositions,
   connes-consani-2306.00456, connes-essay-1509.05576, f1-frontier-scan), INDEX rows, handback.
+- 2026-11-11: digests written: bombieri-1973.md, stepanov-expositions.md, vanfrankenhuijsen-0806.0044.md,
+  borger-0906.3146.md, connes-consani-2306.00456.md, connes-essay-1509.05576.md, f1-frontier-scan.md; 7 rows appended
+  to INDEX.md. Remaining: handback report.
