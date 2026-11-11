@@ -127,3 +127,21 @@ PREDICTION (written before computing, shares.py.txt): 0.4988 is NOT structural. 
 L = 0.45, below 0.35 at L = 1.0; s_P increases with L; s_T stays between 0.05 and 0.30. All three terms positive at every L.
 If instead s_Gamma stays within [0.49, 0.51] on 0.45 <= L <= 1.0, there is an exact factor 1/2 (the trivial zeros pay half of
 the pole on the odd ground state) and that would be a 'factor supplied exactly'. Validation: reproduce B94's row at L = 0.6.
+RESULT (shares.log; lane A's builder, odd block, N = 60..100; one implementation; validation HIT: at L = 0.6 I get
+0.0995 + 0.4986 + 0.4019 against S1-mirror's 0.0997 + 0.4988 + 0.4015):
+  L      s_T      s_Gamma   s_P     (prime 2 alone)   E_0^2/E_+^2
+ 0.45   0.1867   0.5600   0.2589    0.2589            0.640
+ 0.50   0.1386   0.5334   0.3285    0.3284            0.630
+ 0.60   0.0995   0.4986   0.4019    0.4017            0.617
+ 0.68   0.0831   0.4776   0.4393    0.4375            0.609
+ 0.75   0.0741   0.4636   0.4622    0.4584            0.604
+ 0.90   0.0618   0.4409   0.4972    0.4881            0.595
+ 1.00   0.0569   0.4304   0.5127    0.5002            0.591
+ 1.25   0.0496   0.4130   0.5375    0.5178            0.584
+Prediction: 'not structural, s_Gamma decreasing, s_P increasing, all three positive': HIT. Sizes: MISS twice (I said s_Gamma
+> 0.60 at 0.45: it is 0.560; < 0.35 at 1.0: it is 0.430); s_T in [0.05, 0.30]: holds to L = 1.0, 0.0496 at 1.25.
+So there is NO exact factor 1/2: 0.4988 at L = 0.6 is where a slowly falling curve crosses 1/2 (and the prime 2 crosses 1/2 at
+L = 1.0: 0.5002, equally accidental). What the table does say: on the odd ground state the pole square is paid almost
+entirely by two manifestly non-negative mirror terms (trivial zeros m >= 1: 0.56 -> 0.41; prime mirror: 0.26 -> 0.54, of which
+the prime 2 alone is 96-100%), the inductive half-window term shrinks (0.19 -> 0.05), and the odd ground state stays near the
+origin as L grows (E_0^2/E_+^2 = 0.64 -> 0.58), so it never 'sees' primes beyond 2 and 3 with any weight (5: 3e-7 at L = 1.25).

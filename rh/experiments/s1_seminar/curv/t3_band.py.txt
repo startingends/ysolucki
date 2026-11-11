@@ -1,0 +1,29 @@
+"""S1-curv turn 3: weights at which the folded ground state of a block changes from nodeless to having a node. usage: t3_band.py.txt M delta [delta..]"""
+import sys, math, importlib.machinery, importlib.util, numpy as np
+from scipy.optimize import brentq, minimize_scalar
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib'); S2 = load('s2lib')
+M = int(sys.argv[1]); ell = math.log(2); c = ell / math.sqrt(2); tri = lambda t: max(0.0, 1 - abs(t)); Be, Bo = S2.parity_bases(M); h = M // 2
+for dl in [float(a) for a in sys.argv[2:]]:
+    L = (ell + dl) / 2; b = S.build(L, M, 'arch'); d = b['d']
+    Q0 = 2 * np.outer(b['c'], b['c']) - 2 * np.outer(b['s'], b['s']) - b['N']
+    idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M))); P1 = np.array([tri((ell - k * d) / d) for k in range(M)])[idx]
+    A = {nm: (B.T @ Q0 @ B, B.T @ P1 @ B) for nm, B in (("even", Be), ("odd", Bo))}
+    def gs(nm, t):
+        w, V = np.linalg.eigh(A[nm][0] - t * A[nm][1]); v = V[:, 0]; v = v * np.sign(v[np.argmax(np.abs(v))]); return w[0], v
+    ratio = lambda nm, t: (lambda v: v.min() / v.max())(gs(nm, t)[1])
+    low = lambda nm, t: gs(nm, t)[0]
+    grid = np.linspace(-1, 2.5, 141); res = {}
+    for nm in ("even", "odd"):
+        r = np.array([ratio(nm, t) for t in grid]); cross = []
+        for i in range(len(grid) - 1):
+            if (r[i] > 0) != (r[i + 1] > 0): cross.append(brentq(lambda t: ratio(nm, t), grid[i], grid[i + 1], xtol=1e-7))
+        mx = minimize_scalar(lambda t: -low(nm, t), bounds=(-8, 8), method='bounded', options=dict(xatol=1e-10))
+        adm = (brentq(lambda t: low(nm, t), -8, mx.x), brentq(lambda t: low(nm, t), mx.x, 8)) if -mx.fun > 0 else (float('nan'),) * 2
+        res[nm] = (cross, adm, [(t, np.argmin(gs(nm, t)[1])) for t in cross])
+    print("M=%d delta=%.2f L=%.4f : even block admissible [%.4f, %.4f], nodeless<->node at weights %s ; odd block admissible [%.4f, %.4f], nodeless<->node at %s" % (
+        M, dl, L, *res['even'][1], np.round(res['even'][0], 4), *res['odd'][1], np.round(res['odd'][0], 4)))
+    xs = (np.arange(h) + 0.5) * d
+    for nm in ("even", "odd"):
+        for t, i in res[nm][2]: print("      %s: at weight %.4f the minimum of the ground state sits at x = %.3f (strip is [%.3f, %.3f])" % (nm, t, xs[i], ell - L, L))

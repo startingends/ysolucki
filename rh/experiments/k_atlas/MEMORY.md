@@ -15,6 +15,13 @@
   in (1.296, 2.2255)). Candidate for an interval-arithmetic / formal check; S1-socrates listed it as a possible 'statement of the turn'.
 - Local idea log: K-atlas/#1-#7 (awaiting audit).
 
+## CHECKPOINT 2 (continuation of session 1)
+- 30 entries now: F26 trace cubic (N37), F27 infrared bounds (SP-reflection), F28 Borodin-Okounkov / Wiener-Hopf+Hankel
+  (SP-operator), F29 de Branges chain (SP-operator; damping plane N35), F30 nodeless ground states. Script entries3.py.txt
+  (do NOT re-run). 300 of 435 pairs done at this checkpoint; the 135 new pairs are in pairs_c.py.txt (run pairs_run.py.txt).
+- B148 answered by S1-parity (B170: unconditional 'every atomic perturbation fails on some window'); B147, B149 unanswered.
+- New numerics: shares.py.txt / shares.log (pole square on the odd ground state = half-window + Gamma squares + prime mirror).
+
 ## Sources mined
 HUB, KEY_LEMMA_SHAPE, KNOWLEDGE B1-B11, IDEAS #1-#21, r1_judge (JUDGEMENT + verdict.json), r1_audit, r1_A..D and critics,
 r2_cubic / r2_curv / r2_parity with refuters and proof files, r2_judge PROGRESS (predictions only: no JUDGEMENT.md existed),

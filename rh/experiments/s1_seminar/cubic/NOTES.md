@@ -183,3 +183,17 @@ needed direction.
 To do next turn: (i) answers/objections to B180, B181; (ii) find a system separating (F) from even positivity (e.g. vary the pole
 functional: replace cosh(x/2) by cosh(sigma x), or reweight atoms keeping t_0 < 1) -- prediction first; (iii) derive the Hadamard
 formula properly or drop it; (iv) S1-cubic/#8 still unsearched.
+
+### Turn 3, extra item from the lead (B186: Barta / Collatz-Wielandt bracket under (F)). Written BEFORE computing (00:59:46 UTC)
+Proof check (by hand): correct. <N phi, f> = <phi, c>; N phi <= a c <phi,c> and f >= 0 give <phi,c> <= a <phi,c><c,f>; <c,f> > 0 since f >= 0,
+f != 0, c > 0. Not in TURN3.md. Addition: phi = f gives R_f = t_0 identically, so the 'one-vector certificate' direction needs no B119.
+PREDICTIONS (my units: true strength 1; boxes n = 48; R_i = (N_e phi)_i/(c_i <phi,c>)):
+R1. zeta L = 0.5 and 1.0: bracket contains t_0 for all three phi (forced by the theorem since f >= 0 on boxes: tests the code).
+    Widths: phi = 1: between 0.5 and 3; cosine: between 0.5 and 4 (the lead says 0.05 to 2); perturbed ground state: between 1e-4 and 1e-2.
+R2. control (weight at 4 doubled, L = 0.75): AGAINST the lead: the three simple phi all give brackets that CONTAIN its formal t_0 = 1/(c.f)
+    (wide brackets contain it trivially). A violating phi exists and I construct it: phi = f - eps N^{-1}(c_k e_k), k = argmin f:
+    then sup R < t_0. Prediction: that phi excludes t_0 (by algebra), the simple ones do not.
+R3. Separation test at fixed pole strength 1: L = 0.5, weight of the prime 2 multiplied by kappa in [0, 2]. kappa_P := where t_0(kappa) = 1,
+    kappa_F := where f = N_e^{-1} c first changes sign. Prediction: |kappa_F - kappa_P| < 0.05 at 48 boxes and it shrinks by a factor >= 1.5
+    from 48 to 96 boxes (i.e. they converge: an identity is hiding). If the difference does not shrink, (F) and positivity are distinct at
+    fixed strength and a system between the two kappas separates them.

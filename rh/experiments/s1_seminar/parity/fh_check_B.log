@@ -1,0 +1,6 @@
+  no atom, L=0.50 int/80: lowest eigenvalue even -0.032334515 odd -0.31981126   (3s)
+  no atom, L=0.50 half/80: lowest eigenvalue even -0.031619441 odd -0.32217023   (5s)
+  no atom, L=0.54 int/80: lowest eigenvalue even -0.06503888 odd -0.4078697   (8s)
+  no atom, L=0.54 half/80: lowest eigenvalue even -0.063989286 odd -0.41030019   (11s)
+  [foothold Theorem B(iii): polynomial test vectors with Q/|v|^2 = -0.0323519 (even), -0.3222283 (odd) at L = 1/2; -0.0650680, -0.4103637 at L = 27/50]
+  feasible weight interval m (weight of the atom, form -2 m g(y)) at given position e^y: exact pencil, both blocks

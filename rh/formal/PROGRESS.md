@@ -353,3 +353,38 @@ DIFFERENCES: MORE general: the identity uses only symmetry and N u = lam u (any 
   no normalisation); the equivalence needs only u > 0 and lam > 0 in addition. "At most one positive eigenvalue" is
   `AtMostOnePos`. E is the sum over all pairs (the diagonal pairs contribute 0). The clause about the spectral gap of the
   jump process is not formalised. GAP: none.
+
+### 00:56 board: question B157 (S1-socrates -> FORMAL) and nominations B176 (S1-mirror), B182 (S1-cubic)
+Answered B157 in B187: mathlib v4.35.0 has NO Perron-Frobenius theorem (only LinearAlgebra/Matrix/Irreducible/Defs.lean:
+definitions of irreducible / primitive non-negative matrices and "irreducible iff some power has a positive entry").
+
+### FILE 22 DONE: `RHFormal/Perron_GroundState.lean`  (board B157 P1, P2, P3; B176 F-a, F-b, F-c; the Perron step of B109, B140)
+INFORMAL (B157): (P1) M symmetric, M_ij <= 0 off the diagonal: x^T M x >= |x|^T M |x|. (P2) if moreover the graph of the
+  non-zero off-diagonal entries is connected, every minimiser of x^T M x on the unit sphere has all entries of one strict
+  sign, and the lowest eigenvalue is simple. (P3) psi > 0, psi^T M psi < 0, P >= 0 entrywise: M - tP is not PSD for t >= 0,
+  and M + tP PSD forces t >= -psi^T M psi / psi^T P psi.
+LEAN (namespace RHFormal.Perron; W a finite type, `form M x = ∑ i, ∑ j, x i * M i j * x j`, `normSq x = ∑ i, x i^2`):
+  `form_abs_le` (P1): (∀ i j, i ≠ j → M i j ≤ 0) → form M |x| ≤ form M x.
+  `psd_null`: B symmetric bilinear, B ≥ 0, B x x = 0 → B x y = 0 for all y.
+  `eigen_of_ground`: M symmetric, (∀ y, lam * normSq y ≤ form M y), form M x = lam * normSq x → ∀ i, ∑ j, M i j * x j = lam * x i.
+  `pos_of_nonneg_eigen`: off-diagonal ≤ 0, cut-connected, v ≥ 0, v ≠ 0, M v = lam v → ∀ i, 0 < v i.
+  `ground_sign` (P2, first half): M symmetric, off-diagonal ≤ 0, cut-connected, lam a lower bound of the Rayleigh quotient,
+     x ≠ 0 with form M x = lam * normSq x → (∀ i, 0 < x i) ∨ (∀ i, x i < 0).
+  `ground_unique` (P2, second half): under the same hypotheses any minimiser y satisfies y = c x.
+  `neg_of_trial`, `lower_bound_of_trial`, `form_nonneg_of_nonneg`, `form_pos_of_pos` (P3, F-c).
+  cut-connected := ∀ S : Finset W, S.Nonempty → S ≠ univ → ∃ i ∈ S, ∃ j, j ∉ S ∧ M i j ≠ 0.
+DIFFERENCES / HYPOTHESES LEAN MADE EXPLICIT:
+  - P1 does not need symmetry of M. P2 does (minimiser => eigenvector).
+  - "minimiser on the unit sphere" = a lower bound lam of y^T M y / |y|^2 that is attained at x ≠ 0. EXISTENCE of a
+    minimiser (compactness) is NOT proved; the statements are about every minimiser. "The lowest eigenvalue is simple"
+    is "any two minimisers are proportional".
+  - connectedness is used in cut form (equivalent to connectedness of the graph of non-zero off-diagonal entries).
+  - P3 is stated on the trial vector: psi^T M psi - t psi^T P psi < 0, and -psi^T M psi / psi^T P psi ≤ t; symmetry of
+    P not needed.
+  - S1-mirror's F-a is P1 for A = D - K - ss^T; F-b is P2 for that A (all s_i > 0 gives cut-connectedness); F-c is
+    `lower_bound_of_trial` + `form_pos_of_pos`. These specialisations are NOT typed as separate theorems.
+  - S1-cubic's step ('M symmetric, off-diagonal >= 0, irreducible, v > 0, M v = v, M^2 - M PSD => every eigenvalue other
+    than the simple eigenvalue 1 is <= 0') is NOT yet typed; its ingredients are here (uniqueness of the ground state of
+    I - M) and in file 21 (M <= I from the ground-state identity).
+GAP: none found in the informal statements; the continuum versions (B140: nodeless ground state of the odd block on the
+  no-prime window) need in addition existence of a minimiser and a continuum Perron argument, not formalised.

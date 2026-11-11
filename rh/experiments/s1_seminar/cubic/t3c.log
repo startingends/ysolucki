@@ -1,0 +1,29 @@
+zeta L=0.50 n=48: t_0 = 0.998671 ; sign changes of f: 0 ; #pos(N_e) = 1 ; lowest eigenvalue of the even block 1.996e-03
+    phi = constant                                         <phi,c> = +7.0006 ; bracket [0.333755, 1.153744] width 8.200e-01 ; contains t_0: YES
+    phi = cos(pi x/2L)                                     <phi,c> = +4.4376 ; bracket [0.958858, 1.089754] width 1.309e-01 ; contains t_0: YES
+    phi = ground state + 1e-3 second                       <phi,c> = +1.2122 ; bracket [0.998115, 0.999936] width 1.821e-03 ; contains t_0: YES
+    phi = f itself                                         <phi,c> = +1.0013 ; bracket [0.998671, 0.998671] width 8.882e-16 ; contains t_0: YES
+    phi = f - eps N^-1(c_k e_k), k = argmin f, eps = 0.2   <phi,c> = +1.0005 ; bracket [0.799588, 0.999485] width 1.999e-01 ; contains t_0: YES
+zeta L=1.00 n=48: t_0 = 0.999666 ; sign changes of f: 0 ; #pos(N_e) = 1 ; lowest eigenvalue of the even block 1.155e-03
+    phi = constant                                         <phi,c> = +10.2113 ; bracket [0.852770, 1.086326] width 2.336e-01 ; contains t_0: YES
+    phi = cos(pi x/2L)                                     <phi,c> = +6.3879 ; bracket [0.993770, 1.008069] width 1.430e-02 ; contains t_0: YES
+    phi = ground state + 1e-3 second                       <phi,c> = +1.8445 ; bracket [0.999552, 0.999983] width 4.312e-04 ; contains t_0: YES
+    phi = f itself                                         <phi,c> = +1.0003 ; bracket [0.999666, 0.999666] width 8.882e-16 ; contains t_0: YES
+    phi = f - eps N^-1(c_k e_k), k = argmin f, eps = 0.2   <phi,c> = +0.9996 ; bracket [0.800324, 1.000405] width 2.001e-01 ; contains t_0: YES
+four2 L=0.75 n=48: t_0 = 0.998809 ; sign changes of f: 1 ; #pos(N_e) = 2 ; lowest eigenvalue of the even block -8.822e-02
+    phi = constant                                         <phi,c> = +8.6856 ; bracket [0.768250, 1.127424] width 3.592e-01 ; contains t_0: YES
+    phi = cos(pi x/2L)                                     <phi,c> = +5.4753 ; bracket [0.986949, 1.066743] width 7.979e-02 ; contains t_0: YES
+    phi = ground state + 1e-3 second                       <phi,c> = +0.9965 ; bracket [0.972213, 1.107299] width 1.351e-01 ; contains t_0: YES
+    phi = f itself                                         <phi,c> = +1.0012 ; bracket [0.998809, 0.998809] width 1.554e-15 ; contains t_0: YES
+    phi = f - eps N^-1(c_k e_k), k = argmin f, eps = 0.2   <phi,c> = +1.0030 ; bracket [0.797635, 0.997044] width 1.994e-01 ; contains t_0: NO
+L = 0.5, n = 24: weight of the prime 2 multiplied by kappa
+   kappa = 0.00: t_0 = 1.024371 ; min(f)/max(f) = -2.5027e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.25: t_0 = 1.008575 ; min(f)/max(f) = -1.9281e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.50: t_0 = 0.997969 ; min(f)/max(f) = -1.3225e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.75: t_0 = 0.992566 ; min(f)/max(f) = -5.5423e-02 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.90: t_0 = 0.993064 ; min(f)/max(f) = +1.7532e-02 ; sign changes of f 0 ; #pos(N_e) 1
+   kappa = 1.00: t_0 = 0.996689 ; min(f)/max(f) = +1.2439e-01 ; sign changes of f 0 ; #pos(N_e) 1
+   kappa = 1.10: t_0 = 1.007275 ; min(f)/max(f) = +3.5689e-01 ; sign changes of f 0 ; #pos(N_e) 1
+   kappa = 1.25: t_0 = 1.178172 ; min(f)/max(f) = -1.0756e+00 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 1.50: t_0 = 0.938793 ; min(f)/max(f) = -3.8294e-01 ; sign changes of f 1 ; #pos(N_e) 2
+   kappa = 2.00: t_0 = 0.961264 ; min(f)/max(f) = -2.7518e-01 ; sign changes of f 2 ; #pos(N_e) 2

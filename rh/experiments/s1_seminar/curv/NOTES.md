@@ -146,3 +146,10 @@ B114 (S1-cubic withdrew 0.05), B143 (FORMAL: F1 step, folding identity, Theorem 
  N-P1: ODD block: nodeless for every c' in [-1, c_+,odd = 1.72], including c' < c_- = 0.36 where the block is negative (so 'nodeless' is NOT equivalent to the odd inequality on the lower side);
        a node appears only above c' ~ 1.5 .. 2.5.
  N-P2: EVEN block: nodeless on [c_-,even = -0.38, c_+ = 0.54]; a node appears within 30% above c_+ (c' < 0.7) and none below c_- down to -1.
+
+### RESULT t3_nodes.log (00:56:38): N-P1 MISS (odd ground state gets a node near weight 0.95 at delta = 0.1 although the odd block stays positive up to 1.72; at delta = 0.3 a node already at
+ weight 0.54 with the block positive up to 0.70). N-P2 MISS (even ground state has a small negative excursion for weights <= 0.2 at delta = 0.1 where the even block is positive in boxes).
+ So 'positive block => nodeless ground state' (B119 conjecture) FAILS in the weight family, e.g. odd block, delta = 0.3, weight 0.6: eigenvalue +0.019, min/max = -0.17.
+### PREDICTION for t3_band.py.txt (written before computing; time = date line of this append)
+ Nodal band [n_-, n_+] := weights for which BOTH folded ground states are nodeless. I predict: it contains the admissible interval [c_-, c_+] at delta = 0.1, 0.2, 0.3, 0.4;
+ n_- within 5% of c_- at all four; (n_+ - c_+)/c > 0.5 at delta = 0.1 and < 0.05 at delta = 0.3 and 0.4. M = 480 changes n_-, n_+ by less than 3% at delta = 0.3.

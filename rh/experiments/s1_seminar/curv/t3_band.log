@@ -1,0 +1,8 @@
+M=240 delta=0.10 L=0.3966 : even block admissible [-0.3762, 0.5386], nodeless<->node at weights [0.356  1.1566] ; odd block admissible [0.3612, 1.7244], nodeless<->node at [0.9032]
+      even: at weight 0.3560 the minimum of the ground state sits at x = 0.395 (strip is [0.297, 0.397])
+      even: at weight 1.1566 the minimum of the ground state sits at x = 0.002 (strip is [0.297, 0.397])
+      odd: at weight 0.9032 the minimum of the ground state sits at x = 0.395 (strip is [0.297, 0.397])
+M=240 delta=0.20 L=0.4466 : even block admissible [0.3515, 0.4976], nodeless<->node at weights [0.4773 0.7146] ; odd block admissible [0.4772, 1.0166], nodeless<->node at [0.5997]
+      even: at weight 0.4773 the minimum of the ground state sits at x = 0.445 (strip is [0.247, 0.447])
+      even: at weight 0.7146 the minimum of the ground state sits at x = 0.002 (strip is [0.247, 0.447])
+      odd: at weight 0.5997 the minimum of the ground state sits at x = 0.445 (strip is [0.247, 0.447])

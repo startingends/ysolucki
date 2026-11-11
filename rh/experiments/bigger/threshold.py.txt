@@ -1,0 +1,62 @@
+"""BG-T: threshold conductor on a window with free real weights on the integers.
+usage: python3 threshold.py.txt <type: zeta|even0|odd> <L> <N>
+Q(m) = Q0 + sum m_n * Bm[n]  (Bm[n] = builder output for unit weight, i.e. minus the shift form), float64.
+maximise t s.t. Q_b(m) - t I >= 0 on both parity blocks (log-det barrier, Newton)."""
+import sys, math, importlib.util, importlib.machinery, time
+import numpy as np, flint
+from flint import arb
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+typ = sys.argv[1]; L = float(sys.argv[2]); N = int(sys.argv[3]); flint.ctx.prec = 160
+X = int(math.floor(math.exp(2 * L) + 1e-9)); ns = list(range(2, X + 1))
+def tonp(M):
+    return np.array([[float(M[i, j].mid()) for j in range(M.ncols())] for i in range(M.nrows())])
+def blocks(q): return [tonp(weil.even_block(q, N)), tonp(weil.odd_block(q, N))]
+def unit(n):
+    sv = weil.dh_logderiv_coeffs
+    weil.dh_logderiv_coeffs = lambda X: {n: arb(1)}
+    q, _ = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)
+    weil.dh_logderiv_coeffs = sv; return blocks(q)
+t0 = time.time()
+if typ == 'odd':
+    sv = weil.dh_logderiv_coeffs; weil.dh_logderiv_coeffs = lambda X: {}
+    q, _ = weil.build(L, N, kind='dh', pole=False, primes=False, arch=True); weil.dh_logderiv_coeffs = sv; q0 = 5.0
+else:
+    q, _ = weil.build(L, N, kind='zeta', pole=(typ == 'zeta'), primes=False, arch=True); q0 = 1.0
+Q0 = blocks(q); Bm = [unit(n) for n in ns]; k = len(ns)
+def S(x, b):
+    M = Q0[b] - x[k] * np.eye(Q0[b].shape[0])
+    for i in range(k): M = M + x[i] * Bm[i][b]
+    return M
+def lam(m):
+    x = np.append(m, 0.0); return min(np.linalg.eigvalsh(S(x, 0))[0], np.linalg.eigvalsh(S(x, 1))[0])
+x = np.zeros(k + 1); x[k] = lam(np.zeros(k)) - 1.0
+def phi(x, mu):
+    v = x[k]
+    for b in (0, 1):
+        try: C = np.linalg.cholesky(S(x, b))
+        except np.linalg.LinAlgError: return -np.inf
+        v += mu * 2 * np.log(np.diag(C)).sum()
+    return v
+mu = 0.1
+while mu > 1e-13:
+    for it in range(60):
+        g = np.zeros(k + 1); H = np.zeros((k + 1, k + 1)); g[k] = 1.0
+        for b in (0, 1):
+            Si = np.linalg.inv(S(x, b)); A = [Si @ Bm[i][b] for i in range(k)] + [-Si]
+            tr = np.array([np.trace(a) for a in A]); g += mu * tr
+            for i in range(k + 1):
+                for j in range(i, k + 1):
+                    h = -mu * np.sum(A[i] * A[j].T); H[i, j] += h
+                    if j != i: H[j, i] += h
+        step = np.linalg.solve(H - 1e-18 * np.eye(k + 1), -g)
+        dec = float(g @ step); s = 1.0; f0 = phi(x, mu)
+        while phi(x + s * step, mu) < f0 + 0.25 * s * dec and s > 1e-12: s *= 0.5
+        x = x + s * step
+        if dec < 1e-10 * mu: break
+    mu *= 0.3
+m = x[:k]; ls = lam(m)
+print("type=%s L=%.3f N=%d integers 2..%d  time %.0fs" % (typ, L, N, X, time.time() - t0))
+print("  lambda* = %.12g   threshold conductor on this window q*_L = %.10g   (no weights: lambda = %.6g)" % (ls, q0 * math.exp(-ls), lam(np.zeros(k))))
+print("  maximiser m_n:", " ".join("%d:%.6f" % (n, v) for n, v in zip(ns, m)))
