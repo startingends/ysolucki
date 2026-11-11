@@ -49,7 +49,7 @@ Owner: **startingends** (repo owner). This file loads automatically.
   - **Creation seats and anchoring.** A creation seat starts with a **quiet period** (it fills its own pages first and does not read the board); after that it may use the board, where the only moves towards a creation seat are questions, answers, offers to compute or look something up, and results. Nobody posts whether an idea is likely to work. A creation seat may leave the board at any time.
   - Each participant keeps its own notes file as its memory between turns; the board is the shared memory. The lead closes the board with a summary and copies what matters into the main idea log and the journal.
 - Agent count follows the task. Pipeline stages (no barriers) unless a stage truly needs all prior results.
-- **If a workflow can't be used for any reason, ask the owner.** Never work around a permission or classifier refusal.
+- **If a workflow can't be used for any reason, ask the owner.** A permission or classifier refusal is never worked around silently. It may be worked around **only after asking the owner and getting an explicit yes for that specific action** (owner, 2026-11-11): say what was refused, what you want to do instead (including any change to permission settings), and wait for the answer. Record the question and the answer in `docs/DECISIONS.md`.
 - Long jobs (> ~20 min) whose inputs are in git run as separate cloud sessions; jobs that need this disk run here and are resumed with `resumeFromRunId` after a container restart (commit WIP first).
 
 ## Standing structures (owner, 2026-11-10)

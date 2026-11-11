@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sh /tmp/claude-0/-home-user-ysolucki/9039aa06-6540-523a-ba98-9efe520848c8/scratchpad/elan/elan-init.sh -y --default-toolchain stable)",
+      "Bash(ln -sf /root/.elan/bin/* /usr/local/bin/)",
+      "Bash(elan *)",
+      "Bash(lean *)",
+      "Bash(lake *)"
+    ]
+  }
+}
