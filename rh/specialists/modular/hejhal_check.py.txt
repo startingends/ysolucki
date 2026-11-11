@@ -1,0 +1,27 @@
+# zeros of the Eisenstein constant term a_0(y,s) = xi(2s) y^s + xi(2s-1) y^(1-s), xi(w) = pi^(-w/2) Gamma(w/2) zeta(w)
+# check of Hejhal's statement (quoted in Lagarias-Suzuki math/0412039): off-line zeros for y < 1, none for y >= 1
+import mpmath as mp
+mp.mp.dps = 30
+def xi(w): return mp.pi**(-w/2)*mp.gamma(w/2)*mp.zeta(w)
+def a0(y, s): return xi(2*s)*y**s + xi(2*s-1)*y**(1-s)
+def search(y, tlo, thi, sig_guess):
+    found = []
+    t = tlo
+    while t <= thi:
+        for sg in sig_guess(t):
+            try:
+                r = mp.findroot(lambda s: a0(y, s), mp.mpc(sg, t), tol=1e-20, maxsteps=60)
+            except Exception:
+                continue
+            if abs(a0(y, r)) < 1e-15*abs(xi(2*r)*y**r) and r.real > 0.5 + 1e-6 and tlo-1 < r.imag < thi+1:
+                if all(abs(r-q) > 1e-6 for q in found): found.append(r)
+        t += 0.5
+    return sorted(found, key=lambda z: z.imag)
+for y in [mp.mpf('0.9'), mp.mpf('0.5'), mp.mpf('1.1')]:
+    L = mp.log(1/y) if y < 1 else mp.mpf('0.1')
+    guess = lambda t: [0.5 + mp.log(t/mp.pi)/(4*L), 0.5 + 0.5*mp.log(t/mp.pi)/(4*L), 1.0, 2.0, 3.0]
+    z = search(y, 15, 30, guess)
+    print("y =", y, " zeros with Re s > 1/2 found, 15 <= Im s <= 30:", len(z))
+    for r in z[:12]:
+        pred = 0.5 + mp.log(r.imag/mp.pi)/(4*mp.log(1/y)) if y < 1 else None
+        print("   s =", mp.nstr(r, 12), "  predicted Re:", mp.nstr(pred, 6) if pred else "-", " |a0|/scale =", mp.nstr(abs(a0(y, r))/abs(xi(2*r)*y**r), 3))

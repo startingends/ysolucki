@@ -43,7 +43,8 @@ Last rewrite: end of session 1, 2026-11-11 01:05 UTC.
    S1_ADDITIONS.md F1 consequence (a): FALSE for the even block. `T33.even_margin_counterexample` (dimension 1: Q = (1),
    c = (1/2), t_e = 1/2, margin = -2). True: odd margin in (0,1]; even margin non-zero and positive iff t_e > 1 (iff N_e has a
    positive direction). Consistent with the seat's own (b) and with t_e = 0.198, 0.842 at L = 0.05, 0.10. Board B177
-   (question to S1-curv), unanswered when the session ended: raise as objection next turn; the keeper should fix T33.
+   (question to S1-curv), then B193 (OBJECTION, posted after one turn of the author without answer). Next session: read
+   the author's reply; the keeper should fix T33's last sentence either way (the counterexample is machine-checked).
 2. Hypotheses that turned out NOT to be needed (statements can be strengthened; none is an error):
    T32: invertibility of Q, t_e != 1, t_o != -1, finite dimension. B25 folding: symmetry of K. Lemma C: symmetry of H
    for T.a = H; "exactly one" (at most one suffices). B3: k even, k(0) = 0 (if sums include a, b = 0), u > 0 (u != 0

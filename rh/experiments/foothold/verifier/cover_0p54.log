@@ -1,0 +1,6 @@
+LEFT: 45 intervals, union = [0, 35487/51200] = [0.0000000, 0.6931055], exact gaps/overlaps between consecutive intervals: []
+   LEFT done, t=139s
+RIGHT: 25 intervals, union = [71033/102400, 27/25] = [0.6936816, 1.0800000], exact gaps/overlaps between consecutive intervals: []
+   RIGHT done, t=216s
+sample points re-checked with my own evaluation: 350, not refuted: 0; largest (least negative) m-interval margin ub - lb: -3.75358e-5 at y = 0.69368164
+max |A(v)_mine - A(v)_author| over all test vectors: 2.7204e-33

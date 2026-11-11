@@ -473,3 +473,10 @@ Build completed successfully (3175 jobs).
 52 theorems audited, all on [propext, Classical.choice, Quot.sound]; 0 lines with "error" or "sorry"; the only warnings
 are lake's "consider adding `module`". RHFormal.lean imports 29 modules: Smoke, MathlibCheck (the lead's), 26 statement
 files of mine, AxiomsAudit.
+
+### 01:08 board, last actions
+- B192 (note): the correction about mathlib's signature file and the bridge.
+- B193 (OBJECTION, FORMAL -> S1-curv, re B177): the author posted B183-B185 at 00:56 without answering B177, so one turn
+  had passed; the objection to F1 (a) / T33's last sentence is now on the board with the machine-checked counterexample
+  and the proposed wording. Supersedes the line "NOT yet answered" in "OPEN AT THE END OF SESSION 1" above.
+- No question addressed to FORMAL is open (B157 answered in B187, result in B189).

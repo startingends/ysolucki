@@ -1,0 +1,13 @@
+n = 1/2  M = 400  negatives: 206  first: [2, 5, 7, 11, 12, 14, 18, 20, 23, 27, 29, 30]  min value: -0.5  at m = 2  zeros: []
+n = 6/5  M = 400  negatives: 157  first: [3, 6, 8, 11, 13, 15, 18, 20, 22, 27, 29, 31]  min value: -1.2250106839418247  at m = 123  zeros: []
+n = 7/5  M = 400  negatives: 150  first: [3, 6, 11, 15, 18, 22, 23, 27, 32, 34, 38, 43]  min value: -2.9840628005851886  at m = 326  zeros: []
+n = 9/5  M = 400  negatives: 136  first: [3, 6, 11, 14, 21, 23, 27, 28, 30, 35, 39, 43]  min value: -4.059150790380963  at m = 151  zeros: []
+n = 5/2  M = 400  negatives: 63  first: [7, 12, 15, 22, 27, 31, 36, 39, 43, 47, 57, 63]  min value: -34.01337000332325  at m = 367  zeros: []
+   r_2.5(2), r(3), r(7) = 15/2 5/2 -35/16
+n = 7/2  M = 2000  negatives: 76  first: [16, 40, 64, 88, 112, 128, 136, 160, 191, 208, 232, 256]  min value: -1367.7330199587418  at m = 1888  zeros: []
+n = 31/10  M = 1000  negatives: 48  first: [28, 47, 103, 112, 124, 159, 191, 208, 223, 240, 256, 263]  min value: -66.35698848498727  at m = 943  zeros: []
+n = 39/10  M = 1000  negatives: 9  first: [64, 128, 256, 448, 544, 640, 736, 768, 928]  min value: -683.3125410266343  at m = 768  zeros: []
+n = 9/2  M = 1000  negatives: 0  first: []  min value: 1.0  at m = 0  zeros: []
+n = 11/2  M = 1000  negatives: 0  first: []  min value: 1.0  at m = 0  zeros: []
+n = 13/2  M = 1000  negatives: 0  first: []  min value: 1.0  at m = 0  zeros: []
+n = 15/2  M = 1000  negatives: 0  first: []  min value: 1.0  at m = 0  zeros: []
