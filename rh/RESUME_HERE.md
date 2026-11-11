@@ -1,4 +1,18 @@
-# RESUME HERE: live state for a fresh session
+# RESUME HERE
+
+## State at 2026-11-11 02:10 UTC (read this first after a context summary or a restart)
+1. Read `docs/HUB.md` ("The bridge" and "Running jobs"), `rh/BRIDGE.md`, `docs/DECISIONS.md` (Answered A18–A21,
+   open D9–D10) and `git log -8`. The record is the memory; do not redo what it says is done.
+2. The owner's standing goal (A18): keep working until there is a breakthrough big enough to prove RH; never claim
+   one that does not exist. Rule 12 (A20): build ONE bridge from a hunch, plank by plank, each plank confirmed.
+3. Bridge 1 (idea #27, Weil form against the band-limiting leak) is BUILT AND ENDED: it explains the tiny
+   eigenvalues but the impostor shares all of it; RH is decided in the bulk below the band edge 2π e^(2L).
+4. The owner pointed to the October 2026 quasi-RH proof (A21). READER-4 is reading it whole; notebook N42 has a
+   second-hand summary of its mechanism (Möbius sums in a family of sextic twists, amplifier by copies, cubic Gauss
+   sums / Kubota theta). The next bridge, if any, is to be laid from that understanding plus bridge 1's conclusion.
+   No bridge 2 hunch is formulated yet; do not invent one without a confirmation plan.
+5. Do NOT relaunch the creation seats (D10, A19). Chat replies stay very short.
+
 
 _Last updated: 2026-11-10, after round 1 (journal J2, J3)._
 
