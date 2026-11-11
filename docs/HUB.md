@@ -103,9 +103,8 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 ## Running jobs
 **After any context summary or restart, read this section, `rh/NOTEBOOK.md` from N43 on, `rh/HUNCHES.md` parts F–G and
 `git log -8` before launching anything.** State at 2026-11-11 (after N97); read parts F–H of HUNCHES and `rh/CORE.md`.
-- RUNNING: SP-sieve on the hybrid Euler–Hadamard product and its "hybrid functional equation" (N98's gap: a pointwise,
-  bulk use of the Euler product; `rh/specialists/sieve/HYBRID_FE.md`). Closed since N92: N93–N98 (H-4 a shadow;
-  rules H13, H14; classification N98). Read `rh/CORE.md`, `rh/RATINGS.md` first.
+- NOTHING RUNNING. Latest: N99 (hybrid Euler–Hadamard product: reduces RH at height T to a pointwise square-root
+  bound for one short prime polynomial; circular). Read `rh/CORE.md`, `rh/RATINGS.md` first.
   All other seats idle and resumable by id (SP-reflection, SP-sieve; S1-parity, S1-mirror, S1-socrates;
   K-theory, K-atlas, FH, FORMAL; readers 1–9; verifiers V-FH, V-COPY, V-CUB, V-TZ).
 - Bridge 1's last gap closed (plank 13, N80): κ_min warns before the impostor's failure but tracks the closest zero

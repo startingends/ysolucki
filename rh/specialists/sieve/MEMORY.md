@@ -3,6 +3,10 @@
 Rewritten at the end of session 3 (2026-11-11; 1 = seminar S2, 2 = TRANSPORT.md, 3 = COPY_BARRIER.md). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
 Files: S2_B10d.md (long form of everything below), typeII_exponents.py.txt / .log (exponent bookkeeping), IDEAS_LOCAL.md (SP-sieve/#1-#4).
 
+## 0'''''''. SESSION 9 (HYBRID_FE.md): GHK hybrid product (from memory) at s and 1-s: zeros cancel in zeta(s)/zeta(1-s); zero side = odd part
+of U, each zero contributes X^|Re(s-rho)|; a quartet forces |S_X(t,delta)| ~ X^(delta+beta) at one height; Lambda >= 0 bounds S_X only by
+the pole majorant X^(1/2+delta): short by X^(1/2-beta). Tight at collisions (identity), twist-blind (DH has the same identity). Q4, T1.
+
 ## 0''''''. SESSION 8 (LEVINSON_THETA.md; construction, no numerics): theta enters Levinson-Conrey twice: (A) main term 1/theta, forced by
 Radziwill's c/theta (uncertainty principle at infinity, impostor-blind); (B) the Type II error (theta < 4/7), technology. Euler-product
 mollifier decouples the main term exactly but is not localised (H12). Perfect mollifier B = 1/zeta makes Levinson a Littlewood identity

@@ -1763,3 +1763,18 @@ lead's).** H13–H14 closed every LINEAR use. The nonlinear ones on record or in
   build. The gap is therefore precisely named: a use of the Euler product that is pointwise (not statistical), in
   the bulk (not the edge), and not through a Hilbert space of automorphic forms. No such use is known; it is what
   "Toward RH ≥ 3" requires. Ratings: Quality 4 (a classification, not a theorem), Toward RH 1.
+
+**N99. The hybrid Euler–Hadamard product: pointwise and in the bulk, but linear in Λ, so short by X^(½−β)** (lead,
+after SP-sieve, `rh/specialists/sieve/HYBRID_FE.md`; construction only; GHK recalled, not read).
+- With ζ = P_X Z_X (1 + errors) at s and 1 − s and the functional equation: −Re S_X = log|χ(s)| + log|Z_X(1−s)/Z_X(s)|
+  + error, where S_X(t, δ) = Σ_{n≤X} Λ(n) v_X(n) n^(−½−it)·2 sinh(δ log n)/log n. By the symmetry ρ → 1 − ρ̄, ρ̄ the
+  zero terms cancel except an odd part; an off-line quartet forces |S_X| ≈ X^(δ+β)/log X near its height, against a
+  typical X^δ. Λ ≥ 0 bounds S_X only by its non-oscillating majorant X^(½+δ) (the pole term, N84): short by X^(½−β).
+  Closing the gap needs a POINTWISE square-root bound for S_X at one height, which is the zero-free statement at that
+  height (circular). Range: X up to T^(1−ε), beyond Montgomery's line; tight along collisions only because it is an
+  identity. Impostor: the same identity holds with its own Λ_f (both signs, all n): twist-blind except for |Λ| ≤ log.
+  Ratings (seat): Quality 4, Toward RH 1.
+- Lead: this is N84's obstruction in pointwise form, and the cleanest statement yet of what is missing: **a
+  pointwise square-root bound for one short prime polynomial at one height.** The hybrid product reduces RH at
+  height T exactly to that, with X = T^c; the Euler product enters only through Λ, linearly (H13–H14 again). N98's
+  classification stands with one more entry (pointwise linear: reduces to the bound it needs).
