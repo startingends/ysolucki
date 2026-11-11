@@ -315,3 +315,40 @@ on the Möbius side there are no controls. What is left has to be a mechanism of
   "vanishing order" would mean for an element of W(ℤ) or of a λ-ring of finite type, and check whether Chebyshev's
   C(2n, n) has a λ-ring interpretation (its p-adic valuations are the carries of Kummer). Odds: very low; recorded
   because it is the only candidate in the record that addresses "one structure for all primes at once" directly.
+
+## H. Hunches built to a target (owner rules 14–15; lead, 2026-11-11). Read `rh/CORE.md` first.
+Checklist for every hunch: (i) Euler product used, and where; (ii) in the bulk (resolves individual zeros below the
+band edge); (iii) exactly tight along colliding pairs; (iv) verifier named; (v) "what object would make the wall
+trivial?" answered BEFORE any measurement. Construction first.
+
+### H-1. The local Weil discriminant (main line; one seat: SP-operator, resumed by id)
+- (v) first. The wall (CORE 3–4): the Euler product only averages, and RH has no slack. The object that would make
+  it trivial is a criterion that is LOCAL in the zeros (one pair at a time, so no averaging is needed), exactly
+  tight at a collision (so no slack is needed), and whose terms are prime sums (so the Euler product can prove it).
+- The construction. For consecutive zeros γ_k < γ_{k+1} resolved by the window L, let V_k = span of the two
+  D-reproducing kernels at γ_k, γ_{k+1} (D = the Möbius norm, CORE 5) and W_k(L) = the lower eigenvalue of the 2×2
+  pencil (Q, D) on V_k. Built from the window, not from a global minimum, so there is no "binding pair" to choose
+  (the defect that killed (S)).
+- Claims to prove, in this order. (a) For an on-line pair W_k ≥ 0 and W_k = 0 exactly at a double zero; for the
+  pair ρ, 1 − ρ̄ of an off-line quartet W_k < 0 (pair-local Weil criterion: RH ⇔ W_k(L) ≥ 0 for all k, L, if (a)
+  holds and the kernels separate). (b) The D-kernels at zeros have a PRIME-SIDE expression, because D is a norm of
+  f/L built with μ: K_D(γ, γ′) = (explicit formula in μ, Λ and the archimedean factor). Then W_k ≥ 0 is a 2×2
+  inequality between prime sums: the Euler product enters through μ and Λ ≥ 0, pointwise in the pair.
+  (c) What the impostor's version of (b) looks like (its "μ" is not multiplicative): where exactly the two differ.
+- Checklist: (i) yes, through μ in D and the explicit formula for the kernels; (ii) yes, pairs below the pinning
+  height; (iii) yes in the two-zero model (κ₂ = 4Ju); (iv) a fresh verifier after (a)–(c) are written.
+- Risk: (a) may be only a reformulation of Weil's criterion (rule 6 bans pure reformulations). It is not one if
+  (b) gives an inequality the Euler product can attack pair by pair. Rating now: Quality 3, Toward RH 2.
+
+### H-2. The deviation amplifier (second object, not yet assigned)
+- (v) first. CORE 6: over function fields an off-line zero is killed because some operation adds deviations
+  (zeros of C^k are sums of zeros) while the Euler-product bound stays one unit from the centre. The object that
+  would make RH trivial over ℚ: a family F_k of functions with Euler product and functional equation whose zeros
+  include points ½ + kβ + iγ_k for each zero ½ + β + iγ of ζ. Then kβ < ½ for all k, so β = 0.
+- Construction step (before any measurement): for each known operation on L-functions (Rankin–Selberg, symmetric
+  powers, base change, theta lifts, metaplectic Eisenstein series, the GL_n Eisenstein constant terms
+  Π ξ(⟨λ, α^∨⟩)/ξ(⟨λ, α^∨⟩ + 1)), write what it does to a hypothetical off-line zero: shifts it, keeps it,
+  divides its deviation (GL_n degenerate Eisenstein series put ζ's zeros at parameters ρ/n: deviation divided by n),
+  or multiplies it. The table is the result; a single "multiplies" entry would be a new object.
+- Rating now: Quality 2, Toward RH 2 (known programme in spirit: F₁, Deninger, Connes–Consani); worth it only if
+  the table finds an operation not on that list.

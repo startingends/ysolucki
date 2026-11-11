@@ -74,6 +74,16 @@ A field may honestly read "FAILS RULE: …"; such ideas cannot be `alive`.
     trivial?" and then look for that object, rather than estimating around the wall. Honesty rules are unchanged:
     a risky idea is labelled risky, and a wrong one is recorded as wrong.
 
+14. **Two scales, work up.** (owner, 2026-11-11) Every result is rated "Quality" and "Toward RH", each out of 10,
+    in `rh/RATINGS.md`. A breakthrough is 9–10 on both. Climb rung by rung; a different KIND of idea is needed to
+    leave 1–2 on the second scale, not more of the current kind.
+
+15. **Hunches built to a target; construct before measuring.** (owner, 2026-11-11) Read `rh/CORE.md` first. A new
+    hunch must (i) use the Euler product, (ii) work in the bulk (resolve individual zeros, below the band edge),
+    (iii) be exactly tight along colliding pairs (rule H11), (iv) survive an independent verifier, and (v) answer
+    "what object would make the wall trivial?" BEFORE any measurement. The first step of a round is building an
+    object; measurement comes after. One object is worked by one seat, resumed by id, for depth.
+
 ### The deeper version
 - *What a top professional would do that wasn't asked:* keep a barrier list and test every idea against known
   counterexamples before investing in it; build the numerical laboratory first; demand that each route says
