@@ -32,7 +32,9 @@ constant of (Q, D) is the bottom of a Gram matrix of D-kernels at the zeros, whi
 **6. In function fields the average-to-pointwise converter is amplification by products.** Deligne/Weil: on C^k
 the deviations of zeros ADD while the a-priori bound (point counting, i.e. the Euler product plus positivity) stays
 one unit from the centre, so a weak bound for all k is the exact bound. Langlands' symmetric-power argument does
-the same for Ramanujan over ℚ. Over ℚ the amplifier exists (the scaling flow; Sym^k of the Eisenstein
+the same for Ramanujan over ℚ. Analytically over ℚ the amplifier is the 2k-th moment of a prime polynomial
+(unique factorisation gives the Gaussian diagonal); its missing fixed bound is the square-root variance of
+k-almost-primes in multiplicatively short intervals, wall #34 (N101). Over ℚ the amplifier exists (the scaling flow; Sym^k of the Eisenstein
 representation at a zero) but its bound moves with it: what is missing is a FIXED bound, i.e. decay at the cusp
 (cuspidality). Over F_q(t) it comes from Harder's compact support, which needs a cusp with no archimedean
 direction; over ℚ every cusp has the continuous height ℝ₊ (N86–N89).

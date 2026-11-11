@@ -1800,3 +1800,23 @@ separating input is the SIZE of the inverse coefficients** (lead, after READER-1
   property of μ (or Λ) BEYOND its size that forbids alignment with every n^(it) at square-root scale. Ratings: the
   paper's method is Quality 9 (a real breakthrough on its own problem), Toward RH 2 for us (density, size only);
   N100's correction: Quality 5, Toward RH 1.
+
+**N101. The analytic tensor-power trick over ℚ exists, and its fixed bound IS the short-family wall** (lead,
+construction by thought after N99–N100; facts classical, the reduction is the lead's, unchecked).
+- N99 needs a pointwise bound |S_X(t)| ≪ X^ε at height T with X = T^c. The sup norm is a limit of moments, and the
+  k-th power S_X^k is the "tensor power": a Dirichlet polynomial of length N = X^k whose coefficients count ordered
+  factorisations into k prime powers. Unique factorisation (the Euler product, NONLINEARLY) makes the diagonal of
+  ∫_T^{2T} |S_X|^{2k} exactly Gaussian (k!·(Σ_p log²p/p)^k): this is the arithmetic analogue of Deligne's tensor
+  power, with the deviation multiplied by k (an off-line zero makes |S_X|^{2k} grow like X^{2kβ}).
+- Fixed k = 1/(εc) suffices to beat the trivial bound, so N = T^{1/ε} ≫ T: a long polynomial on a short range of t,
+  the short-family wall (#34) exactly. In arithmetic terms: ∫_T^{2T}|S_X^k|² = T·Σ_I (Σ_{n∈I} a_n)² over multiplicative
+  intervals I of relative width 1/T, and the off-diagonal is the VARIANCE of k-fold prime products in short
+  intervals around their smooth mean (Goldston–Montgomery for k = 1; higher k by the same calculation). An upper-bound
+  sieve gives the COUNTS in I to the right order (Brun–Titchmarsh for almost-primes) but not the deviation from the
+  mean, which is the part needed; the sieve bound alone is T^(1/ε − 1) too large.
+- So the tensor-power amplifier over ℚ is: moments of prime polynomials; its "fixed bound" is square-root variance of
+  k-almost-primes in multiplicatively short intervals, for every fixed k. Over F_q(t) the same variance is a
+  character-sum bound (Weil/Deligne, Katz–Sarnak equidistribution). One obstruction again, now with the amplifier
+  built and the bound named arithmetically. Ratings: Quality 5, Toward RH 2 (the cleanest version of the target: a
+  short-interval variance statement for almost-primes with k factors, all k, which is a sieve-flavoured statement
+  rather than a zero statement; it is still RH-strength).

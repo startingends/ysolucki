@@ -23,6 +23,7 @@ Out of 10 each; a breakthrough is 9–10 on both. Lead's honest ratings, 2026-11
 | T131 proved N94 | exact upper-bound kernel formula for the Möbius norm at zeros (Lemma A, Theorem B) | 7 | 1 | smallness of the error only measured; object blind to the Euler product (H13) |
 | H-4 prime-sampling cone N95 | exact duality: the cone keeps only the support of Λ; fake weights hide the impostor's quartet at L = 1.72 | 6 | 1 | support alone does not decide (H14) |
 | Hybrid FE N99 | GHK product + functional equation: an off-line quartet forces |S_X| ≈ X^(δ+β); Λ ≥ 0 is short by X^(½−β) | 4 | 1 | identity; reduces to a pointwise prime-sum bound (circular) |
+| Analytic tensor power N101 | moments of prime polynomials as the amplifier; fixed bound = variance of k-almost-primes in short intervals | 5 | 2 | RH-strength target, reduction unchecked |
 | **Ceiling now** | | 7 | **2** | no statement uses the Euler product in the bulk |
 
 What a 3 on "Toward RH" would be: a PROVED statement about individual zeros below the band edge that is true for ζ,
