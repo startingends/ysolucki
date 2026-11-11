@@ -384,3 +384,8 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
 - N3 sharpened: need positivity of Weil's form itself with zeros as spectral support. RH is not OS reflection positivity
   (atoms; Kallen-Lehmann); in OS language it is "theta is a contraction of the W-Hilbert space on the half-window".
 - Ratings Quality 6, Toward RH 1.
+
+## SESSION (DETUNE.md): detuning prime weights Lambda(p^k)(1 + eps_p), p = 2, 3, 5
+- Every detuning, both signs, eps from 0.3 down to 0.01, breaks positivity 0.005-0.21 in L after p first enters (L* for p=2:
+  0.38-0.56, p=3: 0.58-0.60, p=5: 0.81-0.83); catastrophic later (-1e27 at L = 1). Negative direction = bottom ladder rung
+  (D/|g|^2 down to 6e-30), never closest pair. log log(1/eps) law (prolate defect < eps). 13 small-L zeta dumps made.

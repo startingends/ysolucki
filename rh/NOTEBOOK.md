@@ -2109,3 +2109,25 @@ exact integer arithmetic).
   form: ζ's tuning is critical (no slack, H11) and any detuning of the prime weights that keeps them ≥ 0 should create
   an unstable mode somewhere (consistent with B170). Test sent: perturb the prime weights at p = 2, 3, 5 and measure
   the window at which positivity first fails, as a function of the size of the detuning.
+
+**N122. Detuning test: ζ's tuning is pinned; every detuning of a prime weight breaks positivity almost as soon as
+that prime power enters the window, on the prolate ladder, not on a closest pair** (SP-operator,
+`rh/specialists/operator/DETUNE.md`; 13 new zeta dumps L = 0.36–0.90 plus 1.0; uncertified).
+- First window with κ_min < 0, for Λ(p^k) → Λ(p^k)(1 + ε): p = 2 (enters at L = 0.347): 0.38–0.56; p = 3 (0.549):
+  0.58–0.60; p = 5 (0.805): 0.81–0.83; all three: as p = 2; both signs, every |ε| from 0.3 down to 0.01. The break
+  comes 0.005–0.21 in L after the prime power enters; one window later κ_min reaches −1e16 to −2.5e27 (linear in ε).
+  The lag grows slower than log(1/|ε|), consistent with log log(1/|ε|). The negative direction is always a bottom
+  rung of the prolate ladder (D/‖g‖² from 2e-4 down to 6e-30), never a closest-pair direction. Prediction (a) held
+  in a sharper form, (b) refuted.
+- Reading (seat + lead): the near-null ladder exists only because the archimedean part, the poles and the TRUE Λ
+  cancel exactly on Poisson images of prolates (the functional equation); so the functional equation, through the
+  ladder, locks every prime weight at its exact value the moment it enters the window. This is the ℚ-rigidity of N121
+  seen directly: the archimedean place's Poisson structure determines the tuning (Hamburger's theorem in window form).
+  The detuned object has no functional equation, so this says nothing about RH; it says ℚ has no deformation family
+  in which to move, unlike F_q, where virtual curves with the functional equation and positive counts form large
+  families containing RH violators (N121).
+- Lead's note on a variant of N121: positivity of the counts of all SYMMETRIC POWERS does not rescue the virtual
+  curves either (the violating roots found are real and positive, so every symmetric-power count stays positive);
+  Deligne's amplifier needs an a priori pole bound from a base of positive dimension, which a single virtual curve
+  lacks. So in the function-field shadow: Euler product + functional equation + positivity + amplification without a
+  geometric a-priori bound do not give RH.
