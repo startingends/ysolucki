@@ -1211,3 +1211,13 @@ An exit would need an orthogonality relation whose diagonal is the trivial chara
   So E1 (the bootstrap) is not an exit; it feeds β* only into the L side. Liu and Xu–Sang change only L-side
   parameters (abstracts). Computation asked of SP-sieve: the comparison system's best exponent as a function of the
   copy slope (prediction first), to decide whether 3/4 floors the whole architecture or only its sextic instance.
+- S3, H10's form positivity (SP-reflection, B12, `rh/specialists/reflection/s3/B4_long.md`): a Poisson-weighted H² norm
+  on Re s = θ at s₀ = θ + Y applied to (s − 1)ζ(s)B(s)/s, B the smoothed Möbius polynomial: a defect below 2δ/Y gives a
+  zero-free box (PROVED), and A₁ follows LINEARLY by a contour shift — so no Cauchy–Schwarz halving and no built-in
+  3/4 cap. What it needs: a mollifier longer than the height, X ≥ Y^(1/(2θ−1)) (the S2 near side), equivalently
+  correlations of the truncated Möbius divisor sums c_n = Σ_{d|n, d≤X} μ(d) at level of distribution 1/(2θ); below
+  3/4 needs level above 2/3. Reformulation by my B9 criterion, but the first one in the record whose only difficulty
+  is a LEVEL OF DISTRIBUTION (a known kind of quantity, for Selberg-sieve-type weights), with the parity wall at
+  "level above ½ for weights that are not well-factorable". RISK flagged by the seat: by exactness, the 7/8 theorem
+  would imply asymptotics for those correlations at levels in (½, 4/7) — a new consequence, or a scaling error.
+  Decisive check approved (one computation, prediction first).
