@@ -2049,3 +2049,10 @@ prime side; but the finite part cancels against the singular Green part for EVER
 purely archimedean and W_∞ does not appear. N1: the generic fibre needs a non-trivial Picard variety. N2: no single
 arithmetic surface works (one degree condition versus Weil's two; it sees H¹ of the generic fibre, of finite rank).
 Remaining: Guess C, the modular tower's Eisenstein boundary cycles.
+
+**N118. Guess C: the Eisenstein pairing produces Weil's distribution EXACTLY but with the wrong involution (narrowing
+N3).** Maass–Selberg weight 4 Re ξ′/ξ(1 + 2it) = prime side + digamma (checked to ~5e-17), so positivity pairs
+f̂(ρ)·conj f̂(ρ̄), not f̂(ρ)·conj f̂(1 − ρ̄): conjugation and reflection differ by the +1 in c(s), so unitary/L² positivity
+proves only Re s = 1. Boundary divisors are torsion (Manin–Drinfeld): Hodge index gives equalities where ζ lives.
+Narrowed specification: a positivity whose involution IS the functional-equation reflection. Guess B to be tested
+against N3. Details: `rh/GUESSES.md`.

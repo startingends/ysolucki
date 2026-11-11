@@ -246,3 +246,10 @@ stated (Witt vectors with F_n, function spaces see all characters); sec 4 correc
 For 1 <= n < m <= 60: |Res(Phi_m, Phi_n)| = p^phi(n) if m/n is an integer power of a prime p (n | m), else 1 (Apostol's formula, from memory);
 in particular n = 1 gives Phi_m(1) = e^Lambda(m). Prediction: holds for every pair, no exception.
 Result of P12 (scratchpad res_check.py, sympy, memcap 1 GB): 1770 pairs, 0 failures. HIT.
+## (GUESS_C session) PREDICTION (P13), written before computing (clock: 21:02 UTC)
+c(s) = xi(2s-1)/xi(2s), xi(s) = s(s-1)/2 pi^(-s/2) Gamma(s/2) zeta(s). At s = 1/2 + it, t in {0.5, 3, 7, 14.13, 25}:
+(a) |c| = 1; (b) -c'/c(1/2+it) = 4 Re xi'/xi(1+2it) to 1e-10; (c) it is > 0 at every t; (d) 4 Re xi'/xi(1+2it) =
+4 Re[zeta'/zeta(1+2it) + 1/(1+2it) + 1/(2it) - (1/2)log pi + (1/2)psi((1+2it)/2)] to 1e-10;
+(e) zeta'/zeta(-1) = log(2 pi) - (1 - gamma_E) - zeta'(2)/zeta(2) to 1e-12.
+Result of P13 (scratchpad ms_check.py, mpmath 30 digits, memcap 1 GB): (a) |c|-1 < 1e-30; (b) < 5e-17; (c) values 0.093, 0.113, 7.59,
+0.839, 7.60, all > 0 (large at t = 7 and 25: w = 1 + 2it lies at the edge next to the zeros 14.13, 50.0... ); (d) < 5e-17; (e) 0.0. HIT (all five).

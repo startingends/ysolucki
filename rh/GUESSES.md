@@ -80,3 +80,28 @@ a specific family of arithmetic divisors. The risk is that A1 is impossible for 
 - Remaining Arakelov setting: Guess C (the modular tower with its Eisenstein boundary cycles). The missing computation:
   an arithmetic pairing on Eisenstein (boundary) cycles indexed by a test function on the spectral line, compared with
   Weil's form for ζ(2s). Ratings (seat): Quality 6, Toward RH 1.
+
+## Outcome of Guess C (SP-modular, `rh/specialists/modular/GUESS_C.md`; N118): narrowing N3
+- Setting: X(1)/ℤ = P¹_j and X₀(N)/ℤ with log-singular Petersson metrics (Burgos–Kramer–Kühn); family
+  Ψ_h = ∫ h(t) E(·, ½ + it) dt (an archimedean class, not a divisor's Green function).
+- Truncated (Maass–Selberg) pairing has weight −c′/c(½ + it) = 4 Re ξ′/ξ(1 + 2it), which expands into the prime side
+  Σ Λ(n) n^(−1−2it) plus a digamma term: **Weil's distribution appears exactly** (checked at five heights to ~5e-17,
+  prediction first). Bost–Kühn's ζ′(−1)/ζ(−1) is the same log-derivative at the residual point (constants unchecked).
+- **But it pairs the wrong way:** on zeros it gives Σ f̂(ρ)·conj f̂(ρ̄) (conjugation; the edge line Re w = 1), where Weil
+  needs Σ f̂(ρ)·conj f̂(1 − ρ̄) (the functional-equation reflection). Its positivity holds simply because Re ρ < 1.
+- Hodge index and the boundary: degree-zero cusp divisors are torsion (Manin–Drinfeld), so Faltings–Hriljac gives
+  EQUALITIES there; ζ lives only in the equality case; the inequality lives on the Hecke spectrum. N2 corrected: the
+  fibre and the cusp section do supply the second class (F² = 0, F·S = 1), but the orthogonal complement is J₀(N) plus
+  archimedean energy, and ζ is in neither. The tower does not help (each level's boundary is torsion).
+- **Narrowing N3: wherever positivity comes from the L² (unitary) structure of Eisenstein series, the involution it
+  uses is complex conjugation, which differs from the functional-equation reflection by exactly the +1 in
+  c(s) = ξ(2s − 1)/ξ(2s); such positivity only proves the zero-free line Re s = 1.** (The H-2 table's "+1 of
+  Gindikin–Karpelevich", now as an exact positivity identity.) Ratings (seat): Quality 7, Toward RH 1.
+
+## Where the guesses stand
+- A (single arithmetic surface): dead; N1, N2. C (modular tower, Eisenstein): dead; N3. B (Witt / characteristic one):
+  untested; its test is now N3: is its positivity's involution the functional-equation reflection, or a conjugation?
+- **The narrowed specification:** the prover's positivity must have the FUNCTIONAL-EQUATION REFLECTION f ↦ f^♯ as its
+  involution (Rosati = functional equation, MISSING_SPACE §2, which survives in this form), not complex conjugation of
+  a unitary structure. Every positive structure found in this session (L² of Eisenstein series, Néron–Tate heights,
+  Λ ≥ 0 on effective classes) uses conjugation or positivity of coefficients; none uses the reflection.
