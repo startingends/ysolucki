@@ -1178,3 +1178,13 @@ unverified; novelty of Thms 2–3 not searched).
   slip (+ε should be +ε/2 in Thm 3's wording). So the copy barrier is: proved (SP-sieve), verified with corrections
   (V-COPY), and its finite cores formal over ℚ. It is the most solid NEW result of this phase, and it is a limit on a
   method, not a step towards RH.
+
+**N71. A first-moment amplifier is a tautology; the halving is intrinsic** (lead, 2026-11-11, examined by hand).
+Trying to avoid the Cauchy–Schwarz halving (the (1 + κ)/2 of N50): sum A_u over the whole family with non-negative
+weights. Then C·A₁ + Σ_{u non-copy} A_u = Σ_u A_u, and Σ_u A_u is computable exactly by Poisson in u (the complete
+character sum vanishes for squarefree n ≠ 1, leaving dual terms). But Σ_{u non-copy} A_u = Σ_u A_u − C·A₁ by the same
+computation: the identity returns itself. A first moment gives an equation, not an inequality; an inequality needs a
+second moment, which halves. So the halving is not a weakness of the October proof but of the amplifier itself;
+together with the copy barrier (N69–N70) it fixes 3/4 as the floor of the whole method, bootstrap included (its
+fixed point (1 + κ)/2 needs κ ≥ ½). Recorded so no seat retries it. An inequality without halving would have to be
+an EXACT positivity (form positivity, rule H10), not an amplifier.
