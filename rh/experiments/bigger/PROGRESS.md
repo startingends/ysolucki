@@ -187,3 +187,35 @@ So lambda*_L(r) <= -(1-r) max{2<f,cosh>^2} (r < 1) and <= -(r-1) max{2<f,sinh>^2
 normalised f whose autocorrelation vanishes at every log n and whose Weil energy is (near) zero. The first
 maximum converges as L grows (1.39532); the second grows linearly in L (0.235 per unit L). That is the
 corner. The two one-sided slopes are the two parity blocks of wall WJ13 seen from the dual side.
+
+### 3.6 Characters are not at the threshold (check_chi.log), linearity defect, and one more blind number
+COMPUTED (`python3 check_chi.py.txt 1.25 40`): with the weights Lambda(n) chi(n) the form is degenerate at
+the character's own conductor (lowest eigenvalue 4e-16 for chi_-3 at conductor 3, 5e-13 for chi_-4 at 4,
+2e-11 for chi_5 at 5), as it must be for an L-function with its zeros on the line. So every real character
+is feasible exactly from its own conductor on, while OTHER weights on the integers are feasible lower
+(2.86055 < 3; 4.0363 < 5). Only for zeta does "the smallest conductor at which its own weights are feasible"
+coincide with "the smallest conductor at which anything is feasible".
+Linearity defect of the even factor, d_L = lambda*_L(0.5) - (lambda*_L(0) + lambda*_L(1))/2 (>= 0 by
+concavity): 1.3e-2, 9.9e-4, 2.55e-5, 1.48e-6 at L = 0.5, 0.75, 1.0, 1.25. So the linearity in 3.3 is a
+limit statement, approached fast.
+Blind prediction P6 (written before the run): at L = 1.5 (N = 60) the defect is below 1.5e-7 and
+q*_L(even, 0) = 4.03628 +- 0.00001. If the defect stops shrinking (above 1e-6) the linear law is not exact.
+
+### 3.7 Searches (2026-11-11, web search, result summaries only; no paper read in full)
+1. "Lagarias positivity property Riemann xi function infimum Re xi'/xi ... sigma > 10": Lagarias proved an
+   inequality for Re xi'/xi for sigma > 10; Garunkstis improved it to sigma > a for any zero-free half-plane
+   sigma > a (as summarised in arXiv 2509.18963, Grigutis-Turcinskas 2025); Hinkkanen: RH iff Re xi'/xi > 0
+   on Re s > 1/2; Broughan 2009 for number fields; Goldstein-Grigutis arXiv 2201.08599 near the line for
+   large t. So my section 2.4 identity (minimum on the real axis, for sigma >= Theta) is KNOWN in substance.
+2. "explicit formula lower bound conductor positivity linear programming sharp ... Odlyzko Mestre Miller":
+   Mestre's bound 10.323 for elliptic curves (actual 11); Tchamitchian arXiv 2410.12922 says such bounds are
+   not sharp in general; Miller arXiv math/0112196 is the standard reference for the positivity technique.
+   Nothing found on thresholds with free real weights restricted to the integers, on extremal non-arithmetic
+   objects, or on a pole-weight parameter.
+3. "Weil explicit formula positivity semidefinite programming unknown coefficients at integers minimal
+   conductor ...": nothing matching; the Johns preprint did not appear in the results.
+4. "Kurokawa tensor product ... multiple Euler product Koyama Akatsuka double Riemann zeta": Kurokawa 1992
+   absolute tensor product (zeros at sums of zeros); Koyama-Kurokawa 2004 Euler product for
+   zeta(s,F_p) (x) zeta(s,F_q); Akatsuka: Euler product for the double Riemann zeta function. The Kunneth
+   route of 2.3 is a known programme; no result found that gives a convergence half-plane with a loss
+   independent of the number of factors.

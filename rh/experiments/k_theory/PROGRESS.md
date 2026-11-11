@@ -115,3 +115,16 @@ Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+
 - NOT changed although the coordinator's wording suggested `known`: T51, T53, T30 keep `checked` (stronger in-project status; citation in
   `source`), because the tool defines `known` as "not reproved here".
 - Final check: 81 entries, 0 errors; 16 open, 8 proved, 44 checked, 11 known, 2 refuted.
+
+### Third batch (batch8_formal_foothold_seminar.py.txt): formal results, foothold theorems, seminar turns 2-3, ideas #22-#26
+- FORMAL: T70 and T32 set to `formal` (files in the recorded full build of 00:52; T70's statement trimmed to the identity, T32's statement
+  rewritten to the Lean form). Lean coverage recorded in the notes of 16 other entries, which stay `checked`.
+- MY ERROR: T33's sentence "when a Weil block is positive definite the corresponding margin is strictly positive" is false for the even
+  block (formal seat, file 17; zeta at L = 0.05, 0.10 has t_e < 1 and a negative even margin). I copied it from S1_ADDITIONS F1 (a) and my
+  check C3 above ("OK; needs only Q invertible and t_e != 1") did not test the clause. Corrected in the entry with the history in its note.
+- New entries T82-T98 (17): 3 checked (T84, T87, T93: short proofs re-derived by me), 13 proved, 1 open (T89).
+  Checks done for these: T84 (pole on odd functions; four quadrants of the Levy form; I(a,b) - I(|a|,|b|)); T87 (two cases from T43 and
+  T29 Step 4); T93 (Schur product for forms; nestedness; cosh/cos rank-two identities); T86's inequality line and T90's three lines were
+  re-derived too but those entries stay `proved` (T86: depends on the unchecked T85; T90: per the coordinator).
+- Not marked: no VERDICT.md from V-FH yet; the formal seat's MEMORY.md still lists nothing.
+- Final check: 98 entries, 0 errors; 17 open, 21 proved, 45 checked, 2 formal, 11 known, 2 refuted.

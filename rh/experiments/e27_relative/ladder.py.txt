@@ -1,0 +1,40 @@
+"""e27: near-null ladder of the window Weil form against prolate defects. usage: python3 ladder.py.txt L"""
+import sys, math, importlib.util, importlib.machinery
+import flint, mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+L = float(sys.argv[1]); c = 2 * math.pi * math.exp(2 * L)
+dps = int(70 + 6.5 * math.exp(2 * L)); N = max(28, int(3.0 * L * math.exp(2 * L)) + 12)
+mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+q, _ = weil.build(L, N, kind='zeta', pole=True, primes=True, arch=True)
+ev = sorted(mp.eigsy(to_mp(weil.even_block(q, N)), eigvals_only=True))[:4]
+od = sorted(mp.eigsy(to_mp(weil.odd_block(q, N)), eigvals_only=True))[:4]
+# prolate defects: Nystrom with Gauss-Legendre on [-1, 1]
+n = 70
+xs, ws = zip(*[(x, w) for x, w in mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(6, mp.mp.prec)][:]) if False else (None, None)
+nodes = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(6, mp.mp.prec)   # degree 6 -> 3*2^5 = 96 nodes
+xs = [x for x, w in nodes]; ws = [w for x, w in nodes]; n = len(xs)
+cc = mp.mpf(c)
+K = mp.matrix(n, n)
+for i in range(n):
+    for j in range(n):
+        d = xs[i] - xs[j]
+        k = cc / mp.pi if i == j else mp.sin(cc * d) / (mp.pi * d)
+        K[i, j] = mp.sqrt(ws[i]) * k * mp.sqrt(ws[j])
+chi = sorted(mp.eigsy(K, eigvals_only=True), reverse=True)
+defect = [1 - x for x in chi[:14]]
+print("L=%g c=%.4f N=%d dps=%d nodes=%d" % (L, c, N, dps, n))
+print("even eigenvalues:", [mp.nstr(x, 6) for x in ev])
+print("odd  eigenvalues:", [mp.nstr(x, 6) for x in od])
+print("defects 1-chi_n, n=0..13:", [mp.nstr(x, 4) for x in defect])
+for name, vals, idx in (("even", ev, (4, 6, 8, 10)), ("odd", od, (5, 7, 9, 11))):
+    for k, (v, i) in enumerate(zip(vals, idx)):
+        print("  %s #%d = %s ; 1-chi_%d = %s ; ratio kappa = %s ; (ratio to chi_%d: %s, chi_%d: %s)" % (name, k + 1, mp.nstr(v, 6), i, mp.nstr(defect[i], 6),
+              mp.nstr(v / defect[i], 5), i - 2, mp.nstr(v / defect[i - 2], 4), i + 2, mp.nstr(v / defect[i + 2], 4) if i + 2 < 14 else "-"))

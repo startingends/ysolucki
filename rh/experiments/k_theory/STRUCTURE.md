@@ -1,9 +1,10 @@
 # STRUCTURE of the theory document (K-theory, 2026-11-11; revised after the round-2 judgement and the readers' addenda)
 
-Source of truth: `rh/THEORY.md` (81 entries). Commands run: `records.py theory check` (0 errors), `tree`
-(saved as `tree_2026-11-11.txt` in this folder), `frontier`. Counts: **44 checked, 11 known** (55 established),
-**8 proved** (written proof, not independently checked or resting on an open input), **16 open**, **2 refuted**,
-**0 formal**. Labels below: everything is a statement about the record, not new mathematics.
+Source of truth: `rh/THEORY.md` (98 entries). Commands run: `records.py theory check` (0 errors), `tree`
+(saved as `tree_2026-11-11.txt` in this folder), `frontier`. Counts: **2 formal, 45 checked, 11 known** (58 established),
+**21 proved** (written proof; not independently checked, or computer-assisted with the verifier still running, or resting
+on an open input), **17 open**, **2 refuted**. Sections (a) to (e) were written at 81 entries; what the third batch
+(formal results, foothold theorems, seminar turns 2-3) changes is in "Revision 2" at the end, which takes precedence. Labels below: everything is a statement about the record, not new mathematics.
 
 Nothing in the established part is a case of RH. It consists of (i) dictionaries (what a signature or a null vector
 means), (ii) finite linear algebra about certificates and chains, (iii) statements that are conditional on RH,
@@ -164,3 +165,60 @@ and the formal seat's MEMORY.md lists it; on 2026-11-11 00:33 UTC none met all t
   2.15; T30 (2) = Yoshida 1992 Prop. 1 via Suzuki p. 2; T65 (C1, C2) = Schmuckenschlaeger 1998) keep the status
   `checked`, with the citation in `source`: the tool's `known` means "not reproved here".
 - T16 and T18 became `known` with exact statements from papers read in full by the reader seats.
+
+## Revision 2 (third batch: rh/formal, the foothold seat, seminar turns 2-3, specialists, ideas #22-#26)
+
+**Formal.** Two entries are `formal`: T70 (mirror Gram identity D1; the formal seat reports no difference in content)
+and T32 (exact inertia; the entry was REWRITTEN to the Lean statement, which is more general: any dimension, no
+invertibility, boundary cases covered). Both files are in the recorded full build of 00:52 UTC. Sixteen other
+entries have Lean coverage that differs from the written statement (finite form only, deduction only, part of the
+entry, or a stronger hypothesis-free variant); they stay `checked` with the difference in the note: T26, T27, T29
+(Step 2), T33, T35, T44, T45, T50, T51 (Step 2), T52, T63, T64, T65, T74, T75, T77.
+**A machine check found a false sentence in a `checked` entry (T33):** "when a Weil block is positive definite the
+margin is strictly positive" fails for the even block (zeta itself at L = 0.05, 0.10). K-theory had copied it from the
+seat and passed it in its own check C3. The sentence is corrected; nothing downstream used it.
+
+**New established entries.** T84 (odd fold of the background lowers under absolute values; three seats, checked by
+K-theory), T87 (unconditional uniqueness of the weights: any summable atomic perturbation makes the form negative on
+some window; from T43 and T29), T93 (Schur ray in the damping parameter).
+
+**New `proved` entries waiting for a verifier.** T82 and T83 (foothold seat, computer-assisted; V-FH running): the
+Weil form is >= 9.9998e-9 |f|^2 on every window L <= (1/2) log 3, and on L = 1/2, 27/50 positivity confines one atom
+to a certified box around (log 2, log 2/sqrt 2). T85, T86 (first-prime lemma), T88 (rank-one pole algebra), T90
+(bracket given (F)), T91, T92 (SP-reflection), T94 to T97 (SP-operator), T98 (dial coefficients). New open: T89
+(candidate (F)).
+
+**Frontier now** (open, all dependencies established): T13, T14, T15, T17, T24, T25, T40, T42, T46, T47, T48, T62,
+T78, T80, T81. (T89 is open but hangs on the unchecked T88.)
+
+**Islands now (22):** T3, T14, T15, T16, T17, T18, T19, T20, T21, T22, T24, T25, T33, T34, T45, T46, T47, T59, T72,
+T93, T97, T98. New connectors since section (b): T82/T83 are the first statements that tie the bootstrap cluster to
+something unconditional, but they are not yet declared dependencies of T47 (different window, one atom).
+
+**First open links, revised.**
+- *#8 (first failure):* unchanged, T80. New on the route: T82 (pending verification) gives lambda_L > 0 for
+  L <= (1/2) log 3 without RH, so a first failure can only lie beyond that; T94 (window space is a de Branges space
+  when lambda_L > 0) does not need T80; T97 is the nearest proved relative of the open derivative formula T42.
+- *#9 (bootstrap):* still T47 as stated (six weights at L = 1), but the route now has its first unconditional
+  statements, both waiting for the verifier's verdict: T82 (the true weights are feasible up to (1/2) log 3) and
+  T83 (a certified box for one atom). The first link that is open as mathematics is still T46; T85 proves its
+  odd half on windows with no atom, and S1-parity (B169 (d)) names the exact step that breaks when the atom at 2
+  enters. T87 settles the limit of all windows: the feasible set in the l^1 class is {Lambda} or empty, so
+  existence is RH.
+- *#21 (killed):* unchanged. T91 gives the exact form of barrier B11 (modulus one = positivity for the other
+  involution).
+- *#10 (parked):* T62, with T81 beside it; new on the route: T88 (proved), T89 (open candidate (F)), T90 (bracket
+  given (F)). Ideas #22 to #26 are linked in the `routes` fields: #22 -> T29, T30, T31; #23 -> T32, T50, T61, T81;
+  #24 -> T51, T53, T55, T65; #25 -> T56, T62; #26 -> T18, T98.
+
+**The three open lemmas that would most enlarge the established part: unchanged (T80, T47, T46).** Larger than any
+of them, and not an open lemma: the verifier's verdict on T82/T83, which would turn two computer-assisted theorems
+on a live route into checked ones.
+
+**What to formalise first, revised.** Done on the live routes: T32 (formal); deduction-only or finite-form Lean
+files exist for T45, T26, T27, T74, T44, T35. Next, in this order: (1) a full build that includes files 17 to 22
+and a rewritten rh/formal/MEMORY.md (several entries are one recorded build away from a firmer note); (2) T84 in
+its finite form (already in Perron_GroundState.lean as form_abs_le) and the finite Perron step for T85; (3) T87's
+two-case deduction (easy given T43 and T29 as hypotheses); (4) T88 (secular equation of a rank-one perturbation,
+finite, medium). T82/T83 are interval-arithmetic certificates: a Lean formalisation is hard; an independent
+re-run with a second ball-arithmetic implementation is the realistic check.

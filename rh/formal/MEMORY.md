@@ -4,9 +4,10 @@ Rewritten at the end of every session. Read this first next session. Detail per 
 Last rewrite: end of session 1, 2026-11-11 01:05 UTC.
 
 ## State
-- Full build `lake -d /home/user/ysolucki/rh/formal build`: **Build completed successfully (3167 jobs)** at 01:04 UTC.
-- 25 statement files + `AxiomsAudit.lean` (prints the axioms of 50 main theorems: all `[propext, Classical.choice,
-  Quot.sound]`), all imported from `RHFormal.lean`. No `sorry`, no `axiom`, no `native_decide`. `RHFormal/drafts/` is empty.
+- Full build `lake -d /home/user/ysolucki/rh/formal build`: **Build completed successfully (3175 jobs)** at 01:06 UTC.
+- 26 statement files + `AxiomsAudit.lean` (prints the axioms of 52 main theorems: all `[propext, Classical.choice,
+  Quot.sound]`), all imported from `RHFormal.lean`. No `sorry`, no `axiom`, no `native_decide`. `RHFormal/drafts/` does
+  not exist: nothing was left half-done.
 - The only build warnings are lake's "imports ... designed for use with the module system; consider adding `module`".
 
 ## What is formal, by theory entry (for the theory keeper)
@@ -35,6 +36,7 @@ Last rewrite: end of session 1, 2026-11-11 01:05 UTC.
 | T29 Step 2 (B32) | B32_NegativeSubspaceDim.lean | `B32.finrank_le_of_negDef` | Step 2 as stated | the rest of T29 |
 | (board B157, B176) Perron | Perron_GroundState.lean | `Perron.form_abs_le`, `eigen_of_ground`, `pos_of_nonneg_eigen`, `ground_sign`, `ground_unique`, `lower_bound_of_trial` | P1, P2 (every minimiser has one strict sign; two minimisers are proportional), P3 | EXISTENCE of a minimiser; the continuum statement (lead's B140) |
 | (board B182) N2 | N2_RankOnePush.lean | `N2.push_iff`, `push_unique` | N2 | N1 (needs compactness) |
+| (bridge) | SignatureBridge.lean | `SignatureBridge.posDim_iff_le_sigPos`, `negDim_iff_le_sigNeg` | PosDim/NegDim = mathlib's `sigPos`/`sigNeg` in finite dimension | eigenvalues = weights (spectral theorem) |
 
 ## Gaps / errors found in written statements (the valuable part)
 1. **T33, last sentence** ("when a Weil block is positive definite the corresponding margin is strictly positive") and
@@ -50,18 +52,23 @@ Last rewrite: end of session 1, 2026-11-11 01:05 UTC.
 3. No wrong sign and no missing term found in: D1, Theorem C, Lemma A, Lemma C, Lemma B Steps 1-5, B2, B3 (all three
    sums right, the third included), B56/B92 identities (both halves of T32), folding, Corollary 3 (i)-(ii).
 
-## The one non-formal bridge used everywhere
+## The bridge to eigenvalues (read this before claiming anything about "eigenvalues")
 "At most one positive eigenvalue" / "number of positive eigenvalues" are formalised WITHOUT eigenvalues:
 `AtMostOnePos B` (no plane on which B is positive definite) and `T32.PosDim q k`, `T32.NegDim q k` (a finite-dimensional
-definite subspace of dimension >= k exists). For real symmetric matrices these equal the eigenvalue counts by Sylvester's
-law of inertia + the spectral theorem. That identification is NOT machine-checked. It is textbook (`known`), and it is
-the next structural target: with it T50, T51, T52 (corollary), T32, T34 become formal in their eigenvalue wording.
-mathlib has `Matrix.IsHermitian.eigenvalues` and the spectral theorem (LinearAlgebra/Matrix/Spectrum.lean, not yet read
-by me) but, as far as I searched, no Sylvester inertia statement and no Perron-Frobenius theorem
-(only LinearAlgebra/Matrix/Irreducible/Defs.lean).
+definite subspace of dimension >= k exists).
+- `SignatureBridge.lean` (formal): for a `QuadraticForm ℝ M`, M finite-dimensional, `PosDim Q k ↔ k ≤ QuadraticForm.sigPos Q`
+  and `NegDim Q k ↔ k ≤ QuadraticForm.sigNeg Q`. mathlib's `Mathlib/LinearAlgebra/QuadraticForm/Signature.lean` proves the
+  uniqueness part of Sylvester's law for `sigPos`/`sigNeg` (`sigPos_of_equiv_weightedSumSquares`), `QuadraticForm/Real.lean`
+  the existence part. I found these files only at the END of session 1 (my first note said mathlib had none: wrong).
+- STILL NOT TYPED: (a) "the eigenvalues of a real symmetric matrix are the weights of a diagonalisation" (spectral theorem,
+  `Mathlib/Analysis/Matrix/Spectrum.lean`, not read by me yet); (b) `AtMostOnePos B ↔ sigPos ≤ 1`; (c) T32 / T50 / T27
+  restated with `sigPos` / `sigNeg` (they are stated for plain functions and bilinear forms).
+  Until (a) is typed, entries worded with "eigenvalues" are formal only in the subspace-dimension wording.
+- No Perron-Frobenius theorem in mathlib (only LinearAlgebra/Matrix/Irreducible/Defs.lean): `Perron_GroundState.lean`
+  proves what was needed by hand.
 
 ## Next targets (in order)
-1. Bridge: for a real symmetric matrix, PosDim/NegDim/AtMostOnePos <=> counts of positive/negative eigenvalues.
+1. Finish the bridge: (a), (b), (c) of the section above (use mathlib's `QuadraticForm.sigPos`; do not rebuild it).
 2. Existence of a minimiser of the Rayleigh quotient (compact sphere), to complete P2 / F-b / S1-cubic's N1.
 3. T34 (sum-rule form): follows from T32 + T33 once (1) is there; check the hypothesis "N_e has a positive eigenvalue".
 4. T68 (F2 step, S1-curv), S1-mirror's second nomination of B82 (Cauchy-Schwarz iteration with a limit), D2 (the
@@ -93,6 +100,8 @@ by me) but, as far as I searched, no Sylvester inertia statement and no Perron-F
   `Submodule.finrank_le`, `Module.finrank_prod`, `Module.finrank_self`, `Module.finrank_fin_fun`, `finrank_top`,
   `FiniteDimensional.of_injective`; `Polynomial.eval_eq_sum_range'`, `natDegree_prod_le`, `natDegree_X_sub_C_le`,
   `coeff_X_mul_zero`, `eval_prod`; `abs_real_inner_le_norm`, `real_inner_comm`, `Finset.abs_sum_le_sum_abs`; `csInf_le_csInf`.
+- LESSON: before building a notion by hand, search mathlib for it by MEANING, not only by the name I expect
+  (I searched 'Perron' and 'IsIrreducible' but not 'signature'/'Sylvester' until the end).
 - Sanity practice: once per session state a deliberately false variant in a scratch file outside the repo and see Lean
   reject it; keep `AxiomsAudit.lean` up to date (add a line per new main theorem).
 - Housekeeping done in the lead's file `MathlibCheck.lean`: only the import name (deprecated alias).

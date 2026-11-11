@@ -5,3 +5,4 @@
   [foothold Theorem B(iii): polynomial test vectors with Q/|v|^2 = -0.0323519 (even), -0.3222283 (odd) at L = 1/2; -0.0650680, -0.4103637 at L = 27/50]
   feasible weight interval m (weight of the atom, form -2 m g(y)) at given position e^y: exact pencil, both blocks
   L=0.50 int/80 e^y=1.9997: feasible m in [0.4887948, 0.48897567] (best m = 0.4888065, lowest eigenvalue there 3.825e-6)   (277s)
+  L=0.50 int/80 e^y=2: feasible m in [0.48949997, 0.49016563] (best m = 0.4895451, lowest eigenvalue there 1.475e-5)   (591s)

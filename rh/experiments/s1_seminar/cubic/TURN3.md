@@ -87,3 +87,34 @@ no primes at 0.45, Beurling 2 -> 2.1 at 0.45 and 0.5.
 WHAT I DO NOT KNOW, and it decides whether (F) is a candidate at all: on all 11 computed rows with one positive eigenvalue of N_e,
 (F) holds iff the even block is >= 0. If that is a theorem, (F) is the even inequality in another form (rule 2). The algebra says the
 two are different conditions (t* >= t_0 against t_0 <= 1), tied together only by reading (i) above.
+
+## 6. The lead's bracket (B186) and the separation of (F) from even positivity (`t3c.py.txt bracket | sep <n>`, t3c.log)
+Units: true pole strength 1; R_i = (N_e phi)_i / (c_i <phi,c>) on the folded boxes; predictions R1-R3 in NOTES.md, written first.
+PROOF CHECK: B186's three lines are correct. <N phi, f> = <phi, c>; N phi <= a c <phi,c> and f >= 0 give <phi,c> <= a <phi,c> <c,f>, and <c,f> > 0
+because f >= 0, f != 0, c > 0. Not in my notes before. Addition: phi = f gives R_f = t_0 identically, so "a one-vector certificate exists"
+holds with phi = f whenever t >= t_0 and needs no nodeless ground state.
+COMPUTED, 48 boxes (bracket [inf R, sup R]):
+| system | t_0 | constant | cos(pi x/2L) | ground state + 1e-3 second | f - 0.2 N^{-1}(c_k e_k), k = argmin f |
+|---|---|---|---|---|---|
+| zeta L = 0.5 | 0.998671 | [0.3338, 1.1537] | [0.9589, 1.0898] | [0.998115, 0.999936] | [0.7996, 0.999485] |
+| zeta L = 1.0 | 0.999666 | [0.8528, 1.0863] | [0.99377, 1.00807] | [0.999552, 0.999983] | [0.8003, 1.000405] |
+| weight at 4 doubled, L = 0.75 ((F) fails) | 0.998809 (formal) | [0.7683, 1.1274] | [0.9869, 1.0667] | [0.9722, 1.1073] | [0.7976, 0.997044]: EXCLUDES t_0 |
+zeta: every bracket contains t_0 (as the theorem says). Control: the three simple phi contain its formal t_0 (wide brackets do so trivially);
+the constructed phi (PROVED by algebra: R_i = t_0 (1 - eps [i = k]) / (1 - eps t_0 c_k f_k), all below t_0 when f_k < 0) excludes it.
+Predictions: R1 widths: constant 0.82 (HIT) and 0.23 (MISS, I said >= 0.5); cosine 0.131 and 0.0143 (MISS: I said 0.5 to 4; the lead's 0.05 to 2
+at L = 0.5 HIT); perturbed ground state 1.8e-3, 4.3e-4 (HIT). R2 HIT (simple phi do not detect the failure; the lead predicted one would).
+
+SEPARATION at fixed pole strength 1 (L = 0.5; only the atom 2 is in the window; its weight multiplied by kappa):
+| boxes | even block >= 0 (t_0 <= 1, one positive eigenvalue of N_e) for kappa in | (F) holds for kappa in |
+|---|---|---|
+| 24 | [0.4419, 1.0440] | [0.8725, 1.1447] |
+| 48 | [0.7659, 1.0248] | [0.9575, 1.0739] |
+| 96 | [0.9003, 1.0148] | [0.9861, 1.0534] |
+So (F) and even positivity are DIFFERENT conditions at fixed strength, separated both ways: 48 boxes, kappa = 0.90: block >= 0 (t_0 = 0.997704)
+and f changes sign (min/max = -0.044); 24 boxes, kappa = 1.10: f > 0 and block negative (t_0 = 1.007275). My remark in B181 ((F) holds exactly
+when the even block is >= 0 on 11 rows) was a coincidence of the rows chosen; R3 (the two thresholds agree within 0.05 at 48 boxes) MISS:
+they differ by 0.19 and 0.049. Both intervals contain kappa = 1 and both shrink towards it under refinement (the true positivity interval is
+about 1e-11 wide, B19/B128); the lower end of the (F) interval approaches 1 by a factor 3 per doubling (0.128, 0.042, 0.014).
+Box-level consequence: at 48 boxes, kappa = 0.90, the even block is >= 0 and its ground state at the true strength is NOT nodeless
+(t* < t_0 < 1): on boxes the even half of B119 is not a consequence of the sign structure. (In the true form that system has a negative
+block, so this is not a counterexample to B119 itself.)

@@ -103,6 +103,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - smallest: One system in which the two conditions separate; or a proof that they cannot.
 - novelty: Grep of 6 digests in rh/library only; nothing found; not searched outside.
 - log:
+  - 2026-11-11: B186 item: (F) is NOT the even inequality in disguise: separated at fixed strength by reweighting the prime 2 at L = 0.5 (48 boxes kappa = 0.90: block >= 0, f changes sign; 24 boxes kappa = 1.10: f > 0, block negative). Both conditions pin kappa = 1 in the limit. The lead's Barta bracket is correct; it fails only through the negative part of f.
 
 ## #14 · HEURISTIC: Hadamard formula for the window form: -d(lowest eigenvalue)/dL = C x (edge amplitude of the ground state)^2; finite form = equality case of Cauchy interlacing
 - status: open

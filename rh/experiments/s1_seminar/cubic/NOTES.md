@@ -197,3 +197,7 @@ R3. Separation test at fixed pole strength 1: L = 0.5, weight of the prime 2 mul
     kappa_F := where f = N_e^{-1} c first changes sign. Prediction: |kappa_F - kappa_P| < 0.05 at 48 boxes and it shrinks by a factor >= 1.5
     from 48 to 96 boxes (i.e. they converge: an identity is hiding). If the difference does not shrink, (F) and positivity are distinct at
     fixed strength and a system between the two kappas separates them.
+RESULTS of the B186 item (TURN3.md section 6; posted as result re B186): proof of the bracket correct; brackets computed (zeta contain t_0;
+control excluded only by a constructed phi). R1 mixed, R2 HIT, R3 MISS. KEY: (F) and even positivity are DIFFERENT at fixed pole strength:
+L = 0.5, weight of 2 times kappa: block >= 0 for kappa in [0.442,1.044] / [0.766,1.025] / [0.900,1.015]; (F) for [0.872,1.145] / [0.958,1.074] /
+[0.986,1.053] at 24/48/96 boxes. My B181 'coincidence' sentence is withdrawn. Both intervals close on kappa = 1.

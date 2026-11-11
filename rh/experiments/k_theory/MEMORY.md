@@ -1,13 +1,15 @@
 # K-theory MEMORY (rewritten at the end of session 1, 2026-11-11, after the round-2 judgement was ingested). Read this first.
 
 ## State of rh/THEORY.md
-81 entries, `records.py theory check` clean. 44 checked, 11 known, 8 proved, 16 open, 2 refuted, 0 formal.
-How they were entered: batch files batch1..batch6 in this folder, run through `enter.py.txt`, and the stand-alone batch7_judge_readers.py.txt (every write goes through
+98 entries, `records.py theory check` clean. 2 formal (T32, T70), 45 checked, 11 known, 21 proved, 17 open, 2 refuted.
+How they were entered: batch files batch1..batch6 in this folder, run through `enter.py.txt`, and the stand-alone batch7_judge_readers.py.txt and batch8_formal_foothold_seminar.py.txt (every write goes through
 `tools/records.py theory`; keys -> T numbers in keys.json; do NOT rerun old batches; for new entries append keys to PLAN in
 enter.py.txt and write a new batch file, or call records.py directly). The structure is in STRUCTURE.md; the tree in tree_2026-11-11.txt.
 Map: T1-T6 seeds; T7-T19 literature; T20-T24 round 1; T25 notebook N2 repaired; T26-T34 parity and inertia; T35-T42 first failure (#8);
 T43-T48 bootstrap (#9); T49-T62 cubic seat (#10); T63-T69 curvature seat (#11); T70-T79 mirror (#21) and the tilt identity; T80 zero-side
-formula on the form domain; T81 open converse behind wall WP1.
+formula on the form domain; T81 open converse behind wall WP1; T82-T83 foothold (computer-assisted); T84-T87 first-prime lemma and
+unconditional uniqueness; T88-T90 rank-one pole algebra, candidate (F), bracket; T91-T92 SP-reflection; T93 Schur ray (N35, P3);
+T94-T97 SP-operator P1, P4, P5, P6; T98 dial coefficients (idea #26).
 
 ## What I found myself (details in PROGRESS.md)
 1. T3 (notebook N2) is FALSE as stated: A(s) = 2^-s + 4^-s, w = log 2 gives f = sqrt 2 + cos(t log 2). Repaired statement T25 (c_1 != 0) is
@@ -19,10 +21,23 @@ formula on the form domain; T81 open converse behind wall WP1.
 5. T32 (exact inertia): now `checked` (the round-2 judge derived it independently, J18; I checked his and the seat's arguments).
 
 ## Things the next session must pick up
-- FORMAL: rh/formal has Lean files for T70 (D1), part of T65 (C1, C3, C2 in two halves), T50 without the counting equalities, T52,
-  and Step 2 of T51. On 00:34 UTC they were imported in RHFormal.lean but the formal seat's MEMORY.md listed nothing as formal and no
-  build product existed for them. Rule: set `formal` (field + status) only when (a) imported, (b) `lake -d rh/formal build` succeeded,
-  (c) rh/formal/MEMORY.md lists it. T65 and T50 can be formal only for the parts named in their notes (consider splitting the entries).
+- FORMAL (rule from the coordinator, third batch): `formal` only if the seat reports the Lean statement as matching the written one AND the
+  file is covered by a RECORDED full build. Recorded so far: 00:52 UTC, 16 files (D1, C1, OnePositiveDirection, LemmaA, LemmaC, B56, B25,
+  B32, HankelPowerSums, T45, T26, T32, T50, T27, B2, B3). Set formal: T70 (D1), T32 (statement rewritten to the Lean form). All other Lean
+  coverage is recorded in notes (T26, T27, T29, T33, T35, T44, T45, T50, T51, T52, T63, T64, T65, T74, T75, T77). Files 17-22 (T33_MarginSign,
+  T44, T35, T75, T63, Perron_GroundState) were checked singly only: when a later full build is recorded, update those notes. The formal
+  seat's MEMORY.md "What is formal" was still empty: do not rely on it alone, read its PROGRESS.md.
+- MY MISTAKE, keep in mind: T33's last sentence was false for the even block; I had copied it from S1-curv's F1 (a) and passed it in my
+  check C3. The formal seat's file 17 caught it. Lesson: when I check a short proof, check EVERY clause of the entry I write, including
+  "in particular" clauses, against small cases (here zeta at L <= 0.10, recorded in the same files).
+- FOOTHOLD: T82, T83 are `proved` (computer-assisted). When rh/experiments/foothold/verifier/VERDICT.md appears: positive -> `checked`
+  (checked by V-FH), and then add T82 to the notes of T36/T37 (lambda_L > 0 up to (1/2) log 3) and consider making T83 a dependency-free
+  sibling of T47; negative -> open with the gap.
+- Seminar: board read in full up to B69; B81-B110 skimmed; from turns 2-3 only the posts the coordinator named (B90, B99, B103, B117, B120,
+  B169, B170, B180, B181, B186) plus PROOF_first_prime.md, operator/PROOFS.md, reflection/NOTES_session1.md N4, cubic TURN3.md section 3,
+  parity NOTES Q, R. NOT entered: S1-curv G2, G3; SP-reflection N3, N5-N9; S1-cubic TURN2.md; anything after B186.
+- T88 (rank-one algebra): the seat's file names the method only; a written derivation or a Lean file is needed before `checked`.
+- T90 (lead's bracket): I re-derived the three lines; left `proved` because the coordinator said "unchecked until a seat answers".
 - DONE: rh/experiments/r2_judge/JUDGEMENT.md ingested (verdicts in `checked by`; T32 -> checked; T81 added; gaps in notes). Entries
   that are also in print keep `checked` with the citation in `source` (the tool's `known` means 'not reproved here'); if the lead
   wants `known` instead for T51, T53 (D3), T30 (2), it is one `status` command each.
@@ -39,8 +54,8 @@ formula on the form domain; T81 open converse behind wall WP1.
   one line, X. Zhu arXiv 2608.24827 (unread, queued by the lead: certified bounds for the lowest window eigenvalue; relevant to T47).
 - Literature still `open` because no text was read: T13 Burnol (abstract only), T14 Krein, T15 Krein-Langer; T17 Johns stays open
   (read by readers, proofs unreviewed).
-- Proved but not independently checked: T23 (Fejer equivalence), T68 (F2), T76, T77 (mirror criterion). Proved and blocked by T80:
-  T36, T37, T39, T44.
+- Proved but not independently checked: T23, T68, T76, T77, T85, T86, T88, T90, T91, T92, T94, T95, T96, T97, T98; computer-assisted with
+  verifier running: T82, T83. Proved and blocked by T80: T36, T37, T39, T44.
 - Deliberately NOT entered (trivial or commentary): lane D pencil lemma (zero of Z_1 + lam Z_2 iff lam = -L_1/L_2); lane B closed-span
   equality and D_P(N) >= d_N; C critic's unitarity M(w)M(1-k-w) = 1; KEY_LEMMA_SHAPE S1; Hamburger's theorem (lead, B12, from memory);
   S1-cubic (M1) fibre form of B25 (mentioned in T74's note); the n = 4 dial lemma (inside T77's note); computed facts (M2, M3, sieve tables).
@@ -48,4 +63,5 @@ formula on the form domain; T81 open converse behind wall WP1.
   Paley-Wiener, Gauss's digamma integral, the Mellin transform of the fractional part) are background, not entries; number-theoretic and
   operator-theoretic inputs specific to zeta are entries and are `known` only if a text was fetched and quoted.
 - First open links (STRUCTURE.md (c)): #8 -> T80 (then T40/T41; no lemma using arithmetic is stated); #9 -> T47 (certification), then T46;
-  #21 killed -> T6 refuted; #10 parked -> T62 (and the open converse T81).
+  #21 killed -> T6 refuted; #10 parked -> T62 (and the open T81, T89). Ideas #22-#26 are linked in `routes` (#22: T29-T31; #23: T32, T50,
+  T61, T81; #24: T51, T53, T55, T65; #25: T56, T62; #26: T18, T98).

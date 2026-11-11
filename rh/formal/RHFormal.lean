@@ -25,4 +25,5 @@ import RHFormal.Perron_GroundState
 import RHFormal.LemmaB_PerronStep
 import RHFormal.LemmaB_TrickleInequality
 import RHFormal.N2_RankOnePush
+import RHFormal.SignatureBridge
 import RHFormal.AxiomsAudit

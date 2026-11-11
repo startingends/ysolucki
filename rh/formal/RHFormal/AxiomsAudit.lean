@@ -23,6 +23,7 @@ import RHFormal.Perron_GroundState
 import RHFormal.LemmaB_PerronStep
 import RHFormal.LemmaB_TrickleInequality
 import RHFormal.N2_RankOnePush
+import RHFormal.SignatureBridge
 
 /-!
 # Axiom audit
@@ -83,3 +84,5 @@ name would mean an added axiom. (`native_decide` would show as `Lean.ofReduceBoo
 #print axioms RHFormal.LemmaB.trickle_inequality
 #print axioms RHFormal.N2.push_iff
 #print axioms RHFormal.N2.push_unique
+#print axioms RHFormal.SignatureBridge.posDim_iff_le_sigPos
+#print axioms RHFormal.SignatureBridge.negDim_iff_le_sigNeg

@@ -445,3 +445,31 @@ Build completed successfully (3167 jobs).
   The counterexample is machine-checked (`RHFormal.T33.even_margin_counterexample`), so it stands whatever the answer;
   the keeper should correct T33's last sentence (see FILE 17 above for the wording).
 - No command was refused by the permission rules in this session.
+
+### 01:06 CORRECTION TO MY OWN NOTES + FILE 27 DONE: `RHFormal/SignatureBridge.lean`
+While writing MEMORY.md I checked my claim "mathlib has no Sylvester inertia statement" by a search: it is WRONG.
+This mathlib has `Mathlib/LinearAlgebra/QuadraticForm/Signature.lean` (`QuadraticForm.sigPos`, `sigNeg` = the maximal
+dimension of a positive / negative definite subspace; `sigPos_of_equiv_weightedSumSquares` = uniqueness part of Sylvester's
+law of inertia) and `QuadraticForm/Real.lean` (existence part). The spectral theorem is in `Mathlib/Analysis/Matrix/Spectrum.lean`.
+(Still true after the search: no Perron-Frobenius theorem.) I had built `PosDim` / `NegDim` by hand in file 12 without
+knowing this. The bridge is now typed:
+LEAN (namespace RHFormal.SignatureBridge; Q : QuadraticForm ℝ M, M finite-dimensional):
+  `posDim_iff_le_sigPos`: T32.PosDim (fun x => Q x) k ↔ k ≤ QuadraticForm.sigPos Q;
+  `negDim_iff_le_sigNeg`: T32.NegDim (fun x => Q x) k ↔ k ≤ QuadraticForm.sigNeg Q.
+MEANING: in finite dimension the indices used in files 12, 13, 14 (T32, T50, T27) ARE mathlib's signature, for which
+Sylvester's law is machine-checked in mathlib. What remains between those files and the words "number of positive
+eigenvalues of a real symmetric matrix" is one step: the spectral theorem provides a diagonalisation (a weighted sum of
+squares with the eigenvalues as weights). That step is not typed. The files 12-14 themselves are stated for plain
+functions / bilinear forms, not for `QuadraticForm`; restating them with `sigPos`/`sigNeg` is a next-session job.
+
+### 01:06 FINAL FULL BUILD (supersedes the 01:04 one)  `lake -d /home/user/ysolucki/rh/formal build`
+```
+info: RHFormal/AxiomsAudit.lean:86:0: 'RHFormal.N2.push_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:87:0: 'RHFormal.SignatureBridge.posDim_iff_le_sigPos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:88:0: 'RHFormal.SignatureBridge.negDim_iff_le_sigNeg' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3174/3175] Built RHFormal (2.3s)
+Build completed successfully (3175 jobs).
+```
+52 theorems audited, all on [propext, Classical.choice, Quot.sound]; 0 lines with "error" or "sorry"; the only warnings
+are lake's "consider adding `module`". RHFormal.lean imports 29 modules: Smoke, MathlibCheck (the lead's), 26 statement
+files of mine, AxiomsAudit.

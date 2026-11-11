@@ -144,7 +144,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - statement: (1) For real k >= 0: dim M_k(Gamma_theta, +) = floor((k+4)/4) = 1 + [k/4] and dim M_k(Gamma_theta, -) = floor((k+2)/4) (modular forms of weight k for the theta group with the theta automorphy factor, moderate growth). With k = n/2 for theta^n: the space is one-dimensional for 0 <= n < 8. (2) (Bochner's converse theorem, as stated in the paper's Remark after Proposition 4.1) a Dirichlet series with the corresponding functional equation and finitely many poles is L_f for some f in M_k(Gamma_theta, +-) plus a finite combination of derivatives of explicit kernels attached to the extra poles. Hence for 0 < n < 8 the solution of the functional equation of Z_n(s) = sum r_n(m) m^-s is unique ONCE THE POLES ARE PRESCRIBED.
 - status: known
 - source: Bondarenko, Radchenko, Seip, 'Fourier interpolation with zeros of zeta and L-functions', arXiv 2005.02996 v3: Proposition 3.1 (cited there to Berndt-Knopp, 'Hecke's theory of modular forms and Dirichlet series', Thm 6.3, with a short proof) and the Remark after Proposition 4.1; read in full by seat R-read-2 (rh/library/brs-fourier-interpolation.md), sections 1 to 3 by READER-2 (rh/library/2005.02996.md). First used in the project by the round-1 judge from memory
-- routes: #9, #12, #13
+- routes: #9, #12, #13, #26
 - note: Upgraded from open after checking BOTH digests: READER-2's partial digest (sections 1 to 3) has only the modular-form count; R-read-2's complete note locates the passage to Dirichlet series (the Remark after Prop. 4.1). Caveats: part (2) is a remark in the paper citing Bochner, and its growth hypotheses are recorded here only as 'finitely many poles' and bounded in vertical strips; uniqueness is 'once the poles are prescribed', which is the precise form of the statement idea #13 uses ('uniqueness of the solution of the functional equation does not force RH'). Nothing in the paper concerns zeros of the dial members. | 2026-11-11 -> known: dimension count and the Bochner remark located in a paper read in full by a reader seat
 
 ## T19 · Moment criterion for multiplicative Hankel (Helson) matrices indexed by a, b >= 1
@@ -241,7 +241,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - depends: T8
 - proof: rh/experiments/r2_parity/PROOF_parity_index.md, Theorem 4 (Steps 1-5)
 - source: R2-parity. Known in substance (attributed to Bombieri in an unopened 2026 preprint; Krein-Langer theory); the parity refinement and the cosine-shift proof were not found in what was read
-- routes: #8, #10
+- routes: #8, #10, #22
 - note: Uses only the zero side: T8 (i)-(iv) and the absolute convergence of the sum. Does not use the Euler product; holds for the Davenport-Heilbronn form and counts its quartets. A dictionary, not a route (the seat's own barrier check). | 2026-11-11 -> checked: checker's verdict: every step checked | Novelty (judge, section 6): the total count, with the word 'distinct' and the same hyperbolic-pair argument, is printed as 'Theorem 1 (global signature)' in an unrefereed account of an agent research run, which credits Bombieri 2000 with the upper-bound half; the per-block count was not found. Bombieri 2000 and Yoshida 1992 are still unread by the project. | LEAN (not `formal`: the Lean statement differs from, or covers only part of, the written one): Only Step 2 is in Lean: RHFormal/B32_NegativeSubspaceDim.lean (rh/formal/PROGRESS.md; covered by the recorded full build of 00:52 UTC 2026-11-11, 'Build completed successfully (3157 jobs)', 16 files, no sorry) (if Q = Q+ + sum_{i<=nu} m_i (a_i^2 - b_i^2), Q+ >= 0, m_i > 0, every negative definite subspace has dimension <= nu). Steps 3-5 (the multiplier, attainment) are analysis and are not formalised.
 - checked by: R2-parity-ref (rh/experiments/r2_parity/refuter/PROGRESS.md, section 'PROOF CHECK'): 'Theorem 4: correct; I checked every inequality of Steps 1-5 ... No use of RH or of anything equivalent', inequalities (3b)-(3d) also tested in 200 random cases (c4.log); R2-judge J13 (toy zero sets: counts (2,2), (1,1), (0,0) as predicted, never more than the number of quartets); R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.3: 'proved': every step redone, including (3c), (3d) and all four cases of the Gram matrix; kill test J17 on zeta's own form with surgery: one quartet (1,1), two (2,2), never more; J13 toy zero sets)
 
@@ -251,7 +251,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - depends: T29, T7, T8, T26
 - proof: rh/experiments/r2_parity/PROOF_parity_index.md, section 5, Corollaries C1 and C4
 - source: R2-parity. Part (2) is KNOWN: Yoshida 1992, Proposition 1, as reported by Suzuki arXiv 2606.09096 p. 2 (read by R2-parity-ref, R2-judge and K-theory: 'positivity on nonzero odd test functions implies RH'; for even functions 'except for possible real zeros', which T8 (iv) excludes)
-- routes: #8, #10
+- routes: #8, #10, #22
 - note: Reformulations of RH, entered once. The seat withdrew any novelty claim (board B57). | 2026-11-11 -> checked: checker's verdict: correct
 - checked by: R2-parity-ref (rh/experiments/r2_parity/refuter/PROGRESS.md, section 'PROOF CHECK'): 'C1, C4: correct. The last line of C1 and C4 (one parity block suffices) is KNOWN: Yoshida 1992 Prop. 1'; R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.3: 'proved' (C1) and 'proved, known' (C1 last line, C4: Yoshida 1992 Prop. 1 via Suzuki p. 2, read by the judge))
 
@@ -261,7 +261,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - depends: T27, T29, T7
 - proof: rh/experiments/r2_parity/PROOF_parity_index.md, section 5, Corollary C2
 - source: R2-parity; answers claim (a) of idea #10 (wall WJ13 of the round-1 judge)
-- routes: #10
+- routes: #10, #22
 - note: The file's sentence 'cannot be improved by linear algebra alone' is an observation, not a theorem (checker; conceded on board B57): no configuration with one quartet and kappa_+(N) = 1 is exhibited. The exact condition for such a configuration is given by T32 (t_e < 1 and t_o < -1). | 2026-11-11 -> checked: checker's verdict: correct as an implication | JUDGE (JUDGEMENT.md 1.3, 2.14): the second half ('cannot be improved by linear algebra alone') is a GAP, label open; exact line: PROOF_parity_index.md section 5, C2, the sentence beginning 'the second cannot be improved by linear algebra alone, because'. New evidence J18: on surgery configurations of zeta with one quartet N has three positive eigenvalues, not one. The open converse is T81.
 - checked by: R2-parity-ref (rh/experiments/r2_parity/refuter/PROGRESS.md, section 'PROOF CHECK'): 'C2: correct as an implication'; R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.3: first half 'proved'; second half a gap, see note)
 
@@ -270,7 +270,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - status: formal
 - proof: rh/experiments/r2_judge/JUDGEMENT.md, section 1.4 (last row) and 2.14 (c) (Haynsworth on [[Q_e, c],[c^T, 1/2]] and [[Q_o, s],[s^T, -1/2]]); rh/board/s1.md B56 and B92 (the seat: statement, and the even half by one polynomial identity plus Sylvester); steps written out in rh/experiments/k_theory/PROGRESS.md
 - source: S1-parity (board B56) and, independently, R2-judge (J18)
-- routes: #10
+- routes: #10, #23
 - note: Three independent derivations agree: the seat (B56; even half written on B92), the judge (J18), K-theory. In the judge's words it 'contains curv's Theorem A as the case kappa_-(Q) = 0 and sharpens parity's Prop. 3(b)', i.e. T34 and T27. Consequence (judge, 2.14): a one-quartet configuration has kappa_+(N) = 1 exactly when c^T Q_e^-1 c <= 1/2 and s^T Q_o^-1 s < -1/2; in the computed surgery rows c^T Q_e^-1 c lies between 5.8e5 and 7e53 and N has THREE positive eigenvalues. The Beurling counts 3 and 5 reported by all seats are 1 + kappa_-(Q). COMPUTED also by the seat: 0 failures in 20000 random cases. Finite linear algebra; nominated for Lean by S1-parity (B92). | 2026-11-11 -> checked: the round-2 judge derived the identity independently (JUDGEMENT.md 1.4) and K-theory checked both written arguments | STATEMENT REWRITTEN 2026-11-11 to the machine-checked form, as the formal seat suggested: it is MORE general than the earlier wording (any dimension; invertibility of Q replaced by the existence of w; the cases t_e = 1 and t_o = -1 are covered). The earlier wording, with eigenvalue counts for invertible finite blocks, follows from it by Sylvester's law of inertia (textbook, not formalised). Both halves are machine-checked (rh/formal/PROGRESS.md; covered by the recorded full build of 00:52 UTC 2026-11-11, 'Build completed successfully (3157 jobs)', 16 files, no sorry). | 2026-11-11 -> formal: statement rewritten to the Lean statement (more general than the earlier one); file covered by the recorded full build of 00:52
 - checked by: R2-judge (JUDGEMENT.md section 1.4: 'proved, elementary', derived independently of the seat, COMPUTED in 36 rows) for the seat's claim; K-theory for the judge's bordered-matrix argument (same matrices up to a factor sqrt 2, both Schur complements) and for the seat's identity on board B92
 - formal: rh/formal/RHFormal/T32_InertiaRankOne.lean (theorems RHFormal.T32.even_le, even_gt, odd_gt, odd_le; #print axioms: propext, Classical.choice, Quot.sound only)
@@ -432,7 +432,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - status: checked
 - proof: rh/experiments/r2_cubic/PROOF_trickle.md, Lemma A
 - source: R2-cubic; it is the Hodge index theorem on a product of two curves in linear-algebra form (Haynsworth inertia additivity)
-- routes: #10
+- routes: #10, #23
 - note: Finite linear algebra (Sylvester's law of inertia): first choice for formalisation. Uses nothing about zeta. Its infinite-dimensional and per-parity form combined with the exact index is T61. | 2026-11-11 -> checked: checker's verdict: every line checks | FORMAL STATUS (2026-11-11 00:33 UTC, from rh/formal/PROGRESS.md): RHFormal/LemmaA_FibreClasses.lean checks as a single file: formal for 'Q >= 0 on V <=> Ntilde has no positive definite plane' on ANY real vector space (no finite dimension needed); NOT formal: the two counting equalities (Sylvester's law of inertia), which are what T61 uses. Status stays as it is until the formal seat's MEMORY.md lists the file as formal and the full `lake -d rh/formal build` has succeeded (no build product for this file existed when K-theory looked; K-theory did not run Lean, because the formal seat allows one Lean process at a time). | UPDATE: the Lean file(s) named above are covered by the recorded full build of 00:52 UTC (16 files, no sorry). The status stays `checked` because the Lean statement differs from the written one as described. For T50 the COUNT is now also in Lean (RHFormal/T50_FibreClassesCount.lean: kappa_-(Q) >= k <=> kappa_+(Ntilde) >= k+1, any dimension), which is what T61 uses; not formal: the equality of the numbers of zero eigenvalues, and the identification of kappa with eigenvalue counts (Sylvester).
 - checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Lemma A: correct, known. Every line checks'; COMPUTED: 2000 random (N,p,q), 0 violations; R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.1: 'proved, known': U-perp and the form on it expanded by hand, Sylvester)
 
@@ -441,7 +441,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - status: checked
 - proof: rh/experiments/r2_cubic/PROOF_trickle.md, Lemma B (Steps 1-5) and Remark 1
 - source: R2-cubic. KNOWN: Braenden-Leake, 'Lorentzian polynomials on cones', arXiv 2304.13203 v2, Lemma 2.8 with d = 3 (credited there to Cordero-Erausquin-Klartag-Merigot-Santambrogio 2019); pp. 6-9 read by R2-cubic-ref, p. 8 by R2-judge
-- routes: #10
+- routes: #10, #24
 - note: The only use of a sign is Perron-Frobenius in Step 5. Without irreducibility the conclusion fails. Finite linear algebra plus Perron-Frobenius: formalisable (mathlib has Perron-Frobenius only in part; medium). | 2026-11-11 -> checked: checker's verdict: correct; also in the literature that was read | FORMAL STATUS (2026-11-11 00:33 UTC, from rh/formal/PROGRESS.md): only Step 2 (reverse Cauchy-Schwarz) is in Lean (RHFormal/OnePositiveDirection.lean, with 'at most one positive eigenvalue' defined as 'no positive definite plane'; the equivalence with the eigenvalue count is not formalised). Steps 3-5 (Perron-Frobenius) are not. | UPDATE: the Lean file(s) named above are covered by the recorded full build of 00:52 UTC (16 files, no sorry). The status stays `checked` because the Lean statement differs from the written one as described. | The formal seat reports that mathlib v4.35.0 has NO Perron-Frobenius theorem; RHFormal/Perron_GroundState.lean (rh/formal/PROGRESS.md; written AFTER the recorded full build of 00:52, checked as a single file only) proves the finite ground-state version needed (off-diagonal <= 0, cut-connected: every minimiser has one strict sign and is unique up to scale); the full Step 5 is not yet typed.
 - checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Lemma B: correct, KNOWN. Identical in hypotheses and proof to Braenden-Leake Lemma 2.8, case d = 3'; R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.1: 'proved, known': Steps 1 to 5 checked; read Braenden-Leake Lemma 2.8 and its proof and matched the hypotheses one by one)
 
@@ -461,7 +461,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - depends: T51, T50
 - proof: rh/experiments/r2_cubic/PROOF_trickle.md, Lemma D
 - source: R2-cubic. Item (D3) is in the literature: Braenden-Huh, 'Lorentzian polynomials', Lemma 2.15 at d = 3 (its proof uses only that each slice has one positive eigenvalue and a^T T_k a > 0), per the note rh/library/branden-huh-lorentzian.md (seat R-read-1; the paper was read in part). (D1), (D2), (D4) have no literature source on record
-- routes: #10
+- routes: #10, #24
 - note: Checker's precision, accepted by the seat (board B38, B64): D4 bounds the QUADRATIC value; the vector T_k vt is controlled only at the sqrt(mu) scale; the 'Meaning' paragraph about the continuum ladder is an extrapolation, not part of the lemma. | 2026-11-11 -> checked: checker's verdict: correct
 - checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Lemma D (D1-D4), Lemma E: correct'; R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.1: 'proved': D1 to D4 checked; D4 bounds the quadratic value only)
 
@@ -481,7 +481,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - depends: T51
 - proof: rh/experiments/r2_cubic/PROOF_BE_cubic.md, section 1 (Theorem F)
 - source: R2-cubic
-- routes: #10, #11
+- routes: #10, #11, #24
 - note: No sign condition on H is used. Idea #10's certificate and idea #11's curvature are one object for this canonical cubic; by T65 it cannot certify a zero-margin statement. Not found in two searches by the checker. | 2026-11-11 -> checked: checker's verdict: recomputed by hand
 - checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Theorem F (F1-F5): correct. Recomputed F1, F2 (all four collected lines), F3, F5 (all three entry types) by hand'; COMPUTED: three constructions agree to 6e-15 (checker), 2e-14 (R2-judge J7); R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.1: 'proved': F1, the four collected lines, the pairing, F3 and the distinct-triple case of F5 by hand; own code J7)
 
@@ -491,7 +491,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - depends: T53, T55
 - proof: rh/experiments/r2_cubic/PROOF_BE_cubic.md, section 3 (U), (V)
 - source: R2-cubic
-- routes: #10
+- routes: #10, #25
 - note: COMPUTED (seat; checker on a 0.001 grid; R2-judge J4): no t makes the slices Lorentzian for zeta (best worst-case -0.0184 at t = 0.014, L = 1, 12 boxes) nor for the Beurling control (-0.0239). The seat's 'best t = 0.05' was a grid artefact (conceded, board B64). | 2026-11-11 -> checked: checker's verdict: correct with the normalisation stated
 - checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Sec. 3 (U), (V): correct. Normalisation: formulas with <g> = mean need total mass of pi equal to 1'; R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.1: 'proved': (U) from D3; (V) the four contractions by hand; needs total mass 1)
 
@@ -540,7 +540,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - depends: T50, T29, T30, T7
 - proof: rh/experiments/s1_seminar/parity/NOTES.md, section E (board B32)
 - source: S1-parity, combining R2-cubic's Lemma A with R2-parity's Theorem 4
-- routes: #10
+- routes: #10, #23
 - note: Closes the bookkeeping wall WP1: the signature of N undercounts (one quartet can be invisible to it, T31), the signature of Ntilde is exact. Still a dictionary: holds for any system with the same kind of explicit formula. | 2026-11-11 -> checked: proof re-derived; the algebraic part of Lemma A holds for kappa counts in infinite dimension
 - checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C10)
 
@@ -549,8 +549,8 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - status: open
 - depends: T4, T50, T51, T52, T55
 - source: S1-cubic (board B38, 'WALL, exact statement'); lead (idea #10, notebook N25, N28)
-- routes: #10
-- note: OPEN and not precise. What is established around it: existence without structure is vacuous (T52); the canonical degree-1 cubic fails by a factor 2 (T55, T65); COMPUTED: certificates of chain-degree 2 exist for zeta with margins 1.2e-3 .. 2.6e-4 and equally for random Lorentzian matrices, with no formula for the coefficients; nothing in the cubic seat's lemmas uses the integers or the Euler product (board B51). Idea #10 is parked on this.
+- routes: #10, #25
+- note: OPEN and not precise. What is established around it: existence without structure is vacuous (T52); the canonical degree-1 cubic fails by a factor 2 (T55, T65); COMPUTED: certificates of chain-degree 2 exist for zeta with margins 1.2e-3 .. 2.6e-4 and equally for random Lorentzian matrices, with no formula for the coefficients; nothing in the cubic seat's lemmas uses the integers or the Euler product (board B51). Idea #10 is parked on this. | Idea #25 (round-2 audit) records the seat's CONJECTURE that the least chain-degree d* of a polynomial certificate is finite when the margin is positive and diverges as the margin closes; it is a conjecture about this entry's object, not a separate proved statement.
 
 ## T63 · Ground-state transform: the form of N is lambda_1 minus a Dirichlet form, and 'one positive direction' is a spectral gap
 - statement: CHAIN SETTING. W a finite set, N a real symmetric matrix on W with N_xy >= 0 for x != y, irreducible; lambda_1 its top eigenvalue, u > 0 the normalised eigenvector (Perron-Frobenius), pi = u^2; q_xy = N_xy u_y/u_x (x != y), L f(x) = sum_y q_xy (f_y - f_x), E(h) = (1/2) sum_{x != y} N_xy u_x u_y (h_x - h_y)^2, Gamma(f)(x) = (1/2) sum_y q_xy (f_y - f_x)^2, Gamma_2(f) = (1/2) L Gamma(f) - Gamma(f, Lf). Then for every vector h: <uh, N uh> = lambda_1 ||h||_pi^2 - E(h) (uh the pointwise product). Consequently N has at most one positive eigenvalue iff E(h) >= lambda_1 ||h||_pi^2 for all h with pi-mean zero, i.e. iff the reversible jump process with rates q_xy has spectral gap >= lambda_1.
@@ -575,7 +575,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - status: checked
 - proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem C; the uniform case also in rh/experiments/r2_cubic/PROOF_BE_cubic.md, section 2
 - source: R2-curv, R2-cubic. (C1), (C2) KNOWN: Schmuckenschlaeger 1998 (MSRI Publ. 34, pp. 189-197; p. 189 and the start of section 2 read by R2-curv-ref); (C4) is the standard integrated Bakry-Emery criterion
-- routes: #10, #11
+- routes: #10, #11, #24
 - note: This is why idea #11 was killed: pointwise curvature is capped near half the gap, and RH (in the reading of T63) has zero margin. COMPUTED: zeta at L = 1 gives 0.59, 0.53, 0.48 (12, 24, 48 boxes) and the Beurling control the same to 2%. A Lean file C1_ResamplingGamma2.lean is in progress in rh/formal (not imported, not yet formal). | 2026-11-11 -> checked: both checkers re-derived it | FORMAL STATUS (2026-11-11 00:33 UTC, from rh/formal/PROGRESS.md): RHFormal/C1_ResamplingGamma2.lean checks as a single file: (C1) and (C3) with no difference (they hold for any real pi with sum 1); (C2) as two halves at a fixed site (the bound with constant (lam/2)(1 + 2 pi_x), and equality for f = delta_x), not as one statement about an infimum; 'the gap is lam' and (C4) are NOT formalised. So at best this entry becomes formal in part. Status stays as it is until the formal seat's MEMORY.md lists the file as formal and the full `lake -d rh/formal build` has succeeded (no build product for this file existed when K-theory looked; K-theory did not run Lean, because the formal seat allows one Lean process at a time). | JUDGE (2.5 and section 4, item 7): 'the factor 2 is structural' is PROVED for the resampling model only; for the prime chain the constant is COMPUTED and is not 1/2 (centre 0.5061, 0.4965, 0.4908 at M = 80, 160, 320; minimum over sites 0.4302 at M = 320, still falling; the total jump rate grows with refinement). The report sentence 'CD(rho, n) gives at most (n-4)/(2(n-1))' is wrong as written: exact constant on m points 1/2 - 2/n + (1 + 2/n)/m. | UPDATE: the Lean file(s) named above are covered by the recorded full build of 00:52 UTC (16 files, no sorry). The status stays `checked` because the Lean statement differs from the written one as described.
 - checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING' and 'FINAL VERDICTS'): 'C: (C1)-(C4) re-derived: correct'; R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): resampling constant 1/2 + 1/m 'PROVED in two lines'; R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section 1.1 and 1.2: 'proved, known': C1 to C4 rederived; the constant (m+2)/(2m) rederived)
 
@@ -722,7 +722,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - status: open
 - depends: T31, T32
 - source: round-1 judge (wall WJ13), R2-parity (wall WP1), R2-judge (JUDGEMENT.md 1.3 'Label for the second half: open'; 2.14)
-- routes: #10
+- routes: #10, #23
 - note: OPEN. Evidence only (R2-judge J18, one implementation, finite subspaces): in every surgery configuration of zeta with one quartet (b = 0.3; L = 0.5 to 1.25) N has three positive eigenvalues, and c^T Q_e^-1 c lies between 5.8e5 and 7e53. A surgery configuration is not a system with a non-negative prime side. If true it would make idea #10's signature claim equivalent to RH; idea #10 is parked.
 
 ## T82 · Window positivity with one prime: the Weil form is strictly positive on every window L <= (1/2) log 3
@@ -827,12 +827,60 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 
 ## T93 · Schur ray in the damping parameter, and multiplier duality
 - statement: Notation of T7. For real eps let W_eps be the Weil kernel multiplied by e^{-eps|u|} (atoms Lambda(n) n^{-1/2-eps}; the form attached to the line Re s = 1/2 + eps). (1) If the form of W_eps is >= 0 on D_L and delta > 0, the form of W_{eps+delta} is >= 0 on D_L; so {eps : W_eps >= 0 on D_L} is a ray [eps*(L), infinity) or empty, and eps*(L) is non-decreasing in L. (2) More generally multiplying a kernel k(u) by a positive definite function preserves positivity of the shift form [k(x-y)]; multiplying by cosh(du) preserves positivity of every mirror form [k(x+y)] and may destroy that of the shift form; multiplying by cos(tu) does the opposite.
-- status: proved
+- status: checked
 - proof: rh/NOTEBOOK.md, entry N35 (i) (two lines); rh/specialists/operator/PROOFS.md P3 (two lines)
 - source: lead (N35); SP-operator (P3). Partly in print: Suzuki arXiv 1606.05726 attaches canonical systems to the shifted functions xi(s - omega)^nu / xi(s + omega)^nu (T16); the Schur-monotone ray and the scalar eps*(L) for the window form were not found there (READER-1, SP-operator). Not searched otherwise
 - routes: #8, #21
-- note: A reformulation (owner rule 2) until it brings an input: RH <=> eps*(L) <= 0 for all L. Stated in N35 without proof and NOT part of this entry: (ii) eps*(L) <= 1/2 for every L unconditionally (this is the unconditional half of T-entry 'Poisson splitting', SP-operator P4), (iii) sup_L eps*(L) = Theta - 1/2. The tilted control F_d is 'damped + anti-damped' (T79).
+- note: A reformulation (owner rule 2) until it brings an input: RH <=> eps*(L) <= 0 for all L. Stated in N35 without proof and NOT part of this entry: (ii) eps*(L) <= 1/2 for every L unconditionally (this is the unconditional half of T95, SP-operator P4), (iii) sup_L eps*(L) = Theta - 1/2. The tilted control F_d is 'damped + anti-damped' (T79). | 2026-11-11 -> checked: two-line proofs re-derived
 - checked by: K-theory (Schur product for forms: e^{-delta|u|} = int e^{itu} dmu(t) with mu >= 0, so the form of K p at f is int Q_K(e^{itx} f) dmu(t) >= 0; nestedness of the windows; the rank-2 kernel identities for cosh and cos)
+
+## T94 · The window space is a de Branges space whenever the window form is strictly positive
+- statement: Notation of T10. Let a > 0 with lambda_a > 0 (all small a unconditionally by T2; all a under RH). Let H_a := {vhat : v in Dom_a} with norm ||vhat||^2 := Q(v). Then H_a is a de Branges space: there is an entire function E_a with |E_a(conj z)| < |E_a(z)| for Im z > 0 and H_a = H(E_a) isometrically. In particular, for a non-real w and v in Dom_a with vhat(w) = 0, the function vhat(z)(z - conj w)/(z - w) is the transform of some g in Dom_a with Q(g) = Q(v), for the indefinite zero-side form as well.
+- status: proved
+- depends: T7, T10, T2
+- proof: rh/specialists/operator/PROOFS.md, P1
+- source: SP-operator (specialist seat). Suzuki arXiv 2606.09096 section 7.9 states it under RH
+- routes: #8
+- note: PROVED given de Branges' axiomatic characterisation (de Branges 1968, Thm 23: CITED FROM MEMORY by the specialist, who says it is restated in Suzuki section 7.9, a paper read in full by READER-1). Not independently checked. The isometry step uses the zero-side formula on C_c^inf only (T7) and extends by density and closedness, so it does not need the open T80. Consequences named by the specialist: the reproducing kernel K_a(z,z) = sup |vhat(z)|^2/Q(v) is non-decreasing in a; t_e, t_o of T32/T33 are combinations of K_a at z = +-i/2.
+
+## T95 · Poisson splitting: the log-derivative of the completed zeta function is a generalised Nevanlinna function with exactly one negative square iff RH
+- statement: With s = 1/2 - iz, Lambda(s) = pi^{-s/2} Gamma(s/2) zeta(s), q(z) := i (Lambda'/Lambda)(1/2 - iz) and m(z) := i (xi'/xi)(1/2 - iz): (1) Im m(z) = Re (xi'/xi)(1/2 + y - ix) for z = x + iy; m(. + id) is a Nevanlinna function for every d >= 1/2 unconditionally, and for all d > 0 iff RH; {d : m(. + id) is Nevanlinna} = [d_0, infinity) with d_0 = sup Re rho - 1/2. (2) q = m + 2z/(z^2 + 1/4), and the rational term is of class N_1. (3) The number of negative squares of q is 1 + #{distinct gamma with Im gamma > 0} when that number is finite (q is in no class N_kappa otherwise); so RH <=> q in N_1.
+- status: proved
+- depends: T8
+- proof: rh/specialists/operator/PROOFS.md, P4
+- source: SP-operator. (1) is known (Re xi'/xi > 0 on Re s > 1/2 iff RH: Hinkkanen 1997, Lagarias 1999, from memory); 'a function of N_kappa has at most kappa poles in the upper half-plane': Luger-Ou arXiv 2202.13246 section 3.2 (read by the specialist)
+- routes: #8, #1
+- note: PROVED 'modulo the convergence bookkeeping for infinitely many real zeros', which the specialist says was NOT checked line by line; not independently checked. A reformulation of RH (owner rule 2); the function-theoretic counterpart of the exact index T29 and of the judge's 'three counts of the same integer' (T15).
+
+## T96 · Suzuki's dial: reflection symmetry in the shift, and where the dial of the tilted control ends
+- statement: Let E_d(z) := xi(1/2 + d - iz) and E#(z) := conj(E(conj z)). Then E_d# = E_{-d}, so Theta_d := E_d#/E_d satisfies Theta_d Theta_{-d} = 1. E_w is a Hermite-Biehler function iff w > d_0 := sup Re rho - 1/2. For F_d = zeta(s-d) zeta(s+d) the completed function on the shifted line is E_{w-d} E_{w+d}, which fails to be Hermite-Biehler as soon as w - d < d_0: the dial of F_d ends at w = d + d_0.
+- status: proved
+- depends: T8
+- proof: rh/specialists/operator/PROOFS.md, P5
+- source: SP-operator; 'E_w is Hermite-Biehler iff w > d_0' is Suzuki arXiv 1606.05726 Prop. 4.3 (paper read in full by READER-1)
+- routes: #8, #21
+- note: PROVED per the specialist; short; not independently checked.
+
+## T97 · Derivative in the window of the ratio of the two parity determinants (bounded continuous kernels only)
+- statement: Let K_L be the integral operator on L^2(-L, L) with kernel k(x - y), k even and continuous, I + K_L invertible, and Gamma_L the kernel of I - (I + K_L)^{-1}. Then (d/dL) log det(I + K_L) = Gamma_L(L, L) + Gamma_L(-L, -L), and (d/dL) log [det(even block)/det(odd block)] = 2 Gamma_L(L, -L).
+- status: proved
+- proof: rh/specialists/operator/PROOFS.md, P6
+- source: SP-operator; the first formula is the standard Bellman-Krein / Fredholm endpoint formula (notebook N19, from memory)
+- routes: #8
+- note: PROVED for this class only (per the specialist; not independently checked). For the Weil form (unbounded, logarithmic order, atoms) the statement needs a regularised determinant and is NOT proved; it is the nearest proved relative of the open T42.
+
+## T98 · Explicit dial coefficients: the first log-coefficients of theta^n as polynomials in n, and which small n have all coefficients non-negative
+- statement: Let theta(q) = sum_{k in Z} q^{k^2}, r_n(m) := coefficient of q^m in theta^n (real n), a_n(m) := r_n(m)/(2n), and c_n(m) := coefficient of m^-s in log sum_m a_n(m) m^-s. Then r_n(2) = 2n(n-1), r_n(3) = (4/3) n(n-1)(n-2), r_n(7) = 64 C(n,4) + 128 C(n,7); c_n(2) = n - 1, c_n(3) = (2/3)(n-1)(n-2), c_n(4) = 1 + (1/3)(n-1)(n-2)(n-3) - (n-1)^2/2. Consequently {n in [0,3) : r_n(m) >= 0 for all m} = {0, 1, 2} and {n in (0,2] : c_n(m) >= 0 for all m} = {1, 2}.
+- status: proved
+- proof: rh/experiments/r2_free/PROGRESS.md ('Hand results before computing'; machine recheck in wallach.py.txt)
+- source: seat R2-free (creation seat, withdrawn when round 2 was split)
+- routes: #26, #12
+- note: PROVED by hand and rechecked by one implementation in exact rationals; no checker and not seen by the round-2 judge (idea #26's own evidence field). The larger claims of idea #26 (the sets on (0, 14], n = 8) are COMPUTED on a grid only and are not entered.
+
+
+
+
+
 
 
 

@@ -54,3 +54,4 @@ L = 0.5, n = 96: weight of the prime 2 multiplied by kappa
    kappa = 1.50: t_0 = 0.988831 ; min(f)/max(f) = -1.9757e-01 ; sign changes of f 2 ; #pos(N_e) 2
    kappa = 2.00: t_0 = 0.994157 ; min(f)/max(f) = -2.1966e-01 ; sign changes of f 2 ; #pos(N_e) 2
    kappa_P (t_0 = 1): 0.900325 1.014846 1.081986
+   kappa_F (edge value of f = 0): 0.986075 1.053391
