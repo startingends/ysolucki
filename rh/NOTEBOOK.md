@@ -524,3 +524,29 @@ mode, rule 13; RISK labels as stated).
   and showed that such an operator can carry only part of the zeros (a spacing obstruction, linked to pair
   correlation). If that is right, it is exactly the object rule 13 asks for at this wall, already built, with the
   exact place where it stops. Reader seat sent.
+
+**N44. Two independent derivations agree, and the wall moves to "what ω has that a class-number-2 point lacks"**
+(lead, 2026-11-11, after SP-operator's `rh/specialists/operator/OBJECT_PHI.md`, written without seeing N43).
+- AGREEMENT. SP-operator derived independently: Q(s) − Q(1 − s) = Φ(s)²/((1 − 2s)Λ(2s)Λ(2 − 2s)) for the Krein
+  function Q of the point interaction at ω; so zeros of Φ are where the two sheets of Q agree (N43). Two derivations,
+  same statement; normalisation unchecked by both. Its sentence for the wall: **self-adjointness makes real the
+  zeros of Krein functions and of separating constant terms, never of form factors**; Φ is a form factor.
+- FAKE FIRST, applied by the seat itself: every statement of that picture holds verbatim at a CM point of class
+  number 2, where the zeros of s ↦ E*(z, s) leave the line. So the operator picture does not use what ω has.
+- WHAT ω HAS (lead). For K of class number one, the evaluation f ↦ f(ω) is a joint eigen-functional of the Hecke
+  algebra restricted to the torus K^× (the Heegner "cycle" is the single point). That is why Φ has an Euler product:
+  multiplicity one for torus-invariant functionals (Tunnell–Saito; recalled, unread) makes the period factor into
+  local pieces. For class number 2 a single point is not torus-invariant; its Epstein zeta function is
+  (ζ_K ± L(s, ψ))/2 for the class-group character ψ, a Davenport–Heilbronn-type combination. So **the impostor IS the
+  Eisenstein family evaluated at a point that is not a torus orbit.** In this setting the fake has a location.
+- A TEST I RAN BY HAND and that failed: Hecke correspondences T_p for split p = ππ̄ map ω to itself twice (the two
+  endomorphisms π, π̄); so at a zero, E(·, ρ) has zero average over the other p − 1 points of T_p(ω). Iterated over n
+  this is only the factorisation ζ_{O_f}(s) = ζ_K(s) × (finite Euler factors at f) for the orders of conductor f:
+  nothing new. Recorded as a dead end.
+- WHERE THAT LEAVES THE WALL, as a question for the next attempt: positivity attached to TORUS PERIODS exists for
+  cusp forms (Waldspurger: |period|² = central L-value × local factors ≥ 0). For the Eisenstein series the period is
+  ζ_K(s) itself, linear, not squared, so nothing is non-negative. The object that would make this wall trivial: a
+  representation in which ζ_K(s)·ζ_K(1 − s̄)̄ (the analytic continuation of |ζ_K(½ + it)|²) is the squared norm of a
+  torus-invariant vector for EVERY s, not only on the unitary axis. Off the unitary axis the principal series is not
+  unitary (complementary series only for real s in (0, 1)), so the norm is indefinite there. That indefinite form, on
+  the non-unitary principal series of parameter s, evaluated on the torus-invariant vector, is the next object.
