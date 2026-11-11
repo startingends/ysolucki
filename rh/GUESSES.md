@@ -61,3 +61,22 @@ the next narrowing.
 Guess A: Quality 3 (concrete, with a verified anchor Φ_n(1) = e^(Λ(n)) and five checkable consequences), Toward RH 3
 if A1 can be constructed with A3 respected; it would reduce RH to a known theorem (arithmetic Hodge index) applied to
 a specific family of arithmetic divisors. The risk is that A1 is impossible for a reason the next round finds.
+
+## Outcome of Guess A (SP-modular, `rh/specialists/modular/GUESS_A.md`; N117)
+- The anchor extends to all pairs: |Res(Φ_m, Φ_n)| = p^(φ(n)) if m/n is a power of p, 1 otherwise (checked on all
+  1770 pairs n < m ≤ 60, prediction first; classical: Apostol's resultant formula (m)). So the finite pairing of the
+  torsion divisors T_m, T_n is φ(n)Λ(m/n): multiplicative in the ratio, the exact shape of Weil's prime side (the
+  multiplicative Toeplitz matrix of N91).
+- **Killed:** the finite part cancels for EVERY metric (proved): any Green function for T_m is −Σ log|z − ζ|² + smooth,
+  and its singular part on T_n is exactly −2 log Res, so the pairing depends only on the smooth parts; degree-zero
+  D(f) are ℝ-combinations of principal divisors, and Hodge index on P¹_ℤ is purely archimedean (a Dirichlet energy on
+  P¹(ℂ)). Natural Green functions give the wrong kernels (admissible: rank ≤ 3; rotation-invariant: rank 1;
+  translation-invariant: Ramanujan sums, not a function of m/n). W_∞ does not come out; a tailored metric only puts
+  Weil's form in by hand (then the inequality is RH, and the impostor passes it too).
+- **Narrowing N1:** the generic fibre must have a non-trivial Picard variety (the toric failure is Pic⁰ = 0 plus the
+  product formula, not concavity). **Narrowing N2:** no single arithmetic surface works: its Hodge index has ONE degree
+  condition (deg D_ℚ = 0), Weil's has TWO (the two rulings of C × C), and it controls H¹ of the generic fibre (finite
+  rank, cf. MISSING_SPACE §7), not "H¹ of Spec ℤ"; Weil's constant family C × C → C has no analogue with fibre Spec ℤ.
+- Remaining Arakelov setting: Guess C (the modular tower with its Eisenstein boundary cycles). The missing computation:
+  an arithmetic pairing on Eisenstein (boundary) cycles indexed by a test function on the spectral line, compared with
+  Weil's form for ζ(2s). Ratings (seat): Quality 6, Toward RH 1.

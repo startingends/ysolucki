@@ -2042,3 +2042,10 @@ Riemann–Roch amplifier); §3's collapse withdrawn (Witt vectors and function s
 stand (§7 holds for any non-real ρ and excludes finite-rank algebraic towers, not completed or analytic objects).**
 Remaining picture: Witt vectors (group, every character, no ∞) / Connes' adele class space (zeros, scaling, no group)
 / modular Jacobians (group, polarisation, Hodge index, Hecke spectrum not zeros). Details in MISSING_SPACE.md §8.
+
+**N117. Guess A killed in its concrete form; two narrowings** (SP-modular, `GUESS_A.md`; see `rh/GUESSES.md`).
+Torsion divisors on G_m/ℤ pair as φ(n)Λ(m/n) (Apostol's resultants, checked on 1770 pairs), the exact shape of Weil's
+prime side; but the finite part cancels against the singular Green part for EVERY metric, so on P¹_ℤ Hodge index is
+purely archimedean and W_∞ does not appear. N1: the generic fibre needs a non-trivial Picard variety. N2: no single
+arithmetic surface works (one degree condition versus Weil's two; it sees H¹ of the generic fibre, of finite rank).
+Remaining: Guess C, the modular tower's Eisenstein boundary cycles.

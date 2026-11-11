@@ -242,3 +242,7 @@ there the bound is Harder's compact support). A cusp over Q forces a continuous 
 ## MISSING_SPACE_CHECK.md written (adversarial check of rh/MISSING_SPACE.md). No numerics; literature mostly FROM MEMORY.
 Verdicts: sec 2 correct with fix (the gap is ample class + RR amplifier, not the group law; C x C handles signed classes); sec 3 wrong as
 stated (Witt vectors with F_n, function spaces see all characters); sec 4 correct with fix (closest: Bost-Kuehn omega-hat^2 ~ zeta'(-1)/zeta(-1)).
+## (GUESS_A session) PREDICTION (P12), written before computing (clock: 20:58 UTC)
+For 1 <= n < m <= 60: |Res(Phi_m, Phi_n)| = p^phi(n) if m/n is an integer power of a prime p (n | m), else 1 (Apostol's formula, from memory);
+in particular n = 1 gives Phi_m(1) = e^Lambda(m). Prediction: holds for every pair, no exception.
+Result of P12 (scratchpad res_check.py, sympy, memcap 1 GB): 1770 pairs, 0 failures. HIT.
