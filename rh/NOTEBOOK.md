@@ -929,3 +929,15 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   under RH; PROVED that no positive-definite / Markov semigroup joins the two endpoints monotonically for the Möbius
   form (blind prediction of monotonicity missed). Reading: **every finite place is exactly solvable; the whole
   difficulty is the archimedean place, entering through the long sum** (barrier B10 restated exactly).
+- S1-mirror (B18, `rh/experiments/s1_seminar/mirror/S2_B7.md`): per-prime Poisson identity (PROVED, known in substance;
+  checked to 1e-15): log p·Σ_k p^(−k/2)(φ∗φ)(k log p) = Σ_m F(2πim/log p)², so
+  Σ_ρ F(ρ)² + Σ_m F(−2m)² + Σ_p Σ_m F(2πim/log p)² = F(1)²: one square at the pole against squares at zeros, trivial
+  zeros and every local Euler pole. Exact, no inequality. **The sentence to keep: every per-prime duality has
+  time–frequency area 2LT/π, independent of p, so none of them sees e^(2L): the band edge is placed by the PRIME
+  NUMBER THEOREM, not by any identity.** Widder's three hypotheses each dropped in turn: every exact structure that
+  keeps a sign lives on the far side; Krein–Langer handles finite index only, and the near side has infinite index on
+  every window. Outside structure named: Kurasov–Sarnak's Lee–Yang crystalline measures on a Kronecker line.
+- STATE OF S2 after four of six answers: every proposal is either exact and sign-free on the near side (per-prime
+  Poisson, the tensor box, the gcd identity, Patterson's residue) or sign-carrying and confined to the far side;
+  three seats name the near-side requirement as parity / averaged Chowla with a power saving. My B9 criterion is close
+  to being met; I hold the close until S1-parity and SP-sieve answer.

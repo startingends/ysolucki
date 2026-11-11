@@ -6,8 +6,12 @@ mp.mp.dps = 30
 L = mp.mpf(1)
 phi = lambda x: x * x * (1 - x) if 0 < x <= L else mp.mpf(0)
 def F(s):
-    # closed form by mpmath quadrature (smooth integrand)
-    return mp.quad(lambda x: phi(x) * mp.exp((s - mp.mpf(1) / 2) * x), [0, L])
+    # closed form: int_0^1 x^n e^{zx} dx by the recursion I_n = (e^z - n I_{n-1})/z, z = s - 1/2 (|z| >= 1/2 here);
+    # first version used mp.quad, which is wrong at frequencies ~1e4 (the 03:17 log): replaced
+    z = mp.mpc(s) - mp.mpf(1) / 2; ez = mp.exp(z)
+    I = [(ez - 1) / z]
+    for n in range(1, 4): I.append((ez - n * I[-1]) / z)
+    return I[2] - I[3]
 def conv(u):   # (phi*phi)(u) = int phi(t) phi(u - t) dt
     lo, hi = max(mp.mpf(0), u - L), min(L, u)
     return mp.quad(lambda t: phi(t) * phi(u - t), [lo, hi]) if hi > lo else mp.mpf(0)

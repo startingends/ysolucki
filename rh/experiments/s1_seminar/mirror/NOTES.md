@@ -281,3 +281,11 @@ X2. Widder forbids the SIGN on any class containing L^2 of an interval; the per-
     every class, with signature (1,1) per pair m, -m: same Krein structure as the zeros (B54).
 ### BLIND PREDICTION (03:25 UTC): identity X1 checked numerically for phi = x^2(1-x) on (0,1]: p = 2 and p = 3 agree to better
     than 1e-8 with |m| <= 2000; p = 11 (log 11 > 2L) gives |sum| < 1e-8.
+### RESULTS S2/B7 (03:17-03:35 UTC). Files: s2_poisson.py.txt (s2_poisson.log), S2_B7.md (full answer). Posted s2 B18 (answer), B17 (question to SP-reflection).
+- Prediction X1 HIT after fixing my own quadrature bug (first run used mp.quad at frequencies ~1e4: wrong by 1e-3; replaced by the
+  closed form; agreement 1e-15 for p = 2, 3, 5, 7; p = 11 gives 3e-16).
+- Content: the per-prime mirror Poisson identity (mirror twin of T60); D1 = fixed points of x -> -x on R/(log p)Z; second fixed point gives a
+  second positive comb {(i+1/2) log p}; per-prime dualities have p-independent area 2LT/pi and never see e^(2L): the wall is placed by the PNT.
+- Near side: exact, no sign: D1's square F(0)^2 cancelled by aliases (99.5% for p = 7 on phi = x^2(1-x)).
+- Widder: (W1) interval, (W2) one reflection, (W3) index 0; dropping any one known; none keeps a sign on the near side.
+- Outside: Kurasov-Sarnak (unread; recalled via idea #6 novelty note), question B17 to SP-reflection.
