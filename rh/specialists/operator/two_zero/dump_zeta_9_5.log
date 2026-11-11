@@ -1,0 +1,7 @@
+KIND = zeta, L = 9/5, lam^2 = 36.5982, NB = 180, nh = 40, prec = 380; prime powers [2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 29, 31, 32]; Q built 69s
+D built 111s (x nodes 5640, xi nodes 389)
+saved 111.16191077232361
+
+real	1m51.311s
+user	1m49.481s
+sys	0m0.937s

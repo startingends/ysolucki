@@ -60,3 +60,40 @@ eigenvalue ≤ 1e-6, with degree conditions (E_NB) or without (E′_NB).
 (ii) same g with ZETA's P_NB at L = 1.8 (needs a zeta dump at L = 1.8): E′_NB infeasible (probability 0.6: zeta's ladder is
     built on the band c = 2πe^{3.6}, the impostor's on c/5; g lives on the latter).
 (iii) zeta L = 1.0, 1.25 test directions (positive-degree tops): feasible as they stand (they are ≥ 0, R4).
+
+## 5. Computation (COMPUTED; two_zero/effect3.py.txt; P_NB = L²-eigenvectors of D with eigenvalue ≤ 1e-6, from the dumps;
+new dump QDmp_zeta_9_5_180.pkl (zeta at L = 1.8, 380 bits); grid 2001 points, |c_j| ≤ 1e3; not certified)
+| g | P_NB from | dim (deg-0) | E_NB (degree-zero P) | E′_NB (whole P) |
+|---|---|---|---|---|
+| impostor 1.8, degree-zero negative direction | impostor D | 11 (9) | **+0.0000** (g + p ≡ 0: g is itself in P) | +3.33 |
+| impostor 1.8, same g | **zeta D (L = 1.8)** | 50 (48) | **−0.0016** (g within 0.2% of zeta's P) | +2.30 |
+| impostor 1.8, control (random deg-0 bulk) | impostor D / zeta D | | −0.575 / −0.359 infeasible | **+0.275 / +0.145 feasible** |
+| zeta 1.0: L²-top of D·D (take −g) / D⁻¹(a + b) / control | zeta D | 9 (7) | −g ≥ 0 as is / +0.0003 / −0.505 | +0.43 / +0.50 / −0.27 |
+| zeta 1.25: same three | zeta D | 18 (16) | +0.646 / 0.000 / −0.999 | +0.76 / +0.05 / −0.96 |
+**Prediction score.** (i) E_NB infeasible: MISS in letter (the LP finds g + p = 0, the trivial solution Prop. R5.1 allows
+only when g is itself near-principal; it is); E′_NB feasible: HIT. (ii) E′_NB with zeta's P infeasible: MISS (feasible, and
+so is the control: E′ is trivial). (iii) zeta test directions effective: HIT.
+**Reading.**
+- E′_NB (principal divisors of free degree) is TRIVIAL: even random bulk functions become effective (controls feasible at
+  1.8), exactly as §2 predicted (positive-degree dilation sums E(h), h ≥ 0, absorb any negative part). It carries no RH content.
+- E_NB (degree zero) is decided by Prop. R5.1, and the decisive fact is: **the impostor's failing degree-zero class is itself
+  near-principal, with respect to its OWN dilation sums (exactly, to the LP's precision) and to ZETA's (within 0.2%).** Its
+  L² share in the D-ladder is essentially 1; its Q/‖g‖² is 5e-17; yet relative to D (the Nyman–Beurling distance) its
+  self-intersection is +0.29. So in K3's language: **there are near-principal divisors with positive self-intersection.** The
+  intersection form is not continuous with respect to "being principal": a principal divisor must have D·D = 0, but classes
+  ε-close to principal in the dilation-sum geometry can have D·D/D of order 1 when D itself is ε-small. This is plank 5 seen
+  from the other side: such a class is f = E(g)|_window with a tiny leak, and its whole Weil form is the Weil form of the tail
+  (Q(f) = W(T)), negative when the tail sees the off-line zero (the quartet at 85.7 is above the impostor's band edge 46).
+- Consequence for R5: "principal = dilation sums" is the right algebra (Mellin ζ·ĥ, numerically trivial in the limit) but on a
+  window it cannot be used as a subspace: the only exact window principal divisor is 0 (§1), and the approximate ones carry
+  arbitrary signs of D·D in the D-normalisation. Whatever K3 needs, it must make D·D vanish on principal divisors EXACTLY,
+  which forces leaving the window (all of ℝ₊*), where the Nyman–Beurling theory lives and where the quantitative content is
+  the classical Nyman–Beurling/Báez-Duarte distance (known to be RH-equivalent).
+
+## 6. Ratings
+**Quality 6/10**: the identification "D = Nyman–Beurling distance on the window" is proved from plank 5, exact window
+principal divisors are shown to be 0, the one coefficient-positivity mechanism (Farkas + E* injective) is found and shown to
+need positive degree, and the computation exhibits near-principal divisors of positive self-intersection (the impostor's
+failure), for both functions' dilation sums; not higher because it is uncertified and the decisive statement (an exact,
+off-window version) is not attempted. **Toward RH 1/10**: R5's principal divisors either are trivial on the window or lead back
+to the Nyman–Beurling distance, an RH-equivalent quantity; nothing here proves an inequality.

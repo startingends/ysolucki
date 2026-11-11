@@ -2002,3 +2002,27 @@ SP-operator session 8, `rh/specialists/operator/REVERSE_R4.md`; LP not certified
   Then E reads: "a wrong-sign class plus a Nyman–Beurling function can be made nonnegative", which ties Weil's
   Hodge-index architecture to Nyman–Beurling approximation through effectivity. Possibly known in spirit (Burnol,
   Báez-Duarte); to be checked.
+
+**N114. REVERSE plank R5: on a finite window there are no principal divisors, and near-principal ones can have
+positive self-intersection; exact principal divisors force leaving the window** (lead, after SP-operator session 9,
+`rh/specialists/operator/REVERSE_R5.md`; not certified).
+- PROVED: the only exact principal divisor in a window is 0 (a window function's Mellin transform has bounded
+  exponential type and cannot vanish at all zeros, which grow like T log T). PROVED: every window function is the
+  window cut of a dilation sum via its companion (plank 5), so **the Möbius norm D is exactly the Nyman–Beurling
+  distance on the window** (not recalled in print by the seat; not searched). Hence P_NB,ε = the D-small directions =
+  R4's ladder again (dimension about 2e^(2L) for ζ, 2e^(2L)/5 for the impostor).
+- E with degree-zero P_NB is again exactly Weil positivity (proved). The coefficient-positivity mechanism (Farkas +
+  E* injective on positive measures, ζ's coefficients all 1) makes every g effective, but only through principal
+  divisors of POSITIVE degree, so the degree-free E′ is trivially true; for the impostor it breaks at its coefficient
+  signs, not at multiplicativity.
+- Computed: the impostor's degree-zero failing class at L = 1.8 is itself near-principal (g + p = 0 with its own
+  dilation sums, within 0.2% of zeta's); E′ feasible even for random controls; zeta's test directions effective as
+  they stand. Near-principal classes have D·D/D ≈ +0.29: **the intersection form is not continuous with respect to
+  being principal.** Predictions 2 hits, 2 misses; ratings Quality 6, Toward RH 1.
+- **Where the reverse engineering ends, for now (lead).** Working backwards from Weil's architecture: the Euler-product
+  step is proved on effective classes (N113), the archimedean Riemann–Roch is an exact identity (N111), and the
+  missing link L3–L4 cannot live on finite windows: windows have no principal divisors, and near-principal ones carry
+  positive self-intersection, so the Hodge-index argument needs a GLOBAL space in which principal divisors are exact
+  and the intersection form is continuous with respect to them. Leaving the window lands on the Nyman–Beurling
+  distance, which is RH-equivalent. This matches Connes' statement that the square must be built (not approximated
+  by semilocal cutoffs). Toward RH stays 2.

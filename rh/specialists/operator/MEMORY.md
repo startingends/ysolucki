@@ -365,3 +365,12 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
   FEASIBLE for it (+0.018) because that direction is 97% ladder in L2 (Q/|g|^2 = 1e-16): the impostor's failure is
   near-principal in L2 and visible only in the D geometry. Zeta positive-degree top directions are >= 0 as they stand.
 - Ratings Quality 5, Toward RH 1.
+
+## SESSION 9 (R5: principal divisors = dilation sums): REVERSE_R5.md
+- PROVED: exact window principal divisors = 0 (PW_L zero density vs N(T) ~ T log T). D (Moebius norm of the companion) IS the
+  Nyman-Beurling distance on the window (plank 5): P_NB,eps = D-ladder (= R4's ladder up to O(1)).
+- Prop R5.1 = R4.1 (E_NB pure reformulation). Farkas + E* injective on positive measures (zeta coefficients 1) gives
+  effectivity modulo dilation sums ONLY with positive-degree principal divisors (h >= 0 violates int h = 0): E' trivial.
+- COMPUTED (effect3.py.txt; zeta L = 1.8 dumped): impostor's degree-zero failing class is near-principal for ITS dilation sums
+  (g + p = 0) and within 0.2% for ZETA's; E' feasible even for random controls. Near-principal classes with D.D/D ~ +0.29:
+  intersection form not continuous w.r.t. "principal". Ratings Quality 6, Toward RH 1.

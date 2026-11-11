@@ -59,7 +59,8 @@ form at a zero. Wanted: a use that is pointwise, in the bulk, and not through au
 
 Reverse-engineered (N111–N113, `rh/REVERSE.md`): in Weil's architecture over ℚ the Euler-product step is PROVED
 on effective classes (g ≥ 0 ⇒ the prime side is ≥ 0), and the archimedean Riemann–Roch is an exact identity;
-what is missing is the step that PRODUCES effective representatives, and the right principal divisors.
+what is missing is the step that PRODUCES effective representatives, and the right principal divisors; on finite
+windows there are none (N114), so the missing link needs a global square.
 
 **THE OPEN TENSION, in general.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's
