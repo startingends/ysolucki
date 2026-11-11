@@ -278,3 +278,10 @@ to achieve, and only if two things are added:
     the comb-alignment wall W-FH1 lives (and where a zero off the line would show: detection height about 2 T*).
 Numerically the binding constant 0.33 sits on small-leak combinations, section 15 (c), not in the bulk; I have not
 computed the bulk constant (lowest eigenvalue of Q on the D-orthogonal complement of the ladder) separately.
+
+### 18. Verifier's verdict and repairs (verifier/VERDICT.md, read 2026-11-11)
+Theorem A: VERIFIED AS STATED. Theorem B: VERIFIED AS STATED. No gap in either proof. Corrections: C1 (my false
+label, section 13; the stale line in section 7 is now marked), C2 (the two forcing logs regenerated with the
+current script: identical intervals, 66 and 70; the float-check line now uses log 2 to 17 digits: 1.9573e-4 odd at
+L = 1/2), C3 (wording, removed). The only change to forcing.py.txt after verification is that float-check line.
+FOOTHOLDS.md: FH-1 and FH-2 set to `checked`; FH-3 added as a candidate (float).

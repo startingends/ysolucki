@@ -1,4 +1,4 @@
-# FH seat MEMORY (rewritten at the end of session 1, 2026-11-11)
+# FH seat MEMORY (rewritten at the end of session 2, 2026-11-11)
 
 ## What exists (all in rh/experiments/foothold/ unless said)
 - PROGRESS.md: running log with predictions, commands, reading record, walls W-FH1, W-FH2.
@@ -24,14 +24,32 @@
   so ~2000-bit balls, degree ~100+, irrational atom positions (Taylor-shift around rational approximations).
 - The cap certificate cost: integrals 0.25 s each at 128 bits; at L = 0.8 Zhu used R = 200, 200 even modes.
 
+## Session 2 (bridge, plank 8)
+- VERDICT: verifier/VERDICT.md says Theorem A and Theorem B "VERIFIED AS STATED", no gap. Corrections C1 (my
+  Rayleigh-Ritz numbers were at y = 0.693147, not log 2: at log 2 they are 9.4166e-7 and 1.07699e-7), C2 (logs
+  regenerated), C3 (wording) are repaired. FOOTHOLDS.md FH-1, FH-2 now `checked`. LESSON: the form moves by 0.2 per
+  unit of y; always give log 2 to full precision.
+- pencil.py.txt <NB> <nh> <L>: float pencil (Q, D_L) on polynomials (Q = exact matrix of forcing.py.txt, D_L by Schur
+  complement over the free part h on (0, 1/lambda)). Results: kappa_min = 0.3317 / 0.3307 / 0.3281 at
+  L = 17/50, 1/2, 27/50 on the full space of degree < 28; kappa_max 2.3-2.5 (log growth). Needs BOTH pole conditions
+  as continuous functionals (int g = 0, int_band ghat = 0), else kappa_max = 1e7..1e10. D_L is not parity-diagonal.
+  FOOTHOLDS.md entry FH-3 (candidate, float). PROGRESS.md sections 14-17.
+- Answers given to the coordinator: (1) Connes-Consani Thm 1 does not give plank 8 on the no-prime window as it
+  stands (different comparison form, codimension-2 subspace, non-certified numerics); certificate recipe in
+  PROGRESS 16 A. (3) The FH-1 certificate run on Q - kappa D does NOT escape the cost explosion (PROGRESS 17).
+- NOT done: certified enclosures of the lead's kappa_K on explicit prolate vectors; certified pencil; bulk
+  constant (lowest eigenvalue of Q on the D-complement of the ladder); the paper 2006.13771 sections 4-6 unread by
+  me (digest read).
+
 ## Next steps, in order of value
-1. Get FH-1 and FH-2 checked line by line (verifier); answer the verifier.
-2. Inner bound for FH-2: cert.py.txt with ball-valued (y, m) (a certified feasible neighbourhood).
-3. Second atom: windows (1/2) log 3 < L <= log 2 with atom 2 fixed and a free atom near log 3; then T47 at L = 1.
-4. Write the "zeros as the cap" splitting lemma in full (FH/#2) and see whether L = 0.8 -> 1.2 becomes cheap.
-5. Candidates never started: function fields F_q(t), theta dial n = 2, semi-local.
-6. A Lean check is plausible only for the rational part of forcing.py.txt (given enclosures of H_n, mu_i,
-   log(4 pi L) + gamma as hypotheses); not started. Seat FORMAL: rh/formal.
+1. Certify FH-3 at L = 1/2 or 17/50: Q_R - 0.3 D_up >= 0 with an explicit linear companion (PROGRESS 16 A): needs
+   rigorous entries of the D_up kernel in the Legendre basis (about 1000 two-dimensional integrals) + Lemma-4 type tail.
+2. Push the float pencil to L = 0.75, 1.0 (needs multiprecision: mpmath or Arb midpoints; Q from forcing.py.txt
+   generalised to several fixed atoms at irrational positions) and to degree 60; compare with the lead's kappa_4.
+3. Test numerically "Sonin trace >= kappa D_L" on the no-prime window (Connes-Consani Thm 4.7 gives the Sonin trace
+   as W_infty + an explicit prolate series).
+4. Inner bound for FH-2; second atom; T47 at L = 1 (as before).
+5. "Zeros as the cap" lemma (FH/#2). Function fields, theta dial, semi-local: never started.
 
 ## Rules for me
 Numerics: `python3 /home/user/ysolucki/tools/memcap.py 1 python3 <script>`, one job at a time; heavy jobs under

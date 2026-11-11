@@ -1,0 +1,205 @@
+"""SP-operator, planks 5 and 7 of bridge 1 (rh/BRIDGE.md): numerical check on one explicit g.
+usage: python3 bridge5.py.txt [L] [K] [dps]
+Everything on the PRIME side (pole + arch - primes); no zeros of zeta.
+
+g(y) = G(y/lambda), G(s) = s^2 (1 - kappa s^2)(1 - s^2)^K on |s| <= 1, kappa = (2K+5)/3  (g(0) = ghat(0) = 0).
+F(x) = x^(1/2) sum_{n>=1} g(n x).  Variable v = log(x/lambda) <= 0.  On the piece -log(N+1) < v <= -log N:
+     F = sum_j B[N][j] exp(mu_j v),  mu_j = j + 1/2,  B[N][j] = lambda^(1/2) a_j S_j(N),  S_j(N) = sum_{n<=N} n^j.
+f = F on the window -2L <= v <= 0;  T = F on v < -2L.
+Weil form of a real function phi (translation invariant, so the variable v may be used):
+     Q(phi) = 2 <phi,e^{v/2}><phi,e^{-v/2}>                                   [pole]
+            + (psi(1/4) - log pi) c(0) - 2 sum_{m>=0} [ I(a_m) - c(0)/a_m ]     [arch],  a_m = 2m + 1/2,
+              I(a) = int_0^inf e^{-a t} c(t) dt = int int_{u>v} phi(u) phi(v) e^{-a(u-v)}
+            - sum_n Lambda(n) n^{-1/2} 2 c(log n)                               [primes],
+     c(t) = int phi(u) phi(u - t) du.
+(arch: A = -log(pi) c(0) + int_0^inf (c(0) e^{-2t}/t - 2 w(t) c(t)) dt, w(t) = sum_m e^{-a_m t}; Gauss' integral
+ gives int_0^inf (e^{-2t}/t - 2 w(t)) dt = psi(1/4).)
+"""
+import sys, time
+import mpmath as mp
+
+Lf = sys.argv[1] if len(sys.argv) > 1 else "0.5"
+K = int(sys.argv[2]) if len(sys.argv) > 2 else 8
+mp.mp.dps = int(sys.argv[3]) if len(sys.argv) > 3 else 60
+L = mp.mpf(Lf); lam = mp.exp(L)
+kappa = mp.mpf(2 * K + 5) / 3
+t0 = time.time()
+
+# coefficients of G(s) = s^2 (1 - kappa s^2)(1 - s^2)^K = sum_j a_j s^j
+a = {}
+for i in range(K + 1):
+    c = mp.binomial(K, i) * (-1) ** i
+    a[2 * i + 2] = a.get(2 * i + 2, 0) + c
+    a[2 * i + 4] = a.get(2 * i + 4, 0) - kappa * c
+J = sorted(a)                          # exponents j
+MU = [mp.mpf(j) + mp.mpf(1) / 2 for j in J]
+d = len(J)
+def G(s):
+    return sum(a[j] * s ** j for j in J) if abs(s) <= 1 else mp.mpf(0)
+print("L=%s K=%d dps=%d  kappa=%s  degree %d  sum a_j/(j+1) (= ghat(0)/(2 lambda)) = %s" % (
+    Lf, K, mp.mp.dps, mp.nstr(kappa, 6), J[-1], mp.nstr(sum(a[j] / (j + 1) for j in J), 5)))
+
+def powersums(Nmax):
+    S = [[mp.mpf(0)] * d]
+    for n in range(1, Nmax + 1):
+        S.append([S[-1][i] + mp.mpf(n) ** J[i] for i in range(d)])
+    return S
+
+def make_pieces(vlo, vhi, Nmax, S):
+    """pieces of F restricted to [vlo, vhi]: list of (alpha, beta, coeffs list aligned with MU)"""
+    out = []
+    sq = mp.sqrt(lam)
+    for N in range(1, Nmax + 1):
+        al = -mp.log(N + 1); be = -mp.log(N)
+        al2 = max(al, vlo); be2 = min(be, vhi)
+        if al2 < be2:
+            out.append((al2, be2, [sq * a[J[i]] * S[N][i] for i in range(d)]))
+    out.sort(key=lambda p: p[0])
+    return out
+
+def Eint(kap, al, be):
+    return (be - al) if kap == 0 else (mp.exp(kap * be) - mp.exp(kap * al)) / kap
+
+def lin(pieces, mus, nu):
+    """int phi(v) e^{nu v} dv"""
+    return sum(b[i] * Eint(mus[i] + nu, al, be) for al, be, b in pieces for i in range(len(mus)))
+
+def corr(pieces, mus, t, pieces2=None):
+    """c(t) = int phi(u) phi2(u - t) du, t >= 0"""
+    if pieces2 is None: pieces2 = pieces
+    tot = mp.mpf(0)
+    sh = [(al + t, be + t, [b[k] * mp.exp(-mus[k] * t) for k in range(len(mus))]) for al, be, b in pieces2]
+    i2 = 0
+    for al, be, b in pieces:
+        for al2, be2, b2 in sh:
+            lo = max(al, al2); hi = min(be, be2)
+            if lo < hi:
+                for i in range(len(mus)):
+                    if b[i] == 0: continue
+                    for k in range(len(mus)):
+                        tot += b[i] * b2[k] * Eint(mus[i] + mus[k], lo, hi)
+    return tot
+
+class Lap:
+    """I(a) = int int_{u>v} phi(u) phi(v) e^{-a(u-v)} du dv by one sweep; per-piece data precomputed"""
+    def __init__(self, pieces, mus):
+        self.p = pieces; self.mus = mus; n = len(mus)
+        self.Gk = []
+        for al, be, b in pieces:
+            self.Gk.append([sum(b[j] * Eint(mus[j] + mus[k], al, be) for j in range(n)) for k in range(n)])
+    def __call__(self, aa):
+        mus = self.mus; n = len(mus); tot = mp.mpf(0); Lacc = mp.mpf(0)
+        for idx, (al, be, b) in enumerate(self.p):
+            # scaled by e^{-a al}: Lacc holds int_{v<al} phi(v) e^{a (v - al)} dv
+            eal = [mp.exp(mus[k] * al) for k in range(n)]
+            ebe = [mp.exp(mus[k] * be) for k in range(n)]
+            dec = mp.exp(-aa * (be - al))
+            base = Lacc - sum(b[k] * eal[k] / (mus[k] + aa) for k in range(n))
+            # int_al^be e^{(mu_j - a)(u)} du * e^{a al}  = (e^{mu_j be} dec - e^{mu_j al}) / (mu_j - a)
+            s1 = mp.mpf(0)
+            for j in range(n):
+                kap = mus[j] - aa
+                Ej = (be - al) * eal[j] if kap == 0 else (ebe[j] * dec - eal[j]) / kap
+                s1 += b[j] * Ej
+            tot += base * s1 + sum(b[k] * self.Gk[idx][k] / (mus[k] + aa) for k in range(n))
+            # new Lacc at be: (Lacc + sum_k b_k (e^{(mu_k+a) be} - e^{(mu_k + a) al}) e^{-a al}/(mu_k+a)) e^{-a(be - al)}
+            Lacc = Lacc * dec + sum(b[k] * (ebe[k] - eal[k] * dec) / (mus[k] + aa) for k in range(n))
+        return tot
+
+def mangoldt(n):
+    m = n; p = 2
+    while p * p <= m:
+        if m % p == 0:
+            while m % p == 0: m //= p
+            return mp.log(p) if m == 1 else mp.mpf(0)
+        p += 1
+    return mp.log(n) if n > 1 else mp.mpf(0)
+
+def weil(pieces, mus, nmax_prime, M=600, p=10, Abase=6000, name=""):
+    c0 = corr(pieces, mus, mp.mpf(0))
+    Pp = lin(pieces, mus, mp.mpf(1) / 2); Pm = lin(pieces, mus, -mp.mpf(1) / 2)
+    pole = 2 * Pp * Pm
+    I = Lap(pieces, mus)
+    tt = lambda aa: I(aa) - c0 / aa
+    head = sum(tt(2 * m + mp.mpf(1) / 2) for m in range(M))
+    # tail: t(a) ~ sum_{k=2}^{p+1} d_k a^{-k}; fit d_k at a = Abase * i, i = 1..p ; sum_{m>=M} a_m^{-k} = 2^{-k} zeta(k, M + 1/4)
+    As = [mp.mpf(Abase) * (i + 1) for i in range(p)]
+    V = mp.matrix(p, p); rhs = mp.matrix(p, 1)
+    for i in range(p):
+        rhs[i] = tt(As[i])
+        for k in range(p): V[i, k] = As[i] ** (-(k + 2))
+    dk = mp.lu_solve(V, rhs)
+    tail = sum(dk[k] * mp.mpf(2) ** (-(k + 2)) * mp.zeta(k + 2, M + mp.mpf(1) / 4) for k in range(p))
+    arch = (mp.digamma(mp.mpf(1) / 4) - mp.log(mp.pi)) * c0 - 2 * (head + tail)
+    primes = mp.mpf(0); last = mp.mpf(0)
+    for n in range(2, nmax_prime + 1):
+        ln = mangoldt(n)
+        if ln == 0: continue
+        last = 2 * ln / mp.sqrt(n) * corr(pieces, mus, mp.log(n))
+        primes += last
+    Q = pole + arch - primes
+    print(" %-3s norm^2=%s pole=%s arch=%s primes=%s (last prime term %s; arch tail %s, d_2=%s)\n      Q=%s  Q/norm^2=%s  [%.0fs]" % (
+        name, mp.nstr(c0, 20), mp.nstr(pole, 20), mp.nstr(arch, 20), mp.nstr(primes, 20), mp.nstr(last, 3), mp.nstr(-2 * tail, 5),
+        mp.nstr(dk[0], 8), mp.nstr(Q, 22), mp.nstr(Q / c0, 8), time.time() - t0), flush=True)
+    return Q, c0, primes
+
+if __name__ == "__main__":
+    # ---- P5: evaluator on the constant function against lane A's matrix entry
+    import importlib.util, importlib.machinery, flint
+    Pth = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+    spec = importlib.util.spec_from_file_location("weil", Pth, loader=importlib.machinery.SourceFileLoader("weil", Pth))
+    wl = importlib.util.module_from_spec(spec); spec.loader.exec_module(wl)
+    flint.ctx.prec = 400
+    q, _ = wl.build(float(L), 2, kind='zeta', pole=True, primes=True, arch=True)
+    q00 = mp.mpf(q[2][2].mid().str(50, radius=False))
+    one = [(-2 * L, mp.mpf(0), [mp.mpf(1)])]
+    Q1, _, _ = weil(one, [mp.mpf(0)], int(mp.floor(mp.exp(2 * L))), name="one")
+    print("P5 evaluator check: Q(1) = %s ; 2L q_00 (lane A) = %s ; rel diff %s" % (mp.nstr(Q1, 20), mp.nstr(2 * L * q00, 20), mp.nstr((Q1 - 2 * L * q00) / Q1, 5)))
+    # ---- pieces
+    vcut = -2 * L
+    drop = mp.mpf(sys.argv[4]) if len(sys.argv) > 4 else mp.mpf("3.2")
+    Nmax = int(mp.floor(mp.exp(2 * L + drop)))
+    S = powersums(Nmax)
+    fP = make_pieces(vcut, mp.mpf(0), Nmax, S)
+    TP = make_pieces(-mp.log(Nmax + 1), vcut, Nmax, S)
+    FP = TP + fP
+    print("pieces: f %d, T %d (N up to %d, v down to %s); F at the cut: left %s right %s" % (len(fP), len(TP), Nmax, mp.nstr(-mp.log(Nmax + 1), 6),
+          mp.nstr(sum(TP[-1][2][i] * mp.exp(MU[i] * vcut) for i in range(d)), 12), mp.nstr(sum(fP[0][2][i] * mp.exp(MU[i] * vcut) for i in range(d)), 12)))
+    nP = int(sys.argv[5]) if len(sys.argv) > 5 else 80
+    Qf, nf, _ = weil(fP, MU, int(mp.floor(mp.exp(2 * L))), name="f")
+    QT, nT, PiT = weil(TP, MU, nP, name="T")
+    QF, nF, _ = weil(FP, MU, nP, name="F")
+    print("P1 plank 5:  Q_L(f) = %s\n             W(T)   = %s\n             relative difference %s" % (mp.nstr(Qf, 25), mp.nstr(QT, 25), mp.nstr((Qf - QT) / Qf, 5)))
+    print("P2 null:     W(F)/||F||^2 = %s" % mp.nstr(QF / nF, 5))
+    print("P3 sizes:    Q_L(f)/||f||^2 = %s ; W(T)/||T||^2 = %s ; ||T||^2/||f||^2 = %s" % (mp.nstr(Qf / nf, 8), mp.nstr(QT / nT, 8), mp.nstr(nT / nf, 8)))
+    # ---- P4: plank 7.  T_log(x) = x^{-1/2} sum_m log(m) ghat(m/x),  ghat(xi) = 2 lambda sum_j a_j I_j(2 pi lambda xi)
+    def Ij_all(om):
+        Ic = [mp.sin(om) / om]; Js = [(1 - mp.cos(om)) / om]
+        for j in range(1, J[-1] + 1):
+            Ic.append(mp.sin(om) / om - j / om * Js[j - 1])
+            Js.append(-mp.cos(om) / om + j / om * Ic[j - 1])
+        return Ic
+    def ghat(xi):
+        Ic = Ij_all(2 * mp.pi * lam * xi)
+        return 2 * lam * sum(a[j] * Ic[j] for j in J)
+    def Fval(v, pieces):
+        for al, be, b in pieces:
+            if al < v <= be: return sum(b[i] * mp.exp(MU[i] * v) for i in range(d))
+        return mp.mpf(0)
+    mmax = int(sys.argv[6]) if len(sys.argv) > 6 else 60
+    # Poisson check at two points of the tail
+    for v in (vcut - mp.mpf("0.3"), vcut - mp.mpf("1.1")):
+        x = lam * mp.exp(v)
+        po = sum(ghat(m / x) for m in range(1, 4 * mmax)) / mp.sqrt(x)
+        print("   Poisson check v=%s: T piecewise %s ; x^(-1/2) sum ghat(m/x) %s" % (mp.nstr(v, 5), mp.nstr(Fval(v, TP), 18), mp.nstr(po, 18)))
+    gl = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(3, mp.mp.prec)   # 12 nodes
+    acc = mp.mpf(0)
+    for al, be, b in TP:
+        h = (be - al) / 2; mid = (be + al) / 2
+        for xx, w in gl:
+            v = mid + h * xx; x = lam * mp.exp(v)
+            Tv = sum(b[i] * mp.exp(MU[i] * v) for i in range(d))
+            Tl = sum(mp.log(m) * ghat(m / x) for m in range(2, mmax + 1)) / mp.sqrt(x)
+            acc += h * w * Tv * Tl
+    print("P4 plank 7:  Pi(T) = sum over prime powers = %s\n             2 <T, T_log> (prime-free)   = %s\n             relative difference %s   [%.0fs]" % (
+        mp.nstr(PiT, 20), mp.nstr(2 * acc, 20), mp.nstr((PiT - 2 * acc) / PiT, 5), time.time() - t0))

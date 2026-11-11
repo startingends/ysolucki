@@ -170,3 +170,10 @@ B114 (S1-cubic withdrew 0.05), B143 (FORMAL: F1 step, folding identity, Theorem 
  I predict |t_x1 - n_-| < 0.003 and |t_x2 - n_+odd| < 0.01 at all three delta (n_- = 0.356, 0.4773, 0.4887; n_+odd = 0.903, 0.5997, 0.512),
  and that t_x1 is CLOSER to n_- than c_- is, at delta = 0.1 (where they differ by 0.005).
  If t_x2 is off by more than 0.05 the lemma's second consequence is wrong (or the odd ground state's derivative is not in the domain).
+
+### RESULT t3_cross / t3_overlap (01:22:30): at the crossing of the two ground levels, overlap of (even ground state)' with odd ground state = 1.0000 (delta 0.1, 0.2, 0.3), residual 0.009;
+ control overlaps 0.817..0.9985 and 0.0004 elsewhere. Tolerance predictions HIT at 0.2, 0.3, MISS at 0.1. Posted B197. FORMAL's B177/B193 on F1(a): conceded (B198), file corrected.
+### PREDICTION for t3_pole.py.txt (lead's B140: threshold t* of the pole strength for a one-signed even ground state; written before computing)
+ By the derivative lemma the even ground state gets an edge node where its level reaches the odd ground level. Vary the multiplier s of the EVEN pole term (s = 1 true).
+ zeta, delta = 0.2 (L = 0.4466), M = 240: s_cross (mu_e1(s) = mu_o1) = 1 + (mu_o1 - mu_e1)/(2<c,v_e>^2) = 1 + 0.0030/3.4 = 1.0009 +- 0.0003; s_node (last-box sign change) within 0.002 of s_cross.
+ No-prime window L = 0.30, M = 240: s_cross and s_node agree within 2%; s_cross > 1.

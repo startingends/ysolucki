@@ -51,3 +51,15 @@ and by the spectral theorem
   phi(s) = xi(2s-1)/xi(2s), xi(w) = pi^(-w/2) Gamma(w/2) zeta(w), fhat(t) = int f(v) e^(itv) dv   [SPECTRAL ROUTE: zeta on Re = 1].
 PREDICTION: the two routes agree to at least 6 digits for a bump f supported in [-1.2, 0.3] (c = 1, 2, 3 contribute).
 If they differ by a clean factor (2, pi, 3/pi) one of my constants is wrong and the identity is not to be posted.
+
+## Result of P4 (gram_check.log; mpmath 25 digits, nested quadrature, 7.7 minutes, one implementation)
+HIT: geometric route 0.286868370825262 (int f^2 = 0.0998145906; c = 1: 0.1592678431, c = 2: 0.0555645818 x phi(2)/2,
+c = 3: 5.469e-6 x phi(3)/3), spectral route 0.286868351034754 (residue 0.1697934702, continuous 0.1170748809, t cut at 60
+where the density is 6.9e-10). Difference 2.0e-8, ratio 1.00000007. The constants phi(c)/c, kappa, 3/pi, 1/(4 pi) stand.
+
+## 01:27 An exact identity found by hand while preparing Q3 (PREDICTION P5 before the machine check)
+With a_n(m) = r_n(m)/(2n): multiplicativity at the first coprime pair (2,3) is a polynomial identity in n:
+   2n r_n(6) - r_n(2) r_n(3) = (8/45) n^3 (n-1)(n-2)(n-4)(n-8)        [hand computation, 01:27]
+so a_n(2) a_n(3) = a_n(6) exactly for n in {1, 2, 4, 8}. PREDICTION: the exact-rational script confirms the identity
+at 12 rational values of n, and the analogous defect at the pair (2,5), 2n r_n(10) - r_n(2) r_n(5), also vanishes at
+n = 1, 2, 4, 8 (if it did not, n = 4 or 8 would fail to be multiplicative: contradiction with Jacobi's formulas).

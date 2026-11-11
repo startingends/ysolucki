@@ -73,3 +73,5 @@ LEFT sweep: every y in (0, 70957/102400] = (0, 0.6929395] is infeasible for ever
    certified infeasible: y in [0.697187, 0.697500]  (m* ~ 0.5103)  t=2s
    certified infeasible: y in [0.697168, 0.697187]  (m* ~ 0.5101)  t=2s
 RIGHT sweep: every y in [7139/10240, 2L) = [0.6971680, 2L) (upper end = 2L) is infeasible for every m >= 0  (19 intervals); exp = 2.008058
+RESIDUAL y-interval (0.6929395, 0.6971680): every feasible weight m lies in [[0.4885585899 +/- 4.65e-11], [0.5103665777 +/- 4.49e-11]]   (true: m = log2/sqrt2 = 0.4901291, y = log 2 = 0.6931472)
+total time 7s
