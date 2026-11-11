@@ -102,10 +102,10 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 
 ## Running jobs
 **After any context summary or restart, read this section, `rh/NOTEBOOK.md` from N43 on, `rh/HUNCHES.md` parts F–G and
-`git log -8` before launching anything.** State at 2026-11-11 (after N92); read parts F–H of HUNCHES and `rh/CORE.md`.
-- RUNNING (construction, rules 14–15): SP-sieve on the Levinson–Conrey θ object (`rh/specialists/sieve/LEVINSON_THETA.md`;
-  N92's third option). Closed this span: H-1 (N85), the triangle (N83, N86–N87), discrete orbit (N89), readers on ∞
-  (N90), H-3 (N91); synthesis N92. Read `rh/CORE.md` and `rh/RATINGS.md` before anything else.
+`git log -8` before launching anything.** State at 2026-11-11 (after N97); read parts F–H of HUNCHES and `rh/CORE.md`.
+- NOTHING RUNNING (all seats idle, resumable by id). Closed since N92: Levinson θ (N93), T131 proved (N94), H-4
+  prime-sampling cone (N94–N97, closed as a shadow; rules H13, H14). Next lead step: a hunch that uses the Euler
+  product NONLINEARLY or structurally (H13–H14 rule out every linear use). Read `rh/CORE.md`, `rh/RATINGS.md` first.
   All other seats idle and resumable by id (SP-reflection, SP-sieve; S1-parity, S1-mirror, S1-socrates;
   K-theory, K-atlas, FH, FORMAL; readers 1–9; verifiers V-FH, V-COPY, V-CUB, V-TZ).
 - Bridge 1's last gap closed (plank 13, N80): κ_min warns before the impostor's failure but tracks the closest zero
