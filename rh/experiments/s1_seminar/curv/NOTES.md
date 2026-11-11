@@ -96,3 +96,26 @@ Box model, L = 1, M = 40 (mu_1 of zeta's box blocks: even 1.99e-3, odd 8.1e-3; f
  (predicted > 0.5 at M=40: MISS; (0.15,0.5) at M=160: MISS by 0.016). nu_oe = 7.91, 19.2, 55.7 >= nu_eo: prediction 'nu_oe < nu_eo' MISS (odd block slightly tighter).
  Contraction form vs Q_d: same sign, lowest eigenvalues agree to 0.6% (d=0.1) and 6% (d=0.3, M=80: -0.0288 vs -0.0305): HIT. Box Q_d fails at d = 0.3 for M = 80 (not for M = 40).
  Matrix identity error 1.4e-4..1.7e-3 = O(d^2 * box width) from the atoms (entrywise first order in the box width).
+
+### RESULT B66 (t2_half.log, 00:22:13): rho_half/lam1 = 0.8384 (M=40), 0.8319 (M=160): P6 HIT. Beurling 0.8158, 0.8071. Formula G4 checked 4e-16.
+
+## STATE AT END OF TURN 2 (board read to B106; two container restarts during the turn, nothing on disk lost; my first t2_fd run was lost and rerun)
+My posts this turn: B97 (answer B66: rho_half, G4), B98 (answer B77: Lean nominations; FIRST = Theorem B3, then F2 step; hypotheses list),
+B99 (claim: G1 contraction by tanh(dx); G2 F4 for F_d; G3 process blind), B100 (question -> SP-operator: Bernstein constant on the zeros),
+B101 (question -> SP-reflection: two involutions; bounded vs unbounded semicharacters; two-exponential smallest case),
+B102 (question -> S1-parity: evaluate Q_o(x v_e), nu at L = 0.75, 1), B106 (note: my box heuristic nu*mu_e ~ 0.01 withdrawn),
+B107 (question -> S1-cubic re B103: their 0.05 at L=1 fails the same check at L=0.75).
+No unanswered question addressed to me.
+
+New exact statements (S1_ADDITIONS.md, turn-2 section): G1 F_d >= 0 on window <=> Q_L(tanh(dx) g) <= Q_L(g); parity-coupled; d*^2 = 1/nu, nu = sup Q_o(xg)/Q_e(g)
+ (S1-cubic B103 found the same identity independently at the same time; S1-mirror B90 had Q_d = 2Q(e^{dx}f, e^{-dx}f) first).
+ G2 mirror form adds (congruence), shift form subtracts: one sign. G3 process side tilt-blind (computed). G4 half-window Gamma_2 formula with mirror-crossing rate j = Hu/u.
+Prediction score this turn: process blind HIT; opposite signs HIT; rho_half HIT; nu*mu range HIT; slope kappa MISS (3 orders); 1/sqrt(nu) ranges MISS (narrowly); nu_oe<nu_eo MISS; det S_d crossing moot.
+
+What others established this turn that I should not re-derive: B90/B91 lambda(d) at L=0.75 = 9.1965e-15 - 1.46289e-4 d^2 (even), 7.4532e-12 - 2.45385e-3 d^2 (odd), analytic in t=d^2,
+ positive for imaginary d; B81 G_d = zeta L(s-d,chi4) L(s+d,chi4) passes one-pole count, fails only |root|=1; B96 2x2 test per prime; B94 doubling-step spectrum of R = T^-1 H;
+ B56/B92 inertia formula kappa_+(N_e) = kappa_-(Q_e) + [t_e > 1]; B62 block-averaged BE curve (1+3theta)/(2+2theta); idea 21 killed (B69), barrier B11.
+
+Open for next turn: answers to B100, B101, B102, my question to S1-cubic; if asked: B3 decomposition relative to the half-window block (offered in B97(3));
+ two-exponential smallest case of B101(3) (I can compute it myself); prove Op >= 0 (still open); limit of Hankel min eigenvalue.
+Rule since restart: numerics as `python3 tools/memcap.py 1 python3 <script>`, small arrays, one job at a time.

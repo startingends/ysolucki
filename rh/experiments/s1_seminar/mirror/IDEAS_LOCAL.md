@@ -16,6 +16,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: not an approach; a control. Useless if every proposed bridge already uses the pole count.
 - evidence: mirror2.log: min eig -5e-16 on a,b=2..12 for d=0.3
 - log:
+  - 2026-11-11: COMPUTED turn 2 (fd.py.txt, L = 0.75): lambda_even(d) = 9.1965e-15 - 1.46289e-4 d^2, lambda_odd = 7.4532e-12 - 2.45385e-3 d^2; sign change at d = 7.9e-6 / 5.5e-5. Reproduced by S1-parity (B91). The lead recorded the control as barrier B11.
 
 ## #2 · Doubling: the primes between e^L and e^(2L) enter the window-L form only through the mirror form; RH on the window = |mirror form| <= shift form of the half window
 - status: open
@@ -29,6 +30,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: On L = 0.5..0.69 the half window has no primes; check numerically how tight |H_W| <= T_W is and which phi saturate it.
 - kill line: If the saturating phi are the half-window near-null vectors with no further structure, the doubling step is the whole problem again.
 - log:
+  - 2026-11-11: COMPUTED turn 2 (doubling.py.txt), L = 0.5/0.6/0.68: spectrum of R = T^-1 H in [-1,1] with 1+lam_min = 3.1e-6/5.9e-9/1.0e-11, 1-lam_max = 3.2e-3/1.3e-5/3.8e-8; without primes top eigenvalue 9.1/61/353. Shares at the odd saturator, L = 0.6: Q 0.10, Gamma squares 0.50, prime 2 mirror 0.40. Saturators of one sign. The kill line is met in the sense written: the saturators are the folded ground states; the doubling step is the whole problem. What is kept: the odd block as 'one square <= three forms'.
 
 ## #3 · Mirror positivity of the primes in L^2 lives only above the horizon 4 pi e^(2L)
 - status: open
@@ -38,4 +40,14 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - plain english: The mirror sum-of-squares needs test functions that tell neighbouring whole numbers apart. On a window reaching up to e^(2L) = 7.4 (L = 1) the products go up to 7.4 and neighbours like 7 and 8 are 0.13 apart in log scale, so the bumps must be narrower than about 0.07. Functions that fine oscillate faster than the 'horizon' frequency above which the window form is positive anyway. The dangerous, nearly-zero-energy functions are smooth and cannot tell 7 from 8.
 - claim: HEURISTIC: the L^2 class on which D1 gives H_primes >= 0 is spanned by bumps at log a of width ~ e^(-2L); its frequency content starts at ~ 2 pi e^(2L). PROVED smallest case: two bumps at log 2, log 4 of half-width < log(17/16)/2.
 - first test: S1-curv computed the comb (B39): margin grows with A for zeta and Beurling alike.
+- log:
+
+## #4 · Mirror positivity and Ramanujan are complementary: they meet only at local roots +-1
+- status: open
+- source: S1-mirror turn 2; grows from the lead's B70, barrier B11, Corollary 3
+- date: 2026-11-11
+- tags: B11,control
+- plain english: At each prime a degree-2 symmetric factor is governed by one number a. If a is larger than 2 in size the two roots are real (2 and 1/2, say) and the mirror matrix is a sum of squares; if a is smaller than 2 the roots sit on the unit circle, which is what every L-function believed to satisfy RH does. The two regimes touch only at a = 2 or -2, where both roots are 1 or both are -1. Example at the prime 2: zeta(s-d)zeta(s+d) has a = 2^d + 2^(-d), which is 2.005 for d = 0.1 (mirror positive, RH false) and exactly 2 for d = 0; zeta(s-0.1i)zeta(s+0.1i) has a = 2cos(0.1 log 2) = 1.998 (not mirror positive, RH as true as for zeta).
+- claim: PROVED: for 1 - a p^-s + p^-2s, [c(p^(i+j))] >= 0 iff |a| >= 2; roots of modulus 1 iff |a| <= 2. The tilt family is analytic in t = d^2 and the lowest window eigenvalue is linear in t through 0 with negative slope (COMPUTED, two implementations).
+- kill line: a control and a classification, not a route
 - log:

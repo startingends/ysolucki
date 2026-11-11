@@ -5,5 +5,6 @@ State: all sources read (list in PROGRESS.md). Entries are being added by the ba
 Plan of entries (keys in the scripts): literature inputs, round-1 lemmas, notebook, parity seat, first failure (#8), bootstrap (#9),
 cubic seat (#10), curvature seat (#11), mirror (#21, killed), then updates of seeds T1-T6 (T3 REFUTED by my counterexample, T6 REFUTED by F_d).
 My own findings so far are in PROGRESS.md (Finding 1-3, checks C1-C17, the written-out inertia proof).
+Entered so far: batches 1-3 (T1-T48). Remaining batches: cubic/curvature (T49-T69), mirror (T70-T78, T6).
 Still to do after the entries: STRUCTURE.md, final MEMORY.md, `theory check`, report.
 Formal: a statement is `formal` only if its file is imported from rh/formal/RHFormal.lean and `lake -d rh/formal build` succeeds.

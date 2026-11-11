@@ -68,3 +68,39 @@ Against the prediction: L = 0.5 both inside; L = (1/2) log 3 even inside, odd BE
 1.35e-5 at R = 160): I overestimated the odd margin. Controls negative as predicted (the capped form is only a
 lower bound, so the control numbers are indications, not proofs of negativity).
 The cap at R = 40 keeps both blocks positive at L = (1/2) log 3, so a certificate with 40 + 40 Legendre modes is in reach.
+
+### 5. What the sources say about the known range (reading record, owner rule 5)
+- Zhu arXiv 2608.24827 v2: READ abstract + section 1 in full (pdftotext lines 1-330 of 1894, about 17%); sections
+  2-15 NOT read. Its Theorem 1.1/1.2 are quoted in section 2 above.
+- Suzuki arXiv 2606.09096 (TeX in rh/library/src/2606.09096/clean.tex, 132 352 bytes): read lines 136-182, 215-240,
+  330-420 (the history paragraph and Theorems 1-3 statements), about 8% of the file. What it says on the range:
+  Yoshida "prov[ed] that it is positive for sufficiently small a > 0 [Yo92, Lemma 2] or for appropriate
+  subspaces K_N(a) of finite codimension [Lemma 3]". No explicit a there.
+- Connes-Consani arXiv 2006.13771 (weil-compo.tex, 198 369 bytes): read lines 100-145 (intro + Theorem 1.1), <3%.
+  Says: for smooth positive definite f with support in (1/2, 2) whose Fourier transform vanishes at +-i/2,
+  W_infty(f) >= 0, "proved in [Yoshida] by reducing it to an explicit computation"; their Thm 1.1 strengthens it
+  on functions g supported in [2^{-1/2}, 2^{1/2}] with ghat(i/2) = ghat(0) = 0. NOTE the vanishing conditions:
+  this is positivity on a subspace of codimension 2 or 3 of the window, not on the whole window.
+- Connes-Consani arXiv 2106.01715 (Spectraltriples.tex): read lines 170-210 and 567-590 myself, plus the digest
+  rh/library/connes-consani-zeta-cycles.md (first 60 lines). Says: "In [Yoshida], the positivity was shown to
+  hold for lambda = sqrt 2 using numerical analysis"; NUMERICALLY (no error analysis): the archimedean part alone
+  stops being positive a little beyond log(lambda^2) = log 2, the prime 2 restores it on log 2 <= L < log 3;
+  section 2.3: at mu = 3 (our L = (1/2) log 3), replacing 2 by a real p in the formula of W_2, the smallest
+  eigenvalue is negative for p = 1.9999 and p = 2.0005 (their Figure "sensitive2"). So the "positivity forces
+  the prime 2" OBSERVATION is published (numerical, 2021); no theorem.
+- Yoshida 1992 and Bombieri 2001/2003: NOT read (not available to me in this session); what I know of them is
+  the three second-hand descriptions above, which do not agree on whether a = (log 2)/2 was proved or
+  numerically verified by Yoshida.
+Conclusion (as far as read): proved positivity on the whole window is classical only for "sufficiently small a"
+(Yoshida Lemma 2) and, with vanishing conditions, up to a = (log 2)/2; beyond log 2 the only claim found is
+Zhu's unrefereed certificate (L <= 0.8).
+
+### 6. CERTIFICATE for the window L = (1/2) log 3 (prime 2 only)  [COMPUTED with Arb balls + written tail bound]
+Command: `flock <scratchpad>/heavy.lock python3 tools/memcap.py 1 python3 cert.py.txt log3 40 56 87/100 1/100000000 4/1000000 128`
+Log: cert_log3_R40_n56.log (191 s). R = 40, beta0 = 87/100 < a(R) - A_L = 0.870718..., 28 + 28 Legendre modes,
+812 integrals by acb.integral (max radius 2.5e-25), tail constants eps12 <= 1.97e-13, eps22 <= 1.3e-31.
+Result: M_even - 1e-8 I and M_odd - 4e-6 I certified positive definite by interval LDL^T, hence
+   Q(f) >= 9.9998e-9 ||f||^2 (even f),  Q(f) >= 3.99999e-6 ||f||^2 (odd f),  for all f in L^2[-(1/2)log 3, (1/2)log 3].
+Float eigenvalues of the midpoint matrices: 1.6053e-8 (even), 5.591e-6 (odd): agree with explore.py.txt (1.608e-8,
+5.60e-6), an independent numpy/scipy implementation.
+Proof text: PROOF_window_prime2.md.

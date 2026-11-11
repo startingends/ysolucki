@@ -11,7 +11,18 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 REC = [sys.executable, os.path.join(ROOT, "tools", "records.py"), "theory"]
 KEYS = os.path.join(HERE, "keys.json")
-keys = json.load(open(KEYS)) if os.path.exists(KEYS) else {}
+PLAN = """ef zeros selberg oper cvs nb burnol krein kl canon johns hecke helson
+ds floor dissip fejer loewner symm
+parity kappa_ineq rh_onepos index oneblock onequartet inertia margins sumrule
+mono ff_l2 ff_thm nulleq nullprops endreg simple hadamard
+unique interior caps gspos box dual
+thmE fibre trickle cone rigid lemE becubic meanfield pair blocktrickle onefield poisson ntsig certrule
+gst bochner resample calib blockbe openpath f3
+d1 d3 d4 totalpd pardiff squeeze mirror2 euler gaplemma""".split()
+planned = {k: f"T{7 + i}" for i, k in enumerate(PLAN)}
+planned.update(weil="T1", cont="T2", symm_bad="T3", sign="T4", blocks="T5", bridge="T6")
+done = json.load(open(KEYS)) if os.path.exists(KEYS) else {}
+keys = planned
 
 
 def sub(text):
@@ -37,13 +48,12 @@ for e in ns["ENTRIES"]:
     deps = ", ".join(keys[d] for d in e.get("depends", []))
     if "tag" in e:
         tag = e["tag"]
-        keys[k] = tag
         for f in ("statement", "proof", "source", "routes"):
             if e.get(f):
                 run("set", tag, f, sub(e[f]))
         if "depends" in e:
             run("set", tag, "depends", deps if deps else "(none)")
-    elif k in keys:
+    elif k in done:
         print("skip", k, keys[k])
         continue
     else:
@@ -58,11 +68,12 @@ for e in ns["ENTRIES"]:
                 a += ["--" + f, sub(e[f])]
         out = run(*a)
         tag = out.split()[-1]
-        keys[k] = tag
+        if tag != keys[k]:
+            sys.exit(f"numbering mismatch: {k} planned {keys[k]} got {tag}")
         if e.get("proof") and st not in ("proved", "checked"):
             run("set", tag, "proof", sub(e["proof"]))
-            run("status", tag, st if st != "open" else "open", "see note") if False else None
-    json.dump(keys, open(KEYS, "w"), indent=0)
+    done[k] = tag
+    json.dump(done, open(KEYS, "w"), indent=0)
     if e.get("note"):
         run("set", tag, "note", sub(e["note"]))
     if e.get("checked_by"):

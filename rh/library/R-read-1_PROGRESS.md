@@ -23,3 +23,7 @@ papers; they recommend nothing.
 - paper 3 (2006.13771, identifier found by arXiv API search): read whole (lines 67 to 2431, plus the leftover table
   after `\end{document}`). External data files (Dropbox) not fetched. Note:
   `connes-consani-weil-positivity-archimedean.md`. DONE.
+- paper 4 (2310.18423 v2): read whole (lines 159 to 1475, including two `\iffalse` passages). Note:
+  `connes-consani-moscovici-prolate.md`. DONE.
+- numbering check: the arXiv PDFs of papers 1 to 4 were downloaded and converted with `pdftotext` only to verify
+  theorem numbers (paper 4's propositions have a separate counter). All notes use the PDF numbering.

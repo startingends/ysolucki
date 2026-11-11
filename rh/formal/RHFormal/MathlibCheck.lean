@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 /-!
 Check that mathlib is available: a real-number statement proved with mathlib tactics.

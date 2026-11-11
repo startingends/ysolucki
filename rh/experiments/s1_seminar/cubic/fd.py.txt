@@ -113,3 +113,8 @@ if what == "thr":
     for blk, name in ((0, "even"), (1, "odd")):
         de = thr(lambda d: blocks(Qd(L, n, d)[0])[blk])
         print("   exact compression, %s block: d_crit = %.5f ; d_crit^2 Q(x psi)/mu_0 = %.4f" % (name, de, de * de * Qx / mu0), flush=True)
+if what == "one":
+    L, n = float(sys.argv[2]), int(sys.argv[3])
+    for d in [float(t) for t in sys.argv[4:]]:
+        Q, N, fun = Qd(L, n, d); ee, eo = blocks(Q)
+        print("exact compression L=%.2f n=%d d=%.3f: lowest eigenvalue of Q_d: even %.4e odd %.4e" % (L, n, d, ee, eo), flush=True)

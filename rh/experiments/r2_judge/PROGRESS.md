@@ -130,3 +130,15 @@ Literature, session 2 (rule 5):
 - One document opened from a search hit: "How the two-thirds argument was found: two agent runs and their literature"
   (PDF on www-cdn.anthropic.com, hash d7f3ecf1...; its own first page says the mathematics in it is not independently verified).
   Read about 150 of about 5400 text lines: the passages around its "Theorem 1 (global signature)" and its statements about Bombieri 2000.
+
+J17 (written 00:27:16 UTC by the system clock, command-written, before computing). Kill test of seat parity's Theorem 4 on
+   a surgery configuration made from zeta's own form (round-1 judge's next-step 4; J13 was only a toy with 40 ordinates).
+   Base: Weil form of zeta from implementation B (prime side, exact), 110 digits, int lattice (N = 30 for L <= 0.75, 40 for
+   L = 1, 56 for L = 1.25) and half lattice. Surgery is a finite-rank change computed in closed form from the transforms
+   of the basis functions: remove the real pairs +-gamma_1, +-gamma_2 (14.1347, 21.0220) and add the quartet +-a +- ib,
+   a = (gamma_1 + gamma_2)/2 = 17.578, b = 0.3. Count eigenvalues below -1e-90 in each parity block.
+   Predict (i) zeta itself: (0, 0) at every L. (ii) control: the two pairs merged ON the line (b = 0): (0, 0) at every L.
+   (iii) one quartet: never 2 in a block (that would contradict Theorem 4); (1, 1) at L = 0.75, 1.0, 1.25; at L = 0.5
+   uncertain, my guess (0, 0). (iv) two quartets (also gamma_3, gamma_4 -> a' = 27.718, b = 0.3): never 3 in a block;
+   (2, 2) at L = 1.0 and 1.25. (v) one quartet with multiplicity 3 (weight 3 on the quartet terms): same counts as (iii).
+   Note: "never more than the number of quartets" tests Theorem 4 only together with RH for the untouched zeros of zeta.

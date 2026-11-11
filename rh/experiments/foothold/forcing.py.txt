@@ -1,0 +1,201 @@
+"""'Positivity forces the prime' on the window L = 1/2: certified OUTER bounds (see PROOF_forcing_prime2.md).
+Exact Weil-type form with ONE free atom, on real polynomials v of degree < NB on [-1/2, 1/2] (one parity at a time):
+   Q_{y,m}(v) = A(v) - 2 m g_v(y),   g_v(x) = int v(s+x) v(s) ds  (autocorrelation, a polynomial in x on [0, 1]),
+   A(v) = -(log(2 pi) + gamma) g_v(0) + int_0^1 (g_v(0) - g_v(x))/x dx - int_0^1 h(x) g_v(x) dx + 2 E+(v) E-(v),
+   h(x) = e^{x/2}/sinh(x) - 1/x,  E+-(v) = int v(t) e^{+-t/2} dt.
+In the basis psi_j(t) = P_j(2t):  A(v) = b^T AA b (AA = matrix of Arb balls),  g_v(x) = b^T Gam(x) b (Gam = matrix of
+polynomials with RATIONAL coefficients).  A box of (y, m) is infeasible as soon as some rational b gives Q < 0 on it.
+usage: forcing.py.txt [NB=28] [prec=600]
+"""
+import sys, time, math
+import numpy as np
+import flint
+from flint import arb, acb, fmpq, fmpq_poly
+from fractions import Fraction as Fr
+
+NB = int(sys.argv[1]) if len(sys.argv) > 1 else 28
+PREC = int(sys.argv[2]) if len(sys.argv) > 2 else 600
+flint.ctx.prec = PREC
+Lq = fmpq(1, 2)
+t0 = time.time()
+
+# ---- Legendre polynomials psi_j(t) = P_j(2t) with rational coefficients
+x_ = fmpq_poly([0, 1])
+P = [fmpq_poly([1]), fmpq_poly([0, 2])]
+for n in range(1, NB):
+    P.append(((2 * n + 1) * fmpq_poly([0, 2]) * P[n] - n * P[n - 1]) / (n + 1))
+P = P[:NB]
+
+# ---- I_il(x) = int_{x-L}^{L} u^i (u - x)^l du  =  sum_q C(l,q) (-x)^(l-q) [L^n - (x-L)^n]/n,  n = i+q+1
+pw = [fmpq_poly([1])]
+for n in range(1, 2 * NB + 2):
+    pw.append(pw[-1] * fmpq_poly([-Lq, 1]))
+xp = [fmpq_poly([1])]
+for n in range(1, NB + 1):
+    xp.append(xp[-1] * fmpq_poly([0, -1]))          # (-x)^n
+def I_il(i, l):
+    s = fmpq_poly([0])
+    for q in range(l + 1):
+        n = i + q + 1
+        s += math.comb(l, q) * xp[l - q] * (fmpq_poly([Lq ** n]) - pw[n]) / n
+    return s
+Icache = {}
+def Gam_poly(j, k):
+    """gamma_jk(x) = int_{x-L}^{L} psi_j(u) psi_k(u - x) du, valid for 0 <= x <= 1."""
+    s = fmpq_poly([0])
+    cj = P[j].coeffs(); ck = P[k].coeffs()
+    for i, a in enumerate(cj):
+        if a == 0: continue
+        for l, b in enumerate(ck):
+            if b == 0: continue
+            if (i, l) not in Icache: Icache[(i, l)] = I_il(i, l)
+            s += a * b * Icache[(i, l)]
+    return s
+
+# ---- moments  H_k = int_0^1 h(x) x^k dx,  mu_i = int_{-1/2}^{1/2} t^i e^{t/2} dt   (Arb balls)
+DELTA = arb(2) ** (-120)
+tol = arb(2) ** (-(PREC - 260))
+def hfun(x):
+    return (x / 2).exp() / x.sinh() - 1 / x
+def Hk(k):
+    v = acb.integral(lambda x, _: hfun(x) * x ** k, DELTA, 1, rel_tol=tol, abs_tol=tol, eval_limit=10**7, depth_limit=10**4).real
+    # int_0^DELTA h x^k lies in [0, DELTA^(k+1)]  because 0 <= h <= 1 on (0, 1]
+    e = DELTA ** (k + 1)
+    return v + arb(e.mid() / 2, e.upper() / 2 * 1.0000001)
+def muk(i):
+    return acb.integral(lambda t, _: t ** i * (t / 2).exp(), -arb(1) / 2, arb(1) / 2, rel_tol=tol, abs_tol=tol).real
+H = [Hk(k) for k in range(2 * NB + 1)]
+MU = [muk(i) for i in range(NB)]
+print(f"moments done {time.time() - t0:.0f}s; H_0 = {H[0].str(30)}, radius of H_0 {float(H[0].rad()):.1e}", flush=True)
+C0 = (2 * arb.pi()).log() + arb.const_euler()
+
+def arbq(q):
+    return arb(q.p) / arb(q.q)
+E = []
+for j in range(NB):
+    s = arb(0)
+    for i, a in enumerate(P[j].coeffs()):
+        if a != 0: s += arbq(a) * MU[i]
+    E.append(s)
+GAM = {}; AA = {}; DD = {}
+for par in (0, 1):
+    idx = list(range(par, NB, 2))
+    for j in idx:
+        for k in idx:
+            if k < j: continue
+            g = Gam_poly(j, k)
+            GAM[(j, k)] = GAM[(k, j)] = g
+            c = g.coeffs()
+            T1 = arb(0); T2 = arb(0)
+            for kk, ck in enumerate(c):
+                if ck == 0: continue
+                cb = arbq(ck)
+                if kk >= 1: T1 -= cb / kk
+                T2 += cb * H[kk]
+            val = -C0 * arbq(c[0]) + T1 - T2 + (2 if par == 0 else -2) * E[j] * E[k]
+            AA[(j, k)] = AA[(k, j)] = val
+            dj = P[j].derivative(); dk = P[k].derivative()
+            pr = (dj * dk).integral()
+            DD[(j, k)] = DD[(k, j)] = pr(Lq) - pr(-Lq)
+print(f"matrices done {time.time() - t0:.0f}s; max radius of AA entries {max(float(v.rad()) for v in AA.values()):.1e}", flush=True)
+
+# ---- float copies in the ORTHONORMAL basis phi_j = sqrt(2j+1) psi_j
+IDX = {0: list(range(0, NB, 2)), 1: list(range(1, NB, 2))}
+DN = {par: np.sqrt(2 * np.array(IDX[par]) + 1.0) for par in (0, 1)}
+A0 = {par: np.array([[float(AA[(j, k)].mid()) for k in IDX[par]] for j in IDX[par]]) * np.outer(DN[par], DN[par]) for par in (0, 1)}
+def Gy(par, yq):
+    return np.array([[float(GAM[(j, k)](yq).p) / float(GAM[(j, k)](yq).q) if False else float(Fr(int(GAM[(j, k)](yq).p), int(GAM[(j, k)](yq).q))) for k in IDX[par]] for j in IDX[par]]) * np.outer(DN[par], DN[par])
+def lam(par, G, m):
+    w, V = np.linalg.eigh(A0[par] - 2 * m * G)
+    return w[0], V[:, 0]
+def best_m(G0, G1):
+    f = lambda m: min(lam(0, G0, m)[0], lam(1, G1, m)[0])
+    a, b = -2.0, 6.0
+    gr = (math.sqrt(5) - 1) / 2
+    c = b - gr * (b - a); d = a + gr * (b - a)
+    for _ in range(70):
+        if f(c) > f(d): b = d
+        else: a = c
+        c = b - gr * (b - a); d = a + gr * (b - a)
+    return (a + b) / 2
+
+# ---- rigorous evaluation for a rational coefficient vector b (in the psi basis, one parity)
+def rat_vec(par, cvec):
+    b = cvec * DN[par]
+    b = b / np.max(np.abs(b))
+    return [fmpq(int(round(float(t) * 10**12)), 10**12) for t in b]
+class Vec:
+    def __init__(self, par, b):
+        self.par = par; self.b = b; idx = IDX[par]
+        self.A = arb(0); self.g = fmpq_poly([0]); dn = fmpq(0)
+        for a_, j in enumerate(idx):
+            for b_, k in enumerate(idx):
+                w = b[a_] * b[b_]
+                if w == 0: continue
+                self.A += arbq(w) * AA[(j, k)]
+                self.g += w * GAM[(j, k)]
+                dn += w * DD[(j, k)]
+        self.g0 = self.g(fmpq(0))                      # = ||v||^2 (exact)
+        vL = sum(b, fmpq(0)); vmax = sum((abs(t) for t in b), fmpq(0))
+        # |g'(x)| <= |v(L)| max|v| + ||v'|| ||v||   (PROOF, Lemma 5)
+        self.G1 = arbq(abs(vL) * vmax) + (arbq(dn) * arbq(self.g0)).sqrt()
+    def g_on(self, yc, w):
+        """ball containing g_v(y) for all |y - yc| <= w   (yc, w rational)"""
+        return arbq(self.g(yc)) + arb(0, 1) * 0 + (self.G1 * arbq(w)) * arb(0, 1.0000001)
+
+def certify(yc, w, vecs):
+    """True if for EVERY real m and every y in [yc-w, yc+w] some vector has Q_{y,m}(v) < 0."""
+    lb = None; ub = None; data = []
+    for v in vecs:
+        g = v.g_on(yc, w); data.append((v, g))
+        if g > 0:
+            u = v.A / (2 * g)
+            if ub is None or u < ub: ub = u if ub is None else arb.min(ub, u)
+        elif g < 0:
+            l = v.A / (2 * g)
+            lb = l if lb is None else arb.max(lb, l)
+    if lb is None or ub is None: return False
+    if lb > ub: return True        # every feasible m must satisfy lb <= m <= ub : impossible
+    mm = arb.max(abs(lb), abs(ub))
+    for v, g in data:
+        if v.A + 2 * mm * abs(g) < 0: return True      # Q <= A + 2|m||g| < 0 for all m in [lb, ub]
+    return False
+
+def vectors_at(yq):
+    G0 = Gy(0, yq); G1 = Gy(1, yq)
+    m = best_m(G0, G1)
+    out = []
+    for dm in (0.0, -0.02, 0.02):
+        for par, G in ((0, G0), (1, G1)):
+            out.append(Vec(par, rat_vec(par, lam(par, G, m + dm)[1])))
+    return m, out
+
+if __name__ == "__main__":
+    # float sanity: true atom
+    ylog2 = fmpq(693147, 10**6)
+    m2 = math.log(2) / math.sqrt(2)
+    for par in (0, 1):
+        print(f"float check, atom at y={float(ylog2.p)/float(ylog2.q):.6f}, m={m2:.6f}, parity {par}: lowest eigenvalue {lam(par, Gy(par, ylog2), m2)[0]:.6e};  no atom: {np.linalg.eigvalsh(A0[par])[0]:.6e}")
+    # background (y >= 1, atom inactive, or m = 0): one vector with A < 0
+    for par in (0, 1):
+        v = Vec(par, rat_vec(par, np.linalg.eigh(A0[par])[1][:, 0]))
+        print(f"background, parity {par}: A(v)/||v||^2 = {(v.A / arbq(v.g0)).str(15)}  certified negative: {bool(v.A < 0)}")
+    smin = fmpq(1, 200000)
+    def sweep(start, direction):
+        y = fmpq(start); s = fmpq(1, 100); nint = 0
+        while True:
+            yc = y + direction * s / 2
+            m, vecs = vectors_at(yc)
+            if certify(yc, s / 2, vecs):
+                y = y + direction * s; nint += 1
+                print(f"   certified infeasible: y in [{float(Fr(int(min(y, y - direction*s).p), int(min(y, y - direction*s).q))):.6f}, {float(Fr(int(max(y, y - direction*s).p), int(max(y, y - direction*s).q))):.6f}]  (m* ~ {m:.4f})  t={time.time()-t0:.0f}s", flush=True)
+                if s < fmpq(1, 50): s = s * 2
+            else:
+                s = s / 2
+                if s < smin: break
+        return y, nint
+    yl, n1 = sweep(0, 1)
+    print(f"LEFT sweep: every y in (0, {yl}] = (0, {float(Fr(int(yl.p), int(yl.q))):.7f}] is infeasible for every real m  ({n1} intervals); exp = {math.exp(float(Fr(int(yl.p), int(yl.q)))):.6f}")
+    yr, n2 = sweep(1, -1)
+    print(f"RIGHT sweep: every y in [{yr}, 1) = [{float(Fr(int(yr.p), int(yr.q))):.7f}, 1) is infeasible for every real m  ({n2} intervals); exp = {math.exp(float(Fr(int(yr.p), int(yr.q)))):.6f}")
+    print(f"total time {time.time() - t0:.0f}s")

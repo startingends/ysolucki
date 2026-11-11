@@ -123,3 +123,39 @@ Q3 (doubling, L = 0.6, phi on (0, 0.6]): pencil eigenvalues lam = H_W/T_W all in
     1 - lam_max between 1e-8 and 1e-5; number of eigenvalues with |lam| > 0.99: between 2 and 5 (of ~30).
     At the odd saturator (normalised E_+^2 = 1): H_primes between 0.1 and 0.6, sum_{m>=1} E_m^2 below 0.1, Q(phi) between 0.3 and 0.9.
     Without primes the top eigenvalue of T^-1 (H_pole - H_Gamma) exceeds 1 (between 1.05 and 3).
+
+### RESULTS of turn 2 (2026-11-11 00:18 to 00:30 UTC). New files: fd.py.txt (fd_075.log), doubling.py.txt (doubling_0.5/0.6/0.68.log),
+### b72.py.txt (b72.log). PROOF_mirror_criterion.md corrected (exponent in Theorem 2, Step 2; finite form of the boundedness step).
+Predictions against results:
+- Q1 (B70, F_d at L = 0.75): shape HIT: lambda_even(d) = 9.1965e-15 - 1.46289e-4 d^2, lambda_odd(d) = 7.4532e-12 - 2.45385e-3 d^2,
+  constant coefficient to 6 digits for d <= 1e-6. d*_even = 7.9e-6 MISS (predicted 1e-8..1e-6), d*_odd = 5.5e-5 HIT.
+  Reproduced by S1-parity (B91) with a second implementation, same coefficients, and continued to imaginary d (eigenvalue rises).
+- Q2 (G_d mirror positive): HIT (min eig -2e-16, rank 6). G_d has ONE wrong-sign square and zeros off the line: so that item
+  does not single out d = 0; only the size of the roots does (B81).
+- Q3 (doubling, L = 0.6): 1 + lam_min = 5.9e-9 HIT; 1 - lam_max = 1.3e-5 MISS (just outside); count near +-1 = 3 HIT;
+  shares at the odd saturator (units E_+^2): Q = 0.0997 (MISS), Gamma squares = 0.4988 (MISS), H_primes = 0.4015 (HIT);
+  top eigenvalue of R without primes = 61 (MISS, predicted 1.05..3). L = 0.5: 9.1; L = 0.68: 353.
+  Even saturator, L = 0.6: 1.710 + 0.059 against 0.750 + 1. Both saturators are of one sign.
+  Check of the B25 identity by quadrature of the pieces: 3e-7 (sine family); cosine family 1.3% (jump of the odd extension).
+  NOTE: in the "NO atoms" block of the logs the line "H from pieces" still includes the primes (script reuses PR): ignore that line.
+
+Statements added this turn:
+- PROVED: Q_d = 2Q + d^2 [X,[X,Q]] + O(d^4). Family analytic in t = d^2; t > 0 real roots p^(+-d) (mirror cone), t < 0 roots on the
+  unit circle (Ramanujan side, form >= lambda(0)). For the self-dual local factor 1 - a p^-s + p^-2s: mirror positive iff |a| >= 2,
+  Ramanujan iff |a| <= 2. COMPLEMENTARY, meeting at roots +-1. Mirror-positive AND Ramanujan = characters only.
+- Odd block on [-L, L]  <=>  E_+(phi)^2 <= Q(phi) + sum_{m>=1} E_m(phi)^2 + H_primes(phi) on L^2(0, L]. With "one parity block
+  suffices" (S1-parity Theorem 4 / Yoshida 1992) RH is equivalent to this family. Even block: mirror forms on the small side.
+- R = T^-1 H: compression of complex conjugation to {phihat on the zeros}; past/future type operator (asked SP-operator, B84).
+- B89: weights item (iii) = rank one per prime + modulus one + mass m_p log p; finite test: [[c(p^2), c(p^3)],[c(p^3), c(p^4)]]
+  (normalised) is a positive multiple of [[1, e],[e, 1]]. With a local functional equation rank one <=> modulus one.
+- Smallest Ramanujan test at one prime uses c(p) and the degree: |c(p)| <= (degree) log p; these are exactly the values the mirror
+  matrix cannot see. (Not yet posted; mention to SP-reflection next turn.)
+- Lean nominations (B82): (1) D1 as a finite identity (mathlib vonMangoldt, IsPrimePow); (2) Corollary 3 real-root finite version;
+  (3) the boundedness step sum phi phi c(m^2 ab) <= m^(2a) sum phi phi c(ab).
+
+Open threads (for turn 3):
+- Waiting: SP-reflection on B83 (boundedness = upper half of Ramanujan? semigroup without identity? Levy-Khinchin for F^t?),
+  SP-operator on B84 (Toeplitz +- Hankel identity; R as past/future angle operator; Krein recursion), S1-parity on B48.
+- Not done: comb-profile computation offered to S1-curv (B54); doubling for L > 0.693 where the half window contains the prime 2.
+- Possible next computation: the rank-one bound form of the odd block, <e, M^-1 e> <= 1 with M = Q + Gamma squares + H_primes,
+  e = e^(x/2) on (0, L]: is M positive definite on L^2(0, L] (H_primes is indefinite there), and how does <e, M^-1 e> approach 1?

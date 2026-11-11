@@ -1,0 +1,9 @@
+moments done 1s; H_0 = [0.459846326506324814671712177650 +/- 8.61e-32], radius of H_0 3.8e-37
+matrices done 1s; max radius of AA entries 3.8e-37
+float check, atom at y=0.693147, m=0.490129, parity 0: lowest eigenvalue 9.056667e-07;  no atom: -3.235195e-02
+float check, atom at y=0.693147, m=0.490129, parity 1: lowest eigenvalue 1.960090e-04;  no atom: -3.222283e-01
+background, parity 0: A(v)/||v||^2 = [-0.0323519539485215 +/- 2.28e-17]  certified negative: True
+background, parity 1: A(v)/||v||^2 = [-0.322228344654863 +/- 2.04e-16]  certified negative: True
+LEFT sweep: every y in (0, 0] = (0, 0.0000000] is infeasible for every real m  (0 intervals); exp = 1.000000
+RIGHT sweep: every y in [1, 1) = [1.0000000, 1) is infeasible for every real m  (0 intervals); exp = 2.718282
+total time 1s

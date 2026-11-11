@@ -1,0 +1,10 @@
+G_d p=3 d=0.1: size 2: min eig +1.987918
+G_d p=3 d=0.1: size 3: min eig -0.048473
+G_d p=3 d=0.1: size 4: min eig -0.097822
+G_d p=3 d=0.1: size 5: min eig -0.244712
+G_d p=3 d=0.1: size 6: min eig -0.395986
+G_d p=3 d=0.01: size 2: min eig +1.999879
+G_d p=3 d=0.01: size 3: min eig -0.000483
+G_d p=3 d=0.01: size 4: min eig -0.000966
+G_d p=3 d=0.01: size 5: min eig -0.002414
+G_d p=3 d=0.01: size 6: min eig -0.003863

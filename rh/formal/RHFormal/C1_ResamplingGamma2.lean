@@ -1,6 +1,6 @@
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
 
 /-!
@@ -29,6 +29,8 @@ Setting, and then specialised to `q x y = lam * π y` with `∑ π = 1`.
 open Finset
 
 namespace RHFormal.C1
+
+noncomputable section
 
 variable {W : Type*} [Fintype W]
 
@@ -152,10 +154,10 @@ theorem pi_mul_sq_le (π f : W → ℝ) (hπ : ∑ y, π y = 1) (hπ0 : ∀ y, 0
     ring
   -- split off the site x
   have hsplit1 : π x * g x + ∑ y ∈ univ.erase x, π y * g y = 0 := by
-    rw [Finset.add_sum_erase _ _ (Finset.mem_univ x)]
+    rw [Finset.add_sum_erase _ (fun y => π y * g y) (Finset.mem_univ x)]
     exact h0
   have hsplit2 : π x + ∑ y ∈ univ.erase x, π y = 1 := by
-    rw [Finset.add_sum_erase _ _ (Finset.mem_univ x)]
+    rw [Finset.add_sum_erase _ (fun y => π y) (Finset.mem_univ x)]
     exact hπ
   have hsplit3 : π x * g x ^ 2 + ∑ y ∈ univ.erase x, π y * g y ^ 2 = var π f := by
     rw [Finset.add_sum_erase _ (fun y => π y * g y ^ 2) (Finset.mem_univ x)]
@@ -182,5 +184,36 @@ theorem gamma2_ge_resample (lam : ℝ) (π f : W → ℝ) (hπ : ∑ y, π y = 1
   have h := pi_mul_sq_le π f hπ hπ0 x
   have hl : 0 ≤ lam ^ 2 := sq_nonneg lam
   nlinarith [mul_nonneg hl (sub_nonneg.2 h)]
+
+/-- **(C2), sharpness at a site.** For `f = δ_x` (the indicator of the site `x`) the bound of
+`gamma2_ge_resample` is an equality at `x`. -/
+theorem gamma2_eq_resample_single [DecidableEq W] (lam : ℝ) (π : W → ℝ) (hπ : ∑ y, π y = 1)
+    (x : W) :
+    gamma2 (resample lam π) (Pi.single x (1 : ℝ)) x
+      = lam / 2 * (1 + 2 * π x)
+        * carre (resample lam π) (Pi.single x (1 : ℝ)) (Pi.single x (1 : ℝ)) x := by
+  have hm : mean π (Pi.single x (1 : ℝ)) = π x := by
+    simp only [mean]
+    rw [Finset.sum_eq_single x]
+    · simp
+    · intro y _ hy
+      simp [Pi.single_eq_of_ne hy]
+    · intro h
+      exact absurd (Finset.mem_univ x) h
+  have h2 : ∑ y, π y * ((Pi.single x (1 : ℝ) : W → ℝ) y - 0) ^ 2 = π x := by
+    rw [Finset.sum_eq_single x]
+    · simp
+    · intro y _ hy
+      simp [Pi.single_eq_of_ne hy]
+    · intro h
+      exact absurd (Finset.mem_univ x) h
+  have hv : var π (Pi.single x (1 : ℝ)) = π x - π x ^ 2 := by
+    have h3 := sum_sq_sub π (Pi.single x (1 : ℝ)) hπ 0
+    rw [h2, hm] at h3
+    linarith
+  rw [gamma2_resample lam π _ hπ x, carre_resample lam π _ hπ x, hm, hv, Pi.single_eq_same]
+  ring
+
+end
 
 end RHFormal.C1

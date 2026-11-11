@@ -15,8 +15,8 @@ Reader: R-read-1, 2026-11-11. This note reports what the paper contains. It reco
   draft of sections 2.1 and 6.2 (lines 1659 to 1958; compared with the main text by `diff`, first and last
   hundred lines read, the middle not read line by line).
 - Theorem numbers are computed from the `\newtheorem` declarations in the source (theorems, lemmas,
-  propositions, corollaries share one counter per section; definitions have their own). Not checked against
-  the published numbering.
+  propositions, corollaries share one counter per section; definitions have their own) and agree with the
+  arXiv PDF (checked with `pdftotext`). Not checked against the numbering of the journal version.
 
 Conventions of the paper: test functions on [1/lambda, lambda] in the multiplicative variable u; mu = lambda^2;
 L = log mu = 2 log lambda is the full length of the window. Our half-width L_ours (r1_A) is log lambda, so

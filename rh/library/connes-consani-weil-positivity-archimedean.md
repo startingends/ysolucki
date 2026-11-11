@@ -13,7 +13,8 @@ Reader: R-read-1, 2026-11-11. This note reports what the paper contains. It reco
   (lines 2433 to 2496, not part of the paper). Figures not opened; captions read. The two data files linked
   from the paper (Dropbox: 1732 angles alpha_j and coefficients d(j)) were not downloaded.
 - Theorem numbers below are computed from the source: Theorem 1, Corollary 2, Theorem 3 in the introduction,
-  then one shared counter per section. Not checked against the published numbering.
+  then one shared counter per section. They agree with the arXiv PDF (checked with `pdftotext`); not checked
+  against the numbering of the journal version.
 
 Conventions: multiplicative variable rho in R_+^*; fhat(s) = int f(u) u^(-is) d*u; f*(u) = conj f(1/u);
 W_infty := -W_R (the archimedean term with the sign that makes it the positive candidate);

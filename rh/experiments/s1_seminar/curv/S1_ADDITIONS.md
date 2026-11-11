@@ -93,3 +93,60 @@ is, to 92% in Frobenius angle, a multiple of the mirror form. Reflecting at the 
    M = 80: 0/40, 19/40 -1.2105, 19/40 -1.3067) but that does not repair the order.
 Defended: every number (the checker reproduced all he recomputed; I reran proc/check2/hankel/sig, logs `rerun_*.log`); Theorems B (identity),
 C, D1-D5, E as statements; the conclusion that pointwise Bakry-Emery is capped near half the gap and is blind to the Beurling control.
+
+# Turn 2 (2026-11-11): the tilt control F_d(s) = zeta(s-d) zeta(s+d), and the half-window constant
+
+Input from the board (S1-mirror B15, B90; S1-parity B91): the whole Weil kernel of F_d is zeta's times 2cosh(du); Q_d(f) = 2 Q(e^(dx) f, e^(-dx) f),
+Q zeta's bilinear Weil form on the window; lowest eigenvalue at L = 0.75 = 9.1965e-15 - 1.46289e-4 d^2 (even), 7.4532e-12 - 2.45385e-3 d^2 (odd).
+Box model of F_d: `s2lib.py.txt` (c_inf(d) = 2 log pi - psi(1/4 - d/2) - psi(1/4 + d/2); Levy density 2cosh(du) w(u); atoms Lambda(n) n^(-1/2) 2cosh(d log n);
+pole vectors cosh, sinh of (1/2 +- d)x). Checks (`t2_fd_40.log`): N_0 = 2 N_zeta entrywise (0.0), c_inf(0.1) two ways = 11.081023890.
+
+## G1 (PROVED, two lines from B90) The tilt is a contraction statement for zeta's own form, and it couples the two parity blocks
+Since e^(dx) f = (cosh(dx) + sinh(dx)) f and Q is symmetric bilinear:  Q_d(f) = 2 [ Q(cosh(dx) f) - Q(sinh(dx) f) ].  Put g = cosh(dx) f:
+   F_d is non-negative on [-L, L]   <=>   Q_L(tanh(dx) g) <= Q_L(g) for every g in L^2[-L, L]
+(multiplication by tanh(dx) is a contraction in the Weil form of zeta). tanh(dx) is odd, so it exchanges the parity blocks:
+   even block of F_d >= 0  <=>  Q_o(tanh(dx) g) <= Q_e(g) for all even g;      odd block of F_d >= 0  <=>  Q_e(tanh(dx) g) <= Q_o(g) for all odd g.
+For imaginary d = i tau (zeros moved ALONG the line) the same algebra gives Q_d(f) = 2[Q(cos(tau x) f) + Q(sin(tau x) f)]: a sum. The difference
+between a real and an imaginary tilt is the one sign in front of the shift form of the sinh/sin part.
+Small d (tanh(dx) = dx + O(d^3)): with nu_eo(L) := sup_{g even} Q_o(x g)/Q_e(g), nu_oe(L) := sup_{g odd} Q_e(x g)/Q_o(g) (finite when the blocks are strictly positive),
+the first failing tilt on the window L is d*^2 = 1/nu (to leading order), and testing on the ground states gives
+   lowest eigenvalue of the even block of Q_d  <=  2 mu_e - 2 d^2 [ Q_o(x v_e) - mu_e <v_e, x^2 v_e> ] + O(d^4),   i.e.   c_even(L) = 2 [Q_o(x v_e) - mu_e <x^2>],
+(Q, mu, v for zeta itself; the board's Q_0 is 2Q). With B90/B91 at L = 0.75: Q_o(x v_e) = 7.3145e-5, Q_e(x v_o) = 1.2269e-3 (derived from their slopes; not computed by me).
+So in the Weil geometry of the window the position operator x maps the even ground state to an odd vector whose energy is 1.6e10 times the even ground energy:
+'d = 0' is the statement that an operator of norm^2 >= 1.6e10 (L = 0.75) is not applied.
+COMPUTED in boxes (`t2_nu.py.txt`, `t2_nu.log`; multiplier at box centres; L = 1): nu_eo = 6.18, 17.07, 55.5 and nu_oe = 7.91, 19.2, 55.7 for M = 40, 80, 160;
+nu_eo x mu_e = 0.0123, 0.0093, 0.0096; 1/sqrt(nu_eo) = 0.402, 0.242, 0.134. Lowest eigenvalue of Q - tanh Q tanh against that of Q_d/2: 1.971e-3 / 1.985e-3 (d = 0.1, M = 40),
+5.340e-4 / 5.371e-4 (d = 0.1, M = 80), -0.0288 / -0.0305 (d = 0.3, M = 80; the box form of F_d is negative there). The two matrices differ entrywise by 1.4e-4 .. 1.7e-3,
+which is the first-order box error d^2 x (box width) of the atoms; the identity itself is exact algebra.
+Blind predictions (NOTES.md 00:17:14 and 00:20:44): slope kappa in (0.5, 20): MISS by three orders (0.0011 even, 0.0024 odd at M = 40): boxes are too coarse to see the tilt;
+nu x mu_e in (0.002, 0.05): HIT; 1/sqrt(nu) ranges: two narrow MISSES; 'nu_oe < nu_eo': MISS.
+
+## G2 (PROVED) F4 for F_d: the mirror form adds, the shift form subtracts
+phi on (0, L], phi_+- = e^(+-dx) phi; T_W = half-window Weil shift form (= Q on functions supported in (0, L]), H_W = mirror form of the full Weil kernel (B60 notation).
+   mirror:  H_{W,d}(phi) = H_W(phi_+) + H_W(phi_-) = 2 [ H_W(cosh(dx) phi) + H_W(sinh(dx) phi) ]        (a congruence: every sign property of the mirror form survives)
+   shift:   T_{W,d}(phi) = 2 T_W(phi_+, phi_-)    = 2 [ T_W(cosh(dx) phi) - T_W(sinh(dx) phi) ]
+Proof: 2cosh(d(x+y)) = e^(dx)e^(dy) + e^(-dx)e^(-dy);  2cosh(d(x-y)) = e^(dx)e^(-dy) + e^(-dx)e^(dy).  QED.
+So the window statement for F_d is   | H_W(cosh(dx) phi) + H_W(sinh(dx) phi) |  <=  T_W(cosh(dx) phi) - T_W(sinh(dx) phi),
+while zeta's statement applied to the two functions and added gives the same left side bounded by T_W(cosh(dx) phi) + T_W(sinh(dx) phi).
+The two differ by 2 T_W(sinh(dx) phi): F4 knows where the centre is through one sign, and only in its shift term.
+COMPUTED (`t2_fd_40.log`, on the d = 0 even ground state, boxes L = 1, M = 40): (T_{W,d} - T_{W,0})/d^2 = -0.0061, (H_{W,d} - H_{W,0})/d^2 = +0.0050 for every d from 0.005 to 0.3
+(prediction 'opposite signs, shift part larger': HIT).
+
+## G3 (COMPUTED + remark) F2 and the whole process side do not see the tilt
+F_d has a non-negative kernel, so Theorems A-C, E and F1-F3 hold for it word for word with k_d(a) = 2cosh(da) k(a) and its own ground state u_d. In F2 nothing changes in form:
+||L_d f||^2 = sum_y (sum_a g^d_y(a))^2 and the open part keeps the kernel 1_{W^c}(y+a+b). `t2_fd_40.log` (L = 1, M = 40), d = 0 / 0.1 / 0.3:
+positive eigenvalues of N_d: 1 / 1 / 1; gap/lambda_1: 1.00336 / 1.00324 / 1.00209; Bakry-Emery centre constant/lambda_1: 0.5222 / 0.5215 / 0.5154;
+smallest value of Op: 0.1054 / 0.1061 / 0.1113; negative directions of Cl: 1 / 1 / 1; 2x2 sum-rule determinant det(2 C^T N_e^-1 C - I): -5.592e-4 / -5.754e-4 / -7.713e-4
+(at d = 0 it is minus the even margin of F1). Every prediction of this block HIT. This is barrier B11 measured on my seat's objects: the ground-state process, its gap,
+its curvature and the open-path form are tilt-covariant; the only statement of mine that is not is G2.
+
+## G4 (PROVED) Half-window integral of Gamma_2 (answer to S1-cubic's B66)
+For any subset S of sites, any f:   sum_{x in S} pi_x Gamma_2(f)(x) = (1/2) <1_S, (Lf)^2>_pi + (1/2) <1_S f, L^2 f>_pi + (1/2) <L 1_S, Gamma(f) - f Lf>_pi.
+Proof: Gamma_2(f) = (1/2) L[Gamma(f) - f Lf] + (1/2) f L^2 f + (1/2)(Lf)^2 (from Gamma(f,g) = (1/2)(L(fg) - f Lg - g Lf)), and <1_S, L g>_pi = <L 1_S, g>_pi.  QED.
+For S = {x > 0}: L 1_S(x) = - sign(x) j(|x|), j := (H u)/u >= 0 the rate at which the ground-state process crosses the mirror (H = Hankel operator of K, u even).
+For f even or odd the last term vanishes and the half-window integral is exactly half of ||Lf||^2: the constant falls below the gap only through even-odd cross terms.
+COMPUTED (`t2_half.py.txt`, `t2_half.log`; formula checked to 4e-16; L 1_S = -sign Hu/u to 3e-15): rho_half/lambda_1 = 0.8384 (M = 40), 0.8319 (M = 160) for zeta
+(5/6 = 0.8333 on the resampling chain, S1-cubic B62); Beurling 2 -> 2.1: 0.8158, 0.8071. Minimiser: even part 34%, odd part 34%, cross 33% of Gamma_S. On it (units lambda_1 Gamma_S):
+bulk terms +1.357, mirror-crossing term -0.519 (M = 40); +1.353, -0.521 (M = 160). j ranges over 2.08 .. 3.07 of a total jump rate 5.87 (M = 40).
+B3 parts summed over the half window, on the minimiser: S 0.528, H 0.279, O 0.032; their even-odd cross parts: S +0.119, H +0.144, O -0.105; constants with a part removed: S+H 0.514, S+O 0.427.
+Blind prediction (0.84 +- 0.03, 0.83 +- 0.03, mixed parity): HIT.

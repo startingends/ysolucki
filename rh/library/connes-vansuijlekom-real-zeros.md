@@ -11,7 +11,7 @@ Reader: R-read-1, 2026-11-11. This note reports what the paper contains. It reco
   `\newtheorem` lines and lines 700 to 739 were looked at. Figures (PDF/PNG) were not opened; their captions
   were read.
 - Theorem numbers below are computed from the source (one counter per section shared by theorems,
-  propositions, lemmas, remarks, facts); they were not checked against a compiled PDF.
+  propositions, lemmas, remarks, facts) and were checked against the arXiv PDF with `pdftotext`: they agree.
 
 ## 2. What it proves
 Everything in the paper is unconditional. Nothing in it is a statement about the zeta function: the words

@@ -21,3 +21,20 @@ claude.md (all), rh/library/INDEX.md, rh/library/README.md, docs/KNOWLEDGE.md (a
 ## Notes to self
 - Another reader (R-read-1) uses `rh/library/src/` and a 6-part template from README.md; INDEX.md fixes my
   format (8 parts). Append rows to INDEX.md only; never rewrite other rows.
+
+## Log
+- 2026-11-11, paper 1 DONE. Johns Part I v1.4 read whole: 9 section files 213 667 / 213 667 characters,
+  main.tex, macros.tex, README.md, companion note N3 (critical conductors, 39 795 / 39 795), supplementary
+  README; Part II README only. Digest: `rh/library/johns-2026-part1.md`; index row appended. Running notes
+  kept at `rh/data/papers/johns/NOTES_reader2.md`.
+- DISCOVERED: another seat, R-read-2 (progress file `rh/library/R-read-2_PROGRESS.md`, sources under
+  `rh/library/src/`, README.md's 6-part template), wrote `johns-positive-solutions.md` on the same paper and
+  has BRS, Rodgers-Tao, Braenden-Huh, Miller, Perfekt-Pushnitski on its list. My files use different names
+  (arXiv ids) so nothing is overwritten. Before each paper: `ls rh/library/` to see what exists.
+- Paper 2 (Perfekt-Pushnitski) = arXiv 1611.03772 v2 (found through the arXiv API, export.arxiv.org/api/query).
+- 2026-11-11, paper 2 DONE. Perfekt-Pushnitski arXiv 1611.03772 v2: TeX via `curl -L https://arxiv.org/e-print/1611.03772v2`
+  (gzip'd tar; `tar -xzf`), kept in `rh/data/papers/perfekt-pushnitski/src/`; body 105 787 / 105 787 read. Digest
+  `rh/library/1611.03772.md`; index row appended. Main correction found: T19's credit "Berezansky-Kondratiev" is not
+  what the paper cites (Berezanskii 1968 monograph); the a,b >= 2 variant is not in the paper.
+- R-read-2 has meanwhile written `brs-fourier-interpolation.md` and `rodgers-tao-newman.md` (my papers 3 and 4).
+  My digests of those go under `2005.02996.md` and `1801.05914.md` (independent second readings).

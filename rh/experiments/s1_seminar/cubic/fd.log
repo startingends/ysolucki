@@ -7,3 +7,11 @@ L=1.00 n=24 d=0.05: |E_d - (P_d - W0_d)|=1.6e-14 ; eig(E_d) top three 5.7947 -1.
 L=1.00 n=24 d=0.10: |E_d - (P_d - W0_d)|=4.1e-15 ; eig(E_d) top three 5.8149 -1.172e-03 -1.217e-03 (#pos 1) ; min offdiag N'_d 1.784e-03 ; lowest eig Q_d even 7.460e-03 odd 3.358e-02 (#neg 0) ; #pos one-field 1 ; #pos 4-fibre 2 (min offdiag 0.00e+00)
 L=1.00 n=24 d=0.25: |E_d - (P_d - W0_d)|=1.6e-15 ; eig(E_d) top three 5.9589 -1.172e-03 -1.217e-03 (#pos 1) ; min offdiag N'_d 1.942e-03 ; lowest eig Q_d even 7.350e-03 odd 3.359e-02 (#neg 0) ; #pos one-field 1 ; #pos 4-fibre 2 (min offdiag 0.00e+00)
 L=1.00 n=24 d=0.45: |E_d - (P_d - W0_d)|=6.0e-13 ; eig(E_d) top three 6.3609 -1.172e-03 -1.217e-03 (#pos 1) ; min offdiag N'_d 2.385e-03 ; lowest eig Q_d even 6.946e-03 odd 3.334e-02 (#neg 0) ; #pos one-field 1 ; #pos 4-fibre 2 (min offdiag 0.00e+00)
+exact compression L=1.00 n=48 d=0.300: lowest eigenvalue of Q_d: even 2.0856e-03 odd 9.9469e-03
+exact compression L=1.00 n=48 d=0.360: lowest eigenvalue of Q_d: even 1.7585e-03 odd 8.0313e-03
+exact compression L=1.00 n=48 d=0.400: lowest eigenvalue of Q_d: even 6.5266e-04 odd -3.1607e-02
+exact compression L=1.00 n=48 d=0.450: lowest eigenvalue of Q_d: even -1.9974e-02 odd -1.0230e-01
+
+real	0m2.808s
+user	0m2.992s
+sys	0m0.036s
