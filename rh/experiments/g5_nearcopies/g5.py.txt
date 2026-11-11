@@ -1,0 +1,49 @@
+import numpy as np, math, sys
+D = int(sys.argv[1]); H = int(sys.argv[2])
+N = D
+mu = np.ones(N+1, dtype=np.int8); spf = np.zeros(N+1, dtype=np.int64)
+isp = np.ones(N+1, bool); isp[:2] = False
+for p in range(2, N+1):
+    if isp[p]:
+        isp[2*p::p] = False
+        spf[p::p] = np.where(spf[p::p]==0, p, spf[p::p])
+mu[0]=0
+for p in np.nonzero(isp)[0]:
+    mu[p::p] *= -1; mu[p*p::p*p] = 0
+primes = np.nonzero(isp)[0]
+odd = primes[primes > 2]
+# chi_d(p) for odd p via Euler criterion
+chi = np.zeros((H+1, N+1), dtype=np.int8)
+for d in range(1, H+1):
+    v = np.array([pow(d % int(p), (int(p)-1)//2, int(p)) for p in odd], dtype=np.int64)
+    vals = np.where(v == 1, 1, np.where(v == 0, 0, -1)).astype(np.int8)
+    chi[d, odd] = vals
+# extend to squarefree odd n multiplicatively
+n_idx = np.arange(N+1)
+sq_odd = np.nonzero((mu != 0) & (n_idx % 2 == 1))[0]
+full = np.zeros((H+1, N+1), dtype=np.int8); full[:, 1] = 1
+for n in sq_odd[1:]:
+    p = spf[n]; m = n // p
+    full[:, n] = chi[:, p] * full[:, m]
+def W(x):
+    out = np.zeros_like(x)
+    m = (x > 0.5) & (x < 1)
+    y = (x[m] - 0.5) / 0.5
+    out[m] = np.exp(-1/(y*(1-y)))
+    return out
+w = ((n_idx <= D) & (n_idx >= 1)).astype(np.float64) * mu
+A = np.array([float(np.dot(full[i].astype(np.float32), w.astype(np.float32))) for i in range(H+1)])
+A1 = A[1]; rms = math.sqrt((w**2).sum())
+isq = np.array([int(math.isqrt(d))**2 == d for d in range(H+1)])
+tol = 0.1 * rms
+dev = np.abs(A[1:] - A1)
+near = np.nonzero(dev <= tol)[0] + 1
+print(f"D={D} H={H} A1={A1:.3f} rms={rms:.3f} median|A_d| nonsquares={np.median(np.abs(A[1:][~isq[1:]])):.3f}")
+print(f"near copies: {len(near)}; squares among them: {int(isq[near].sum())}; non-squares: {[int(d) for d in near if not isq[d]][:40]}")
+print(f"fraction of non-squares near: {sum(1 for d in near if not isq[d]) / max(1,(~isq[1:]).sum()):.4f}")
+
+rng = np.random.default_rng(1)
+ns = np.nonzero(~isq[1:])[0] + 1
+pa = rng.choice(ns, 4000); pb = rng.choice(ns, 4000)
+base = np.mean(np.abs(A[pa] - A[pb]) <= tol)
+print(f"baseline fraction of random non-square pairs within tol: {base:.4f}; A_1 = {A1:.2f}; values A_(k^2) for k=1..6: {[round(float(A[k*k]),2) for k in range(1,7)]}")
