@@ -48,3 +48,21 @@ kappa_K(L) = lowest eigenvalue of D^(-1/2) M D^(-1/2).
  P8 (blind). kappa_4(L) increases with L across the three windows.
  Would kill idea 27 in this form: kappa_K falling by orders of magnitude as K grows (cross terms between rungs
  not controlled by the defect).
+
+## Outcome of the third experiment (form_*.log)
+kappa_4 = 0.35 / 0.68 / 1.02 (even), 0.22 / 0.55 / 0.91 (odd) at L = 0.5 / 0.75 / 1.0. P7: 5 of 6 hit (miss: odd,
+L = 0.5, 0.22 < 0.30). P8 HIT.
+
+## Fourth experiment: a formula for the constant. Prediction written BEFORE computing.
+Derivation (lead, notebook N41, HEURISTIC): in the reflected log variable the tail is F = 1_{v>L} sum_m m^(-1/2)
+psi(v + log m), psi(w) = e^(w/2) phi(e^w), phi = out-of-band part of ghat (one side, xi > lambda). On the half line
+v > L the one-sided prime shifts never meet the cut, so the prime term is exactly prime-free:
+primes(F) = 2 <F, sum_m m^(-1/2) log m psi(. + log m)>. Treating the dilates as orthogonal chirps of local frequency
+2 pi lambda m e^v (archimedean density = log of that over 2 pi) and dropping the pole term gives
+   W(F) ~ int_{w>L} |psi(w)|^2 K_L(w) dw,   K_L(L + a) = sum_{m <= e^a} (2L + a - 2 log m)/m  >= 2L.
+So the comparison constant should be about 2L plus an average of log(xi/lambda) over the leak.
+ P9 (blind). kappa_pred := int |phi|^2 K / int |phi|^2 for the bottom rungs (n = 4 even, n = 6 odd) is within a
+     factor 0.6 to 1.6 of the measured one-sided constant 2 kappa_1 (= 1.99, 3.85, 5.41 even; 2.00, 3.22, 4.86 odd)
+     at each of L = 0.5, 0.75, 1.0.
+ Would surprise me: agreement to 2 digits (then the cross terms vanish for a reason), or a factor above 3 off
+ (then the mechanism is wrong and plank 8 has no heuristic).
