@@ -86,6 +86,12 @@ I corrected one of my own recollections while writing (the Euler factor of L(s, 
 - Impostor: 0.808 is the lowest off-line zero; sup of real parts = 1.1204 (COMPUTED, Bohr-Kronecker; my prediction missed).
   So 1/f_DH has unbounded coefficients: excluded by |mu nu| <= 1 in every regime. SHORT_FAMILY 4(a) corrected in the file.
 
+## 2g. TRANSPORT.md (session 3): hybrid family of Hecke characters (u/.)_6 alpha^k N^(-it)
+- At bounded height mollifier exponent theta and zero-free abscissa are equivalent (Bettin-Gonek + Perron): 7/8 -> theta = 4/3 there;
+  the [0,T] uniform statement for theta > 1 is different (zeta M ~ 1 at all heights).
+- Absorption is pointwise, so it survives archimedean twists; exact copies only at k = t = 0 (Hecke): the hybrid dilutes the amplifier.
+- RISK held: quasi-GRH Re s > 7/8 for CM-by-K Grossencharacter L-functions (e.g. L(E,s), x^3+y^3=1) if the theta step works for K-types.
+
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of
    Frobenius of a one-point curve); RH follows because q <= 2 sqrt(q) for q <= 4, by inspection, and the list of curves

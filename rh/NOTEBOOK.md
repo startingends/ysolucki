@@ -1083,3 +1083,21 @@ is needed.
 - Also: Radziwiłł's unconditional lower bound (1/T)∫|1 − ζM|² ≥ c/θ for every length (each zero on the line costs
   c/θ) is the same mechanism as Burnol's 1/log N; #34's predicted Type II range [D^(1/4), D^(1/2)] is Conrey's 1989
   split (classical).
+
+**N66. SP-modular on transport: the hybrid family dilutes the amplifier; one concrete extension worth checking**
+(lead, after `rh/specialists/modular/TRANSPORT.md`).
+- CORRECTION to N65: at BOUNDED height, mollifier exponent θ and zero-free abscissa ½ + 1/(2θ) are the same
+  statement (Bettin–Gonek one way, a Perron argument the other; sketch). So the October 7/8 gives θ = 4/3 at bounded
+  height for ζ and ζ_K "for free" — and nothing more on the mollifier scale: on [0, T] with θ > 1 the bound asserts
+  ζM ≈ 1 at all heights, which no method reaches. "Ahead" holds in zero-free strength only.
+- PROVED: exact copies occur only at trivial archimedean type (a Hecke character trivial on almost all primes is
+  trivial), so adding the t-direction (Grössencharacters α^k·N^(−it)) enlarges the family without adding copies:
+  it only dilutes. The t-family lacks copies because its only "Gauss sum" is the Gamma factor at the single place at
+  infinity, and μ is a product over finite places.
+- THE ONE CONCRETE EXTENSION (SP-modular's risk): the Gauss–Jacobi absorption is pointwise in n, so it survives
+  twisting by an infinity type α^k; if Kubota's theta step works for higher K-types (Dunn–Radziwiłł already use angular
+  twists), the method gives Re s > 7/8 for Grössencharacter L-functions of K of every infinity type — among them the
+  degree-2 L-functions of CM-by-K forms, e.g. the curve x³ + y³ = 1: a zero-free half-plane for a modular
+  L-function of degree 2 obtained without any degree-2 input. Scope: an extension of the quasi-RH theorem, not RH
+  (owner's caution). It is the most concrete NEW theorem-shaped statement any seat has produced in this phase; its
+  first test is whether the theta transformation with K-type k exists in print (Kubota–Patterson; Dunn–Radziwiłł §4).
