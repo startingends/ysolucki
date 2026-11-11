@@ -352,3 +352,35 @@ trivial?" answered BEFORE any measurement. Construction first.
   or multiplies it. The table is the result; a single "multiplies" entry would be a new object.
 - Rating now: Quality 2, Toward RH 2 (known programme in spirit: F₁, Deninger, Connes–Consani); worth it only if
   the table finds an operation not on that list.
+
+### H-2, construction step done by the lead (2026-11-11; no measurement)
+What each operation does to a hypothetical off-line zero ρ₀ = ½ + β + iγ, measured as RATIO r = deviation / distance
+from the centre to the line of absolute convergence (for ζ, r = β/(½) = 2β; RH ⇔ r = 0 for every zero):
+
+| operation | effect on ρ₀ | r |
+|---|---|---|
+| base change ζ_K = ζ·L(s, χ_K), Rankin–Selberg with the trivial form | ρ₀ stays a zero | unchanged |
+| shift ζ(s − w) | ρ₀ + w; centre moves with it | unchanged |
+| dilation ζ(ks) = Σ (n^k)^(−s) | ρ₀/k; centre 1/(2k), convergence at 1/k | unchanged (scale-invariant) |
+| GL_n Eisenstein constant terms Π ξ(⟨λ,α^∨⟩)/ξ(⟨λ,α^∨⟩+1); metaplectic covers ζ(nz)/ζ(nz+1) | zeros at λ-parameters (ρ − 1)/n etc. | unchanged, and always in the NON-spectral chamber (the +1 shift of Gindikin–Karpelevich): Maass–Selberg positivity only sees Re ρ ≥ 1 |
+| function fields, C^k (Künneth) | zeros of H^k are sums of k zeros; centre k/2, trivial bound at k | unchanged (2β)! |
+| Deligne's actual trick: F^(⊗2k) for a lisse sheaf F on a CURVE U | weight 2kw grows, abscissa stays at weight/2 + 1 (dim U = 1) | multiplied by k: deviation grows, half-width fixed |
+| Langlands: Sym^k π, π automorphic on GL₂/ℚ | local Satake parameter α_p ↦ α_p^k, abscissa stays at 1 | multiplied by k (this is how Ramanujan follows from functoriality) |
+
+- **What the table says (the construction's result).** No operation on ζ itself amplifies: every operation on the
+  GLOBAL zeros rescales deviation and half-width together. The two operations that amplify act on LOCAL parameters
+  of an object living over a fixed base (a sheaf on a curve; a form on GL₂ over Spec ℤ), and the fixed half-width is
+  the dimension of the base. In Weil II, global RH for X comes from LOCAL purity of a family's fibres over a curve
+  (Lefschetz pencil). So the converter needs the zeros of ζ to be LOCAL parameters (Satake / archimedean spectral
+  parameters) of a family over a base, not global zeros of anything.
+- **The target object, sharpened.** A family {Π_γ} of automorphic representations (on any reductive group over any
+  number field) whose archimedean Langlands parameter at one place encodes ½ + iγ for the zeros of ζ, with Sym^k
+  (or a tensor-power operation) staying in the family. Temperedness at ∞ (archimedean Ramanujan, Selberg's 1/4
+  type) would then be RH, and Langlands' argument proves temperedness from analytic continuation of all Sym^k.
+  This is Hilbert–Pólya in Langlands' language, and the record's Colin de Verdière / Bombieri–Garrett pseudo-
+  Laplacians are the closest known attempt (their "spectrum" is defined by a constant-term condition, not by
+  automorphy, which is why no Sym^k exists for it).
+- Rating: Quality 3, Toward RH 2. Known in spirit (Langlands, Sarnak, Deninger). New here only as a sharp target:
+  "local parameters over a fixed base" is the property that every global construction on the record lacks, and it
+  is the same property the October authors used without saying so (their sextic theta lives on a cover, whose Gauss
+  sums are LOCAL parameters at each prime, N75).
