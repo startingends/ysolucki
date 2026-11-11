@@ -24,6 +24,11 @@ import RHFormal.LemmaB_PerronStep
 import RHFormal.LemmaB_TrickleInequality
 import RHFormal.N2_RankOnePush
 import RHFormal.SignatureBridge
+import RHFormal.CB_L1_Squarefull
+import RHFormal.CB_L2_KernelCopies
+import RHFormal.CB_L3_GramLowerBound
+import RHFormal.CB_L4_AmplifierArithmetic
+import RHFormal.CB_L5_CharacterOrthogonality
 
 /-!
 # Axiom audit
@@ -86,3 +91,26 @@ name would mean an added axiom. (`native_decide` would show as `Lean.ofReduceBoo
 #print axioms RHFormal.N2.push_unique
 #print axioms RHFormal.SignatureBridge.posDim_iff_le_sigPos
 #print axioms RHFormal.SignatureBridge.negDim_iff_le_sigNeg
+#print axioms RHFormal.CB.L1.squarefull_decomp
+#print axioms RHFormal.CB.L1.card_squarefull_le_three
+#print axioms RHFormal.CB.L1.card_squarefull_le_tsum
+#print axioms RHFormal.CB.L1.tsum_eq_zeta
+#print axioms RHFormal.CB.L1.card_squarefull_le_zeta
+#print axioms RHFormal.CB.L2.kernel_lemma
+#print axioms RHFormal.CB.L2.squarefull_of_copy
+#print axioms RHFormal.CB.L2.card_copies_le_three
+#print axioms RHFormal.CB.L2.card_copies_le_zeta
+#print axioms RHFormal.CB.L2.copy_decomp
+#print axioms RHFormal.CB.L2.card_copies_le_euler
+#print axioms RHFormal.CB.L3.delta_ge_of_test
+#print axioms RHFormal.CB.L3.opNorm_sq_ge
+#print axioms RHFormal.CB.L3.exact_copy_sum_ge
+#print axioms RHFormal.CB.L3.near_copy_re_sum_ge
+#print axioms RHFormal.CB.L3.theorem1
+#print axioms RHFormal.CB.L3.theorem1_exact
+#print axioms RHFormal.CB.L4.amplifier_floor
+#print axioms RHFormal.CB.L4.exponent_floor
+#print axioms RHFormal.CB.L4.exponent_floor_attained
+#print axioms RHFormal.CB.L4.delta_floor
+#print axioms RHFormal.CB.L5.sum_char_mul_conj
+#print axioms RHFormal.CB.L5.sum_norm_sq_eq

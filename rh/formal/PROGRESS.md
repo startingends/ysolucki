@@ -480,3 +480,107 @@ files of mine, AxiomsAudit.
   had passed; the objection to F1 (a) / T33's last sentence is now on the board with the machine-checked counterexample
   and the proposed wording. Supersedes the line "NOT yet answered" in "OPEN AT THE END OF SESSION 1" above.
 - No question addressed to FORMAL is open (B157 answered in B187, result in B189).
+
+
+## Session 2 (2026-11-11, from 04:37 UTC): the finite cores of SP-sieve's copy barrier
+Source of all five: `rh/specialists/sieve/COPY_BARRIER.md` (SP-sieve, session 3), section 6 "Finite cores nominated
+for Lean", and the coordinator's list L1-L5. No theory numbers exist for them yet, so the files are named `CB_L<k>_...`.
+Board s1: S1-curv answered B177/B193 in B198: ACCEPTS the objection, corrected S1_ADDITIONS.md F1 (a) to my wording, and
+asks the keeper to correct T33's last sentence the same way (also B28(1) carries the same error for the even margin).
+Both boards s1 and s2 are CLOSED, so the session-2 results below are NOT posted on a board; they are here and in MEMORY.md.
+
+### FILE 28 DONE: `RHFormal/CB_L4_AmplifierArithmetic.lean`  (L4; Theorem 3 arithmetic)
+INFORMAL (L4): for H >= D >= 1, H D/(3 sqrt H) >= D^(3/2)/3 (so x^2 C <= H D with C <= 3 sqrt H never yields x^2 < D^(3/2)/3).
+  (Theorem 3) inf over H >= D^(1-eps0) of H D^(1+eps)/H^(1/2) = D^(3/2 - eps0/2 + eps), |A_1| << D^(3/4 - eps0/4 + eps);
+  general form 1 - delta/2.
+LEAN (namespace RHFormal.CB.L4; reals, rpow):
+  `amplifier_floor`: 1 ≤ D ≤ H, 0 < C ≤ 3 √H → D √D / 3 ≤ H D / C.
+  `amplifier_floor_bound`: ... → H D / C ≤ y → D √D / 3 ≤ y.
+  `exponent_floor`: 1 ≤ D, D^(1-ε₀) ≤ H → D^(3/2 - ε₀/2 + ε) ≤ H D^(1+ε) / H^(1/2).
+  `exponent_floor_attained`: equality at H = D^(1-ε₀) (D > 0).  `sqrt_exponent`: (D^(3/2-ε₀/2+ε))^(1/2) = D^(3/4-ε₀/4+ε/2).
+  `delta_floor`: 1 ≤ D ≤ H, 0 < C ≤ H^δ, δ ≤ 1 → D^(2-δ+ε) ≤ H D^(1+ε) / C.
+DIFFERENCES: none in L4. In Theorem 3's wording, the square root of D^(3/2 - eps0/2 + eps) is D^(3/4 - eps0/4 + eps/2):
+  the file's "+ eps" should be "+ eps/2" (harmless: eps is arbitrary). The factor 2 and O(eta^2 D^2) are not in these
+  statements (they only add to the bound). GAP: none.
+
+### FILE 29 DONE: `RHFormal/CB_L3_GramLowerBound.lean`  (L3 and Theorem 1)
+INFORMAL: Delta(F, D) least constant with sum_{chi in F} |sum_n a_n chi(n)|^2 <= Delta sum |a_n|^2 for ALL a; eta-copy:
+  chi(n) = 1_{(n,r)=1}, sum_{p|r} 1/p <= eta. Theorem 1: Delta >= (1 - 2eta)^2 C_eta D for 0 <= eta < 1/2 (the (1-2eta)^2
+  "covers members that are 1 off the multiples and arbitrary on them"). L3: Re sum_n v_i(n) >= (1-2eta) D for C vectors
+  => ||V||^2 >= (1-2eta)^2 C D.
+LEAN (namespace RHFormal.CB.L3; members v : ι → α → ℂ, ι a finite type, so multiplicity is allowed):
+  `delta_ge_of_test`: N non-empty Finset, Cs : Finset ι, 0 ≤ c, (∀ i ∈ Cs, c |N| ≤ Re ∑_{n∈N} v i n),
+     (∀ a, ∑_i ‖∑_{n∈N} a n * v i n‖^2 ≤ Δ ∑_{n∈N} ‖a n‖^2) → c^2 |Cs| |N| ≤ Δ.
+  `opNorm_sq_ge`: V : EuclideanSpace ℂ α →L[ℂ] EuclideanSpace ℂ ι with (V a) i = ∑_n a n * v i n, same hypotheses on Cs
+     → c^2 |Cs| |α| ≤ ‖V‖^2.
+  `card_not_coprime_le`: r ≠ 0 → #{n ∈ (0, D] : ¬ coprime n r} ≤ ∑_{p ∈ r.primeFactors} D / p.
+  `card_not_coprime_le_real`, `card_coprime_add`.
+  `exact_copy_sum_ge`: r ≠ 0, ∑_{p | r} 1/p ≤ η → (1 - η) D ≤ #{n ∈ (0, D] : coprime n r}.
+  `near_copy_re_sum_ge`: in addition v n = 1 on coprime n, ‖v n‖ ≤ 1 → (1 - 2η) D ≤ Re ∑_{n ∈ (0,D]} v n.
+  `theorem1`: D ≥ 1, η ≤ 1/2, every i ∈ Cs has r i ≠ 0, ∑_{p | r i} 1/p ≤ η, v i = 1 on (n, r i) = 1, ‖v i n‖ ≤ 1, Δ
+     admissible → (1 - 2η)^2 |Cs| D ≤ Δ.
+  `theorem1_exact`: exact copies (v i n = 1_{(n, r i)=1}), η ≤ 1 → (1 - η)^2 |Cs| D ≤ Δ.
+DIFFERENCES: over ℚ only (number-field variant with N(p) not done). "Least constant" not needed (bound holds for every
+  admissible Δ). η < 1/2 used as η ≤ 1/2. For EXACT copies the constant (1 - η)^2 is proved, which is better than the
+  file's (1 - 2η)^2; the file's (1 - 2η)^2 is proved for the "1 off the multiples, arbitrary of modulus <= 1 on them"
+  members, exactly as the file says. r ≠ 0 is an explicit hypothesis (r = 0 would make every n > 1 non-coprime).
+  The Remark on multiplicities is not done. GAP: none.
+
+### FILE 30 DONE: `RHFormal/CB_L5_CharacterOrthogonality.lean`  (L5)
+INFORMAL: for q > 2D and any a on [1, D], sum_{chi mod q} |sum a_n chi(n)|^2 = phi(q) sum_{(n,q)=1} |a_n|^2.
+LEAN (namespace RHFormal.CB.L5; DirichletCharacter ℂ q, q ≠ 0):
+  `inv_apply_unit`: χ⁻¹ b = χ b⁻¹ for a unit b.
+  `sum_char_mul_conj`: ∑_χ χ a * conj (χ b) = if IsUnit b ∧ a = b then φ(q) else 0
+     (from mathlib's `DirichletCharacter.sum_char_inv_mul_char_eq` and `MulChar.star_apply'`).
+  `sum_norm_sq_eq`: D < q → ∑_χ ‖∑_{n∈(0,D]} a n * χ n‖^2 = φ(q) * ∑_{n∈(0,D], coprime n q} ‖a n‖^2.
+DIFFERENCE: hypothesis q > 2D WEAKENED to q > D (all that is used: distinct n, m in [1, D] are distinct mod q). (q ≥ D
+  would also suffice, since n = q has χ(q) = 0 and is not coprime to q; not typed.) GAP: none.
+mathlib needed `Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed` for the instance HasEnoughRootsOfUnity ℂ _.
+
+### FILE 31 DONE: `RHFormal/CB_L1_Squarefull.lean`  (L1)
+INFORMAL: #{n <= X : n squarefull} <= zeta(3/2) sqrt(X) (or the cruder 3 sqrt(X)), via n = a^2 b^3, b squarefree.
+LEAN (namespace RHFormal.CB.L1; `Squarefull n := 0 < n ∧ ∀ p prime, p ∣ n → p^2 ∣ n`; X : ℕ):
+  `squarefull_decomp`: Squarefull n → ∃ a b, 0 < a ∧ 0 < b ∧ Squarefree b ∧ n = a^2 * b^3.
+  `card_le_sqrt_div`: 1 ≤ b → #{a ∈ [1,X] : a^2 b^3 ≤ X} ≤ √X / (b √b).
+  `step`, `sum_range_le` (∑_{k<B} 1/((k+1)√(k+1)) ≤ 3 - 2/√B), `sum_inv_le` (∑_{b=1}^{B} 1/(b √b) ≤ 3).
+  `card_squarefull_le_pairs`, `card_pairs_eq`.
+  `card_squarefull_le_three`: #{n ∈ [1,X] : Squarefull n} ≤ 3 √X.
+  `card_squarefull_le_tsum`: ... ≤ (∑' n : ℕ, 1 / n^(3/2)) √X.
+  `tsum_eq_zeta`: riemannZeta (3/2) = ↑(∑' n : ℕ, 1 / n^(3/2));  `card_squarefull_le_zeta`: ... ≤ Re ζ(3/2) · √X.
+DIFFERENCES: X a natural number (for real X apply it at ⌊X⌋). Uniqueness of n = a^2 b^3 is NOT used (the pair count
+  is an upper bound), nor is "b squarefree" in the count; the decomposition lemma does provide b squarefree. Both
+  constants of L1 (3 and ζ(3/2)) are formal. GAP: none. Consistency with the seat's COMPUTED values: 2.158 √X at X = 1e12
+  is below 3 and below ζ(3/2) = 2.612.
+
+### FILE 32 DONE: `RHFormal/CB_L2_KernelCopies.lean`  (L2; kernel lemma of Theorem 2; counting with P_0)
+INFORMAL: kernel lemma: psi_u principal => m_p | v_p(u) (from psi_(u,p) = psi_(p,p)^(v_p(u))). L2: m : primes -> N_{>=2},
+  n a copy if m(p) | v_p(n) for all p; then every copy is squarefull, #{copies <= X} <= 3 sqrt(X); with P_0 finite:
+  <= 3 sqrt(X) prod_{p in P_0} (1 - p^(-1/2))^(-1).
+LEAN (namespace RHFormal.CB.L2; `IsCopy m n := 0 < n ∧ ∀ p prime, m p ∣ n.factorization p`):
+  `kernel_lemma`: groups G p, elements g p, 0 < u, (∀ p prime, g p ^ v_p(u) = 1) → IsCopy (fun p => orderOf (g p)) u.
+  `exp_zero_or_two_le`, `squarefull_of_copy`: (∀ p prime, m p ≠ 1) → IsCopy m n → Squarefull n.
+  `card_copies_le_three`: #{n ∈ [1,X] : IsCopy m n} ≤ 3 √X;  `card_copies_le_zeta`: ≤ Re ζ(3/2) √X.
+  `partIn`, `partOut` (P₀-part and P₀-free part via Finsupp.filter of n.factorization), `partIn_mul_partOut`,
+  `factorization_partIn`, `factorization_partOut`.
+  `copy_decomp`: (∀ p prime, p ∉ P₀ → m p ≠ 1) → IsCopy m n → partIn P₀ n ∈ Nat.factoredNumbers P₀ ∧ Squarefull (partOut P₀ n).
+  `invSqrt : ℕ →* ℝ` (n ↦ n^(-1/2)), `sum_factored_le` (Euler product, mathlib
+  `EulerProduct.summable_and_hasSum_factoredNumbers_prod_filter_prime_geometric`), `sqrt_div_le`.
+  `card_copies_le_euler`: (∀ p prime, p ∉ P₀ → m p ≠ 1) → #{n ∈ [1,X] : IsCopy m n} ≤ 3 √X ∏_{p ∈ P₀, prime} (1 - p^(-1/2))⁻¹.
+DIFFERENCES: over ℕ only (number fields, ideals not done). m ≥ 2 WEAKENED to m p ≠ 1 (m p = 0, infinite order, forces
+  v_p = 0). In `kernel_lemma` the identity psi_(u,p) = psi_(p,p)^(v_p(u)) (locality + multiplicativity) is the
+  HYPOTHESIS; the lemma formalises the step from it to m_p | v_p(u). S and P_0 are merged into one finite set P₀.
+  The file's "<< H^(1/2) prod_{p in S u P_0} (1 - N(p)^(-1/2))^(-1)" is proved with the explicit constant 3.
+  GAP: none.
+
+### 04:58 FULL BUILD (session 2)  `lake -d /home/user/ysolucki/rh/formal build`
+```
+info: RHFormal/AxiomsAudit.lean:113:0: 'RHFormal.CB.L4.exponent_floor_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:114:0: 'RHFormal.CB.L4.delta_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:115:0: 'RHFormal.CB.L5.sum_char_mul_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:116:0: 'RHFormal.CB.L5.sum_norm_sq_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3967/3968] Built RHFormal (2.3s)
+Build completed successfully (3968 jobs).
+```
+75 theorems audited, all on exactly [propext, Classical.choice, Quot.sound]; 0 lines with "error" or "sorry"; only lake's
+"consider adding `module`" warnings. RHFormal.lean imports 34 modules (2 of the lead's, 31 statement files, AxiomsAudit).
+(The job count rose from 3175 because the new files import more of mathlib: Dirichlet characters, zeta, Euler products.)

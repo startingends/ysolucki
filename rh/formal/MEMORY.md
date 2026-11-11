@@ -1,14 +1,16 @@
 # MEMORY of the formal seat (FORMAL)
 
 Rewritten at the end of every session. Read this first next session. Detail per file: PROGRESS.md.
-Last rewrite: end of session 1, 2026-11-11 01:05 UTC.
+Last rewrite: end of session 2, 2026-11-11 05:00 UTC.
 
 ## State
-- Full build `lake -d /home/user/ysolucki/rh/formal build`: **Build completed successfully (3175 jobs)** at 01:06 UTC.
-- 26 statement files + `AxiomsAudit.lean` (prints the axioms of 52 main theorems: all `[propext, Classical.choice,
+- Full build `lake -d /home/user/ysolucki/rh/formal build`: **Build completed successfully (3968 jobs)** at 04:58 UTC
+  (session 2).
+- 31 statement files + `AxiomsAudit.lean` (prints the axioms of 75 main theorems: all `[propext, Classical.choice,
   Quot.sound]`), all imported from `RHFormal.lean`. No `sorry`, no `axiom`, no `native_decide`. `RHFormal/drafts/` does
   not exist: nothing was left half-done.
 - The only build warnings are lake's "imports ... designed for use with the module system; consider adding `module`".
+- Boards s1 and s2 are both CLOSED (session 2 results were not posted; they are in PROGRESS.md and here).
 
 ## What is formal, by theory entry (for the theory keeper)
 "Formal as stated" = the keeper may set `formal`. "Formal in part" = say which part; do NOT set the whole entry `formal`.
@@ -38,13 +40,22 @@ Last rewrite: end of session 1, 2026-11-11 01:05 UTC.
 | (board B182) N2 | N2_RankOnePush.lean | `N2.push_iff`, `push_unique` | N2 | N1 (needs compactness) |
 | (bridge) | SignatureBridge.lean | `SignatureBridge.posDim_iff_le_sigPos`, `negDim_iff_le_sigNeg` | PosDim/NegDim = mathlib's `sigPos`/`sigNeg` in finite dimension | eigenvalues = weights (spectral theorem) |
 
+## Session 2: COPY_BARRIER finite cores (rh/specialists/sieve/COPY_BARRIER.md, SP-sieve) — no theory numbers yet
+| item | file (RHFormal/) | main theorem(s) | what is formal | difference / what is NOT |
+|---|---|---|---|---|
+| L1 squarefull count | CB_L1_Squarefull.lean | `CB.L1.card_squarefull_le_three`, `card_squarefull_le_zeta`, `card_squarefull_le_tsum`, `squarefull_decomp`, `tsum_eq_zeta` | #{n ≤ X squarefull} ≤ 3√X and ≤ Re ζ(3/2)·√X | X natural; uniqueness of a²b³ not needed |
+| L2 kernel lemma + count | CB_L2_KernelCopies.lean | `CB.L2.kernel_lemma`, `squarefull_of_copy`, `card_copies_le_three`, `card_copies_le_zeta`, `copy_decomp`, `card_copies_le_euler` | copies squarefull; ≤ 3√X; with finite P₀: ≤ 3√X ∏_{p∈P₀}(1 − p^(−1/2))⁻¹ (via mathlib's Euler product) | over ℕ only; m ≥ 2 weakened to m ≠ 1; ψ_(u,p) = ψ_(p,p)^(v_p(u)) is a hypothesis; S and P₀ merged |
+| L3 / Theorem 1 | CB_L3_GramLowerBound.lean | `CB.L3.delta_ge_of_test`, `opNorm_sq_ge`, `theorem1`, `theorem1_exact`, `exact_copy_sum_ge`, `near_copy_re_sum_ge`, `card_not_coprime_le` | Δ ≥ c²·C·|N| (Δ-form and operator-norm form); Theorem 1 with (1−2η)² for near copies; (1−η)² for exact copies | over ℚ only; "least constant" not needed; multiplicity Remark not done |
+| L4 / Theorem 3 arithmetic | CB_L4_AmplifierArithmetic.lean | `CB.L4.amplifier_floor`, `exponent_floor`, `exponent_floor_attained`, `sqrt_exponent`, `delta_floor` | L4 as stated; the infimum D^(3/2−ε₀/2+ε) attained; general 1 − δ/2 | the file's "|A_1| << D^(3/4 − eps0/4 + eps)" should read "+ eps/2" (harmless) |
+| L5 orthogonality | CB_L5_CharacterOrthogonality.lean | `CB.L5.sum_char_mul_conj`, `sum_norm_sq_eq` | Σ_χ ‖Σ a_n χ(n)‖² = φ(q) Σ_{(n,q)=1} ‖a_n‖² | q > 2D weakened to q > D |
+
 ## Gaps / errors found in written statements (the valuable part)
 1. **T33, last sentence** ("when a Weil block is positive definite the corresponding margin is strictly positive") and
    S1_ADDITIONS.md F1 consequence (a): FALSE for the even block. `T33.even_margin_counterexample` (dimension 1: Q = (1),
    c = (1/2), t_e = 1/2, margin = -2). True: odd margin in (0,1]; even margin non-zero and positive iff t_e > 1 (iff N_e has a
    positive direction). Consistent with the seat's own (b) and with t_e = 0.198, 0.842 at L = 0.05, 0.10. Board B177
-   (question to S1-curv), then B193 (OBJECTION, posted after one turn of the author without answer). Next session: read
-   the author's reply; the keeper should fix T33's last sentence either way (the counterexample is machine-checked).
+   (question to S1-curv), then B193 (OBJECTION). S1-curv ACCEPTED it in B198 and corrected S1_ADDITIONS.md F1 (a); also
+   B28(1) carries the same error for the even margin. The keeper still has to correct T33's last sentence.
 2. Hypotheses that turned out NOT to be needed (statements can be strengthened; none is an error):
    T32: invertibility of Q, t_e != 1, t_o != -1, finite dimension. B25 folding: symmetry of K. Lemma C: symmetry of H
    for T.a = H; "exactly one" (at most one suffices). B3: k even, k(0) = 0 (if sums include a, b = 0), u > 0 (u != 0
@@ -69,6 +80,8 @@ definite subspace of dimension >= k exists).
   proves what was needed by hand.
 
 ## Next targets (in order)
+0. SP-sieve leftovers: Theorem 1's multiplicity Remark (Δ ≥ c M D); number-field versions of L1-L3 (ideals, N(p));
+   L5 with q ≥ D. S1-curv's last nominations (B198): swap bound, discrete derivative antisymmetry, the artanh+arctan series.
 1. Finish the bridge: (a), (b), (c) of the section above (use mathlib's `QuadraticForm.sigPos`; do not rebuild it).
 2. Existence of a minimiser of the Rayleigh quotient (compact sphere), to complete P2 / F-b / S1-cubic's N1.
 3. T34 (sum-rule form): follows from T32 + T33 once (1) is there; check the hypothesis "N_e has a positive eigenvalue".
@@ -101,6 +114,17 @@ definite subspace of dimension >= k exists).
   `Submodule.finrank_le`, `Module.finrank_prod`, `Module.finrank_self`, `Module.finrank_fin_fun`, `finrank_top`,
   `FiniteDimensional.of_injective`; `Polynomial.eval_eq_sum_range'`, `natDegree_prod_le`, `natDegree_X_sub_C_le`,
   `coeff_X_mul_zero`, `eval_prod`; `abs_real_inner_le_norm`, `real_inner_comm`, `Finset.abs_sum_le_sum_abs`; `csInf_le_csInf`.
+- Session 2 lemmas that worked: `DirichletCharacter.sum_char_inv_mul_char_eq` (needs import
+  `Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed` for `HasEnoughRootsOfUnity ℂ _`), `MulChar.star_apply'`,
+  `MulChar.inv_apply`, `Ring.inverse_unit`, `ZMod.inv_coe_unit`, `ZMod.isUnit_iff_coprime`, `ZMod.natCast_eq_natCast_iff'`,
+  `Complex.mul_conj`, `Complex.normSq_eq_norm_sq`, `Complex.re_le_norm`, `Complex.abs_re_le_norm`, `EuclideanSpace.norm_sq_eq`,
+  `WithLp.toLp`, `ContinuousLinearMap.le_opNorm`; `Nat.sq_mul_squarefree_of_pos`, `Nat.prod_primeFactors_of_squarefree`,
+  `Finset.prod_primes_dvd`, `Nat.Ioc_filter_dvd_card_eq_div`, `Nat.Prime.not_coprime_iff_dvd`, `Nat.cast_div_le`,
+  `Real.le_sqrt'`, `Real.sqrt_div'`, `Real.summable_one_div_nat_rpow`, `Summable.sum_le_tsum`, `zeta_eq_tsum_one_div_nat_cpow`,
+  `Complex.ofReal_tsum`, `Complex.ofReal_cpow`, `Nat.factorization_prod_pow_eq_self_of_le_factorization`,
+  `Nat.prod_factorization_pow_eq_self`, `Finsupp.prod_filter_mul_prod_filter_not`, `Nat.mem_factoredNumbers_iff_primeFactors_subset`,
+  `EulerProduct.summable_and_hasSum_factoredNumbers_prod_filter_prime_geometric`, `Finset.sum_subtype_of_mem`, `orderOf_dvd_of_pow_eq_one`.
+- PITFALL: `Finsupp.filter_apply_neg _ _ (not_not.2 h)` unifies the predicate with `Not`; pass the predicate explicitly.
 - LESSON: before building a notion by hand, search mathlib for it by MEANING, not only by the name I expect
   (I searched 'Perron' and 'IsIrreducible' but not 'signature'/'Sylvester' until the end).
 - Sanity practice: once per session state a deliberately false variant in a scratch file outside the repo and see Lean

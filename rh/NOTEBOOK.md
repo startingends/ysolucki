@@ -1172,3 +1172,9 @@ unverified; novelty of Thms 2–3 not searched).
 - STATUS: the project's first verified barrier theorem for a class of methods. It limits one method; it says nothing
   about RH. Its exits (weighted or thinned families, approximate copies, the bootstrap, the short regime) are the only
   places that method could still go.
+- FORMAL session 2: all five finite cores L1–L5 of the copy barrier are machine-checked (full build, 3968 jobs, 75
+  theorems audited, only the three standard axioms; files `rh/formal/RHFormal/CB_L*.lean`). Over ℕ / ℚ only (the
+  number-field versions are not formal); L5 holds under q > D (weaker than the written q > 2D); L4 found a harmless
+  slip (+ε should be +ε/2 in Thm 3's wording). So the copy barrier is: proved (SP-sieve), verified with corrections
+  (V-COPY), and its finite cores formal over ℚ. It is the most solid NEW result of this phase, and it is a limit on a
+  method, not a step towards RH.
