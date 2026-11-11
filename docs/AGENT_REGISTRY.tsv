@@ -34,3 +34,6 @@ K-atlas	2026-11-10	persistent seat: failure atlas keeper and the pairing job	ses
 K-theory	2026-11-10	persistent seat: theory document keeper	session model	rh/experiments/k_theory	running	-
 FH	2026-11-10	persistent seat: foothold hunt	session model	rh/experiments/foothold	running	-
 BG	2026-11-10	persistent seat: bigger-statement track (creation rules)	session model	rh/experiments/bigger	running	-
+SP-reflection	2026-11-11	persistent specialist: reflection positivity, semigroups, moment problems (session 1, in seminar S1)	session model	rh/specialists/reflection	running	-
+SP-operator	2026-11-11	persistent specialist: de Branges/Krein, negative squares, Toeplitz/Hankel (session 1, in seminar S1)	session model	rh/specialists/operator	running	-
+FORMAL	2026-11-11	persistent seat: machine-checking lemmas in Lean 4 + mathlib	session model	rh/formal	running	-

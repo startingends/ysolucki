@@ -1,0 +1,7 @@
+import sys, math, numpy as np, scipy.linalg as sl
+exec(open("/home/user/ysolucki/rh/experiments/r2_judge/j15.py.txt").read().split('for name, shift, Ms in')[0])
+for name, shift, M in (("zeta", None, 160), ("beurling", 2.1, 160), ("zeta", None, 320)):
+    N, p, q_ = jb.boxN(1.0, M, shift)
+    sites = list(range(0, M // 2 + 1)) if M <= 160 else list(range(0, 40))
+    lam1, r = be_sites(N, sites); r = np.array(r)
+    print("J15b %s M=%d: min over sites %s of BE/lambda_1 = %.4f at site %d ; site 0 %.4f" % (name, M, "0..M/2" if M <= 160 else "0..39", r.min(), sites[int(r.argmin())], r[0]), flush=True)

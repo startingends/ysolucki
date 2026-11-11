@@ -12,8 +12,8 @@ outside it, it says so and names the seat that should take it.
 
 | seat | toolkit | folder | sessions |
 |---|---|---|---|
-| SP-operator | operator theory for this problem: de Branges spaces, Krein systems and canonical systems, Pontryagin spaces and negative squares (Krein-Langer), Toeplitz / Hankel / Wiener-Hopf operators and their determinant identities | `rh/specialists/operator` | 0 |
-| SP-reflection | reflection positivity and its relatives: Osterwalder-Schrader, Kallen-Lehmann, infrared bounds; positive definite functions on semigroups (Berg-Christensen-Ressel); moment problems | `rh/specialists/reflection` | 0 |
+| SP-operator | operator theory for this problem: de Branges spaces, Krein systems and canonical systems, Pontryagin spaces and negative squares (Krein-Langer), Toeplitz / Hankel / Wiener-Hopf operators and their determinant identities | `rh/specialists/operator` | 1 (2026-11-11, seminar S1) |
+| SP-reflection | reflection positivity and its relatives: Osterwalder-Schrader, Kallen-Lehmann, infrared bounds; positive definite functions on semigroups (Berg-Christensen-Ressel); moment problems | `rh/specialists/reflection` | 1 (2026-11-11, seminar S1) |
 | SP-modular | modular forms and Hecke theory: theta functions, Hecke operators, converse theorems (Hamburger, Hecke, Weil), Eisenstein series, the Selberg class | `rh/specialists/modular` | 0 |
 | SP-chodge | combinatorial Hodge theory: Lorentzian polynomials, Hodge-Riemann relations without geometry, matroid Chow rings, high-dimensional expanders and trickle-down | `rh/specialists/chodge` | 0 |
 

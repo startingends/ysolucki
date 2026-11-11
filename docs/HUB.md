@@ -21,7 +21,7 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 | [`rh/ATLAS.md`](../rh/ATLAS.md) | failure atlas: where each approach breaks, what it needs, what it supplies; pairs examined | `python3 tools/records.py atlas check` / `todo` |
 | [`rh/FOOTHOLDS.md`](../rh/FOOTHOLDS.md) | provable nontrivial cases with a spreading mechanism | none yet |
 | [`rh/BIGGER.md`](../rh/BIGGER.md) | what RH is a shadow of; base cases | none yet |
-| [`rh/specialists/ROSTER.md`](../rh/specialists/ROSTER.md) | persistent specialist seats, one toolkit each | 4 chartered, 0 sessions |
+| [`rh/specialists/ROSTER.md`](../rh/specialists/ROSTER.md) | persistent specialist seats, one toolkit each | 4 chartered; SP-reflection and SP-operator in session 1 |
 | [`rh/board/`](../rh/board/) | Socratic seminar boards | S1 open |
 
 ## The record
@@ -86,8 +86,9 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
   `rh/FOOTHOLDS.md`), BG (bigger statement, `rh/BIGGER.md`). Specialists SP-reflection and SP-operator are
   chartered in `rh/specialists/ROSTER.md` and NOT yet started: they join seminar S1 at its second turn.
 - **Formal checking works** (decision A16): Lean 4.35.0 installed in this session with the owner's approval;
-  project `rh/formal/`; `RHFormal/Smoke.lean` machine-checked; mathlib fetch running in the background
-  (`lake -d rh/formal update`). No project lemma is formal yet.
+  project `rh/formal/`; `RHFormal/Smoke.lean` machine-checked; mathlib fetched (7.3 GB under `rh/formal/.lake`, gitignored)
+  and `lake -d rh/formal build` succeeds on both check files. Seat FORMAL (launched 00:12) is formalising the
+  finite, algebraic lemmas first. No project lemma is formal yet.
 - **Seminar S1, turn 2** running (woken 00:04): socrates, curv, parity, mirror; cubic woken after its turn 1;
   specialists SP-reflection and SP-operator join in this turn (first sessions).
 - Awaiting audit: ideas in the local logs of r2_cubic, r2_curv, r2_parity (and the creation seats when

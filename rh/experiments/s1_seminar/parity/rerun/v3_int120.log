@@ -1,2 +1,3 @@
   int/120 L=0.5 x=2.008   best c=0.722703 (log x=0.697139) max lowest eig=-1.666e-6 infeasible (207s)
   int/120 L=0.5 x=1.9996  best c=0.690879 (log x=0.692947) max lowest eig=-1.215e-7 infeasible (408s)
+  int/120 L=0.5 x=2.0075  best c=0.721975 (log x=0.69689) max lowest eig=0.0002578 FEASIBLE (614s)

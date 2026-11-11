@@ -50,8 +50,47 @@ J13 (written 00:04 UTC 11-11, before computing) toy sanity check of Theorem 4's 
    Predict: (even, odd) = (2, 2) at every L, never 3; with one quartet only (1, 1); quartet multiplicity 3 changes
    nothing. Control: both quartets moved onto the line (b = 0): (0, 0).
 
-J14 (written 00:06 UTC 11-11, before computing), my box matrix, L = 1, M = 40:
+J14 (written about 00:05 UTC 11-11 by the system clock, before computing), my box matrix, L = 1, M = 40:
    Hankel (reflection) matrix K(x_i + x_j) on the 20 positive boxes: arch part 0 negative eigenvalues; with zeta atoms
    smallest -1.1227 and 9 of 20 negative; Beurling smallest -1.1725. Odd sum-rule margin 1 - 2 s^T(-N)^-1 s = 3.2074e-2.
    Calibrated Bakry-Emery, sup over (c, c') of the pointwise constant / lambda_1: zeta 0.7923, Beurling 0.7694.
    (All are the seat's and the checker's common values; the control is the Beurling column.)
+
+## Results (all COMPUTED; commands: python3 tools/memcap.py 3 python3 <script> ; each run under 1 minute)
+Implementations used: (i) the lead's Arb builder r1_A/weil.py.txt through my own harness j1.py.txt / j12.py.txt (40 and
+90 digits); (ii) my own box matrix jbox.py.txt (double precision; diagonal from Theorem E with the closed form
+int_h^inf w = atanh(e^{-h/2}) + atan(e^{-h/2}); no seat or checker code imported); (iii) plain numpy algebra (j2.py.txt).
+
+| id | result | hit? |
+|---|---|---|
+| J1 | background lowest eigenvalue, odd block: +0.0332 / +0.0217 / +0.0103 / -0.0039 / -0.0178 at L = 0.362 / 0.366 / 0.370 / 0.375 / 0.380 (N = 30); +0.0305 / +0.0190 / +0.0075 / -0.0066 / -0.0206 (N = 60). Even block 0.00107..0.00105 on the whole range, 0.00063 at 0.40. Control with true primes at 0.38: +4.101e-4. | HIT. Lead's "negative from about 0.362" is wrong: the change is in (0.370, 0.375), in the odd block. |
+| J2 | L = 0.5, N = 30: x = 1.994 -2.18e-4; 1.9996 +1.304e-6; 2.0000 +1.578e-5; 2.0075 +2.579e-4; 2.0080 +4.744e-5; 2.0085 -2.86e-4; 2.0100 -1.284e-3. N = 60: 1.9996 +4.15e-7; 2.0000 +1.498e-5; 2.0075 +2.578e-4; 2.0080 +9.99e-6; 2.0085 -3.235e-4. | HIT. The seat's right end "about 2.0085" is infeasible; the right end is at 2.0080 or just below. |
+| J3 | top eigenvalue of N = -arch: -0.790 (L = 0.05), -0.0728 (0.10), +0.119 (0.12), +0.668 (0.20); lowest Weil eigenvalue at 0.10: 0.4572. Toy 2x2: N_even = -9, 2c^T N^-1 c - 1 = -1.444. | HIT. Theorem A's stated equivalence fails at L = 0.10. |
+| J4 | Theta_t on a 0.001 grid: best t = 0.014, -0.01836 (zeta L = 1 n = 12); t = 0.034, -0.03794 (n = 24); t = 0.057, -0.02170 (L = 0.5); Beurling t = 0.014, -0.02389. At t = 0.050: -0.04694. BE cubic: symmetric to 2e-16, |T.a - H| 7e-16, 2 positive eigenvalues per slice, worst P_k -4.138 / -6.148 / -2.215. | HIT. The seat's "best t = 0.05, -0.047" is a grid artefact; "no t works" stands. |
+| J5 | zeta centre: S+H+O = Gamma_2 to 2e-14; constants / lambda_1: S 0, S+H 0.2405, S+O 0.1999, all 0.5222; edge site: 0, 0.0056, -0.2269, 0.4963; site 5: 0, 0.3002, 0.1103, 0.5269. Raw full-matrix eigenvalues: Hessian piece -0.0343 .. 3.2386, open-path piece -1.5691 (centre); -0.3740, -2.7908 (edge). Restricted to f(x) = 0 the raw minima are -0.0337 and -0.0515. Beurling centre: 0.2523, 0.2058, 0.5244. | HIT (control 0.5244 in the predicted 0.50..0.54). |
+| J6 | index = 1 at: zeta 38/40, 50/80, 4/160 (histogram at 160: 4, 116, 34, 4, 2 sites with index 1..5); Beurling 32/40, 24/80, 0/160. | HIT. |
+| J7 | 40 random mixed-sign H: definition vs F5 1.4e-14; vs Gamma_2 by definition 2.1e-14; |T.a - H| 2.3e-14; asymmetry 3.6e-15. Control coefficient 0.3: |T.a - H| 0.10..0.60. | HIT. |
+| J8 | cone certificate: l >= 0: 0 violations of 300; some l_k < 0: 300 of 300 have a slice with two positive eigenvalues. | HIT. |
+| J9 | m = 40: 0.135000, 0.281250, 0.427500 (n = 5, 8, 20) = formula; times n/(n-1): 0.16875, 0.32143, 0.45000 against the seat's bound 0.125, 0.2857, 0.4211. n = infinity: 0.525, 0.7 (m = 5), 0.6 (m = 10). Control run at m = 200 instead of 1000 (my script built a 7.6 GB list at m = 1000 and was stopped by the memory cap): 0.107000 = formula. | HIT (control size changed, stated). |
+| J10 | 2c^T N_e^-1 c - 1 = 5.592234356886e-4; det(Q_e)/|det N_e| = 5.592234356884e-4; mu_1(Q_e) = 1.990533e-3, so P = 1.2089. Beurling: margin +1.137e-2 with mu_1 = -0.344 (ratio -0.141). | HIT. |
+| J11 | zeta L = 1 M = 40: lambda_1 4.303094, one positive eigenvalue, gap/lambda_1 - 1 = 3.3586e-3, BE worst 0.4963 (site 0), centre 0.5222. Beurling: 4.280512, 5 positive, gap/lambda_1 0.9141, BE 0.4989. Ntilde n = 12: 5.305946, -1.811519e-3, -3.467240e-2; Beurling 5.286899, +1.995303e-2. lambda_1 at M = 20/80/160: 4.302810 / 4.304310 / 4.305238; total rates 5.1654, 5.8713, 6.5719, 7.2690. | HIT (every digit). |
+| J12 | lowest Weil eigenvalue 8.2493e-30 (even), 2.228e-26 (odd). Feasible c_6 change: even block [-8.81e-12, +1.8239e-14], odd block [-1.2504e-13, +5.94e-11]; intersection [-1.2504e-13, +1.8239e-14]. Control: Beurling base has lowest eigenvalue -0.503; best over the weight at 6 is -0.434. | HIT. |
+| J13 | first run (threshold 1e-8 relative, 40 digits): two quartets (0,0), (1,0), (2,2), (1,1) at L = 0.5, 1, 2, 4. MISS against "(2,2) at every L". Reason: the negative eigenvalues on small windows are far below 1e-8 of the largest one, and my threshold hid them. Second run (60 digits, threshold 1e-45): (2,2) at every L; one quartet (1,1); multiplicity 3 (1,1); control on the line (0,0). Never more than the number of quartets in either run. | first run MISS (my threshold), second run HIT |
+| J14 | Hankel: arch 0 negative of 20; zeta min -1.1227, 9 of 20 negative; Beurling -1.1725. Odd margin 3.207444e-2. Calibrated constant: zeta plain 0.4963, c = lambda_1/4 only 0.4555, sup 0.7923 at (0.299, 0.210), 0.7897 of own gap; Beurling 0.4989, 0.4403, 0.7694, 0.8417 of own gap. | HIT. |
+
+Score: 14 predictions written before computing; 13 hit at first run, 1 (J13) missed at first run for a reason in my own
+test and hit on the corrected rerun. Most were reproductions of values on which seat and checker already agreed, so those
+hits carry little information; the ones that settled something are J1, J2, J3, J4, J5, J6, J9.
+
+## Literature read by me (rule 5)
+- Braenden-Leake, arXiv 2304.13203v2: PDF fetched, text extracted; read page 8 (Lemma 2.8, its proof, the credit line) and
+  reference [17]. Nothing else.
+- Suzuki, arXiv 2606.09096v3: PDF fetched, text extracted; read the introduction lines on Yoshida and Bombieri (pp. 2-3),
+  Theorem 1.1, Corollary 1.2, the remark after Theorem 1.3, Theorem 1.4, and the domain remark on p. 14 (about 5% of the text).
+  Searched the whole text for "negative square", "Pontryagin", "monoton": no hits.
+- One web search (query in JUDGEMENT.md section 6), result summaries only.
+
+J15 (written about 00:07 UTC 11-11 by the system clock, before computing) Bakry-Emery constant / lambda_1 under refinement,
+   zeta L = 1, my box matrix. Predict M = 160: centre 0.4965, worst (edge) 0.4415 (the common values of seat and checker);
+   M = 320 (nobody has computed it): centre in (0.488, 0.494), worst in (0.425, 0.433), i.e. the centre value is below
+   1/2 and still falling. Control: Beurling M = 160 worst 0.4435 (checker's value).
