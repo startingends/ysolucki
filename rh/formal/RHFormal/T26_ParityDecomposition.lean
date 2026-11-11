@@ -1,6 +1,7 @@
 import Mathlib.LinearAlgebra.BilinearForm.Properties
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # T26: parity decomposition of a reflection-invariant form, and the pole in the two parity blocks

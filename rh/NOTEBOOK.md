@@ -1843,3 +1843,11 @@ construction by thought after N99–N100; facts classical, the reduction is the 
   oscillation) shows the main term fails. So the only unconditional variance results for prime-built sets live where
   the primes are tiny (y = X^(o(1))): the sieve's natural range, where nothing about zeros is seen. (5) closed: no
   foothold for N101. The analytic tensor-power line ends at #34 like the others.
+
+**N104. Three finite cores machine-checked (FORMAL session 3; 3971 jobs, 88 audited theorems, standard axioms, no
+sorry).** T140 two-factor Kronecker-sum core (`T140_KroneckerSum.lean`: bottom of c·I + A⊗I + I⊗B is
+c + λ_min(A) + λ_min(B), attained at x₀⊗y₀); T139 support closure (`T139_SupportClosure.lean`: Dirichlet products and
+inverses stay on a submonoid; log 2, log 3 in no common lattice cℤ, so ζ is not P/Q with lattice-supported P, Q);
+T129 pair-Gram core (`T129_PairGram.lean`: det Gram(p+m, p−m) = 4 det Gram(p, m); bounds det/tr ≤ λ_min ≤
+det·tr/(tr² − 2det)). Not formal as worded: the r-factor induction, the divisor-box identity, generalised
+frequencies, the u-expansions. The keeper updates THEORY statuses.

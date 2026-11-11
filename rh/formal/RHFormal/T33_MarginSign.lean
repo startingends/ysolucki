@@ -1,5 +1,6 @@
 import RHFormal.B56_BorderedIdentity
 import Mathlib.Algebra.Algebra.Bilinear
+set_option autoImplicit false
 
 /-!
 # T33: the sign of the two sum-rule margins (a correction to the "in particular" clause)

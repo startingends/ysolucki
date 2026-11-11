@@ -1,5 +1,6 @@
 import RHFormal.T32_InertiaRankOne
 import Mathlib.LinearAlgebra.QuadraticForm.Signature
+set_option autoImplicit false
 
 /-!
 # Bridge: the indices `PosDim` / `NegDim` of this library are mathlib's signature of a quadratic form

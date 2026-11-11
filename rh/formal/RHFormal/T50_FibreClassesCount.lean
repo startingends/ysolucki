@@ -1,5 +1,6 @@
 import RHFormal.LemmaA_FibreClasses
 import RHFormal.T32_InertiaRankOne
+set_option autoImplicit false
 
 /-!
 # T50 (Lemma A, the count): pos(Ntilde) = 1 + neg(Q), without eigenvalues

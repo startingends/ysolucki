@@ -1,5 +1,6 @@
 import RHFormal.OnePositiveDirection
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
+set_option autoImplicit false
 
 /-!
 # T63: the ground-state transform. The form of N is lambda_1 minus a Dirichlet form, and

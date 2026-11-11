@@ -3,6 +3,7 @@ import Mathlib.Analysis.Complex.Norm
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.Data.Nat.Cast.Order.Field
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # COPY_BARRIER L3 / Theorem 1: general-coefficient sieves pay for the copies

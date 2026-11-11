@@ -1,5 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # COPY_BARRIER L4: the amplifier arithmetic (Theorem 3 as a statement about real numbers)

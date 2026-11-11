@@ -1,6 +1,7 @@
 import Mathlib.LinearAlgebra.BilinearForm.Properties
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # N2: the ground state of a rank-one push (critical pole strength and its null vector)

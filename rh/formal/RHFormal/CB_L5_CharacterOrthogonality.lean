@@ -4,6 +4,7 @@ import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.FieldTheory.IsSepClosed
 import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # COPY_BARRIER L5: the large-sieve identity for all characters mod q on a short interval

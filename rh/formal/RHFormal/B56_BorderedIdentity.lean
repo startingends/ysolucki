@@ -1,6 +1,7 @@
 import Mathlib.LinearAlgebra.BilinearForm.Properties
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # The bordered form behind B56 (first step) and the rank-one inverse formula F1

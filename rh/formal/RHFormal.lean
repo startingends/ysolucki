@@ -31,4 +31,7 @@ import RHFormal.CB_L2_KernelCopies
 import RHFormal.CB_L3_GramLowerBound
 import RHFormal.CB_L4_AmplifierArithmetic
 import RHFormal.CB_L5_CharacterOrthogonality
+import RHFormal.T140_KroneckerSum
+import RHFormal.T139_SupportClosure
+import RHFormal.T129_PairGram
 import RHFormal.AxiomsAudit

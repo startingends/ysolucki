@@ -5,6 +5,7 @@ import Mathlib.LinearAlgebra.Pi
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # B32, Step 2: a form with `ν` negative squares is negative definite on at most `ν` dimensions

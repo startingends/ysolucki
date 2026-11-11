@@ -1,6 +1,7 @@
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # T44: with a positive ground-state energy, every small atomic perturbation keeps the form non-negative

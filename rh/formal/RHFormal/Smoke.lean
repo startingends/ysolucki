@@ -1,3 +1,5 @@
+set_option autoImplicit false
+
 /-!
 Smoke test for the formal-checking setup. No mathlib needed.
 If this file compiles, the Lean toolchain works in this environment.

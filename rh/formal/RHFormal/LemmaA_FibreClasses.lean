@@ -1,6 +1,7 @@
 import RHFormal.OnePositiveDirection
 import Mathlib.LinearAlgebra.BilinearMap
 import Mathlib.LinearAlgebra.Prod
+set_option autoImplicit false
 
 /-!
 # Lemma A (fibre classes): Weil positivity as ONE signature statement

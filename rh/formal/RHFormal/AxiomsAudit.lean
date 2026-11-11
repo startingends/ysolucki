@@ -29,6 +29,10 @@ import RHFormal.CB_L2_KernelCopies
 import RHFormal.CB_L3_GramLowerBound
 import RHFormal.CB_L4_AmplifierArithmetic
 import RHFormal.CB_L5_CharacterOrthogonality
+import RHFormal.T140_KroneckerSum
+import RHFormal.T139_SupportClosure
+import RHFormal.T129_PairGram
+set_option autoImplicit false
 
 /-!
 # Axiom audit
@@ -114,3 +118,16 @@ name would mean an added axiom. (`native_decide` would show as `Lean.ofReduceBoo
 #print axioms RHFormal.CB.L4.delta_floor
 #print axioms RHFormal.CB.L5.sum_char_mul_conj
 #print axioms RHFormal.CB.L5.sum_norm_sq_eq
+#print axioms RHFormal.T140.kroneckerSum_lower
+#print axioms RHFormal.T140.kroneckerSum_attained
+#print axioms RHFormal.T140.kroneckerSum_ground_eigen
+#print axioms RHFormal.T139.mul_supported
+#print axioms RHFormal.T139.inv_supported
+#print axioms RHFormal.T139.not_two_and_three
+#print axioms RHFormal.T139.zeta_not_quotient
+#print axioms RHFormal.T139.zeta_not_quotient'
+#print axioms RHFormal.T129.gramDet_sum_diff
+#print axioms RHFormal.T129.gramDet_eq_J
+#print axioms RHFormal.T129.lam_root
+#print axioms RHFormal.T129.lam_lower
+#print axioms RHFormal.T129.lam_bounds

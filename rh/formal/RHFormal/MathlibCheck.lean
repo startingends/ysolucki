@@ -1,5 +1,6 @@
 import Mathlib.Tactic
 import Mathlib.Basic.Real.Basic
+set_option autoImplicit false
 
 /-!
 Check that mathlib is available: a real-number statement proved with mathlib tactics.

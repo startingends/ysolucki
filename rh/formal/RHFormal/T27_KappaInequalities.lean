@@ -1,4 +1,5 @@
 import RHFormal.T32_InertiaRankOne
+set_option autoImplicit false
 
 /-!
 # T27: negative squares of Q are bounded by positive squares of N, with no hypothesis

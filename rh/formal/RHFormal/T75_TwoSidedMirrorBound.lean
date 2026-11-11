@@ -1,4 +1,5 @@
 import RHFormal.B25_Folding
+set_option autoImplicit false
 
 /-!
 # T75 (finite form): the two block inequalities are a two-sided bound of the mirror form by the

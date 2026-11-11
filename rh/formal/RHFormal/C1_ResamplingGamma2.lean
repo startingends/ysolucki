@@ -2,6 +2,7 @@ import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # Theorem C (C1, C3 and the pointwise half of C2): Bakry-Emery calculus of the resampling chain

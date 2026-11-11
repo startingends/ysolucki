@@ -5,6 +5,7 @@ import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # The Hankel matrix of power sums is a (weighted) Gram matrix

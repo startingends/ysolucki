@@ -6,6 +6,7 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.LinearAlgebra.Prod
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # T32: exact inertia relation between a Weil block and the corresponding block of N (rank-one pole)

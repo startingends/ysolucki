@@ -1,4 +1,5 @@
 import RHFormal.B2_BochnerPathForm
+set_option autoImplicit false
 
 /-!
 # Theorem B, (B3): the three-way split of Gamma_2 for the transformed jump process

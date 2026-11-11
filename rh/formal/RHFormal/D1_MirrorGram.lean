@@ -1,6 +1,7 @@
 import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # Theorem D1: the mirror form of the prime atoms is a sum of squares, one per prime

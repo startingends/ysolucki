@@ -3,6 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.PSeries
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # COPY_BARRIER L1: the number of squarefull `n ≤ X` is at most `3 √X` (and at most `ζ(3/2) √X`)

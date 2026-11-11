@@ -1,6 +1,7 @@
 import RHFormal.CB_L1_Squarefull
 import Mathlib.NumberTheory.EulerProduct.Basic
 import Mathlib.GroupTheory.OrderOfElement
+set_option autoImplicit false
 
 /-!
 # COPY_BARRIER L2: the kernel lemma; kernel copies are an S-part times a squarefull number

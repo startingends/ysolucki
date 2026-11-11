@@ -1,6 +1,7 @@
 import RHFormal.OnePositiveDirection
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+set_option autoImplicit false
 
 /-!
 # Lemma B, Steps 1-3 (trickle-down inequality): Lorentzian slices give `H ≤ H D H`

@@ -1,5 +1,6 @@
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # T45: first-order caps on the change of one weight (trial-vector bound)

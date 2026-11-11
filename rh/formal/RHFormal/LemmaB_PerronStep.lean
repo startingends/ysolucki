@@ -1,5 +1,6 @@
 import RHFormal.Perron_GroundState
 import RHFormal.T63_GroundStateTransform
+set_option autoImplicit false
 
 /-!
 # Lemma B, Steps 4-5 (the Perron step of the trickle-down lemma), in eigenvector form

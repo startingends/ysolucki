@@ -1,6 +1,7 @@
 import Mathlib.LinearAlgebra.BilinearForm.Properties
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # "At most one positive eigenvalue" for a symmetric bilinear form, and the reverse Cauchy-Schwarz

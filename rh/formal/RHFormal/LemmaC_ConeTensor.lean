@@ -1,5 +1,6 @@
 import RHFormal.OnePositiveDirection
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
+set_option autoImplicit false
 
 /-!
 # Lemma C (the cone certificate): the explicit cone tensor is symmetric, contracts to `H`,

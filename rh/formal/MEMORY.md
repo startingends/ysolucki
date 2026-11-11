@@ -1,12 +1,12 @@
 # MEMORY of the formal seat (FORMAL)
 
 Rewritten at the end of every session. Read this first next session. Detail per file: PROGRESS.md.
-Last rewrite: end of session 2, 2026-11-11 05:00 UTC.
+Last rewrite: end of session 3, 2026-11-11 13:12 UTC.
 
 ## State
-- Full build `lake -d /home/user/ysolucki/rh/formal build`: **Build completed successfully (3968 jobs)** at 04:58 UTC
-  (session 2).
-- 31 statement files + `AxiomsAudit.lean` (prints the axioms of 75 main theorems: all `[propext, Classical.choice,
+- Full build `lake -d /home/user/ysolucki/rh/formal build`: **Build completed successfully (3971 jobs)** at 13:10 UTC
+  (session 3).
+- 34 statement files + `AxiomsAudit.lean` (prints the axioms of 88 main theorems: all `[propext, Classical.choice,
   Quot.sound]`), all imported from `RHFormal.lean`. No `sorry`, no `axiom`, no `native_decide`. `RHFormal/drafts/` does
   not exist: nothing was left half-done.
 - The only build warnings are lake's "imports ... designed for use with the module system; consider adding `module`".
@@ -48,6 +48,14 @@ Last rewrite: end of session 2, 2026-11-11 05:00 UTC.
 | L3 / Theorem 1 | CB_L3_GramLowerBound.lean | `CB.L3.delta_ge_of_test`, `opNorm_sq_ge`, `theorem1`, `theorem1_exact`, `exact_copy_sum_ge`, `near_copy_re_sum_ge`, `card_not_coprime_le` | Δ ≥ c²·C·|N| (Δ-form and operator-norm form); Theorem 1 with (1−2η)² for near copies; (1−η)² for exact copies | over ℚ only; "least constant" not needed; multiplicity Remark not done |
 | L4 / Theorem 3 arithmetic | CB_L4_AmplifierArithmetic.lean | `CB.L4.amplifier_floor`, `exponent_floor`, `exponent_floor_attained`, `sqrt_exponent`, `delta_floor` | L4 as stated; the infimum D^(3/2−ε₀/2+ε) attained; general 1 − δ/2 | the file's "|A_1| << D^(3/4 − eps0/4 + eps)" should read "+ eps/2" (harmless) |
 | L5 orthogonality | CB_L5_CharacterOrthogonality.lean | `CB.L5.sum_char_mul_conj`, `sum_norm_sq_eq` | Σ_χ ‖Σ a_n χ(n)‖² = φ(q) Σ_{(n,q)=1} ‖a_n‖² | q > 2D weakened to q > D |
+
+## Session 3: T140, T139, T129 (finite cores; THEORY.md not edited by me, the keeper sets statuses)
+| entry | file | main theorems | formal | NOT formal |
+|---|---|---|---|---|
+| T140 | T140_KroneckerSum.lean | `T140.kroneckerSum_lower`, `kroneckerSum_attained`, `kroneckerSum_ground_eigen` | two-factor Kronecker sum: bottom = c + a + b, attained at x₀ ⊗ y₀ (eigenvector) | r-factor induction; spectral theorem; the divisor-box identity M = log(T/2π)I + Σ_p M_p |
+| T139 | T139_SupportClosure.lean | `T139.mul_supported`, `inv_supported`, `not_two_and_three`, `zeta_not_quotient` | support closure under Dirichlet product and inverse (submonoid); log 2, log 3 in no lattice; ζ ≠ P/Q for P, Q supported on {log n ∈ cℤ} | generalised frequencies, analytic half-plane statement |
+| T129 | T129_PairGram.lean | `T129.gramDet_sum_diff`, `gramDet_eq_J`, `lam_root`, `lam_lower`, `lam_bounds` | det Gram(p+m, p−m) = 4 det Gram(p,m); J form; 2×2 λ_min with d/t ≤ λ ≤ dt/(t²−2d) | the O(u) expansions of the analytic family; continuation to u = −β² |
+For the keeper: these are FINITE CORES; T139, T140 and T129 as worded are NOT formal as a whole.
 
 ## Gaps / errors found in written statements (the valuable part)
 1. **T33, last sentence** ("when a Weil block is positive definite the corresponding margin is strictly positive") and
@@ -124,6 +132,8 @@ definite subspace of dimension >= k exists).
   `Complex.ofReal_tsum`, `Complex.ofReal_cpow`, `Nat.factorization_prod_pow_eq_self_of_le_factorization`,
   `Nat.prod_factorization_pow_eq_self`, `Finsupp.prod_filter_mul_prod_filter_not`, `Nat.mem_factoredNumbers_iff_primeFactors_subset`,
   `EulerProduct.summable_and_hasSum_factoredNumbers_prod_filter_prime_geometric`, `Finset.sum_subtype_of_mem`, `orderOf_dvd_of_pow_eq_one`.
+- PITFALL (session 3): a scoped notation used without `open scoped` (e.g. `ζ` for `ArithmeticFunction.zeta`) is read as
+  a NEW auto-bound variable unless `set_option autoImplicit false` is on. It is now on in every file; keep it in new files.
 - PITFALL: `Finsupp.filter_apply_neg _ _ (not_not.2 h)` unifies the predicate with `Not`; pass the predicate explicitly.
 - LESSON: before building a notion by hand, search mathlib for it by MEANING, not only by the name I expect
   (I searched 'Perron' and 'IsIrreducible' but not 'signature'/'Sylvester' until the end).

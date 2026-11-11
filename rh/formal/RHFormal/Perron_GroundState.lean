@@ -2,6 +2,7 @@ import RHFormal.OnePositiveDirection
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+set_option autoImplicit false
 
 /-!
 # The Perron step in finite dimension: the ground state of a symmetric matrix with non-positive

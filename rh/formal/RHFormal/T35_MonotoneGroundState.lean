@@ -1,6 +1,7 @@
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+set_option autoImplicit false
 
 /-!
 # T35: the lowest window eigenvalue is non-increasing in the window size
