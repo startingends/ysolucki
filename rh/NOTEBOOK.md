@@ -920,3 +920,12 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   has been started to say exactly what parity-breaking inputs exist and whether any reaches the sextic family or
   the t-family. If the wall is parity, the question for a bridge is the known one: an input of Type II strength in the
   critical range, specific to μ. The impostor fails at the tensor-product line in every proposal so far.
+- SP-reflection (B13, B15, B16; `rh/specialists/reflection/s2/`): on the full torus the Möbius mean square is Σ μ²/n
+  for every length (PROVED); an exact gcd identity (checked at N = 80) writes the t-family mean square as a product-form
+  Möbius correlation on ℚ₊^×, which on the near side reduces EXACTLY to binary Möbius correlations at shifts up to
+  N/T: the near side needs a POWER SAVING IN AVERAGED CHOWLA (Chowla is the parity problem's statement for μ) — a third
+  seat, a third language, the same parity wall. And: the profinite Nyman–Beurling problem is solved EXACTLY by local
+  Szegő problems at each prime (value ≈ 0.443, bounded); the archimedean one is 3–4 times larger and should grow
+  under RH; PROVED that no positive-definite / Markov semigroup joins the two endpoints monotonically for the Möbius
+  form (blind prediction of monotonicity missed). Reading: **every finite place is exactly solvable; the whole
+  difficulty is the archimedean place, entering through the long sum** (barrier B10 restated exactly).

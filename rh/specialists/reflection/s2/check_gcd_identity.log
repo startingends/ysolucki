@@ -1,0 +1,5 @@
+N=80, T=7.0: LHS 2.421941963329  RHS 2.421941963329  diff 0.00e+00   torus value (g = delta) 3.711985
+p=2: min local density 0.05719 (>0), Fourier coeff at 1: -0.471405 vs -sqrt(p)/(p+1) = -0.471405
+p=3: min local density 0.13397 (>0), Fourier coeff at 1: -0.433013 vs -sqrt(p)/(p+1) = -0.433013
+p=5: min local density 0.25464 (>0), Fourier coeff at 1: -0.372678 vs -sqrt(p)/(p+1) = -0.372678
+p=7: min local density 0.33856 (>0), Fourier coeff at 1: -0.330719 vs -sqrt(p)/(p+1) = -0.330719

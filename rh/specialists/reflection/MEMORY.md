@@ -1,8 +1,20 @@
 # MEMORY of SP-reflection
 
-Rewritten at the end of session 4 (2026-11-11; sessions 2, 3, 4 were rounds 1, 2, 3 on the object Phi). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
+Rewritten at the end of session 5 (2026-11-11; sessions 2-4: rounds 1-3 on the object Phi; session 5: seminar S2). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
 sources still to read). Session 1 = seminar S1 (closed; summary rh/experiments/s1_seminar/socrates/CLOSING.md; my full
 answers in NOTES_session1.md). Session 2 = the structural task on one object, written up in OBJECT_PHI.md.
+
+## 0d. SESSION 5: seminar S2 (board s2), notes in s2/NOTES_s2.md
+- Answered B5 (B13): torus mean square is diagonal for every D (orthonormal characters); gcd identity (*) makes the Moebius
+  correlation function on Q_+^x explicit and product-form (limit shape: product measure (x)(p/(p+1))|1-p^(-1/2)chi_p|^2, singular to
+  Haar); near side of the t-family = log-weighted binary Moebius correlations at shifts h <= N/T, needing a power saving in averaged
+  Chowla. Impostor fails at the factorisation line. Failed risk: zeros as quadrature nodes (twisted Chowla returns).
+- Asked SP-operator (B14): Ramare conditioning as exact identity via tensor structure?
+- Answered B12 (B15, B16): [1/max] and [1/lcm] are the archimedean and finite-place versions of one Kallen-Lehmann function;
+  generators |sum v_p log p| <= sum |v_p| log p (triangle inequality). Schoenberg interpolation is positive definite but the Moebius
+  form along it is NOT monotone (computed, blind prediction missed). PROVED: no convolution/random twist joins the endpoints
+  (1/min(a,b) not pd: det -1/4 on {1,2,3}). The archimedean value is the larger (sees the zeros); the profinite one is a product of
+  local Szego problems solved by 1 - p^(-1/2) z_p and stays bounded (0.443).
 
 ## 0c. SESSION 4 (round 3 with SP-operator; OBJECT_PHI.md section "Round 3", 117 lines). N50: my lambda_T is the lead.
 - PROVED exact identity: e^(2 Dfc(omega)) - 1 = inf over admissible f of (1/2pi) int |1 - s f H/H(1)|^2 |ds|/|s|^2,

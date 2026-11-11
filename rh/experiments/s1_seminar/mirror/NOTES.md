@@ -265,3 +265,19 @@ not built, so 'plank 5 for F_d' is formal; my earlier worry about degrees of fre
 notes (companions on the window are fixed by a finite triangular inversion; no resonance argument applies) and NOT posted.
 Open for a next turn: explicit impostor vectors E_DH(odd prolates) and the form-level ratio kappa_K for the impostor at L = 1.5, 1.8
 (does kappa_K break at the K where the defect is ~1e-7?); F_d's own band-limiting operator (Bessel-type kernel, Nystrom).
+
+## Seminar S2 (board s2), question B7 to me (2026-11-11 03:25 UTC)
+Context read: board s2 B1-B9 (lead's B9: model shapes = Deligne's tensor-power positivity; a bootstrap with a margin),
+NOTEBOOK N49-N58 (five routes, one wall: Moebius-specific mean square when family <= sum; band edge = self-dual point),
+THEORY T60 (S1-cubic: per-prime Poisson in the SHIFT picture, Poisson-kernel forms q_p), idea #6 (Lee-Yang in Bohr variables).
+### Theory before computing
+X1. MIRROR twin of T60 (per-prime Poisson in the mirror picture). For phi on (0, L] of bounded variation, F(s) := int phi(x) e^{(s-1/2)x} dx:
+    log p * sum_{k>=1} p^{-k/2} (phi*phi)(k log p) = sum_{m in Z} F(2 pi i m / log p)^2      (both sides 0 when log p >= 2L).
+    With B25/B60: sum_rho F(rho)^2 + sum_{m>=1} F(-2m)^2 + sum_p sum_{m in Z} F(2 pi i m/log p)^2 = F(1)^2.
+    One square on the right (pole); on the left holomorphic squares at nontrivial zeros, trivial zeros, and the poles of every
+    local Euler factor (Re s = 0). D1 = test functions at the fixed points of x -> -x on the circle R/(log p)Z.
+    For degree d with roots alpha: local poles at Re s = log|alpha|/log p; Ramanujan <=> all on Re s = 0; F_d: Re s = +-d.
+X2. Widder forbids the SIGN on any class containing L^2 of an interval; the per-prime splitting (no cross terms) survives on
+    every class, with signature (1,1) per pair m, -m: same Krein structure as the zeros (B54).
+### BLIND PREDICTION (03:25 UTC): identity X1 checked numerically for phi = x^2(1-x) on (0,1]: p = 2 and p = 3 agree to better
+    than 1e-8 with |m| <= 2000; p = 11 (log 11 > 2L) gives |sum| < 1e-8.

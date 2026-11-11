@@ -1,0 +1,90 @@
+"""S1-parity, seminar S2 (answer to B6): the folding identity q(f_e) = 2[T(phi) + H(phi)], q(f_o) = 2[T(phi) - H(phi)] read as a split of the
+prime sum at sqrt(D) = e^L, evaluated on the lowest EVEN eigenvector (folded phi on (0, L]) of (i) the impostor at L = 1.72 (its failure),
+(ii) zeta at L = 1.0 and 1.5. H = Hankel (mirror) form of the full kernel on (0, L]; T = Weil form of phi alone (window of half size).
+  zeta:      H = E_+^2 - sum_{m>=1} E_m^2 - H_Lambda,   E_+ = int phi e^{x/2}, E_m = int phi e^{-(2m+1/2)x}
+  impostor:  H = - sum_{m>=0} E'_m^2 - H_c,           E'_m = int phi e^{-(2m+3/2)x}  (no pole; Gamma((s+1)/2))
+  H_c = sum_n c_n n^{-1/2} (phi*phi)(log n).   T is obtained as mu/2 - H (mu = eigenvalue of the unit vector, |f_e| = 1).
+usage: python3 s2_fold.py.txt check | run"""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt"); wb = fd.wb
+t0 = time.time(); ns = lambda x, k=5: mp.nstr(x, k)
+def dh_c(X):
+    kap = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+    a = [mp.mpf(0)] + [(mp.mpf(0), mp.mpf(1), kap, -kap, mp.mpf(-1))[n % 5] for n in range(1, X + 1)]
+    b = list(a); b[1] = mp.mpf(0); l = [mp.mpf(0)] * (X + 1); pw = list(b); k = 1
+    while 2 ** k <= X:
+        for n in range(2, X + 1): l[n] += mp.mpf((-1) ** (k + 1)) / k * pw[n]
+        new = [mp.mpf(0)] * (X + 1)
+        for d in range(2, X + 1):
+            if pw[d] != 0:
+                for e in range(2, X // d + 1): new[d * e] += pw[d] * b[e]
+        pw = new; k += 1
+    return {n: l[n] * mp.log(n) for n in range(2, X + 1) if l[n] != 0}
+def coeffs(kind, L):
+    X = int(math.exp(2 * L) + 1e-9)
+    if kind == 'zeta': return {n: c for n, c in wb.mangoldt(X).items() if math.log(n) < 2 * L - 1e-12}
+    return {n: c for n, c in dh_c(X).items() if math.log(n) < 2 * L - 1e-12}
+def blocks(kind, L, N, lat='int'):
+    Lm = mp.mpf(L)
+    if kind == 'zeta':
+        M = wb.add(wb.arch_blocks(Lm, N, lat), wb.pole_blocks(Lm, N, lat))
+    else:
+        w = wb.freqs(Lm, N, lat); vals = []
+        for om in w:
+            v, dv = fd.phi_arch_c(om + fd.I, Lm); vals.append((v + mp.log(5) / 2, dv))
+        M = wb.blocks(Lm, N, lat, [v[0] for v in vals], [v[1] for v in vals]); M = (M[0].apply(mp.re), M[1].apply(mp.re))
+    for n, c in coeffs(kind, L).items(): M = wb.add(M, wb.atom_blocks(Lm, N, lat, n), c)
+    return M
+def hankel_parts(kind, L, phi, a_int=None):
+    """phi: callable on (0, L]. Returns dict of pieces of H(phi)."""
+    Lm = mp.mpf(L)
+    E = lambda a: mp.quad(lambda x: phi(x) * mp.exp(a * x), mp.linspace(0, Lm, 9))
+    conv = lambda u: mp.quad(lambda x: phi(x) * phi(u - x), mp.linspace(max(mp.mpf(0), u - Lm), min(Lm, u), 9))
+    out = {}
+    if kind == 'zeta':
+        out['pole E_+^2'] = E(mp.mpf(1) / 2) ** 2
+        gam = mp.fsum(E(-(2 * m + mp.mpf(1) / 2)) ** 2 for m in range(1, 400)); out['Gamma squares'] = gam
+        out['H_arith'] = {n: c / mp.sqrt(n) * conv(mp.log(n)) for n, c in coeffs(kind, L).items()}
+        out['H'] = out['pole E_+^2'] - gam - mp.fsum(out['H_arith'].values())
+    else:
+        out['pole E_+^2'] = mp.mpf(0)
+        gam = mp.fsum(E(-(2 * m + mp.mpf(3) / 2)) ** 2 for m in range(0, 400)); out['Gamma squares'] = gam
+        out['H_arith'] = {n: c / mp.sqrt(n) * conv(mp.log(n)) for n, c in coeffs(kind, L).items()}
+        out['H'] = - gam - mp.fsum(out['H_arith'].values())
+    return out
+if sys.argv[1] == "check":
+    # q(f_e) - q(f_o) = 4 H on phi = x^3 (L - x)^3 (both extensions C^2, vanishing to 3rd order at +-L), for both systems
+    mp.mp.dps = 40
+    for kind, L, N in (('zeta', 0.7, 60), ('impostor', 0.7, 60), ('impostor', 1.2, 80)):
+        Lm = mp.mpf(L); phi = lambda x: x ** 3 * (Lm - x) ** 3
+        M = blocks(kind, L, N); w = wb.freqs(Lm, N, 'int')
+        ce = [2 * mp.quad(lambda x: phi(x) * (mp.cos(om * x) if om != 0 else 1), [0, Lm]) / (mp.sqrt(2 * Lm) if om == 0 else mp.sqrt(Lm)) for om in w]
+        so = [2 * mp.quad(lambda x: phi(x) * mp.sin(om * x), [0, Lm]) / mp.sqrt(Lm) for om in w if om != 0]
+        qe = (mp.matrix(ce).T * M[0] * mp.matrix(ce))[0]; qo = (mp.matrix(so).T * M[1] * mp.matrix(so))[0]
+        H = hankel_parts(kind, L, phi)['H']
+        print("check %-8s L=%.1f N=%d: q(f_e) - q(f_o) = %s ; 4H = %s ; difference %s   (%.0fs)" % (kind, L, N, ns(qe - qo, 12), ns(4 * H, 12), ns(qe - qo - 4 * H, 3), time.time() - t0), flush=True)
+else:
+    for kind, L, N, dps in (('zeta', 1.0, 40, 60), ('zeta', 1.5, 70, 220), ('impostor', 1.70, 100, 120), ('impostor', 1.72, 100, 120)):
+        mp.mp.dps = dps; Lm = mp.mpf(L)
+        M = blocks(kind, L, N); ev, V = mp.eigsy(M[0]); i = min(range(len(ev)), key=lambda j: abs(ev[j]) if kind == 'impostor' else ev[j])
+        mu = ev[i]; w = wb.freqs(Lm, N, 'int')
+        co = [V[k, i] / (mp.sqrt(2 * Lm) if w[k] == 0 else mp.sqrt(Lm)) for k in range(len(w))]
+        mp.mp.dps = 30
+        phi = lambda x: mp.fsum(co[k] * mp.cos(w[k] * x) for k in range(len(w)))
+        s = 1 if phi(Lm / 3) > 0 else -1
+        phis = lambda x: s * phi(x)
+        P = hankel_parts(kind, L, phis)
+        H = P['H']; T = mu / 2 - H
+        Ha = P['H_arith']; pos = mp.fsum(v for n, v in Ha.items() if v > 0); neg = mp.fsum(v for n, v in Ha.items() if v < 0)
+        mir = {n: v for n, v in Ha.items() if math.log(n) >= L}
+        scale = P['pole E_+^2'] if kind == 'zeta' else T
+        print("%s L=%.2f N=%d: mu = %s ; T = %s ; pole E_+^2 = %s ; Gamma squares = %s ; arithmetic mirror H_arith = %s (positive terms %s, negative terms %s ; from the mirror-only range log n >= L: %s)   (%.0fs)" % (
+              kind, L, N, ns(mu, 6), ns(T, 8), ns(P['pole E_+^2'], 8), ns(P['Gamma squares'], 8), ns(pos + neg, 8), ns(pos, 5), ns(neg, 5), ns(mp.fsum(mir.values()), 5), time.time() - t0))
+        lab = "E_+^2" if kind == 'zeta' else "T"
+        print("    in units of %s: T %s ; Gamma %s ; arithmetic mirror %s ; mu/2 %s" % (lab, ns(T / scale, 5), ns(P['Gamma squares'] / scale, 5), ns((pos + neg) / scale, 5), ns(mu / 2 / scale, 3)))
+        big = sorted(Ha.items(), key=lambda kv: -abs(kv[1]))[:8]
+        print("    largest arithmetic terms c_n n^-1/2 (phi*phi)(log n): " + " ; ".join("n=%d (c=%s): %s" % (n, ns(coeffs(kind, L)[n], 4), ns(v, 4)) for n, v in big), flush=True)

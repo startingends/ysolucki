@@ -336,3 +336,17 @@ Foothold second route (fh_*.py.txt, logs): see section V below (written when the
  zeta linear (slope 1.45 = 2/(sqrt3 |zeta'(rho_1)|)), impostor exponential at t = 85.7 from L = 1 (below zeta until L = 2, above from 2.5), F_d
  visible from L = 4-5; one-prime bounded (not a fake here). Exact doubling identity M_2l = [[M_l,0],[H_mu R, M_l]], H_mu = -M H_1 M^# (Vaughan at
  sqrt D): quadratic bound only; F_d shows the functional equation alone cannot give a polynomial doubling law.
+
+## SEMINAR S2 (board s2), my question B6 (S1-socrates). Proposal: the odd/even FOLDING identity (B25, FORMAL B142) read as a
+## split of the prime sum at sqrt(D): shift part n <= e^L, mirror part (e^L, e^2L] with a definite sign on the cone (Lambda >= 0).
+### PREDICTIONS, written 03:15:04 UTC 2026-11-11, before any S2 computation (script s2_fold.py.txt does not exist yet)
+ Setting: unit-norm lowest eigenvector of the failing/positive EVEN block, folded phi on (0, L] (nodeless, B119 / K-atlas B148),
+ identity q(f_e) = 2[T(phi) + H(phi)], T = Weil form of phi on a window of half size, H = Hankel (mirror) form of the full kernel.
+ Impostor (no pole; Gamma rates 2m + 3/2): H = - sum_{m>=0} E'_m^2 - H_c, H_c = sum_n c_n n^-1/2 (phi*phi)(log n), c_n signed.
+ zeta: H = E_+^2 - sum_{m>=1} E_m^2 - H_Lambda.
+ Q1 (impostor, L = 1.72, its failure vector): H_c(phi) > 0; the terms with c_n < 0 (n = 3, 4, 9, ...) total less than 20% of |H_c|,
+    and n = 2 carries more than 80% of the positive part. So at its own failure the impostor does NOT use its negative couplings in the
+    mirror range: its failure is not where 'Lambda >= 0' is violated.
+ Q2 (same vector): of T = sum E'_m^2 + H_c + mu/2, Gamma squares take 0.5 to 0.8, couplings 0.2 to 0.5.
+ Q3 (zeta, L = 1, even ground state): T + E_+^2 = sum_{m>=1} E_m^2 + H_Lambda + mu/2 with H_Lambda/E_+^2 between 0.02 and 0.2 and
+    T/E_+^2 between 0.02 and 0.2: the pole square pays almost all of the Gamma squares, the prime mirror is small in the even block.

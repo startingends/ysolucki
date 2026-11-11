@@ -1,0 +1,3 @@
+check zeta     L=0.7 N=60: q(f_e) - q(f_o) = -1.00213274088e-7 ; 4H = -1.00213269587e-7 ; difference -4.5e-15   (7s)
+check impostor L=0.7 N=60: q(f_e) - q(f_o) = -1.12762181799e-6 ; 4H = -1.127621827e-6 ; difference 9.01e-15   (13s)
+check impostor L=1.2 N=80: q(f_e) - q(f_o) = 0.00170386783257 ; 4H = 0.00170386783478 ; difference -2.21e-12   (23s)

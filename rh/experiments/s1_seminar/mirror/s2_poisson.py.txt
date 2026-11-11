@@ -1,0 +1,19 @@
+"""S2/B7: check of the mirror per-prime Poisson identity
+   log p * sum_{k>=1} p^{-k/2} (phi*phi)(k log p) = sum_{m in Z} F(2 pi i m/log p)^2,   F(s) = int_0^L phi(x) e^{(s-1/2)x} dx.
+phi = x^2 (1 - x) on (0, 1].  mpmath, 30 digits."""
+import mpmath as mp
+mp.mp.dps = 30
+L = mp.mpf(1)
+phi = lambda x: x * x * (1 - x) if 0 < x <= L else mp.mpf(0)
+def F(s):
+    # closed form by mpmath quadrature (smooth integrand)
+    return mp.quad(lambda x: phi(x) * mp.exp((s - mp.mpf(1) / 2) * x), [0, L])
+def conv(u):   # (phi*phi)(u) = int phi(t) phi(u - t) dt
+    lo, hi = max(mp.mpf(0), u - L), min(L, u)
+    return mp.quad(lambda t: phi(t) * phi(u - t), [lo, hi]) if hi > lo else mp.mpf(0)
+for p in (2, 3, 5, 7, 11):
+    a = mp.log(p)
+    left = a * sum(mp.power(p, -mp.mpf(k) / 2) * conv(k * a) for k in range(1, int(2 * L / a) + 2))
+    M = 2000
+    right = F(mp.mpf(0)) ** 2 + 2 * sum(mp.re(F(2j * mp.pi * m / a) ** 2) for m in range(1, M + 1))
+    print("p = %2d: left %s ; right (|m| <= %d) %s ; difference %s ; m = 0 square F(0)^2 = %s" % (p, mp.nstr(left, 15), M, mp.nstr(right, 15), mp.nstr(left - right, 3), mp.nstr(F(0) ** 2, 8)))
