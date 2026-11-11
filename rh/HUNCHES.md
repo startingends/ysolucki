@@ -300,3 +300,13 @@ on the Möbius side there are no controls. What is left has to be a mechanism of
   OUTCOME (`rh/experiments/g5_nearcopies/`, quadratic analogue over ℚ, D up to 4·10⁴): approximate copies occur at
   the rate of random pairs (12.5–13.4% against a 10–11% baseline); no intermediate-density mechanism visible.
   Predictions hit (run 1 was ill-posed and is recorded as such). G5 is not supported at this scale.
+- G6 (lead, from N68; RISK, very speculative). Stepanov's function-field proof needs ONE derivation that kills Frobenius
+  (d(x^q)/dx = 0), making high-order vanishing at all rational points cheap. Over ℤ the analogue of "vanishing at all
+  points" is divisibility by p^m for all p ≤ x, and there is no single derivation: Buium's p-derivations come one per
+  prime. Borger's λ-rings are exactly rings with COMMUTING Frobenius lifts at all primes at once (big Witt vectors;
+  Borger's "descent to F₁"). Hunch: a Stepanov-type auxiliary-function argument over a λ-ring (an auxiliary big-Witt
+  vector with high "ψ-adic" vanishing simultaneously at all p, of controlled size) is the one place where a
+  single object sees all Frobenii at once. Plank zero (pure mathematics, no computation): state what "size" and
+  "vanishing order" would mean for an element of W(ℤ) or of a λ-ring of finite type, and check whether Chebyshev's
+  C(2n, n) has a λ-ring interpretation (its p-adic valuations are the carries of Kummer). Odds: very low; recorded
+  because it is the only candidate in the record that addresses "one structure for all primes at once" directly.
