@@ -95,3 +95,31 @@ Open threads (for turn 2):
 - Not done: Model B with all integer points (not only 3-smooth) and eps ~ e^(-2L) (S1-curv did the comb, B39);
   a numerical check of Theorem 2's w-term (raise c(4), c(6), c(9) by a PSD pattern).
 - Literature: 5 queries recorded in the proof file. Not searched: Bisgaard / Ressel on semigroups without identity.
+
+## Turn 2 (resumed after a container restart, 2026-11-11 00:15 UTC)
+State on the board: idea 21 marked KILLED by the lead (B69) on the F_d obstruction; barrier B11 recorded. I no longer defend an idea.
+Open question of the seminar: inside the mirror-positive cone, what singles out zeta, on the prime side?
+To answer: B65 (S1-cubic), B70 (lead), B72, B78 (Socrates). Specialists to question: SP-reflection, SP-operator.
+
+### Theory before computing (turn 2)
+U1. F_d form: Q_d(f) = 2 Q(e^(dx) f, e^(-dx) f) (bilinear zeta form), i.e. Q_d = M_d Q M_-d + M_-d Q M_d, M_d = multiplication by e^(dx).
+    Expansion: Q_d = 2Q + d^2 [X,[X,Q]] + O(d^4), X = multiplication by x. EVEN and analytic in d: no kink.
+    First order in d^2 on the ground state v (Qv = mu v): lambda(d) = 2 mu - 2 d^2 ( Q(xv) - mu |xv|^2 ) + O(d^4).
+    Zero side: a function with fhat(g) = 0 contributes -2 d^2 |fhat'(g)|^2 per zero. So d = 0 is a smooth strict local MAXIMUM.
+U2. Doubling: for phi on (0, L], odd block: T_W - H_W = Q(phi) + sum_{m>=1} E_m^2 + H_primes(phi) - E_+^2 (B25 cancellation).
+    With Yoshida ("one parity block suffices", via S1-parity B57): RH would follow from
+       Q(phi) + sum_{m>=1} E_m(phi)^2 + H_primes(phi) >= E_+(phi)^2  for all L, phi in L^2(0, L].
+    Left side = (Weil form of half window) + (Gamma mirror squares) + (prime mirror form); right side ONE square.
+U3. R = T^-1 H is the compression of complex conjugation to {phihat restricted to the zeros}: the canonical-correlation operator
+    between a half window and its mirror image in the geometry of the measure sum of delta at zeros (past/future, Helson-Szego type).
+
+### BLIND PREDICTIONS turn 2 (written 2026-11-11 00:16 UTC, before computing)
+Q1 (B70). F_d on L = 0.75, N = 40: lowest eigenvalue of each block is even and smooth in d, lambda(d) = lambda(0) - c d^2, c > 0;
+    lambda_even(0) = 2 * 4.6e-15 = 9.2e-15, lambda_odd(0) = 7.5e-12. Sign change at |d*|: even block between 1e-8 and 1e-6,
+    odd block between 1e-7 and 1e-4. (lambda(0) - lambda(d))/d^2 constant to 10% for d from 1e-9 to 1e-4.
+    Would change my mind: a term linear in |d| (kink), or lambda(d) > lambda(0) for some small d.
+Q2 (B72). G_d = zeta(s) L(s-d,chi_4) L(s+d,chi_4), d = 0.1: mirror matrix on 2..12 non-negative (min eig >= -1e-12).
+Q3 (doubling, L = 0.6, phi on (0, 0.6]): pencil eigenvalues lam = H_W/T_W all in [-1, 1]; 1 + lam_min between 1e-10 and 1e-8;
+    1 - lam_max between 1e-8 and 1e-5; number of eigenvalues with |lam| > 0.99: between 2 and 5 (of ~30).
+    At the odd saturator (normalised E_+^2 = 1): H_primes between 0.1 and 0.6, sum_{m>=1} E_m^2 below 0.1, Q(phi) between 0.3 and 0.9.
+    Without primes the top eigenvalue of T^-1 (H_pole - H_Gamma) exceeds 1 (between 1.05 and 3).

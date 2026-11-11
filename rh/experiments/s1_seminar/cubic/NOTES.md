@@ -66,3 +66,27 @@ Run numerics: `python3 /home/user/ysolucki/tools/memcap.py 2 python3 <script>` f
 - Never post whether an idea is likely to work. Object only after asking. Labels on every statement.
 - Do not read other agents' IDEAS_LOCAL.md. Do not edit anything outside this folder.
 - Box-basis margins are 1e-2..1e-3; nothing here sees the true 1e-23 margins. Say "on boxes" when quoting.
+
+## TURN 2 (started 00:18 UTC, after a container restart). Nothing addressed to me on the board (B71-B78 go to others).
+Rule: jobs > 1 GB or > 1 min: `flock /tmp/claude-0/-home-user-ysolucki/9039aa06-6540-523a-ba98-9efe520848c8/scratchpad/heavy.lock python3 tools/memcap.py 2 python3 <script>`.
+Tasks: (1) what is a one-block certificate; (2) one-field form for F_d = zeta(s-d)zeta(s+d), prediction first; (3) locality outcome;
+(4) Lean nomination among A, B, C; question SP-reflection and SP-operator.
+
+### Derived by hand BEFORE computing (00:18 UTC)
+- EXACT: Q_d(f) = 2 Q(e^{dx} f, e^{-dx} f) = 2 Q(cosh(dx) f) - 2 Q(sinh(dx) f)  (zero side: zeros gamma -+ i d; Q bilinear symmetric).
+  So with g = cosh(dx) f:  Q_d(f) = 2 [ Q(g) - Q(tanh(dx) g) ]:  F_d >= 0 on [-L,L]  <=>  multiplication by tanh(dx) is a contraction
+  for zeta's Weil form on [-L,L]. Second order: threshold d_crit(L)^2 ~ mu_0(L) / Q(x psi), psi = ground state of Q_L.
+- One-field form for F_d: E_d(x,y) = e^{|x-y|/2} 2cosh(d(x-y)) = e^{(1/2+d)|u|} + e^{(1/2-d)|u|}; N'_d = primes_d - arch'_d (two slowest
+  exponentials removed), N'_d - E_d = -Q_d. Two-plane fibre form: 4 functionals e^{+-(1/2+-d)x}, #pos(Ntilde_d) = 2 + #neg(Q_d).
+
+### PREDICTIONS written BEFORE computing (00:18:02 UTC); boxes, exact compression of the tilted kernel
+PT1. E_d on 24 boxes, L = 1: exactly ONE positive eigenvalue for d = 0.05, 0.1, 0.25 (so the one-field matrix stays a valid
+     'one positive eigenvalue <=> Q_d >= 0' form and does NOT single out d = 0 by its shape). At d = 0.45: I guess two (unsure).
+PT2. Threshold d_crit (smallest d with lowest eigenvalue of Q_d < 0), L = 1: 24 boxes in [0.03, 0.12]; 48 boxes smaller by a factor
+     in [1.4, 2.2] (box mu_0 = 3.74e-3, 1.155e-3; the true mu_0 = 8e-30 would give d_crit ~ 1e-14, not computable here).
+PT3. Second-order formula: d_crit^2 * Q(x psi) / mu_0 in [0.8, 1.25] (x psi by box centres).
+PT4. Failing block = parity of the lowest eigenvector of Q on boxes (I expect EVEN at L = 1).
+PT5. Model 'tilt by box-centre differences' (Q o 2cosh(d(x_i - x_j))) and the exact compression agree on d_crit within 10%.
+PT6. #pos(Ntilde_d) with 4 fibre nodes = 2 + #neg(Q_d) for every d != 0 (identity; tests the code); so for d != 0 Ntilde_d NEVER has
+     one positive eigenvalue and by Lemma B no cubic certificate exists for it on any window.
+Control: d = 0 must give Q_0 = 2 Q exactly (code check), and Beurling is not involved.

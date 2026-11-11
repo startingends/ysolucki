@@ -128,3 +128,37 @@ Others' open questions I am watching: lead B70 (kink at d = 0), S1-cubic B65, B6
    search of a theorem": B80 now asks SP-operator about exactly these operators. Follow whatever comes back.
 7. Unused from turn 1's reserve: fibre rows in the mirror spectrum (answered in substance by B25/B63: skip);
    position asymmetry (1.9996, 2.0080) with 2 at the left end: still unexplained, ask if a seat touches it.
+
+## Turn 2, second resume (2026-11-11, after a second container restart)
+Board on return: B80 when I read it (B81-B84 arrived while I was posting, see below), nothing answered, nothing lost (the board is on disk). Open: B65, B66, B67 (S1-cubic's),
+B70 (lead's), and my B71-B80. Posted:
+- B85 (note, to all): the 14 open questions listed by addressee; asked seats to say if a number lived only in a
+  killed process rather than quote it from memory. No content repeated.
+- B86 (question, S1-cubic, re B36): Lemma A written out for F_d: how many fibre nodes, which signature; what
+  replaces the Perron step when the target signature has more than one positive eigenvalue; is d = 0 visible as a
+  rank drop, on the prime side or only on the pole side. (Priority 2; S1-cubic had no open question to it.)
+- B87 (question, S1-cubic): Lean nominations for B51(b), B52, B62, B63; is "E has one positive eigenvalue on every
+  window" proved on L^2[-L, L] or on the box compression. (Closes the gap noted in my self-check.)
+Turn-2 total: 12 questions + 1 note. Do NOT add more until answers arrive.
+New on disk: rh/library/ (whole-paper digests; background only, never a direction; I skimmed README/INDEX only).
+Reserve for turn 3 unchanged, minus item 5 (S1-cubic nominations: now asked).
+Arrived while I was posting (read after):
+- B81 (S1-mirror, answers B72): G_d = zeta(s) L(s-d,chi_4) L(s+d,chi_4) is mirror positive, has exactly ONE
+  wrong-sign square, zeros off the line. So "one pole" does not single out d = 0; hope of B45 withdrawn by the seat.
+  Seat's prime-side name for what F_d, G_d fail: "c(p^k) p^(-k/2) bounded in k and not tending to 0"; it calls this
+  one more NECESSARY item (one-prime, Liouville, Beurling all have it).
+- B82 (S1-mirror, answers B78): nominations: D1 as a finite identity (mathlib has vonMangoldt); Corollary 3 as a
+  finite Hankel/Vandermonde statement; the Step 2 norm bound. Exponent in Theorem 2 corrected in the file.
+- B83 (S1-mirror -> SP-reflection): boundedness = upper half of Ramanujan only? semigroup without identity;
+  Levy-Khinchin. B84 (S1-mirror -> SP-operator): is R = T_W^-1 H_W the past/future angle operator; recursion.
+Then I posted:
+- B88 (note): correction of B85 (B72, B78 were already closed); open list as of B87 by addressee.
+- B89 (question, S1-mirror, re B81): the "weight at 4 times 1.01" control (B19) sits between the B81 statement and
+  B50 (iii): does it satisfy B81's statement; its local roots at 2; one statement on c(p^k) that F_d, G_d and the
+  1.01 control all fail and zeta passes, as a test on [c(p^(i+j))].
+Turn-2 total: 13 questions (B71-B80, B86, B87, B89) + 2 notes (B85, B88).
+Lesson: read the board again immediately before posting a status note; B85 was stale by one minute.
+Open and waiting: lead B71; S1-mirror B65, B70, B89; S1-curv B66, B77; S1-parity B67, B73, B76 (+ F_d table);
+S1-cubic B86, B87; SP-reflection B74, B79, B83; SP-operator B75, B80, B84.
+For turn 3: B71(c) asked the lead whether "weights exactly log p" and "roots of modulus 1" are one item; B89 asks
+S1-mirror the same thing through a control. If the two answers differ, put them side by side.

@@ -70,3 +70,7 @@ is the QUESTION (a definition, a reason, an example, a consequence), not the ver
 and numbers, only after asking, and only with a specific gap, counterexample or failed recomputation. Never
 post whether an idea is likely to work. Creation seats: fill your own pages first; the board is optional
 for you after that.
+
+**Library.** `rh/library/INDEX.md` lists whole papers read in full, with digests. Read the ones that touch
+your work before you start, so you begin at the frontier. They are background only: a digest is never a
+reason to follow a paper, and never evidence that its topic is the important one.

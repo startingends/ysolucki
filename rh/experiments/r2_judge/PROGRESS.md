@@ -103,3 +103,14 @@ x = -0.944 (M = 160) and x = -0.941 (M = 320). OBSERVATION (COMPUTED, two refine
 that is x = log 7 - L = -0.9459 up to one box, the point from which the largest jump in the window (log 7 < 2L) just
 reaches the far edge. Final score: 15 predictions, 13 clean hits, J13 missed at first run (my threshold) and hit on the
 rerun, J15 hit on values and missed on the location of the worst site.
+
+## Session 2 of this seat (the first session stopped at 00:08 before JUDGEMENT.md was written; its logs were re-read and spot-checked: j1_J1, j1_J2, j1_J3, j12, j13, j13b, j15b all match the table above)
+In this session I re-read all six PROOF files line by line and redid every displayed computation by hand (notes in JUDGEMENT.md).
+
+J16 (written 00:18:21 UTC by the system clock, command-written, before computing). The lead's fourth row in e10 test_a.log
+   (zeta L = 1.25, N = 56: one positive eigenvalue of N = primes - arch, largest 5.66836, second -2.451e-47, third -3.773e-44)
+   was not redone by seat or checker. I redo it with the seat's implementation B (wb.py.txt: mpmath, digamma formula; independent
+   of the lead's Arb builder), 110 digits. Predict: 'int' lattice N = 56 (same subspace as the lead): #pos = 1, largest 5.66836,
+   second -2.451e-47, third -3.773e-44 to the printed digits. 'half' lattice N = 56 (a different subspace): #pos = 1, second
+   within a factor 0.7..1.4 of -2.45e-47. Control Beurling (2 -> 2.1), int lattice: between 5 and 12 positive eigenvalues,
+   second eigenvalue of order +0.3..+1.

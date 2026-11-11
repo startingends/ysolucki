@@ -48,6 +48,12 @@ Owner's standing instructions:
    learn from them, then make your own discovery out of what you learned. A new idea must say which
    recorded results it grows from and what it explains or uses that was not explained or used before.
    "Nobody has done this" is not a reason to do it; "this is what the record is pointing at" is.
+10. **Read whole papers first; reading is not a direction.** (owner, 2026-11-11) Each run starts from the
+    digests in `rh/library/` so it begins at the frontier. Reading is only for knowledge and understanding:
+    do not let a paper persuade you that its road is the road, or that its topic matters because it is
+    written up. Take the knowledge, then create (rules 7 to 9).
+11. **The atlas and the seminar keep running.** Both sharp turns so far came from one agent questioning
+    another. A round without a seminar board and an atlas pairing pass is incomplete.
 These are enforced as required fields in `tools/ideas.py` (wall, new input, prediction, smallest, novelty).
 A field may honestly read "FAILS RULE: …"; such ideas cannot be `alive`.
 

@@ -61,11 +61,16 @@ These exist so that work accumulates instead of evaporating. Each has one writer
 | `rh/FOOTHOLDS.md` | **the foothold hunt**: any nontrivial case that is actually provable, however small, with a mechanism that could spread it | the foothold seat (FH) |
 | `rh/BIGGER.md` | **the bigger statement**: what RH is a shadow of, and whether the larger statement has a provable base case | the bigger-statement seat (BG) |
 | `rh/specialists/<seat>/` | **specialist seats that persist**: each owns one toolkit deeply (CHARTER, LIBRARY, MEMORY, own idea log) and keeps its memory across sessions; roster in `rh/specialists/ROSTER.md`. Collisions need two deep holders: put two specialists on one question, on a seminar board | each specialist |
+| `rh/library/` | **whole papers read in full**: digests for knowledge only, never a direction (see "Reading") | reader seats |
 | `rh/formal/` | **formal checking**: any lemma a live route depends on must be machine-checked in a proof assistant (status `formal`) or be `known` with a citation, before that route is reported above L2 | the formal seat |
 | `rh/library/` | **whole papers read in full**, one note per paper plus `FRONTIER.md`, so each run starts at the frontier instead of rediscovering it. **For knowledge and understanding only**: reading a paper is never a sign that its direction is the way to go, and nothing in the library is a lane or a recommendation (owner, 2026-11-11) | reader seats; the lead keeps `FRONTIER.md` |
 - Other seats do not write these files; they write proofs and notes in their own folders and the keeper picks them up.
 - **The failure atlas and the Socratic seminar are kept going continuously** (owner, 2026-11-11): both sharp turns so far came from one agent questioning another. After every restart, resume them first.
 - A session of a persistent seat starts by reading its own memory file and ends by rewriting it.
+
+## Reading (owner, 2026-11-11)
+- **Whole papers are read first, in full,** so each run starts at the frontier instead of rediscovering it. Reader seats keep digests in `rh/library/` (index: `rh/library/INDEX.md`); every brief points its seat to the relevant digests as background.
+- **Reading is for knowledge and understanding only.** It is never the way to go and never evidence that a topic is important. A digest states what a paper proves and where it stops; it makes no recommendation. A seat that has read a paper is not thereby assigned to it.
 
 ## Before any new piece of work
 1. **Backlog recheck** (a Haiku agent greps IDEAS / KNOWLEDGE / JOURNAL / reports): "done before? yes / partly / no, idea N, date, result". The owner sees the answer, not the process. If it was done, answer from the record and ask what is new.

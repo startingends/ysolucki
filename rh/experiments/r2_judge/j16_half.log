@@ -1,0 +1,3 @@
+J16 half L=1.25 N=56 even block of N: top three ['5.64436', '-2.60995e-47', '-1.79569e-40']
+J16 half L=1.25 N=56 odd block of N: top three ['-4.03837e-44', '-2.11978e-37', '-1.53146e-31']
+J16 half: #pos=1 ; largest 5.644365 ; second -2.6099e-47 ; third -4.0384e-44 (5s)

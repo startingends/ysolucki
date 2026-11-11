@@ -1,0 +1,72 @@
+"""S1-curv turn 2: F_d on the box window. usage: t2_fd.py.txt L M [mode]   mode: table (default) | crit"""
+import sys, importlib.machinery, importlib.util, numpy as np, scipy.linalg as sl, mpmath as mp
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib'); S2 = load('s2lib')
+L = float(sys.argv[1]); M = int(sys.argv[2]); mode = sys.argv[3] if len(sys.argv) > 3 else 'table'
+Be, Bo = S2.parity_bases(M); h = M // 2; J = np.eye(M)[::-1]
+def lows(b):
+    return np.linalg.eigvalsh(Be.T @ b['Q'] @ Be)[0], np.linalg.eigvalsh(Bo.T @ b['Q'] @ Bo)[0]
+b0 = S2.build_d(L, M, 0); bz = S.build(L, M, 'zeta')
+if mode == 'table':
+    Qz = 2 * np.outer(bz['c'], bz['c']) - 2 * np.outer(bz['s'], bz['s']) - bz['N']
+    print("check d = 0: |N_0 - 2 N_zeta| = %.1e  |Q_0 - 2 Q_zeta| = %.1e ; c_inf(0) = %.7f = 2 x 5.3721834" % (np.abs(b0['N'] - 2 * bz['N']).max(), np.abs(b0['Q'] - 2 * Qz).max(), b0['cinf']))
+    dd = mp.mpf('0.1'); wz = lambda u: mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+    print("check c_inf(0.1) = %.9f ; 2 c_inf + 4 int w (cosh(du) - 1) = %.9f" % (S2.build_d(L, 4, 0.1)['cinf'], float(2 * (mp.log(mp.pi) - mp.digamma(0.25)) + 4 * mp.quad(lambda u: wz(u) * (mp.cosh(dd * u) - 1), [0, 1, 5, 20, mp.inf]))))
+    e0, o0 = lows(b0)
+    mu, V = np.linalg.eigh(Be.T @ b0['Q'] @ Be); fe = Be @ V[:, 0]; phi = fe[h:] * 2 ** 0.5     # folded even ground state, ||phi|| = 1
+    def TH(b):
+        TW = (b['Pole'] - b['N'])[h:, h:]; HW = ((b['Pole'] - b['N']) @ J)[h:, h:]; return phi @ TW @ phi, phi @ HW @ phi
+    T0, H0 = TH(b0)
+    print("L=%g M=%d.  d | low eig Q_d even, odd | (low(0)-low(d))/d^2 even, odd | #pos eig N_d | min offdiag | gap/lam1 | BE centre/lam1 | det S_d | Op min, Cl #neg | F4 on d=0 even ground state: (T_W,d - T_W,0)/d^2, (H_W,d - H_W,0)/d^2" % (L, M))
+    for d in (0, 0.005, 0.01, 0.02, 0.03, 0.05, 0.1, 0.2, 0.3):
+        b = S2.build_d(L, M, d) if d else b0
+        e, o = lows(b); N = b['N']; ev, lam1, u, q, Lg = S.process(N); pi = u * u
+        off = N[~np.eye(M, dtype=bool)].min()
+        G, G2 = S.gamma_at(q, Lg, M // 2); be = S.geneig_min(G2, G, M // 2) / lam1
+        C = Be.T @ np.stack([b['cp'], b['cm']], 1); Ne = Be.T @ N @ Be
+        Sd = 2 * C.T @ np.linalg.solve(Ne, C) - np.eye(2)
+        # Op, Cl
+        E = np.eye(M); inW = lambda j: 0 <= j < M; k = b['k']; Op = np.zeros((M, M))
+        for y in range(M):
+            for a in range(-M + 1, M):
+                if a == 0 or not inW(y + a): continue
+                ga = k[abs(a)] * u[y + a] * (E[y + a] - E[y])
+                for bb in range(-M + 1, M):
+                    if bb == 0 or not inW(y + bb) or inW(y + a + bb): continue
+                    Op += np.outer(ga, k[abs(bb)] * u[y + bb] * (E[y + bb] - E[y]))
+        Op = (Op + Op.T) / 2; LL = Lg.T @ np.diag(pi) @ Lg; Cl = LL - Op
+        K = N - np.diag(np.diag(N)); Ef = np.diag((K * np.outer(u, u)).sum(1)) - K * np.outer(u, u)
+        Bq = np.linalg.qr(np.hstack([np.ones((M, 1)), np.eye(M)[:, 1:]]))[0][:, 1:]
+        ge = lambda A: sl.eigh(Bq.T @ A @ Bq, Bq.T @ Ef @ Bq, eigvals_only=True) / lam1
+        eo, ec = ge(Op), ge(Cl)
+        Td, Hd = TH(b)
+        s2 = ("%+.4f %+.4f" % ((T0 - Td) / d ** 2 * -1, (H0 - Hd) / d ** 2 * -1)) if d else "   -      -"
+        k2 = ("%.4f %.4f" % ((e0 - e) / d ** 2, (o0 - o) / d ** 2)) if d else "  -     -"
+        print("%5.3f | %+.6e %+.6e | %s | %d | %.4f | %.5f | %.4f | %+.4e | %.4f %d | %s" % (d, e, o, k2, (ev > 0).sum(), off, (lam1 - ev[-2]) / lam1, be, np.linalg.det(Sd), eo[0], (ec < -1e-9).sum(), s2))
+    # cross-value identity check with box-centre multipliers (error O(dl^2)):  Q_d(f) ~ Q_0(cosh(dx) f) - Q_0(sinh(dx) f)
+    rng = np.random.default_rng(1); x = b0['x']; f = np.exp(-x ** 2) * (1 + 0.5 * x + 0.3 * np.cos(3 * x))
+    for d in (0.05, 0.2):
+        b = S2.build_d(L, M, d); lhs = f @ b['Q'] @ f; ch, sh = np.cosh(d * x) * f, np.sinh(d * x) * f
+        rhs = ch @ b0['Q'] @ ch - sh @ b0['Q'] @ sh
+        print("identity Q_d(f) = Q_0(cosh(dx) f) - Q_0(sinh(dx) f) on a smooth f, d=%.2f: lhs %.8f rhs %.8f diff %.1e (box error ~ dl^2 = %.1e)" % (d, lhs, rhs, lhs - rhs, b0['dl'] ** 2))
+else:
+    for nm, idx in (("even", 0), ("odd", 1)):
+        lo, hi = 0.0, 0.4
+        if lows(S2.build_d(L, M, hi))[idx] > 0: print(nm, "no crossing below 0.4"); continue
+        for _ in range(22):
+            mid = (lo + hi) / 2
+            if lows(S2.build_d(L, M, mid))[idx] > 0: lo = mid
+            else: hi = mid
+        # same for det S_d (even only)
+        print("L=%g M=%d %s block: 2 mu_1 = %.6e  d_crit = %.6f  kappa_eff = 2mu_1/d_crit^2 = %.4f" % (L, M, nm, lows(b0)[idx], (lo + hi) / 2, lows(b0)[idx] / ((lo + hi) / 2) ** 2))
+    Be_ = Be
+    def detS(d):
+        b = S2.build_d(L, M, d); C = Be_.T @ np.stack([b['cp'], b['cm']], 1); Ne = Be_.T @ b['N'] @ Be_
+        return np.linalg.det(2 * C.T @ np.linalg.solve(Ne, C) - np.eye(2))
+    lo, hi = 0.0, 0.4
+    for _ in range(22):
+        mid = (lo + hi) / 2
+        if detS(mid) < 0: lo = mid
+        else: hi = mid
+    print("   det S_d changes sign at d = %.6f" % ((lo + hi) / 2))

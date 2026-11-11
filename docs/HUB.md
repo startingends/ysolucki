@@ -68,22 +68,24 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 
 ## Running jobs
 **After any context summary or restart, read this section and `git log -5` before launching anything.**
-The container restarted at 00:09 on 2026-11-11; every agent stopped; nothing on disk was lost (Lean and the
-mathlib cache survived). Resumed afterwards, in this order:
-- **Seminar S1** (board `rh/board/s1.md`): S1-socrates, S1-cubic, S1-curv, S1-parity, S1-mirror in turn 2;
-  specialists SP-reflection and SP-operator in their first sessions. Resumed by message to their agent ids.
-- **K-atlas** (failure atlas and the pairing job) and **K-theory** (theory document): resumed.
-- **FH** (foothold hunt), **BG** (bigger statement), **FORMAL** (Lean): resumed.
-- **Round-2 verification track** (run `wf_39b9c4a2-4ff`): all three verifiers had finished; only the judge
-  (proofs and numbers only) reruns on resume.
-- **Creation run 1** (run `wf_0afb126a-9cf`): none of its three seats had finished; resumed, they restart
-  (seat `inside` finds its earlier files; seats `blank` and `data` had written nothing).
-- **Readers** R-read-1, R-read-2: whole papers into `rh/library/` (understanding only).
-- Rule after the restart: one heavy numerical job at a time across all seats
-  (`flock <scratchpad>/heavy.lock python3 tools/memcap.py 2 ...`).
-- Formal checking works (Lean 4.35.0 + mathlib, `lake -d rh/formal build`). No project lemma is formal yet.
-- Awaiting audit: about 80 ideas in agents' local logs. The auditor's test for created ideas is the two
-  questions (new? precise enough to compute?), not likelihood.
+The container restarted on 2026-11-11 at about 00:09. Disk, repository, Lean and the mathlib cache survived.
+Most seats turned out to be still alive and received a "continue" message; two things were restarted.
+- **Seminar S1** (board `rh/board/s1.md`), turn 2: S1-socrates (moderator), S1-cubic, S1-curv, S1-parity,
+  S1-mirror, and the two specialists SP-reflection and SP-operator (first sessions). Open question after
+  idea #21 was killed: every hypothesis used so far is blind to the twist n ↦ n^d (barrier B11); what,
+  stated on the prime side, singles out d = 0?
+- **Standing seats:** K-atlas (failure atlas and the pairing job), K-theory (theory document), FH (foothold
+  hunt), BG (bigger statement), FORMAL (Lean; one Lean process at a time). Each was told to save its memory
+  file as it goes; before the restart several had nothing on disk.
+- **Reader seats** (new, owner's instruction A17): READER-1 and READER-2 read whole papers in full and write
+  digests in `rh/library/` (background knowledge only, never a direction).
+- **Verification track of round 2** (run `wf_39b9c4a2-4ff`): verifiers of all three seats have finished; the
+  judge (proofs and numbers only) is running.
+- **Creation run 1** (run `wf_0afb126a-9cf`): restarted from the beginning after the container restart; its
+  three unlaned seats had left nothing on disk. At least two hours each, no refuter, then the two-question
+  screen.
+- Awaiting audit: 83 ideas in agents' local logs. Next audit after seminar turn 2.
+- Load: every numerical job runs under `tools/memcap.py 1`; one Lean process at a time.
 
 ## Scheduled routines
 None.

@@ -28,7 +28,7 @@ FALSE already in two variables (their section 3.1, citing Berg-Christensen-Resse
 non-negative multi-variable Hankel matrices that are not moment sequences.
 
 ## Theorem 2 (PROVED here; the version without the index 1)
-Let c be real with |c(n)| <= C n^(2a) for composite n (some C, a >= 0). Let X = prod_p [-p^a, p^a] (compact), a point
+Let c be real with |c(n)| <= C n^a for composite n (some C, a >= 0). Let X = prod_p [-p^a, p^a] (compact), a point
 chi of X being the completely multiplicative function with those values at the primes; 0 denotes the point chi = 0.
 The following are equivalent.
  (a) M_c = [c(ab)], a, b >= 2, is non-negative (every finite section is positive semidefinite).
@@ -49,9 +49,12 @@ Step 2 (the integers act). For m >= 1 put T_m k_a = k_(ma). On finite combinatio
 <T_m v, v'> = sum phi_a psi_b c(mab) = <v, T_m v'>, and <T_m v, T_m v> = <T_(m^2) v, v> <= ||T_(m^2) v|| ||v||.
 So T_m maps null vectors to null vectors (it is well defined on H's dense subspace), and by induction
    ||T_m v|| <= ||T_(m^(2^k)) v||^(2^-k) ||v||^(1 - 2^-k).
-With B = sum |phi_a| a^(2a): ||T_M v||^2 = sum phi_a phi_b c(M^2 ab) <= C M^(4a) B^2. Hence
-||T_(m^(2^k)) v||^(2^-k) <= (C^(1/2) B)^(2^-k) m^(2a) -> m^(2a), so ||T_m v|| <= m^(2a) ||v||. [With the bound written as
-n^(2a) the box X should be prod [-p^(2a), p^(2a)]; the exponent is immaterial.] Thus the T_m extend to bounded
+With B = sum |phi_a| a^a: ||T_M v||^2 = sum phi_a phi_b c(M^2 ab) <= C M^(2a) B^2. Hence
+||T_(m^(2^k)) v||^(2^-k) <= (C^(1/2) B)^(2^-k) m^a -> m^a, so ||T_m v|| <= m^a ||v||. [Corrected 2026-11-11 after Socrates' B78:
+the first version stated the bound as n^(2a) with the box for n^a; no conclusion depended on the exponent.]
+Finite form of this step, the one nominated for a machine check: for every finitely supported real phi and every m >= 1,
+   sum phi_a phi_b c(m^2 ab) <= m^(2a) sum phi_a phi_b c(ab)   whenever [c(ab)] >= 0 and |c(n)| <= C n^a.
+Thus the T_m extend to bounded
 self-adjoint commuting operators with T_m T_n = T_(mn). (This is the standard argument for exponentially bounded
 positive definite functions, Berg-Christensen-Ressel 4.1.12, from memory.)
 Step 3 (spectral theorem). The commuting bounded self-adjoint operators T_p, p prime, have a joint resolution of the

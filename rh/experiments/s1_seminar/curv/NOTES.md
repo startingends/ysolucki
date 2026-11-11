@@ -65,7 +65,7 @@ Task: F2 and F4 for F_d = zeta(s-d) zeta(s+d), prediction first; nominate for Le
  mirror: H_d(phi) = H(phi_+) + H(phi_-) = 2[H(cosh(dx) phi) + H(sinh(dx) phi)]                               (mirror forms: a SUM, congruence)
  Q_d = 2Q + d^2 Q2 + O(d^4), Q2(f) = int int f(x) f(y) (x-y)^2 W(x-y) = - sum over zeros of (|F|^2)''(gamma)  -> on a null vector = -2 sum |F'(gamma)|^2 < 0.
 
-### PREDICTIONS for t2_fd.py.txt (written at the time printed by `date` when this block was appended; see the line above the block in the turn log: 00:1x UTC 2026-11-11)
+### PREDICTIONS for t2_fd.py.txt (written at the time printed by `date` when this block was appended; 00:17:14 UTC 2026-11-11)
 Box model, L = 1, M = 40 (mu_1 of zeta's box blocks: even 1.99e-3, odd 8.1e-3; for zeta^2 doubled).
  P1 lowest eigenvalue of the F_d Weil block, even and odd: even in d, smooth, = 2 mu_1 - kappa d^2 (quadratic to 10% up to the crossing), kappa in (0.5, 20):
     even block negative from d_crit in (0.014, 0.09), odd block from d_crit in (0.03, 0.18). No kink at d = 0.

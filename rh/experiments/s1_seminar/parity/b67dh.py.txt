@@ -1,0 +1,47 @@
+"""S1-parity, B67 extra control: the Davenport-Heilbronn impostor (couplings of BOTH signs, no pole, Gamma((s+1)/2), conductor 5).
+Its form is >= 0 up to L* in (1.70, 1.72] (lane A). Is the folded ground state of each block of one sign while the form is positive?
+Own construction on implementation B: Phi_arch,DH(w) = Phi_arch(w + i) + (log 5)/2  (exponents 2m + 3/2, constant log(5/pi)/2);
+coefficients of -f'/f by the Dirichlet logarithm (as in mirror2.py.txt). Validation: lowest eigenvalue against lane A's table."""
+import sys, math, importlib.util, importlib.machinery, time
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt"); wb = fd.wb
+t0 = time.time()
+def dh_c(X):
+    kap = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+    a = [mp.mpf(0)] + [(mp.mpf(0), mp.mpf(1), kap, -kap, mp.mpf(-1))[n % 5] for n in range(1, X + 1)]
+    b = list(a); b[1] = mp.mpf(0); l = [mp.mpf(0)] * (X + 1); pw = list(b); k = 1
+    while 2 ** k <= X:
+        for n in range(2, X + 1): l[n] += mp.mpf((-1) ** (k + 1)) / k * pw[n]
+        new = [mp.mpf(0)] * (X + 1)
+        for d in range(2, X + 1):
+            if pw[d] != 0:
+                for e in range(2, X // d + 1): new[d * e] += pw[d] * b[e]
+        pw = new; k += 1
+    return {n: l[n] * mp.log(n) for n in range(2, X + 1) if l[n] != 0}
+def dh_form(L, N, lat):
+    Lm = mp.mpf(L); w = wb.freqs(Lm, N, lat)
+    vals = []
+    for om in w:
+        v, dv = fd.phi_arch_c(om + fd.I, Lm); vals.append((v + mp.log(5) / 2, dv))
+    M = wb.blocks(L, N, lat, [v[0] for v in vals], [v[1] for v in vals])
+    for n, c in dh_c(int(math.exp(2 * L))).items():
+        if math.log(n) < 2 * L - 1e-12: M = wb.add(M, wb.atom_blocks(L, N, lat, n), c)
+    return M
+for L, N, dps in ((0.5, 30, 50), (1.0, 40, 60), (1.3, 50, 70), (1.6, 60, 90), (1.8, 60, 90)):
+    mp.mp.dps = dps
+    for lat in ('int', 'half'):
+        Q = dh_form(L, N, lat); ws = wb.freqs(mp.mpf(L), N, lat); out = []
+        for b in (0, 1):
+            ev, V = mp.eigsy(Q[b]); i = min(range(len(ev)), key=lambda j: ev[j])
+            fr = ws if (b == 0 or lat == 'half') else ws[1:]
+            co = [float(V[k, i]) for k in range(V.rows)]; frf = [float(x) for x in fr]
+            xs = [L * (j + 0.5) / 800 for j in range(800)]
+            vals = [sum(c * (math.cos(f * x) if b == 0 else math.sin(f * x)) for c, f in zip(co, frf)) for x in xs]
+            if sum(vals) < 0: vals = [-y for y in vals]
+            nchg = sum(1 for j in range(799) if vals[j] * vals[j + 1] < 0)
+            rel = max(0.0, -min(vals)) / max(abs(y) for y in vals)
+            out.append("%s: eig %s, sign changes %d, rel %.1e" % (('even', 'odd')[b], mp.nstr(ev[i], 4), nchg, rel))
+        print("  impostor L=%.2f %s/%d  %s   (%.0fs)" % (L, lat, N, " | ".join(out), time.time() - t0), flush=True)

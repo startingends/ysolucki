@@ -1,0 +1,18 @@
+L=1.00 n=24: eigenvalues of Q (parity): 3.740e-03(e) 1.679e-02(o) 3.490e-02(e) 6.219e-02(o) 1.060e-01(e) 1.623e-01(o)
+   x psi_0: |x psi_0|^2 = 0.1426 ; Q(x psi_0) = 2.9185e-03 ; shares of Q(x psi_0) by eigenvector k=0..5: 0.000 0.809 0.000 0.035 0.000 0.003 ; overlaps^2: 0.000 0.986 0.000 0.012 0.000 0.000
+   formula d_crit = sqrt(mu_0/Q(x psi_0)) = 1.1320
+   model threshold d_crit = 0.6179  (d_crit^2 Q(x psi)/mu_0 = 0.298) ; lowest eigenvalue of model Q_d at d = 0.1, 0.25, 0.45: 7.4318e-03 7.1731e-03 6.3877e-03
+   d = 0.25: sup_g Q(tanh(dx) g)/Q(g) = 0.1891  (F_d >= 0 on the window iff this is <= 1)
+   d = 0.45: sup_g Q(tanh(dx) g)/Q(g) = 0.5738  (F_d >= 0 on the window iff this is <= 1)
+L=1.00 n=48: eigenvalues of Q (parity): 1.155e-03(e) 5.085e-03(o) 1.153e-02(e) 2.151e-02(o) 3.373e-02(e) 5.079e-02(o)
+   x psi_0: |x psi_0|^2 = 0.1309 ; Q(x psi_0) = 1.2043e-03 ; shares of Q(x psi_0) by eigenvector k=0..5: 0.000 0.546 0.000 0.019 0.000 0.004 ; overlaps^2: 0.000 0.989 0.000 0.008 0.000 0.001
+   formula d_crit = sqrt(mu_0/Q(x psi_0)) = 0.9795
+   model threshold d_crit = 0.3729  (d_crit^2 Q(x psi)/mu_0 = 0.145) ; lowest eigenvalue of model Q_d at d = 0.1, 0.25, 0.45: 2.2893e-03 2.1443e-03 -1.0261e-01
+   d = 0.25: sup_g Q(tanh(dx) g)/Q(g) = 0.4659  (F_d >= 0 on the window iff this is <= 1)
+   d = 0.45: sup_g Q(tanh(dx) g)/Q(g) = 1.4142  (F_d >= 0 on the window iff this is <= 1)
+L=0.50 n=24: eigenvalues of Q (parity): 5.472e-03(e) 2.242e-02(o) 5.876e-02(e) 4.412e-01(o) 9.879e-01(e) 1.001e+00(o)
+   x psi_0: |x psi_0|^2 = 0.0299 ; Q(x psi_0) = 1.3064e-03 ; shares of Q(x psi_0) by eigenvector k=0..5: 0.000 0.492 0.000 0.339 0.000 0.128 ; overlaps^2: 0.000 0.960 0.000 0.034 0.000 0.006
+   formula d_crit = sqrt(mu_0/Q(x psi_0)) = 2.0466
+   model threshold d_crit = 1.0933  (d_crit^2 Q(x psi)/mu_0 = 0.285) ; lowest eigenvalue of model Q_d at d = 0.1, 0.25, 0.45: 1.0922e-02 1.0798e-02 1.0433e-02
+   d = 0.25: sup_g Q(tanh(dx) g)/Q(g) = 0.0584  (F_d >= 0 on the window iff this is <= 1)
+   d = 0.45: sup_g Q(tanh(dx) g)/Q(g) = 0.1866  (F_d >= 0 on the window iff this is <= 1)

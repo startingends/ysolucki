@@ -1,0 +1,30 @@
+"""S1-cubic turn 2: second-order formula for the F_d threshold on boxes, and the ladder overlaps of x psi.
+model: Q_d = Q o 2cosh(d(x_i - x_j)) = 2 C Q C - 2 S Q S (box centres); F_d >= 0 iff tanh(dX) is a contraction for Q."""
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+for L, n in ((1.0, 24), (1.0, 48), (0.5, 24)):
+    Nb, p, q = box.boxN(L, n); Q0 = np.outer(p, q) + np.outer(q, p) - Nb
+    w, V = np.linalg.eigh(Q0); xc = np.array([-L + (i + 0.5) * 2 * L / n for i in range(n)])
+    J = np.eye(n)[::-1]; par = lambda v: "e" if v @ J @ v > 0 else "o"
+    v0 = V[:, 0]; xv = xc * v0; Qx = xv @ Q0 @ xv; ov = V.T @ xv
+    print("L=%.2f n=%d: eigenvalues of Q (parity): %s" % (L, n, " ".join("%.3e(%s)" % (w[k], par(V[:, k])) for k in range(6))))
+    print("   x psi_0: |x psi_0|^2 = %.4f ; Q(x psi_0) = %.4e ; shares of Q(x psi_0) by eigenvector k=0..5: %s ; overlaps^2: %s" % (
+        xv @ xv, Qx, " ".join("%.3f" % (w[k] * ov[k] ** 2 / Qx) for k in range(6)), " ".join("%.3f" % (ov[k] ** 2 / (xv @ xv)) for k in range(6))))
+    print("   formula d_crit = sqrt(mu_0/Q(x psi_0)) = %.4f" % math.sqrt(w[0] / Qx))
+    model = lambda d: np.linalg.eigvalsh(Q0 * (2 * np.cosh(d * np.subtract.outer(xc, xc))))[0]
+    lo, hi = 0.0, 6.0
+    if model(hi) < 0:
+        for _ in range(40):
+            mid = (lo + hi) / 2
+            if model(mid) < 0: hi = mid
+            else: lo = mid
+        print("   model threshold d_crit = %.4f  (d_crit^2 Q(x psi)/mu_0 = %.3f) ; lowest eigenvalue of model Q_d at d = 0.1, 0.25, 0.45: %.4e %.4e %.4e" % (hi, hi * hi * Qx / w[0], model(0.1), model(0.25), model(0.45)))
+    else:
+        print("   model: no failure up to d = 6")
+    # exact contraction ratio: sup_g Q(tanh(dX) g)/Q(g) at d = 0.25, 0.45
+    for d in (0.25, 0.45):
+        T = np.diag(np.tanh(d * xc)); R = np.linalg.eigvalsh(np.linalg.solve(np.linalg.cholesky(Q0), np.linalg.solve(np.linalg.cholesky(Q0), (T @ Q0 @ T)).T))[-1]
+        print("   d = %.2f: sup_g Q(tanh(dx) g)/Q(g) = %.4f  (F_d >= 0 on the window iff this is <= 1)" % (d, R))

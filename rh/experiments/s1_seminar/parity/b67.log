@@ -19,3 +19,8 @@
   (c'') Beurling 2->2.1                        L=1.00 int   even: eig -0.4883, sign changes 5, rel 8.1e-01 | odd: eig -0.503, sign changes 4, rel 1.0e+00   (48s)
   (c'') Beurling 2->2.1                        L=1.00 half  even: eig -0.4778, sign changes 5, rel 8.1e-01 | odd: eig -0.503, sign changes 4, rel 1.0e+00   (50s)
   (d) zeta, weight at 4 doubled                L=0.75 int   even: eig -0.1436, sign changes 2, rel 1.8e-01 | odd: eig -0.0002509, sign changes 2, rel 4.1e-01   (53s)
+  (d) zeta, weight at 4 doubled                L=0.75 half  even: eig -0.1321, sign changes 2, rel 2.6e-01 | odd: eig -0.0003408, sign changes 2, rel 4.1e-01   (55s)
+  (e) zeta, weight at 4 flipped                L=0.75 int   even: eig -0.01487, sign changes 4, rel 2.8e-01 | odd: eig -0.2801, sign changes 3, rel 3.3e-01   (58s)
+  (e) zeta, weight at 4 flipped                L=0.75 half  even: eig -0.01156, sign changes 4, rel 3.6e-01 | odd: eig -0.2971, sign changes 3, rel 3.2e-01   (60s)
+  (f) Liouville twist (weights at 2,3 negated) L=0.50 int   even: eig -0.1233, sign changes 1, rel 3.5e-01 | odd: eig -0.7451, sign changes 0, rel 0.0e+00   (63s)
+  (f) Liouville twist (weights at 2,3 negated) L=0.50 half  even: eig -0.1183, sign changes 1, rel 5.6e-01 | odd: eig -0.7522, sign changes 0, rel 0.0e+00   (65s)
