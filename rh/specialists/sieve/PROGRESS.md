@@ -19,3 +19,9 @@
      if it holds, the 3/4 floor is NOT a floor of the whole architecture.
   P3 (relax Lemma 17.1: r + 2z <= 1 + rho): gains small and saturating; still above 3/4 for rho <= 1/2 at c = 1/6.
 - Session 6: S3_SLOPE.md; P0 hit (0.874996 vs Liu 0.874957), P1 hit (0.8722 at alpha=1/2), P2 rough (0.810/0.744/0.609 vs 0.8125/0.75/0.625), P3 hit (167/192 saturating). Floor bin => sigma >= 1 - 4c/5.
+- Session 7 PREDICTION (before computing; two-variable cubic family of CUBIC_ABSORB.md):
+  Model: c = 1/3 in signal and low; low side + (1/2) x (cubic excess of the row energy, (2/3)(3M - 1) - max(M, 2M - 1), M = 2 l_x + b);
+  Moebius-side diagonal only for family >= D^(7/6) (cubic excess in the 11/12 recursion's first bound), i.e. rho = -1/7, alpha = 2/3;
+  Lemma 18.1 unchanged (optimistic). Part I alone (copy amplifier at H = D^(7/6), c = 1/3): 8/9.
+  PREDICTION: best exponent in [0.80, 0.86], below 7/8 (at the paper geometry the low line alone is 1 - 13/48 + 1/48 + 1/12 = 5/6).
+- Session 7: cubic family C0/C1/C2: 0.7660/0.8136/0.7786; prediction hit; A5 (no dual large sieve) is the gap.

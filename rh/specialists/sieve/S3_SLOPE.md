@@ -98,3 +98,35 @@ binary Moebius correlations with small cofactors, i.e. Chowla, the parity wall i
    Hard floor of the bookkeeping (PROVED algebra): sigma0 >= 1 - 4c/5 from the trivial-count floor bin, whatever the Moebius-side inputs.
 6. So 3/4 is the floor of the amplifier chain (Thm 3), not, in this bookkeeping, of the October architecture; the question that decides it is
    whether any family other than the sextic one has the Gauss-sum absorption of mu (S2 B22).
+
+## 7. Session 7: the two-variable cubic family of CUBIC_ABSORB.md (prediction written 05:49 UTC in PROGRESS.md, before computing)
+MODEL (each item an assumption, labelled): (A1) copy density c = 1/3 in the signal (pole of zeta_F(3z)) and in the low estimate's
+exceptional frequencies (a^3 e), from CUBIC_ABSORB 3(d). (A2) The low estimate's row energy (Lemma 5.8: rows Z^M, M = l_x + l_y = 2 l_x + b,
+column Z^1; quadratic sieve exponent max(M, 2M - 1)) is replaced by the cubic sieve K + L + (KL)^(2/3): extra (2/3)(3M - 1) - max(M, 2M - 1)
+= M - 2/3 for 2/3 <= M <= 1, and the low exponent (a Cauchy-Schwarz square root of the row energy) takes HALF of it. RISK: I assumed the
+"half"; I read only Prop 15.3's statement. (A3) The Moebius-side diagonal (the 11/12-type recursion, Lemmas 17.1, 17.6) needs its first
+bound calH + L + (calH L)^(2/3) <= X, which holds iff H >= D^(7/6) (calH = D^2/H, L = calH^2/X; PROVED arithmetic); modelled as Lemma 17.1's
+width shrunk to 6/7 (rho = -1/7) with Lemma 17.6's slope (1 - c)(7/6) = 7/9 above r = 6/7. (A4) Lemma 18.1 (plain fourth moment) unchanged
+(OPTIMISTIC). (A5) BIGGEST RISK, from CUBIC_ABSORB 3(c): after the theta step the cubic twist becomes a FREQUENCY SHIFT with no character left in
+h; (A2) assumes the cubic large sieve still bounds that dual mean square. If it does not, the low side has no bound at all and the family gives
+nothing.
+PREDICTION: best exponent in [0.80, 0.86], below 7/8. Part I alone (copy amplifier at H = D^(7/6), c = 1/3): 1/2 + (1 - c)(7/6)/2 = 8/9.
+COMPUTED (`slope_C0.log`, `slope_C1.log`, `slope_C2.log`; kappa fixed at 3/4, inside Lemma 18.1's range; memcap 1 GB, ~4 min each):
+| run | low estimate | Moebius-side width | best sigma0 | geometry (l_x, b) |
+|---|---|---|---|---|
+| C1 (main model A1-A4) | cubic sieve (A2) | 6/7 (A3) | 0.813619 (low line 0.813440) | (0.3792, 0.0551) |
+| C2 (A3 dropped)        | cubic sieve      | 1           | 0.778634                     | (0.3135, 0.1516) |
+| C0 (A2 dropped)        | quadratic-type   | 6/7         | 0.765991                     | (0.4077, 0.0496) |
+| reference V2, c = 1/3  | quadratic-type   | 1           | 0.743856                     | (0.3451, 0.1308) |
+PREDICTION HIT (0.8136 in [0.80, 0.86]). Readings (about the model, not about any theorem):
+- Under A1-A5 the family would give Re s > 0.8136, BELOW 7/8 (and Part I alone 8/9, below 11/12). Nothing in the bookkeeping kills it:
+  the cubic excess (KL)^(2/3) costs about 0.035-0.048 in the low estimate (C0 -> C1, V2 -> C2), and the stricter family length
+  H >= D^(7/6) on the Moebius side about 0.022-0.035 (C2 -> C1, V2 -> C0). The binding pair is again low line against the floor bin
+  (at C1 the low line equals the optimum to 2e-4).
+- So the term that would kill it is NOT in the comparison system: it is (A5), the dual mean square after the theta step. The sextic family
+  has a quadratic character there ((2.14), "the key point"); the cubic family has a frequency shift g(h,n) = conj((h/n)_3) g(1,n) and no
+  character in h, so no large sieve of either kind is available in the form used (CUBIC_ABSORB 3(c), HEURISTIC there). Until a bound for
+  sum_h |sum_n tau_3(h n) W(N(n)/X)|^2 of the shape K + L + (KL)^(2/3) is proved (or found), 0.8136 is the value of a hypothesis, not a theorem.
+- If (A5) were supplied, it would be an improvement of the October exponent (still not RH, and still above the floor 1 - 4c/5 = 11/15 = 0.733
+  of the trivial bin at c = 1/3). The precise statement to look for: a mean-square bound, over h with N(h) <= K, for partial sums of length X of
+  Patterson's cubic theta coefficients at the dilated frequencies h n, with the cubic-sieve shape and uniformity in the twist alpha(n).

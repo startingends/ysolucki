@@ -1294,3 +1294,19 @@ against Liu's 0.874957; predictions written first).
   power of the sextic character after the theta step. Only the sextic family has both.** That is the structural reason
   the October proof works over ℚ(√−3) with sixth-order symbols and nowhere else in sight, and why c is stuck at 1/6.
 - Pending: SP-sieve reruns its c = ⅓ case with the cubic sieve's excess term (ML)^(2/3) in the low estimate.
+
+**N76. A conditional improvement of the October theorem, and the one hypothesis it needs** (lead, after section 7 of
+`rh/specialists/sieve/S3_SLOPE.md`; prediction [0.80, 0.86] written first, hit).
+- In the two-variable cubic family (μ absorbed into cubic theta coefficients, N75), with half the cubic large-sieve
+  excess in the low estimate and the Möbius diagonal only for families of length ≥ D^(7/6), the comparison system gives
+  **no zeros of ζ in Re s > 0.8136** (0.7786 without the D^(7/6) restriction; the copy amplifier alone 8/9). No term
+  inside the system kills it.
+- What it rests on, outside the system: after the theta step the cubic twist becomes a frequency shift with no character
+  left, so the needed dual mean square is an OPEN HYPOTHESIS:
+      (H_cub)  Σ_{h ≤ K} | Σ_n τ₃(hn) W(N(n)/L) |² ≪ (K + L + (KL)^(2/3))·(KL)^ε,
+  τ₃ the coefficients of Kubota's cubic theta function. Until (H_cub) is proved or found, 0.8136 is its value, not a
+  theorem; even if proved it improves the zero-free half-plane, not RH (absolute floor of the architecture 3/5, N73).
+- Lead in the literature: READER-7 noted a proved Lindelöf-on-average bound in the twist aspect for the cubic Gauss-sum
+  series (arXiv 2410.03048, §6: Σ_{N(m)≤M}|ψ(hm, σ+it)|² ≪ N(h)^(1/2) M^(1+ε), 1 < σ ≤ 5/4). Whether it implies (H_cub)
+  (or a weaker version enough for an exponent below 7/8) is the next question. This is the most concrete
+  theorem-shaped item of the whole session; its honest scope is quasi-RH.

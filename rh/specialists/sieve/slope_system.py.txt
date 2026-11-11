@@ -49,9 +49,14 @@ def Emax(sigma0, lx, b, csig, alpha, rho, delta0=1/50, nd=401, nx=21, use_dyn_ka
     # floor bin: R = 1, q <= delta0/2
     Ef = (1+delta0)*(1-ly)/2 - sigma0 - h*csig - ell/2 + 0.5*delta0*ell + h + h*delta0/2
     return max(E.max(), Ef)
+CUBIC_LOW = False
 def sigma_low(lx, b, csig):
     ell = 1 - 2*lx - b; h = 1 - lx + ell
-    return 1 - csig*h + csig*b/2
+    base = 1 - csig*h + csig*b/2
+    if CUBIC_LOW:   # row energy with the cubic large sieve K + L + (KL)^(2/3) instead of K + L (Lemma 5.8: rows Z^M, column Z^1)
+        M = 2*lx + b
+        base += 0.5*max(0.0, (2/3)*(3*M - 1) - max(M, 2*M - 1))
+    return base
 KAPPA_FIXED = None
 def sigma_best_geom(lx, b, csig, alpha, rho, tmax=1.5, fine=False):
     kw = dict(nd=401, nx=21) if fine else dict(nd=81, nx=6)
@@ -85,7 +90,8 @@ if __name__ == '__main__':
     elif mode == 'opt':
         csig, alpha, rho = float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4])
         tmax = float(sys.argv[5]) if len(sys.argv) > 5 else 1.5
-        if len(sys.argv) > 6: KAPPA_FIXED = float(sys.argv[6]); print('kappa fixed at', KAPPA_FIXED)
+        if len(sys.argv) > 6 and sys.argv[6] != 'dyn': KAPPA_FIXED = float(sys.argv[6]); print('kappa fixed at', KAPPA_FIXED)
+        if len(sys.argv) > 7 and sys.argv[7] == 'cubic': CUBIC_LOW = True; print('cubic large sieve in the low estimate')
         s, g = optimise(csig, alpha, rho, tmax)
         print(f"csig={csig:.4f} alpha={alpha:.4f} rho={rho:.3f} tmax={tmax}: best sigma0 = {s:.6f} at (l_x, b) = ({g[0]:.5f}, {g[1]:.5f}); "
               f"sigma_low there {sigma_low(g[0], g[1], csig):.6f}")
