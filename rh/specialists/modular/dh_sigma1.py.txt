@@ -1,0 +1,24 @@
+# sup of real parts of zeros of the Davenport-Heilbronn function in Re s > 1 (Bohr-Kronecker bound), see S2_B23.md
+import numpy as np, math
+from scipy.special import exp1
+P = 10**7
+sieve = np.ones(P+1, dtype=bool); sieve[:2] = False
+for i in range(2, int(P**0.5)+1):
+    if sieve[i]: sieve[i*i::i] = False
+pr = np.nonzero(sieve)[0]
+pr = pr[(pr % 5 == 2) | (pr % 5 == 3)].astype(float)
+kappa = (math.sqrt(10 - 2*math.sqrt(5)) - 2)/(math.sqrt(5) - 1)
+target = math.pi/2 - math.atan(kappa)
+def M(sig):
+    head = np.sum(np.arctan(pr**(-sig)))
+    tail = 0.5*exp1((sig - 1)*math.log(P))           # (1/2) int_P^inf x^-sig / log x dx, PNT in progressions; arctan(x) ~ x there
+    return head + tail, tail
+lo, hi = 1.0001, 1.5
+for _ in range(60):
+    mid = (lo + hi)/2
+    if M(mid)[0] > target: lo = mid
+    else: hi = mid
+print("kappa =", kappa, " target pi/2 - arctan(kappa) =", target)
+for s in [1.01, 1.02, 1.03, 1.05, 1.1]:
+    v, t = M(s); print("sigma = %.3f  M = %.5f  (tail estimate %.5f)" % (s, v, t))
+print("sigma_1 =", lo, "  tail at sigma_1:", M(lo)[1])

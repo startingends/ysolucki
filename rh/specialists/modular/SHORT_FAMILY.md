@@ -129,3 +129,8 @@ c_n gives A_1^f(D) = sum c_n W(n/D) of size D^(beta_0) along a sequence of D (Me
    spectral large sieve on the cubic cover) exist only as tools, unapplied, from memory or search summaries.
 9. S(D^(1/2), D) << D^(3/2+eps) would give Re s > 3/4 without amplifier, 17/24 with it; for all eta it is RH_K (u = 1 is in the family).
 10. Fake: the impostor's pole at 0.808 forces S >= D^1.616, visible exactly for H < D^0.617 and invisible in the paper's regime.
+
+## Correction (2026-11-11, after S2 B23): section 4 (a) is wrong as stated
+0.808 is the lowest off-line zero of the impostor, not the rightmost: its zeros have real parts up to about 1.12 (S2_B22_B23.md,
+B23 (2), COMPUTED). So 1/f_DH has unbounded coefficients and is excluded already by the normalisation |mu nu| <= 1, in every
+regime of H; "invisible for H >= D" holds only for an impostor with a bounded inverse.

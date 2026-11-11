@@ -79,6 +79,13 @@ I corrected one of my own recollections while writing (the Euler factor of L(s, 
 - Impostor: same line as SHORT_FAMILY 4(b). Analogy (RISK): zero-free region <-> no exceptional spectrum.
 - Asked (d): Vaughan + sextic large sieve for the sparse family of H = D^(1/2) sextic characters.
 
+## 2f. S2 B22/B23 answered as B26/B27 (long form S2_B22_B23.md)
+- Quadratic stratum u = w^3: Poisson gives quadratic Gauss sums, which do NOT absorb mu (g^2 = chi(-1)p: a character, no constant -1;
+  for m = 3 the primary Jacobi sum supplies the -1). The stratum is closed under Poisson (pure duality). Structurally the m = 2 theta is
+  supported on squares = the copies: absorption would be circular. If it absorbed: delta = 1/2, exponent 3/4 = N49's cap.
+- Impostor: 0.808 is the lowest off-line zero; sup of real parts = 1.1204 (COMPUTED, Bohr-Kronecker; my prediction missed).
+  So 1/f_DH has unbounded coefficients: excluded by |mu nu| <= 1 in every regime. SHORT_FAMILY 4(a) corrected in the file.
+
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of
    Frobenius of a one-point curve); RH follows because q <= 2 sqrt(q) for q <= 4, by inspection, and the list of curves

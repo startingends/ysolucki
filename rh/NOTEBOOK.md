@@ -968,3 +968,23 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   sextic rows by the order of their character (1/2/3/6 with counts H^(1/6), H^(1/3), H^(1/2), H); parity lives on the
   quadratic stratum u = w³: does Poisson there absorb μ? (ii) SP-sieve's conjecture: a Siebert-type theorem in which a
   constant-factor gain at the copies for H < D gives a zero-free region (scope: quasi-RH, not RH).
+
+**N60. S2's last thread, and a consequence for which controls are even possible** (lead, after B26, B27,
+`rh/specialists/modular/S2_B22_B23.md`).
+- B22: NO absorption on the quadratic stratum: a quadratic Gauss sum squared is χ(−1)p, a character value with no
+  constant −1 (on the cubic side the −1 that becomes μ comes from the primary Jacobi sum); the double-cover theta has
+  coefficients only on squares, which are exactly the copies, so any absorption lands on the trivial characters
+  (circular). Had it worked: copies of density ½ in the stratum, A₁ ≪ D^(3/4) — exactly N49's cap, where parity sits.
+- B23 (CORRECTION): 0.808 is the impostor's LOWEST off-line zero, not its rightmost; by Bohr–Kronecker its zeros reach
+  real part σ₁ ≈ 1.1204 (computed, primes to 10⁷; prediction missed). So its inverse has unbounded coefficients
+  (S ≥ D^2.24 along a sequence) and it is excluded in EVERY regime simply by the normalisation |μν| ≤ 1. SP-modular's
+  earlier "invisible for H ≥ D" was wrong and is corrected in its file.
+- CONSEQUENCE (lead). In the Möbius-side formulation the Davenport–Heilbronn function is not a useful control: the
+  bound |coefficients of 1/L| ≤ 1 already kills it. A control for the short-family wall must have a functional
+  equation, zeros off the line, AND a Dirichlet inverse with bounded (or divisor-bounded) coefficients. A completely
+  multiplicative unimodular f gives L(s, f) whose logarithm converges where Σ|f(p)|²p^(−2σ) does, hence no zeros in
+  Re s > ½ almost surely for random f (Helson-type; recalled) and no functional equation. Every known object with a
+  functional equation and divisor-bounded inverse coefficients is in the Selberg class, where GRH is open. So **on
+  the Möbius side there are no controls at all**: whatever crosses the short-family wall must work for the whole
+  Selberg class or use something beyond it, and nothing on the board can test it. Rule H1 cannot be applied there;
+  the only available test is the impostor's failure at the normalisation line, which is free.

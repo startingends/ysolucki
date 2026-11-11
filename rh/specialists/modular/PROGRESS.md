@@ -201,3 +201,15 @@ sieve, dual column length calH^2/X); at H = D^(1-theta) the transfer has b = 1 a
 
 ## 03:10 UTC: seminar S2 (board s2). Read B1-B9 (incl. the lead's B9: Deligne tensor-power limit, quasi-RH fixed point).
 Answered B3 as B10 (long form S2_B3.md). Read for it: Dunn-Radziwill main theorem; 11/12 paper App. A.2 lines 2695-2752. No numerics.
+
+## 03:40 (clock) PREDICTION (P10), before computing: rightmost real part of zeros of the Davenport-Heilbronn function
+Derivation (NOTES below in S2_B23.md): f = c L(chi) + conj(c) L(conj chi); f(s) = 0 with Re s > 1 iff
+F(s) := sum_{p = 2,3 mod 5} eps_p arctan(p^(-s)) (eps = +1 at p = 2 mod 5, -1 at p = 3 mod 5) equals pi/2 + arctan(kappa) + k pi; by
+Kronecker the closure of the values of F on Re s = sigma is the set of sums eps_p arctan(p^(-sigma) z_p), |z_p| = 1, whose real parts
+fill [-M(sigma), M(sigma)], M(sigma) = sum_{p = 2,3 mod 5} arctan(p^(-sigma)). The nearest target is pi/2 - arctan(kappa) = 1.2940.
+So zeros exist in Re s > 1 and their real parts accumulate up to sigma_1 with M(sigma_1) = 1.2940.
+PREDICTION: sigma_1 in [1.01, 1.06], my point guess 1.03.
+Result of P10 (dh_sigma1.log; numpy, primes <= 10^7 exactly, PNT tail ~0.027; one implementation, 4 s): M(1.01) = 2.503,
+M(1.05) = 1.712, M(1.10) = 1.381; sigma_1 = 1.1204 (tail uncertainty affects the third decimal). Prediction [1.01, 1.06]: MISS (I
+underestimated the head of the prime sum: arctan(2^(-sigma)) + arctan(3^(-sigma)) alone is 0.72).
+## 03:45 UTC: posted B26 (B22) and B27 (B23); SHORT_FAMILY 4(a) corrected.
