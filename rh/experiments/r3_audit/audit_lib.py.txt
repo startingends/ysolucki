@@ -1,0 +1,106 @@
+"""Helpers for the round-3 idea audit (auditor R3-AUD). Same design as rh/experiments/r2_audit/audit_lib.py.txt:
+drives tools/ideas.py with argument lists (no shell quoting). Each stage script refuses to run twice (marker file),
+because notes and promotions are not idempotent. Every decision is appended to PROGRESS.md."""
+import datetime, os, subprocess, sys
+
+ROOT = "/home/user/ysolucki"
+TOOL = os.path.join(ROOT, "tools", "ideas.py")
+EXP = os.path.join(ROOT, "rh", "experiments")
+SPEC = os.path.join(ROOT, "rh", "specialists")
+HERE = os.path.join(EXP, "r3_audit")
+AUD = "R3-AUD"
+LOGS = {
+    "atlas": os.path.join(EXP, "k_atlas", "IDEAS_LOCAL.md"),
+    "bg": os.path.join(EXP, "bigger", "IDEAS_LOCAL.md"),
+    "fh": os.path.join(EXP, "foothold", "IDEAS_LOCAL.md"),
+    "vfh": os.path.join(EXP, "foothold", "verifier", "IDEAS_LOCAL.md"),
+    "curv": os.path.join(EXP, "s1_seminar", "curv", "IDEAS_LOCAL.md"),
+    "parity": os.path.join(EXP, "s1_seminar", "parity", "IDEAS_LOCAL.md"),
+    "cubic": os.path.join(EXP, "s1_seminar", "cubic", "IDEAS_LOCAL.md"),
+    "mirror": os.path.join(EXP, "s1_seminar", "mirror", "IDEAS_LOCAL.md"),
+    "operator": os.path.join(SPEC, "operator", "IDEAS_LOCAL.md"),
+    "modular": os.path.join(SPEC, "modular", "IDEAS_LOCAL.md"),
+    "sieve": os.path.join(SPEC, "sieve", "IDEAS_LOCAL.md"),
+    "reflection": os.path.join(SPEC, "reflection", "IDEAS_LOCAL.md"),
+}
+OWNER = {"atlas": "K-atlas", "bg": "BG", "fh": "FH", "vfh": "V-FH", "curv": "S1-curv", "parity": "S1-parity",
+         "cubic": "S1-cubic", "mirror": "S1-mirror", "operator": "SP-operator", "modular": "SP-modular",
+         "sieve": "SP-sieve", "reflection": "SP-reflection"}
+sys.path.insert(0, os.path.join(ROOT, "tools"))
+import ideas as ideas_mod  # noqa: E402  (read-only use: parse)
+
+
+def one(s):
+    return " ".join(str(s).split())
+
+
+def progress(line):
+    with open(os.path.join(HERE, "PROGRESS.md"), "a") as fh:
+        fh.write("- %s %s\n" % (datetime.datetime.utcnow().strftime("%H:%M:%S"), one(line)))
+
+
+def once(stage):
+    m = os.path.join(HERE, ".done_" + stage)
+    if os.path.exists(m):
+        sys.exit("stage %s already ran" % stage)
+    return m
+
+
+def run(*args):
+    args = [one(a) for a in args]
+    for a in args:
+        assert not a.startswith("-") or a.startswith("--"), "text must not start with '-': " + a[:40]
+    r = subprocess.run([sys.executable, TOOL, *args], capture_output=True, text=True, cwd=ROOT)
+    out = (r.stdout + r.stderr).strip()
+    if r.returncode != 0:
+        progress("TOOL FAILED %r: %s" % (args[:4], out))
+        sys.exit("TOOL FAILED %r\n%s" % (args[:4], out))
+    if out:
+        print(out)
+    return out
+
+
+def get(local, n, field):
+    _, its = ideas_mod.parse(local)
+    for it in its:
+        if it["n"] == n:
+            return it["fields"].get(field)
+    raise KeyError(n)
+
+
+def fill(local, n, fields):
+    """Set fields in a local entry. Returns {field: original text} for fields that existed and were replaced."""
+    replaced = {}
+    for f, text in fields.items():
+        old = get(local, n, f)
+        if old and one(old) != one(text):
+            replaced[f] = old
+        run("--file", local, "set", str(n), f, text)
+    return replaced
+
+
+def promote(key, n, fields, status, why):
+    local = LOGS[key]
+    replaced = fill(local, n, fields)
+    out = run("promote", "--from", local, str(n), "--auditor", AUD)
+    m = int(out.rsplit("#", 1)[1])
+    if status:
+        run("status", str(m), status, why)
+    for f, old in replaced.items():   # nothing is lost from the agent's own log
+        run("--file", local, "note", str(n),
+            "auditor %s replaced the '%s' field before promotion; the agent's original text was: %s" % (AUD, f, old))
+    progress("P  %s/#%d -> main #%d (status %s)" % (OWNER[key], n, m, status or "open"))
+    return m
+
+
+def merge_note(main, text, entries):
+    """One dated note on main idea `main`, closing every local entry in `entries` = [(key, n), ...]."""
+    run("note", str(main), text)
+    for key, n in entries:
+        run("--file", LOGS[key], "skip", str(n), "merged into main #%d" % main)
+        progress("M  %s/#%d -> note on main #%d" % (OWNER[key], n, main))
+
+
+def skip(key, n, why):
+    run("--file", LOGS[key], "skip", str(n), why)
+    progress("S  %s/#%d: %s" % (OWNER[key], n, why[:90]))

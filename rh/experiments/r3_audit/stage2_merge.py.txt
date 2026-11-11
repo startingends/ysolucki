@@ -1,0 +1,424 @@
+"""Stage 2: the 86 merges. One dated note per group of related local entries on the main idea they test or refine;
+each local entry is then closed with "merged into main #K". Facts from: rh/experiments/s1_seminar/socrates/CLOSING.md,
+the s1 and s2 boards, rh/NOTEBOOK.md N34-N61, docs/JOURNAL.md J5-J6, rh/BRIDGE.md, rh/FOOTHOLDS.md, rh/BIGGER.md,
+rh/HUNCHES.md, rh/THEORY.md T75-T105, rh/ATLAS.md, docs/KNOWLEDGE.md B11 and the seats' own files. Nothing re-judged."""
+import json, os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage2")
+M = json.load(open(os.path.join(HERE, "main_numbers.json")))
+assert M == {"cone": 28, "F": 29, "body": 30, "dfc": 31, "short": 32, "wdial": 33}, M
+A = " (audit R3-AUD)"
+
+# ------------------------------------------------------------------------------------------------- #2
+merge_note(2, """MERGED from S1-parity/#13, V-FH/#1 and FH/#2""" + A + """: two numerical cautions for every lowest-eigenvalue
+ number of this instrument, and one proposal for spreading the certified windows. (1) COMPUTED (S1-parity,
+ fh_check_A.log, plank4 logs): trigonometric bases OVERESTIMATE the bottom of the window form by about 3% at L = 0.5 and
+ 30% or more at L = 1, while polynomial and trigonometric routes agree on form VALUES to 1e-30; ratios to a same-basis
+ eigenvalue are more stable than eigenvalues. (2) COMPUTED (V-FH, verifier/bottoms.py.txt): the bottom at L = 0.54
+ moves from 1.08e-7 to 6.4e-8 when log 2 is typed as 0.693147 (a shift of 1.8e-7): d(bottom)/dy is about 0.2 at
+ L = 1/2 and 0.24 at L = 27/50; two quoted Rayleigh-Ritz bottoms in the foothold files had exactly this error
+ (rh/FOOTHOLDS.md, verification); an audit of other scripts for rounded log p has not been done. (3) HEURISTIC proposal
+ (FH, not worked out): certify windows beyond FH-1 (positivity on L <= (1/2) log 3, checked, THEORY T82) by using the
+ zeros verified to height 3e12 as a positive measure in the medium band instead of bounding the prime comb pointwise,
+ which forces frequencies up to about 2 pi e^(A_L), A_L ~ 4 e^L (wall W-FH1). Its own kill line is the visibility
+ question of #16: the error from zeros above the verified height must be below the window margin exp(-c e^(2L)); #18
+ (killed) already shows zeros far above the horizon are not invisible. Not computed.""",
+           [("parity", 13), ("vfh", 1), ("fh", 2)])
+
+# ------------------------------------------------------------------------------------------------- #8
+merge_note(8, """MERGED from S1-parity/#5, S1-curv/#7, S1-cubic/#12, S1-cubic/#14, SP-operator/#3 and K-atlas/#7""" + A + """:
+ seminar S1's additions to the first-failure template. (a) GAP AND REPAIR (S1-parity): Lemma 2 of
+ PROOF_first_failure.md needs Selberg's count of DISTINCT on-line ordinates; repaired by citation (sign changes of Z(t),
+ or a positive proportion of simple zeros, Heath-Brown 1979 / Conrey 1989, from memory). (b) DERIVATIVE LEMMA (S1-curv,
+ S1_ADDITIONS.md H3; PROVED given v absolutely continuous, v(+-L) = 0, v' in the form domain and C_c^inf a form core,
+ Suzuki Thm 1.1): the derivative of an edge-regular eigenfunction is an eigenfunction of the other parity with the same
+ eigenvalue. Corollaries: a simple eigenvalue has an edge-SINGULAR eigenfunction; an edge-regular first null vector would
+ be null in both parity blocks. COMPUTED (H4): where the two ground levels cross (prime 2 reweighted to 0.478 at
+ L = 0.447) the overlap of (even ground state)' with the odd ground state is 1.0000. This bears on wall WP2 (T40,
+ end-point regularity). Not checked by a second seat; Suzuki 2606.09096 Thm 1.5 has the antisymmetry of d/dx. (c)
+ HEURISTIC (S1-cubic): Hadamard-type formula -d(lowest eigenvalue)/dL = C (edge amplitude)^2; finite form trivial
+ (equality case of Cauchy interlacing), continuum form not derived; check sqrt(8.2e-30 x 158) = 3.6e-14 against an edge
+ minimum 2.1e-14 at L = 1. (d) DE BRANGES CHAIN (SP-operator, PROOFS.md P1, T94 proved): the window spaces with norm Q_t
+ form a de Branges chain whenever Q_t > 0, with pi dK_t(0,0) = h_1(t) dt; as an EXISTENCE statement it is as vacuous as
+ Lemma C of #10 (board B127; atlas F29); S1-parity's table (B159): t_1 = <1, Q_even^-1 1> from 0.099 (L = 0.05) to
+ 8.8e28 (L = 1) for zeta, and the log-slope PAUSES on the step after each entry L_n = (1/2) log n, n = 2, 3, 4; no
+ formula for H(t) at d = 0 is known (Suzuki has one only for the shifted dial, see #33). S1-cubic's question (a
+ certificate indexed by window size that sees the tilt) was answered by B127 in that sense. (e) NEGATIVE RESULT (K-atlas,
+ signs_gs.log; second implementation S1-parity B209 to 120 digits): the impostor's null vector at its first failure
+ (L = 1.70-1.72) is NODELESS in both blocks and looks like zeta's bottom rung, 48% in the slowest mode, lowest even
+ eigenvalue +1.118e-28 at 1.70 and -7.911e-30 at 1.72; at the crossing the on-line energy is cancelled by ONE quartet
+ with psihat there within 0.02 pi of purely imaginary (confirms Prop. 5(c)). So no key lemma can say 'a null vector
+ must change sign', and the node count is no early warning (wall WJ1).""",
+           [("parity", 5), ("curv", 7), ("cubic", 12), ("cubic", 14), ("operator", 3), ("atlas", 7)])
+
+# ------------------------------------------------------------------------------------------------- #9
+merge_note(9, """MERGED from FH/#1, FH/#3, S1-parity/#4, #6 and #10""" + A + """: the bootstrap now has its first CHECKED
+ theorem and an unconditional uniqueness statement. (1) FH-2 (FH/#1; PROOF_forcing_prime2.md; checked by the
+ independent verifier V-FH, rh/experiments/foothold/verifier/VERDICT.md; THEORY T83): keep zeta's Gamma factor and pole,
+ replace the primes by ONE atom at log-position y with weight m >= 0; if the form is >= 0 on all polynomials of degree
+ < 28 on L = 1/2 then 1.999585 < e^y < 2.008058 and 0.488558 <= m <= 0.510367 (truth: 2 and log 2/sqrt 2 = 0.4901);
+ on L = 27/50: 1.999917 < e^y < 2.001069, 0.489943 <= m <= 0.492420; with no atom the form is negative in both blocks.
+ Exact rationals plus Arb balls; 66 and 70 certified intervals; an outer box, not tight; not formal. Literature: a
+ certified region for the first prime not found in three searches ('not found', not 'new'). It is this idea's claim,
+ certified at the first prime. (2) THEOREM U' (S1-parity/#10, PROOF_Uprime.md, T87 checked): among weight systems with
+ sum |m_n - Lambda(n)| n^(-1/2) finite, at any positions, AT MOST ONE keeps the form with zeta's pole and Gamma factor
+ >= 0 on every window, namely Lambda, and it does iff RH (RH case: Theorem U; non-RH case: the multiplier vectors of
+ Theorem 4 with |M| <= 2). It names no window; overlaps Johns Prop. 3.2(b), Thm 2.9(b) (unrefereed preprint): withdrawn
+ by its author as new (B195). So the feasible set in the limit of all windows, inside that class, is {Lambda} or empty.
+ (3) COMPUTED (S1-parity/#4, hank.log): for the Gamma form alone the even eigenvalues lie below the odd ones, and the odd
+ block of the Gamma form alone loses positivity between L = 0.37 and 0.38 (the asymmetry comes from the pole); proved for
+ smooth phi in (0, L), form-core statement unchecked. (4) S1-parity/#6: the folded ground states of both blocks are
+ one-signed on (0, L] (computed at L = 0.75, 1); PROVED: tau_n = 0 for log n >= L; the first-order caps
+ mu sqrt(n)/(2|g|) are rigorous outer bounds (T45, FORMAL) and reproduce the exact feasible end points to 0.1-18%; 'the
+ caps ARE the intervals' is computed only. (5) PROPOSAL, not yet precise (FH/#3, CONJECTURE): for every L a non-negative
+ measure nu on [2L, 2L + d) such that the form with the primes below e^(2L) and nu is >= 0 on the window L + d/2
+ (existence of a non-negative continuation at every step, which with uniqueness as in (2) would point to RH; each half
+ alone is weaker). First test named: at L = (1/2) log 3 compute the set of (y, m) for a second atom near log 3 on
+ L = 0.56-0.6 and check that m >= 0 is forced. Not computed; it is FH-2's 'Operation 2' (rh/FOOTHOLDS.md).""",
+           [("fh", 1), ("fh", 3), ("parity", 4), ("parity", 6), ("parity", 10)])
+
+# ------------------------------------------------------------------------------------------------- #10
+merge_note(10, """MERGED from S1-cubic/#1 and #5""" + A + """: the locality question of the certificate is answered, and it
+ does not rescue the idea. PROVED (TURN1.md 3b): a pair of boxes with no third box forces
+ G = HDH - H >= (a_i/s_i) v_i v_i^T + (a_j/s_j) v_j v_j^T, a one-parameter convex test. COMPUTED: it fails for EVERY pair
+ (15/15, 28/28, 120/120 on zeta L = 1 with 6, 8, 16 boxes; zeta and Beurling at L = 0.5, 8 boxes); the end pair is not
+ special, so R* = n - 1 (round 2) was not a statement about the window edge. Zeroing distinct triples with minimal gap
+ > r: n = 12, r = 4 harmless, r = 3 infeasible (-0.21); n = 8, r = 2 infeasible (-0.17); explained in TURN2.md 3 as a
+ graded pair obstruction paid pair by pair (end pair at 12 boxes can lose 2 of 10 thirds free, 3 costs -1.7e-3, 4 costs
+ -0.035). Nothing in the cubic seat uses the integers or the Euler product (board B105).""", [("cubic", 1), ("cubic", 5)])
+
+# ------------------------------------------------------------------------------------------------- #11
+merge_note(11, """MERGED from S1-curv/#1""" + A + """: PROVED (S1_ADDITIONS.md F2): ||Lf||^2 = Cl + Op, and the integrated
+ open-path term is a Hankel-type form in the two jumps, Op = (1/2) sum_y sum_{a,b: y+a+b outside W} g_y(a) g_y(b) with
+ g_y(a) = k(a) u(y+a)(f(y+a) - f(y)): a mirror form with a moving centre. CONJECTURE: Op >= 0 as a form, Cl has exactly
+ one negative (odd) direction. COMPUTED only at L = 1, 40 boxes: zeta Op min 0.105 lambda_1, Cl min -0.0043 lambda_1;
+ Beurling 0.111 and -0.0070, and 'Cl has one negative direction' holds for both: the split does not see the control. The
+ blind prediction that the parity difference of Op is unrelated to the mirror form (|cos| < 0.5) MISSED: cos = 0.917,
+ 0.929 (zeta, 40/80 boxes), 0.919 (Beurling).""", [("curv", 1)])
+
+# ------------------------------------------------------------------------------------------------- #14
+merge_note(14, """MERGED from K-atlas/#2""" + A + """: the missing-prime law on the WINDOW side. Exact identity:
+ Q^(q)(f) = Q(f) + (log q / 2 pi) int |fhat(t)|^2 (P_r(t log q) - 1) dt, r = q^(-1/2) (Poisson kernel; deleting the
+ powers of q). COMPUTED: the first failure is L*(q) = (1/2) log q + eps(q) with eps(2) in (0.0234, 0.0284), eps(3) in
+ (0, 0.0107), eps(5) in (0.0013, 0.0053]; for q = 5 the form is 9.5e-15 at L = 0.806 and -4.4e-14 at 0.810, odd block
+ first. PROVED unconditionally for every q but with no window (S1-parity B170, via Theorem U', see #9): zeta's form with
+ the powers of q removed is negative on SOME window. NOT NEW as numerics: the omitted-prime-power effect (2, 3, 4, 5, 7)
+ and the sign change of the archimedean form past log 2 are in Connes-Consani arXiv 2106.01715 sec. 2.2, 2.4 (digests
+ rh/library/2106.01715.md, connes-consani-zeta-cycles.md). The atlas seat's additions: odd block first at q = 5, the
+ Poisson-kernel identity, a one-vector witness for 'no primes' on [-0.4, 0.4] (bg2.log). A uniform window in q needs a
+ lower bound on the mirror autocorrelation of the odd ground state just past (1/2) log q, the open item of #28.""",
+           [("atlas", 2)])
+
+# ------------------------------------------------------------------------------------------------- #15
+merge_note(15, """MERGED from K-atlas/#5""" + A + """: the atlas pairing F12 x F13 reproduces this idea exactly (same price
+ list C(S), same conjecture C(S) <= kappa local(S) with kappa < 1.3, same first tests: exact C({3}) by Szego, one thin
+ infinite S). No new computation; recorded so the pairing is not counted twice.""", [("atlas", 5)])
+
+# ------------------------------------------------------------------------------------------------- #17
+merge_note(17, """MERGED from S1-parity/#9 and K-atlas/#3""" + A + """: the tilt control F_d = zeta(s-d) zeta(s+d) (barrier
+ B11) has the same visibility law as this idea's surgery. COMPUTED (S1-parity fd_rate.log, fd_count logs, ladder.log):
+ the window L sees a real tilt d iff d > d_c(L) = sqrt(mu(L)/c(L)), log(1/d_c) ~ 3.8 L e^(2L); the number of negative
+ squares equals the number of zeta's rungs below c d^2; the slope c = Q_o(x v_e) was verified on the zero side to 8
+ digits (B136); first failures L = 0.436, 0.476, 0.505 for d = 0.25, 0.1, 0.05 (B112); at L = 0.75 the first failure
+ is at d = 7.9e-6 (even) / 5.5e-5 (odd); each single part of the kernel tilted alone is detected at L = 0.39-0.48, the
+ consistent tilt survives nearly longest (B113). K-atlas: d_c^2 = mu_e/c and ln(1/d_c) against X = 4 pi e^(2L) has
+ successive slopes 0.370, 0.418, 0.412, 0.448, 0.452, 0.458; PROVED part (S1-curv B184): ln(1/d_c) = (1/2)|ln mu_e| +
+ (1/2) ln c(L), so the slope tends to 1/2 (the prolate law) and the deficit is the ln c(L) term (c falls only from 6.1e-4
+ to 6.9e-5 over L = 0.5..1 while mu_e falls by 23 orders). Kill line of the pairing (slope overshoots 1/2 or stalls below
+ 0.47 by L = 1.5) not yet tested.""", [("parity", 9), ("atlas", 3)])
+
+# ------------------------------------------------------------------------------------------------- #21 (four notes)
+merge_note(21, """MERGED from S1-mirror/#1, SP-operator/#1, SP-operator/#5, S1-curv/#5, S1-cubic/#11, K-atlas/#1 and
+ SP-modular/#6""" + A + """: the control that killed this idea, from seven seats. (a) F_d = zeta(s-d) zeta(s+d),
+ 0 < d < 1/2 (S1-mirror; recorded as barrier B11 in docs/KNOWLEDGE.md): Euler product with real local roots p^(+-d),
+ functional equation, positive couplings, mirror-positive, completely monotone Gamma kernel (exactly for d < 1/2), and all
+ zeros at Re s = 1/2 +- d; its Weil kernel is zeta's times 2cosh(du). (b) TWIST IDENTITY, found independently by four seats
+ (S1-mirror B90, S1-curv B99, S1-cubic B103, SP-operator; THEORY T79): Q_{F_d} = e^{dX} Q e^{-dX} + e^{-dX} Q e^{dX},
+ i.e. Q_d(f) = 2[Q(cosh(dx) f) - Q(sinh(dx) f)]; F_d >= 0 on a window iff multiplication by tanh(dx) is a contraction in
+ zeta's form (S1-curv), and for small d the threshold is d*^2 = 1/nu with nu = sup Q_o(x g)/Q_e(g), a Bernstein constant of
+ differentiation on the zeros, nu >= 1.6e10 at L = 0.75. The lowest eigenvalue is even and analytic in d, concave at 0, no
+ kink: lambda(d) = lambda(0) - c(L) d^2 (L = 0.75: 9.1965e-15 - 1.46289e-4 d^2 even, 7.4532e-12 - 2.45385e-3 d^2 odd).
+ SP-operator's blind first-failure guesses MISSED (0.28-0.33, 0.35, 0.38-0.40 against 0.436, 0.476, 0.505 for d = 0.25,
+ 0.1, 0.05): c(L) is 1.5e-4, not of order 1, because x psi_even lies almost in the odd near-null ladder. Box-level forms
+ fail the calibration at L = 0.75 by a factor 6-8 (S1-cubic). (c) MULTIPLIER DUALITY (SP-operator, PROOFS.md P3, T93
+ checked): cosh(d(x+y)) is a sum of two squares and cosh(d(x-y)) a difference, so by Schur products every Hankel-type
+ (mirror) hypothesis is invariant under real twists and only shift-type positivity can notice d; cos(tu) is the reverse.
+ (d) IDENTIFICATION (K-atlas B147, checked against sources by SP-modular B211): F_d is the L-function of an Eisenstein
+ series with spectral parameter off by d, sum sigma_{2d}(n) n^(-d-s); real tilts = complementary series, imaginary =
+ tempered; 'mirror positive' is LARGER than 'locally unitary, not tempered' (S1-mirror B178: it also contains d >= 1/2
+ and negative roots); the Rankin-Selberg square is Schur-closed and detects nothing on the prime side; the RS pole sits
+ at 1 + 2d. (e) INSTRUMENT (SP-modular, NOTES D9, proved): [sum_{d|(m,n)} a(mn/d^2)] is PSD iff a is a non-negative
+ mixture of level-1 Hecke eigensystems, rank one iff a single one (degree one: the Helson matrix [a(mn)]); Davenport-
+ Heilbronn has rank 2, signature (1, 1); F_d passes: blind to B11. A second witness with ONE pole and zeros off the line:
+ G_d = zeta L(s-d, chi_4) L(s+d, chi_4) (S1-mirror B81), failing the window form at L = 0.846 (S1-parity B118).""",
+           [("mirror", 1), ("operator", 1), ("operator", 5), ("curv", 5), ("cubic", 11), ("atlas", 1), ("modular", 6)])
+
+merge_note(21, """MERGED from S1-mirror/#4 and SP-reflection/#1, #2, #3, #4""" + A + """: what the missing hypothesis is, in
+ the language of the two involutions. (a) PROVED (S1-mirror; SP-reflection NOTES_session1.md N1, THEORY T91): for a local
+ factor 1 - a p^-s + p^-2s, the mirror (Hankel) matrix [c(p^(i+j))] is >= 0 iff |a| >= 2 (real roots, Hamburger), the
+ shift (Toeplitz) matrix [s(|i-j|)] is >= 0 iff all roots have modulus <= 1 (Herglotz / Caratheodory-Toeplitz), with a
+ local functional equation iff modulus 1 (Ramanujan); the two regimes meet only at roots +-1. Example: F_d at p = 2 has
+ 2x2 Toeplitz determinant -4 sinh^2(d log 2) = -0.019249 at d = 0.1. Classical in parts (Hermite-Jacobi, Herglotz);
+ 'almost certainly folklore' (seat); FAILS RULE 2 as an attack: every test is prime by prime, and 'any version that is not
+ prime-by-prime' is open. (b) PROVED (SP-reflection N4, T92): real local roots with positive multiplicities give a
+ Helson-positive [a_t(nm)]_{n,m>=1} for 0 < t <= 1/degree; zeta^t exactly for t <= 1 (-0.0135 at t = 1.01); the prime
+ mirror matrix of this idea is the generator at t = 0, which is why the index 1 had to be left out; the converse is false
+ ((1 - z)/(1 - 2z)^2, found while writing the proof). (c) RATIO DIAL (SP-reflection; proved in two lines; computed to 50
+ digits): the coefficients of zeta(s-d)/zeta(s+d) are moments of a product probability measure (independent two-point
+ variables p^d with probability 1 - p^(-2d)) for d > 0, so [q_d(nm)] >= 0 iff d >= 0, rank = number of squarefree
+ integers up to the size; d = 0 is the trivial boundary point, so it says nothing about zeta itself. Suzuki's Hankel
+ operator K_d[t] built from these coefficients is NOT >= 0 on L^2 for any d > 0 (SP-operator B150: a 2x2 compression has
+ determinant -k^2); the positivity lives on atoms at log-integers only. SP-reflection's question for a correlation of
+ this product family (B139) was answered by no seat (S1 closing, open item 11). (d) DIAGNOSIS (SP-reflection; atlas F27):
+ in reflection positivity the conclusion is always positivity of a propagator, never an upper bound on a
+ reflection-positive coupling, which is what RH needs; Jorgensen-Neeb-Olafsson Thm 5.8 would be a bridge of the right
+ kind with the opposite sign. FAILS RULE 2.""",
+           [("mirror", 4), ("reflection", 1), ("reflection", 2), ("reflection", 3), ("reflection", 4)])
+
+merge_note(21, """MERGED from S1-parity/#1, #2, S1-curv/#3, #4, S1-cubic/#2, #4, S1-mirror/#3 and SP-modular/#2""" + A + """:
+ the exact structure of the mirror form, which explains why this idea's bridge points the wrong way. (a) FOLDING IDENTITY
+ (S1-parity B25, S1-curv F3-F4, S1-mirror B60; three seats; FORMAL B142; THEORY T75): for phi on (0, L],
+ Q(f_e) = 2[T_W + H_W](phi), Q(f_o) = 2[T_W - H_W](phi) with T_W the form of a half-size window (primes up to e^L only)
+ and H_W the mirror form of the FULL kernel, H_W = E_+^2 - sum_{m>=1} E_m^2 - H_primes (one positive square from the pole;
+ its e^(-x/2) half cancels the m = 0 Gamma square; checked to 1e-30): positivity on [-L, L] is the two-sided squeeze
+ |H_W| <= T_W. (b) DIRECTION (S1-cubic TURN1.md 2): in Weil's form the mirror-positive prime terms are SUBTRACTED:
+ Q = pole + E_w + (theta(e^(2L)) - c_inf)|f|^2 - sum_p log p q_p(f) with q_p >= (1 - r)/(1 + r)|f|^2; mirror positivity
+ gives lower bounds on q_p, RH an upper bound; at L = 1 on the lowest eigenvector primes 2, 3, 5, 7 give 6.4132 against
+ 6.4170. (c) REWEIGHTING TEST (S1-cubic, TURN1.md M2-M3, L = 1, 48 boxes): mirror positivity is a cone (c_p >= 0), window
+ positivity pins the weights: c_2 = 0.97 gives -7.8e-3, 1.00 +1.2e-3, 1.03 -2.2e-2. (d) DIAL n = 4 (S1-parity B23,
+ S1-mirror B16 independently; PROVED): exactly one negative mirror square for every size, caused by the factor
+ (1 + 2^(1-s)) whose zeros are ON the centre line, while the off-centre zeros come from the mirror-positive factor
+ zeta(s) zeta(s-1): this idea's claim fails in both directions on the dial. (e) HORIZON (S1-mirror, HEURISTIC; smallest
+ case proved): the L^2 class on which the prime mirror form is >= 0 is spanned by bumps narrower than about e^(-2L), with
+ frequency content from about 2 pi e^(2L) up, i.e. where the window form is positive anyway; COMB (S1-curv, t1_comb.log,
+ four blind predictions hit): on narrow teeth at log a the mirror form is the integer matrix [Lambda(ab)/sqrt(ab)] and the
+ shift form D_eps + [Lambda(a/b)/sqrt(a/b)]; for A = 12, 24, 48 the comb Weil blocks are positive with O(1) margin
+ (even 2.51/3.22/3.94) for zeta AND for Beurling 2 -> 2.1: that subspace is at O(1) distance from the tight directions.
+ (f) THIRD TEST CLASS (SP-modular, NOTES D7, proved; Zagier 1981 read whole): Zagier's unitarity statement is the Weil form
+ on functions even for the scattering involution S = R o phi; no compactly supported profile is S-even, so Zagier's test
+ functions and window functions share only 0 (atlas F22); Lachaud 2002/2003 not read.""",
+           [("parity", 1), ("parity", 2), ("curv", 3), ("curv", 4), ("cubic", 2), ("cubic", 4), ("mirror", 3),
+            ("modular", 2)])
+
+merge_note(21, """MERGED from SP-modular/#5 and #7""" + A + """: the function-field twin of barrier B11 (notebook N38) and
+ what is known to exclude it. KNOWN, read (Cornelissen-Lorscheid arXiv 0710.2994, whole; Lorscheid 1012.3223): for the
+ three elliptic curves with a single point over F_2, F_3, F_4, toroidal integrability iterated with one Hecke operator
+ squeezes the candidates into a space of dimension q + 2 with Hecke eigenvalues 0, q, -q, and q^s + q^(1-s) in that set
+ forces Re s = 1/2: an exact recursion plus finiteness proves a Riemann hypothesis, but only because the quotient is a ray
+ plus finitely many vertices; for other curves the eigenvalues are known only through Weil's theorem; over Q the
+ quotient is two-dimensional and the toroidal space infinite-dimensional. CAUTION (KNOWN, KNOWLEDGE B2): coefficients that
+ COUNT are not enough: Epstein zeta functions of class number > 1 count lattice points, have a functional equation and
+ zeros off the line, and on the dial integer n >= 3 counts and has no Euler product; the count N38 asks for must be
+ attached to window functions.""", [("modular", 5), ("modular", 7)])
+
+# ------------------------------------------------------------------------------------------------- #22
+merge_note(22, """MERGED from S1-parity/#3 and SP-operator/#2""" + A + """: two restatements, both KNOWN in substance.
+ (1) S1-parity (NOTES.md E): with Ntilde (the fibre-extended matrix of the cubic seat's Lemma A) and Theorem 4,
+ sup_L kappa_+(Ntilde_L) = 1 + nu, and 'odd block of Ntilde <= 0 on every window' <=> RH; it replaces WP1 as bookkeeping
+ (N's signature is the wrong invariant, Ntilde's is exact, per parity block). (2) SP-operator (PROOFS.md P4; THEORY T95):
+ with Lambda the completed zeta without s(s-1), q(z) = i (Lambda'/Lambda)(1/2 - iz) is a generalised Nevanlinna
+ function of class N_kappa, kappa = 1 + number of zeros right of the line; RH <=> q in N_1 (convergence bookkeeping for
+ infinitely many real zeros not written). KNOWN: Krein-Langer (N_kappa has at most kappa poles in C_+; Luger-Ou
+ 2202.13246 sec. 3.2 read); the pole of zeta is the single non-real spectral point (board B125, B131). A reformulation
+ (rule 2); its use is to place this theorem in indefinite canonical systems / de Branges-Pontryagin spaces.""",
+           [("parity", 3), ("operator", 2)])
+
+# ------------------------------------------------------------------------------------------------- #23
+merge_note(23, """MERGED from S1-parity/#7, S1-curv/#2, S1-cubic/#3 and #8""" + A + """: (1) S1-parity/#7 is this
+ idea itself in S1-parity's derivation (Schur complement; one of the three derivations cited in the claim): WP1 becomes
+ the computable conditions t_e < 1, t_o < -1. KNOWN: Haynsworth inertia additivity 1968 (SP-operator B125, B131).
+ FORMAL in definite-subspace form (B166, T32). (2) S1-curv (F1, Sherman-Morrison): the sum rules of Theorem A in closed
+ form, even margin 1/(t_e - 1), odd margin 1/(1 + t_o), t = 2<pole vector, Q^-1 pole vector>; computed to 10 digits at
+ 20-160 boxes; CORRECTION: F1(a) 'both margins strictly positive when the Weil block is' was refuted by FORMAL with a
+ machine-checked counterexample (B193, accepted B198). (3) S1-cubic (TURN1.md M1): Hankel(Ntilde)(phi, alpha) =
+ primes_H(phi) + sum_{m>=1}(int phi e^{-(2m+1/2)x})^2 + (alpha + int phi e^{-x/2})^2: with the pole fibre the no-prime
+ system is mirror positive in the continuum (PSD to 5e-18), yet its Weil form is negative from L = 0.38. (4) PROPOSAL,
+ not computed beyond m = 0 (S1-cubic TURN1.md 7; UNSEARCHED): pole plus the slowest Gamma exponential is the single
+ kernel e^{|x-y|/2}, the growing fundamental solution of -d^2/dx^2 + 1/4, and Weil positivity <=> [[N', E], [E, E]] has
+ one positive eigenvalue with all off-diagonal entries >= 0 (proved and computed for m = 0). Kac-Baker direction: every
+ Gamma exponential e^{-(2m+1/2)|u|} is the Green function of a local operator, so the archimedean part could be traded for
+ a tower of local auxiliary fields, one per trivial zero, leaving the prime atoms as the only non-local couplings. The
+ tower for m >= 1 is NOT done; it is a reformulation until something is proved in the local picture. One promote of
+ S1-cubic/#8 would give it a number.""",
+           [("parity", 7), ("curv", 2), ("cubic", 3), ("cubic", 8)])
+
+# ------------------------------------------------------------------------------------------------- #24
+merge_note(24, """MERGED from S1-cubic/#6, #7, #10, S1-curv/#6 and K-atlas/#4""" + A + """: the factor 2 of the Bakry-Emery
+ cubic, resolved into a curve. (1) BLOCK-AVERAGED Bakry-Emery (S1-cubic, TURN2.md; PROVED on the resampling chain,
+ COMPUTED for the Weil chain at L = 1): averaging the local inequality over a block of pi-share theta gives the curve
+ (1 + 3 theta)/(2 + 2 theta): sites 0.48-0.53, 8 blocks 0.60, quarters 0.70, two mirror halves 0.84 (mean field 5/6),
+ one block = the gap; stable under refinement; blind to the Beurling control except at one block. (2) S1-curv (G4,
+ PROVED): the half-window integral of Gamma_2 = bulk terms in (T, H, lambda_1) + a mirror-crossing term with weight
+ j = (Hu)/u; rho_half/lambda_1 = 0.8384 (40 boxes), 0.8319 (160); Beurling 0.8158, 0.8071; the deficit from 1 comes only
+ from even-odd cross terms. This answers S1-cubic's own question #6 (are 'a non-trivial decomposition of zero at mean
+ field' and 'the open-path edge term' the same deficit?): at the site level the resampling chain has no edge, and the
+ two-halves deficit is the mirror-crossing term. (3) r-BLOCK CERTIFICATES (S1-cubic TURN2.md 1, twoblock.log; PROVED,
+ COMPUTED): H = sum H_i with H_i b_j = H_j b_i and each H_i with at most one positive eigenvalue; one block is the
+ statement itself; two mirror blocks are the doubling step in Lorentzian form, with explicit member
+ H/2 +- (l_+ l_+^T - l_- l_-^T)/s. Open (K-atlas pairing F2 x F22, F3 x F22): a two-block certificate given by a formula in
+ T and H, and 'is rho_half >= 5/6 a theorem for the Weil chain?' (the first constant of the family that does not drift
+ under refinement). Kill line of the pairing: every two-block certificate is again the cone tensor (then nothing is
+ gained over Lemma C of #10). No step uses the Euler product.""",
+           [("cubic", 6), ("cubic", 7), ("cubic", 10), ("curv", 6), ("atlas", 4)])
+
+# ------------------------------------------------------------------------------------------------- #26
+merge_note(26, """MERGED from SP-modular/#3""" + A + """: PROVED (rh/specialists/modular/PROOF_dial.md Theorems A-C; THEORY
+ T98): the first multiplicativity test of the dial, 2n r_n(6) - r_n(2) r_n(3) = (8/45) n^3 (n-1)(n-2)(n-4)(n-8), vanishes
+ exactly at n = 0, 1, 2, 4, 8 (the composition-algebra dimensions); e.g. -2.009 at n = 1.4, 48 at n = 3, 0 at n = 4.
+ Coefficientwise non-negativity holds on 0 < n <= 3 exactly at n = 1, 2, 3 (q^7 coefficient -35/16 at n = 2.5),
+ consistent with this idea's S. COMPUTED: negatives at n = 3.1, 3.5, 3.9 (76 below 2000 at n = 3.5: the seat's
+ prediction of none MISSED), none for n = 4.5..7.5 up to m = 1000. Open: every non-integer n in (3, 4) has a negative
+ coefficient and none for n >= 4. Integer case believed classical (Lehmer 1948, unread); real-n identity not found in
+ two searches (summaries only). Note for #10's log: a vanishing defect at n = 8 is one Hecke relation, not an Euler
+ product; that the n = 8 member has zeros off its centre line is a remark in #26's evidence checked by nobody.""", [("modular", 3)])
+
+# ------------------------------------------------------------------------------------------------- #27
+merge_note(27, """MERGED from SP-operator/#7, #8, #9, FH/#4, S1-mirror/#6, S1-parity/#12 and #14""" + A + """: the planks
+ of bridge 1 that came from these seats (rh/BRIDGE.md). PLANK 5 (SP-operator, PROOF_bridge.md Thm 5.1; THEORY T101, open
+ until checked): for g in C^1, piecewise C^2, supported in [-lambda, lambda], g(0) = ghat(0) = 0, the window form of
+ f = E(g) equals the Weil form of the Poisson tail and minus the coupling across the cut, Q_L(f) = W(T) = -Q(f, T);
+ computed to 5e-14 (L = 0.5) and 3e-15 (L = 0.75), five blind predictions hit; holds for any Dirichlet series with an
+ explicit formula. PLANK 7 (Thm 7.1, Cor. 7.2; T100 checked): on the tail and on the window the prime term is 2<f, f_log>
+ with no boundary term (co-analytic Toeplitz multiplicativity, T_(-zeta'/zeta) T_zeta = T_(-zeta')); computed to 1e-48;
+ the seat's board claim that it fails on the window (B206) was its own error, corrected in B208. PLANK 6 (Prop. 6.1-6.2;
+ T102): the least L^2 leak D_L is a bounded closed form, so 'Q <= C D' is false and 'g(0) = 0' is not closable; FH/#4
+ corrected the definition: both pole conditions must be the continuous functionals int g = 0 and int_band ghat = 0
+ (otherwise the upper comparison fails by 5e7-8e10), and D_L is not parity-diagonal; with that, kappa_min = 0.3317,
+ 0.3307, 0.3281 at L = 0.34, 0.5, 0.54 on polynomials of degree < 28 and 0.3279, 0.3265, 0.3018, 0.2978 at L = 0.65,
+ 0.75, 0.85, 1.0 in multiprecision (stable to 3 digits; float and mp builders agree to 6 digits at 1/2), kappa_max
+ unbounded in the degree; the minimiser is a ladder/bulk mixture whose leak is half a cross term (plank 3b; FH-3, not a
+ foothold). S1-parity/#12 (PROVED, B204): with FIXED companions kappa_K must tend to 0, because the cut Poisson map has a
+ kernel (g supported in |y| < 1/lambda); computed even 1.30..0.293, odd 1.53..0.268 for K = 1..8 at L = 0.75; only the
+ least leak over all companions can carry a positive constant. PLANK 9 (S1-mirror, B199-B200): PROVED E_DH(g)(x) =
+ i E_DH(ghat)(1/(5x)) for odd g: the impostor has a summation map (functional equation suffices); its small eigenvalues
+ follow the leak law with ratios 1-4 at L = 1.5 and stay on it at L = 1.8 after its failure, which is one extra negative
+ eigenvalue 2.5e-7 per block at the height of its off-line zero; this is what moved the bridge. HUNCH 1 (S1-parity/#14,
+ HUNCH1.md; rh/HUNCHES.md E): Moebius-side doubling identity M_2l = [[M_l, 0], [H_mu R, M_l]], H_mu = -M_l H_1 M_l^#
+ (checked to 1e-15; Vaughan's identity at cut-off sqrt D) gives only G(2L) <= G(L) + e^(2L) G(L)^2: QUADRATIC, the hunch's
+ own kill line for its strong form; F_d has Euler product, functional equation and summation formula and still
+ G(2L) ~ G(L)^2, so a doubling law cannot come from the functional equation alone. Kept: on |t| <= 100 the frequency-
+ resolved size of the cut Moebius operator peaks at the impostor's off-line zero (85.7) from L = 1, before any size
+ effect; but on the Moebius side the impostor is excluded by coefficient size anyway (notebook N60).""",
+           [("operator", 7), ("operator", 8), ("operator", 9), ("fh", 4), ("mirror", 6), ("parity", 12), ("parity", 14)])
+
+# ------------------------------------------------------------------------------------------------- #28 (new)
+merge_note(M["cone"], """MERGED from S1-parity/#8, #11, SP-operator/#6, S1-cubic/#9, S1-mirror/#2, #5 and S1-curv/#8""" + A + """:
+ the pieces of this split from the seminar. (N), PROVED where there is no atom: on every window L <= (1/2) log 2 the odd
+ block of pole + Gamma (and of zeta) is a Perron operator, simple lowest eigenvalue with a strictly one-signed folded
+ eigenfunction (S1-parity NOTES.md Q, SP-operator PROOFS.md P7, S1-mirror B174: three write-ups; THEORY T84 checked, T85
+ proved; finite Perron step FORMAL B189; theorems cited from memory: Reed-Simon IV XIII.43-44, 50; existence of a
+ minimiser cited). It breaks exactly at the mirror part of a positive atom. Without primes the odd block is Metzler, so
+ its negativity has a linear (Collatz-Wielandt) certificate, which the primes destroy through the mirror form
+ (S1-cubic/#9; certificate for L < 0.37 not computed). It is NOT arithmetic: it holds for the impostor's Gamma factor.
+ (N) as a CONJECTURE beyond that (S1-parity/#8): on every window where a parity block of a Weil-type form is >= 0 its
+ ground state has no sign change on (0, L]; 11 positive rows in 4 systems; nodes appear after failure in most failed
+ controls; contested in a weight family by S1-curv (B197, odd block >= 0 with a node at weight 0.6, L = 0.497), not
+ recomputed (S1 closing open item 1). FIRST-PRIME LEMMA (S1-mirror/#5, PROOF_first_prime.md; T86 proved, P3 FORMAL):
+ for every L the odd block of pole + Gamma has a simple lowest eigenvalue -eps(L) with positive folded eigenfunction psi;
+ if eps > 0, atoms in (0, 2L) making the odd block >= 0 satisfy sum m_i x_i^(-1/2) 2(h_i - tau_i) >= eps; bounds 0.407 /
+ 0.552 for the atom at 2 at L = 0.40 / 0.50; an atom at 2.1 needs 1.71 / 1.10 / 0.877 at L = 0.38 / 0.40 / 0.42, so the
+ Beurling system 2 -> 2.1 (weight 0.742) is excluded at L = 0.40; recomputation of the Beurling number asked (B179), not
+ posted; no web search. DOUBLING (S1-mirror/#2, doubling.py.txt): R = T^-1 H has spectrum in [-1, 1] with 1 + lambda_min
+ = 3.1e-6 / 5.9e-9 / 1.0e-11 at L = 0.5 / 0.6 / 0.68; the saturators are the folded ground states (kill line met: the
+ doubling step is the whole problem); shares at the odd saturator, L = 0.6: half window 0.10, Gamma squares 0.50, prime 2
+ mirror 0.40; what is kept is the odd block as 'one square <= three forms', i.e. (C). EDGE STRIPS (S1-curv/#8, H1,
+ proved): on the first-prime window the prime-2 term is c times a swap of two edge strips, +-2c times the reflection about
+ (log 2)/2, dominated by at most 16.3% of the killing energy; Q >= Q_0 - c 1_strips, and the archimedean form
+ Q_0 - c 1_strips is >= 0 only for delta <= 0.029 (L <= 0.361); no control violates it; it bounds the atom in absolute
+ value and throws the sign away (B207), so it does not give (C) on (1/2) log 2 < L < (1/2) log 3.""",
+           [("parity", 8), ("parity", 11), ("operator", 6), ("cubic", 9), ("mirror", 2), ("mirror", 5), ("curv", 8)])
+
+# ------------------------------------------------------------------------------------------------- #30 (new)
+merge_note(M["body"], """MERGED from BG/#1, #3, #4, #6 and #7""" + A + """: the bigger-statement seat's other entries,
+ which are about this body or frame it (rh/BIGGER.md). (1) PROVED, one line each (BG/#1): in every monotone family on
+ record zeta is the LAST member (window half-width: truth travels to smaller windows; damping e^(-d|x|): to larger d by
+ the Schur product, proved for d >= 1/2; conductor: to larger q by adding Lebesgue measure; heat time: t >= 0.2 known,
+ t < 0 false; pole weight r: nothing feasible for r > 1), so no induction can run along these dials: there is nothing true
+ beyond zeta to start from (barrier B3 as a statement about families; notebook N61 says the same for index arguments).
+ That is why this entry is a convex body with zeta at a corner and not a family. (2) OPEN QUESTIONS on the threshold
+ objects: for the odd pole-free type the extremal weights are -0.880, 0.894, -1.738 at 2, 3, 4 (q* = 2.86055 < 3, weight
+ on 6); for the even pole-free type -1.3505, 0.9306, -2.3716 (q* = 4.0363 < 5); is the zero side of the extremal object
+ an atomic measure or does it have a continuous part, and is 2.86055 a known Odlyzko-type constant restricted to integer
+ positions (BG/#3)? The odd Gamma factor carries a full pole at conductor 0.99838 < 1 with weights 0.680, 1.057, 0.666,
+ 1.498, 0.057 at n = 2..6, so the pole and the smallest conductor do not force the primes, the exact even Gamma factor
+ does; is q*(mu) for Gamma_R(s + mu), 0 <= mu <= 1, monotone from 1 to 0.99838, and is mu = 0 a corner (BG/#4)? The
+ linear law log q*(r) = (1 - r) c0, c0 = 1.39532, misses by 1.1e-6; the defect is the Weil energy of the dual
+ certificate (a positive definite function vanishing at every log n); limit or still falling needs L = 1.75, 2.0 in
+ higher precision (BG/#7). (3) BG-3, the damping plane (BG/#6): for zeta(s-d) zeta(s+d) the damped form is >= 0 exactly
+ for d' >= d + theta, theta the distance of zeta's worst zero from the line; d' >= d + 1/2 unconditional, RH says d' >= d.
+ KNOWN family (Hinkkanen, Lagarias, Garunkstis, from the seat's reading); the same as the lead's damping plane (notebook
+ N35, THEORY T93 checked); no mechanism to lower d'.""",
+           [("bg", 1), ("bg", 3), ("bg", 4), ("bg", 6), ("bg", 7)])
+
+# ------------------------------------------------------------------------------------------------- #31 (new)
+merge_note(M["dfc"], """MERGED from SP-operator/#10, SP-modular/#9, #10, #11 and #12""" + A + """: the object-Phi work of the
+ specialists (J6; their OBJECT_PHI.md files; notebook N43-N52), which this entry now carries. (1) POINT INTERACTION
+ (SP-operator/#10, proved; SP-modular/#9): with a point scatterer at omega and coupling S = (Q(s) + Q(1-s))/2 the bound
+ states are exactly the zeros of zeta_K on the line, each for its own coupling tau_gamma = arccot J(gamma); -S is in no
+ class N_kappa (non-real poles at the resonances rho/2 of zeta(2s), the first at 0.25 + 7.07i), so the operator is not
+ self-adjoint. IN PRINT (READER-5, notebook N48): the two-sheet identity is Bombieri-Garrett 2020 Cor. 46-47, the Krein
+ function is Colin de Verdiere's F(s, j) (1982), 'an eigenvalue needs a second real condition' is their Cor. 52, and 'one
+ operator carrying all zeros' (all tau_gamma equal) was Colin de Verdiere's 1983 conjecture, reported false by Bombieri
+ (2011). The per-zero couplings tau_gamma were not computed. Everything holds verbatim at a class-number-2 CM point. (2)
+ POSITIVE KERNEL (SP-modular/#10, OBJECT_PHI R1, Gamma factors matched to 15 digits): Lambda_K^(3)(2s) RS(|theta_3|^2)(s)
+ = C 3^(-s)(1 + 3^(1-2s))(1 - 3^(-s)) Lambda_K(s) Lambda_K(3s - 1); it separates the FIELD, not the point, and the
+ impostor at i sqrt 5 has a positive kernel of the same shape with off-line zeros, so no theorem 'positivity of one
+ factor forces real zeros' can exist (N52); rule H9 (an identity linear in the object whose zeros are sought sees only
+ the zero). The Hecke module of delta_omega: T(p) delta_omega = (1 + chi(p)) delta_omega + 3 sum over CM(-3p^2), rank one
+ exactly at class-number-one CM points (CONJECTURE: the points where E*(z, s) vanishes only on the line are the 13
+ rational CM points; READER-6 adds that the cusp end is outside the RH set). (3) KILLED by its own proof (SP-modular/#11,
+ OBJECT_PHI section 4): no Hecke-equivariant pseudo-Laplacian; the Hecke multipliers cos(t log q) are complete, so the
+ constrained space is {0}: self-adjointness (one point) or Hecke stability (Zagier's space, outside L^2), not both. (4)
+ PROVED (SP-modular/#12, OBJECT_PHI R3 (a)): the cusp-form part of the resolvent at a point is single-valued in
+ lambda = s(1-s) and drops out of every sheet difference, so Waldspurger's factorisation (where omega and i sqrt 5
+ differ) is invisible to the zeros: separating data and zero-seeing data are complementary. (5) What the three toolkits
+ agree on (J6, N45, N49): RH_K is a PHASE statement, outer = minimum phase = cyclic, and -log cos(cyclicity angle) =
+ Dfc, derived three ways; Dfc is additive over products, zero for every finite Euler product, and only upper
+ semicontinuous under weak limits.""",
+           [("operator", 10), ("modular", 9), ("modular", 10), ("modular", 11), ("modular", 12)])
+
+# ------------------------------------------------------------------------------------------------- #32 (new)
+merge_note(M["short"], """MERGED from SP-sieve/#2, #3, #4, BG/#5 and BG/#8""" + A + """: the rest of the S2 thread and the
+ amplification candidates of the bigger-statement seat. (1) OPEN, the one surviving thread of S2 (SP-sieve/#2, HEURISTIC
+ analogy; sources read: Friedlander-Iwaniec 2022 sections 1, 3, 10): for the linear sieve, any fixed improvement of the
+ constant 2 in Brun-Titchmarsh would exclude Siegel zeros (Siebert, Granville: the extremal sequences look like a
+ character pretending to be mu); the conjectural analogue one level up: a constant-factor improvement of the sextic-family
+ mean square at the copies, for H < D, gives a narrow zero-free region. This is the 'smallest' of this entry. (2) CLOSED
+ (SP-sieve/#3, answered by SP-modular B26, S2_B22_B23.md): stratify the rows by character order (copies H^(1/6),
+ quadratic u = w^3 H^(1/3), cubic u = w^2 H^(1/2), sextic H); on the quadratic stratum, where parity lives, Poisson does
+ NOT absorb mu: a cubic Gauss sum cubed is a Hecke character times -1 (the -1 that becomes mu), a quadratic one squared
+ is a Hecke character times +1 (g(chi) g(chibar) = chi(-1) p), and the double-cover theta has coefficients only on squares,
+ which are the copies (circular). Had it absorbed: copies of density 1/2 in the stratum, A_1 << D^(3/4), exactly the
+ 3/4 cap of notebook N49. (3) PROVED + KNOWN (SP-sieve/#4; Saias-Weingartner 2009, abstract read): Vaughan's identity
+ holds for any invertible Dirichlet series; the impostor's Dirichlet inverse has poles in Re s > 1 (its zeros reach real
+ part about 1.1204, SP-modular B27, computed with primes to 1e7), so its first false line is the coefficient
+ normalisation |mu nu| <= 1, in EVERY regime; consequence (N60): on the Moebius side there are no controls at all.
+ (4) BG-2 (BG/#5, parked by the seat; PROVED: MH(tau, A) implies Theta <= 1/2 + A/(2 tau)): Deligne's amplification
+ transposed to Dirichlet characters is the variance of primes in progressions to small moduli; proved for tau <= 2 by
+ the large sieve; the first step past tau = 2 is already a zero-free strip; NOT NEW in substance (Barban-Davenport-
+ Halberstam below the large-sieve range); blocked at: no control of the real singularity of
+ sum_q q^-w sum_chi |P_chi(q^tau)|^2. (5) BG/#8 (half-thought): Kunneth amplification would need a product for a function
+ with zeros at sums of two zeros, convergent and non-vanishing for Re s > 3/2 (it would put every zero within 1/4 of the
+ line); the obvious one, prod over rho of zeta(s - rho), is circular; Deligne's gain comes from pencils whose fibres are
+ new curves, which have no analogue here.""",
+           [("sieve", 2), ("sieve", 3), ("sieve", 4), ("bg", 5), ("bg", 8)])
+
+# ------------------------------------------------------------------------------------------------- #33 (new)
+merge_note(M["wdial"], """MERGED from SP-modular/#1 and #4""" + A + """: the w = 1/2 end of this family and its framing.
+ (1) PROVED (NOTES D5): Suzuki's Theta at (w, nu) = (1/2, 1) is ((s-1)/s) phi(s) with phi = xi(2s-1)/xi(2s) the
+ scattering function of PSL2(Z)\\H; PROVED + COMPUTED (NOTES D4): ||E_psi||^2 = ||f||^2 + sum_c (phi(c)/c)
+ <f, kappa(-(v+v') - 2 log c) f>, weights phi(c)/c = 1, 1/2, 2/3, 1/2, 4/5, ... (Euler's totient); a bump between
+ heights 0.30 and 1.35 has squared length 0.2868684 from the totients of c = 1, 2, 3 and from zeta on Re = 1, agreeing to
+ seven digits. The seat's blind prediction (the margin at the half shift decays only exponentially, since the spectral
+ side is absolutely continuous) MISSED: lowest eigenvalue 0.415, 0.179, 0.0167, 1.2e-4, <= 1.9e-6 at l = 0.25 .. 1.25,
+ faster than exponential; its kill line 'the half shift has room' is met. What survives: a POSITIVE CONTROL (positivity is
+ a theorem, a norm) that shows pinning of weights, missing-atom failure, one wrong-sign pole square and the even block
+ weakest, so none of these seminar phenomena is a signature of RH. Atlas F17. (2) HEURISTIC framing (SP-modular/#4;
+ Zagier 1981 sec. 1 read): at the half shift every form in sight is >= 0 for a trivial reason and RH is a RATE (horocycle
+ equidistribution with error y^(3/4 - eps) iff RH, against y^(1/2) unconditionally); on the windows the rate
+ exp(-4 pi e^(2L)) is forced by discreteness of the zeros (SP-operator B150) and RH is the sign. Suggested test, not
+ computed: w*(t) = inf of w with ||K_w[t]|| < 1 for fixed t, and whether there is a differential inequality in (w, t).
+ NOT SEARCHED.""", [("modular", 1), ("modular", 4)])
+
+open(marker, "w").write("done\n")
+print("stage 2 done")

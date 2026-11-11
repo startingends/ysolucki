@@ -12,3 +12,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - plain english: The lowest value of the form on the window of half-width 0.54 changes from 1.08e-7 to 6.4e-8 when the prime is moved from log 2 = 0.69314718 to 0.693147, a shift of 1.8e-7. Any script that types the position as a 6-digit decimal reports a number for a different object.
 - claim: COMPUTED (verifier/bottoms.py.txt): d(bottom)/dy at fixed weight is about 0.2 at L = 1/2 and 0.24 at L = 27/50; an audit of other project scripts for rounded log p is cheap and has not been done.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #2

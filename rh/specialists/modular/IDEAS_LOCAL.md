@@ -21,6 +21,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: NOT SEARCHED beyond: Lagarias-Suzuki (read in part) and Suzuki's digest; Lax-Phillips / Pavlov-Faddeev unread. The identification is surely known to Suzuki and Lagarias; not found stated in what I read.
 - log:
   - 2026-11-11: COMPUTED (halfshift_window*.log): first prediction (exponential margin) MISSED; margin collapses faster than exponential (0.415, 0.179, 0.0167, 1.2e-4, <= 1.9e-6 at l = 0.25 .. 1.25). So the half-shift form has the same degenerate margin as the Weil form. What survives: it is a POSITIVE CONTROL (positivity is a theorem) showing pinning of weights, missing-atom failure, one wrong-sign pole square and even-block-weakest. The kill line as I wrote it is met for 'the half-shift has room'; the instrument use stands.
+  - 2026-11-11: audit: not promoted: merged into main #33
 
 ## #2 · Two involutions on the log line: the mirror R (parity blocks) and the scattering involution S = R o phi (automorphy); Zagier's form is the Weil form on S-even functions
 - status: open
@@ -35,6 +36,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: Numerical: sum_rho phi(rho) fhat(-gamma)^2 for the window ground states of lane A, from the zero list in tools/rhlib.py; compare with H_W.
 - novelty: Zagier 1981 read whole; Cornelissen-Lorscheid 2009, Lorscheid 2010 read in part: none states the relation to Weil's form. Lachaud 2002/2003 (toroidal forms and Connes) NOT read: likely overlap.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #3 · Dial identities: the multiplicativity defect is (8/45) n^3 (n-1)(n-2)(n-4)(n-8); coefficientwise positivity singles out the integers exactly below n = 4
 - status: open
@@ -50,6 +52,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: n/a
 - novelty: Two searches, summaries only; integer case believed classical (Lehmer 1948, unread); real-n identity not found. NOT established as new.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #26
 
 ## #4 · At the half-shift positivity is free and RH is a RATE; at shift zero RH is a positivity and the rate is free
 - status: open
@@ -63,6 +66,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: For fixed t compute w*(t) = inf of w with ||K_w[t]|| < 1 ... (Suzuki's K); is w*(t) increasing to Theta - 1/2, and is there a differential inequality in (w,t)? Compare notebook N35's eps*(L).
 - novelty: NOT SEARCHED.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #33
 
 ## #5 · Function-field twin of Zagier's programme exists in print and is a dimension count with a Hecke recursion, not a norm (Cornelissen-Lorscheid); beyond three curves it needs Weil
 - status: open
@@ -75,6 +79,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: KNOWN (read): Cornelissen-Lorscheid arXiv 0710.2994 (whole), Lorscheid 1012.3223 (Cor. and Thm on temperedness).
 - novelty: Read, not mine.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #6 · Hecke-Gram / Hecke-Hankel rank test: an Euler product is a rank-one point of a positive cone (finite instrument for barrier B1)
 - status: open
@@ -83,6 +88,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - tags: instrument,B1
 - claim: PROVED (NOTES D9): [sum_{d|(m,n)} a(mn/d^2)] is PSD iff a is a non-negative mixture of level-1 Hecke eigen-systems, rank one iff a single one. For degree one it is the Helson matrix [a(mn)]. Davenport-Heilbronn: rank 2, signature (1,1). F_d passes (blind to B11).
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #7 · Caution for N38: coefficients that COUNT are not enough (Epstein); the count must be attached to window functions
 - status: open
@@ -91,6 +97,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - tags: N38,caution
 - claim: KNOWN: Epstein zeta functions of forms of class number > 1 have coefficients that count lattice points, a functional equation, and zeros off the line (KNOWLEDGE B2). On the dial, integer n >= 3 counts and has no Euler product (PROOF_dial).
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #8 · One family joins the positive control to the Weil blocks: (1 -+ K_w[L])/w for 0 < w <= 1/2; even block = d/dw of 1 - K_w at 0, odd block = d/dw of 1 + K_w
 - status: open
@@ -102,10 +109,15 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - new input: None (Suzuki's dial read through the window). Instrument: lowest eigenvalue of (1 -+ K_w[L])/w along w for zeta and for the ratio-controls.
 - claim: NOTES D12: (a),(b) PROVED from the digest's formulas; (c) PROVED under RH on the zero side (sketch), formal on the prime side.
 - prediction: Not yet computed. Blind guess: for zeta the lowest eigenvalue of (1 - K_w[L])/w on even functions is monotone in w on (0, 1/2] at L = 0.5.
+- smallest: (auditor R3-AUD) (a), (b) of NOTES_session1.md D12 are done. Smallest open: match the normalisation at w = 1/2 (Suzuki's Blaschke factor (s-1)/s against the subtraction of the pole square; the constant), so that '1 + K_{1/2}[L] >= 0' is literally the norm identity ||E_psi||^2 = ||f||^2 + sum_c (phi(c)/c) <f, kappa f> of SP-modular/#1 (merged here); then make the first-order statement (c) rigorous on the prime side (distributional limits).
 - first test: Extend halfshift_window.py.txt to general w (kernel G_w, atoms q_w); follow the lowest eigenvalue from w = 1/2 to 0.05 at L = 0.5, 0.75; for the control zeta(s-d)zeta(s+d) the family must fail at w = d.
-- novelty: Suzuki 1606.05726 read only through SP-operator's digest; the first-order statement is not in the digest; NOT searched.
+- kill line: (auditor R3-AUD) The tilted control F_d must fail at w = d (its dial ends at w = d + d_0, THEORY T96): if the computed lowest eigenvalue of (1 -+ K_w[L])/w for F_d does not change sign at w = d, the identification is wrong. As a calibration instrument it carries only qualitative information, because the w = 1/2 end already has a degenerate margin (SP-modular/#1: 0.415, 0.179, 0.0167, 1.2e-4, <= 1.9e-6 at l = 0.25 .. 1.25, faster than exponential).
+- novelty: (auditor R3-AUD) Seat: Suzuki 1606.05726 read only through SP-operator's digest; first-order statement not in the digest. Auditor's web query 2026-11-11 ('Suzuki screw line Hamiltonian xi(s-w)/xi(s+w) w=1/2 scattering matrix modular surface pseudo-Eisenstein totient', summaries only): Suzuki's screw-line papers 2209.04658, 2206.03682 and two unrefereed 2026 numerical preprints (2607.24830) came up; nothing on w = 1/2 as the modular surface or on the first-order limit. The identification at w = 1/2 is very probably known to Suzuki and Lagarias. Not established.
+- evidence: (auditor R3-AUD) COMPUTED (PROGRESS P7, P8 of the seat): on e_0 at L = 0.5, (1 - I_w/2L)/w = 0.0808 (w = 0.5), 0.0839, 0.0857, 0.0875, 0.08776 (w = 0.01), limit 0.088015 against lane A's q_00 = 0.0880146; no general monotonicity in w (a Gaussian goes the other way). At w = 1/2 the positive control shows pinning of weights, missing-atom failure, one wrong-sign pole square and the even block weakest (SP-modular/#1): so those phenomena are NOT signatures of RH. Like every family on record (BG/#1, merged into #30), positivity holds on a ray w > d_0 (T96; Suzuki 1606.05726 Prop. 4.3), so RH is again the end point (notebook N61 (b)): no induction along w.
 - log:
   - 2026-11-11: COMPUTED after writing the entry (PROGRESS P8): on e_0 at L = 0.5 the arithmetic family (1 - I_w/2L)/w = 0.0808 (w = 0.5), 0.0839 (0.2), 0.0857 (0.1), 0.0875 (0.02), 0.08776 (0.01), limit 0.088015; lane A's builder q_00 = 0.0880146 with the pole. The blind guess 'monotone in w on this kind of vector' holds for e_0 (decreasing in w); the Gaussian of P7 goes the other way, so no general monotonicity.
+  - 2026-11-11: promoted to main #33 by R3-AUD
+  - 2026-11-11: auditor R3-AUD replaced the 'novelty' field before promotion; the agent's original text was: Suzuki 1606.05726 read only through SP-operator's digest; the first-order statement is not in the digest; NOT searched.
 
 ## #9 · Each on-line zero of zeta_K has a coupling phase at omega: tau_gamma = arccot J(gamma), the point interaction for which it is an embedded eigenvalue
 - status: open
@@ -119,6 +131,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: J(gamma) for the first zeros of zeta and of L(chi_-3) from the spectral integral (principal value) or from the Green's function at (omega, omega).
 - novelty: Bombieri-Garrett read only to 10%; they may have it. NOT searched.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #31
 
 ## #10 · zeta_K(s) at the right parameter is the Eisenstein transform of two positive measures: delta_omega and |theta_3|^2; and the Hecke module of delta_z has rank one exactly at class-number-one CM points
 - status: open
@@ -128,6 +141,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: OBJECT_PHI.md 2(c) (from Patterson's coefficients as quoted in the digest; Gamma factors not computed), 3(c) (PROVED: T(p) delta_omega = (1+chi(p)) delta_omega + 3 sum over CM(-3p^2); the degree-two twin of the impostor at discriminant -20). CONJECTURE: the points z where E*(z,s) vanishes only on the line are the 13 rational CM points.
 - log:
   - 2026-11-11: Session 2: made exact (OBJECT_PHI R1): Lambda_K^(3)(2s) x RS(|theta_3|^2) = C 3^(-s)(1+3^(1-2s))(1-3^(-s)) Lambda_K(s)Lambda_K(3s-1), Gamma factors matching. Reduces (multiplicative H9): sees only what Phi sees; the positive kernel is shared by the impostor's Epstein kernel. Separates the field, not the point.
+  - 2026-11-11: audit: not promoted: merged into main #31
 
 ## #11 · No Hecke-equivariant pseudo-Laplacian: the Hecke multipliers cos(t log q) are complete, so the constrained space is zero; a point has no direction
 - status: killed
@@ -137,6 +151,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: PROVED (OBJECT_PHI.md section 4). One can have self-adjointness (one point) or Hecke stability (Zagier's space, outside L^2), not both. One-sidedness (Hardy-space structure) is available at the cusp and on split tori, not at a CM point.
 - log:
   - 2026-11-11: status -> killed: killed by its own proof: the constrained space is {0} (OBJECT_PHI.md section 4); kept as a recorded failure with its exact reason
+  - 2026-11-11: audit: not promoted: merged into main #31
 
 ## #12 · The cusp part of the resolvent at a point is single-valued in lambda, so it drops out of every sheet difference: separating data (Waldspurger) and zero-seeing data are complementary
 - status: open
@@ -145,3 +160,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - tags: object-Phi,dichotomy,H9
 - claim: PROVED (OBJECT_PHI R3 (a)). Consequence: any route to RH_K through the point omega that uses the discrete spectrum must use it outside the sheet-comparison identities.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #31

@@ -19,6 +19,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: NOT SEARCHED as a statement about L-functions. Herglotz / Caratheodory-Toeplitz and Hermite-Jacobi are classical. Almost certainly folklore.
 - evidence: PROVED (NOTES_session1.md N1; board B117). COMPUTED tests_b74.log, tests_b74b.log: F_d 2x2 det = -4 sinh^2(d log 2) = -0.019249 at d = 0.1; G_d at p = 3 needs the 3x3 matrix (-0.0485).
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #2 · F^t is Helson positive (identity included) for t <= 1/degree; the mirror matrix of Lambda on a,b>=2 is the generator at t = 0
 - status: open
@@ -34,6 +35,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: NOT SEARCHED. Complete monotonicity / Stieltjes property of (1-z)^(-t), t <= 1, is classical; the Helson-matrix reading was not looked for.
 - evidence: PROVED NOTES_session1.md N4 (Lemmas 1-4). COMPUTED tests_b80_b83.log, tests_lk_counter.log (60-80 digits). 'Fails for every t > 1/D' in general: NOT proved.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #3 · Ratio dial: the coefficients of zeta(s-d)/zeta(s+d) are moments of a product probability measure for d > 0; d = 0 is on the boundary of the mirror cone
 - status: open
@@ -49,6 +51,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: NOT SEARCHED. Suzuki 1606.05726 not read by me (SP-operator read it in full).
 - evidence: PROVED (two lines: q_d(p^k) = (1 - p^(-2d)) p^(kd), tensor product of local Hankel matrices). COMPUTED tests_suzuki_q.log, 50 digits: d = 0.1, 0.3: 0 negative eigenvalues, rank 8 (A = 12), 19 (A = 30); d = -0.1: 5 and 11 negative, min -0.576, -0.934.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #4 · The Weil form is an inverse propagator: pole minus a reflection-positive coupling; every bridge in the toolkit gives positivity of propagators
 - status: open
@@ -64,6 +67,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: One query pre-existing on the board (S1-mirror) found nothing on reflection positivity with the explicit formula; I ran none of my own on this.
 - evidence: KNOWN statements read (LIBRARY.md L17-L21). PROVED: prime coupling on the lattice of rationals satisfies the FSS hypothesis for coordinate mirrors (NOTES N6.3).
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #5 · Defect function on the modular surface: A(z) = Poisson mean of log|E(z,1/2+it)| = log(3/pi) - (1/2) log ht(z) + Dfc(z), Dfc >= 0, zero exactly at RH points
 - status: open
@@ -76,8 +80,11 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: A(z) = log(3/pi) - (1/2) log ht(z) + sum over zeros rho of E(z,.) with Re rho > 1/2 of log|rho/(1-rho)|. RH for zeta_K (class number one) <=> Dfc(z_K) = 0.
 - prediction: Stated before computing: A(omega) = log(sqrt2 3^(3/4)/pi) = 0.0258 and A(i) = log(3/pi) = -0.0461. Computed as above. TO STATE NEXT (blind): Dfc at a class number 2 CM point, from tabulated off-line zeros of its Epstein zeta function.
 - smallest: Regularity of A on the surface and a formula for its Laplacian in z; or a proof that Dfc vanishes to infinite order at any RH point.
+- first test: (auditor R3-AUD) The seat's blind rate law, stated before computing (OBJECT_PHI.md Round 3; notebook N54): lambda_T(omega)/limit - 1 ~ 2 lambda_1^K / T = 0.15942/T under RH_K, against (1/6) log T / T for the full orbit form; compute lambda_T(omega) to the largest feasible T. Second, Dfc at the class-number-2 point i sqrt 5 from tabulated off-line zeros of its Epstein zeta function (prediction to be written first, as the seat planned).
+- kill line: (auditor R3-AUD) As a route, met already in substance (N52, N54): e^(2 Dfc(omega)) - 1 is exactly a continuous Nyman-Beurling distance for zeta_K and any unconditional rate for lambda_T is RH_K itself (a reformulation, rule 2); the unconditional certificate Dfc(omega) <= (1/2) log(1 + NB integral) is about 0.16/log X and cannot certify 0. As an instrument it is dead if the rate law cannot tell omega from i sqrt 5 at any computable T.
 - novelty: Two web searches 2026-11-11 (queries in OBJECT_PHI.md section 5): BSY and variants found; no Epstein/Eisenstein version found; Lagarias-Suzuki math/0412039 found and NOT read. Status: not found in two queries.
 - evidence: PROVED given the inner-outer factorisation (OBJECT_PHI.md section 4); constant checked exactly at omega through L(1,chi_-3), zeta(2) and the BSY value; COMPUTED crude: A(i) = -0.04609 vs -0.04612; A(omega) = 0.0252..0.0287 vs 0.0258.
 - log:
   - 2026-11-11: Round 2 (session 3): four zero-free definitions written (OBJECT_PHI.md Round 2): Jensen; a family Dfc(z; sigma) = Poisson transform of off-line displacements using only convergent lattice sums for sigma > 1/2; Szego-Krein Christoffel limit of the Wiener-Hopf form of the orbit wave kernel (lambda_inf = 9/(32 pi^2) ht^-1 e^(2 Dfc)); phase defect. omega vs i sqrt5 differ only in the orbit counts (one versus four shifted convolutions) and in the multiplicative (Mobius) candidate minimiser. Equivalent to Nyman-Beurling for zeta_K; no slack.
   - 2026-11-11: Round 3: Dfc(omega) is exactly a continuous Nyman-Beurling distance for zeta_K (e^(2Dfc)-1 = inf NB integral). Blind rate law: lambda_T^Eis/bound - 1 ~ 2 lambda_1^K/T = 0.15942/T under RH; full orbit form ~ (1/6) log T/T from cusp forms. Fake i sqrt5 fails at the explicit Moebius vector (abscissa > 1).
+  - 2026-11-11: promoted to main #31 by R3-AUD

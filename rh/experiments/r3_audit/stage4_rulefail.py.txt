@@ -1,0 +1,19 @@
+"""Stage 4: make the rule failures of the new entries visible to `ideas.py check` / hubcheck (a field must START with
+'FAILS RULE'). Text is prefixed, never removed."""
+import os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage4")
+MAIN = os.path.join(ROOT, "docs", "IDEAS.md")
+P = {
+    (28, "prediction"): "FAILS RULE 4 (no number fixed by the seat before computing; see below).",
+    (29, "prediction"): "FAILS RULE 4 (no number fixed before computing; a proposal for the next run is below).",
+    (32, "prediction"): "FAILS RULE 4 (a barrier, not a route: there is no impostor number to predict).",
+    (32, "wall"): "FAILS RULE 1 as an attack: it measures the short-family wall, it does not pass it.",
+    (33, "wall"): "FAILS RULE 1 as an attack: an instrument placing both ends of the half-shift wall in one family.",
+    (31, "new input"): "FAILS RULE 2 in the end (auditor R3-AUD; notebook N52, N54: Dfc(omega) = 0 is exactly a continuous Nyman-Beurling statement for zeta_K, i.e. Balazard-Saias-Yor for zeta_K). The seat's text follows.",
+}
+for (n, f), pre in P.items():
+    old = get(MAIN, n, f)
+    run("set", str(n), f, pre + " " + old)
+    progress("F  main #%d field '%s' prefixed with '%s'" % (n, f, pre[:40]))
+open(marker, "w").write("done\n")

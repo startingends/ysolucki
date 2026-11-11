@@ -16,6 +16,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: an independent verifier finds a gap in Lemma 5 or Lemma 8, or a recomputation of one refuted interval fails
 - evidence: 66 and 70 certified intervals; validate_x.py.txt agrees to 20 digits
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #9
 
 ## #2 · Zeros as the cap: use the verified zeros (height 3e12) as a positive measure in the medium band instead of bounding the prime comb pointwise
 - status: open
@@ -27,6 +28,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: write the splitting lemma in full with an explicit w (power of sinc) and compute the three error terms at L = 1.0
 - kill line: the error term from zeros above H cannot be made smaller than the window margin exp(-c e^(2L)) with H = 3e12
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #2
 
 ## #3 · One-step extension with a sign: is the new prime-side mass forced to be non-negative?
 - status: open
@@ -38,6 +40,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: at L = (1/2) log 3: compute the set of (y, m) for a second atom near log 3 that keeps the form >= 0 on L = 0.56..0.6; check m >= 0 is forced and the set is non-empty before using the true value
 - kill line: the feasible set for the second atom is empty at the true first atom (would contradict RH numerics) or contains negative weights
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #9
 
 ## #4 · The leak form D_L needs both pole conditions as continuous functionals, is not parity-diagonal, and then Q/D stays in [0.33, 2.5] on all polynomials at three windows
 - status: open
@@ -50,3 +53,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: kappa_min on degree < 60 at L = 1/2 below 0.2, or a second implementation disagreeing in the second digit
 - log:
   - 2026-11-11: Session 3: multiprecision pencil at L = 0.65, 0.75, 0.85, 1.0: kappa_min = 0.3279, 0.3265, 0.3018, 0.2978 (degree < 68, 80, 96, 116; stable to 3 digits). Not e^(-2L). Minimiser is a ladder/bulk mixture; half of its leak is a cross term (measured at L = 0.85). kappa_max unbounded in the degree. PROGRESS.md section 20.
+  - 2026-11-11: audit: not promoted: merged into main #27

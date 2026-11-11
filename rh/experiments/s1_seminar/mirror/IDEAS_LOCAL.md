@@ -17,6 +17,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - evidence: mirror2.log: min eig -5e-16 on a,b=2..12 for d=0.3
 - log:
   - 2026-11-11: COMPUTED turn 2 (fd.py.txt, L = 0.75): lambda_even(d) = 9.1965e-15 - 1.46289e-4 d^2, lambda_odd = 7.4532e-12 - 2.45385e-3 d^2; sign change at d = 7.9e-6 / 5.5e-5. Reproduced by S1-parity (B91). The lead recorded the control as barrier B11.
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #2 · Doubling: the primes between e^L and e^(2L) enter the window-L form only through the mirror form; RH on the window = |mirror form| <= shift form of the half window
 - status: open
@@ -31,6 +32,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: If the saturating phi are the half-window near-null vectors with no further structure, the doubling step is the whole problem again.
 - log:
   - 2026-11-11: COMPUTED turn 2 (doubling.py.txt), L = 0.5/0.6/0.68: spectrum of R = T^-1 H in [-1,1] with 1+lam_min = 3.1e-6/5.9e-9/1.0e-11, 1-lam_max = 3.2e-3/1.3e-5/3.8e-8; without primes top eigenvalue 9.1/61/353. Shares at the odd saturator, L = 0.6: Q 0.10, Gamma squares 0.50, prime 2 mirror 0.40. Saturators of one sign. The kill line is met in the sense written: the saturators are the folded ground states; the doubling step is the whole problem. What is kept: the odd block as 'one square <= three forms'.
+  - 2026-11-11: audit: not promoted: merged into main #28
 
 ## #3 · Mirror positivity of the primes in L^2 lives only above the horizon 4 pi e^(2L)
 - status: open
@@ -41,6 +43,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: HEURISTIC: the L^2 class on which D1 gives H_primes >= 0 is spanned by bumps at log a of width ~ e^(-2L); its frequency content starts at ~ 2 pi e^(2L). PROVED smallest case: two bumps at log 2, log 4 of half-width < log(17/16)/2.
 - first test: S1-curv computed the comb (B39): margin grows with A for zeta and Beurling alike.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #4 · Mirror positivity and Ramanujan are complementary: they meet only at local roots +-1
 - status: open
@@ -51,6 +54,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: PROVED: for 1 - a p^-s + p^-2s, [c(p^(i+j))] >= 0 iff |a| >= 2; roots of modulus 1 iff |a| <= 2. The tilt family is analytic in t = d^2 and the lowest window eigenvalue is linear in t through 0 with negative slope (COMPUTED, two implementations).
 - kill line: a control and a classification, not a route
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #21
 
 ## #5 · First-prime lemma: the odd background is a Perron operator on every window, so the first atom has a forced sign and a minimum weight
 - status: open
@@ -67,6 +71,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: If an independent recomputation gives a bound below 0.742 for the atom at 2.1 at L = 0.40, the Beurling exclusion is wrong.
 - novelty: Checked rh/library digests 2106.01715, connes-consani-weil-positivity-archimedean, suzuki-2606.09096, yoshida-1992 (grep): numerics only there. No web search. Overlaps on the board with B168 and B169.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #28
 
 ## #6 · The impostor has a Poisson map and obeys the small-eigenvalue law; what it violates is one direction per block near the band edge
 - status: open
@@ -78,3 +83,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: Build E_DH(odd prolates) and compute the form-level ratio on their span for K up to the rung where the defect is 1e-7.
 - kill line: If the form-level ratio for the impostor collapses already at small K on L = 1.8, the low rungs do see the failure and this entry is wrong.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #27

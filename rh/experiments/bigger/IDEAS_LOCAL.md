@@ -12,6 +12,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - plain english: In each one-parameter family we know (how wide the window is, how much we damp, how big the conductor is, how long we heat), truth spreads in one direction only, and zeta always sits at the very end. Example: if the damped form is non-negative at damping 0.3 it is non-negative at 0.31, never the other way; it is proved from 0.5 upward and RH is damping 0. So no induction can run along these dials: there is nothing true beyond zeta to start from.
 - claim: PROVED one line each (restriction; Schur product; adding Lebesgue measure): BIGGER.md table
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #30
 
 ## #2 · BG-1: the convex body of positive solutions with free real weights on the integers; zeta is its corner in the (pole weight, conductor) plane
 - status: open
@@ -23,9 +24,13 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: Conjecture V1-V4 in rh/BIGGER.md; V1 implies RH (proved, PROGRESS 4 P-a)
 - prediction: Six blind predictions in PROGRESS 3.1-3.8. Hits: zeta type threshold 1 with von Mangoldt maximiser; r > 1 infeasible; q*(r) decreasing; q*_1.5(even,0) = 4.03628. Misses: odd and even pole-free thresholds predicted 3 and 5, measured 2.86055 and 4.0363; odd factor with a full pole predicted to give von Mangoldt at conductor 1, measured a different object at 0.99838; linear law predicted exact, defect stalls at 1.1e-6.
 - smallest: A certified finite instance: on the window L = 1.25 no real weights on the integers 2..12 make the odd form non-negative at conductor below 2.86 (dual certificate in interval arithmetic). Next: an explicit positive solution for the pole-free even factor at conductor 4.2 on all windows.
+- first test: (auditor R3-AUD) The seat's smallest instance: a dual certificate (density matrix Y with tr(Y B_n) = 0 for every integer n in 2..12) in interval arithmetic showing that no real weights on the integers make the odd pole-free form >= 0 on L = 1.25 below conductor 2.86. Then a second implementation of lambda*_L for (even, r) at r = 0, 0.5, 1 and (odd, 0), L = 1.0..1.5 (one float64 implementation so far).
+- kill line: (auditor R3-AUD) V2 fails: lambda*_L at pole weight r = 1.1 levels off instead of falling linearly in L (then one Gamma factor can carry more than one pole and zeta is not a corner); or a second implementation moves q*(odd, 0) or q*(even, 0) by more than 1e-3; or the maximiser at (even, r = 1) on a computed window differs from von Mangoldt beyond the stated precision (that would contradict RH numerics and point to a bug).
 - novelty: SEARCHED 2026-11-11, two web queries, summaries only (PROGRESS 3.7): conductor bounds by positivity are classical (Odlyzko, Mestre, Miller math/0112196) and known not to be sharp in general; Johns preprint has the conductor threshold for zeta with free positions. Not found: real weights restricted to integers, pole-weight parameter, corner, numbers 2.86055 / 4.0363 / 0.99838 / 1.39532. Not established as new.
+- evidence: (auditor R3-AUD) COMPUTED, float64, one implementation, N = 40..80 modes (rh/experiments/bigger/threshold_a..e.log; threshold_c_BUGGY.log is invalid): q*_L(even, 1) = 1 to 1e-11 for L >= 1, maximiser Lambda(n) for n <= 19 at L = 1.5; q*(even, 0.5) = 2.009046; q*(even, 0) = 4.036276; q*(odd, 0) = 2.8605506; q*(odd, 1) = 0.9983785; no levelling off at r = 1.1 (even) or 1.25 (odd). V1 implies RH: PROVED (PROGRESS section 4 P-a). Nothing checked by a second seat.
 - log:
   - 2026-11-11: COMPUTED threshold_a..e.log, float64, one implementation, N = 40..80 modes, L up to 1.5. See BIGGER.md table. Bug found and fixed in the odd+pole patch (threshold_c_BUGGY.log is invalid).
+  - 2026-11-11: promoted to main #30 by R3-AUD
 
 ## #3 · The pole-free threshold objects: what are they? (odd: conductor 2.86055, weights -0.880, 0.894, -1.738 at 2,3,4; even: 4.0363, weights -1.3505, 0.9306, -2.3716)
 - status: open
@@ -33,6 +38,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - plain english: The extreme object for the odd smooth term is not the first odd character (conductor 3); it sits at 2.8606 and puts weight on 6. It is to the explicit formula what the best possible bound is to sphere packing in a dimension where no lattice achieves it. Half-thought: its zero side need not be atoms; is it a measure with a continuous part? Is 2.86055 a known constant (an Odlyzko-type bound restricted to integer positions)?
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #30
 
 ## #4 · Odd Gamma factor can carry a full pole at conductor 0.99838 < 1 with weights near but not equal to von Mangoldt
 - status: open
@@ -42,6 +48,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - log:
   - 2026-11-11: status -> parked: not new in substance (Barban-Davenport-Halberstam below the large-sieve range); blocked at: no independent control of the real singularity of sum_q q^-w sum_chi |P_chi(q^tau)|^2
   - 2026-11-11: status -> open: status set by mistake (meant for #5); this entry is open
+  - 2026-11-11: audit: not promoted: merged into main #30
 
 ## #5 · BG-2: Deligne's amplification transposed to characters is the variance of primes in progressions to small moduli
 - status: parked
@@ -51,6 +58,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: MH(tau, A) implies Theta <= 1/2 + A/(2 tau); proved, PROGRESS 4 P-d
 - log:
   - 2026-11-11: status -> parked: not new in substance (Barban-Davenport-Halberstam below the large-sieve range); blocked at: no independent control of the real singularity of sum_q q^-w sum_chi |P_chi(q^tau)|^2
+  - 2026-11-11: audit: not promoted: merged into main #32
 
 ## #6 · BG-3: damping plane; critical damping of zeta(s-d)zeta(s+d) is d + theta; ground value 2 xi'/xi(1/2+d') jumps to minus infinity at theta
 - status: open
@@ -58,6 +66,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - plain english: Damp the kernel by e^(-d'|x|). For the product zeta(s-d) zeta(s+d) the damped form is non-negative exactly when d' is at least d plus the distance theta of zeta's worst zero from the line. Example: unconditionally d' >= d + 0.5 works; RH says d' >= d works. Known family (Hinkkanen, Lagarias, Garunkstis); no mechanism to lower d'.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #30
 
 ## #7 · Half-thought: the linear law log q*(r) = (1-r) c0 misses by 1.1e-6; what is the defect?
 - status: open
@@ -65,6 +74,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - plain english: The dual certificate of the pole-free problem is a positive definite function vanishing at every log n; the defect is its Weil energy sum over zeros of ghat(gamma). It is tiny but apparently not zero. Is 1.1e-6 a limit or still falling slowly? Needs L = 1.75, 2.0 in higher precision.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #30
 
 ## #8 · Half-thought: Kunneth amplification needs a product for the k-fold object convergent with loss independent of k
 - status: open
@@ -72,3 +82,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - plain english: A function with zeros at sums of two zeros, given by a product that converges and does not vanish for real part above 3/2, would put every zero of zeta within 1/4 of the line. Projection gives prod over rho of zeta(s - rho): circular. Deligne's gain comes from pencils whose fibres are new curves.
 - log:
+  - 2026-11-11: audit: not promoted: merged into main #32

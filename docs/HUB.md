@@ -57,6 +57,13 @@ the exact identity, S1-parity's reproduction, SP-modular.
 | parked | #10 arithmetic Lorentzian geometry (round 2: a certificate exists whenever positivity holds, so it is a reformulation; the one cubic with a formula loses a factor 2) · #2 truncated Weil positivity (already in the literature) · #6 Lee–Yang in Bohr's variables (owner rule 1) |
 | killed (reason kept) | **#21 mirror positivity** (seminar S1: the bridge is false; counterexample ζ(s−d)ζ(s+d); everything assumed so far is blind to the twist n ↦ n^d: barrier B11) · #11 prime jump process / curvature (structural factor 2; blind to the Beurling control; process picture already published) · #3 Li split (pure reformulation) · #18 horizon lemma (judge's counterexample: two regimes of visibility) · #20 one-gap reduction (hypothesis already contains RH) |
 
+Round-3 audit (2026-11-11, `rh/experiments/r3_audit/AUDIT.md`): 94 local ideas decided: 6 promoted (#28–#33), 86 merged,
+2 skipped. New: **#28** nodeless odd minimiser + copositivity (open) · **#29** critical vector of one sign, candidate (F)
+(open) · **#30** convex body of positive solutions, zeta at its corner (open) · **#31** defect function Dfc on the
+modular surface (parked: ends as Nyman–Beurling for ζ_K) · **#32** sparse-family Vaughan is zero-density, never
+exclusion (parked: the S2 wall in proved form) · **#33** one family joining the positive control to the Weil blocks
+(open, an instrument). And **#34 (lead): the short-family wall**, five routes, one wall (alive, used as a filter).
+
 Round-2 audit (2026-11-11, `rh/experiments/r2_audit/AUDIT.md`): 65 agent ideas decided: 5 promoted, 56 merged,
 4 skipped. New in the main log: **#22** exact negative-index theorem (alive; a dictionary) · **#23** exact inertia
 relation between N and Q per parity block (alive) · **#24** certificate = lossless Bochner, the Bakry–Émery cubic
