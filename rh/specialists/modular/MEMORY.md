@@ -92,6 +92,12 @@ I corrected one of my own recollections while writing (the Euler factor of L(s, 
 - Absorption is pointwise, so it survives archimedean twists; exact copies only at k = t = 0 (Hecke): the hybrid dilutes the amplifier.
 - RISK held: quasi-GRH Re s > 7/8 for CM-by-K Grossencharacter L-functions (e.g. L(E,s), x^3+y^3=1) if the theta step works for K-types.
 
+## 2h. Seminar S3 (board s3), B3 answered as B7 (long form S3_B3.md): exit E5 (GL(2) / Eisenstein)
+- No Hecke eigen-system is an exact copy (lambda(p)^2 = lambda(p^2) + 1). Eisenstein members = the t-family, weight fraction ~H^(-1/2), and
+  zero Plancherel weight at the copy direction t = 0 (E(z,1/2) = 0).
+- Rankin-Selberg family: A_1 is the d = 1 term of every member (zeta | L(f x f-bar)): density-one copies, circular (N71 / E3 / Theorem 1).
+- E5 closes at Landau's pole (N63). Open: an orthogonality with trivial diagonal but no pole in each member's RS square.
+
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of
    Frobenius of a one-point curve); RH follows because q <= 2 sqrt(q) for q <= 4, by inspection, and the list of curves

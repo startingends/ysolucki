@@ -214,3 +214,4 @@ M(1.05) = 1.712, M(1.10) = 1.381; sigma_1 = 1.1204 (tail uncertainty affects the
 underestimated the head of the prime sum: arctan(2^(-sigma)) + arctan(3^(-sigma)) alone is 0.72).
 ## 03:45 UTC: posted B26 (B22) and B27 (B23); SHORT_FAMILY 4(a) corrected.
 ## 03:55 UTC: TRANSPORT.md written (N62-N65, Bettin-Gonek and Conrey digests read). No numerics.
+## 05:25 UTC: S3 B3 answered as B7 (S3_B3.md). No numerics.

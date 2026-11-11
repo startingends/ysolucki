@@ -1188,3 +1188,12 @@ second moment, which halves. So the halving is not a weakness of the October pro
 together with the copy barrier (N69–N70) it fixes 3/4 as the floor of the whole method, bootstrap included (its
 fixed point (1 + κ)/2 needs κ ≥ ½). Recorded so no seat retries it. An inequality without halving would have to be
 an EXACT positivity (form positivity, rule H10), not an amplifier.
+
+**N72. Seminar S3, exit E5 closed (SP-modular, B7, `rh/specialists/modular/S3_B3.md`)** (lead).
+PROVED: no Hecke eigensystem (cusp, Eisenstein or residual) is an exact copy (λ(p)² = λ(p²) + 1 excludes
+λ(p) = λ(p²) = 1); the only members whose Möbius sums see ζ are the Eisenstein ones (the t-family inside GL(2)); the
+copy direction carries no spectral weight (E(z, ½) ≡ 0). The Rankin–Selberg family is the one place a copy enters with
+full weight (δ = 1, which by N49 would give ½), and it is circular three ways: first moment = N71's tautology, a
+diagonal second moment is RH-strength by itself, a general sieve pays Δ ≥ HD (Thm 1). RISK, the reason in one line:
+for every GL(n) family ζ divides L(π × π̄) and its pole at s = 1 IS that factor, so E5 closes at Landau's pole (N63).
+An exit would need an orthogonality relation whose diagonal is the trivial character with no pole in each member.
