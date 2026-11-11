@@ -1327,3 +1327,18 @@ adversarial verification** (lead, after `rh/specialists/modular/H_CUB.md`).
   0.8749), resting on (i) published inputs, (ii) one sign to re-read, (iii) a reconstruction to be turned into a proof.
   Honest scope: it would improve the quasi-RH theorem, not prove RH. Sent to an independent adversarial verifier
   before anything else is built on it.
+
+**N78. The 0.8136 candidate is REFUTED as modelled** (lead, after `rh/specialists/sieve/verifier_cub/VERDICT.md`).
+- The absorption identity μγ₂² = αγ̄₂ is right (checked at 72 split primes and 144 composites), the object is still
+  1/L_K (a zero-free region would be one for ζ), and the theta-multiplier sign R1 resolves in the candidate's favour
+  (χ^(−4), from App. A.2). BUT the bookkeeping mixed two families: the family that absorbs μ is the TWO-variable one,
+  whose absorption needs two Poisson summations (each costs N^(−1/2), the dual box doubles in log-size: dual range D⁴/U,
+  not D²/H), while the model used the one-variable normalisation. With that single correction in SP-sieve's own script:
+  0.8136 → 1.011 (no zero-free region), 0.7786 → 0.982; even with sextic-quality inputs elsewhere 0.900; and the
+  11/12-type amplifier cannot even start (it needs U < D^(3/2)). Further gaps listed (A2, A4, the cubic Lemmas 17.1 and
+  17.6, no cubic Prop 19.2 / Lemma 20.2 certificate).
+- What survives: nothing below 7/8. The rule of N75 (absorption needs μ inside a Gauss sum; the sharp sieve needs an odd
+  power of the sextic character) is now strengthened: the one family that absorbs μ with cubic symbols pays a second
+  Poisson summation that destroys the gain. The October family remains the only one in sight.
+- Process note: the chain N73 → N76 → N77 was carried by three seats agreeing; the adversarial verifier caught an error
+  none of them saw. The verification track is doing its job; nothing of N76–N77 had been built on.

@@ -1,0 +1,3 @@
+kappa fixed at 0.75
+cubic large sieve in the low estimate
+csig=0.3333 alpha=0.6667 rho=-0.143 tmax=1.5: best sigma0 = 0.813619 at (l_x, b) = (0.37917, 0.05510); sigma_low there 0.813440

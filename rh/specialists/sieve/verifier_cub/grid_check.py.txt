@@ -1,0 +1,18 @@
+# V-CUB: grid search (no optimiser) of the corrected-signal system, to check the Nelder-Mead results of corrected_signal.py.txt
+import sys, numpy as np
+sys.argv = ['x', '0', '0', '0', '1']
+src = open('corrected_signal.py.txt').read().rsplit("if __name__ == '__main__':", 1)[0]
+g = {'__name__': 'cs'}; exec(src, g)
+def run(SIG, clow, alpha, rho, cub, n=36):
+    g['SIG'] = SIG; g['CUB'] = cub
+    best = (9, None)
+    for lx in np.linspace(0.01, 0.49, n):
+        for b in np.linspace(0.0, 0.98, n):
+            if 1 - 2*lx - b < 0: continue
+            s = g['ns']['sigma_best_geom'](lx, b, clow, alpha, rho, 1.5)
+            if s < best[0]: best = (s, (lx, b))
+    print(f"GRID SIG={SIG} clow={clow:.4f} alpha={alpha:.4f} rho={rho:.4f} cubic={cub}: min sigma0 = {best[0]:.6f} at {best[1]}", flush=True)
+run('model', 1/3, 2/3, -1/7, True)
+run('two', 1/3, 2/3, -1/7, True)
+run('two', 1/3, 2/3, 0.0, True)
+run('two', 1/6, 5/6, 0.0, False)

@@ -1,0 +1,6 @@
+paper geometry, csig=1/6, alpha=5/6, rho=0:
+  Emax at sigma0 = 7/8      : -0.00019132291666681955
+  Emax at sigma0 = 7/8, kappa=3/4 baseline: -0.00019132291666681955
+  paper's certificate -E* >= 49/440640 = 0.00011120188816267247
+  sigma_low = 0.875  sigma_best(geometry fixed) = 0.875
+  Part I geometry (lx=1/2, b=0): sigma_best = 0.9166666666666666
