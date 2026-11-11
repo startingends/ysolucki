@@ -1,25 +1,27 @@
 """Float exploration (NOT a certificate): generalised eigenvalues of the Weil form Q against the band-limiting leak D_L
 (definition of notebook N40) on all polynomials of degree < NB on the window L = 1/2 (one prime, 2).
-usage: pencil.py.txt [NB=28] [nh=14]"""
+usage: pencil.py.txt [NB=28] [nh=14] [L=1/2 as p/q]   (L < (1/2) log 3; for L <= (1/2) log 2 there is no atom and no Moebius term)"""
 import sys, math, numpy as np
 from fractions import Fraction as Fr
 NB = int(sys.argv[1]) if len(sys.argv) > 1 else 28
 nh = int(sys.argv[2]) if len(sys.argv) > 2 else 14
 sys_argv = list(sys.argv)
-sys.argv = ['forcing', str(NB), '600', '1/2']
+LARG = sys_argv[3] if len(sys_argv) > 3 else '1/2'
+sys.argv = ['forcing', str(NB), '600', LARG]
 src = open('/home/user/ysolucki/rh/experiments/foothold/forcing.py.txt').read()
 ns = {'__name__': 'lib'}
 exec(compile(src, 'forcing', 'exec'), ns)
 A0 = ns['A0']; Gy = ns['Gy']; IDX = ns['IDX']; fmpq = ns['fmpq']
-L = 0.5; lam = math.exp(L)
+L = float(Fr(LARG)); lam = math.exp(L); ATOM = (2 * L > math.log(2))
 ylog2 = fmpq(int(round(math.log(2) * 10**17)), 10**17)
 m2 = math.log(2) / math.sqrt(2)
-Q = {par: A0[par] - 2 * m2 * Gy(par, ylog2) for par in (0, 1)}
+Q = {par: (A0[par] - 2 * m2 * Gy(par, ylog2)) if ATOM else A0[par] for par in (0, 1)}
 # ---- companions on x in (0, lambda]: pieces (0, 1/lam) [free part h], [1/lam, lam/2], [lam/2, lam]
 xs, ws = np.polynomial.legendre.leggauss(80)
 def piece(a, b):
     return (a + b) / 2 + (b - a) / 2 * xs, (b - a) / 2 * ws
-x0, w0 = piece(0.0, 1 / lam); x1, w1 = piece(1 / lam, lam / 2); x2, w2 = piece(lam / 2, lam)
+xm = max(lam / 2, 1 / lam)
+x0, w0 = piece(0.0, 1 / lam); x1, w1 = piece(1 / lam, xm); x2, w2 = piece(xm, lam)
 X = np.concatenate([x0, x1, x2]); Wt = np.concatenate([w0, w1, w2])
 from numpy.polynomial import legendre as Lg
 def phi(j, u):     # orthonormal Legendre on [-L, L]
@@ -39,7 +41,7 @@ Gram = 2 * (G * Wt) @ G.T
 Aout = Gram - 2 * (C * wxi) @ C.T                                 # out-of-band energy form
 ell = 2 * (G * Wt).sum(axis=1)                                    # ghat(0)
 Aff = Aout[:NB, :NB]; Afh = Aout[:NB, NB:]; Ahh = Aout[NB:, NB:]
-print("L = 0.5, NB = %d, nh = %d; lowest eigenvalues of A_hh (free part, c = 2 pi): %s" % (NB, nh, np.round(np.linalg.eigvalsh(Ahh)[:3], 7)))
+print("L = " + LARG + ", NB = %d, nh = %d; lowest eigenvalues of A_hh (free part, c = 2 pi): %s" % (NB, nh, np.round(np.linalg.eigvalsh(Ahh)[:3], 7)))
 D_h0 = Aff                                                        # companion with h = 0  (upper bound of D_L)
 Ahi = np.linalg.inv(Ahh)
 D_free = Aff - Afh @ Ahi @ Afh.T                                  # min over h, no constraint
@@ -84,3 +86,10 @@ for K in (12, 20, NB):
 for par in (0, 1):
     idx = IDX[par]; k = sl.eigh(Q[par], D_con2[np.ix_(idx, idx)], eigvals_only=True)
     print(f"   parity {par} block alone, degree < {NB}: kappa_min = {k[0]:.5f} kappa_max = {k[-1]:.4f}; three lowest kappa: {k[:3]}")
+# ---- where is kappa_min attained?  (D(v)/|v|^2 of order 1 = bulk; tiny = ladder)
+kk, VV = sl.eigh(Qfull, D_con2)
+for i in range(3):
+    v = VV[:, i]; n2 = v @ v
+    print(f"   pencil eigenvector {i}: kappa = {kk[i]:.5f}, D(v)/|v|^2 = {v @ D_con2 @ v / n2:.3e}, Q(v)/|v|^2 = {v @ Qfull @ v / n2:.3e}, even part of |v|^2: {sum(v[j]**2 for j in IDX[0]) / n2:.3f}")
+de, DV = np.linalg.eigh(D_con2)
+print("   ladder ratios Q(d_i)/D(d_i) on the three lowest eigenvectors d_i of D:", [round(float(DV[:, i] @ Qfull @ DV[:, i] / de[i]), 4) for i in range(3)])

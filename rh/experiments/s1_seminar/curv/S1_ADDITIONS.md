@@ -11,8 +11,10 @@ If Q_o > 0:  1 - 2 s^T (-N_o)^{-1} s = 1/(1 + t_o),  t_o := 2 s^T Q_o^{-1} s.
 Proof. N_e = 2cc^T - Q_e. Sherman-Morrison: N_e^{-1} c = -Q_e^{-1} c /(1 - t_e), so 2c^T N_e^{-1} c = t_e/(t_e - 1).
 -N_o = Q_o + 2ss^T: (-N_o)^{-1} s = Q_o^{-1} s/(1 + t_o), so 2 s^T(-N_o)^{-1}s = t_o/(1 + t_o).  QED.
 Consequences (all PROVED from the formula).
- (a) On a window where the Weil block is strictly positive both margins are STRICTLY positive resp. in (0,1): the sum
-     rules are never "exactly saturated" there. This concedes the checker's point (1) and replaces my wording.
+ (a) [CORRECTED 2026-11-11 after FORMAL's B177/B193, machine-checked counterexample Q = (1), c = (1/2): margin -2.] If Q_o >= 0 the odd margin
+     lies in (0, 1]. The even margin is never 0 and is positive iff t_e > 1, i.e. iff N_e has a positive direction (lambda_1 > 0); for t_e < 1 it is
+     negative (zeta at L = 0.05, 0.10: -1.2468, -6.2291, item (b)). So neither sum rule is ever "exactly saturated" on a window with a strictly
+     positive Weil block; my earlier sentence 'both margins are strictly positive' was wrong for the even block when t_e < 1.
  (b) Even margin > 0 iff t_e > 1 iff lambda_1 > 0 (given Q_e > 0). For lambda_1 < 0 (zeta: L <= 0.10) the block
      inequality holds trivially, N_e has no positive eigenvalue and 2c^T N^-1 c - 1 = 1/(t_e - 1) < 0. So Theorem A (A1),
      second line, needs the hypothesis lambda_1 > 0 (checker's point (6), conceded).
@@ -193,3 +195,41 @@ it fails in the odd block from delta = 0.03. A statement that a control violates
 Predictions (NOTES.md 00:51:18): T3-P1 MISS (I said the crude form is negative already at delta = 0.005 with the even block binding; it is positive up to 0.029 and the odd block binds);
 T3-P2 HIT for zeta, sign change of the odd block of Q_0 at delta = 0.051 (I said 0.04 to 0.06); T3-P3 HIT at delta = 0.005 and 0.1, and at 0.4 ((c_+ - c_-)/c = 0.004 < 0.02);
 T3-P4 MISS (22% and 27% off, I said within 20%); T3-P5 MISS (the weight -c leaves between 0.02 and 0.05, I said 0.005 to 0.02).
+
+## H3 (PROVED, given the hypotheses stated) Derivative lemma
+Setting: W an even real distribution on R, Q(f, g) = int (W * f) g the translation-invariant form (zeta's Weil form, or that of any control), Q_L its restriction to functions supported
+in [-L, L], a closed lower-bounded form with operator A_L, for which C_c^inf(-L, L) is a form core (for zeta: Suzuki 2606.09096 Thm 1.1, cited from the digest, not re-proved).
+LEMMA. Let v be an eigenfunction, A_L v = mu v. Assume v is absolutely continuous on [-L, L], v(L) = v(-L) = 0, and v' lies in the form domain. Then A_L v' = mu v'.
+Since differentiation exchanges even and odd functions, v' is an eigenfunction of the OTHER parity block with the same eigenvalue.
+Proof. For g in C_c^inf(-L, L) the function W * g is smooth, so Q(u, g) = int_{-L}^{L} u (W * g) for every u in L^2[-L, L]. Hence
+Q(v', g) = int v' (W * g) = [v (W * g)]_{-L}^{L} - int v (W * g)' = - int v (W * g') = -Q(v, g') = -mu <v, g'> = mu <v', g>
+(boundary term zero because v(+-L) = 0; (W * g)' = W * g'; g' is again in C_c^inf(-L, L); last step by parts once more). As C_c^inf is a form core and v' is in the form domain,
+Q(v', g) = mu <v', g> for all g in the form domain, i.e. v' is in D(A_L) and A_L v' = mu v'.  QED.
+COROLLARY 1. If mu is a simple eigenvalue of A_L, its eigenfunction is NOT edge-regular in the sense of the lemma (v' = const v is impossible for v vanishing at both ends).
+In particular: if RH fails, at the first window L_0 a one-dimensional null space forces an edge singularity of the null vector, and an edge-regular null vector forces a null vector
+in BOTH parity blocks at the same L_0. (S1-parity's first-failure file lists end-point regularity, simplicity and parity of the first null vector as three open items; this ties them.)
+COROLLARY 2 (formal; needs the edge asymptotics of eigenfunctions, which I do not have): for eigenfunctions v_e, psi_o of opposite parity,
+(mu_o - mu_e) <psi_o, v_e'> = (edge term proportional to the product of the edge coefficients of v_e and psi_o). So where an even and an odd level cross, one of the two eigenfunctions
+is edge-regular and its derivative is the other.
+Known part: the antisymmetry Q(v', g) = -Q(v, g') on functions vanishing at the ends is what makes i d/dx symmetric in the Hilbert space with norm Q - lambda (Suzuki Thm 1.5, digest).
+The corollaries I did not find in the digests of Suzuki, Zhu, Yoshida, Connes-Consani (grep only for the last two).
+Nothing here uses the primes: it holds for every translation-invariant kernel, so no control violates the lemma itself.
+
+## H4 (COMPUTED, boxes M = 240; `t3_nodes.log`, `t3_band.log`, `t3_cross.log`, `t3_overlap.log`) The lemma seen in the weight family of the atom at log 2
+t_x1 := weight where the lowest even and lowest odd eigenvalue coincide; t_x2 := weight where the lowest odd and SECOND even eigenvalue coincide; n_-, n_o := weights where the last-box value
+of the even, resp. odd, ground state changes sign; c_- := weight where the odd block becomes >= 0.
+ delta = 0.1: t_x1 = 0.3666, n_- = 0.3560, c_- = 0.3612;  t_x2 = 0.8847, n_o = 0.9032.
+ delta = 0.2: t_x1 = 0.4784, n_- = 0.4773, c_- = 0.4772;  t_x2 = 0.5942, n_o = 0.5997.
+ delta = 0.3: t_x1 = 0.4888, n_- = 0.4887, c_- = 0.4883;  t_x2 = 0.5103, n_o = 0.5120.   (M = 480 at delta = 0.3: n_- = 0.4892, n_o = 0.5108.)
+At t_x1 the normalised derivative of the even ground state has overlap 1.0000 with the odd ground state at all three delta, and (delta = 0.2) |Q v' - mu v'|/|v'| = 0.009.
+Control, delta = 0.2, overlap / residual at other weights: 0.817 / 1.94 (weight 0), 0.935 / 1.12 (0.3), 0.995 / 0.32 (0.45), 0.9985 / 0.16 (zeta's 0.4901), 0.774 / 1.83 (0.55), 0.0004 / 2.9 (0.594).
+At t_x2 = 0.5942 the derivative of the odd ground state has overlap 1.0000 with the second even eigenvector (0.22 at weight 0, 0.78 at zeta's weight).
+Predictions (NOTES.md 01:09:59): |t_x1 - n_-| < 0.003: HIT at 0.2, 0.3, MISS at 0.1 (0.011); |t_x2 - n_o| < 0.01: HIT at 0.2, 0.3, MISS at 0.1 (0.019); 't_x1 closer to n_- than c_- is, at 0.1': MISS.
+The last-box sign change is a box proxy for edge regularity, good to about 3 box widths in weight; the overlap is the sharp test.
+CONSEQUENCES for the nodes of the folded ground states (S1-parity's B119 conjecture 'a block >= 0 has a nodeless ground state'):
+ - it FAILS in the weight family: odd block, delta = 0.3 (L = 0.4966), weight 0.6: lowest eigenvalue +0.019, ground state with a sign change of amplitude 17%; delta = 0.1, weight 1.2: +0.058, 15%.
+   Also even block, delta = 0.1, weight 0.2: +0.00098 (box-limited), amplitude 1.7%. Earlier predictions N-P1, N-P2 (NOTES 00:56:29): both MISS.
+ - where the node comes from: the odd ground state gets its edge node at t_x2 (crossing with the second even level); the even ground state loses its edge node at t_x1 (crossing of the two
+   ground levels), which is c_- up to the size of the even ground eigenvalue (2.8e-4 in boxes; 1e-6 or less on the window).
+ - so on the first-prime window: 'the even ground state has no edge node' <=> 'the odd ground level lies above the even one' (COMPUTED in boxes at three delta; mechanism PROVED in one
+   direction by H3). Weight 0, the Liouville weight and every weight below t_x1 violate it.

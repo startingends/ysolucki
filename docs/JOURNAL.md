@@ -85,3 +85,41 @@ their results (one git commit separates them).
 **Lead's computation e22** (`rh/experiments/e22_rootplane/`): two of three blind predictions missed. A window pins
 each atom at a rate set by how long it has been inside; tilting one prime alone is caught ten times earlier than
 tilting everything together (F_d).
+
+## 2026-11-11 · J5 · The bridge (owner's rule 12): one hunch, built in planks
+
+**The owner's instruction.** Stop throwing darts; understand the ocean, form a hunch, build towards it and get
+confirmation at every step. The main line is now `rh/BRIDGE.md`; seats are assigned to planks.
+
+**The hunch (idea #27).** The Weil form on a window is comparable, up to a constant factor, to the least
+band-limiting leak of a companion function. Then positivity is free and the statement has a constant factor of room.
+
+**Confirmations so far** (experiment e27, four rounds, every prediction committed to git before its run; 7 of 9 hit):
+the whole ladder of small eigenvalues follows the leak sizes with ratios of order 1 (index rule mis-predicted);
+the explicit vectors are near-null within 10–41% from 1e-6 to 1e-29; at form level the ratio stays between 0.2 and
+4.6 on four rungs per parity; a three-line change of variable (Möbius inversion) removes the primes from the
+window form; a diagonal model then gives the comparison constant as ζ(2)(2L + 0.43) per unit of leak, which matches
+the measured constant to 61–91% and predicts the drift of the law's constant at five larger windows to within
+0.1 in the logarithm against an outside author's certified bounds.
+**Where it is hard, exactly:** the tail form has a large null space, so only the least-leak representative can
+satisfy a lower bound, and on it the cross terms between dilates are not controlled. If they are bounded by a
+constant times the leak, the constant loses against 2L on large windows and small windows are a finite certified
+computation. Whether they are bounded is the next measurement.
+
+**Other results of these hours.**
+- Foothold theorems FH-1, FH-2 **verified** by an independent verifier (first checked unconditional statements of
+  the project about windows containing a prime; FH-1 is contained in an unrefereed 2026 claim, FH-2 was not found).
+- Lean: 26 files, full build passes, no sorry; it found a false sentence in a lemma two human-style checks had
+  passed (T33). Theory document: 98 entries.
+- Seminar S1, turn 3: first-prime lemma (two seats independently); candidate (F) and the lead's pointwise bracket
+  (checked by a seat; (F) is not the even inequality in disguise and is as weight-sensitive as positivity).
+- Atlas: 30 failures, 435 pairs; one pairing where a missing sign is supplied (one-signed minimiser ⇒ the prime
+  mirror term is non-negative term by term).
+- Bigger-statement seat: the body of positive solutions on the integers, with zeta at a corner of the
+  (pole weight, conductor) plane; near-linear law log q*(r) = 1.39532 (1 − r). Unreviewed, one implementation.
+- Readers: Connes–Consani–Moscovici 2511.22755, Bombieri 2000, Connes–Moscovici 2112.05500 read whole. Already in
+  print, which we had as ours: monotonicity of the lowest eigenvalue in the window (Bombieri Thm 5; CCM (3.27));
+  attainment of the infimum (Bombieri Thm 3); the per-block count of negative squares for FINITE zero sets
+  (Bombieri Thm 9); zeros of the minimiser's transform reproducing zeta's zeros (CCM §6); the lowest eigenvalue
+  tracking 1 − χ₄ (CCM Fig. 4); the fake-zero experiment (Bombieri §13).
+- Creation seats: refused by the model's safeguard; not relaunched (decisions D10, A19).

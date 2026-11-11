@@ -1,0 +1,7 @@
+L = 0.5, N = 28, dps = 87 ; zeta lowest even 9.68788e-7 odd 0.00022226
+  explicit vector n = 4 (even): prolate defect 3.63038e-7 ; zeta Rayleigh quotient 1.18408e-6 ; ratio to defect 3.262
+  explicit vector n = 8 (even): prolate defect 0.0137545 ; zeta Rayleigh quotient 0.0202565 ; ratio to defect 1.473
+  explicit vector n = 6 (odd): prolate defect 0.000118597 ; zeta Rayleigh quotient 0.00024435 ; ratio to defect 2.06
+  explicit vector n = 10 (odd): prolate defect 0.355684 ; zeta Rayleigh quotient 0.406976 ; ratio to defect 1.144
+  one-prime system (atoms 2^k only)  lowest eig even 9.688e-7 odd 0.0002223 | Rayleigh of zeta's vectors: n=4: 1.1841e-6 (ratio 1.0) ; n=8: 0.020257 (ratio 1.0) ; n=6: 0.00024435 (ratio 1.0) ; n=10: 0.40698 (ratio 1.0)
+  zeta (check)                       lowest eig even 9.688e-7 odd 0.0002223 | Rayleigh of zeta's vectors: n=4: 1.1841e-6 (ratio 1.0) ; n=8: 0.020257 (ratio 1.0) ; n=6: 0.00024435 (ratio 1.0) ; n=10: 0.40698 (ratio 1.0)

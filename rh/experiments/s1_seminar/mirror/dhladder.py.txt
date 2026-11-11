@@ -1,0 +1,41 @@
+"""PLANK 9 (3): the Davenport-Heilbronn impostor against the classical band-limiting ladder.
+Poisson for the impostor: a(n) = (1, xi, -xi, -1, 0) mod 5 is an eigenvector of the finite Fourier transform (eigenvalue i sqrt 5),
+so E_DH(g)(x) = x^(1/2) sum a(n) g(nx) = i E_DH(ghat)(1/(5x)) for odd g: time-limit Lam, band-limit Lam, window half-width
+L = log(sqrt5 Lam), c = 2 pi Lam^2 = 2 pi e^(2L)/5.  Compare the small eigenvalues of the impostor's window form with 1 - chi_n(c).
+usage: python3 dhladder.py.txt L N"""
+import sys, math, importlib.util, importlib.machinery
+import flint, mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+L = float(sys.argv[1]); N = int(sys.argv[2])
+c = 2 * math.pi * math.exp(2 * L) / 5
+dps = int(40 + 1.2 * c); mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+# check of the eigenvector property
+xi = float(weil.dh_xi().mid()); a = [0, 1, xi, -xi, -1]
+import cmath
+ah = [sum(a[r] * cmath.exp(2j * math.pi * k * r / 5) for r in range(5)) for k in range(5)]
+print("finite Fourier transform of a: ahat(k)/a(k) for k = 1..4:", [complex(round((ah[k] / a[k]).real, 12), round((ah[k] / a[k]).imag, 12)) for k in range(1, 5)], " i sqrt5 =", 5 ** 0.5)
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+q, _ = weil.build(L, N, kind='dh', pole=False, primes=True, arch=True)
+evE = sorted(mp.eigsy(to_mp(weil.even_block(q, N)), eigvals_only=True)); evO = sorted(mp.eigsy(to_mp(weil.odd_block(q, N)), eigvals_only=True))
+cc = mp.mpf(c)
+nodes = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(6, mp.mp.prec); xs = [x for x, w in nodes]; ws = [w for x, w in nodes]; n = len(xs)
+K = mp.matrix(n, n)
+for i in range(n):
+    for j in range(n):
+        d = xs[i] - xs[j]
+        K[i, j] = mp.sqrt(ws[i] * ws[j]) * (cc / mp.pi if d == 0 else mp.sin(cc * d) / (mp.pi * d))
+chi = sorted(mp.eigsy(K, eigvals_only=True), reverse=True)
+print("impostor, L = %.2f, N = %d, c = 2 pi e^(2L)/5 = %.4f, dps = %d" % (L, N, c, dps))
+print("  prolate defects 1 - chi_n, n = 0..9:", [mp.nstr(1 - chi[i], 3) for i in range(10)])
+print("  impostor even block, lowest 5:", [mp.nstr(e, 3) for e in evE[:5]])
+print("  impostor odd block,  lowest 5:", [mp.nstr(e, 3) for e in evO[:5]])
+merged = sorted(evE[:6] + evO[:6])[:8]
+print("  merged ladder / (1 - chi_n) for the odd prolates n = 1, 3, 5, ...:", [mp.nstr(merged[j] / (1 - chi[2 * j + 1]), 3) for j in range(5)])
+print("  merged ladder / (1 - chi_n) for n = 0, 1, 2, ...:", [mp.nstr(merged[j] / (1 - chi[j]), 3) for j in range(6)])

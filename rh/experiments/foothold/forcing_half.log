@@ -1,8 +1,8 @@
 moments done 0s; H_0 = [0.459846326506324814671712177650 +/- 8.61e-32], radius of H_0 3.8e-37
 matrices done 1s; max radius of AA entries 3.8e-37
 L = 1/2, NB = 28, prec = 600
-float check, atom at y=0.693147, m=0.490129, parity 0: lowest eigenvalue 9.056667e-07;  no atom: -3.235195e-02
-float check, atom at y=0.693147, m=0.490129, parity 1: lowest eigenvalue 1.960090e-04;  no atom: -3.222283e-01
+float check, atom at y=0.693147, m=0.490129, parity 0: lowest eigenvalue 9.416631e-07;  no atom: -3.235195e-02
+float check, atom at y=0.693147, m=0.490129, parity 1: lowest eigenvalue 1.957304e-04;  no atom: -3.222283e-01
 background, parity 0: A(v)/||v||^2 = [-0.0323519539485215 +/- 2.28e-17]  certified negative: True
 background, parity 1: A(v)/||v||^2 = [-0.322228344654863 +/- 2.04e-16]  certified negative: True
    certified infeasible: y in [0.000000, 0.010000]  (m* ~ 0.0000)  t=1s
@@ -47,7 +47,7 @@ background, parity 1: A(v)/||v||^2 = [-0.322228344654863 +/- 2.04e-16]  certifie
    certified infeasible: y in [0.692187, 0.692500]  (m* ~ 0.4857)  t=1s
    certified infeasible: y in [0.692500, 0.692656]  (m* ~ 0.4868)  t=1s
    certified infeasible: y in [0.692656, 0.692813]  (m* ~ 0.4876)  t=1s
-   certified infeasible: y in [0.692813, 0.692852]  (m* ~ 0.4880)  t=2s
+   certified infeasible: y in [0.692813, 0.692852]  (m* ~ 0.4880)  t=1s
    certified infeasible: y in [0.692852, 0.692891]  (m* ~ 0.4882)  t=2s
    certified infeasible: y in [0.692891, 0.692910]  (m* ~ 0.4884)  t=2s
    certified infeasible: y in [0.692910, 0.692930]  (m* ~ 0.4885)  t=2s
@@ -72,6 +72,4 @@ LEFT sweep: every y in (0, 70957/102400] = (0, 0.6929395] is infeasible for ever
    certified infeasible: y in [0.697500, 0.700000]  (m* ~ 0.5113)  t=2s
    certified infeasible: y in [0.697187, 0.697500]  (m* ~ 0.5103)  t=2s
    certified infeasible: y in [0.697168, 0.697187]  (m* ~ 0.5101)  t=2s
-RIGHT sweep: every y in [7139/10240, 1) = [0.6971680, 1) is infeasible for every m >= 0  (19 intervals); exp = 2.008058
-RESIDUAL y-interval (0.6929395, 0.6971680): every feasible weight m lies in [[0.4885585899 +/- 4.65e-11], [0.5103665777 +/- 4.49e-11]]   (true: m = log2/sqrt2 = 0.4901291, y = log 2 = 0.6931472)
-total time 7s
+RIGHT sweep: every y in [7139/10240, 2L) = [0.6971680, 2L) (upper end = 2L) is infeasible for every m >= 0  (19 intervals); exp = 2.008058

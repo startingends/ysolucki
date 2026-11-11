@@ -52,3 +52,20 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - claim: PROVED (G4): sum_{x in S} pi Gamma_2 = (1/2)<1_S,(Lf)^2> + (1/2)<1_S f, L^2 f> + (1/2)<L 1_S, Gamma(f) - f Lf>; L 1_S = -sign(x)(Hu)/u for the half window. COMPUTED rho_half/lam1 = 0.8384 (M=40), 0.8319 (M=160); Beurling 0.8158, 0.8071. Posted B97.
 - log:
+
+## #7 · Derivative lemma: an edge-regular eigenfunction of the window form has its derivative as an eigenfunction of the other parity with the same eigenvalue; level crossings between parities = edge-regular eigenfunctions
+- status: open
+- source: S1-curv
+- date: 2026-11-11
+- plain english: Slide a pattern a tiny distance along the scale line and subtract the original: that difference is the pattern's slope. The energy we study does not care where on the line a pattern sits, only the window does. So if a lowest-energy pattern already touches zero at both ends of the window, sliding it costs nothing, and its slope is again a lowest-energy pattern, but of the opposite symmetry (the slope of a symmetric hill is an antisymmetric wave). Example on the window of half-width 0.447 with the prime 2 given weight 0.478 instead of 0.490: the symmetric and antisymmetric lowest energies coincide (0.00028 each) and the slope of the symmetric pattern matches the antisymmetric one to four digits; at weight 0.3 the match is only 93%.
+- wall: W-curv-3 follow-up / S1-parity WP2 (end-point regularity of a null vector)
+- claim: PROVED (S1_ADDITIONS.md H3) given: v abs. continuous, v(+-L)=0, v' in the form domain, C_c^inf a form core (Suzuki Thm 1.1). COROLLARY: a simple eigenvalue has an edge-singular eigenfunction; an edge-regular first null vector would be null in both parity blocks. COMPUTED (H4): at the weight where the two ground levels cross, overlap of (even ground state)' with the odd ground state = 1.0000, residual 0.9%; elsewhere 0.82..0.9985; the odd ground state gets its node where its level crosses the second even level.
+- novelty: PARTLY SEARCHED: digests of Suzuki 2606.09096 (has the antisymmetry of d/dx for Q, Thm 1.5), Zhu, Yoshida, Connes-Consani by grep; corollaries not found. No web search this turn.
+- log:
+
+## #8 · Edge-strip lemma on the first-prime window: prime-2 term = c x swap of two edge strips = +-2c x reflection about (log 2)/2; dominated by at most 16.3% of the killing energy
+- status: open
+- source: S1-curv
+- date: 2026-11-11
+- claim: PROVED (H1). Q >= Q_0 - c 1_strips. COMPUTED: the archimedean form Q_0 - c 1_strips is >= 0 for delta <= 0.029 (L <= 0.361). No control violates it. Admissible weight intervals of the atom at log 2 tabulated in H2.
+- log:

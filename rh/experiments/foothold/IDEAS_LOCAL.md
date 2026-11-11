@@ -38,3 +38,14 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: at L = (1/2) log 3: compute the set of (y, m) for a second atom near log 3 that keeps the form >= 0 on L = 0.56..0.6; check m >= 0 is forced and the set is non-empty before using the true value
 - kill line: the feasible set for the second atom is empty at the true first atom (would contradict RH numerics) or contains negative weights
 - log:
+
+## #4 · The leak form D_L needs both pole conditions as continuous functionals, is not parity-diagonal, and then Q/D stays in [0.33, 2.5] on all polynomials at three windows
+- status: open
+- source: FH
+- date: 2026-11-11
+- tags: bridge,plank8,plank6
+- plain english: The bridge compares the Weil energy of a window function with the least amount by which a companion signal must leak out of a frequency band. I computed that least leak from its definition on all polynomials of degree below 28, not only on four special vectors. Two corrections to the definition came out: the two side conditions that remove the pole must be imposed as honest linear conditions (signal has zero mean; its band-limited part vanishes at 0), otherwise the comparison fails upward by a factor 10^10; and the leak form mixes even and odd functions. With that, example at window 0.5: the three smallest leaks are 1.27e-6, 2.58e-4, 2.15e-2 and the three smallest Weil energies 9.42e-7, 1.96e-4, 1.81e-2, and over the whole 28-dimensional space the ratio Weil/leak never drops below 0.33 or rises above 2.3. The same 0.33 appears at window 0.34 (no prime) and 0.54.
+- claim: COMPUTED (float, one implementation): kappa_min = 0.3317, 0.3307, 0.3281 at L = 17/50, 1/2, 27/50 on polynomials of degree < 28; stable in the degree.
+- first test: pencil.py.txt; second implementation by another seat; then the certificate described in PROGRESS.md section 16 (A)
+- kill line: kappa_min on degree < 60 at L = 1/2 below 0.2, or a second implementation disagreeing in the second digit
+- log:

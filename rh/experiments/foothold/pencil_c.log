@@ -1,0 +1,15 @@
+L = 17/50
+   pencil eigenvector 0: kappa = 0.33170, D(v)/|v|^2 = 3.905e-02, Q(v)/|v|^2 = 1.295e-02, even part of |v|^2: 0.999
+   pencil eigenvector 1: kappa = 0.39586, D(v)/|v|^2 = 2.191e-01, Q(v)/|v|^2 = 8.673e-02, even part of |v|^2: 0.539
+   pencil eigenvector 2: kappa = 0.53320, D(v)/|v|^2 = 7.185e-03, Q(v)/|v|^2 = 3.831e-03, even part of |v|^2: 0.995
+   ladder ratios Q(d_i)/D(d_i) on the three lowest eigenvectors d_i of D: [0.7606, 0.8453, 0.6234]
+L = 1/2
+   pencil eigenvector 0: kappa = 0.33074, D(v)/|v|^2 = 4.363e-02, Q(v)/|v|^2 = 1.443e-02, even part of |v|^2: 0.056
+   pencil eigenvector 1: kappa = 0.35574, D(v)/|v|^2 = 1.576e-05, Q(v)/|v|^2 = 5.605e-06, even part of |v|^2: 1.000
+   pencil eigenvector 2: kappa = 0.42628, D(v)/|v|^2 = 6.877e-06, Q(v)/|v|^2 = 2.931e-06, even part of |v|^2: 1.000
+   ladder ratios Q(d_i)/D(d_i) on the three lowest eigenvectors d_i of D: [0.967, 0.9072, 0.9898]
+L = 27/50
+   pencil eigenvector 0: kappa = 0.32812, D(v)/|v|^2 = 2.306e-05, Q(v)/|v|^2 = 7.567e-06, even part of |v|^2: 0.999
+   pencil eigenvector 1: kappa = 0.34657, D(v)/|v|^2 = 1.523e-04, Q(v)/|v|^2 = 5.280e-05, even part of |v|^2: 0.557
+   pencil eigenvector 2: kappa = 0.38045, D(v)/|v|^2 = 1.380e-06, Q(v)/|v|^2 = 5.252e-07, even part of |v|^2: 1.000
+   ladder ratios Q(d_i)/D(d_i) on the three lowest eigenvectors d_i of D: [1.1561, 1.1284, 0.8184]

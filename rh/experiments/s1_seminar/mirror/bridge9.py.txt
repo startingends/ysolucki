@@ -1,0 +1,88 @@
+"""PLANK 9 of Bridge 1: zeta's explicit vectors (Poisson images of pole-corrected prolate functions, as in
+rh/experiments/e27_relative/vec.py.txt, whose construction is copied here) run through the forms of the controls.
+usage: python3 bridge9.py.txt 0.75      (F_d, weight at 4)       python3 bridge9.py.txt 0.6 one   (one-prime system)"""
+import sys, math, importlib.util, importlib.machinery
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+D = "/home/user/ysolucki/rh/experiments/s1_seminar/mirror/"
+lib = load("lib", D + "lib.py.txt"); fd = load("fd", D + "fd.py.txt")
+mp = lib.mp; arb = lib.arb
+L = float(sys.argv[1]); mode = sys.argv[2] if len(sys.argv) > 2 else "main"
+dps = int(70 + 6.5 * math.exp(2 * L)); N = max(28, int(3.0 * L * math.exp(2 * L)) + 12)
+lib.setprec(dps); fd.lib.setprec(dps)
+Lm = mp.mpf(sys.argv[1]); lam = mp.exp(Lm); cc = 2 * mp.pi * lam * lam
+ns = lambda x, k=6: mp.nstr(x, k)
+# ---- zeta's explicit vectors (copied from e27_relative/vec.py.txt)
+nodes = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(6, mp.mp.prec)
+xs = [x for x, w in nodes]; ws = [w for x, w in nodes]; n = len(xs)
+def kern(t, s):
+    d = t - s
+    return cc / mp.pi if d == 0 else mp.sin(cc * d) / (mp.pi * d)
+K = mp.matrix(n, n)
+for i in range(n):
+    for j in range(n):
+        K[i, j] = mp.sqrt(ws[i]) * kern(xs[i], xs[j]) * mp.sqrt(ws[j])
+chi, V = mp.eigsy(K); order = sorted(range(n), key=lambda i: -chi[i])
+def phi(idx):
+    i = order[idx]; col = [V[j, i] / mp.sqrt(ws[j]) for j in range(n)]; ch = chi[i]
+    return (lambda t: sum(ws[j] * kern(t, xs[j]) * col[j] for j in range(n)) / ch), ch
+def testvec(nn, b):
+    f, ch = phi(nn); fb, chb = phi(b); r = f(mp.mpf(0)) / fb(mp.mpf(0))
+    g = lambda t: f(t) - r * fb(t)
+    def v(u):
+        x = mp.exp(u); top = int(mp.floor(lam / x + mp.mpf(10) ** (-dps + 5)))
+        return mp.sqrt(x) * sum(g(k * x / lam) for k in range(1, top + 1))
+    return v, ch
+brk = sorted(set([-Lm, Lm] + [Lm - mp.log(k) for k in range(1, int(mp.floor(lam * lam)) + 1) if Lm - mp.log(k) > -Lm]))
+gl = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(5, mp.mp.prec)
+pts = []
+for a, bnd in zip(brk[:-1], brk[1:]):
+    h = (bnd - a) / 2; m = (bnd + a) / 2
+    for x, w in gl: pts.append((m + h * x, h * w))
+def coeffs(v):
+    vals = [(u, w, v(u)) for u, w in pts]; s2L = mp.sqrt(2 * Lm)
+    ce = [sum(w * val for u, w, val in vals) / s2L] + [sum(w * val * mp.sqrt(2) * mp.cos(mp.pi * k * u / Lm) for u, w, val in vals) / s2L for k in range(1, N + 1)]
+    co = [sum(w * val * mp.sqrt(2) * mp.sin(mp.pi * k * u / Lm) for u, w, val in vals) / s2L for k in range(1, N + 1)]
+    return ce, co
+vecs = []
+for nn, b, par in ((4, 0, 0), (8, 0, 0), (6, 2, 1), (10, 2, 1)):
+    v, ch = testvec(nn, b); ce, co = coeffs(v); x = mp.matrix(ce if par == 0 else co); x = x / mp.sqrt((x.T * x)[0])
+    vecs.append((nn, par, x, 1 - ch))
+rq = lambda M, x: (x.T * M * x)[0]
+X = math.exp(2 * L)
+A = lib.arch(L, N); Z = lib.add(A, lib.atoms(L, N, lib.lam(X)))
+evZ = [mp.eigsy(Z[b]) for b in (0, 1)]
+print("L = %s, N = %d, dps = %d ; zeta lowest even %s odd %s" % (sys.argv[1], N, dps, ns(min(evZ[0][0])), ns(min(evZ[1][0]))))
+base = {}
+for nn, par, x, defect in vecs:
+    base[nn] = rq(Z[par], x)
+    print("  explicit vector n = %d (%s): prolate defect %s ; zeta Rayleigh quotient %s ; ratio to defect %s" % (nn, "even" if par == 0 else "odd", ns(defect), ns(base[nn]), ns(base[nn] / defect, 4)))
+def table(name, F, scale=1):
+    row = []
+    for nn, par, x, defect in vecs:
+        r = rq(F[par], x); row.append("n=%d: %s (ratio %s)" % (nn, ns(r, 5), ns(r / (scale * base[nn]), 8)))
+    lo = [min(mp.eigsy(F[b], eigvals_only=True)) for b in (0, 1)]
+    print("  %-34s lowest eig even %s odd %s | Rayleigh of zeta's vectors: %s" % (name, ns(lo[0], 4), ns(lo[1], 4), " ; ".join(row)), flush=True)
+if mode == "one":
+    table("one-prime system (atoms 2^k only)", lib.add(A, lib.atoms(L, N, lib.lam(X, (2,)))))
+    table("zeta (check)", Z)
+else:
+    table("zeta (check)", Z)
+    for ds in ("1e-6", "5e-6", "1e-5", "1e-4", "1e-3"):
+        table("F_d, d = %s (relative to 2 zeta)" % ds, fd.Fd_blocks(L, N, ds), scale=2)
+    if 4 in lib.lam(X):
+        for eta in ("1e-5", "-1e-5", "0.01"):
+            cn = {k: (c * (1 + arb(eta)) if k == 4 else c) for k, c in lib.lam(X).items()}
+            table("weight at 4 times (1 + %s)" % eta, lib.add(A, lib.atoms(L, N, cn)))
+    # S4: the negative direction of F_d at d = 1e-5, even block
+    F = fd.Fd_blocks(L, N, "1e-5"); ev, Vv = mp.eigsy(F[0]); i = min(range(len(ev)), key=lambda j: ev[j]); w = Vv[:, i]
+    evz, Vz = evZ[0]; iz = min(range(len(evz)), key=lambda j: evz[j]); vz = Vz[:, iz]
+    x4 = vecs[0][2]
+    print("  F_d, d = 1e-5, even block: lowest eigenvalue %s ; 1 - overlap^2 with zeta's ground state %s ; with zeta's explicit vector n = 4: %s"
+          % (ns(ev[i]), ns(1 - (w.T * vz)[0] ** 2, 4), ns(1 - (w.T * x4)[0] ** 2, 4)))
+    # the d^2 coefficient on each explicit vector: c_w = (2 R_zeta - R_d)/d^2  = 2 [Q(x w) - R |x w|^2] to first order
+    F6 = fd.Fd_blocks(L, N, "1e-6"); d = mp.mpf("1e-6")
+    for nn, par, x, defect in vecs:
+        cw = (2 * base[nn] - rq(F6[par], x)) / d ** 2
+        print("  d^2-coefficient on zeta's explicit vector n = %d: c = %s ; so F_d(w) < 0 from d = %s ; c / (2 R_zeta) = %s" % (nn, ns(cw), ns(mp.sqrt(2 * base[nn] / cw)), ns(cw / (2 * base[nn]), 4)))

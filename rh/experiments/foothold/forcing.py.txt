@@ -184,7 +184,7 @@ def vectors_at(yq):
 if __name__ == "__main__":
     print(f"L = {Lq}, NB = {NB}, prec = {PREC}")
     # float sanity: true atom
-    ylog2 = fmpq(693147, 10**6)
+    ylog2 = fmpq(int(round(math.log(2) * 10**17)), 10**17)      # log 2 to 17 digits (changed after verifier's C1; float check only)
     m2 = math.log(2) / math.sqrt(2)
     for par in (0, 1):
         print(f"float check, atom at y={float(ylog2.p)/float(ylog2.q):.6f}, m={m2:.6f}, parity {par}: lowest eigenvalue {lam(par, Gy(par, ylog2), m2)[0]:.6e};  no atom: {np.linalg.eigvalsh(A0[par])[0]:.6e}")

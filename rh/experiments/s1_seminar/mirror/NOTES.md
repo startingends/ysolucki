@@ -217,3 +217,31 @@ Open threads (for turn 4):
   (the even block is not Perron; any even test function gives an upper bound, e.g. at (L, x) = (0.38, 1.9): m <= 0.26 < log 1.9).
 - Possible sharpening of Lemma 3: optimise the test function over the positive cone (the exact odd threshold is 0.529 at L = 0.40
   against the first-order 0.407); and a two-sided 'position-weight' region for the first atom from one odd and one even test function.
+
+## Turn 4: PLANK 9 of Bridge 1 (assignment from the coordinator, 2026-11-11 01:17 UTC)
+Read: rh/BRIDGE.md, notebook N40, e27_relative/vec.py.txt and logs. Questions: (1) where does the comparison fail for F_d;
+(2) zeta's explicit vectors through the controls' forms; (3) is there an analogue of plank 5 for the impostor.
+
+### Theory before computing (turn 4)
+W1. Plank 5 for F_d: E_d(g) = x^(1/2) sum a_d(n) g(nx), a_d(n) = sum_{ab=n} (a/b)^d; identity Q_d(f) = W_d(tail) holds by the same
+    formal derivation (conditions: g(0) = 0 and int g y^(+-d) = 0). So plank 5 does not separate F_d.
+W2. Where it fails: Q_d(v) = 2 mu - c d^2 on zeta's ground state v (B90). The failing direction IS the bottom ladder vector; the
+    failing quantity is Q(x v) = sum |vhat'(gamma)|^2 (multiplication by the log variable). So the lead's guess is right about the
+    mechanism and wrong about 'not on the near-null ladder'.
+W3. The impostor HAS a Poisson map. Its coefficients (1, xi, -xi, -1, 0) mod 5 are an eigenvector of the finite Fourier transform
+    (eigenvalue i sqrt 5; this is what xi is chosen for), so sum_n a(n) g(nx) = (i/(sqrt5 x)) sum_k a(k) ghat(k/(5x)), i.e.
+    E_DH(g)(x) = i E_DH(ghat)(1/(5x)) for odd g. Poisson needs the functional equation, not the Euler product. So plank 5 has an
+    exact analogue for the impostor, with the classical leak at c = 2 pi e^(2L)/5 (the 1/q that r1_A observed).
+    Also plank 7's 'Lambda * 1 = log' is the DEFINITION of the log-derivative coefficients (c * a = a log) for any Dirichlet series.
+W4. Consequence to report at once: planks 5-7 are available verbatim for F_d and for the impostor; only the inequality (plank 8)
+    separates. The 'chirp tail' mechanism proposed for plank 8 is twist-blind.
+
+### BLIND PREDICTIONS turn 4 (written 2026-11-11 01:23 UTC, before computing)
+S1. F_d, d = 5e-6, L = 0.75: Rayleigh quotient of zeta's explicit vectors relative to F_0 = 2 zeta: n = 4: 0.60-0.80;
+    n = 6: 0.98-0.999; n = 8 and n = 10: within 1e-3 of 1.
+S2. Weight at 4 times (1 + 1e-5): n = 4: 0.3-0.6; n = 6: 1.05-1.25. Times 1.01: n = 4: between -800 and -300.
+S3. One-prime system at L = 0.5: ratio exactly 1 (the matrices are identical: 3 is not in the window).
+S4. F_d at d = 1e-5 (lowest even eigenvalue negative): its eigenvector has overlap deficiency below 1e-6 with zeta's ground state
+    and below 1e-5 with zeta's explicit vector n = 4.
+S5. Impostor: its lowest eigenvalues at L = 1.0 and 1.5 are within a factor 10 of prolate defects 1 - chi_n at c = 2 pi e^(2L)/5
+    for small odd-function indices (n = 1 for the bottom): the impostor passes plank 1 below its failing window.

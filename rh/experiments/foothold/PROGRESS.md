@@ -127,7 +127,8 @@ Against the prediction: L = 1/2 residual (1.999585, 2.008058): inside (1.999, 2.
 L = 27/50: width 1.15e-3 against 8.5e-3: 7.4 times narrower (predicted >= 3).  Note m < 0 must be excluded:
 a negative atom near y = 0 raises the low-frequency symbol and can be feasible (first version of the sweep
 found the float optimum at m = -2); the statement is for m >= 0.
-Rayleigh-Ritz values of the exact form with the true atom (float, polynomials of degree < 28 / 32):
+[WRONG LABEL, see section 13 and the verifier's C1: the next numbers are at y = 0.693147, NOT at log 2; at log 2 they are 9.4166e-7 / 1.9573e-4 and 1.07699e-7.]
+Rayleigh-Ritz values of the exact form at y = 693147/10^6 (float, polynomials of degree < 28 / 32):
 L = 1/2: 9.0567e-7 (even), 1.9601e-4 (odd); L = 27/50: 6.447e-8, 2.4997e-5.  Consistent with r1_A (9.34e-7,
 2.00e-4, periodic basis) and with the capped lower values (8.77e-7, 1.81e-4 at R = 160).
 Validation of the x-space formula and of the ball matrix (validate_x.py.txt, mpmath, 25 digits, v = (1/4 - t^2)^4 and
@@ -196,3 +197,84 @@ on polynomials of degree < 28 is between 0.05 and 0.35 in the even block and bet
 block (it must be <= about the lead's kappa_4 = 0.35 / 0.22 if his D is close to the true D_L on his vectors, and I
 expect the drift with K to continue a little but not to zero, because in the bulk Q is of size 0.3-1 and D <= 3).
 It would surprise me, and wound plank 8, if kappa_poly < 0.01 or negative.
+
+### 15. Outcome of the pencil experiment (COMPUTED, float, ONE implementation: pencil.py.txt; logs pencil_a/b/c.log)
+Command: `python3 tools/memcap.py 1 python3 pencil.py.txt 28 16 <L>` for L = 17/50 (no prime), 1/2, 27/50.
+Q = my exact ball matrix (midpoints) on polynomials of degree < 28, atom at log 2 to 17 digits. D_L from the
+definition (Schur complement over the free part h on (0, 1/lambda), 16 Legendre functions; nh = 14, 22 give the
+same digits). FINDINGS:
+(a) DEFINITION. With the companion h = 0, D is not small on the ladder (lowest eigenvalue 0.045 against Q's 9.4e-7):
+    the free part is essential. With "min over h" and NO pole condition, or with ghat(0) = 0 only, the UPPER
+    comparison fails by 1e7 to 1e10 (kappa_max = 7.8e10, 5.1e7 at L = 1/2): D then has near-null directions
+    (Poisson images of prolates with g(0) != 0) on which Q is of size 1e-6: these carry the pole. The condition
+    g(0) = 0 of N40 has no effect on an infimum over L^2 unless it is imposed as a continuous functional. With
+    BOTH conditions as continuous functionals, ghat(0) = int g = 0 and (Bg)(0) = int_{-lambda}^{lambda} ghat = 0,
+    the two ladders are parallel: lowest eigenvalues of D: 1.27e-6, 2.58e-4, 2.15e-2; of Q: 9.42e-7, 1.96e-4,
+    1.81e-2 (L = 1/2).
+(b) D_L is NOT parity-diagonal (largest mixing entry 0.32 of entries of size 1): the definition treats g (hard
+    support) and ghat (soft band) asymmetrically. The pencil must be taken on the full space, or D symmetrised
+    under u -> -u.
+(c) THE NUMBERS (both conditions; full polynomial space of degree < 28, both parities together):
+| L | lowest eig of Q | kappa_min | kappa_max (grows like log degree) | kappa_min, D symmetrised | per block even / odd |
+|---|---|---|---|---|---|
+| 17/50 (no prime) | 1.609e-3 | 0.33170 | 2.48 | 0.33850 | 0.3385 / 0.4059 |
+| 1/2 | 9.417e-7 | 0.33074 | 2.32 | 0.35639 | 0.3564 / 0.3597 |
+| 27/50 | 1.080e-7 | 0.32812 | 2.33 | 0.33653 | 0.3365 / 0.3741 |
+    Stable in the degree (L = 1/2: 0.33189, 0.33086, 0.33074 at degree < 12, 20, 28). The minimiser is a
+    small-leak direction (D(v)/|v|^2 = 4e-2, 4e-2, 2.3e-5), not the bottom rung (Rayleigh ratios on the three
+    lowest D-eigenvectors: 0.76-1.16) and not the bulk.
+Against my prediction (0.05-0.35 even, 0.03-0.22 odd): MISSED on the high side in the odd block (0.36), inside in
+the even block (0.356). I had assumed the lead's D (leak of one specific companion) equals D_L; the true infimum
+is smaller, so the ratio is larger. kappa does NOT fall with the number of directions: on 28 directions it is
+0.33 at all three windows, across the entry of the prime 2, while the bottom of Q falls by 4 orders.
+Not certified; a second implementation is needed (S1-parity). L = 27/50 lowest eigenvalue 1.080e-7 agrees with
+the verifier's 1.077e-7 (its section 7).
+
+### 16. Task (1): what a certificate of "Q >= kappa D on the whole window" needs; does Connes-Consani Thm 1 give it?
+Read for this: the library digest connes-consani-weil-positivity-archimedean.md parts 1-3 (in full) and the
+paper's introduction (lines 100-145 of weil-compo.tex); the proofs in sections 4-6 of the paper NOT read.
+(A) What the certificate needs (my machinery, both windows). Q - kappa D >= Q_R - kappa D_up, where Q_R is the capped
+form of PROOF_window_prime2.md (lower bound of Q, any f) and D_up is the leak of ANY admissible companion chosen
+linearly in f (an upper bound of the infimum D_L). So only an explicit linear choice f -> h(f) with the two
+conditions satisfied exactly is needed; then D_up = (bounded multiplication-type operator) - (operator with the
+entire kernel sin(2 pi lambda (x - y))/(pi (x - y)) transported to the log variable) + finite rank. Remainders:
+  (i) the cap remainder of Q, discarded with a sign as before; the cap now needs a(R) - A_L - kappa ||D_up|| > 0
+      (||D_up|| <= about (1 + 2^(-1/2))^2 (1 + ||h-map||)^2, a number of size 3 to 10);
+  (ii) the Legendre tail of the D_up kernel: frequencies in u up to c = 2 pi e^(2L) (18.8 at L = 0.55), below the
+      R = 40 already resolved: same type of bound as Lemma 4, no new kind of remainder;
+  (iii) entries of D_up: two-dimensional integrals of analytic functions on 3 x 3 pieces; rigorous but about 1000
+      of them (not done).
+  On the no-prime window the Moebius term of the companion disappears (g = x^(-1/2) f on the window), nothing else
+  changes. So a certificate with kappa = 0.3 is a finite job of the size of FH-1 at L <= (1/2) log 3. Not done.
+(B) Connes-Consani Theorem 1 does NOT give plank 8 on the no-prime window as it stands, for three exact reasons:
+  1. Its right side is Tr(theta(g) S theta(g)*) with S the Sonin projection at cutoff 1 (prolate parameter c = 2 pi,
+     fixed), acting on the window function by scaling, with no summation over integers. D_L is the least leak of a
+     companion at c = 2 pi e^(2L), which changes with the window. A further inequality "Sonin trace >= kappa D_L on
+     the window" between two explicit prime-free forms is needed; I did not find it in the digest and have no
+     proof. (It can be tested numerically: by their Theorem 4.7, Sonin trace = W_infty + integration against an
+     explicit prolate series epsilon.)
+  2. It holds on the subspace ghat(i/2) = 0 = ghat(0) (codimension 2), or with - c |ghat(0)|^2, c about 17, on
+     ghat(-i/2) = 0. Plank 8 is on the whole window, where the pole directions are handled by the two
+     conditions built into D_L (finding (a)).
+  3. Its proof uses numerical facts that are not interval-certified (digest part 6).
+  What my numbers say instead: on the no-prime window L = 0.34 the direct pencil gives kappa = 0.33 on all
+  polynomials of degree < 28 (float), with no vanishing condition.
+
+### 17. Task (3): does the FH-1 certificate, run for Q - 0.1 D, escape the cost explosion?  NO. Exact reason:
+The certificate has two costs. (1) The cap: R must exceed 2 pi exp(A_L + kappa ||D||); this comes from the band
+T* = 2 pi e^(2L) < |r| < 2 pi e^(A_L), where the pointwise bound on the prime comb is the only control. In that band
+D is NOT small: every function is out of band there, D is about ||g||^2, so "Q >= kappa D" there is plain positivity
+with a margin of order 1, and the cap needs exactly what it needed before (slightly more). The matrix size is
+about e R L/2: doubly exponential in L, unchanged. (2) The precision: the finite matrix M_Q - kappa M_D in a fixed
+basis (Legendre) still has eigenvalues of the size of the ladder (1 - kappa/kappa_true) x 1e-30 at L = 1, so its
+entries must still be known to absolute accuracy below the ladder: unchanged. But this cost was never the
+explosion: digits needed grow like e^(2L), polynomially in the matrix size.
+So the comparison does not help a certificate in a fixed basis at all. What it changes is what an ESTIMATE has
+to achieve, and only if two things are added:
+  - plank 5 (the identity Q(f) = W(tail)), which gives the ladder block of Q with RELATIVE accuracy, and bounds the
+    coupling of a ladder vector v to any w by |Q(v, w)| = |W(T_v, w)| <= C sqrt(D(v)) (form norm of w): the Schur
+    complement then needs C^2 < kappa x (bulk constant), an inequality between numbers of size 1;
+  - a proof that Q >= c > 0 on the complement of the ladder, for which the comparison gives nothing. THAT is where
+    the comb-alignment wall W-FH1 lives (and where a zero off the line would show: detection height about 2 T*).
+Numerically the binding constant 0.33 sits on small-leak combinations, section 15 (c), not in the bulk; I have not
+computed the bulk constant (lowest eigenvalue of Q on the D-orthogonal complement of the ladder) separately.

@@ -35,6 +35,19 @@ comparison holds away from the near-null directions, and what, in it, a control 
 | 8 | The lower comparison Q ≥ κ D on all directions | open: THIS IS THE BRIDGE'S SPAN | first on the window with no prime (from Connes–Consani 2006.13771 Thm 1), then with the prime 2 (the foothold seat's certified window), each with an explicit κ | — |
 | 9 | What a control violates. The comparison must fail for every system that violates RH, and the failure must be visible in the planks, not only in the conclusion | open | for the twisted control F_d, the one-prime system and the impostor: which plank breaks, stated as mathematics. Blind expectation (lead): plank 5's identity survives for F_d with its own summation formula, and what breaks is plank 8 away from the near-null ladder; for the impostor there is no Poisson map at all (no Euler product), so plank 5 has no analogue | — |
 
+| 7c | The constant of the eigenvalue law, derived. For a tail with envelope a/ξ the model of 7b gives, per unit of one-sided leak, W(T) = ζ(2)(2L + 1) + ζ′(2) = ζ(2)·(2L + 0.430) (diagonal terms only: archimedean density log(frequency/2π), prime term through Λ ∗ 1 = log, no pole). With the measured ‖v‖² = 0.301·e^L and Rayleigh factor 1.3 this predicts the constant κ in "lowest eigenvalue = κ·(1 − χ₄)": κ(L) ≈ 2.10·(2L + 0.430), LINEAR in L | HEURISTIC + out-of-sample comparison | compare with numbers the model was not fitted to: Zhu's certified upper bounds on ln κ at L = 1.2, 1.4, 1.6, 1.8, 2.0 (1.83, 2.03, 2.06, 2.12, 2.26, as computed by our reader from Zhu's printed values) | predicted ln κ = 1.78, 1.92, 2.03, 2.14, 2.23: differences −0.05, −0.11, −0.03, +0.02, −0.03. NOT blind in the strict sense (I had seen Zhu's five numbers in the reader's report hours earlier); the two fitted factors come from my runs at L ≤ 1 only. In-sample (L = 0.5, 0.75, 1.0, with factor 1.0 instead of 1.3): 3.86, 5.26, 6.63 against measured 2.67, 4.68, 4.17 |
+
+### Position against the literature (READER-3, Connes–Consani–Moscovici arXiv 2511.22755 read whole, 2026-11-11)
+The frontier paper names exactly two missing steps: (1) the smallest eigenvalue of the window form is simple with an
+even eigenvector; (2) the prolate guess k_λ = ℰ(h_λ) is "a sufficiently accurate approximation" to that eigenvector.
+It gives no norm, rate or criterion for (2), no Rayleigh quotient of k_λ, no second eigenvalue, no gap, and it
+contains NO inequality between the Weil form and a form built from prolate functions, for any window. Its Figure 4
+compares the lowest eigenvalue with 1 − χ for λ² ≤ 17 (our L ≤ 1.42): that part of plank 1 is published.
+So, against that paper: plank 2's numbers (Rayleigh quotient 1.10–1.41, overlap deficiency 7.5e-6, 4.2e-7, 7.2e-8,
+falling with the window) are a quantitative statement about its missing step (2); the odd block and the higher rungs
+(1 − χ₆, χ₈, ...), plank 3 (form level), planks 7–7c (the change of variable, the constant 2L, the linear growth of κ)
+were not found in it. "Not found in the papers read", not "new".
+
 ### Where the difficulty now sits (lead, after planks 7 and 7b)
 The heuristic of plank 7b cannot be a proof as it stands, and the reason is exact: the form ψ ↦ W(tail of ψ) has a
 large null space (every g supported in (0, 1/λ) gives a tail that is a full Poisson image, with zero Weil form and
