@@ -9,13 +9,7 @@ Setting. c = (c_d)_{d<=N}, f_c(x) = sum_d c_d rho(1/(dx)) on (0, inf), M_c(s) = 
 b_n = sum_{d|n, d<=N} c_d: the coefficients of zeta(s) M_c(s). The Moebius vector is c = mu w_N.
 (1a) PROVED (Mellin-Plancherel; N53): ||f_c||^2 = (1/2pi) int |zeta(1/2+it) M_c(1/2+it)|^2 dt/(1/4+t^2). Mellin of rho(1/(dx)) is
      -d^-s zeta(s)/s on 0 < Re s < 1.
-(1b) PROVED, the exact discrete form. If sum_d c_d/d = 0 (THE POLE CONDITION: M_c(1) = 0 removes the pole of zeta; the same
-     bookkeeping as bridge plank 5), then f_c vanishes on x > 1 and
-          ||f_c||^2 = sum_{k>=1} |S_k(b)|^2 / (k(k+1)),    S_k(b) = sum_{i<=k} b_i = sum_{d<=N} c_d floor(k/d).
-     Proof: y = 1/x, F(y) = sum c_d rho(y/d) = y M_c(1) - sum c_d floor(y/d) = -sum c_d floor(y/d), constant on [k, k+1), and
-     int_k^(k+1) dy/y^2 = 1/(k(k+1)). COMPUTED check: N = 7, random c with the constraint, k up to 4000: both sides
-     0.129484692266528423898522984211, relative difference 2e-30.
-(1b) THE GRAM MATRIX, factorised (PROVED from 1a). G_N = P_N T_1^* Gamma T_1 P_N, where
+(1b) THE GRAM MATRIX, factorised (PROVED). G_N = P_N T_1^* Gamma T_1 P_N, where
      - T_1 = [1_{a|b}] (b over a), the DIVISOR MATRIX: the multiplicative Toeplitz operator of symbol zeta (convolution by 1),
        "analytic" (it moves e_d to multiples of d); its inverse is the Moebius matrix [mu(b/a) 1_{a|b}];
      - Gamma(m, n) = 1/max(m, n) = sum_{k >= max(m,n)} 1/(k(k+1)): Gamma = A A^T, A(m, k) = 1_{m <= k}/sqrt(k(k+1)) (Cesaro-type).
@@ -27,17 +21,22 @@ b_n = sum_{d|n, d<=N} c_d: the coefficients of zeta(s) M_c(s). The Moebius vecto
      Proof: with y = 1/x, sum c_d rho(y/d) = y M_c(1) - sum c_d floor(y/d), constant on [k, k+1); int_k^{k+1} dy/y^2 = 1/(k(k+1)).
      COMPUTED (check of (1.1), random c, N = 7, k < 4000 both sides, 30 digits): 0.12948469226652842389852298 on both sides,
      relative difference 2e-30. Formula (1.1) is elementary and is surely known (Baez-Duarte's discrete Nyman-Beurling; not searched).
-(1b) THE WINDOW IDENTITY (PROVED; the multiplicative analogue of plank 5 and of Borodin-Okounkov). The window {1..N} is closed
-     under divisors, so P_N T_a = P_N T_a P_N for every analytic multiplicative Toeplitz T_a (if d > N then all multiples of d are > N).
-     Hence P_N T_1 P_N and P_N T_{1/zeta} P_N are inverse to each other, and for c = mu 1_{[1,N]} (sharp cutoff; any weight with
-     w = 1 on the window and the pole condition behaves the same): (T_1 c)_n = [n = 1] for n <= N EXACTLY (Moebius inversion), so
-     sum_d mu(d) floor(k/d) = 1 for k <= N and, for k > N,  = 1 - R_N(k),  R_N(k) := sum_{N < d <= k} mu(d) floor(k/d).
-     So, with the pole condition imposed by a correction at d = 1 (or by a smooth weight), the form splits into window + tail:
-          ||f_c||^2 = sum_{k<=N} 1/(k(k+1)) + sum_{k>N} |1 - R_N(k)|^2/(k(k+1)),     ||f_c - 1||^2 = sum_{k>N} |R_N(k)|^2/(k(k+1)).
-     The Moebius vector is EXACTLY in the kernel of P_N (T_1 c - e_1); all the energy above the trivial part lives BEYOND the window,
-     on k > N, where it is a mean square, over the long family k in (N, inf) with weights 1/k^2, of Moebius sums R_N(k) of length
-     < k. On the dyadic block k ~ X the family (k) and the sum (d in (N, k]) have the SAME length: exactly the borderline H ~ D.
-(1c) SPECTRUM. In normalised coordinates G~_N = [ (ab)^(1/2) G(a,b) ] = compression to {1..N} of the multiplicative Toeplitz matrix
+(1c) THE WINDOW IDENTITY (PROVED; the multiplicative analogue of plank 5 and of Borodin-Okounkov). The window {1..N} is closed
+     under divisors, so P_N T_a = P_N T_a P_N for every analytic multiplicative Toeplitz T_a (if d > N all multiples of d are > N);
+     hence P_N T_1 P_N and P_N T_{1/zeta} P_N are mutually inverse. For c = mu 1_{[1,N]} this is Moebius inversion: (T_1 c)_n = [n = 1]
+     for n <= N EXACTLY, so S_k(b) = sum_{d<=N} mu(d) floor(k/d) = 1 for k <= N and = 1 - R_N(k) for k > N,
+          R_N(k) := sum_{N < d <= k} mu(d) floor(k/d)   (R_N(k) := 0 for k <= N).
+     The Nyman-Beurling approximant is -sum_d mu(d) rho(1/(dx)); in y = 1/x it equals S_floor(y) - y M_N(1), so (no pole condition needed)
+          d_N^2 := || -sum_{d<=N} mu(d) rho(1/(dx)) - 1_(0,1) ||^2_{L^2(0,inf)} = sum_{k>=0} int_k^(k+1) |R_N(k) + y M_N(1)|^2 dy/y^2
+     (the k = 0 term, = M_N(1)^2, is the part of the approximant on x > 1). COMPUTED check (N = 6, k < 200, 20 digits, direct
+     piecewise quadrature of the left side against the right side): they agree to 1e-21 (0.17952227897969552914 both) once the k = 0 term is included; my first
+     version omitted it and was off by exactly M_6(1)^2 = 0.017778 (0.179522 against 0.161745), which located the error.
+     The term y M_N(1) is the pole bookkeeping (it contributes about N M_N(1)^2 from k <= N; a smooth weight with M_c(1) = 0 removes it,
+     at the price of exact inversion only where the weight is 1). Apart from it, ALL the energy lives BEYOND the window: the
+     Moebius vector is exactly in the kernel of P_N(T_1 c - e_1), and the distance is a mean square, over the long family k in
+     (N, inf) with weights 1/k^2, of Moebius sums R_N(k) of length < k. On the dyadic block k ~ X the family (k) and the sums
+     (d in (N, k]) have the SAME length: exactly the borderline H ~ D of N53.
+(1d) SPECTRUM. In normalised coordinates G~_N = [ (ab)^(1/2) G(a,b) ] = compression to {1..N} of the multiplicative Toeplitz matrix
      [nu^(log(a/b))], nu = |zeta(1/2+it)|^2 dt/(2pi(1/4+t^2)). Viewed on the group Q_+, its symbol is the push-forward of nu to the
      dual group T^infinity (one coordinate p^(it) per prime) along the Kronecker line t -> (p^(it))_p: a SINGULAR measure on T^infinity.
      PROVED consequences: (i) ||G~_N|| >= (1/N) <G~ 1, 1> = (1/N) int |sum_{a<=N} a^(it)|^2 d nu ~ N int d nu/(1+t^2): the top of the
@@ -65,16 +64,16 @@ b_n = sum_{d|n, d<=N} c_d: the coefficients of zeta(s) M_c(s). The Moebius vecto
      regime the large sieve is sharp AND equivalent to the statement it should prove; a mean square over a short family can never be
      an amplifier, because its extremal vectors are the copies.
 (2c) What extra structure of the coefficient vector would beat it: an EXACT statement that the Moebius vector is orthogonal (to within
-     square-root size) to the cluster-smooth subspace, not an estimate valid for all vectors. In the elementary form (1b): the tail
+     square-root size) to the cluster-smooth subspace, not an estimate valid for all vectors. In the elementary form (1c): the tail
      R_N(k) = sum_{N<d<=k} mu(d) floor(k/d); write floor(k/d) = k/d - 1/2 - psi(k/d). The d > sqrt k part of psi(k/d) is smooth in d (the
      cluster part, the D-term), and against it one needs sum_{d ~ y} mu(d) F(d) << y^(1/2+eps) for smooth F: RH-strength. Only an exact
      transformation of these sums (Poisson/theta: the quasi-RH paper's route via mu = cube of Gauss sums over Z[omega], digest steps 5-7)
      changes their length; nothing in the operator picture supplies one for mu over Z.
 
 ## 3. Rule 13 (c): an operator identity that would make the short family trivial
-(3a) The one I name: an exact Krein / Levinson recursion in N, made explicit by the window identity (1b).
+(3a) The one I name: an exact Krein / Levinson recursion in N, made explicit by the window identity (1c).
      The windows {1..N} are a NEST of divisor-closed sets, and on each of them the analytic multiplicative Toeplitz operators
-     compress multiplicatively (PROVED in 1b). Gram-Schmidt in N gives, exactly (KNOWN, linear algebra),
+     compress multiplicatively (PROVED in 1c). Gram-Schmidt in N gives, exactly (KNOWN, linear algebra),
           d_N^2 - d_(N+1)^2 = |<1 - f_N, r_(N+1)>|^2 / ||r_(N+1)||^2,   r_(N+1) = residual of rho(1/((N+1)x)) against the first N,
      a Levinson recursion with "reflection coefficients" kappa_N = correlation of the target with the new residual. If kappa_N had a
      closed form (as Verblunsky coefficients do for a Toeplitz matrix on Z, through the Szego recursion), RH would be a statement
@@ -82,25 +81,25 @@ b_n = sum_{d|n, d<=N} c_d: the coefficients of zeta(s) M_c(s). The Moebius vecto
      Gram matrix that is Toeplitz for a group acting transitively on the nodes, with a bounded, absolutely continuous symbol: then
      Szego's theorem (on T, or Helson's on T^infinity) gives the limit and the recursion.
 (3b) Why it probably fails, exactly. (i) The nodes log n are not a group orbit on the line; the only group present is Q_+, and on it
-     the symbol of G~ is singular (carried by the Kronecker line in T^infinity, 1c): Szego-Helson theory needs an absolutely
+     the symbol of G~ is singular (carried by the Kronecker line in T^infinity, 1d): Szego-Helson theory needs an absolutely
      continuous symbol, and the passage from "almost every line" to "the line t -> (p^(it))_p" is Bagchi's strong recurrence (N46, N49).
      (ii) The window identity moves the energy to k > N but does not SHORTEN the sums: R_N(k) is again a Moebius sum of length
      comparable to k; there is no analogue of plank 5's archimedean gain (there the tail lived above the band edge, where
      log(frequency) won; here the tail is the same kind of object at larger scale). (iii) An exact recursion with explicit kappa_N
      would make d_N computable in closed form, hence decide RH by computation: implausible for that reason alone (owner rule 2 test).
-(3c) The other two forms asked for, in one line each. G_N = B^T B with B = A^T T_1 P_N explicit (1a), and the Moebius vector is in the
-     known kernel of P_N(T_1 c - e_1) (1b): this factorisation EXISTS and is elementary; it reduces the form to the tail and stops there.
+(3c) The other two forms asked for, in one line each. G_N = B^T B with B = A^T T_1 P_N explicit (1b), and the Moebius vector is in the
+     known kernel of P_N(T_1 c - e_1) (1c): this factorisation EXISTS and is elementary; it reduces the form to the tail and stops there.
      A commutation with the dilation semigroup x -> nx: Gamma commutes with no dilation (1/max(m,n) is not invariant under (m,n) -> (km,kn);
      it scales by 1/k), and the normalised Gamma~ is dilation-invariant but its compression to {1..N} is not: the cut breaks it,
      exactly the one-sidedness of the window.
 
 ## 4. Fake first: the impostor
 For a Dirichlet series f = sum a_n n^-s with a_1 = 1 (Davenport-Heilbronn), put c = (coefficients of 1/f) on [1, N], T_f the
-multiplicative Toeplitz operator of convolution by a. Everything in (1a)-(1b) holds verbatim with T_f in place of T_1 (PROVED: only
+multiplicative Toeplitz operator of convolution by a. Everything in (1a)-(1c) holds verbatim with T_f in place of T_1 (PROVED: only
 a_1 = 1 and divisor-closed windows are used): ||f M_N||^2-type form = window part + tail with R^f_N(k) := truncated sums of the
 inverse coefficients. So the window identity is impostor-blind, like plank 5. Where the pole of 1/f at rho_0 = 0.808 + 85.7i shows
 (HEURISTIC, by Perron): the partial sums of the inverse coefficients carry a term x^(rho_0)/rho_0 (times the cutoff), so R^f_N(k)
-has size N^(0.808) for k ~ N, the tail is ~ N^(1.616) sum_{k>N} k^(-2) ~ N^(0.616) -> inf. In the spectral picture (1c): the impostor's
+has size N^(0.808) for k ~ N, the tail is ~ N^(1.616) sum_{k>N} k^(-2) ~ N^(0.616) -> inf. In the spectral picture (1d): the impostor's
 normalised inverse vector has cluster sums growing like e^(0.308 j/T): it correlates with the top (cluster-smooth, trivial-twist)
 eigenvectors and SATURATES the D-term, while under RH the Moebius vector must be asymptotically orthogonal to them. So the impostor
 is the vector that the large sieve's extremal direction catches; the theorem to prove is that mu is not caught.
@@ -111,7 +110,7 @@ operator picture therefore sees the Euler product as a tensor-product factorisat
 Kronecker line) is what prevents using it on the critical line.
 
 ## 5. Summary
-1. Exact: ||f_N||^2 = sum_k |sum_{d<=N} c_d floor(k/d)|^2/(k(k+1)) under M_c(1) = 0, i.e. G_N = P_N T_1^T Gamma T_1 P_N, Gamma = [1/max] = A A^T.
+1. Exact: ||f_c||^2 = sum_k |sum_{d<=N} c_d floor(k/d)|^2/(k(k+1)) under M_c(1) = 0, i.e. G_N = P_N T_1^T Gamma T_1 P_N, Gamma = [1/max] = A A^T.
 2. Window identity: the Moebius vector is exactly in the kernel of P_N(T_1 c - e_1); the distance is a tail sum over k > N of
    R_N(k)^2/k^2, a family of the same length as its sums (the borderline H ~ D). Elementary, almost certainly known.
 3. Normalised, G_N is a multiplicative Toeplitz compression with a singular symbol on T^infinity; its top grows like N; RH = bounded

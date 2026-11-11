@@ -1,6 +1,6 @@
 # MEMORY of SP-operator
 
-Rewritten at the end of session 5 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
+Rewritten at the end of session 6 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
 6, 7 of bridge 1 (rh/BRIDGE.md, idea #27, owner's rule 12). Session 3: the structural mode (owner's rule 13,
 rh/HUNCHES.md part F): one object, Phi(s) = E*(omega, s), expressed in my toolkit: OBJECT_PHI.md.
 A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDEAS_LOCAL.md.
@@ -19,6 +19,25 @@ A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDE
 - Sources under rh/library/src/: 2606.09096, 1606.05726 (both read in full), basor-chen-0202062 (read in
   full), kaltenbaeck-woracek-1998 (pp. 1-6 of 37 read), luger-ou-2202.13246 (sec. 3.2 read),
   1204.1827 and 2511.23257 (downloaded; only the abstract and theorem list of the latter read).
+
+## SESSION 6 (short-family mean square): SHORT_FAMILY.md (122 lines; written without SP-modular's answer)
+Read: NOTEBOOK N49, N53; digest openai-qrh-11-12.md (whole).
+- PROVED + COMPUTED (30 digits): ||f_c||^2 = sum_k |sum_{d<=N} c_d floor(k/d)|^2/(k(k+1)) under M_c(1) = 0;
+  G_N = P_N T_1^T Gamma T_1 P_N, T_1 = divisor matrix (multiplicative Toeplitz, symbol zeta), Gamma = [1/max(m,n)] = A A^T
+  (Hardy-Cesaro, norm 4).
+- PROVED + COMPUTED (20 digits; first version off by the k = 0 term M_N(1)^2, found by the check): window identity, the
+  divisor-closed window makes P_N T_1 P_N invertible with inverse the Moebius matrix; Moebius vector exactly in the kernel of
+  P_N(T_1 c - e_1); d_N^2 = sum_{k>=0} int_k^{k+1} |R_N(k) + y M_N(1)|^2 dy/y^2, R_N(k) = sum_{N<d<=k} mu(d) floor(k/d): all
+  energy beyond the window, family k ~ X of the same length as its sums (H ~ D borderline). Multiplicative analogue of plank 5.
+- Normalised G~_N: multiplicative Toeplitz with SINGULAR symbol (Kronecker line in T^inf); top ~ N; RH = O(1) energy of a
+  vector of norm^2 ~ log N (mass O(1/K) above level K); not near the bottom.
+- Large sieve D-term = top singular value of non-uniform sampling R_T (node clusters at log-scale 1/T); its extremal vectors
+  are the TRIVIAL TWIST (t ~ 0 clusters; rows u = p^6): in the short regime the mean square is equivalent to the trivial-twist
+  Moebius sum, no amplification.
+- Trivialising object named: Levinson recursion in N with explicit reflection coefficients (needs group-Toeplitz structure
+  with a.c. symbol). Fails: symbol on the Kronecker line; window identity does not shorten the tail.
+- Impostor: identities hold verbatim (a_1 = 1 only); inverse coefficients (pole at 0.808) saturate the D-term; T_f is a sum,
+  not a tensor product over primes.
 
 ## SESSION 5 (round 3 on Phi, with SP-reflection): OBJECT_PHI.md section "Round 3" (124 lines)
 Read: NOTEBOOK N49-N50; reflection/OBJECT_PHI.md Round 2 (lambda_T(z) = Szego-Krein extremal problem on the orbit, ratio of

@@ -123,3 +123,30 @@ computation. Whether they are bounded is the next measurement.
   (Bombieri Thm 9); zeros of the minimiser's transform reproducing zeta's zeros (CCM §6); the lowest eigenvalue
   tracking 1 − χ₄ (CCM Fig. 4); the fake-zero experiment (Bombieri §13).
 - Creation seats: refused by the model's safeguard; not relaunched (decisions D10, A19).
+
+## 2026-11-11 · J6 · Structural mode (owner's rule 13): one object, three toolkits, one wall
+
+After the owner asked for abstraction and risk over measurement, the lead stopped measurement jobs and gave the
+same concrete objects to several specialists at once (notebook N43–N56, `rh/HUNCHES.md` F1–F5, the specialists'
+`OBJECT_PHI.md` and `SHORT_FAMILY.md`). What came out, in order:
+- Where a zero of ζ_K (K = ℚ(√−3)) is an actual object: a node at the CM point ω of the Eisenstein family. Three
+  toolkits, independently: positivity and self-adjointness see only |Φ| on the line, which impostors share; RH_K is
+  a PHASE statement (outerness = minimum phase = cyclicity; −log of the cyclicity angle = the Jensen defect Dfc,
+  derived three ways). Most of the operator side is in print (Colin de Verdière 1982–83, Bombieri–Garrett 2020).
+- Rule H9 (found here): an identity linear in the object whose zeros are sought returns the zero and nothing more.
+- The quasi-RH method outputs (1 + κ)/2 from an auxiliary moment exponent κ, so any "individual sum by a family mean
+  square" argument loses a square root; the amplifier formula 1 − δ/2 (copies of density H^δ) explains 11/12 and a
+  3/4 cap for algebraic copies; δ = 1 is Bagchi's strong recurrence (⟺ RH). (Heuristic; unsearched.)
+- A Wiener–Hopf determinant at ω (SP-reflection) is the first loss-free sign-sensitive object found; the operator
+  seat showed it is Balazard–Saias–Yor / Nyman–Beurling for ζ_K (prediction N51 hit); the positivity seat reached the
+  same conclusion independently.
+- **One wall, reached by four routes:** a Möbius-specific mean square in the regime where the family of twists is not
+  longer than the sum (equivalently a mollified second moment with mollifier longer than the square root of the
+  height; equivalently RH ⟺ boundedness of the Möbius Nyman–Beurling approximants). The October 2026 proof works on
+  the other side (family longer than the sum); the impostor is invisible there and excluded exactly in the short
+  regime; the extremal direction of every mean-square bound there is the trivial twist; the Möbius side has no
+  duality of its own. Candidate exact formula: a Kuznetsov formula on the cubic cover (being read).
+- Killed or reduced on the way: Hunch 2 (positivity as a norm through the cubic theta; the fake has the same kernel
+  structure); the Bohr lift and the Hecke module of δ_ω (both linear); the theta-kernel route (killed by the fake);
+  Hunch 1's polynomial doubling law (doubling is quadratic and needs root size, not the functional equation).
+None of this is a proof of RH or a step that is known to lead to one. It is a map of where the difficulty is.

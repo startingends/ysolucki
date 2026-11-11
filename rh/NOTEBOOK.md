@@ -840,3 +840,22 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   Kuznetsov(-Bruggeman) formula on the cubic metaplectic cover, turning the cubic Gauss sums into Kloosterman-type
   sums with the family size entering only through a test function (Livné–Patterson; Kodama 2004; a spectral large sieve
   on the cubic cover). Reader sent.
+
+**N56. SP-operator on the short-family object: the extremal direction is the trivial twist** (lead, after
+`rh/specialists/operator/SHORT_FAMILY.md`; two formulas checked numerically there, one error caught by the check).
+- Exact: ‖f_c‖² = Σ_k |Σ_{d≤N} c_d ⌊k/d⌋|²/(k(k+1)) under M_c(1) = 0; G_N = P_N T₁* Γ T₁ P_N with T₁ the divisor matrix
+  (multiplicative Toeplitz with symbol ζ) and Γ = [1/max(m, n)] the Hardy–Cesàro operator. WINDOW IDENTITY (the
+  multiplicative analogue of bridge plank 5): {1..N} is divisor-closed, so Möbius inverts the divisor matrix exactly
+  there, and d_N² = Σ_k ∫_k^{k+1} |R_N(k) + y·M_N(1)|² dy/y², R_N(k) = Σ_{N<d≤k} μ(d)⌊k/d⌋: all the energy lives beyond
+  the window, on blocks where family and sum have the SAME length — N53's borderline H ≈ D exactly.
+- The decisive operator fact: the D-term of the large sieve is the top singular value of the sampling operator with
+  nodes log n, produced by clusters of nodes within 1/T; **its extremal vectors are the trivial twist** (t ≈ 0 in the
+  t-family; the rows u = p⁶ in the sextic family). So in the short regime every mean square is equivalent to the
+  untwisted Möbius sum itself and cannot amplify. Beating it needs an exact statement that μ is orthogonal, to
+  square-root size, to the cluster-smooth vectors.
+- Both specialists, independently, now agree on the wall's description (SP-modular: the dualities are self-dual at
+  H = D and the Möbius side has no duality of its own; SP-operator: the extremal direction is the copy direction).
+  The project's map of this region is complete enough to state the target in one line:
+  **TARGET: an exact identity, specific to μ (or to μ·Gauss sum over ℤ[ω]), valid in the regime family ≈ sum length,
+  that separates μ from the cluster-smooth (copy) directions.** The one candidate in sight: a Kuznetsov formula on the
+  cubic cover (READER-7 reading). Nothing else proposed by any seat survived the fake test.
