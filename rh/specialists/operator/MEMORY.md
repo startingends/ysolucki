@@ -344,3 +344,14 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
 - Session 6c: primal SDP at 1.8: +0.138 on k <= 80 eigvecs (constraints avoid the negative directions); k = 180 SCS-inaccurate
   -0.060, infeasible with PSD margin 1e-4: NO certificate. kappa_P(1.8) in [-0.233, ~0.14], sign undetermined; N96 interim
   'detected' withdrawn. L = 2.0: dual stuck at -0.3067. H-4 closed.
+
+## SESSION 7 (R1 of REVERSE.md: solving for H^0): REVERSE_R1.md
+- Conventions: D.xi0 = ghat(i/2), D.xi1 = ghat(-i/2), D.D = 2ab - Q, degree zero = ghat(+-i/2) = 0.
+- Prop R1.1 PROVED: C1 & C2 solvable iff RH; minimal h = (D.D/2)_+ 1[deg>0]; with C2, C1 at degree zero IS Weil positivity.
+  Lemma R1.2: degree-2 homogeneous continuous dimensions make RR amplification vacuous (C1 must hold exactly).
+- Candidates: K1 Krein positive part (C1 universal, C2 false for all: even); K2 one-sided (C2 built in, C1 at deg 0 = RH);
+  K3 effective = g >= 0 mod Poisson null vectors (L5 trivial archimedean; arithmetic only in L4). Predicted split CONTRADICTED.
+- COMPUTED (hodge2.py.txt, Haynsworth inertia; float eig of D.D is swamped by |alpha|~1e14-1e27): nu_+(D.D) = 1 for zeta
+  L = 1, 1.25; impostor nu_+ = nu_-(Q) = 0, 1, 2 at 1.70, 1.72, 1.8. Degree-zero min Q/D: zeta 0.2980, 0.2046; impostor
+  1.72: +0.031 (its first failure is NOT degree zero), 1.8: -0.290.
+- Ratings Quality 5, Toward RH 1.

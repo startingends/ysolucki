@@ -1955,3 +1955,25 @@ FH, `rh/experiments/foothold/REVERSE_R2.md`; predictions first).
   whenever S(c) < 0, which happens at all three zeta windows. So the sign must come from L4–L5 (effectivity and
   positive degree), where the Euler product has to act. Ratings (seat): Quality 3, Toward RH 1; lead: the plank
   confirms the predicted SPLIT (∞ exact and universal; sign elsewhere), which is information for R1 and R4.
+
+**N112. REVERSE plank R1: H⁰ is not determined by the constraints (a solution exists iff RH), but one candidate puts
+ALL the arithmetic into a single effectivity step** (lead, after SP-operator session 7,
+`rh/specialists/operator/REVERSE_R1.md`; one implementation, not certified).
+- Conventions: D·ξ₀ = ĝ(i/2), D·ξ₁ = ĝ(−i/2); D·D = 2ab − Q (so Lemma 2.1 is Q ≥ 0 with the poles); degree zero =
+  ĝ(±i/2) = 0. PROVED: C1 ∧ C2 solvable ⇔ RH (minimal solution (½D·D)₊ on positive degree), and once C2 holds, C1
+  at degree zero IS Weil positivity; for quadratically scaling continuous dimensions the Riemann–Roch amplifier adds
+  nothing (Lemma R1.2).
+- Candidates: K1 (positive spectral part) — C1 universal, C2 fails (symmetric under g → −g). K2 (one-sided) — C2 built
+  in, C1 becomes RH. **K3: effective = g ≥ 0 modulo the Poisson null vectors (the ladder plays the PRINCIPAL
+  DIVISORS); then C2 is a one-line archimedean fact, and the arithmetic can enter only through "a class with
+  sections has an effective representative": positive coefficients for ζ versus mixed signs for the impostor.**
+- Computed: positive squares of D·D: ζ (L = 1.0, 1.25) 1 each (Hodge signature); impostor 0 (1.70), 1 (1.72), 2 (1.8).
+  Min Q/D on degree zero: ζ 0.2980, 0.2046; impostor 0.0419, +0.031, −0.290. The impostor's first failure at 1.72 is
+  in the pole direction, not degree zero; a degree-zero failure appears by L = 1.8. Seat's predictions hit.
+  Ratings (seat): Quality 5, Toward RH 1.
+- Lead's reading: R1 confirms the split in the only form that is not tautological (K3): ∞ makes C2 trivial and the
+  ladder supplies the principal divisors; everything arithmetic is concentrated in ONE statement, the effectivity
+  step E: "every degree-zero class D(g) with D(g)·D(g) > 0 has, modulo the ladder, a representative g + p ≥ 0".
+  E + C2 ⇒ contradiction ⇒ Weil positivity. E must FAIL for the impostor at L = 1.8 (it has a degree-zero failure),
+  and the coefficient-sign difference is the only place it can fail. That is plank R4, now sharp enough to compute
+  (a linear-programming feasibility test) and to attack (why positive coefficients would make E true).

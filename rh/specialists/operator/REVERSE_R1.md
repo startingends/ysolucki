@@ -83,3 +83,49 @@ fact. In that dictionary the Euler product (or coefficient positivity) can only 
 
 ## 4. Test on the existing matrices (after 1–3). Quantities: ν₊(𝔇) (Hodge-index count), and on the extremal direction v
 (the pencil minimiser; for the impostor its negative direction): a, b, deg, D·D(v), h₁(±v), and the C1/C2 verdicts of K1, K2.
+
+### 4.1 Outcomes (COMPUTED; two_zero/hodge.py.txt (float, discarded: see below), hodge2.py.txt; existing matrices;
+D_L-whitened; one implementation, not certified)
+Numerical trap first: in D-whitened coordinates the pole functionals have norm |α| ≈ |β| ≈ 3e14 (L = 1) and 1e27 (L = 1.25),
+so the rank-2 part of D·D has eigenvalue ~2e29 / 3e54 and swamps every O(1) eigenvalue in float (spurious "+4e13"
+eigenvalues). The Hodge count is therefore computed by Haynsworth inertia: ν₊(D·D) = ν₋(Q) + ν₊(M) − 1, M = UᵀA⁻¹U − J (2×2,
+U = [α, β], J the hyperbolic form), which is stable. The K1/K2 values on the minimiser (D·D ≈ 7e24, set by 2ab) are not
+informative for the same reason.
+| case | ν₋(Q) | ν₊(D·D) (Hodge count) | min Q/D, whole window | min Q/D, degree zero (a = b = 0) |
+|---|---|---|---|---|
+| zeta L = 1.0 | 0 | **1** (M eigenvalues 2.1e24, 2.5e29) | 0.297833 | 0.297967 |
+| zeta L = 1.25 | 0 | **1** | 0.204610 | 0.204624 |
+| impostor L = 1.70 | 0 | 0 (no pole: D·D = −Q) | 0.041237 | 0.041905 |
+| impostor L = 1.72 | 1 | 1 | −0.047964 | **+0.031291** |
+| impostor L = 1.80 | 2 | 2 | −0.304332 | **−0.290412** |
+Prediction (b): HIT on all five counts.
+**Reading.**
+- Zeta: exactly one positive square, the Hodge index signature (1, n), on both windows; on degree zero D·D ≤ 0 with margin
+  equal to the comparison constant. All candidates' C1, C2 hold there (K1's C2 fails structurally, as proved).
+- The impostor has no pole, hence no hyperbolic plane: for L < 1.70 its D·D is negative DEFINITE (no positive class at
+  all, no "ample" class), and positive classes appear exactly as its Weil form fails (1 at 1.72, 2 at 1.8).
+- **New: at its first failing window L = 1.72 the impostor's negative direction is NOT of degree zero.** Imposing zeta's
+  fibre conditions ĝ(±i/2) = 0 (Weil's two codimension conditions) makes its form positive again (+0.031). The failure
+  becomes visible at degree zero only from L = 1.8 (−0.290). So for one-sided candidates (K2, K3), C1 at degree zero fails for
+  the impostor from L = 1.8 on, not at 1.72: the impostor's first failure lives in the hyperbolic (fibre) directions, which
+  for zeta carry the pole. (Same lag 1.72 → 1.8 as the prime-sampling cone of PRIME_SAMPLING §7: there the fake weights
+  hid it at 1.72; here the degree conditions hide it at 1.72. HEURISTIC link: both are "two extra linear conditions"
+  effects near the first failure.)
+
+## 5. Verdict and ratings
+- Solving C1 + C2 for H⁰ gives exactly h_min = (½D·D)₊·1[deg > 0], and solutions exist iff RH (Prop. R1.1): the constraints
+  do not determine H⁰, they restate Weil positivity. For continuous (degree-2 homogeneous) dimensions the Riemann–Roch
+  amplifier is vacuous and C1 must hold exactly (Lemma R1.2).
+- The predicted split is CONTRADICTED as a property of definitions: even spectral candidates make C1 universal and C2 false
+  for everyone; one-sided candidates make C2 trivial (with "effective = g ≥ 0", L5 is a one-line archimedean fact) and put RH
+  into C1 at degree zero. The split survives only as a programme: "find an H⁰ for which C1 is a theorem", and then C2 at
+  degree zero is RH.
+- Dictionary gained: fibre classes = ĝ(±i/2); degree zero = Weil's codimension conditions; principal divisors = Poisson null
+  vectors (bridge 1's ladder); effective = g ≥ 0; Hodge count ν₊(D·D) = 1 for zeta (checked at two windows), = ν₋(Q) for
+  the impostor. In this dictionary the arithmetic can act only in L4 ("sections ⇒ an effective representative modulo the
+  ladder"), through positivity of E's coefficients for ζ versus mixed signs for the impostor.
+**Quality 5/10**: the reduction (Prop. R1.1, Lemma R1.2) is proved and short, the dictionary is concrete, and the Hodge count
+and the degree-zero lag are computed; not higher because the candidates are elementary and K3's L4 statement is not
+formulated precisely enough to test. **Toward RH 1/10**: the constraints determine H⁰ only through RH itself; the bridge's
+first plank shows where an intrinsic H⁰ would have to come from (an L4 statement about the ladder and positivity), not that
+it exists.
