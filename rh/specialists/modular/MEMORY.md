@@ -65,6 +65,13 @@ I corrected one of my own recollections while writing (the Euler factor of L(s, 
 - HOLDING: Polya / de Bruijn conditions (read in Newman-Wu 1901.06596) are the right class but unverifiable for such kernels;
   the cuspidal part of |theta_3|^2 (Ichino-type triple products <|theta|^2, u_j>) as the only positivity not implied by K's; the signs eps_j = sign u_j(omega) entering R3 (e).
 
+## 2d. SHORT_FAMILY.md (02:45-03:00 UTC): the mean square S(H,D) for H <= D
+- (2.15) is the step needing H > D: calH + calH^2/X <= X iff calH <= X iff H >= D; a power is needed for the recursion (5.1).
+- At H = D^(1-theta): H_c < 1, b = 1 is a fixed point of the transfer: vacuous; large sieve gives S << D^2 = trivial for A_1.
+- S >= |A_1|^2 (u = 1 in the family): S(D^eta, D) << D^(1+eta+eps) for all eta is RH_K; at eta = 1/2 gives Re s > 3/4 (17/24 amplified).
+- No exact formula for H < D in anything read; both dualities have self-dual point H = D. Impostor visible exactly for H < D^0.617.
+- HOLDING: whether a Gauss-sum-to-Kloosterman identity puts S into Kuznetsov form on the cubic cover (Kodama 2004, Livne-Patterson: unread).
+
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of
    Frobenius of a one-point curve); RH follows because q <= 2 sqrt(q) for q <= 4, by inspection, and the list of curves

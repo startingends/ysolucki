@@ -194,3 +194,7 @@ contributes about three times as much as rho (it is three times closer to the li
 ## Round 2b (02:40-02:50 UTC): lead's correction (Schoenberg) checked by reading Groechenig arXiv 2007.12889 (theorem
 statements) and Newman-Wu arXiv 1901.06596 (Polya, de Bruijn sections). Log-concavity test withdrawn. "Every zero twice"
 examined: union of two copies, kernel = K * K dilated by 3; no theorem of the asked shape can exist (Epstein fake). No numerics.
+
+## 02:45-03:00 UTC: SHORT_FAMILY.md (new common object, rule 13 (b); SP-operator's answer not read). Read N49, N53, the
+11/12 paper's sections 2, 4.4, 5 in the text. No numerics. Finding: the step needing H > D is (2.15) (theta + quadratic large
+sieve, dual column length calH^2/X); at H = D^(1-theta) the transfer has b = 1 as a fixed point and returns the trivial bound.
