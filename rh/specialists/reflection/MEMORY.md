@@ -1,8 +1,18 @@
 # MEMORY of SP-reflection
 
-Rewritten at the end of session 5 (2026-11-11; sessions 2-4: rounds 1-3 on the object Phi; session 5: seminar S2). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
+Rewritten at the end of session 5 (2026-11-11; sessions 2-4: rounds 1-3 on the object Phi; session 5: seminar S2; session 6: seminar S3). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
 sources still to read). Session 1 = seminar S1 (closed; summary rh/experiments/s1_seminar/socrates/CLOSING.md; my full
 answers in NOTES_session1.md). Session 2 = the structural task on one object, written up in OBJECT_PHI.md.
+
+## 0e. SESSION 6: seminar S3 (board s3), long form s3/B4_long.md
+- Answered B4 (B12): form positivity avoids the amplifier's LOSS only near its equality case; the square root disappears via Jensen
+  (log) + contour shift. Typed form: Poisson-weighted H^2 norm on Re s = theta at s0 = theta + Y, vector (s-1)zeta(s)B(s)/s with smoothed
+  Moebius B; eps(B) < 2 delta/Y => zero-free box => A_1 << D^(theta + 2delta + eps) with Y = D^(eps'). Requirement: mollifier longer than
+  height, X >= Y^(1/(2theta-1)); level of distribution 1/(2theta) for correlations of c_n = sum_{d|n,d<=X} mu(d) (theta = 3/4 <-> 2/3).
+  Reformulation by B9 criterion but no floor at 1/2; H10: neither case (form, not coefficient positivity); first wall = parity (level > 1/2,
+  mu not well-factorable); copy barrier's (H3) fails. RISK: 7/8 theorem => asymptotic correlations at level in (1/2, 4/7).
+- Asked SP-sieve (B13): largest known level for those Moebius-weighted correlations.
+HOLDING: blind check eps_theta(B) for zeta at theta = 0.9, X = 1e4, Y = 10 (prediction first); SP-sieve's answer.
 
 ## 0d. SESSION 5: seminar S2 (board s2), notes in s2/NOTES_s2.md
 - Answered B5 (B13): torus mean square is diagonal for every D (orthonormal characters); gcd identity (*) makes the Moebius

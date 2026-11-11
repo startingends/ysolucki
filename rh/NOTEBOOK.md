@@ -1203,3 +1203,11 @@ An exit would need an orthogonality relation whose diagonal is the trivial chara
   mean square of b ∗ μ and breaks the Gauss–Jacobi step, which needs μ pointwise. Its two repairs meet parity
   (positively biased b) or land on 3/4 (b on cubes boosts only the quadratic copies of density H^(1/2)). Question B11
   to SP-sieve is open.
+- CORRECTION to N50 and N71 (from SP-sieve's S3 B9, `rh/specialists/sieve/S3_B2.md`): the bootstrap's κ enters Lemma
+  18.1 only through (18.12), |Q|² ≤ Z^(κz), which is the licence β* ≤ (1 + κ)/2 restated and holds by the definition
+  of β*; the stated range κ ∈ [3/4, 1] is bookkeeping (works down to 13/18). So my reading "(1 + κ)/2 with κ ≥ ½ at
+  square-root cancellation" was WRONG as a mechanism. The floor is carried by the Möbius side: Lemma 17.1's length
+  condition (the Möbius polynomial not longer than the family: Thm 3's H2) and Lemma 17.6's sixth-power copies (H1).
+  So E1 (the bootstrap) is not an exit; it feeds β* only into the L side. Liu and Xu–Sang change only L-side
+  parameters (abstracts). Computation asked of SP-sieve: the comparison system's best exponent as a function of the
+  copy slope (prediction first), to decide whether 3/4 floors the whole architecture or only its sextic instance.
