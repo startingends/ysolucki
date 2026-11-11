@@ -98,6 +98,12 @@ I corrected one of my own recollections while writing (the Euler factor of L(s, 
 - Rankin-Selberg family: A_1 is the d = 1 term of every member (zeta | L(f x f-bar)): density-one copies, circular (N71 / E3 / Theorem 1).
 - E5 closes at Landau's pole (N63). Open: an orthogonality with trivial diagonal but no pole in each member's RS square.
 
+## 2i. CUBIC_ABSORB.md: cubic symbols and mu-absorption
+- 1D cubic family: mu x (cubic Gauss) = sextic Gauss sum (I4): absorbed onto the 6-fold cover, where theta coefficients are unknown.
+- 2D (divisor-weighted) cubic family: mu x (cubic)^2 = alpha x conj cubic (I3): absorbed into theta_3; but every twist is an even power of
+  chi, so the paper's (2.14) never yields the quadratic character: only the cubic large sieve, whose excess is sharp under GRH.
+- Asked SP-sieve: rerun S3_SLOPE V2 at c = 1/3 with M + L + (ML)^(2/3) in the low estimate.
+
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of
    Frobenius of a one-point curve); RH follows because q <= 2 sqrt(q) for q <= 4, by inspection, and the list of curves

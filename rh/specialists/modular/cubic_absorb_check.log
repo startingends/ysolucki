@@ -1,0 +1,6 @@
+primes tested: 74
+I1 g2^3 = -alpha                         max error 3.51e-14
+I2 g1 g2 = -alpha G                      max error 2.25e-14
+I3 -g2^2 = alpha conj g2                 max error 2.63e-14
+I4 -conj g2 = g1 conj(alpha) conj(G)     max error 2.16e-14
+I5 g3^2 = (-1/pi)_2                      max error 3.11e-14

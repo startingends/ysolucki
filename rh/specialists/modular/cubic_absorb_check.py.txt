@@ -1,0 +1,33 @@
+# numerical check of the Gauss-sum identities used in CUBIC_ABSORB.md (split primary primes of Z[omega], N <= 400)
+import cmath, math
+w = complex(-0.5, math.sqrt(3)/2)
+def isprime(n):
+    if n < 2: return False
+    i = 2
+    while i*i <= n:
+        if n % i == 0: return False
+        i += 1
+    return True
+def e(z): return cmath.exp(4j*math.pi*z.imag/math.sqrt(3))
+worst = [0]*5; count = 0
+for a in range(-40, 41):
+    for b in range(-40, 41):
+        p = a*a - a*b + b*b
+        if p > 400 or not isprime(p) or p % 3 != 1: continue
+        if not (a % 3 == 1 and b % 3 == 0): continue          # primary: pi = 1 mod 3
+        pi = complex(a, 0) + b*w
+        # omega mod pi: a + b*omega = 0 mod pi  =>  omega = -a/b mod p
+        om = (-a * pow(b, -1, p)) % p
+        z6 = (-om) % p                                         # -omega: primitive 6th root of unity mod pi
+        table = {pow(z6, k, p): cmath.exp(-1j*math.pi*k/3) for k in range(6)}   # complex value of -omega^k... -omega = e^(-i pi/3)
+        chi = lambda x: table[pow(x % p, (p-1)//6, p)]
+        def gam(j):
+            return sum(chi(x)**j * e(complex(x, 0)/pi) for x in range(1, p))/math.sqrt(p)
+        g1, g2, g3 = gam(1), gam(2), gam(3)
+        al = pi/abs(pi); G = chi(4).conjugate()*g3
+        res = [abs(g2**3 + al), abs(g1*g2 + al*G), abs(-g2**2 - al*g2.conjugate()), abs(-g2.conjugate() - g1*al.conjugate()*G.conjugate()),
+               abs(g3**2 - chi(-1)**3)]
+        worst = [max(u, v) for u, v in zip(worst, res)]; count += 1
+print("primes tested:", count)
+for name, v in zip(["I1 g2^3 = -alpha", "I2 g1 g2 = -alpha G", "I3 -g2^2 = alpha conj g2", "I4 -conj g2 = g1 conj(alpha) conj(G)", "I5 g3^2 = (-1/pi)_2"], worst):
+    print("%-40s max error %.2e" % (name, v))

@@ -1281,3 +1281,16 @@ against Liu's 0.874957; predictions written first).
 - So G6 is not "where nobody looked"; it is a known programme with named obstacles. What the record can add is the
   asymmetry above: over ℤ the Stepanov-type UPPER bound alone would suffice, so the missing piece is exactly the
   "cheap high-order vanishing at all primes" step, with nothing needed for the lower half.
+
+**N75. Why the October family is the only one: absorption and the sharp sieve pull in opposite directions**
+(lead, after `rh/specialists/modular/CUBIC_ABSORB.md`; five identities checked at 74 split primes to 3.5e-14).
+- On squarefree n, μ = (sextic Gauss sum)·(cubic Gauss sum) up to units. One-variable cubic family: the dual has one
+  cubic Gauss sum, μ is absorbed into a SEXTIC Gauss sum — coefficients of the 6-fold cover's theta, whose Whittaker
+  model is not unique (Kazhdan–Patterson): no Patterson formula, absorption fails. Two-variable cubic family (the
+  divisor-weighted one): μ·γ₂² = α·γ̄₂ IS a cubic theta coefficient, absorption works — but then every twist and the
+  theta multiplier are even powers of the sextic character, the quadratic character never appears, and only the cubic
+  large sieve remains, whose excess term is sharp (Dunn–Radziwiłł; de Faveri–Dunn–Hoffstein).
+- **The rule (SP-modular): absorption needs a Gauss sum that contains μ; the sharp (quadratic) sieve needs an odd
+  power of the sextic character after the theta step. Only the sextic family has both.** That is the structural reason
+  the October proof works over ℚ(√−3) with sixth-order symbols and nowhere else in sight, and why c is stuck at 1/6.
+- Pending: SP-sieve reruns its c = ⅓ case with the cubic sieve's excess term (ML)^(2/3) in the low estimate.

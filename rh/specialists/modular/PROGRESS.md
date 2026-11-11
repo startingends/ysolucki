@@ -215,3 +215,14 @@ underestimated the head of the prime sum: arctan(2^(-sigma)) + arctan(3^(-sigma)
 ## 03:45 UTC: posted B26 (B22) and B27 (B23); SHORT_FAMILY 4(a) corrected.
 ## 03:55 UTC: TRANSPORT.md written (N62-N65, Bettin-Gonek and Conrey digests read). No numerics.
 ## 05:25 UTC: S3 B3 answered as B7 (S3_B3.md). No numerics.
+
+## 05:45 (clock) PREDICTION (P11) for the identities of CUBIC_ABSORB.md, before computing
+For split primary primes pi of Z[omega], N(pi) = p <= 400, with chi = (./pi)_6, gamma_j = p^(-1/2) sum_x chi(x)^j e(x/pi), e(z) = exp(4 pi i Im z/sqrt3),
+alpha = pi/|pi|, G = conj(chi(4)) gamma_3 (READER-4's corrected form):
+ (I1) gamma_2^3 = -alpha;  (I2) gamma_1 gamma_2 = -alpha G;  (I3, derived) -gamma_2^2 = alpha conj(gamma_2) [mu x cubic^2 = alpha x conj cubic];
+ (I4, derived) -conj(gamma_2) = gamma_1 conj(alpha) conj(G) [mu x conj cubic = sextic Gauss sum x ray class / alpha];
+ (I5) gamma_3^2 = chi(-1)^3 = (-1/pi)_2 [quadratic: no constant -1].
+PREDICTION: all five hold to 1e-12 at every prime; (I3), (I4) are algebraic consequences of (I1), (I2), so they cannot fail alone.
+Result of P11 (cubic_absorb_check.log; double precision, 74 split primary primes, N <= 400): I1 3.5e-14, I2 2.3e-14, I3 2.6e-14,
+I4 2.2e-14, I5 3.1e-14. HIT (all five).
+## 05:48 UTC: CUBIC_ABSORB.md written (88 lines).
