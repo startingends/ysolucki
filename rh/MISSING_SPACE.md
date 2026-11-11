@@ -82,3 +82,38 @@ eigenvalues of its endomorphisms at once.
   curve candidate gives spectral, not zero, positivity.
 - Quality 4 (clean and consistent with every result of the session; several links from memory). Toward RH 2 (it
   names the object more sharply; it does not build it).
+
+## 7. A construction attempt, and the no-go it produced (lead, 2026-11-11, after the owner: "you NEED to fill it")
+Attempt. Look for J among existing groups with the scaling action, sorted by how End sees the scalings λ ∈ ℚ₊*:
+- (a) Groups with a lattice and finite-rank endomorphism algebras (G_m over ℤ with the power maps [n], the adelic
+  solenoid 𝔸/ℚ with End = ℚ, the Bohr torus T^∞ = dual of ℚ₊*, abelian varieties, tori): the group law is there and
+  positivity can come from a polarisation (theta functions on the lattice), but ℤ[ℚ₊*] → End collapses (§3) or the
+  zeros appear as POINTS (the Kronecker line in T^∞, N88), not as eigen-characters of endomorphisms.
+- (b) Connes' L²(adele class space): every signed combination of scalings acts (by convolution), the zeros are the
+  absorption spectrum, but they live on a cokernel where the induced form is not the L² form, and its positivity is
+  Weil positivity, open.
+The hole sits between (a) and (b). Trying to place a candidate there produced the following obstruction.
+
+**Proposition (no-go for integral models; lead, proof by a known transcendence theorem; to be verified).** Let
+γ ≠ 0 be real and p₁, p₂, p₃ distinct primes. Then at least one of p₁^(iγ), p₂^(iγ), p₃^(iγ) is transcendental.
+Proof: the six exponentials theorem (Lang, Ramachandra (m)): if x₁, x₂ are ℚ-linearly independent and y₁, y₂, y₃ are
+ℚ-linearly independent, one of the six numbers e^(x_i y_j) is transcendental. Take x = (1, iγ) (independent since iγ
+is not rational) and y_j = log p_j (independent by unique factorisation); the e^(1·y_j) = p_j are algebraic, so some
+p_j^(iγ) is transcendental. ∎
+**Consequence.** On the γ-component of H¹, the scaling by p acts by p^(iγ) (times p^(½) in the usual normalisation).
+If J had a lattice (an integral structure) preserved by the scalings by p₁, p₂, p₃ with the γ-component inside a
+FINITE-RANK invariant sublattice, those scalings would have characteristic polynomials with integer coefficients there,
+hence algebraic eigenvalues: a contradiction. So:
+- **no zero of ζ (indeed no real γ ≠ 0) can sit in a finite-rank integral piece on which three prime scalings act;**
+- hence J cannot be an abelian variety, a torus, or any finite-rank lattice object over ℚ̄ with the prime scalings
+  as endomorphisms, and positivity cannot come from a polarisation of finite rank (Riemann relations on a lattice);
+- over F_q(t) there is no contradiction because every Frobenius is a power of ONE π, whose eigenvalues are algebraic
+  Weil numbers; over ℚ the primes are independent (log p ℚ-independent), and independence plus algebraicity is what
+  the six exponentials theorem forbids.
+- So each zero must live in a piece of INFINITE rank with no finite invariant sublattice (like the shift on ℓ²(ℤ)),
+  or J has no integral structure at all. Either way, the positivity of the missing space cannot be inherited from
+  finite-dimensional algebraic geometry; it must come from an infinite-rank or analytic polarisation.
+- Status: rigorous modulo (m) for the six exponentials theorem and the standard fact that endomorphisms preserving a
+  finite-rank lattice have integral characteristic polynomials; the conclusion "J is not algebraic of finite rank"
+  is new as far as the lead knows (not searched). Quality 6, Toward RH 2: it removes a whole class of candidates for
+  the missing space and says what kind the space must be; it does not build it.

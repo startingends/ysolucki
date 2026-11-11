@@ -2026,3 +2026,13 @@ positive self-intersection; exact principal divisors force leaving the window** 
   and the intersection form is continuous with respect to them. Leaving the window lands on the Nyman–Beurling
   distance, which is RH-equivalent. This matches Connes' statement that the square must be built (not approximated
   by semilocal cutoffs). Toward RH stays 2.
+
+**N115. A construction attempt for the missing space, and a no-go from transcendence** (lead; `rh/MISSING_SPACE.md`
+§§1–7). Specification: an Arakelov-type space with a group law on which signed combinations of the scaling flow act as
+endomorphisms with the zeros as eigen-characters, Rosati involution = functional equation (§§2–5). Existing groups
+either have a lattice and a collapsed End (G_m, 𝔸/ℚ, T^∞, abelian varieties) or a full End without proved positivity
+(Connes' L²). No-go (§7): by the six exponentials theorem, for any real γ ≠ 0 one of p₁^(iγ), p₂^(iγ), p₃^(iγ) is
+transcendental, so no zero can sit in a finite-rank integral piece on which three prime scalings act: the missing space
+is NOT an abelian variety, torus or finite-rank lattice object, and its positivity cannot come from a finite-rank
+polarisation. Each zero must live in an infinite-rank piece (or the space has no integral structure). Quality 6,
+Toward RH 2. Sent to SP-modular for adversarial check together with §§1–5.
