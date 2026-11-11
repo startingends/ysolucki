@@ -1405,3 +1405,23 @@ collision** (lead, after SP-operator session 2, `rh/specialists/operator/TWO_ZER
 - Prediction score of the seat: 2 hits, 2 partial, 3 misses (main miss: it predicted κ > 0 at the collision).
 - Next (rule 12, confirm before building): an independent verifier tests (S) at new binding pairs with the kill
   line κ/Δ ∉ [0.3, 2]. Sent.
+
+**N82. Statement (S) is KILLED; what survives is a factor-2 tracking with no selection rule** (lead, after V-TZ,
+`rh/specialists/verifier_tz/VERDICT.md`).
+- With the written rule (binding pair = argmin Δ in the band (2πe^(2L)/q, 1.55×)) the impostor scores κ/Δ = 0.16 and
+  0.18, below the kill line 0.3. The original impostor point had been scored by where the minimiser sits (40.16/40.68,
+  above T_D(1.5) = 39.1), i.e. a choice made after seeing the data. No band cut-off works: zeta at L = 1.0 needs a
+  factor < 1.66, at L = 1.1 one > 1.97. The pair 121.37/122.95 never binds. The degree rule 90L is not enough
+  (0.277 at degree 110 against 0.221 at 176 for zeta at L = 1.1).
+- Survives: scored by the pair the minimiser actually sits on, κ/Δ ∈ [0.66, 1.17] over nine points (zeta, χ₅,
+  impostor). The spike at the true zero positions is real (reproduced with an independent all-mpmath whitening;
+  K_D at the pair goes 0.74 → 6.5 → 655 as the pair is moved 0, 0.01, 0.1 off the true zeros).
+- Structural reading (lead). The pinning has a simple cause: D = 2‖Möbius-inverse‖² is, on the window space, a norm
+  of f DIVIDED by the L-function, so K_D(z, z) behaves like |ξ(z)|² times a Paley–Wiener kernel: small at the zeros,
+  huge between them. The pencil (Q, D_L) is then the comparison of the Weil form with a ξ-divided norm, and κ_min is
+  the bottom of the Gram matrix of reproducing kernels at the zeros, indefinite (Krein) when zeros are off the line.
+  That is the de Branges / Lagarias picture of Weil positivity (Hilbert spaces of entire functions built from ξ; RH ⇔
+  a Hermite–Biehler property). So bridge 1 ends, at both gaps, inside a known framework: the near-null ladder is
+  Poisson summation, and the whole-space constant is interpolation at the zeros. Sent to a reader to check against
+  the literature rather than asserting it from memory.
+- Prediction scores this round: lead N80 (both missed), SP-operator (2 hit, 2 partial, 3 missed), V-TZ (see verdict).

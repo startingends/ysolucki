@@ -1,0 +1,27 @@
+KIND = zeta, L = 11/10, lam^2 = 9.0250, NB = 130, nh = 40, prec = 560; prime powers [2, 3, 4, 5, 7, 8, 9]; Q built 35s
+D built 40s (x nodes 1260, xi nodes 216)
+ degree < 110: kappa_min = 0.276576  second = 0.277927  kappa_max = 3.72177   (57s)
+ degree < 130: kappa_min = 0.224978  second = 0.241438  third = 0.278441  kappa_max = 4.66833   (154s)
+ ladder of Q (10 lowest): ['2.049e-38', '7.769e-35', '1.596e-31', '2.527e-28', '3.15e-25', '2.519e-22', '1.001e-19', '2.527e-17', '7.542e-15', '2.06e-12']
+ ladder of D (10 lowest): ['1.954e-38', '8.044e-35', '1.716e-31', '2.531e-28', '2.808e-25', '2.165e-22', '9.317e-20', '2.611e-17', '7.912e-15', '2.063e-12']
+ rung ratios Q(d)/D(d) on the 8 lowest eigenvectors d of D: ['1.475', '1.423', '1.376', '1.394', '1.458', '1.489', '1.412', '1.35']
+ rung ratios Q(q)/D(q) on the 8 lowest eigenvectors q of Q: ['0.5772', '0.5335', '0.5668', '0.6887', '0.8486', '0.8624', '0.7192', '0.6151']
+ MINIMISER: kappa = 0.224978; D(v)/|v|^2 = 4.015e-37; Q(v)/|v|^2 = 9.033e-38; even share 1.0; share in Legendre degrees >= NB/2: 5.0e-28;
+      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): [(1, '0.227', '2.05e-38'), (3, '0.214', '1.6e-31'), (121, '0.139', '4.62'), (9, '0.0758', '7.54e-15'), (23, '0.0614', '0.866')]; energy share in rungs 1..6: 0.474, in rungs 1..12: 0.585
+      OFF-LADDER PART w (components on Q-eigenvalues >= 0.01, 115 of 130): |w|^2/|v|^2 = 2.22e-38; Q(w)/|w|^2 = 1.514; D(w)/|w|^2 = 3.467; Q(w)/Q(v) = 0.372; D(w)/D(v) = 0.192
+      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): ['1.0', '1.0', '1.0', '1.0', '1.0', '1.0']; largest overlaps at Q-rungs [(1, '1.0', '2.05e-38'), (2, '1.52e-6', '7.77e-35'), (3, '1.21e-7', '1.6e-31'), (4, '6.24e-13', '2.53e-28')]
+ second: kappa = 0.241438; D(v)/|v|^2 = 6.14e-34; Q(v)/|v|^2 = 1.482e-34; even share 0.469; share in Legendre degrees >= NB/2: 1.41e-25;
+      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): [(2, '0.278', '7.77e-35'), (122, '0.136', '4.62'), (4, '0.125', '2.53e-28'), (8, '0.105', '2.53e-17'), (26, '0.0384', '1.06')]; energy share in rungs 1..6: 0.409, in rungs 1..12: 0.576
+      OFF-LADDER PART w (components on Q-eigenvalues >= 0.01, 115 of 130): |w|^2/|v|^2 = 7.08e-35; Q(w)/|w|^2 = 0.8491; D(w)/|w|^2 = 1.973; Q(w)/Q(v) = 0.405; D(w)/D(v) = 0.227
+      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): ['0.4688', '1.0', '1.0', '1.0', '1.0', '1.0']; largest overlaps at Q-rungs [(2, '0.531', '7.77e-35'), (1, '0.469', '2.05e-38'), (3, '1.85e-6', '1.6e-31'), (4, '7.32e-8', '2.53e-28')]
+ MAXIMISER: kappa = 4.66833; D(v)/|v|^2 = 1.379e-34; Q(v)/|v|^2 = 6.438e-34; even share 0.956; share in Legendre degrees >= NB/2: 1.35e-26;
+      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): [(121, '0.18', '4.62'), (23, '0.152', '0.866'), (21, '0.117', '0.758'), (26, '0.0714', '1.06'), (122, '0.0702', '4.62')]; energy share in rungs 1..6: 0.0144, in rungs 1..12: 0.0195
+      OFF-LADDER PART w (components on Q-eigenvalues >= 0.01, 115 of 130): |w|^2/|v|^2 = 4.43e-34; Q(w)/|w|^2 = 1.417; D(w)/|w|^2 = 0.3621; Q(w)/Q(v) = 0.975; D(w)/D(v) = 1.16
+      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): ['0.9558', '1.0', '1.0', '1.0', '1.0', '1.0']; largest overlaps at Q-rungs [(1, '0.956', '2.05e-38'), (2, '0.0442', '7.77e-35'), (3, '7.74e-6', '1.6e-31'), (4, '6.53e-9', '2.53e-28')]
+   ON-LINE ZEROS (all 79 on-line zeros below 200), MINIMISER: sum_on 2|F(gamma)|^2 = 0.984135 x Q(v); sum_on + off-line quartets = 0.984135 x Q(v) (missing: zeros above 200); largest contributions (gamma, share of Q(v)): [('111.875', '0.475'), ('111.03', '0.333'), ('122.947', '0.0935'), ('94.6513', '0.0122'), ('133.498', '0.00807'), ('118.791', '0.00615')]
+ OFF-LINE ZEROS, MINIMISER: Q(v) = 9.0329e-38 |v|^2, D(v) = 4.015e-37 |v|^2; contribution of the quartets at 85.7, 114.2, 166.5, 176.7: [] x Q(v); ratio without them (Q - off)/D = 0.22498, with them Q/D = 0.22498
+   ON-LINE ZEROS (all 79 on-line zeros below 200), lowest eigenvector of Q: sum_on 2|F(gamma)|^2 = 0.648302 x Q(v); sum_on + off-line quartets = 0.648302 x Q(v) (missing: zeros above 200); largest contributions (gamma, share of Q(v)): [('111.875', '0.141'), ('111.03', '0.0941'), ('114.32', '0.0451'), ('129.579', '0.0292'), ('116.227', '0.0252'), ('134.757', '0.0222')]
+ OFF-LINE ZEROS, lowest eigenvector of Q: Q(v) = 2.0488e-38 |v|^2, D(v) = 3.5498e-38 |v|^2; contribution of the quartets at 85.7, 114.2, 166.5, 176.7: [] x Q(v); ratio without them (Q - off)/D = 0.57716, with them Q/D = 0.57716
+ OFF-LINE ZEROS, 2nd eigenvector of Q: Q(v) = 7.7694e-35 |v|^2, D(v) = 1.4563e-34 |v|^2; contribution of the quartets at 85.7, 114.2, 166.5, 176.7: [] x Q(v); ratio without them (Q - off)/D = 0.53349, with them Q/D = 0.53349
+ OFF-LINE ZEROS, lowest eigenvector of D: Q(v) = 2.8827e-38 |v|^2, D(v) = 1.9538e-38 |v|^2; contribution of the quartets at 85.7, 114.2, 166.5, 176.7: [] x Q(v); ratio without them (Q - off)/D = 1.4754, with them Q/D = 1.4754
+total 309s

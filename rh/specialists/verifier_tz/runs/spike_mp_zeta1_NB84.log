@@ -1,0 +1,7 @@
+D eig range 7.2988e-30 .. 8.7137  (17s)
+actual: ['0.2979583', '0.3003184']  background: ['2.696e-14', '1.731e-13'] (28s)
+ shift 0: kappa_min = 0.2979583, second 0.3003184; K_D(c - delta) = 0.74156  (34s)
+ shift 1e-3: kappa_min = 0.2639614, second 0.2941887; K_D(c - delta) = 0.79817  (39s)
+ shift 1e-2: kappa_min = 0.02732219, second 0.1062096; K_D(c - delta) = 6.4958  (43s)
+ shift 0.1: kappa_min = 0.0002738223, second 0.001593411; K_D(c - delta) = 655.39  (48s)
+ shift 0.3: kappa_min = 2.399883e-5, second 0.0001403311; K_D(c - delta) = 7548.4  (52s)

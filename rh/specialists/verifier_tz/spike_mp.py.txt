@@ -1,0 +1,35 @@
+"""V-TZ: spike check of TWO_ZERO 3.3(d) entirely in mpmath (no float64 step), with a DIFFERENT whitening
+(D = U diag(w) U^T by eigsy, D^{-1/2} = U diag(w^{-1/2}) U^T instead of Cholesky). Also prints K_D(t) = phi^T D^{-1} phi.
+usage: spike_mp.py.txt <pkl> <NB> <g1> <g2> <shift1,shift2,...>"""
+import sys, pickle, time
+import mpmath as mp
+d = pickle.load(open(sys.argv[1], 'rb')); NB = int(sys.argv[2]); mp.mp.prec = d['prec'] - 40
+L = mp.mpf(d['L'].split('/')[0]) / (mp.mpf(d['L'].split('/')[1]) if '/' in d['L'] else 1)
+g1, g2 = mp.mpf(sys.argv[3]), mp.mpf(sys.argv[4]); c = (g1 + g2) / 2; d0 = (g2 - g1) / 2
+Q = mp.matrix(NB, NB); D = mp.matrix(NB, NB)
+for i in range(NB):
+    for j in range(NB):
+        Q[i, j] = (mp.mpf(d['Q'][i][j]) + mp.mpf(d['Q'][j][i])) / 2; D[i, j] = (mp.mpf(d['D'][i][j]) + mp.mpf(d['D'][j][i])) / 2
+t0 = time.time()
+w, U = mp.eigsy(D)
+print(f"D eig range {mp.nstr(min(w),5)} .. {mp.nstr(max(w),5)}  ({time.time()-t0:.0f}s)", flush=True)
+S = U * mp.diag([1 / mp.sqrt(x) for x in w]) * U.T
+def phi(z):
+    z = mp.mpc(z); wz = z * L
+    return [(1j) ** n * mp.sqrt(2 * L * (2 * n + 1)) * mp.sqrt(mp.pi / (2 * wz)) * mp.besselj(n + mp.mpf(1) / 2, wz) for n in range(NB)]
+def pairform(t):
+    p = phi(t); a = mp.matrix([mp.re(x) for x in p]); b = mp.matrix([mp.im(x) for x in p])
+    return 2 * (a * a.T + b * b.T), a, b
+P1, _, _ = pairform(g1); P2, _, _ = pairform(g2)
+Qbg = Q - P1 - P2
+def kmin(M):
+    A = S * M * S.T; A = (A + A.T) / 2
+    e = mp.eigsy(A, eigvals_only=True); e = sorted(e); return e[0], e[1]
+print("actual:", [mp.nstr(x, 7) for x in kmin(Q)], " background:", [mp.nstr(x, 4) for x in kmin(Qbg)], f"({time.time()-t0:.0f}s)", flush=True)
+Dinv = S.T * S
+for sh in sys.argv[5].split(','):
+    e = mp.mpf(sh); dl = d0 + e
+    Pa, a1, b1 = pairform(c - dl); Pb, _, _ = pairform(c + dl)
+    KD = (a1.T * Dinv * a1)[0] + (b1.T * Dinv * b1)[0]
+    k = kmin(Qbg + Pa + Pb)
+    print(f" shift {sh}: kappa_min = {mp.nstr(k[0], 7)}, second {mp.nstr(k[1], 7)}; K_D(c - delta) = {mp.nstr(KD, 5)}  ({time.time()-t0:.0f}s)", flush=True)
