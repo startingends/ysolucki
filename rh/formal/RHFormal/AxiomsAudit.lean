@@ -32,6 +32,8 @@ import RHFormal.CB_L5_CharacterOrthogonality
 import RHFormal.T140_KroneckerSum
 import RHFormal.T139_SupportClosure
 import RHFormal.T129_PairGram
+import RHFormal.T140_KroneckerSumMulti
+import RHFormal.T129_CollisionExact
 set_option autoImplicit false
 
 /-!
@@ -131,3 +133,10 @@ name would mean an added axiom. (`native_decide` would show as `Lean.ofReduceBoo
 #print axioms RHFormal.T129.lam_root
 #print axioms RHFormal.T129.lam_lower
 #print axioms RHFormal.T129.lam_bounds
+#print axioms RHFormal.T140.Ksum_lower
+#print axioms RHFormal.T140.Ksum_attained
+#print axioms RHFormal.T140.vec_ne_zero
+#print axioms RHFormal.T140.Ksum_ground_eigen
+#print axioms RHFormal.T129.det_exact
+#print axioms RHFormal.T129.trace_exact
+#print axioms RHFormal.T129.det_exact_J

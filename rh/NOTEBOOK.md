@@ -1932,3 +1932,10 @@ recorded, check clean; K-atlas/#9, #10; scripts `rh/experiments/k_atlas/`).
   validates H-4 as a CRITERION only (positivity on C_P is as hard as RH, N95).
 - The lead's own gluing (triangle amplifier + Bagchi) does not compose: one multiplies exponents, the other counts
   zeros. Ratings: Quality 4, Toward RH 1.
+
+**N110. FORMAL session 4: T140 r-factor core and T129 exact collision identity compile** (3973 jobs, 95 audited
+theorems, standard axioms, no sorry). `T140_KroneckerSumMulti.lean`: bottom of c·I + Σ_i A_i (Matrix.kronecker) is
+c + Σ λ_min(A_i), attained at the tensor product of bottom vectors. `T129_CollisionExact.lean`: for a polynomial
+family k(t), k± = k(c ± √u): det Gram(k₊, k₋) = 4‖k(c)‖²·J·u + u²R(u), trace = 2‖k(c)‖² + u·T(u), R, T polynomials;
+with session 3's bounds this brackets κ₂. Not formal: T140's divisor-box identity; T129 for analytic families and the
+continuation u = −β²; λ_min is the Rayleigh minimum (spectral theorem not typed). Quality step only.

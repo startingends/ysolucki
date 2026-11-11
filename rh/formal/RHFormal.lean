@@ -34,4 +34,6 @@ import RHFormal.CB_L5_CharacterOrthogonality
 import RHFormal.T140_KroneckerSum
 import RHFormal.T139_SupportClosure
 import RHFormal.T129_PairGram
+import RHFormal.T140_KroneckerSumMulti
+import RHFormal.T129_CollisionExact
 import RHFormal.AxiomsAudit

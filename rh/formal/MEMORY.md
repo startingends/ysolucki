@@ -1,12 +1,12 @@
 # MEMORY of the formal seat (FORMAL)
 
 Rewritten at the end of every session. Read this first next session. Detail per file: PROGRESS.md.
-Last rewrite: end of session 3, 2026-11-11 13:12 UTC.
+Last rewrite: end of session 4, 2026-11-11 13:56 UTC.
 
 ## State
-- Full build `lake -d /home/user/ysolucki/rh/formal build`: **Build completed successfully (3971 jobs)** at 13:10 UTC
-  (session 3).
-- 34 statement files + `AxiomsAudit.lean` (prints the axioms of 88 main theorems: all `[propext, Classical.choice,
+- Full build `lake -d /home/user/ysolucki/rh/formal build`: **Build completed successfully (3973 jobs)** at 13:54 UTC
+  (session 4).
+- 36 statement files + `AxiomsAudit.lean` (prints the axioms of 95 main theorems: all `[propext, Classical.choice,
   Quot.sound]`), all imported from `RHFormal.lean`. No `sorry`, no `axiom`, no `native_decide`. `RHFormal/drafts/` does
   not exist: nothing was left half-done.
 - The only build warnings are lake's "imports ... designed for use with the module system; consider adding `module`".
@@ -56,6 +56,11 @@ Last rewrite: end of session 3, 2026-11-11 13:12 UTC.
 | T139 | T139_SupportClosure.lean | `T139.mul_supported`, `inv_supported`, `not_two_and_three`, `zeta_not_quotient` | support closure under Dirichlet product and inverse (submonoid); log 2, log 3 in no lattice; ζ ≠ P/Q for P, Q supported on {log n ∈ cℤ} | generalised frequencies, analytic half-plane statement |
 | T129 | T129_PairGram.lean | `T129.gramDet_sum_diff`, `gramDet_eq_J`, `lam_root`, `lam_lower`, `lam_bounds` | det Gram(p+m, p−m) = 4 det Gram(p,m); J form; 2×2 λ_min with d/t ≤ λ ≤ dt/(t²−2d) | the O(u) expansions of the analytic family; continuation to u = −β² |
 For the keeper: these are FINITE CORES; T139, T140 and T129 as worded are NOT formal as a whole.
+Session 4 extensions: `T140_KroneckerSumMulti.lean` (`T140.Ksum_lower`, `Ksum_attained`, `vec_ne_zero`, `Ksum_ground_eigen`):
+the r-factor Kronecker sum, bottom c + Σ λ_min(A_i) attained at x₁ ⊗ … ⊗ x_r (Rayleigh sense). `T129_CollisionExact.lean`
+(`T129.det_exact`, `trace_exact`, `det_exact_J`): for a polynomial family, det Gram(k₊,k₋) = 4‖k(c)‖²J·u + u²·R(u) and
+trace = 2‖k(c)‖² + u·T(u) with R, T polynomials, exactly. Still NOT formal: T140's divisor-box identity; T129 for
+analytic (non-polynomial) families and the continuation to u = −β²; λ_min = eigenvalue (spectral theorem).
 
 ## Gaps / errors found in written statements (the valuable part)
 1. **T33, last sentence** ("when a Weil block is positive definite the corresponding margin is strictly positive") and

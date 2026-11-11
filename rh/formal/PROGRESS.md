@@ -639,3 +639,36 @@ info: RHFormal/AxiomsAudit.lean:133:0: 'RHFormal.T129.lam_bounds' depends on axi
 Build completed successfully (3971 jobs).
 ```
 88 theorems audited, all on [propext, Classical.choice, Quot.sound]; 0 error/sorry lines; autoImplicit false in all files.
+
+
+## Session 4 (2026-11-11, 13:20 UTC): T140 with r factors; T129 as an exact polynomial statement
+### FILE 36 DONE: `RHFormal/T140_KroneckerSumMulti.lean`
+LEAN (namespace RHFormal.T140): `Factor` (symmetric A : Matrix (Fin n) (Fin n) ℝ, bottom a, vector x ≠ 0 with
+  a|y|² ≤ yᵀAy ∀y and xᵀAx = a|x|²); `Idx L` = Fin n₁ × (… × Unit); `Ksum c [] = c·1`,
+  `Ksum c (F :: L) = kroneckerSum 0 F.A (Ksum c L)` = F.A ⊗ₖ 1 + 1 ⊗ₖ Ksum c L; `vec L` = x₁ ⊗ … ⊗ x_r;
+  `bottomSum L` = Σ a_i.
+  `Ksum_lower`: ∀ z, (c + Σ a_i)|z|² ≤ zᵀ Ksum z.  `Ksum_attained`: vec L attains it.  `vec_ne_zero`.
+  `Ksum_symm`.  `Ksum_ground_eigen`: Ksum (vec L) = (c + Σ a_i) vec L.
+DIFFERENCES: λ_min = Rayleigh minimum (attained, non-zero vector); identification with the least eigenvalue is the
+  spectral theorem (not typed). Kronecker products nested to the right. The arithmetic half of T140 (divisor-box
+  matrix = log(T/2π) I + Σ_p M_p) is still NOT formal. GAP: none.
+
+### FILE 37 DONE: `RHFormal/T129_CollisionExact.lean`
+SETTING: polynomial family around c: k(c+s) = Σ_{i<N} s^{2i} a_i + Σ_{i<N} s^{2i+1} b_i (a₀ = k(c), b₀ = k'(c)),
+  k₊ = k(c+s), k₋ = k(c−s), u = s², N ≥ 1.
+LEAN (namespace RHFormal.T129): `det_exact`: ∃ R : ℝ[X], ∀ s, gramDet k₊ k₋ = 4·gramDet(a₀,b₀)·u + u²·R(u).
+  `trace_exact`: ∃ T : ℝ[X], ∀ s, trace Gram(k₊,k₋) = 2‖a₀‖² + u·T(u).
+  `det_exact_J`: a₀ ≠ 0 → ∃ R, det = 4‖a₀‖²·J·u + u²·R(u), J = ‖b₀ − (⟨b₀,a₀⟩/‖a₀‖²)a₀‖².
+  Tools: `vpoly`, `ipoly`, `eval_ipoly`, `gpoly`, `eval_gpoly`, `eval_eq_zero_add` (G(u) = G(0) + u·(divX G)(u)), `kplus_eq`.
+DIFFERENCES: polynomial families only (analytic = limit of Taylor polynomials, not formalised); u = s² ≥ 0 (the
+  continuation to u = −β² not formalised). κ₂ = 2λ_min is then bracketed by `lam_bounds` (session 3):
+  2·det/trace ≤ κ₂ ≤ 2·det·trace/(trace² − 2 det), with det and trace the exact polynomials above; the O(u²) constant
+  is not made explicit. GAP: none.
+
+### 13:54 FULL BUILD (session 4)
+```
+info: RHFormal/AxiomsAudit.lean:142:0: 'RHFormal.T129.det_exact_J' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3972/3973] Built RHFormal (2.4s)
+Build completed successfully (3973 jobs).
+```
+95 theorems audited, all [propext, Classical.choice, Quot.sound]; 0 error/sorry lines.
