@@ -1,0 +1,47 @@
+"""BOOTSTRAP.md: box of R_L around c_zeta. Whitened: A_Q + sum_s dc_s W_s >= 0 (W_s = Li B_s Li^T), dc = c - c_zeta; scaled
+y_s = dc_s * |W_s| so the SDP is O(1). max / min of each y_s by cvxpy."""
+import sys, pickle, math, time
+import numpy as np, mpmath as mp, flint, cvxpy as cp
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+d = pickle.load(open(sys.argv[1], 'rb')); NB = d['NB']; prec = d['prec']; flint.ctx.prec = prec; mp.mp.prec = prec - 40
+LQ = Fr(d['L']); L = arb(LQ.numerator) / arb(LQ.denominator)
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/prime_dual.py.txt').read()
+exec(src[src.index("def gl("):src.index("Qm = mp.matrix")])
+Qm = mp.matrix(NB, NB); Dm = mp.matrix(NB, NB)
+for i in range(NB):
+    for j in range(NB):
+        Qm[i, j] = (mp.mpf(d['Q'][i][j]) + mp.mpf(d['Q'][j][i])) / 2; Dm[i, j] = (mp.mpf(d['D'][i][j]) + mp.mpf(d['D'][j][i])) / 2
+Lim = mp.inverse(mp.cholesky(Dm)); dig = int(prec * 0.29)
+toa = lambda M: arb_mat(NB, NB, [arb(mp.nstr(M[i, j], dig)) for i in range(NB) for j in range(NB)])
+Li = toa(Lim); Qa = toa(Qm)
+fl = lambda M: np.array([[float(M[i, j].mid()) for j in range(NB)] for i in range(NB)])
+A = fl(Li * Qa * Li.transpose()); A = (A + A.T) / 2
+X = math.exp(2 * float(LQ))
+def isprimepow(n):
+    for p in range(2, n + 1):
+        if n % p == 0:
+            while n % p == 0: n //= p
+            return n == 1
+S = [n for n in range(2, int(math.floor(X - 1e-12)) + 1) if isprimepow(n)]
+W = []; nr = []
+for n in S:
+    Wn = fl(Li * gamma_sym(arb(n).log(), NB + 2) * Li.transpose()); Wn = (Wn + Wn.T) / 2; s_ = np.abs(np.linalg.eigvalsh(Wn)).max()
+    W.append(Wn / s_); nr.append(s_)
+lam = {n: math.log(p) for n in S for p in [next(q for q in range(2, n + 1) if n % q == 0)]}
+cz = {n: -2 * lam[n] / math.sqrt(n) for n in S}
+print(f"zeta L = {d['L']} NB = {NB}: prime powers {S}; kappa_min = {np.linalg.eigvalsh(A)[0]:.4f}; |W_s| = {[f'{x:.2e}' for x in nr]}", flush=True)
+y = cp.Variable(len(S))
+M = A + sum(y[i] * W[i] for i in range(len(S)))
+cons = [(M + M.T) / 2 >> 0]
+for i, n in enumerate(S):
+    out = []
+    for sense in (cp.Maximize, cp.Minimize):
+        pr = cp.Problem(sense(y[i]), cons)
+        if NB <= 50:
+            try: pr.solve(solver='CLARABEL')
+            except Exception: pr.solve(solver='SCS', max_iters=100000, eps=1e-9)
+        else: pr.solve(solver='SCS', max_iters=200000, eps=1e-9)
+        out.append(pr.value)
+    lo, hi = out[1] / nr[i], out[0] / nr[i]
+    print(f"  s = {n}: c_zeta = {cz[n]:+.5f}; R_L range of c_s - c_zeta: [{lo:+.3e}, {hi:+.3e}]; relative width {(hi - lo) / abs(cz[n]):.3e}  (status {pr.status})", flush=True)

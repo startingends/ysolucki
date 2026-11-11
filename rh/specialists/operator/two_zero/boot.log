@@ -1,0 +1,10 @@
+zeta L = 9/20 NB = 40: prime powers [2]; kappa_min = 0.3310; |W_s| = ['4.45e+02']
+  s = 2: c_zeta = -0.98026; R_L range of c_s - c_zeta: [-2.011e-03, +1.955e-02]; relative width 2.200e-02  (status optimal)
+zeta L = 3/5 NB = 44: prime powers [2, 3]; kappa_min = 0.3280; |W_s| = ['1.26e+07', '8.04e+02']
+  try: pr.solve(solver='CLARABEL')
+  s = 2: c_zeta = -0.98026; R_L range of c_s - c_zeta: [-2.909e-07, +1.261e-05]; relative width 1.316e-05  (status optimal)
+  s = 3: c_zeta = -1.26857; R_L range of c_s - c_zeta: [-2.228e-02, +5.179e-03]; relative width 2.165e-02  (status optimal)
+zeta L = 17/20 NB = 66: prime powers [2, 3, 4, 5]; kappa_min = 0.3019; |W_s| = ['1.04e+18', '2.39e+15', '4.98e+11', '9.26e+05']
+memory allocation of 19633712 bytes failed
+zeta L = 1 NB = 116: prime powers [2, 3, 4, 5, 7]; kappa_min = 0.2978; |W_s| = ['8.45e+27', '3.52e+25', '3.35e+22', '6.38e+18', '3.94e+06']
+memory allocation of 184226328 bytes failed
