@@ -584,3 +584,58 @@ Build completed successfully (3968 jobs).
 75 theorems audited, all on exactly [propext, Classical.choice, Quot.sound]; 0 lines with "error" or "sorry"; only lake's
 "consider adding `module`" warnings. RHFormal.lean imports 34 modules (2 of the lead's, 31 statement files, AxiomsAudit).
 (The job count rose from 3175 because the new files import more of mathlib: Dirichlet characters, zeta, Euler products.)
+
+
+## Session 3 (2026-11-11, 13:00 UTC): T140, T139, T129 (coordinator's order)
+THEORY.md NOT edited: the coordinator asked me to set statuses, but my brief and the standing-structures rule make the
+theory keeper the only writer of THEORY.md. What compiles is listed for the keeper in MEMORY.md.
+
+### FILE 33 DONE: `RHFormal/T140_KroneckerSum.lean`  (T140, finite core; two factors)
+INFORMAL (coordinator): c·I + Σ_i (I ⊗ .. ⊗ A_i ⊗ .. ⊗ I) has smallest eigenvalue c + Σ λ_min(A_i); T140: bottom attained at
+  a tensor-product (Euler-product-shaped) vector.
+LEAN (namespace RHFormal.T140; `kroneckerSum c A B = c • 1 + A ⊗ₖ 1 + 1 ⊗ₖ B` on m × n; form/normSq as in Perron file):
+  `kroneckerSum_lower`: (∀ x, a |x|² ≤ xᵀAx) → (∀ y, b |y|² ≤ yᵀBy) → ∀ z, (c+a+b)|z|² ≤ zᵀKz.
+  `kroneckerSum_attained`: x₀, y₀ attain a, b → x₀ ⊗ y₀ attains c+a+b.
+  `kroneckerSum_ground_eigen`: A, B symmetric → K (x₀ ⊗ y₀) = (c+a+b)(x₀ ⊗ y₀).
+  Tools: `form_kron_one`, `form_one_kron`, `mulVec_kron_one`, `mulVec_one_kron`, `kroneckerSum_symm`.
+DIFFERENCES: two factors only; the r-factor case is r−1 applications of the same theorem to K_r = K_{r−1} ⊗ 1 + 1 ⊗ A_r
+  (the theorem is for arbitrary matrices with lower bounds) but that induction is NOT typed. "Smallest eigenvalue" =
+  Rayleigh minimum (spectral theorem not typed). The ARITHMETIC half of T140 (the divisor-box matrix equals
+  log(T/2π) I + Σ_p M_p) is NOT formalised. GAP: none.
+
+### FILE 34 DONE: `RHFormal/T139_SupportClosure.lean`  (T139, algebraic core)
+INFORMAL (coordinator): a, b supported on S (n ∈ S iff log n ∈ G ≤ (ℝ,+)) ⇒ a*b and a⁻¹ (a₁ ≠ 0) supported on S.
+LEAN (namespace RHFormal.T139; ArithmeticFunction R, `SupportedOn f S := ∀ n, f n ≠ 0 → n ∈ S`, S : Submonoid ℕ):
+  `mul_supported`: SupportedOn f S → SupportedOn g S → SupportedOn (f * g) S.
+  `inv_supported` (R without zero divisors): SupportedOn a S → a 1 ≠ 0 → a * b = 1 → SupportedOn b S.
+  `logSubmonoid G` = {n : 0 < n ∧ log n ∈ G} is a submonoid; `mem_logSubmonoid`.
+  `not_two_and_three`: c > 0 → ¬(2 ∈ logSubmonoid (zmultiples c) ∧ 3 ∈ logSubmonoid (zmultiples c)).
+  `zeta_not_quotient`, `zeta_not_quotient'`: no P, Q (, Q') supported on logSubmonoid (cℤ) with Q*Q' = 1 (or Q 1 ≠ 0) and ζ*Q = P.
+DIFFERENCES: only a submonoid is needed (not closure under division). ORDINARY Dirichlet series (frequencies log n), at the
+  level of coefficients; T139's generalised frequencies in cℤ and the analytic half-plane statement (uniqueness of
+  coefficients) are NOT formalised. Route differs from K-theory's (periodicity); both end at log 2, log 3 not in a
+  common lattice, which is formal. GAP: none.
+CAUGHT DURING THE WORK: the first draft wrote `ζ` without opening its scoped notation; Lean read it as a NEW VARIABLE
+  (auto-bound implicit), so the statement was about an arbitrary function. The proof then failed and showed it. Fixed by
+  writing `ArithmeticFunction.zeta`. Consequence for the whole library: `set_option autoImplicit false` is now in EVERY
+  file (lakefile cannot be changed); the full build passes with it, so no earlier statement relied on an auto-bound name.
+
+### FILE 35 DONE: `RHFormal/T129_PairGram.lean`  (T129, finite core)
+INFORMAL (keeper's check): a = p + m, b = p − m: det Gram(a,b) = 4 det Gram(p,m) = 4u‖k‖²J + O(u²), trace = 2‖k‖² + O(u),
+  λ_min = det/trace + O(u²) = 2uJ + O(u²); J = ‖k' − (⟨k',k⟩/‖k‖²)k‖².
+LEAN (namespace RHFormal.T129; E real inner product space, `gramDet x y = ⟪x,x⟫⟪y,y⟫ − ⟪x,y⟫²`):
+  `gramDet_sum_diff`: gramDet (p+m) (p−m) = 4 gramDet p m.   `gramTrace_sum_diff`: trace = 2(⟪p,p⟫ + ⟪m,m⟫).
+  `gramDet_eq_J`: p ≠ 0 → gramDet p m = ⟪p,p⟫ · ‖m − (⟪m,p⟫/⟪p,p⟫)p‖².
+  2×2 symmetric [[α,γ],[γ,β]], `lamMin = (t − √(t² − 4d))/2`: `disc_nonneg`, `lam_root` (det(G − λI) = 0),
+  `lam_lower` (λ|x|² ≤ xᵀGx), `lam_bounds` (t > 0, 4d ≤ t²: d/t ≤ λ ≤ dt/(t² − 2d)).
+DIFFERENCES: every exact identity and inequality of the check is formal; the expansions in u of the analytic family
+  (p = k(c) + O(u), m = √u k'(c) + O(u^{3/2})) and the continuation to u = −β² are NOT. GAP: none.
+
+### 13:10 FULL BUILD (session 3)
+```
+info: RHFormal/AxiomsAudit.lean:132:0: 'RHFormal.T129.lam_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:133:0: 'RHFormal.T129.lam_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3970/3971] Built RHFormal (2.1s)
+Build completed successfully (3971 jobs).
+```
+88 theorems audited, all on [propext, Classical.choice, Quot.sound]; 0 error/sorry lines; autoImplicit false in all files.
