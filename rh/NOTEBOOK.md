@@ -1871,3 +1871,16 @@ known: Bagchi 1981, Voronin; packaging the lead's).
   factor (ζ is the principal member; the bounds are for the new parts L(s, χ_D)); twists by n^(it) are shifts.
   So the number-multiplying amplifiers either need RH or land on a common factor that averaging cannot see.
   Recorded as one more face of the obstruction; no new object.
+
+**N106. Novelty of the copy barrier: PARTLY KNOWN** (lead, after READER-13, `rh/library/NOVELTY_copy_barrier.md`;
+~30 arXiv queries, 10 web, 5 MathOverflow, ~12 sources read in the relevant sections).
+- T106 (general sieves pay for the copies): KNOWN in substance (Heath-Brown, Acta Arith. 72 (1995) 236–237, read:
+  square rows, about M^(1/2) of them, each contributing about N²; folklore in Conrey–Iwaniec–Soundararajan
+  arXiv 1105.1176; dual form in Goldmakher–Louvel). T109, T114: known. T107, T108, T110, T111: PARTLY known (special
+  cases: power-residue kernels, BGL arXiv 1112.1650; the Dirichlet family); the general kernel lemma with the
+  C·H^(1/2) copy bound was NOT found. T113 (amplification by copies cannot pass Re s > 3/4): NOT FOUND IN WRITING; a
+  "3/4" is asserted orally (Tao, via secondary sources) without argument.
+- Not obtained: Montgomery's Topics, Iwaniec–Kowalski, Iwaniec–Sarnak, Duke–Friedlander–Iwaniec, Conrey–Iwaniec,
+  Huxley, Jutila, Bourgain. So "not found" is bounded by that scope.
+- Consequence for the ratings: the copy barrier's new content is the general kernel lemma (T110–T111) and the written
+  barrier T113. Quality stays 6 (a barrier with an oral precedent), Toward RH 1.
