@@ -12,3 +12,11 @@ of 2·rms accepts everything (99% "near copies"). Run 2, prediction unchanged in
 looking: sharp cutoff n ≤ D (Mertens-type sums), tolerance |A_d − A₁| ≤ 0.1·rms where rms = √(#squarefree odd n ≤ D);
 baseline = the same statistic for |A_d − A_{d'}| over random pairs of non-squares. P1': near copies are the squares
 (and possibly d = 4k² variants), non-square fraction within tolerance ≤ 2× the random-pair baseline.
+
+## Run 2 outcome (g5_run2.log): predictions HIT; no surprise
+Non-squares within 0.1·rms of A₁: 13.4% (D = 2·10⁴, H = 2000) and 12.5% (D = 4·10⁴, H = 1000), against the
+random-pair baseline 11.0% and 10.0%: ratio ≈ 1.2, i.e. chance. No family of approximate copies of intermediate
+density shows up. Squares k² with small k are NOT near-copies at this length (A₉ = −91, A₂₅ = −61 against A₁ = −14):
+removing the multiples of k changes a sharp Mertens sum by O(D/k), as the copy error term says. Median |A_d| for
+non-squares 39 and 59, about rms/3 (P2 hit within the stated factor). Analogue over ℚ with quadratic twists only;
+the sextic family over ℤ[ω] was not computed.

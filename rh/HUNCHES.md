@@ -297,3 +297,6 @@ on the Möbius side there are no controls. What is left has to be a mechanism of
   Plank zero (computable, cheap): for the family of characters (u/·)_6 with N(u) ≤ H, measure the proportion of u for
   which |A_u(D) − A₁(D)| ≤ D^(1−η) for small η, at D = 10⁴–10⁶; predict first: only the sixth powers (proportion
   H^(1/6)/H). A surprise there would be the first sign of a mechanism of a new kind.
+  OUTCOME (`rh/experiments/g5_nearcopies/`, quadratic analogue over ℚ, D up to 4·10⁴): approximate copies occur at
+  the rate of random pairs (12.5–13.4% against a 10–11% baseline); no intermediate-density mechanism visible.
+  Predictions hit (run 1 was ill-posed and is recorded as such). G5 is not supported at this scale.
