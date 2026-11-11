@@ -322,3 +322,9 @@ T115 is `checked` (K-theory, line by line, LEMMA_T115.md; the +1 power is restri
 the Euler product enters only on Re s > 1). T117 (bounded-height equivalence) is `checked`. Counts: 9 formal, 55 checked, 13 known,
 23 proved, 23 open, 2 refuted. Frontier: T13, T14, T15, T17, T24, T25, T40, T42, T46, T47, T48, T62, T78, T80, T81, T101, T103, T118.
 First open link for #34 is now T118 (the bounded Nyman-Beurling equivalence).
+
+## Revision 4b (seventh batch)
+T118 restated with the weights: (<=) for Levinson weights is T126 (checked; READER-8's adaptation of Bettin-Gonek step 6);
+(=>) is known under RH + a 1/zeta' moment bound for Levinson weights (T128, BCF) and under RH alone for the weights
+mu(n) n^(-eps(N)) (T127, Balazard-de Roton / Baez-Duarte). FIRST OPEN LINK for #34: T118, i.e. RH alone => bounded
+Levinson-weighted approximants. Counts: 9 formal, 56 checked, 15 known, 23 proved, 23 open, 2 refuted (128 entries).

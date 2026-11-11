@@ -1055,13 +1055,13 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - checked by: K-theory, 2026-11-11: (=>) Perron, (1/2 pi i) int_(c) y^w w^{-2} dw = log y for y >= 1 and 0 for y < 1, contour shifted to Re w = sigma - 1/2 + delta > 0 without crossing w = 0, horizontal connectors O(|Im w|^{-2+eps}) by T115 (ii), giving |M_N(1/2+it)| log N << N^{sigma - 1/2 + delta}(|t|+2)^eps and I_N(0,T_0) << N^{2 sigma - 1 + 2 delta}; (<=) step 6 of T116 multiplied by |zeta(1/2+it)|^2 and integrated over [0, T_0] (T_0 fixed): c(T_0) x^{2 beta_0} << log^2 x int_1^x I_y(0,T_0) dy << x^{2 sigma + eps} log^2 x, so beta_0 <= sigma
 
 ## T118 · Nyman-Beurling, bounded version (notebook N53 (a)): RH iff the Moebius approximants are bounded in L^2
-- statement: (Sketch.) Let f_N := sum_{k <= N} mu(k) w_N(k) rho(1/(kx)) (rho the fractional part, w_N smooth weights) be the Moebius approximants of 1 on (0,1) in L^2(0, infinity) (notation of T12). CLAIM: RH <=> sup_N ||f_N||_2 < infinity. Equivalently, by Mellin-Plancherel, ||f_N||^2 = (1/2pi) int |zeta(1/2+it) M_N(1/2+it)|^2 dt/(1/4+t^2) is bounded.
+- statement: (Restated 2026-11-11 with the weights.) Notation: rho = fractional part; for weights c_1..c_N, f_c(x) := sum_{k<=N} c_k rho(1/(kx)) in L^2(0, infinity), so ||f_c||^2 = (1/2pi) int |zeta(1/2+it) C(1/2+it)|^2 dt/(1/4+t^2), C(s) = sum c_k k^{-s} (Mellin-Plancherel; the Mellin transform of rho(1/(kx)) is -k^{-s} zeta(s)/s on 0 < Re s < 1). Levinson weights: c_k = mu(k)(1 - log k/log N), with polynomial M_N of T116; write f_N^Lev. CLAIM (open direction only): RH implies sup_{N >= 2} ||f_N^Lev|| < infinity. Status of the equivalence 'RH <=> sup_N ||f_N^Lev|| < infinity' by direction: (<=) is T126 (checked); (=>) is known under RH plus the moment bound sum 1/|zeta'(rho)|^2 << T^{3/2-delta} (T128), and for the different weights mu(n) n^{-eps(N)} under RH alone (T127); under RH ALONE for the Levinson weights it is OPEN. The version for general weights w_N (notebook N53 (a)) is not a well-posed statement and is OPEN.
 - status: open
-- depends: T12
+- depends: T126, T127, T128, T12
 - source: lead (N53 (a)); 'elementary; probably known: Baez-Duarte, Bagchi, Burnol' (lead, not searched)
 - routes: #34
 - proof: rh/NOTEBOOK.md, entry N53 (a)
-- note: OPEN: sketch only. (<=) bounded approximants with f_N -> 1 in a weaker sense give 1 in the weak, hence (Mazur) norm closure: RH by T12; the weak convergence is said to follow from a zero-free region by Beurling's L^p theorem (cited from memory). (=>) 'RH gives bounded approximants' is asserted without an argument, and for which weights w_N is not said; this direction is not known to K-theory. Correction N65 (READER-8): heights T >= N^{2/3+eps} are harmless with trivial bounds (Balazard-de Roton); the open range is T <= N^{2/3}.
+- note: OPEN (the direction RH => bounded, Levinson weights, RH alone). READER-8 (BCF digest): 'Whether RH alone gives boundedness for N53's exact weights was not found in print by this reader (not searched beyond the papers read)'. Earlier note: N53 (a)'s own argument for (<=) used weak closure, Mazur and Beurling's L^p theorem; T126 replaces it. Correction N65 (READER-8): heights T >= N^{2/3+eps} are harmless with trivial bounds (Balazard-de Roton); the open range is T <= N^{2/3}.
 
 ## T119 · A one-sided bound for psi with a slowly growing factor implies RH (notebook N63, corrected in N68)
 - statement: If there is C with psi(x) <= x + C sqrt(x) (log x)^2 for all large x (psi the Chebyshev function), then RH holds (and the same with any fixed power of log x).
@@ -1126,6 +1126,35 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - source: SP-modular. Patterson's theta expansion (Patterson 1977 Thm 8.1) as quoted in Dunn-Radziwill arXiv 2109.07463, (5.6)-(5.8): READ by the specialist; the renormalised Rankin-Selberg unfolding (Zagier's method for functions not of rapid decay): FROM MEMORY
 - routes: #31
 - note: PROVED given the two cited inputs; not independently checked. COMPUTED: the 3-adic geometric series and the Bessel-Mellin formula M(s) checked to 15 digits (rs_theta_check.log). The specialist's own reading: the identity is EQUIVALENT to RH_K, no more ('nothing forced the two Gamma factors to match' is the check of the identity, not new input). Curiosity: the ramified Euler factor 1 + 3^{1-2s} has all its zeros on Re s = 1/2.
+
+## T126 · Bounded Levinson-weighted Nyman-Beurling functions imply RH (and polynomial growth bounds the zeros)
+- statement: Notation: rho = fractional part; for weights c_1..c_N, f_c(x) := sum_{k<=N} c_k rho(1/(kx)) in L^2(0, infinity), so ||f_c||^2 = (1/2pi) int |zeta(1/2+it) C(1/2+it)|^2 dt/(1/4+t^2), C(s) = sum c_k k^{-s} (Mellin-Plancherel; the Mellin transform of rho(1/(kx)) is -k^{-s} zeta(s)/s on 0 < Re s < 1). Levinson weights: c_k = mu(k)(1 - log k/log N), with polynomial M_N of T116; write f_N^Lev. If sup_{N >= 2} ||f_N^Lev|| < infinity, then RH holds. More generally, if ||f_N^Lev||^2 << N^{2 sigma - 1 + eps} for every eps > 0 (1/2 <= sigma < 1), then zeta has no zeros in Re s > sigma.
+- status: checked
+- depends: T116
+- proof: rh/library/bettin-gonek-1604.02740.md, section 6, first item (READER-8's adaptation of step 6 of Bettin-Gonek with the weight 1/(1/4+t^2) in place of 1_[0,T])
+- source: READER-8 (adaptation; 'not stated in the paper; the steps are those of section 2 of the paper'); Bettin-Gonek arXiv 1604.02740, step 6 (T116)
+- routes: #34
+- note: This replaces notebook N53 (a)'s weak-closure / Mazur / Beurling-L^p argument for this direction (no L^p input needed). Proved for the LEVINSON weights; for other weights (e.g. mu(n) n^{-eps}) not shown here. Impostor-blind (complex analysis only). | 2026-11-11 -> checked: one-line adaptation of a known step, re-derived by K-theory
+- checked by: K-theory, 2026-11-11: multiply step 6 of T116 (x^{2 beta_0}/(1+|t|)^4 << int_1^x |M_y(1/2+it)|^2 log^2 y dy, uniform in t) by |zeta(1/2+it)|^2/(1/4+t^2) >= 0 and integrate over all real t (Tonelli): c(rho_0) x^{2 beta_0} <= C log^2 x int_1^x 2 pi ||f_y^Lev||^2 dy with c(rho_0) = int |zeta(1/2+it)|^2 dt/((1+|t|)^4 (1/4+t^2)) > 0; bounded ||f_y|| gives x^{2 beta_0} << x log^2 x, so beta_0 <= 1/2; the growth form gives beta_0 <= sigma
+
+## T127 · Under RH the damped Moebius approximants converge (Baez-Duarte; Balazard-de Roton rate), hence are bounded
+- statement: Let H = L^2(0, infinity; t^{-2} dt), e_alpha(t) := {t/alpha}, chi := 1_[1, infinity), d_N := dist_H(chi, span(e_1, ..., e_N)) (equivalently the Nyman-Beurling distance of T12). If RH holds, then for every delta > 0: d_N^2 << (log log N)^{5/2+delta} (log N)^{-1/2}, N >= 3; the approximant used is -sum_{n<=N} mu(n) n^{-eps} e_n with eps = eps(N) of order (log log N)^{5/2+delta}/sqrt(log N), for which ||chi + sum_{n<=N} mu(n) n^{-eps} e_n||_H^2 -> 0. Consequently these damped Moebius approximants are bounded in H. (Earlier: Baez-Duarte 2003, proof due to Balazard: RH => d_N^2 << (log log N)^{-2/3}.)
+- status: known
+- depends: T12
+- source: M. Balazard, A. de Roton, 'Sur un critere de Baez-Duarte pour l'hypothese de Riemann', arXiv 0812.1689, Theoreme (statement and section 2 read by READER-8, rh/library/balazard-deroton-0812.1689.md; the paper was read PARTLY, about 40%, sections 3-6 of the proof NOT read); Baez-Duarte 2003 (not read)
+- routes: #34
+- note: KNOWN as a published statement whose text was read; the proof was not read in full by any seat (Props 2.2, 2.3 stated; the final section on I_{N,eps} read whole). Weights mu(n) n^{-eps(N)}, NOT Levinson's. Whether boundedness of THESE approximants alone implies RH is not shown in the record (the converse T-entry above is for Levinson weights). | 2026-11-11 -> known: theorem statement quoted from a paper read in part by a reader seat
+
+## T128 · Bettin-Conrey-Farmer: under RH and a moment bound for 1/zeta', the Levinson-weighted approximant attains the optimal constant
+- statement: Notation: rho = fractional part; for weights c_1..c_N, f_c(x) := sum_{k<=N} c_k rho(1/(kx)) in L^2(0, infinity), so ||f_c||^2 = (1/2pi) int |zeta(1/2+it) C(1/2+it)|^2 dt/(1/4+t^2), C(s) = sum c_k k^{-s} (Mellin-Plancherel; the Mellin transform of rho(1/(kx)) is -k^{-s} zeta(s)/s on 0 < Re s < 1). Levinson weights: c_k = mu(k)(1 - log k/log N), with polynomial M_N of T116; write f_N^Lev. Let V_N(s) := sum_{n<=N} (1 - log n/log N) mu(n) n^{-s}. If RH holds and sum_{|Im rho| <= T} 1/|zeta'(rho)|^2 << T^{3/2 - delta} for some delta > 0, then (1/2pi) int |1 - zeta V_N(1/2+it)|^2 dt/(1/4+t^2) ~ (2 + gamma - log 4 pi)/log N. In particular the Levinson-weighted Nyman-Beurling approximants converge and are bounded.
+- status: known
+- depends: T12
+- source: S. Bettin, J. B. Conrey, D. W. Farmer, 'An optimal choice of Dirichlet polynomials for the Nyman-Beurling criterion', arXiv 1211.5191, Theorem 1; read in full by READER-8 (rh/library/bcf-1211.5191.md: 18,458 of 18,458 characters)
+- routes: #34
+- note: The moment hypothesis forces simple zeros; it is predicted (Gonek, Hughes-Keating-O'Connell: the sum ~ (6/pi^3) T) but not known. So for Levinson weights the direction 'RH => bounded' is known only under MORE than RH. | 2026-11-11 -> known: theorem quoted from a paper read in full by a reader seat
+
+
+
 
 
 

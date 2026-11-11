@@ -178,3 +178,8 @@ Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+
   compact {s0 + delta <= sigma <= 2, |t| <= 2} (holomorphic there), needed for the Perron step at all heights.
 - T117 (<=): read Bettin-Gonek digest steps 6-7; with T fixed the bound integrates to beta_0 <= sigma. Step 6 added to T116's statement.
 - Check: theory 125 entries, 0 errors; 23 open, 23 proved, 55 checked, 9 formal, 13 known, 2 refuted.
+
+### Seventh batch: T118 restated by weights; T126-T128 added
+- Read: bettin-gonek digest section 6 (READER-8's adaptation), bcf-1211.5191 digest (whole paper read), balazard-deroton-0812.1689 digest
+  (paper read partly, ~40%). T126 checked by me: step 6 x |zeta|^2/(1/4+t^2), Tonelli, Mellin-Plancherel ||f_y||^2 = (1/2pi) int |zeta M_y|^2/|s|^2.
+- Check: 128 entries, 0 errors; 23 open, 23 proved, 56 checked, 9 formal, 15 known, 2 refuted.
