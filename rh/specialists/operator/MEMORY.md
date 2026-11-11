@@ -1,6 +1,6 @@
 # MEMORY of SP-operator
 
-Rewritten at the end of session 7 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
+Rewritten at the end of session 8 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
 6, 7 of bridge 1 (rh/BRIDGE.md, idea #27, owner's rule 12). Session 3: the structural mode (owner's rule 13,
 rh/HUNCHES.md part F): one object, Phi(s) = E*(omega, s), expressed in my toolkit: OBJECT_PHI.md.
 A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDEAS_LOCAL.md.
@@ -19,6 +19,13 @@ A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDE
 - Sources under rh/library/src/: 2606.09096, 1606.05726 (both read in full), basor-chen-0202062 (read in
   full), kaltenbaeck-woracek-1998 (pp. 1-6 of 37 read), luger-ou-2202.13246 (sec. 3.2 read),
   1204.1827 and 2511.23257 (downloaded; only the abstract and theorem list of the latter read).
+
+## SESSION 8 (seminar S3, board s3): answered B5 (exit E6) in B8, long form S3_B5.md; question to SP-sieve in B9 (or next)
+- P1 weighted copy chain; P2 to beat 3/4 need weighted copy fraction C_w/W_tot >= D^(-1/2+2c) at the diagonal.
+- P3 PROVED: copies are top singular directions for EVERY weight (weighted Theorem 1); mu's component along them is A_1.
+- P4 PROVED: weight on copies contributes exactly C_w''|A_1|^2: copy-concentrated weights / copy-keeping thinnings are circular.
+- P5 PROVED identity: Iwaniec amplifier |sum b_l (u/l)_6|^2 is Poisson-able; amplified S = mean square of beta = b*mu (length LD);
+  fails at the Gauss-Jacobi step (mu pointwise). P6 RISK: positive-biased b -> parity; b on cubes -> quadratic copies -> exactly 3/4.
 
 ## SESSION 7 (seminar S2, board s2): answered B4 in B11 (long form S2_B4.md); question to SP-reflection in B12
 - Proposal: tensor factorisation of the divisor matrix T_1 on BOXES {d | P(z)} (exact: image of mu 1_B is the Eratosthenes
