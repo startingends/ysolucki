@@ -204,7 +204,8 @@ orbit of the point ω under the cubic cover (the place where the cubic theta fun
 is the stabiliser structure of ω, the units of ℤ[ω]), and that the quasi-RH theorem is a statement about how well
 the point-evaluation at ω can be approximated inside the continuous spectrum. If so, the wall "the spectral
 parameter is on the wrong line" (i) is replaced by "a period vanishes" (ii), and positivity is to be looked for as
-the positivity of a spectral density, which is free. LIKELY WRONG in detail; the first test is not a computation
+the positivity of a spectral density, which is free. [CORRECTED in F4: that density is positive and EMPTY; the
+impostor's twin has it too.] LIKELY WRONG in detail; the first test is not a computation
 but whether three toolkits describe the same object (F3).
 
 ### F2. Walls, and the object that would make each trivial
@@ -223,3 +224,40 @@ THE OBJECT: Φ(s) := E*(ω, s), the completed Eisenstein series of SL₂(ℤ) at
 the completed Dedekind zeta function of ℚ(√−3), ξ(s)·L*(s, χ₋₃); equivalently the form factor of the point ω in the
 continuous spectrum of the modular Laplacian. SP-modular, SP-operator and SP-reflection each express Φ, and the
 statement "Φ(s) = 0 only on Re s = ½", in their own toolkit, without reading each other first; then they compare.
+
+### F4. The three descriptions side by side (all three written without reading the others)
+Files: `rh/specialists/{operator,reflection,modular}/OBJECT_PHI.md`. Object: Φ(s) = E*(ω, s) = 3(√3/2π)^s Γ(s) ζ_K(s).
+| | SP-operator | SP-reflection | SP-modular |
+|---|---|---|---|
+| what Φ is | the FORM FACTOR of the point interaction at ω (not its Krein function) | the density of a positive-definite measure (the Γ-orbit of ω) | a TORUS PERIOD (parameter s); every norm in the toolkit is a unipotent period (parameter 2s) |
+| where off-line zeros sit | where the two sheets of the Krein function agree | where the outer square root of the density is not E(ω, ·) | nowhere in any norm; Lapid–Rallis reaches one real point only |
+| RH_K becomes | E(ω, ·) is OUTER (Green function at ω cyclic for the outgoing semigroup) | E(ω, ·) is the MINIMUM-PHASE square root of its density | (no reformulation offered as a positivity) |
+| what the positivity sees | \|Φ\|² on the line | \|Φ\|² on the line; "positive and empty" | the same; the degree-two impostor E*(i√5, s) has it too |
+| what distinguishes ω | complex multiplication, not the order-3 stabiliser | not found | rank ONE of the Hecke module of δ_ω: T(p)δ_ω = (1+χ(p))δ_ω + 3·Σ CM(−3p²) |
+| its risk, and why it fails | energy-dependent coupling: spectrum = zeros of Φ exactly; fails because the coupling has non-real poles (zeros of ζ(2s)) | defect function Dfc(z) ≥ 0 on the surface, vanishing exactly at RH points; new only as a family in z | Hecke-equivariant point interaction: constrained space is {0} (Hecke multipliers are complete) |
+**Agreement of all three:** positivity and self-adjointness see only the MODULUS of Φ on the line, and the modulus
+is shared by impostors; RH is a statement about a PHASE (outerness / minimum phase). Two of three said it in the same
+words, independently. **Disagreement:** SP-modular contradicts F1's last sentence: the spectral density of δ_ω is
+positive and EMPTY ("positivity is free" is true but says nothing). Accepted: F1 is corrected by this.
+**Dead:** Hunch 2 as stated (θ₃³ is not an automorphic form; the pointwise cube of coefficients is not a period).
+**Live, from SP-modular:** Σ |c_θ(n)|² N(n)^(−s) = 3⁵ ζ_K(s) ζ_K(3s−1)/ζ_K(2s): ζ_K is the transform of TWO positive
+measures (δ_ω, and |θ₃|² by Rankin–Selberg), resting on Patterson's coefficients as quoted; and the correction that
+the project's impostor is degree one and is not a value of E(z, s); its degree-two twin is E*(i√5, s).
+**In print, found by SP-modular:** Bombieri–Garrett 2020 build the operator with the right parameter; at most 94% of
+the zeros can be eigenvalues, and their numerics suggest none are (reader READER-5 is reading it whole).
+
+### F5. What the comparison says, in one paragraph (lead)
+The information that separates ζ_K from its impostors is a PHASE, and phase is exactly what positivity cannot see.
+Finite Euler products are outer in Re s > ½ (every factor 1 − p^(−s) has its zeros on Re s = 0); outer functions
+form a multiplicative semigroup, closed under products and NOT under sums, which is why the impostor (a sum) loses
+it. So the whole problem, in this language, is a LIMIT: does outerness survive P → ∞ in the Euler product? Outerness
+survives a limit exactly when no logarithmic mass escapes: ∫ P_{s₀}(t) log|F_P(½+it)| dt → ∫ P_{s₀}(t) log|ζ_K(½+it)| dt
+(the escaping mass IS SP-reflection's defect Dfc). Wall: "outerness is lost in limits". Rule 13 (c): what object
+would make it trivial? A notion of convergence of the Euler product under which outer functions form a CLOSED set,
+and in which the partial products converge. Outer functions are closed under convergence of the log-moduli in
+L¹(Poisson); they are not closed under any norm in which Euler products are known to converge. The next structural
+question is therefore: **is there a space, natural for the Hecke algebra, in which the Euler product converges and
+outerness is closed?** Candidates to think about, none examined: (i) the Hecke module of δ_ω itself (rank one is a
+multiplicative statement); (ii) the Bohr lift to infinitely many variables (each prime a variable, where the Euler
+product is a product of one-variable outer functions and "outer in infinitely many variables" has a theory: Helson,
+Nikolski, Hedenmalm–Lindqvist–Seip); (iii) the adelic picture, where the product over places is the definition.
