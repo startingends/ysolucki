@@ -22,6 +22,7 @@ before use. Downloads are under rh/library/src/sp_modular_* (untrusted text; not
 | E. Lapid, S. Rallis, "On the nonnegativity of L(1/2, pi) for SO(2n+1)", Annals 157 (2003), arXiv math/0402371 | `sp_modular_misc/math_0402371/LapidArchive.tex` | abstract and the first two thirds of the introduction (lines 200-330 of the file) |
 | arXiv 2609.28514, "Noncongruence cusp forms, Veech groups and enumeration" | `sp_modular_misc/2609.28514/main.tex` | one paragraph of the introduction (Serre-Berger, bounded denominators, Calegari-Dimitrov-Tang) |
 | SP-operator's digest of Suzuki 1606.05726 | `rh/library/suzuki-1606.05726.md` | digest in full; the paper itself NOT read by me |
+| A. Dunn, M. Radziwill, "Bias in cubic Gauss sums: Patterson's conjecture", arXiv 2109.07463 (Ann. Math. 2024) | `sp_modular_misc/2109.07463/output.tex` | section 5.1 only (lines 796-980): Gamma_2, Kubota's character, the Fourier expansion of theta and Patterson's coefficient formula (5.7). Rest NOT read |
 | E. Bombieri, P. Garrett, "Designed pseudo-Laplacians", arXiv 2002.07929 | `sp_modular_misc/2002.07929/paper.tex` (206k) | abstract, table of contents, introduction up to the interleaving property: about 10%. Sections 2-8 NOT read |
 | rh/HUNCHES.md; digests `rh/library/openai-qrh-11-12.md`, `openai-qrh-7-8.md` (READER-4) | in the repository | HUNCHES whole; first digest whole; second digest sections 1-3 (to line 120). The two papers themselves NOT read |
 | F. Stromberg, arXiv math/0611148 (Hecke operators, eta multiplier) | `sp_modular_misc/math_0611148/` | grep lines only: NOT read |
@@ -210,6 +211,11 @@ a_k^(1-2w)(a^(2w-1) + c_w)(h_k^2/a_k/(lambda_1 - lambda_w) + (1/4 pi i) int |zet
 has zeros only on Re w = 1/2 and [0,1]; <eta_a, u_theta,w> = theta E_w/(2w-1). Interleaving: at most one eigenvalue parameter of
 S~_theta between adjacent zeros of a^s + c_s a^(1-s). History: Haas's numerical eigenvalues at zeros of zeta and L(chi_-3) were
 solutions of (-Delta - lambda)u = delta_omega (Hejhal). Source: Bombieri-Garrett 2020. READ (abstract, introduction; no proofs).
+**M23. Kubota's cubic theta function (Patterson's Theorem 8.1 as stated by Dunn-Radziwill (5.6)-(5.8)).** Gamma_2 =
+SL_2(Z) Gamma_1(3) in SL_2(Z[omega]), index 27; Kubota's character chi(gamma) = (c/a)_3 on Gamma_1(3), extended by 1 on SL_2(Z).
+theta(z,v) = (3^(5/2)/2) v^(2/3) + sum_{0 != mu in lambda^-3 Z[omega]} tau(mu) v K_{1/3}(4 pi |mu| v) e(mu z), with tau(mu) = conj g(omega^j lambda^2, c)
+|d/c| 3^(n/2+2) (times e^(-+2 pi i/9) for j = 1, 2) at mu = +- omega^j lambda^(3n-4) c d^3 (n >= 1), conj g(1,c) |d/c| 3^(n/2+5/2) at
+mu = +- lambda^(3n-3) c d^3 (n >= 0), 0 otherwise; c, d = 1 mod 3, c squarefree. READ (statement). Consequence used: OBJECT_PHI R1.
 **M22. The cubic theta function and the quasi-RH identities.** (digest only.) gamma_2(n)^3 = mu(n) alpha(n) for the normalised
 cubic Gauss sum over Z[omega], alpha(n) = n/|n| (Lemma 4.1 of the 11/12 paper; checked numerically by READER-4); coefficient of
 Kubota's theta at lambda^(-3) n b^3: 3^(5/2) |b| chi_n(lambda)^2 gamma_2(n) (Patterson 1977 Thm 8.1 as quoted). Papers and Patterson NOT read.
@@ -225,6 +231,8 @@ Kubota's theta at lambda^(-3) n b^3: 3^(5/2) |b| chi_n(lambda)^2 gamma_2(n) (Pat
 - **P6** (NOTES D8): F_d x F_d and G_d x G_d have their rightmost pole at 1 + 2d; Selberg-class bookkeeping of F_d, G_d.
 - **P7** (NOTES D9): Hecke-Gram matrix: positive semidefinite always, rank one iff eigenform.
 - **P8** (NOTES D2): xi(S+d) xi(S-d) = 2 int_0^inf E~*(iy, 1/2+d) y^(S-1/2) dy/y.
+- **P12** (OBJECT_PHI R1-R3): exact Rankin-Selberg identity of the cubic theta function with Gamma factors and the factor at 3;
+  the cusp part of the resolvent drops out of every sheet difference.
 - **P10** (NOTES D12): the project's parity blocks are the w-derivative at 0 of Suzuki's 1 -+ K_w[L]; checked on e_0 at
   L = 0.5, 0.75, 1.0 against lane A's builder.
 - **P11** (OBJECT_PHI.md): Phi(s) = 3 (sqrt3/2pi)^s Gamma(s) zeta_K(s); the class-number-two twin of the impostor at discriminant

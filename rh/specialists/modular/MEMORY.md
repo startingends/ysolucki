@@ -47,6 +47,22 @@ HOLDING from it: distribution of tau_gamma; a group-side (prime-side) formula fo
 whether the Rankin-Selberg integral of |theta_3|^2 is in print; status of the set S at non-CM points.
 I corrected one of my own recollections while writing (the Euler factor of L(s, D f^2): the lattice count is right).
 
+## 2c. Session 2 (02:15-02:40 UTC; after a container restart): Round 2 on Phi (OBJECT_PHI.md, section "Round 2")
+- RESOLVED: Patterson's Theorem 8.1 (read as Dunn-Radziwill (5.7)) gives sum |tau(mu)|^2 N(mu)^(-s) = 486*3^(3s)(1+3^(1-2s))/(1+3^(-s))
+  * zeta_K(s) zeta_K(3s-1)/zeta_K(2s), and with the Bessel integral (checked) the Gamma factors match EXACTLY:
+  Lambda_K^(3)(2s) x RS = C 3^(-s)(1+3^(1-2s))(1-3^(-s)) Lambda_K(s) Lambda_K(3s-1). Renormalisation poles s = 1/3, 2/3 = poles of Lambda_K(3s-1).
+- Lead's statement confirmed: the positive kernel's Mellin transform has all strip zeros on the line iff RH_K (zeros at rho
+  and (rho+1)/3; s -> 3s-1 is a dilation by 3 about 1/2).
+- At i sqrt5: no twisted-multiplicative form can have the Epstein function as RS square (PROVED); separates the FIELD, not
+  the point (Q(i) also has no cubic theta).
+- Dichotomy (PROVED): the cusp part of the resolvent at a point is single-valued in lambda, so it drops out of every sheet
+  difference; Waldspurger's factorisation (where omega and i sqrt5 differ) is invisible to the zeros.
+- Gross-Zagier cross densities carry the SIGN of Phi but are linear in delta_omega: reduce. T(p)^2 vs T(p^2): reduces.
+- Pick: the cubic-theta kernel k_theta and its Jensen defect (= 0 iff RH_K). Probably fails: a positive kernel is shared by
+  the impostor; what is left is "positivity + multiplicative weights", i.e. B1 in the Selberg class.
+- HOLDING: a Polya-type criterion (first test: log-concavity of k_theta(e^u) against the Epstein kernel of x^2+5y^2);
+  Ichino-type exact triple products <|theta|^2, u_j>; the signs eps_j = sign u_j(omega) entering R3 (e).
+
 ## 3. NOT POSTED (board closed): texts in posts/UNPOSTED.md, to be posted or handed to the lead
 1. CAVEAT to my own B214 (4): Cornelissen-Lorscheid's recursion gives the VALUE of the Hecke eigenvalue (q = trace of
    Frobenius of a one-point curve); RH follows because q <= 2 sqrt(q) for q <= 4, by inspection, and the list of curves
@@ -103,14 +119,14 @@ I corrected one of my own recollections while writing (the Euler factor of L(s, 
 
 ## 6. Files of this seat
 CHARTER.md (fixed; one line added on periods) · LIBRARY.md (22 entries M1-M22, 11 own statements, reading list) ·
-OBJECT_PHI.md (the object Phi, 221 lines) · NOTES_session1.md (D1-D13) ·
+OBJECT_PHI.md (the object Phi: 221 lines + Round 2, about 130) · NOTES_session1.md (D1-D13) ·
 PROOF_dial.md (Theorems A, B, C; nomination F1-F3) · PROGRESS.md (predictions P1-P9 and outcomes) · IDEAS_LOCAL.md
 (8 ideas: #1 positive control, #2 two involutions, #3 dial identities, #4 sign/rate framing, #5 function-field twin,
 #6 Hecke-Gram rank test, #7 caution for N38, #8 the family in w) · posts/ (q1, q2a, q2b, q2c, q3a, q3b as posted;
 q_operator, q_reflection, UNPOSTED.md not posted) · scripts with logs: dial_coeffs, hejhal_check, gram_check,
 halfshift_window, halfshift_window2, hecke_integral_check, d12_check, d12_prime_check, d12_family, weil_q00,
-maass_selberg_check, phi_check (all `python3 tools/memcap.py 1 python3 X.py.txt`;
+maass_selberg_check, phi_check, rs_theta_check (all `python3 tools/memcap.py 1 python3 X.py.txt`;
 mpmath or numpy; one implementation each; nothing interval-certified).
 Sources downloaded (untrusted text): rh/library/src/sp_modular_zagier1981, sp_modular_lagarias_suzuki,
 sp_modular_conrey_ghosh, sp_modular_misc/{1003.0559, 1509.00797, 1809.07605, 0707.3315, 2011.07796, 0710.2994,
-1012.3223, 0906.5284, math_0402371, 2609.28514, math_0611148, 2002.07929}.
+1012.3223, 0906.5284, math_0402371, 2609.28514, math_0611148, 2002.07929, 2109.07463}.

@@ -179,3 +179,14 @@ E*(omega,s) = 0.1793191816 (lattice) against 0.1793191826 by both closed forms; 
 Found while writing: my recollection of the formula for L(s, D f^2)/L(s, D) was wrong by a term p^(-s); the lattice
 count (Hecke operator on delta_omega) and the classical identity for x^2 + 3y^2 agree with each other, and that is what
 OBJECT_PHI 3(c) states. No prediction was made for this file (no measurement).
+
+## Session 2 (02:15-02:40 UTC, after a container restart): Round 2 on the common object (rule 13)
+Read: the other two seats' OBJECT_PHI.md, HUNCHES F3-F5 and H9, NOTEBOOK N43-N46, Dunn-Radziwill arXiv 2109.07463 sec. 5.1
+(Patterson's coefficients as their (5.7)), the 11/12 paper's passages quoting them. Wrote OBJECT_PHI.md "Round 2" (about 130 lines).
+No prediction (structure, not measurement). Sanity checks only (rs_theta_check.py.txt, .log; mpmath 25 digits): the Bessel
+integral int u^(2s-1) K_{1/3}^2 = sqrt(pi)Gamma(s+1/3)Gamma(s-1/3)Gamma(s)/(4Gamma(s+1/2)) and its Gauss-multiplied form agree with
+quadrature to 15 digits at s = 0.9, 1.5, 1.2+0.7i; the 3-part of sum |tau|^2 N^(-s) agrees with its closed form at s = 2, 1.3.
+Result: the Rankin-Selberg identity of the cubic theta function is exact with Gamma factors (they match Gamma(s)Gamma(3s-1));
+the factor at 3 is (1 + 3^(1-2s))(1 - 3^(-s)) after completion.
+Corrected while writing: I first wrote that the second zero (rho+1)/3 "contracts" the Jensen defect; to first order it
+contributes about three times as much as rho (it is three times closer to the line and three times lower).

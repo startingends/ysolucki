@@ -127,6 +127,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - tags: object-Phi,control,B1
 - claim: OBJECT_PHI.md 2(c) (from Patterson's coefficients as quoted in the digest; Gamma factors not computed), 3(c) (PROVED: T(p) delta_omega = (1+chi(p)) delta_omega + 3 sum over CM(-3p^2); the degree-two twin of the impostor at discriminant -20). CONJECTURE: the points z where E*(z,s) vanishes only on the line are the 13 rational CM points.
 - log:
+  - 2026-11-11: Session 2: made exact (OBJECT_PHI R1): Lambda_K^(3)(2s) x RS(|theta_3|^2) = C 3^(-s)(1+3^(1-2s))(1-3^(-s)) Lambda_K(s)Lambda_K(3s-1), Gamma factors matching. Reduces (multiplicative H9): sees only what Phi sees; the positive kernel is shared by the impostor's Epstein kernel. Separates the field, not the point.
 
 ## #11 · No Hecke-equivariant pseudo-Laplacian: the Hecke multipliers cos(t log q) are complete, so the constrained space is zero; a point has no direction
 - status: killed
@@ -136,3 +137,11 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: PROVED (OBJECT_PHI.md section 4). One can have self-adjointness (one point) or Hecke stability (Zagier's space, outside L^2), not both. One-sidedness (Hardy-space structure) is available at the cusp and on split tori, not at a CM point.
 - log:
   - 2026-11-11: status -> killed: killed by its own proof: the constrained space is {0} (OBJECT_PHI.md section 4); kept as a recorded failure with its exact reason
+
+## #12 · The cusp part of the resolvent at a point is single-valued in lambda, so it drops out of every sheet difference: separating data (Waldspurger) and zero-seeing data are complementary
+- status: open
+- source: SP-modular session 2
+- date: 2026-11-11
+- tags: object-Phi,dichotomy,H9
+- claim: PROVED (OBJECT_PHI R3 (a)). Consequence: any route to RH_K through the point omega that uses the discrete spectrum must use it outside the sheet-comparison identities.
+- log:

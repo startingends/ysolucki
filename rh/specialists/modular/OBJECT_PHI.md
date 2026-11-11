@@ -222,4 +222,130 @@ coefficients of theta_3), to make 2(c) exact with its Gamma factors; (2) whether
     its multipliers cos(t log q) are complete, the constrained space is {0}. A point has no direction; a geodesic has.
 
 ## Round 2 (session 2, 2026-11-11): a non-linear invariant at omega; the Rankin-Selberg identity made exact
-(stub written first, to survive a restart; content follows)
+Read this round: the other two seats' OBJECT_PHI.md (whole), rh/HUNCHES.md F3-F5 and H9, NOTEBOOK N43-N46; in the TeX
+source of Dunn-Radziwill arXiv 2109.07463 (Ann. Math. 2024) section 5.1 (lines 796-980: groups, Kubota's character, the
+expansion of theta and Patterson's Theorem 8.1 as their (5.7)); in the 11/12 paper's text (rh/library/src/qrh-short/6.txt)
+the passages quoting it (lines 300-345, 1370-1400, 2505-2545). Patterson 1977 itself NOT read. Sanity check of formulas
+only: rs_theta_check.py.txt / .log.
+
+### R1. The Rankin-Selberg identity of the cubic theta function, exact (resolves the item held in section 4 (1), (2))
+KNOWN, read (Dunn-Radziwill (5.6)-(5.8), quoting Patterson Thm 8.1): Gamma_2 = SL_2(Z) Gamma_1(3) in SL_2(Z[omega]) (index 27),
+chi = Kubota's cubic character extended by chi = 1 on SL_2(Z); theta is automorphic on Gamma_2 with multiplier chi,
+   theta(z,v) = (3^(5/2)/2) v^(2/3) + sum_{0 != mu in lambda^-3 O} tau(mu) v K_{1/3}(4 pi |mu| v) e(mu z),   lambda = 1 + 2 omega,
+   tau(mu) = conj g(r,c) |d/c| 3^(n/2+2) for mu = +- omega^j lambda^(3n-4) c d^3 (n >= 1, j = 0,1,2, r = omega^j lambda^2, phase e^(-+2pi i/9) for j = 1, 2),
+   tau(mu) = conj g(1,c)  |d/c| 3^(n/2+5/2) for mu = +- lambda^(3n-3) c d^3 (n >= 0),   tau = 0 otherwise;
+c, d = 1 mod 3, c squarefree. Since |g(r,c)| = |c| for c squarefree prime to 3: |tau(mu)|^2 = 3^(n+4) N(d), resp. 3^(n+5) N(d).
+PROVED from this (each mu has at most one such representation: c = product of the primes of exponent = 1 mod 3; six resp.
+two units; 3-part summed as a geometric series, checked to 15 digits in rs_theta_check.log):
+   D(s) := sum_{mu != 0} |tau(mu)|^2 N(mu)^(-s) = 486 * 3^(3s) * (1 + 3^(1-2s))/(1 + 3^(-s)) * zeta_K(s) zeta_K(3s-1)/zeta_K(2s).
+So the coefficient formula I had quoted (3^5 zeta_K(s) zeta_K(3s-1)/zeta_K(2s)) was right away from 3; the factor at 3 is now explicit.
+Archimedean part. KNOWN formula, checked to 15 digits at three points: M(s) := int_0^inf u^(2s-1) K_{1/3}(u)^2 du =
+sqrt(pi) Gamma(s+1/3)Gamma(s-1/3)Gamma(s)/(4 Gamma(s+1/2)) = (pi/4) 3^(3/2-3s) 4^s Gamma(3s-1)Gamma(s)/Gamma(2s) (Gauss, Legendre).
+Unfolding (PROVED given that the renormalised integral exists, below), Lambda_lat = Z + 3O the translation lattice of Gamma_2, A its area,
+E(w,s) := sum over (Gamma_2)_inf \ Gamma_2 of v(gamma w)^(2s) (Laplace eigenvalue 2s(2-2s) on H^3, the right parameter s):
+   int_0^inf a_0(v) v^(2s-3) dv = A (4 pi)^(-2s) M(s) D(s),   a_0(v) := A sum_mu |tau(mu)|^2 v^2 K_{1/3}(4 pi |mu| v)^2  >= 0   (Re s > 1),
+and with Lambda_K(s) := (sqrt3/(2 pi))^s Gamma(s) zeta_K(s) all exponentials collapse (4^s (4 pi)^(-2s) (2pi/sqrt3)^(2s) = 3^(-s)):
+   (R1)  Lambda_K^(3)(2s) * int_0^inf a_0(v) v^(2s-3) dv = C * 3^(-s) (1 + 3^(1-2s)) (1 - 3^(-s)) * Lambda_K(s) Lambda_K(3s-1),
+Lambda_K^(3) = Lambda_K without its Euler factor at lambda, C an explicit positive constant (not simplified). EXACT, Gamma factors
+included: the Gamma factor Gamma(s+1/3)Gamma(s-1/3)Gamma(s)/Gamma(s+1/2) of the Bessel integral times Gamma(2s) IS Gamma(s) Gamma(3s-1)
+up to exponentials. I take this as the main check of the identity: nothing forced the two Gamma factors to match.
+Renormalisation (FROM MEMORY: Zagier's Rankin-Selberg method for functions not of rapid decay): theta is a residual form in
+L^2 but not of rapid decay (|theta|^2 ~ (243/4) v^(4/3)), so int |theta|^2 E(.,s) is defined by renormalisation and acquires
+poles at 2s = 4/3 and 2 - 4/3, i.e. s = 2/3 and 1/3. These are exactly the poles of Lambda_K(3s-1) at 3s-1 = 1, 0. Consistent.
+CHECK OF THE LEAD'S STATEMENT (PROVED): the transform in (R1) is the Mellin transform of a POSITIVE kernel (a_0, and after
+multiplication by Lambda_K^(3)(2s) the multiplicative convolution of a_0 with the positive theta kernel of Lambda_K^(3)); its zeros in
+0 < Re s < 1 are: the zeros rho of zeta_K; the points (rho+1)/3; the zeros of 1 + 3^(1-2s), all on Re s = 1/2 (spacing pi/log 3).
+s -> 3s - 1 is the dilation by 3 about s = 1/2, so (rho+1)/3 lies at distance (beta - 1/2)/3 from the line. Hence: all zeros of
+(R1) in the strip are on Re s = 1/2 IF AND ONLY IF RH_K. The statement is right; and it is equivalent to RH_K, no more.
+Curiosity (PROVED, no use found): the Euler factor at the ramified prime, 1 + 3^(1-2s), also has all its zeros on the line.
+
+### R2. Is there such an object at i sqrt5? Structural difference (PROVED in one class; FROM MEMORY in general)
+(a) PROVED. Let f be any form whose coefficients are multiplicative up to a unimodular cocycle (Hecke eigenforms;
+    Kubota-Patterson theta: Gauss sums are twisted-multiplicative, digest Lemma 4.1). Then |coefficients| are multiplicative and
+    sum |c|^2 N^(-s) is an Euler product. E*(i sqrt5, s) = c(s)[zeta L(chi_-20) + L(chi_-4)L(chi_5)] has coefficients r_Q(n) of
+    x^2 + 5y^2 with r_Q(2) = r_Q(3) = 0, r_Q(6) = 4: not multiplicative. So NO form of that class has a Rankin-Selberg square
+    equal to the Epstein function of i sqrt5 (or to it times a fixed Euler product). The structural difference is again
+    "rank one = Euler product", now one level up (|coefficients|^2 instead of coefficients).
+(b) FROM MEMORY (Kubota; Kazhdan-Patterson 1984). An n-fold metaplectic cover of GL_2 over F needs mu_n in F; its theta
+    representation has a unique Whittaker model (hence coefficients determined, Gauss sums on squarefree indices) only for
+    n = 2, 3. Q(sqrt-5) has mu = {+-1}: only n = 2, whose theta has coefficients on squares, Rankin-Selberg at 2s (wrong
+    parameter). Q(sqrt-3) is the only imaginary quadratic field containing mu_3. So (R1) is special to K.
+(c) CAVEAT (PROVED). This separates the FIELD, not the point: Q(i), Q(sqrt-2), ..., Q(sqrt-163) have no cubic theta either,
+    and their CM points are expected RH points. So the existence of theta_3 cannot be what makes CM points of class number one
+    RH points; at most it is a device specific to K (which, by base change, is how the quasi-RH proof reaches all of Q).
+
+### R3. The three candidates through rule H9, and one exact reason why they all reduce
+(a) THE CUSP PART DROPS OUT OF EVERY SHEET DIFFERENCE (PROVED, one line). For any points z, w write the resolvent kernel
+    G_s(z,w) = Q^disc_{z,w}(lambda) + Q^cont_{z,w}(s), Q^disc = sum_j u_j(z) u_j(w)/(lambda_j - lambda) + (3/pi)/(-lambda), lambda = s(1-s).
+    Q^disc is a single-valued function of lambda, so G_s - G_(1-s) = Q^cont(s) - Q^cont(1-s) = E(z,s)E(w,1-s)/(1-2s) (Selberg,
+    SP-operator 1b). Every statement about zeros of s -> E(z,s) obtained by comparing sheets is independent of the cusp forms.
+    Consequence: the one place where omega and i sqrt5 differ structurally inside the spectrum, the DISCRETE weights
+    (|u_j(omega)|^2 = c L(1/2,u_j) L(1/2,u_j x chi_-3)/L(1,sym^2 u_j) by Waldspurger-Zhang, FROM MEMORY; at i sqrt5,
+    u_j(z_1) = (P_1 + P_psi)/2 with toric periods P_1, P_psi, so |u_j(z_1)|^2 carries the cross term 2 Re P_1 conj(P_psi), which is
+    not an L-value), is invisible to the zeros. The separating data and the zero-seeing data live in complementary parts
+    of the spectrum.
+(b) GREEN FUNCTIONS AT PAIRS OF CM POINTS (Gross-Zagier). The cross-spectral density of (delta_omega, delta_w),
+    Phi(1/2+it) E*(w,1/2+it)/|xi*(1+2it)|^2, is SIGNED: it carries the sign of the real function Phi on the line, which
+    |Phi| does not. So criterion (2) holds. But G_s(omega,w) is linear in delta_omega and by (a) its sheet difference factors:
+    at a zero rho, G_rho(omega,w) = G_(1-rho)(omega,w) for every w, which is Phi(rho) = 0 again (N46's computation, for all w at
+    once). The arithmetic values (s = 1: log|j(omega) - j(w)|^2 = log|j(w)|^2 since j(omega) = 0; higher s = k: Gross-Kohnen-Zagier,
+    FROM MEMORY) sit at integers, where nothing about zeros is decided.
+(c) T(p)^2 VERSUS T(p^2). An operator identity in the Hecke algebra; applied to delta_omega it yields identities among
+    multisets of CM points (class-number relations of Kronecker-Hurwitz type, FROM MEMORY), unconditional and linear: reduces.
+(d) THE PRODUCT IDENTITY (R1), multiplicative form of H9 (PROVED, one line): if an object's transform is a finite product of
+    values of Phi at affine images a s + b of s, its zeros are the union of the preimages of the zeros of Phi; it sees exactly
+    what Phi sees. (R1) is quadratic in theta and non-linear in Phi, yet of this kind: Lambda_K(s) Lambda_K(3s-1).
+(e) A product that does NOT drop the cusp forms (PROVED as an identity; content RISK). Expand F = E(.,s_1)E(.,s_2)
+    (renormalised) spectrally and evaluate at omega: Phi(s_1)Phi(s_2)/(xi*(2s_1)xi*(2s_2)) = sum_j <F,u_j> u_j(omega) +
+    (continuous) + (degenerate terms), with <F,u_j> = (Gamma factors) Lambda(s_1+s_2-1/2,u_j) Lambda(s_1-s_2+1/2,u_j)/(xi*(2s_1)xi*(2s_2))
+    (unfolding, FROM MEMORY). At s_1 = rho a zero of zeta_K the right side vanishes for every s_2: a zero of zeta_K becomes a
+    linear relation among the cusp values u_j(omega), weighted by values of cusp-form L-functions AT ARGUMENTS SHIFTED BY rho.
+    Here the SIGNS eps_j = sign u_j(omega) enter, which Waldspurger does not give (it gives |u_j(omega)|^2). Still linear in
+    delta_omega, so it is a reformulation (RH_K <=> s_1 -> right side vanishes only on the line).
+
+### R4. The pick, the number, and what an off-line zero would do
+PICK: the cubic-theta kernel of (R1). Of the candidates it is the one that separates omega's field from i sqrt5 for a
+structural reason (R2 (a), (b)), it is quadratic in an automorphic form and non-linear in Phi, and it is now exact.
+THE NUMBER. k_theta(v) := multiplicative convolution of a_0 with the theta kernel of Lambda_K^(3)(2s): an explicit positive function on
+(0, inf), a lattice sum over Z[omega] whose weights |tau(mu)|^2 = 3^(n+4 or n+5) N(d) are constant on squarefree indices (the
+Gauss sums have modulus one). Its Mellin transform is (R1). Define its Jensen defect, as SP-reflection did for points of the
+modular surface: Dfc_theta := sum over zeros sigma of (R1) with Re sigma > 1/2 of log|sigma/(1-sigma)| >= 0.
+WHAT AN OFF-LINE ZERO rho = beta + i gamma OF zeta_K WOULD DO (PROVED): put two zeros of the Mellin transform of the positive kernel
+k_theta off the line, at rho and (rho+1)/3 (and their reflections), so Dfc_theta >= log|rho/(1-rho)| + log|(rho+1)/(2-rho)| > 0;
+conversely Dfc_theta = 0 iff RH_K. The second zero is three times closer to the line but also three times lower; since
+log|sigma/(1-sigma)| ~ (Re sigma - 1/2)/|sigma|^2 for |Im sigma| large, its contribution is about THREE times that of rho:
+Dfc_theta ~ 4 Dfc(omega) when the off-line zeros are high (PROVED to first order; an amplification, not a new constraint).
+WHY IT PROBABLY FAILS (exactly): (i) R3 (d): it sees nothing beyond Phi; (ii) positivity of the kernel is free and shared:
+E*(i sqrt5, s) is also the Mellin transform of a positive kernel (the theta series of x^2 + 5y^2 minus 1), with zeros off the line;
+so "Mellin transform of a positive kernel" is empty, as the spectral density was. What k_theta has and the impostor's kernel
+lacks is that its weights are a MULTIPLICATIVE function (constant moduli on squarefree indices). So the question it reduces
+to is the oldest one in this project's list: does positivity of a kernel plus multiplicativity of its weights force its Mellin
+transform's zeros onto the line? That is barrier B1 inside the Selberg class (B211). Known consequence of positivity plus
+multiplicativity: only Landau's lemma, at the abscissa Re s = 1.
+WHAT I WOULD NEED TO KNOW TO DECIDE. (1) Any theorem of Polya type (sufficient conditions on a positive kernel for real zeros
+of its Fourier transform: Polya 1926, de Bruijn 1950 "universal factors", FROM MEMORY) that k_theta satisfies and the Epstein
+kernel of i sqrt5 violates. Since the impostor's transform has zeros off the line, every such criterion must fail for the
+impostor's kernel; a criterion that k_theta passes would be a real separation. Concrete first test (computable, not run):
+log-concavity in u = log v of k_theta(e^u) versus the Epstein kernel of x^2+5y^2. Riemann's own kernel is known to fail the
+classical sufficient conditions (FROM MEMORY), so the expected answer is "no". (2) Whether Patterson's coefficients make the
+cuspidal triple products <|theta|^2, u_j> exact (Ichino-type); they would be the analogue of R3 (a)'s discrete weights for (R1).
+
+### R5. Ten-line summary of Round 2
+1. Patterson's Theorem 8.1 (read in Dunn-Radziwill (5.7)) makes the Rankin-Selberg identity exact: sum |tau|^2 N^(-s) =
+   486*3^(3s)(1+3^(1-2s))/(1+3^(-s)) * zeta_K(s)zeta_K(3s-1)/zeta_K(2s).
+2. With the Bessel integral the Gamma factors match exactly: Lambda^(3)_K(2s) x (RS transform) = C 3^(-s)(1+3^(1-2s))(1-3^(-s)) Lambda_K(s)Lambda_K(3s-1).
+   The renormalisation poles at s = 1/3, 2/3 are the poles of Lambda_K(3s-1). Checked to 15 digits (Bessel, 3-part).
+3. The lead's statement is right: the positive kernel's transform has all its zeros on the line iff RH_K; s -> 3s-1 is a
+   dilation by 3 about 1/2, so an off-line zero at distance delta appears twice, at delta and delta/3.
+4. At i sqrt5 no form with twisted-multiplicative coefficients has this property (PROVED: its RS square would be an Euler
+   product); no cubic cover exists over Q(sqrt-5) (FROM MEMORY). But this separates the field, not the point (Q(i) lacks it too).
+5. Dichotomy (PROVED): the cusp part of the resolvent at a point is single-valued in lambda, so it drops out of every sheet
+   difference: Waldspurger's factorisation (where omega and i sqrt5 differ) is invisible to the zeros.
+6. Green functions at CM pairs carry the SIGN of Phi on the line (not a function of |Phi|), but are linear in delta_omega:
+   at a zero they reduce to Phi(rho) = 0 for all w at once. T(p)^2 vs T(p^2) reduces to class-number relations.
+7. Multiplicative H9: products of values of Phi at affine arguments see exactly what Phi sees; (R1) is of this kind.
+8. Pick: the cubic-theta kernel k_theta; number: its Jensen defect Dfc_theta, = 0 iff RH_K; an off-line zero enters twice (~4x).
+9. It probably fails because a positive kernel is shared by the impostor; what remains is positivity + multiplicativity of
+   weights, i.e. B1 in the Selberg class.
+10. To decide: a Polya-type criterion passed by k_theta and failed by the Epstein kernel of x^2 + 5y^2 (first test:
+    log-concavity), and Ichino-type exact triple products for <|theta|^2, u_j>.
