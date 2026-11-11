@@ -313,3 +313,15 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
   fixed PW_L), (F2) Paley-Wiener bound grows at the same rate, (F3) tensor powers keep Lambda>=0 but pole distance k/2 scales too.
 - Lemma 2: D-power-bounded Krein isometry cannot boost. Needed object = fixed-window, D-power-bounded Krein boost = vertex (B).
 - Ratings Quality 5, Toward RH 1.
+
+## SESSION 5 (one-object seat: the Moebius norm D and its kernel; T131): LOCAL_DISCRIMINANT.md section 7
+- Lemma A PROVED: for g in the companion space (int g = 0, int_band ghat = 0) and a zero gamma,
+  F_g(gamma) = -int_lam^inf ghat(xi) xi^{-1/2-i gamma} R_{xi/lam}(1/2 - i gamma) dxi: the pole subtraction in R_N IS the
+  companion's g(0) (= int of the leak, by the 2nd pole condition). Proof: Mellin continuation + Poisson for smooth g, density.
+- Theorem B PROVED: K_D(gamma, gamma') = K_T131 - (1/4)<P_perp tau, P_perp tau'> (PSD error); K_D <= K_T131 on the diagonal,
+  error = (1/4) dist(tau_gamma, closure of leaks)^2. (ADM) is FALSE (closure of leaks = out-of-band parts of time-limited
+  functions, closed range; complement infinite-dim) and not needed. Error > 0 strictly (partial sums jump at xi = n lam).
+  Smallness of the error below T_D: computed 0.1-0.7%, not proved.
+- Euler product: absent; only mu * 1 = delta is used (impostor too). Linear use of mu (norms/kernels of Moebius-inverted
+  objects) cannot see multiplicativity: the kernel sees M^{-1} = E (coefficients 1).
+- Ratings Quality 7, Toward RH 1. Check two_zero/ident.py.txt: Lemma A to 1e-6 relative at zeros 14.13, 21.02 (L = 0.5); off by O(1) at t = 17.5 (control).

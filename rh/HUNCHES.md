@@ -388,3 +388,10 @@ from the centre to the line of absolute convergence (for ζ, r = β/(½) = 2β; 
 - **H12 (lead, from N91).** The Euler product decouples the primes exactly (Landau–Gonek form on a divisor box is a
   sum of one-prime operators); any localisation in the height t (needed to see ONE zero) re-couples them. A hunch
   must say what plays the role of the localisation and why it does not undo the decoupling.
+
+- **H13 (lead, from N94).** Objects linear in the Möbius inverse are blind to the Euler product (they see only
+  μ∗1 = δ). Multiplicativity is nonlinear in a(n) and μ(n), LINEAR in Λ (a support condition). Use the Euler product
+  in Λ-coordinates.
+
+### H-4. The prime-sampling cone: see NOTEBOOK N94 (built to target; assigned to SP-operator).
+

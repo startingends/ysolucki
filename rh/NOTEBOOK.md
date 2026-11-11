@@ -1665,3 +1665,42 @@ SP-sieve, `rh/specialists/sieve/LEVINSON_THETA.md`; construction only, several f
   methods are twist-blind at 100%.** Ratings (seat): Quality 4, Toward RH 1.
 - With N92 this closes the third option. The first (an object where ∞ has a discrete target) has no known instance
   (N89–N90); the second (a Stepanov bound for one structured family over ℤ) reduces to the Möbius wall (N79).
+
+**N94. T131 proved in corrected form; and the lesson: objects linear in μ cannot see the Euler product** (lead, after
+SP-operator session 5, `rh/specialists/operator/LOCAL_DISCRIMINANT.md` §7).
+- Lemma A (PROVED; checked to 1e-6 at γ = 14.13, 21.02, and correctly failing at t = 17.5): evaluation at a zero
+  depends only on the leak, F(γ) = −∫_λ^∞ ĝ(ξ) ξ^(−½−iγ) R_{ξ/λ}(½ − iγ) dξ; the pole subtraction in R_N comes out of
+  g(0). Theorem B (PROVED): K_D = K_T131 − ¼⟨P_⊥τ_γ′, P_⊥τ_γ⟩, so the N85 formula is an exact UPPER bound with error
+  ¼·dist(τ_γ, closure)², strictly positive; (ADM) was FALSE and is no longer needed. Smallness of the error (0.1–0.7%)
+  is measured, not proved. Ratings (seat): Quality 7, Toward RH 1.
+- **Rule H13 (from the proof).** The only arithmetic the proof uses is μ∗1 = δ, which every Dirichlet series shares
+  with its own inverse, the impostor included. Anything built LINEARLY from the Möbius inverse (a norm, a kernel, a
+  Gram of Möbius-inverted functions) sees only the inverse operator, whose coefficients are all 1: the inversion
+  cancels multiplicativity exactly. In the coefficients a(n) or μ(n), multiplicativity is a NONLINEAR condition.
+- **Lead's turn (the coordinates in which the Euler product is linear).** In log-derivative coordinates the Euler
+  product IS linear: it says Λ is supported on the prime powers (for the impostor Λ_DH lives on all n). The Weil form
+  is linear in Λ. So the Euler product enters the Weil form as a SUPPORT condition, and the natural way to use it
+  linearly is to make the test function vanish where Λ lives. That is H-4 below.
+
+### H-4 (HUNCHES part H): the prime-sampling cone (built to target; one seat: SP-operator)
+- (v) first. What would make the wall trivial: a test class on which the prime side of the Weil form is EXACTLY zero
+  while the class still resolves single zeros in the bulk. Then Weil positivity on that class is a purely
+  archimedean statement, and the archimedean place's uncertainty principle, which is the obstruction everywhere else
+  (N90), becomes the TOOL: a function forced to vanish on a dense set must carry high frequencies, where the
+  archimedean term log|t| is positive.
+- The object. C_P(L) = { h positive definite, supported in [−2L, 2L], h(±log p^k) = 0 for every prime power
+  p^k ≤ e^(2L) } (a convex cone: the positive-definite cone cut by finitely many linear conditions). On C_P the
+  explicit formula reads Σ_ρ ĥ(γ_ρ) = W_∞(h) + ĥ(i/2) + ĥ(−i/2): no primes at all. Hence (a) RH ⇒ W_∞ + poles ≥ 0 on
+  every C_P(L); (b) the converse holds if (Detect): an off-line zero, if one exists, is seen by some h ∈ C_P(L).
+- Why it might not be a pure reformulation: the attack on "W_∞ + poles ≥ 0 on C_P" is a SAMPLING theorem. The set
+  {log p^k} has density about e^x/x near x (prime number theorem); by Beurling–Landau-type density arguments a
+  function vanishing there must have frequency content of order e^(2L)/(2L) near the top of the window, i.e. close
+  to the band edge 2πe^(2L) (Montgomery's line), where W_∞ ≈ ∫ĥ(t) log(|t|/2π) dt is positive. Degrees of freedom:
+  a window function resolving frequencies up to e^(2L) has about L·e^(2L) of them, against π(e^(2L)) ≈ e^(2L)/(2L)
+  constraints, so C_P is large (codimension a fraction 1/L² of the space) and (Detect) is not excluded by counting.
+- Checklist: (i) the Euler product is used, linearly, as the support of Λ, and the impostor is excluded by
+  construction (its prime side does not vanish on C_P); (ii) in the bulk (forced frequencies near the band edge);
+  (iii) tightness along colliding pairs: unknown, to be determined; (iv) a fresh verifier once built; (v) above.
+- Risks, named: (Detect) may fail (the cone may be too thin where the off-line zero lives); the pole term
+  2∫h(x)cosh(x/2)dx weights the window's edge by e^L and may dominate; the density argument may give frequencies a
+  factor L below the band edge, i.e. exactly in the soft regime. Ratings now (unbuilt): Quality 3, Toward RH 3.

@@ -189,3 +189,95 @@ off-line zeros at the windows where they first matter.
 higher because (ADM) is unproved and everything is one implementation. **Toward RH 2/10**: the object does not let the
 Euler product act pair by pair, and the pair-local criterion misses the impostor's off-line zero; not lower because the
 kernel formula turns the pinning into an explicit discrete-moment object that a sign-definite construction could use.
+
+## 7. Session 5: the kernel formula (T131) PROVED as an upper bound with an exact error term; (ADM) is false and not needed
+
+Setting (foothold definition of D = D_L, plank 6). λ = e^L, c = 2πλ². 𝒢 := even g ∈ L²[−λ, λ] with ∫g = 0 and
+∫_{−λ}^{λ} ĝ = 0 (ĝ(ξ) = ∫ g e^{−2πiyξ} dy). Each g ∈ 𝒢 gives the window function f_g = E(g) on [1/λ, λ],
+E(g)(x) = x^{1/2} Σ_n g(nx) (a finite sum there), every f arises this way (Möbius on [1/λ, λ], free part on (0, 1/λ)), and
+D(f) = min{ ‖(1 − B)ĝ‖² : g ∈ 𝒢, f_g = f } (B = restriction to |ξ| ≤ λ). Leak k := (1 − B)ĝ, 𝒦 := (1 − B)ĝ(𝒢) ⊂ L²_even(|ξ| > λ).
+For a zero ρ = ½ + iγ put R_N(s) := Σ_{n≤N} n^{−s} − N^{1−s}/(1 − s) and τ_γ(ξ) := ξ^{−½+iγ} R_{ξ/λ}(ρ) on ξ > λ (even extension).
+
+**Lemma A (leak representation of evaluation at a zero; PROVED).** For every g ∈ 𝒢 and every zero ρ = ½ + iγ on the line,
+  F_g(γ) = ∫_{1/λ}^{λ} g(y) y^{−½+iγ} ζ_{λy}(½ + iγ) dy = − ∫_λ^∞ ĝ(ξ) ξ^{−½−iγ} R_{ξ/λ}(½ − iγ) dξ = −½⟨k, τ_γ⟩_{L²(ℝ)}.
+Proof. (1) First equality: Σ_n ∫ g(nx) x^{iγ−½} dx, substitute y = nx; only n ≤ λy survive. (2) For g ∈ C_c^∞(−λ, λ) ∩ 𝒢:
+the Mellin transform of E(g) on (0, ∞) is ζ(s + ½)·Mg(s + ½) for Re s > ½; Poisson summation gives, for x < 1/λ,
+E(g)(x) = x^{½}[−g(0)/2 + x^{−1} Σ_{m≥1} ĝ(m/x)] (ĝ(0) = ∫g = 0), so E(g)(x) = O(x^{½}) at 0 and the transform continues
+analytically to Re s > −½, where the pole of ζ at s = ½ is cancelled by Mg(1) = ½∫g = 0. At s = iγ it vanishes (ρ is a zero),
+and E(g) = 0 for x > λ, so F_g(γ) = −∫_0^{1/λ} E(g)(x) x^{iγ−1} dx. (3) For x < 1/λ every m/x exceeds λ, so only the leak k
+appears; and g(0) = ∫ĝ = ∫_band ĝ + ∫k = ∫k = 2∫_λ^∞ k by the second pole condition. Insert, substitute ξ = m/x, sum over
+m ≤ ξ/λ: the Σ_m term gives −∫_λ^∞ k(ξ) ξ^{−½−iγ} ζ_{ξ/λ}(½ − iγ) dξ, the g(0) term gives
++∫_λ^∞ k(ξ) λ^{−½−iγ}/(½ + iγ) dξ = +∫_λ^∞ k(ξ) ξ^{−½−iγ} N^{1−s̄}/(1 − s̄) dξ with N = ξ/λ, s̄ = ½ − iγ. **The pole subtraction
+in R_N is the companion's value g(0), forced by the two pole conditions; it is not put in by hand.** (4) Both sides are
+continuous in g ∈ 𝒢 (left: finite sums of L² pairings; right: k depends continuously on g and τ_γ ∈ L², because
+R_N(ρ) = (½ − {N})N^{−ρ} + O(|ρ|² N^{−3/2}) for large N, so |τ_γ(ξ)|² = O(ξ^{−2})); smooth g are dense in 𝒢 (two continuous
+constraints). ∎
+
+**Theorem B (the kernel formula with exact error; PROVED from Lemma A and plank 6).** Let P be the orthogonal projection
+of L²_even(|ξ| > λ) onto 𝒦̄ and P_⊥ = 1 − P. For zeros γ, γ′ on the line,
+  K_D(γ, γ′) = ¼⟨Pτ_γ′, Pτ_γ⟩_{L²(ℝ)},   K_T131(γ, γ′) = ¼⟨τ_γ′, τ_γ⟩_{L²(ℝ)}  (= ½∫_λ^∞ τ_γ′ conj τ_γ dξ; in the log
+variable ξ = e^w this is T131's ½∫_1^∞ e^{−i(γ−γ′)(L+log N)} conj R_N(ρ) R_N(ρ′) dN/N), hence
+  **K_T131(γ, γ′) − K_D(γ, γ′) = ¼⟨P_⊥τ_γ′, P_⊥τ_γ⟩_{L²(ℝ)}**, a positive
+semidefinite matrix over the zeros. In particular
+  0 ≤ K_T131(γ) − K_D(γ) = ¼ ε_γ²,  |K_T131(γ, γ′) − K_D(γ, γ′)| ≤ ¼ ε_γ ε_γ′,  ε_γ := dist_{L²(ℝ)}(τ_γ, 𝒦̄).
+Proof. D is bounded, closed and strictly positive (plank 6, Prop 6.1), so f ↦ (its minimal leak) is an isometry Φ of
+(H_L, D) onto a closed subspace of 𝒦̄. By Lemma A, F(γ) = −½⟨k, τ_γ⟩ for EVERY leak of f (all companions give the same F);
+for leaks of companions of f = 0 the left side is 0, so τ_γ is orthogonal to them and the representer of evaluation at γ in
+Φ(H_L) is the projection of τ_γ onto Φ(H_L), which equals Pτ_γ. Kernel = inner product of representers; T131 is the same
+expression with τ in place of Pτ (the normalisation ½ of T131 is k even: ‖k‖² = 2∫_{w>L}|𝒦|²). ∎
+(The normalising constants above were checked against T131's ½ only through the numbers of section 5.1, which match to
+0.1–0.7%; the form of the identity does not depend on them.)
+
+**What 𝒦̄ is, and why (ADM) is false (PROVED).** (1 − B) restricted to L²[−λ, λ] is bounded below:
+‖(1 − B)ĝ‖² = ⟨g, (1 − A_c) g⟩ ≥ (1 − χ₀(c))‖g‖², A_c = time–band limiting (prolate) operator. So its range is CLOSED:
+𝒦̄ = (1 − B)ĝ(𝒢), the out-of-band parts of time-limited functions, up to the two constraint directions. Its orthogonal
+complement in the out-of-band space is 𝒜 ⊕ (≤ 2 dims), 𝒜 := {a out-of-band with ǎ = 0 on [−λ, λ]}. 𝒜 is infinite
+dimensional: otherwise TL + BL (time-limited + band-limited, a closed sum since ‖Π_λ B‖ < 1) would have finite codimension,
+and the restrictions of band-limited functions to |x| > λ (real-analytic) would be of finite codimension in L²(|x| > λ),
+false. So the session-3 hypothesis (ADM) "leaks dense in the pole-orthogonal space" is FALSE. It is not needed: Theorem B
+holds with the error ε_γ² = dist(τ_γ, 𝒦̄)². Equivalently (dual form, PROVED by Hilbert-space duality):
+  ε_γ² = ‖τ_γ‖² − ⟨ẽ_γ, (1 − A_c)^{−1} ẽ_γ⟩·(norm.), e_γ(y) = y^{−½−iγ} ζ_{λy}(½ − iγ) 1_{[1/λ, λ]}(|y|),
+ẽ_γ = e_γ corrected by its optimal component along the two constraint functionals: the exact kernel is the
+minimum-norm out-of-band extension of e_γ, and T131 is one particular extension, namely the one Poisson summation provides.
+**Why ε_γ is small but never 0.** τ_γ ∈ 𝒦̄ exactly would make τ_γ the restriction to |ξ| > λ of an entire function of
+exponential type 2πλ; but R_{ξ/λ}(ρ) jumps by (ξ/λ)^{−ρ}-sized amounts at ξ = nλ (each partial sum gains a term), so
+τ_γ is not analytic and ε_γ > 0 strictly. The jumps have size n^{−½}, the part of τ_γ they generate at ξ ≥ nλ is
+weighted by |R|² ~ 1/N, and only the components of these jumps that look like functions vanishing on [−λ, λ] in time
+(the 𝒜-part) are lost. That 𝒜-part is what the measured 0.1–0.7% is. A bound of the form ε_γ² ≤ C(L)·Σ_n n^{−1}·(prolate
+leakage at nλ) is the natural next statement; NOT proved here. Above the pinning height the dual sum region N < γ/2π
+reaches ξ beyond the resolved band and the measured gap grows (111.03 at L = 1: 1.71 vs 1.34, i.e. ε² ≈ 0.74): consistent
+with Theorem B (the error is a distance, which the theorem does not claim small).
+**Status for T131:** "K_D = T131 formula" is replaced by **"K_D = T131 formula − ½·Gram(P_⊥τ) (exact), with the diagonal
+error ¼ε_γ² ≥ 0"**: PROVED (Lemma A rests on Poisson summation and Mellin continuation for smooth compactly supported g,
+written above; Theorem B on plank 6's Prop 6.1). The smallness of ε below T_D is COMPUTED (0.1–0.7%), not proved. Consistency
+with section 5.1: Theorem B predicts K_D ≤ K_T131 on the diagonal; measured: 8 of 9 entries obey it, the ninth
+(59.347: 0.7442 vs 0.7436) exceeds by 8e-4, inside the discretisation error of the finite Legendre/free-part basis.
+
+**The Euler product: where it goes (one paragraph, for CORE).** In the final expression K_D(γ, γ′) = K_T131 − E, both
+terms are built from: the coefficients of ζ as a Dirichlet SERIES (all equal to 1, in ζ_N and in R_N), the pole term
+N^{1−s}/(1−s), the window/band geometry (λ, B, the prolate operator A_c), and the zero positions. By the approximate
+functional equation, at a zero and for N ≲ γ/2π, R_N(ρ) = −χ(ρ) Σ_{m ≤ γ/(2πN)} m^{ρ−1} + O(N^{−½} + (γ/N)^{−½}), and this
+range carries 97–99% of K_T131, so K_D(γ, γ) ≈ ½ ∫_1^{γ/2π} |Σ_{m≤M} m^{−½+iγ}|² dM/M (|χ| = 1 on the line): the
+functional equation (Poisson in Lemma A, χ in the AFE) appears explicitly inside an object defined from μ. **The Euler
+product does not survive anywhere.** μ, Λ, multiplicativity and the support on prime powers are all absent. The reason is
+structural, not accidental: μ enters D only as the convolution inverse of the coefficient sequence (Möbius inversion, i.e.
+μ ∗ 1 = δ), and the kernel of a norm ‖M f‖² built from an invertible operator M is the Gram of M^{−1*} applied to the
+evaluation vectors; M^{−1} = E has coefficients 1. So the kernel sees the coefficients of the series, never the inverse
+coefficients, and the only arithmetic fact used anywhere in the proof is μ ∗ 1 = δ, which every Dirichlet series with
+a₁ ≠ 0 satisfies (the impostor: b ∗ a = δ, with its periodic summatory function in place of −{x} and no pole). Information
+for CORE: **a quadratic object built from μ LINEARLY (norms, kernels, Grams of Möbius-inverted functions) cannot see the
+Euler product; the inversion cancels it exactly. Multiplicativity can only enter through something nonlinear in the
+coefficients, or through the values of μ (signs, support), never through μ's role as an inverse.**
+
+**Ratings (this section).** Quality 7/10: T131 is now a theorem in its corrected form (an exact identity with a PSD error,
+and a proved upper bound), the false hypothesis is identified and replaced; not higher because the smallness of the error
+below T_D is computed, not proved, and the constants were matched numerically rather than re-derived by a second hand.
+Toward RH 1/10: the proof shows exactly why this object is impostor-blind (only μ ∗ 1 = δ is used), which closes it as a
+route for the Euler product; not lower because it pins the functional equation inside a μ-object exactly.
+
+**Check of Lemma A (the one numerical check of this session; two_zero/ident.py.txt, numpy, Gauss–Legendre).** L = 0.5,
+companion g = combination of three C^∞ bumps in (0, λ) with both pole conditions imposed (residuals 0). Window side
+∫_{1/λ}^{λ} g y^{−½+iγ} ζ_{λy}(½+iγ) dy against the leak side −∫_λ^{Ξ} ĝ ξ^{−½−iγ} R_{ξ/λ}(½−iγ) dξ, Ξ = 40, 80, 160:
+γ = 14.1347: |diff| = 2.5e-8 to 4.8e-8 against |F| = 3.05e-2 (relative 1e-6, quadrature level); γ = 21.0220: 8e-8 to 1.1e-7
+against 3.67e-2. Control at the non-zero t = 17.5: the two sides differ by 9.2e-2 (larger than |F| = 6.7e-2), as they must
+(the identity uses ζ(ρ) = 0). Lemma A is confirmed to 6 digits at two zeros and fails off the zeros.

@@ -1,0 +1,40 @@
+"""Check of Lemma A (LOCAL_DISCRIMINANT section 7): for an even smooth companion g in (-lam, lam) with int g = 0 and
+int_{-lam}^{lam} ghat = 0, and gamma a ZERO of zeta,
+   int_{1/lam}^{lam} g(y) y^{-1/2+i gamma} zeta_{lam y}(1/2+i gamma) dy = - int_lam^inf ghat(xi) xi^{-1/2-i gamma} R_{xi/lam}(1/2-i gamma) dxi,
+R_N(s) = zeta_N(s) - N^{1-s}/(1-s). At a non-zero t the two sides must differ. numpy, Gauss-Legendre."""
+import numpy as np
+from numpy.polynomial.legendre import leggauss
+L = 0.5; lam = np.exp(L)
+cs = [(0.45 * lam, 0.4), (0.80 * lam, 0.18), (0.2 * lam, 0.15)]
+xg, wg = leggauss(400)
+def bump(y, c, w):
+    z = (y - c) / w; out = np.zeros_like(y); m = np.abs(z) < 1
+    out[m] = np.exp(-1 / (1 - z[m] ** 2)); return out
+Y = [(c + w * xg, w * wg) for c, w in cs]
+def ghat0(xi, j):               # 2 int_0^lam g_j(y) cos(2 pi y xi) dy
+    y, wy = Y[j]; return 2 * (np.cos(2 * np.pi * np.outer(xi, y)) * bump(y, *cs[j])) @ wy
+def gl(a, b, n=64):
+    x, w = leggauss(n); return (a + b) / 2 + (b - a) / 2 * x, (b - a) / 2 * w
+xb, wb = gl(0, lam, 200)
+A = np.array([[ghat0(np.array([0.0]), j)[0] for j in range(3)], [2 * ghat0(xb, j) @ wb for j in range(3)]])
+a = np.append(np.linalg.solve(A[:, :2], -A[:, 2]), 1.0)
+g = lambda y: sum(a[j] * bump(np.abs(y), *cs[j]) for j in range(3))
+ghat = lambda xi: sum(a[j] * ghat0(xi, j) for j in range(3))
+print("constraints:", A @ a)
+def zN(N, s): return np.array([np.sum(np.arange(1, int(np.floor(v)) + 1) ** (-s)) for v in N])
+def lhs(t):
+    s = 0.5 + 1j * t; br = [1 / lam] + [n / lam for n in range(2, int(lam * lam) + 1)] + [lam]; tot = 0
+    for p, q in zip(br[:-1], br[1:]):
+        y, w = gl(p, q, 80); tot += np.sum(w * g(y) * y ** (-0.5 + 1j * t) * zN(lam * y, s))
+    return tot
+def rhs(t, XI):
+    sb = 0.5 - 1j * t; tot = 0
+    for n in range(1, int(XI / lam)):
+        xi, w = gl(n * lam, (n + 1) * lam, 60); N = xi / lam
+        R = zN(N, sb) - N ** (1 - sb) / (1 - sb)
+        tot += np.sum(w * ghat(xi) * xi ** (-0.5 - 1j * t) * R)
+    return -tot
+for t in (14.134725141734693790, 21.022039638771554993, 17.5):
+    l = lhs(t)
+    for XI in (40, 80, 160):
+        r = rhs(t, XI); print(f" t = {t:.6f}, leak integral to xi = {XI}: window side {l:.10f}  leak side {r:.10f}  |diff| = {abs(l - r):.2e}  (|window| {abs(l):.2e})", flush=True)

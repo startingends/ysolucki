@@ -20,7 +20,9 @@ Out of 10 each; a breakthrough is 9–10 on both. Lead's honest ratings, 2026-11
 | Chain N90 | functional equation ⇒ ∞ ⇒ uncertainty principle ⇒ soft positivity and no fixed bound | 5 | 1 | known in spirit; link (3) heuristic |
 | H-3 separable form N91 | Landau–Gonek Gram on a divisor box decouples exactly over primes | 4 | 1 | sums over all zeros up to T: cannot detect one quartet |
 | Levinson θ N93 | θ forced at ∞ in the main term; technology in the error term; 100% on the line is twist-blind | 4 | 1 | density method |
-| **Ceiling now** | | 6 | **2** | no statement uses the Euler product in the bulk |
+| T131 proved N94 | exact upper-bound kernel formula for the Möbius norm at zeros (Lemma A, Theorem B) | 7 | 1 | smallness of the error only measured; object blind to the Euler product (H13) |
+| H-4 prime-sampling cone (unbuilt) | Weil form on positive-definite h vanishing at log p^k: no prime side; sampling theorem at ∞ | 3 | 3 | unbuilt; (Detect) and the pole term unknown |
+| **Ceiling now** | | 7 | **2 (3 pending H-4)** | no statement uses the Euler product in the bulk |
 
 What a 3 on "Toward RH" would be: a PROVED statement about individual zeros below the band edge that is true for ζ,
 false for the impostor, and uses the Euler product in its proof. A 5: such a statement that is tight along colliding
