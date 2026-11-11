@@ -3,6 +3,17 @@
 Rewritten at the end of session 3 (2026-11-11; 1 = seminar S2, 2 = TRANSPORT.md, 3 = COPY_BARRIER.md). Read this first, then CHARTER.md, then LIBRARY.md (section C: to read).
 Files: S2_B10d.md (long form of everything below), typeII_exponents.py.txt / .log (exponent bookkeeping), IDEAS_LOCAL.md (SP-sieve/#1-#4).
 
+## 0''''. SESSION 6 (S3_SLOPE.md; board s3 closed before posting; slope_system.py.txt + logs)
+- Reconstructed the 7/8 comparison system (Prop 19.2, (20.4), Lemma 10.4, (12.4), Prop 15.3): reproduces the paper's margin and Liu 0.874957
+  (to 4e-5). Predictions P0-P3 in PROGRESS.md: P0, P1, P3 hit; P2 (1 - 3c/4) roughly hit.
+- Lemma 17.6 slope 5/6 -> 1/2: 0.8750 -> 0.8722 (irrelevant). Lemma 17.1 relaxed: 167/192 = 0.8698, saturating. Binding: low (lx/2 + b/12)
+  vs signal (h/6), both carrying the sixth-power density c of the Poisson FREQUENCIES. c as parameter: 0.810, 0.744, 0.609 (c = 1/4, 1/3, 1/2).
+  Floor bin (trivial count) gives sigma0 >= 1 - 4c/5 for ANY Moebius-side inputs.
+- So my B9 conjecture holds for the row slope alone, fails for the architecture: 3/4 is the floor of the amplifier chain, not of the
+  bookkeeping; decisive question: any non-sextic family with Gauss-sum absorption of mu (S2 B22).
+- B11 (written in S3_SLOPE sec 4): exact b = (mu psi)*1 works untruncated; any finite amplifier breaks the identity (PROVED, prime density).
+- B13 (sec 5): near level 1 the correlation is Chowla with small cofactors (exact identity).
+
 ## 0'''. SESSION 5 (seminar S3, board s3: B9 answer to B2 (exit E1), B10 question to lead; long form S3_B2.md)
 - PROVED (reading 7/8 text lines 12690-13145, 9553-9580, 12556-12640): kappa enters Lemma 18.1 only via the prime-slot bound (18.12)
   |Q|^2 <= Z^(kappa z) = licence beta* <= (1+kappa)/2, free by definition of beta*; range [3/4,1] = contradiction range + one bookkeeping

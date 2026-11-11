@@ -18,3 +18,4 @@
   P2 (vary c everywhere, alpha = 1 - c): guess sigma_best(c) ~ 1 - 3c/4 (fits 7/8 at c = 1/6) -> about 5/8 at c = 1/2; LOW confidence;
      if it holds, the 3/4 floor is NOT a floor of the whole architecture.
   P3 (relax Lemma 17.1: r + 2z <= 1 + rho): gains small and saturating; still above 3/4 for rho <= 1/2 at c = 1/6.
+- Session 6: S3_SLOPE.md; P0 hit (0.874996 vs Liu 0.874957), P1 hit (0.8722 at alpha=1/2), P2 rough (0.810/0.744/0.609 vs 0.8125/0.75/0.625), P3 hit (167/192 saturating). Floor bin => sigma >= 1 - 4c/5.

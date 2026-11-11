@@ -39,7 +39,7 @@ def Rstar(delta, x, alpha, rho, sixk, cap, lam=0.5, nt=801, tmax=1.5, need=None)
 def Emax(sigma0, lx, b, csig, alpha, rho, delta0=1/50, nd=401, nx=21, use_dyn_kappa=True, tmax=1.5, need=None):
     ell = 1 - 2*lx - b; h = 1 - lx + ell; ly = lx + b
     if ell < 0 or b < 0 or lx <= 0: return 1e9
-    kappa = 2*sigma0 - 1 if use_dyn_kappa else 0.75
+    kappa = (2*sigma0 - 1 if use_dyn_kappa else 0.75) if KAPPA_FIXED is None else KAPPA_FIXED
     sixk = 6*max(kappa, 1e-6)
     cap = ell/h
     delta = np.linspace(delta0, alpha, nd); x = np.linspace(0, 0.5, nx)
@@ -52,8 +52,9 @@ def Emax(sigma0, lx, b, csig, alpha, rho, delta0=1/50, nd=401, nx=21, use_dyn_ka
 def sigma_low(lx, b, csig):
     ell = 1 - 2*lx - b; h = 1 - lx + ell
     return 1 - csig*h + csig*b/2
+KAPPA_FIXED = None
 def sigma_best_geom(lx, b, csig, alpha, rho, tmax=1.5, fine=False):
-    kw = dict(nd=401, nx=21) if fine else dict(nd=121, nx=11)
+    kw = dict(nd=401, nx=21) if fine else dict(nd=81, nx=6)
     if 1 - 2*lx - b < 0 or b < 0 or lx <= 0: return 2.0
     sig = 0.875
     for _ in range(6):   # E = K(kappa(sigma)) - sigma: fixed point of sigma = K
@@ -63,7 +64,7 @@ def sigma_best_geom(lx, b, csig, alpha, rho, tmax=1.5, fine=False):
     return max(sig, sigma_low(lx, b, csig))
 def optimise(csig, alpha, rho, tmax=1.5, starts=None):
     from scipy.optimize import minimize
-    starts = starts or [(17/48, 1/8), (0.3, 0.1), (0.4, 0.05), (0.25, 0.2), (0.45, 0.02), (0.2, 0.1)]
+    starts = starts or [(17/48, 1/8), (0.3, 0.05), (0.42, 0.1), (0.22, 0.15)]
     best = (9, None)
     for x0 in starts:
         res = minimize(lambda v: sigma_best_geom(v[0], v[1], csig, alpha, rho, tmax), x0, method='Nelder-Mead',
@@ -84,6 +85,7 @@ if __name__ == '__main__':
     elif mode == 'opt':
         csig, alpha, rho = float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4])
         tmax = float(sys.argv[5]) if len(sys.argv) > 5 else 1.5
+        if len(sys.argv) > 6: KAPPA_FIXED = float(sys.argv[6]); print('kappa fixed at', KAPPA_FIXED)
         s, g = optimise(csig, alpha, rho, tmax)
         print(f"csig={csig:.4f} alpha={alpha:.4f} rho={rho:.3f} tmax={tmax}: best sigma0 = {s:.6f} at (l_x, b) = ({g[0]:.5f}, {g[1]:.5f}); "
               f"sigma_low there {sigma_low(g[0], g[1], csig):.6f}")

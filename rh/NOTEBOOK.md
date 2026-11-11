@@ -1242,3 +1242,21 @@ An exit would need an orthogonality relation whose diagonal is the trivial chara
   top singular directions) or is the short-family wall itself (E2), and the one cap-free route (H10's form positivity)
   is Beurling's graded criterion, a reformulation at each level. The October architecture's limit and the place RH
   sits relative to it are now stated precisely and checked.
+
+**N73. CORRECTION: 3/4 floors the amplifier chain, NOT the October architecture; the binding parameter is the density
+of sixth powers among the Poisson frequencies** (lead, after `rh/specialists/sieve/S3_SLOPE.md`; reconstruction of
+the 7/8 paper's comparison system, validated: margin 1.9e-4 against their certified 1.1e-4; optimised 0.874996
+against Liu's 0.874957; predictions written first).
+- The Möbius-side lemmas are SLACK at the optimum: copy slope 5/6 → ½ moves 0.8750 → 0.8722 only; relaxing Lemma 17.1
+  gives 167/192 = 0.8698 once, then saturates. What binds is the low estimate against the principal signal, both
+  carrying the density c of sixth powers among the Poisson frequencies (the pole of ζ_F(6z), the exceptional
+  frequencies a⁶e). With c as a parameter: 0.810, 0.744, 0.609 at c = ¼, ⅓, ½; below 3/4 once c > 0.32.
+- PROVED (algebra on the system): a floor no Möbius-side change can move: σ₀ ≥ 1 − 4c/5 (the bin with no zero
+  witness). So the architecture can never reach ½: at best 3/5 (c = ½).
+- So my N67/N71 sentence "3/4 is the floor of the whole method" is WRONG for the architecture; it holds for the
+  amplifier chain (Thm 3). The decisive open question is now concrete: **does a family of CUBIC (c = ⅓) or quadratic
+  (c = ½) symbols absorb μ the way the sextic Gauss sums do?** SP-modular's S2 B22 answer says the quadratic stratum
+  does NOT (no constant −1 in a squared quadratic Gauss sum). The cubic case is unexamined; if it absorbs μ, the
+  architecture would give about 0.744 < 3/4: an improvement of the October theorem, still not RH (floor 3/5).
+- B11 (PROVED): an exact untruncated amplifier b = (μψ) ∗ 1 exists, but every finitely supported amplifier breaks the
+  Gauss-sum identity. B13: near level 1 the correlation is Chowla's two-point correlation (parity wall).
