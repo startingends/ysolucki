@@ -587,3 +587,27 @@ mode, rule 13; RISK labels as stated).
   height ≥ 1 has all zeros on the line; recalled). What is the mechanism that makes a CM point of class number one
   a re-collision point? Candidate: the Hecke algebra of the torus fixes the point, and the zeros of E(z, ·) are
   joint data of the Laplacian AND the Hecke operators, which commute; at a generic point only the Laplacian acts.
+
+**N46. Two candidates of F5 examined by hand; both reduce, and the reason is one pattern** (lead, 2026-11-11).
+- (ii) THE BOHR LIFT. On the infinite torus T^∞ (one variable z_p per prime) the Euler product at σ₀ > ½ is
+  F(z) = Π_p (1 − p^(−σ₀) z_p)^(−1): each factor outer in its variable, F ∈ H²(T^∞) since Σ p^(−2σ₀) < ∞, log F a
+  random-type series converging a.e. So the lift is outer and zero-free almost everywhere; ζ(σ₀ + it) is its
+  restriction to one Kronecker line. The impostor's lift is a SUM of two such functions and vanishes on a set of
+  positive measure (Bohr–Jessen; this is why it has ≫ T zeros in the strip). So T^∞ separates ζ from the impostor
+  robustly, at the level of "almost every point" (Bohr–Landau: off-line zeros of ζ have density zero; recalled).
+  RH is the statement for the SPECIFIC line, i.e. pointwise; that is Bagchi's strong recurrence (1981, recalled,
+  unread). Wall, exactly: pointwise control on T^∞ needs continuity of log F, and for a series in independent
+  variables uniform convergence ⟺ Σ |a_p| < ∞ ⟺ σ₀ > 1. The lift hits the wall precisely at the edge of the strip.
+- (i) THE HECKE MODULE OF δ_ω. Hecke operators commute with the resolvent, so T_p applied to the Green function at
+  ω gives the Green function at the cycle T_p ω = (1+χ(p))·ω + 3·CM(−3p²) (SP-modular's relation). Twisting the
+  Krein function by the Hecke eigenvalue gives functions Q_p with Q_p(s) − Q_p(1−s) = λ_p(s)·Φ(s)²/(...), and the
+  Hecke relation then says, at a zero ρ: Σ_{w ∈ CM(−3p²)} [G_ρ(ω, w) − G_{1−ρ}(ω, w)] = 0 for every split p. But the
+  sheet difference of a Green function between two points is the product E*(ω, s)E*(w, 1 − s)/(…), so the relation
+  is a consequence of Φ(ρ) = 0 and carries nothing.
+- THE PATTERN (a lesson worth a rule): **every identity LINEAR in the spectral data of δ_ω reduces, at a zero, to
+  Φ(ρ) = 0.** The Euler product (the Hecke structure) is already used up in the factorisation of Φ. Information
+  beyond it must come from an object that is QUADRATIC or non-linear in the spectral data and is not itself a
+  function of |Φ| on the line (which the impostor shares). The only such object found so far is the continuation
+  of the density, Φ(s)², i.e. the sheet difference of the Krein function, and its analytic continuation off the line
+  is the whole problem. Rule H9 (proposed): before building on an identity, check whether it is linear in the
+  object whose zeros are sought; if it is, it cannot see them.

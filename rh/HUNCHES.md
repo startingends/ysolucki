@@ -261,3 +261,6 @@ outerness is closed?** Candidates to think about, none examined: (i) the Hecke m
 multiplicative statement); (ii) the Bohr lift to infinitely many variables (each prime a variable, where the Euler
 product is a product of one-variable outer functions and "outer in infinitely many variables" has a theory: Helson,
 Nikolski, Hedenmalm–Lindqvist–Seip); (iii) the adelic picture, where the product over places is the definition.
+- **H9 (lead, from N46).** Before building on an identity, check whether it is LINEAR in the object whose zeros are
+  sought (Hecke relations, Poisson summation, factorisations are). A linear identity evaluated at a zero returns the
+  zero. Information must come from a quadratic or non-linear object that is not a function of the modulus on the line.
