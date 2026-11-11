@@ -822,3 +822,21 @@ labels per line; novelty not searched).
   the sum). Two seats (SP-modular, SP-operator) are on "what object makes the short-family regime exact".
 - Blind conjecture of SP-reflection to keep (testable later, not now under rule 13): λ_T^Eis(ω) − limit ≈ 0.15942/T
   under RH_K.
+
+**N55. SP-modular on the short-family object: the regime is where the fake dies, and the candidate exact formula is
+a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SHORT_FAMILY.md`).
+- The step needing H > D is the theta transformation followed by the quadratic large sieve, Σ_h|T_h(X)|² ≪ 𝓗 + 𝓗²/X
+  (their (2.15)); Poisson in u is exact for every H. At H = D^(1−θ) the cube-removal recursion returns the problem
+  to itself (b = 1 is a fixed point). Both dualities they use are self-dual at H = D.
+- **Sharp sentence for the wall:** "the Möbius side cannot supply its own duality: 1/L has no functional
+  equation; multiplying μ by a sextic Gauss sum produces a theta coefficient with a functional equation, but only on
+  the dual side." That is barrier B1 seen from the Möbius side.
+- **The fake confirms the regime:** the impostor's pole at 0.808 forces S ≥ D^1.616, which breaks the diagonal bound
+  exactly when H < D^0.617. So the impostor is INVISIBLE in their regime H ≥ D and EXCLUDED at H = D^(1/2). The
+  short-family regime is precisely where the Euler product starts to matter. What a bound would buy:
+  S(D^(1/2), D) ≪ D^(3/2+ε) gives Re s > 3/4 without amplifier and 17/24 with the sixth-power amplifier (one step
+  heuristic); the bound at H = D^η for every η > 0 is RH_K.
+- **Rule 13 (c), the object:** an EXACT formula for S(H, D) with H < D. Candidate named by the seat: a
+  Kuznetsov(-Bruggeman) formula on the cubic metaplectic cover, turning the cubic Gauss sums into Kloosterman-type
+  sums with the family size entering only through a test function (Livné–Patterson; Kodama 2004; a spectral large sieve
+  on the cubic cover). Reader sent.
