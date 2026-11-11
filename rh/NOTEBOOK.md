@@ -1448,3 +1448,23 @@ collision** (lead, after SP-operator session 2, `rh/specialists/operator/TWO_ZER
   because zeros of ζ are not Maass parameters, and any Hilbert–Pólya space must break A in a controlled way (Connes'
   adele class space keeps a weaker A: the action of the idele class group). The precise question: what is the
   weakest form of A that still lets Sym^k act? That is where the triangle might have a gap.
+
+**N84. Why Λ ≥ 0 cannot reach the bulk: the oscillation obstruction** (lead, 2026-11-11; construction by thought,
+no measurement; the facts are classical, the packaging is the lead's).
+- Two positivities use the primes. (P1) de la Vallée Poussin: Σ Λ(n) n^(−σ) w(n/N) P(t log n) ≥ 0 for a positive
+  trigonometric polynomial P. Positivity of P forces its mean a₀ > 0 (Fejér–Riesz), and the mean is exactly what
+  pairs with the pole at 1, so the zero term is bounded by the pole term: zero-free only within c/log t of Re s = 1.
+  (P2) Weil: archimedean ≥ primes + poles, with Λ entering with a MINUS sign against g*g̃, which has no sign.
+- Attempted object: the cone of positive-definite h with h ≤ 0 off [−log 2, log 2]. On it the prime side of (P2)
+  has a sign by Λ ≥ 0, so Weil positivity on the cone needs only archimedean + poles ≥ 0. It fails rule 15 (ii): to
+  detect a zero at height γ the test must oscillate at frequency γ over length > log γ (the band edge), and an
+  oscillating h is positive half the time, so the cone only contains short, non-oscillating tests, i.e. the soft
+  regime of CORE 1.
+- **The obstruction in one line: Λ ≥ 0 bites only on non-oscillating tests, and the bulk is made of oscillating
+  ones.** The oscillation n^(iγ) is itself completely multiplicative, so it can be ABSORBED into an Euler product
+  (ζ(s − iγ)) without losing multiplicativity, but then the positivity is lost. Read this way, the October trick
+  (absorbing μ into a sextic Gauss sum, N75) is a partial absorption of oscillation into multiplicative structure
+  that keeps a sieve-type positivity. The target in these terms: a positivity that survives the absorption of n^(iγ)
+  for γ in the bulk, i.e. positivity of a multiplicative object twisted by a multiplicative oscillation. Over
+  function fields this is exactly what the Frobenius twist does (the oscillation q^(−inθ) is the Frobenius power,
+  and positivity comes from geometry, not from the coefficients).
