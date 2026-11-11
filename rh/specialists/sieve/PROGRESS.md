@@ -27,3 +27,4 @@
 - Session 7: cubic family C0/C1/C2: 0.7660/0.8136/0.7786; prediction hit; A5 (no dual large sieve) is the gap.
 - Session 8: LEVINSON_THETA.md (construction only, no numerics). Q4, T1.
 - Session 9: HYBRID_FE.md (construction; no numerics). Q4, T1.
+- Session 10: Check of N101 appended to HYBRID_FE.md; one search (Gorodetsky 2111.00853 abstract).

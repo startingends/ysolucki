@@ -1820,3 +1820,14 @@ construction by thought after N99–N100; facts classical, the reduction is the 
   built and the bound named arithmetically. Ratings: Quality 5, Toward RH 2 (the cleanest version of the target: a
   short-interval variance statement for almost-primes with k factors, all k, which is a sieve-flavoured statement
   rather than a zero statement; it is still RH-strength).
+
+**N102. N101 checked by SP-sieve (`HYBRID_FE.md`, "Check of N101"): (2)–(4) correct, (1) half right, no foothold yet.**
+- (1) Forward: M_2k ≪ T^(1+o(1)) at ONE fixed k ≥ 1/(2cε) gives |S_X| ≪ X^ε (Gallagher/Sobolev); Gaussian constants
+  are not needed. Converse overstated: |S| ≪ X^ε only gives M_2k ≪ T^(1+2kcε); equivalence is in exponents only.
+  (2) Exact with a smooth kernel; with sharp intervals only Gallagher's inequality. The twist n^(−iT) removes the
+  smooth mean; the off-diagonal is the excess variance. (3) The sieve loses N/T = T^(kc−1). (4) Goldston–Montgomery
+  (under RH, α = c), from memory.
+- (5) No known square-root variance for products of exactly k primes ≤ X beyond the trivial range X^k ≤ T
+  (Soundararajan's moment lemma); Type I/II does not help (both variables are primes, no smooth variable). Known only
+  for smooth convolutions (d₂, Jutila; partial d_k) and over function fields (Keating–Rudnick and successors); from
+  memory. One lead to read before closing (5): Gorodetsky, arXiv 2111.00853 (variance of rough numbers, unconditional).

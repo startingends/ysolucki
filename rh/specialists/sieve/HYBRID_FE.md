@@ -63,3 +63,40 @@ inequality (Lambda >= 0) bounds that polynomial only by its pole majorant X^(1/2
 CORE 6's fixed bound: a pointwise (Stepanov-type) bound for one prime polynomial at one height.
 Quality 4/10 (exact bookkeeping of where a quartet appears and of the missing factor X^(1/2-beta); rests on a formula recalled, not read).
 Toward RH 1/10 (it re-expresses the zero-free statement at a height as a pointwise prime-sum bound; no new input).
+
+## Check of N101 (SP-sieve, adversarial; N101 read at the end of rh/NOTEBOOK.md; no numerics)
+Notation: S(t) = sum_{p <= X} a_p p^(-1/2-it) (prime-power terms are lower order), X = T^c, N = X^k, M_2k = int_T^(2T) |S|^(2k) dt.
+(1) PARTLY CORRECT. Forward (PROVED): S^k is a Dirichlet polynomial of length N; Gallagher/Sobolev on unit t-intervals gives
+    |S(t)|^(2k) << (log N)^2 sup-local integral <= (log N)^2 M_2k, so M_2k << T^(1+o(1)) gives |S(t)| << T^(1/(2k)+o(1)), which is <= X^eps once
+    k >= 1/(2 c eps): ONE fixed k suffices (N101's k = 1/(eps c) is enough, with a factor 2 to spare). Only M_2k << T^(1+o(1)) is needed, not
+    Gaussian constants. Converse: OVERSTATED. |S| << X^eps on [T,2T] gives only M_2k << T X^(2k eps) = T^(1 + 2k c eps), i.e. a moment bound with a
+    power loss, not of Gaussian size. Equivalence holds at the level of exponents, not of constants.
+(2) CORRECT up to smoothing (PROVED). For any coefficients b_n and a smooth kernel w with transform supported in [-1, 1]:
+    int |sum b_n n^(-it)|^2 w^(t - T0)/T) dt = T sum_{m,n} b_m conj b_n (m/n)^(-i T0) w(T log(m/n)) = T^2 int |sum_{|log(n/x)| < 1/(2T)} b_n n^(-iT0)|^2 dlog x
+    for w a triangle (self-convolution of an indicator); with sharp intervals one has only Gallagher's inequality (FROM MEMORY: Montgomery,
+    Topics, Lemma 1.9). At height T0 ~ T the twist n^(-iT0) removes the t ~ 0 (pole, smooth-mean) part; the diagonal m = n is the Poisson
+    (square-root) part of the variance and the off-diagonal is its excess. 'Variance around a smooth mean' is the right reading (Goldston-
+    Montgomery's form), with that twist.
+(3) CORRECT (PROVED as arithmetic, given (2)). Bounding each count by the sieve/Brun-Titchmarsh upper bound (right order, no cancellation):
+    sum over the ~T intervals I of |count_I|^2 with b_n ~ n^(-1/2) gives about N/T times the diagonal: the loss is N/T = T^(kc - 1), which is
+    T^(1/eps - 1) at N101's k and T^(1/(2eps) - 1) at the k of (1). Upper-bound sieves give the mean, never the deviation (parity: the
+    deviation of a count of products of primes is a sign-sensitive quantity).
+(4) CORRECT, from memory: k = 1 is Goldston-Montgomery (1987), under RH: pair correlation F(alpha) ~ 1 for alpha in [1, A] is equivalent to the
+    variance of primes in intervals [x, x + delta x] being ~ delta x log(1/delta) for the matching range of delta. Here alpha = c.
+(5) NOTHING KNOWN to me gives square-root variance for products of exactly k primes, each <= X, in multiplicatively short intervals, beyond
+    the trivial range N = X^k <= T, where the mean value theorem makes the moment diagonal (KNOWN in this form, from memory: Soundararajan's
+    moment lemma int_T^(2T) |sum_{p<=x} a(p) p^(-1/2-it)|^(2k) << T k! (sum |a(p)|^2/p)^k for x^k <= T, as used by Soundararajan 2009 and Harper).
+    Bilinear (Type I/II) structure does not help: the coefficients are convolutions of PRIMES (both variables rough), so there is no smooth
+    variable for Voronoi or a level-of-distribution input; in S2_B10d terms a Type II bound for bounded coefficients is attained by one
+    character row and gives the D-term, i.e. exactly (3)'s loss. Known square-root variance results are for SMOOTH convolutions:
+    d_2 = 1 * 1 (Jutila 1984, mean square of Delta(x + h) - Delta(x), via Voronoi; FROM MEMORY), partial results for d_k (Lester; Rodgers-
+    Soundararajan in progressions; FROM MEMORY), and the function-field analogues (Keating-Rudnick, Keating-Rodgers-Roditty-Gershon-Rudnick,
+    via Katz equidistribution; FROM MEMORY): those are N101's 'Weil/Deligne' side. 'Almost all intervals' results for almost-primes
+    (Matomaki-Radziwill; Teravainen; FROM MEMORY) give variance o(mean^2), far from square-root.
+    ONE LEAD (abstract only, search this session): Gorodetsky, arXiv 2111.00853, 'The variance of integers without small prime factors in short
+    intervals': an UNCONDITIONAL variance asymptotic for y-rough integers in intervals of length at least a power of y, by complex analysis and
+    sieve theory, 'connecting with statistics of y-smooth numbers'. Our set is the opposite (X-smooth, exactly k factors, all near X), and
+    the rough-number result works where the sifting primes are SMALL against the interval, which is the sieve's comfortable regime; I expect
+    it not to transfer (HEURISTIC), but its range is the one thing to read before closing (5).
+VERDICT: (1) true forward, converse overstated; (2) true up to smoothing; (3) true; (4) true (from memory, under RH); (5) no foothold known
+beyond the trivial range N <= T; one paper to read (Gorodetsky).
