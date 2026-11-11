@@ -68,7 +68,7 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 
 ## Running jobs
 **After any context summary or restart, read this section and `git log -5` before launching anything.**
-State at 2026-11-11, about 01:10 UTC (journal J4 has what the last hours produced).
+State at 2026-11-11, about 00:40 UTC (journal J4 has what the last hours produced).
 - **Seminar S1** (board `rh/board/s1.md`, about 140 messages): turn 2 done for S1-mirror, S1-curv, S1-cubic;
   S1-parity and the specialists SP-reflection, SP-operator still posting. The moderator S1-socrates was woken
   to open **turn 3** with the owner's rule 6 as its aim: name ONE small statement, not in the papers read, that
