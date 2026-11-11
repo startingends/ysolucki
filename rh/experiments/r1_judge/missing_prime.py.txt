@@ -1,0 +1,41 @@
+"""Judge: cost of leaving ONE prime (or a few) out of the Nyman-Beurling dilations.
+C_N(S) = dist^2(chi, span{e_k : k <= N, gcd(k, prod S) = 1}), using lane B's Vasyunin Gram matrix G2000 (validated by lane B's critic
+on the 200x200 block). Compare with d_N^2 (nothing missing) and with the local fee = critic's three-interval bound
+(smooth_lb.local_lb applied to the ALLOWED set = all primes except S; here computed directly)."""
+import sys, math, numpy as np
+exec(open("nb_gram.py.txt").read().split('if __name__')[0])
+G = np.load("/home/user/ysolucki/rh/data/r1_B/G2000.npy"); Nmax = G.shape[0]; b = bvec(Nmax); ks = np.arange(1, Nmax + 1)
+d2 = np.load("/home/user/ysolucki/rh/data/r1_B/d2.npy")
+def dist2(idx):
+    A = G[np.ix_(idx, idx)]; r = b[idx]; c = np.linalg.lstsq(A, r, rcond=1e-13)[0]; return 1 - r @ c
+def local_fee(S, Y=200000):
+    # numbers q > 1 all of whose prime factors lie in S (the missing primes): forced repeat of the step at 1
+    qs = [1]
+    for p in S:
+        new = []
+        for x in qs:
+            y = x
+            while y < Y: new.append(y); y *= p
+        qs = new
+    q = np.array(sorted(x for x in qs if x > 1), dtype=float)
+    ok = np.ones(len(q), bool)                      # keep q whose intervals [q-1,q+1) are disjoint from earlier ones
+    for i in range(1, len(q)):
+        if q[i] - q[i - 1] < 2: ok[i] = False
+    q = q[ok]
+    def val(u, lam):
+        t = lam * lam + u * u * 0.5 - 2 * u * lam * math.log(2) + lam * lam
+        Da, La = 1 / ((q - 1) * q), np.log1p(1 / (q - 1)); Db, Lb = 1 / (q * (q + 1)), np.log1p(1 / q)
+        w = u - 1; v = (lam * La + lam * Lb - w * Db) / (Da + Db)
+        return t + np.sum(v * v * Da - 2 * v * lam * La + (v + w) ** 2 * Db - 2 * (v + w) * lam * Lb + 2 * lam * lam)
+    pts = [(0, 0), (1, 0), (0, 1), (1, 1), (2, 0), (0, 2)]
+    A = np.array([[1, u, l, u * u, u * l, l * l] for u, l in pts], float); z = np.array([val(u, l) for u, l in pts])
+    c0, cu, cl, cuu, cul, cll = np.linalg.solve(A, z)
+    sol = np.linalg.solve(np.array([[2 * cuu, cul], [cul, 2 * cll]]), -np.array([cu, cl]))
+    return val(*sol)
+print("missing S | C_N(S) for N = 250, 500, 1000, 2000 | d_N^2 at 2000 | C_2000 - d_2000^2 | local fee | (C-d^2)/fee | C/fee")
+for S in [(2,), (3,), (5,), (7,), (11,), (13,), (2, 3), (3, 5), (5, 7), (2, 3, 5)]:
+    cop = np.ones(Nmax, bool)
+    for p in S: cop &= (ks % p != 0)
+    row = [dist2(np.where(cop & (ks <= N))[0]) for N in (250, 500, 1000, 2000)]
+    fee = local_fee(S)
+    print("%-10s | %s | %.6f | %.6f | %.6f | %.3f | %.3f" % (S, "  ".join("%.6f" % x for x in row), d2[-1], row[-1] - d2[-1], fee, (row[-1] - d2[-1]) / fee, row[-1] / fee))

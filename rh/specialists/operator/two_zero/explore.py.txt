@@ -1,0 +1,30 @@
+import sys, math
+sys.argv = ['x', 'none']
+exec(open('/home/user/ysolucki/rh/specialists/operator/two_zero/model.py.txt').read().split("if __name__")[0])
+print("rho(r, u) as a function of the relative gap g = 2 delta/s (on-line, u = g^2/4) and of b = beta/s (off-line, u = -b^2)")
+rs = [1.0, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.5, 2.0]
+print("   g  " + "".join(f"  r={r:<5}" for r in rs))
+for g in [1.0, 0.8, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05, 0.0]:
+    print(f" {g:4.2f} " + "".join(f" {rho(r, g*g/4)[0]:8.4f}" for r in rs))
+print("  off-line b = beta/s")
+for b in [0.02, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]:
+    print(f" {b:4.2f} " + "".join(f" {rho(r, -b*b)[0]:8.4f}" for r in rs))
+print("collision values rho(r, 0) and the formula 1 - 1/r + sin(pi/r)/pi (odd sector):")
+for r in rs: print(f"  r = {r}: rho(r,0) = {rho(r,0)[0]:.6f}, sectors {rho(r,0)[1][0]:.6f} / {rho(r,0)[1][1]:.6f}, formula {1-1/r+math.sin(math.pi/r)/math.pi:.6f}")
+print("small-u slope at r = 1: rho/u for u = +-1e-4, 1e-3 ; 64/pi^2 =", 64/math.pi**2)
+for u in (1e-4, -1e-4, 1e-3, -1e-3): print(f"  u = {u}: rho/u = {rho(1.0, u)[0]/u:.5f}")
+def bstar(r):
+    lo, hi = 0.0, 2.0
+    if rho(r, 0)[0] <= 0: return 0.0
+    for _ in range(80):
+        m = (lo + hi) / 2
+        if rho(r, -m*m)[0] > 0: lo = m
+        else: hi = m
+    return lo
+print("critical off-line distance b*(r) = beta*/s (rho = 0):")
+for r in [1.0, 1.02, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.4, 1.5, 2.0, 3.0]: print(f"  r = {r}: b* = {bstar(r):.5f}")
+print("pair share of s*Q at the minimiser (pair, lattice rest):")
+for r, g in [(1.13, 0.534), (1.15, 0.387), (1.16, 0.287), (1.0, 0.3), (1.5, 0.5)]:
+    p, rest, chk = pair_share(r, g*g/4); print(f"  r = {r}, g = {g}: pair {p:.3f}, rest {rest:.3f}, rho check {chk}")
+for r, b in [(1.23, 0.207), (1.25, 0.207)]:
+    p, rest, chk = pair_share(r, -b*b); print(f"  off-line r = {r}, b = {b}: quartet {p:.3f}, rest {rest:.3f}, rho check {chk}")

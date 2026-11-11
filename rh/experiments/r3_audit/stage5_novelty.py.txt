@@ -1,0 +1,13 @@
+"""Stage 5: novelty notes from the auditor's own web searches (standard mode, titles and summaries only, 2026-11-11)."""
+import os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage5")
+N = {
+ 30: "NOVELTY (audit R3-AUD, one web query 'Weil explicit formula linear programming real weights on integers conductor lower bound pole weight extremal', summaries only): conductor and discriminant lower bounds from the explicit formula with chosen test functions (Odlyzko, Mestre, Tchamitchian arXiv 2410.12922, a Rankin-Selberg conductor paper); nothing on free real weights restricted to the integers, a pole-weight parameter, a corner, or the numbers 2.86055 / 4.0363 / 0.99838 / 1.39532. Still 'not found', not 'new'.",
+ 31: "NOVELTY (audit R3-AUD, one web query 'Balazard Saias Yor criterion Eisenstein series Epstein zeta function logarithmic integral E(z,1/2+it) Jensen', summaries only): BSY and its variants (Kunik arXiv 0804.4829 with an outer-Blaschke factorisation of (s-1)zeta(s)/s; Bui-Lester-Milinovich on the rate under RH; 1306.0856, 0904.1277); nothing linking it to E(z, s) as a function of z. Lagarias-Suzuki math/0412039 has since been read by READER-6 (rh/library/math0412039.md; notebook N50): its statement concerns an integral in T, not E. Status of the z-family as an object: not found.",
+ 32: "NOVELTY (audit R3-AUD, one web query 'Mobius sums twisted by power residue symbols large sieve family shorter than sum trivial twist extremal Vaughan Type II barrier', summaries only): Banks-Shparlinski 1801.10276 (Moebius twisted by characters to powerful moduli), cubic/sextic large-sieve results, Gowers-uniformity Type I/II work; nothing that states the copy direction as the extremal vector of the sparse-family mean square. The statement is of standard type (large values, zero density; the seat's own searches say so); the copy-multiplicity point is in notebook N49, N56 in other words.",
+}
+for n, t in N.items():
+    run("note", str(n), t)
+    progress("N  novelty note on main #%d" % n)
+open(marker, "w").write("done\n")

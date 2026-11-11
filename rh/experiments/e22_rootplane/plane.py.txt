@@ -1,0 +1,89 @@
+"""e22: positive region in the (d2, d4) plane at window L (default 0.75). usage: python3 plane.py.txt [L]"""
+import sys, math, importlib.util, importlib.machinery
+import flint
+from flint import arb
+import mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+L = float(sys.argv[1]) if len(sys.argv) > 1 else 0.75
+nmax = int(math.exp(2 * L))
+dps = int(60 + 5.5 * math.exp(2 * L)); N = max(24, int(2.6 * L * math.exp(2 * L)) + 8)
+mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+blocks = lambda q: (to_mp(weil.even_block(q, N)), to_mp(weil.odd_block(q, N)))
+q, _ = weil.build(L, N, kind='zeta', pole=True, primes=False, arch=True); Q0 = blocks(q)
+saved = weil.dh_logderiv_coeffs
+def unit(cn):
+    weil.dh_logderiv_coeffs = lambda X: dict(cn)
+    q, _ = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)
+    weil.dh_logderiv_coeffs = saved
+    return blocks(q)
+lam = {k: arb(p).log() for k, (_, p) in weil.mangoldt_upto(nmax).items()}
+full = unit(lam); base = [Q0[b] + full[b] for b in (0, 1)]
+B2 = unit({2: arb(2).log()}); B4 = unit({4: arb(2).log()})
+def lmins(d2, d4):
+    return [min(mp.eigsy(base[b] + mp.mpf(d2) * B2[b] + mp.mpf(d4) * B4[b], eigvals_only=True)) for b in (0, 1)]
+def ok(d2, d4):
+    """positive definite test by Cholesky (much cheaper than eigenvalues at this precision)"""
+    for b in (0, 1):
+        try: mp.cholesky(base[b] + mp.mpf(d2) * B2[b] + mp.mpf(d4) * B4[b])
+        except ValueError: return False
+    return True
+print("L=%g nmax=%d N=%d dps=%d  eig at truth (even, odd): %s" % (L, nmax, N, dps, [mp.nstr(x, 5) for x in lmins(0, 0)]))
+def reach(u, v):
+    """largest t with (t u, t v) in the region (region is convex and contains 0)"""
+    a = None; b = None; k = 2
+    while k > -dps + 12:
+        t = mp.mpf(10) ** k
+        if ok(t * u, t * v): a = t; break
+        b = t; k -= 1
+    if a is None: return mp.mpf(0)
+    if b is None: return mp.inf
+    for _ in range(14):
+        c = mp.sqrt(a * b)
+        if ok(c * u, c * v): a = c
+        else: b = c
+        if b / a < 1.01: break
+    return a
+ax = [reach(1, 0), reach(-1, 0), reach(0, 1), reach(0, -1)]
+print("axis reach: d2+ %s  d2- %s  d4+ %s  d4- %s" % tuple(mp.nstr(x, 5) for x in ax))
+# iterate: scan directions in a frame adapted to the region
+import itertools
+S = mp.matrix([[max(ax[0], ax[1]), 0], [0, max(ax[2], ax[3])]]); pts = []
+for it in range(3):
+    pts = []
+    for k in range(48):
+        ph = 2 * mp.pi * k / 48; w = S * mp.matrix([mp.cos(ph), mp.sin(ph)])
+        t = reach(w[0], w[1]); pts.append((t * w[0], t * w[1]))
+    # second-moment matrix of boundary points -> new frame
+    C = mp.matrix(2, 2)
+    for x, y in pts:
+        C[0, 0] += x * x; C[0, 1] += x * y; C[1, 0] += x * y; C[1, 1] += y * y
+    C = C / len(pts); E, V = mp.eigsy(C)
+    S = V * mp.diag([mp.sqrt(abs(E[0])), mp.sqrt(abs(E[1]))])
+    print("pass %d: principal half-axes %s, %s ; long axis direction (d2, d4) = (%s, %s)" % (it, mp.nstr(mp.sqrt(abs(E[0])), 4),
+          mp.nstr(mp.sqrt(abs(E[1])), 4), mp.nstr(V[0, 1], 6), mp.nstr(V[1, 1], 6)), flush=True)
+xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
+print("extent d2: [%s, %s]   extent d4: [%s, %s]" % (mp.nstr(min(xs), 5), mp.nstr(max(xs), 5), mp.nstr(min(ys), 5), mp.nstr(max(ys), 5)))
+# root-plane quantities. s = 2 d2 + d2^2 - d4  (>0: conjugate pair, theta^2 ~ s ; <0: two real roots)
+s = [2 * x + x * x - y for x, y in pts]
+r2 = [2 * (1 + x) ** 2 - (1 + y) for x, y in pts]
+print("s = (1+d2)^2 - (1+d4) on the boundary: min %s  max %s" % (mp.nstr(min(s), 5), mp.nstr(max(s), 5)))
+print("r range on the boundary (where pair is complex, r = |root|; else sqrt of mean square root): [%s, %s] - 1" %
+      (mp.nstr(mp.sqrt(min(r2)) - 1, 5), mp.nstr(mp.sqrt(max(r2)) - 1, 5)))
+if max(s) > 0:
+    th = mp.sqrt(max(s)); print("max theta (complex side): %s rad ; theta range / r range = %s" %
+          (mp.nstr(th, 5), mp.nstr(th / (mp.sqrt(max(r2)) - mp.sqrt(min(r2))), 5)))
+if min(s) < 0:
+    print("real side: roots split up to 1 +- %s" % mp.nstr(mp.sqrt(-min(s)), 5))
+# area share on complex side (polygon area by shoelace, clipped by sign of s at vertices -- crude)
+pos = sum(1 for v in s if v > 0); print("boundary points with s > 0 (complex pair): %d of %d" % (pos, len(s)))
+for k in range(0, 48, 4):
+    print("  bd pt %2d: d2 = %s  d4 = %s  s = %s  binding block: %s" % (k, mp.nstr(pts[k][0], 6), mp.nstr(pts[k][1], 6), mp.nstr(s[k], 4),
+          "even" if lmins(pts[k][0] * 1.001, pts[k][1] * 1.001)[0] < lmins(pts[k][0] * 1.001, pts[k][1] * 1.001)[1] else "odd"))

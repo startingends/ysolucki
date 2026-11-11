@@ -1,0 +1,22 @@
+R10: small windows
+ L=0.03 zeta: lambda1=-1.311766 #pos(N_e)=0 #pos(N_o)=0 min eig Q_e=1.4276e+00 Q_o=2.5415e+00  2c^T N_e^-1 c - 1 = -1.0896e+00
+ L=0.03 beurling: lambda1=-1.311766 #pos(N_e)=0 #pos(N_o)=0 min eig Q_e=1.4276e+00 Q_o=2.5415e+00  2c^T N_e^-1 c - 1 = -1.0896e+00
+ L=0.05 zeta: lambda1=-0.791312 #pos(N_e)=0 #pos(N_o)=0 min eig Q_e=9.8411e-01 Q_o=2.0306e+00  2c^T N_e^-1 c - 1 = -1.2468e+00
+ L=0.05 beurling: lambda1=-0.791312 #pos(N_e)=0 #pos(N_o)=0 min eig Q_e=9.8411e-01 Q_o=2.0306e+00  2c^T N_e^-1 c - 1 = -1.2468e+00
+ L=0.07 zeta: lambda1=-0.445231 #pos(N_e)=0 #pos(N_o)=0 min eig Q_e=7.1486e-01 Q_o=1.6940e+00  2c^T N_e^-1 c - 1 = -1.6123e+00
+ L=0.07 beurling: lambda1=-0.445231 #pos(N_e)=0 #pos(N_o)=0 min eig Q_e=7.1486e-01 Q_o=1.6940e+00  2c^T N_e^-1 c - 1 = -1.6123e+00
+ L=0.1 zeta: lambda1=-0.074187 #pos(N_e)=0 #pos(N_o)=0 min eig Q_e=4.5868e-01 Q_o=1.3371e+00  2c^T N_e^-1 c - 1 = -6.2291e+00
+ L=0.1 beurling: lambda1=-0.074187 #pos(N_e)=0 #pos(N_o)=0 min eig Q_e=4.5868e-01 Q_o=1.3371e+00  2c^T N_e^-1 c - 1 = -6.2291e+00
+ L=0.12 zeta: lambda1=0.117684 #pos(N_e)=1 #pos(N_o)=0 min eig Q_e=3.4312e-01 Q_o=1.1545e+00  2c^T N_e^-1 c - 1 = 2.9456e+00
+ L=0.12 beurling: lambda1=0.117684 #pos(N_e)=1 #pos(N_o)=0 min eig Q_e=3.4312e-01 Q_o=1.1545e+00  2c^T N_e^-1 c - 1 = 2.9456e+00
+ L=0.14 zeta: lambda1=0.281357 #pos(N_e)=1 #pos(N_o)=0 min eig Q_e=2.5550e-01 Q_o=9.9990e-01  2c^T N_e^-1 c - 1 = 9.2055e-01
+ L=0.14 beurling: lambda1=0.281357 #pos(N_e)=1 #pos(N_o)=0 min eig Q_e=2.5550e-01 Q_o=9.9990e-01  2c^T N_e^-1 c - 1 = 9.2055e-01
+ L=0.2 zeta: lambda1=0.666422 #pos(N_e)=1 #pos(N_o)=0 min eig Q_e=9.6594e-02 Q_o=6.4123e-01  2c^T N_e^-1 c - 1 = 1.4918e-01
+ L=0.2 beurling: lambda1=0.666422 #pos(N_e)=1 #pos(N_o)=0 min eig Q_e=9.6594e-02 Q_o=6.4123e-01  2c^T N_e^-1 c - 1 = 1.4918e-01
+R11: impostor (DH), alpha=3/2, atoms Lambda_f(n)/sqrt(n) at log n, L=1 M=40
+  Lambda_f: {2: 0.1969, 3: -0.3121, 4: -1.4422, 5: 0.0, 6: 1.9364, 7: 0.5528}
+  negative off-diag fraction 5.51%  min entry -0.5169  at offsets [22, 27, 28]
+R12: dial theta^n
+  n=1.0: c_m (m<=12) [0.0, 0.0, 1.3863, 0.0, 0.0, 0.0, 0.0, 2.1972, 0.0, 0.0, 0.0]  negative fraction 0.00%  min entry 0.0203 at offsets []
+  n=1.4: c_m (m<=12) [0.2773, -0.1758, 1.4528, 1.0733, -0.4591, 0.5878, -0.835, 2.2732, 1.1211, -1.1615, 1.9647]  negative fraction 14.62%  min entry -0.2704 at offsets [11, 18, 21, 24, 29, 30, 35, 38]
+  n=2.0: c_m (m<=12) [0.6931, 0.0, 0.6931, 3.2189, 0.0, 0.0, 0.6931, 2.1972, 0.0, 0.0, 0.0]  negative fraction 0.00%  min entry 0.0111 at offsets []

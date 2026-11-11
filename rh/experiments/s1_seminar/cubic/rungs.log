@@ -1,0 +1,28 @@
+n=24: mu_0 = 3.740e-03 ; |x psi_0|^2 = 0.1426 ; Q(x psi_0) = 2.9185e-03
+   rung k: eigenvalue, share of |x psi_0|^2, share of Q(x psi_0)
+   k= 1  mu=1.679e-02  mass 0.98615  Q-share 0.8089
+   k= 3  mu=6.219e-02  mass 0.01162  Q-share 0.0353
+   k= 5  mu=1.623e-01  mass 0.00042  Q-share 0.0033
+   k= 7  mu=2.659e-01  mass 0.00025  Q-share 0.0032
+   k= 9  mu=5.359e-01  mass 0.00003  Q-share 0.0008
+   k=11  mu=1.080e+00  mass 0.00006  Q-share 0.0032
+   k=14  mu=1.757e+00  mass 0.00032  Q-share 0.0276
+   k=16  mu=1.936e+00  mass 0.00001  Q-share 0.0007
+   eigenvalues in [0.0, 0.1): 4 rungs, mass 0.99777, Q-share 0.8442
+   eigenvalues in [0.1, 1): 7 rungs, mass 0.00069, Q-share 0.0073
+   eigenvalues in [1.0, 3): 13 rungs, mass 0.00153, Q-share 0.1485
+   eigenvalues in [3.0, 1e+09): 0 rungs, mass 0.00000, Q-share 0.0000
+n=48: mu_0 = 1.155e-03 ; |x psi_0|^2 = 0.1309 ; Q(x psi_0) = 1.2043e-03
+   rung k: eigenvalue, share of |x psi_0|^2, share of Q(x psi_0)
+   k= 1  mu=5.085e-03  mass 0.98891  Q-share 0.5464
+   k= 3  mu=2.151e-02  mass 0.00820  Q-share 0.0192
+   k= 5  mu=5.079e-02  mass 0.00071  Q-share 0.0039
+   k= 7  mu=1.099e-01  mass 0.00016  Q-share 0.0019
+   k= 9  mu=1.957e-01  mass 0.00000  Q-share 0.0000
+   k=11  mu=4.707e-01  mass 0.00005  Q-share 0.0027
+   k=13  mu=1.283e+00  mass 0.00018  Q-share 0.0249
+   k=15  mu=1.542e+00  mass 0.00015  Q-share 0.0245
+   eigenvalues in [0.0, 0.1): 7 rungs, mass 0.99782, Q-share 0.5695
+   eigenvalues in [0.1, 1): 6 rungs, mass 0.00022, Q-share 0.0047
+   eigenvalues in [1.0, 3): 29 rungs, mass 0.00196, Q-share 0.4244
+   eigenvalues in [3.0, 1e+09): 6 rungs, mass 0.00000, Q-share 0.0014

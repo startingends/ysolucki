@@ -1,0 +1,30 @@
+"""Where do the real characters sit? lowest eigenvalue of the window form with the weights Lambda(n) chi(n).
+usage: python3 check_chi.py.txt <L> <N>   (float64; odd type: chi_-3, chi_-4 ; even pole-free type: chi_5)"""
+import sys, math, importlib.util, importlib.machinery
+import numpy as np, flint
+from flint import arb
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+L = float(sys.argv[1]); N = int(sys.argv[2]); flint.ctx.prec = 160
+X = int(math.floor(math.exp(2 * L) + 1e-9))
+tonp = lambda M: np.array([[float(M[i, j].mid()) for j in range(M.ncols())] for i in range(M.nrows())])
+lam = {n: math.log(p) for n, (_, p) in weil.mangoldt_upto(X).items()}
+def low(kind, chi):
+    cn = {n: arb(v * chi(n)) for n, v in lam.items() if chi(n) != 0}
+    sv = weil.dh_logderiv_coeffs
+    if kind == 'odd':
+        weil.dh_logderiv_coeffs = lambda X: cn
+        q, _ = weil.build(L, N, kind='dh', pole=False, primes=True, arch=True)
+    else:
+        q0, _ = weil.build(L, N, kind='zeta', pole=False, primes=False, arch=True)
+        weil.dh_logderiv_coeffs = lambda X: cn
+        q1, _ = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)
+        q = [[a + b for a, b in zip(r0, r1)] for r0, r1 in zip(q0, q1)]
+    weil.dh_logderiv_coeffs = sv
+    return min(np.linalg.eigvalsh(tonp(weil.even_block(q, N)))[0], np.linalg.eigvalsh(tonp(weil.odd_block(q, N)))[0])
+c3 = lambda n: (0, 1, -1)[n % 3]; c4 = lambda n: (0, 1, 0, -1)[n % 4]; c5 = lambda n: (0, 1, -1, -1, 1)[n % 5]
+for name, kind, chi, q, qref in (("chi_-3", 'odd', c3, 3, 5), ("chi_-4", 'odd', c4, 4, 5), ("chi_5", 'even', c5, 5, 1)):
+    v = low(kind, chi)   # eigenvalue at reference conductor qref
+    print("L=%.2f %s: lowest eigenvalue at its own conductor %d: %.3e ; smallest conductor at which these weights stay feasible on this window: %.8f"
+          % (L, name, q, v + math.log(q / qref), qref * math.exp(-v)))

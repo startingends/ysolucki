@@ -1,0 +1,16 @@
+L = 0.680, window atoms [2, 3] ; half window (0, L]: atoms with log n < L: []
+=== zeta atoms ===
+   R = T^-1 H, cos family (double precision): min -1.000000  max 0.999757 ; five largest [0.3758, 0.4463, 0.5392, 0.9958, 0.9998] ; lowest eig of T/|phi|^2-Gram not shown
+   R = T^-1 H, sin family (double precision): min -0.999989  max 1.000000 ; five largest [0.3743, 0.4439, 0.5379, 0.9978, 1.0] ; lowest eig of T/|phi|^2-Gram not shown
+ (i) cosine family: 1 + lam_min = 9.9876e-12 ; lowest five lam + 1: ['9.99e-12', '1.44e-5', '0.114', '0.497', '0.594'] ; #(lam < -0.99) = 2 of 41 ; lam_max = 0.99976
+   even saturator: |phi|^2 = 1.791 ; T = 0.5, H = -0.5, H/T = -1.000000000 ; H from pieces = -0.514487 (difference -1.45e-02)
+      in units of E_+^2 = 0.71165:  Q(phi) = T = 0.70259 ; sum_{m>=1} E_m^2 = 1.64768 ; H_primes = {2: 0.07522, 3: 4e-05} ; E_0^2 = 0.73764 ; smaller lobe / larger lobe of phi = 0
+ (ii) sine family: 1 - lam_max = 3.7629e-8 ; top five 1 - lam: ['3.76e-8', '0.00222', '0.462', '0.556', '0.626'] ; #(lam > 0.99) = 2 of 40 ; lam_max = 0.99999996 ; lam_min = -0.99999
+   odd saturator: |phi|^2 = 11 ; T = 0.5, H = 0.5, H/T = 0.999999962 ; H from pieces = 0.500001 (difference 5.20e-07)
+      in units of E_+^2 = 6.0112:  Q(phi) = T = 0.08318 ; sum_{m>=1} E_m^2 = 0.47770 ; H_primes = {2: 0.43732, 3: 0.00181} ; E_0^2 = 0.60937 ; smaller lobe / larger lobe of phi = -0
+=== NO atoms ===
+   R = T^-1 H, cos family (double precision): min -2.921278  max 352.634778 ; five largest [0.0, 0.0, 0.0001, 0.0282, 352.6348] ; lowest eig of T/|phi|^2-Gram not shown
+   R = T^-1 H, sin family (double precision): min -2.482777  max 335.951103 ; five largest [0.0, 0.0, 0.0, 0.0, 335.9511] ; lowest eig of T/|phi|^2-Gram not shown
+ (i) failed: matrix is not positive-definite
+ (ii) failed: matrix is not positive-definite
+time 5.6 s

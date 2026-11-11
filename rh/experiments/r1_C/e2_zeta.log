@@ -1,0 +1,112 @@
+mode=zeta N=12 sigma0=1.25 Tmax=100.0 dps=220  (function values: 0.9s)
+Pick matrix A: 0 negative eigenvalues; most negative 0.000e+00 ; smallest positive 2.831e-07 ; largest 2.632e-04
+time 0.9s
+Ritz values: 12 of 12 real to 1e-30
+   # 1 Ritz 14.148180930092  (Im 3.7e-218)   gamma_k 14.134725141735   |err| 1.35e-02
+   # 2 Ritz 21.354437826510  (Im -2.1e-218)   gamma_k 21.022039638772   |err| 3.32e-01
+   # 3 Ritz 28.044443975774  (Im -1.2e-219)   gamma_k 25.010857580146   |err| 3.03e+00
+   # 4 Ritz 36.366071035218  (Im -9.7e-220)   gamma_k 30.424876125860   |err| 5.94e+00
+   # 5 Ritz 41.617875233546  (Im 2.2e-219)   gamma_k 32.935061587739   |err| 8.68e+00
+   # 6 Ritz 51.105324930849  (Im 3.2e-221)   gamma_k 37.586178158826   |err| 1.35e+01
+   # 7 Ritz 59.261833691023  (Im 2.8e-220)   gamma_k 40.918719012147   |err| 1.83e+01
+   # 8 Ritz 68.070810469294  (Im 4.0e-220)   gamma_k 43.327073280915   |err| 2.47e+01
+   # 9 Ritz 76.043775419460  (Im -1.5e-219)   gamma_k 48.005150881167   |err| 2.80e+01
+   #10 Ritz 84.774309529202  (Im -5.9e-220)   gamma_k 49.773832477672   |err| 3.50e+01
+   #11 Ritz 95.106586770045  (Im -2.5e-221)   gamma_k 52.970321477714   |err| 4.21e+01
+   #12 Ritz 105.202164814602  (Im -6.4e-220)   gamma_k 56.446247697063   |err| 4.88e+01
+mode=zeta N=24 sigma0=1.25 Tmax=100.0 dps=220  (function values: 1.1s)
+Pick matrix A: 0 negative eigenvalues; most negative 0.000e+00 ; smallest positive 1.831e-17 ; largest 2.343e-03
+time 1.5s
+Ritz values: 24 of 24 real to 1e-30
+   # 1 Ritz 14.134725141735  (Im -3.8e-172)   gamma_k 14.134725141735   |err| 8.70e-14
+   # 2 Ritz 21.022039639134  (Im -7.4e-172)   gamma_k 21.022039638772   |err| 3.62e-10
+   # 3 Ritz 25.010857599180  (Im 2.8e-173)   gamma_k 25.010857580146   |err| 1.90e-08
+   # 4 Ritz 30.424877873229  (Im -3.3e-173)   gamma_k 30.424876125860   |err| 1.75e-06
+   # 5 Ritz 32.935092720143  (Im -1.8e-173)   gamma_k 32.935061587739   |err| 3.11e-05
+   # 6 Ritz 37.586838359130  (Im 3.5e-174)   gamma_k 37.586178158826   |err| 6.60e-04
+   # 7 Ritz 40.926121180276  (Im -1.7e-174)   gamma_k 40.918719012147   |err| 7.40e-03
+   # 8 Ritz 43.340215681583  (Im 3.5e-175)   gamma_k 43.327073280915   |err| 1.31e-02
+   # 9 Ritz 48.095965383532  (Im 4.3e-176)   gamma_k 48.005150881167   |err| 9.08e-02
+   #10 Ritz 50.650471502223  (Im 6.1e-177)   gamma_k 49.773832477672   |err| 8.77e-01
+   #11 Ritz 53.290230850346  (Im -3.1e-177)   gamma_k 52.970321477714   |err| 3.20e-01
+   #12 Ritz 56.822311594494  (Im 1.0e-177)   gamma_k 56.446247697063   |err| 3.76e-01
+   #13 Ritz 60.685337953892  (Im 1.2e-178)   gamma_k 59.347044002602   |err| 1.34e+00
+   #14 Ritz 65.372182728973  (Im 6.8e-179)   gamma_k 60.831778524610   |err| 4.54e+00
+   #15 Ritz 69.343520344399  (Im 3.3e-180)   gamma_k 65.112544048082   |err| 4.23e+00
+   #16 Ritz 72.795429695563  (Im 2.0e-180)   gamma_k 67.079810529494   |err| 5.72e+00
+   #17 Ritz 77.188490124358  (Im 6.9e-181)   gamma_k 69.546401711174   |err| 7.64e+00
+   #18 Ritz 81.196842641766  (Im -4.3e-181)   gamma_k 72.067157674482   |err| 9.13e+00
+   #19 Ritz 84.164845717307  (Im 4.8e-182)   gamma_k 75.704690699084   |err| 8.46e+00
+   #20 Ritz 88.063576010732  (Im 3.1e-181)   gamma_k 77.144840068875   |err| 1.09e+01
+   #21 Ritz 93.736483932648  (Im 2.1e-181)   gamma_k 79.337375020249   |err| 1.44e+01
+   #22 Ritz 96.716513422133  (Im 1.3e-181)   gamma_k 82.910380854086   |err| 1.38e+01
+   #23 Ritz 102.350488868711  (Im 1.6e-181)   gamma_k 84.735492980517   |err| 1.76e+01
+   #24 Ritz 273.066124402664  (Im 9.9e-173)   gamma_k 87.425274613125   |err| 1.86e+02
+mode=zeta N=36 sigma0=1.25 Tmax=100.0 dps=220  (function values: 1.7s)
+Pick matrix A: 0 negative eigenvalues; most negative 0.000e+00 ; smallest positive 2.079e-41 ; largest 1.624e-03
+time 2.9s
+Ritz values: 36 of 36 real to 1e-30
+   # 1 Ritz 14.134725141735  (Im -1.5e-96)   gamma_k 14.134725141735   |err| 0.00e+00
+   # 2 Ritz 21.022039638772  (Im 1.2e-94)   gamma_k 21.022039638772   |err| 0.00e+00
+   # 3 Ritz 25.010857580146  (Im -2.7e-94)   gamma_k 25.010857580146   |err| 0.00e+00
+   # 4 Ritz 30.424876125860  (Im 1.3e-92)   gamma_k 30.424876125860   |err| 0.00e+00
+   # 5 Ritz 32.935061587739  (Im 3.7e-92)   gamma_k 32.935061587739   |err| 0.00e+00
+   # 6 Ritz 37.586178158826  (Im 4.7e-91)   gamma_k 37.586178158826   |err| 0.00e+00
+   # 7 Ritz 40.918719012147  (Im 6.6e-91)   gamma_k 40.918719012147   |err| 0.00e+00
+   # 8 Ritz 43.327073280915  (Im 4.5e-91)   gamma_k 43.327073280915   |err| 0.00e+00
+   # 9 Ritz 48.005150881167  (Im 2.9e-90)   gamma_k 48.005150881167   |err| 0.00e+00
+   #10 Ritz 49.773832477672  (Im 3.9e-92)   gamma_k 49.773832477672   |err| 0.00e+00
+   #11 Ritz 52.970321477714  (Im 7.2e-91)   gamma_k 52.970321477714   |err| 0.00e+00
+   #12 Ritz 56.446247697063  (Im 1.2e-91)   gamma_k 56.446247697063   |err| 0.00e+00
+   #13 Ritz 59.347044002602  (Im 2.4e-91)   gamma_k 59.347044002602   |err| 7.11e-15
+   #14 Ritz 60.831778524610  (Im 5.7e-91)   gamma_k 60.831778524610   |err| 1.42e-14
+   #15 Ritz 65.112544048082  (Im -1.6e-90)   gamma_k 65.112544048082   |err| 6.96e-13
+   #16 Ritz 67.079810529502  (Im 3.6e-91)   gamma_k 67.079810529494   |err| 7.53e-12
+   #17 Ritz 69.546401711211  (Im -5.5e-91)   gamma_k 69.546401711174   |err| 3.70e-11
+   #18 Ritz 72.067157674627  (Im -1.0e-91)   gamma_k 72.067157674482   |err| 1.45e-10
+   #19 Ritz 75.704690714967  (Im -2.3e-91)   gamma_k 75.704690699084   |err| 1.59e-08
+   #20 Ritz 77.144840109370  (Im -1.2e-91)   gamma_k 77.144840068875   |err| 4.05e-08
+   #21 Ritz 79.337375140156  (Im -1.0e-91)   gamma_k 79.337375020249   |err| 1.20e-07
+   #22 Ritz 82.910381966964  (Im 6.9e-93)   gamma_k 82.910380854086   |err| 1.11e-06
+   #23 Ritz 84.735505737471  (Im 3.6e-93)   gamma_k 84.735492980517   |err| 1.28e-05
+   #24 Ritz 87.425407154852  (Im -8.4e-93)   gamma_k 87.425274613125   |err| 1.33e-04
+   #25 Ritz 88.809225879875  (Im 1.5e-93)   gamma_k 88.809111207634   |err| 1.15e-04
+   #26 Ritz 92.493198697225  (Im 6.0e-94)   gamma_k 92.491899270558   |err| 1.30e-03
+   #27 Ritz 94.663792738338  (Im 9.7e-95)   gamma_k 94.651344040520   |err| 1.24e-02
+   #28 Ritz 95.910442140901  (Im 1.3e-94)   gamma_k 95.870634228245   |err| 3.98e-02
+   #29 Ritz 98.886834119996  (Im 4.3e-96)   gamma_k 98.831194218194   |err| 5.56e-02
+   #30 Ritz 101.885698964362  (Im 3.0e-94)   gamma_k 101.317851005731   |err| 5.68e-01
+mode=zeta N=48 sigma0=1.25 Tmax=100.0 dps=220  (function values: 2.4s)
+Pick matrix A: 0 negative eigenvalues; most negative 0.000e+00 ; smallest positive 5.043e-75 ; largest 2.610e-03
+time 5.0s
+Ritz values: 0 of 48 real to 1e-30
+   # 1 Ritz nan  (Im nan)   gamma_k 14.134725141735   |err| nan
+   # 2 Ritz nan  (Im nan)   gamma_k 21.022039638772   |err| nan
+   # 3 Ritz nan  (Im nan)   gamma_k 25.010857580146   |err| nan
+   # 4 Ritz nan  (Im nan)   gamma_k 30.424876125860   |err| nan
+   # 5 Ritz nan  (Im nan)   gamma_k 32.935061587739   |err| nan
+   # 6 Ritz nan  (Im nan)   gamma_k 37.586178158826   |err| nan
+   # 7 Ritz nan  (Im nan)   gamma_k 40.918719012147   |err| nan
+   # 8 Ritz nan  (Im nan)   gamma_k 43.327073280915   |err| nan
+   # 9 Ritz nan  (Im nan)   gamma_k 48.005150881167   |err| nan
+   #10 Ritz nan  (Im nan)   gamma_k 49.773832477672   |err| nan
+   #11 Ritz nan  (Im nan)   gamma_k 52.970321477714   |err| nan
+   #12 Ritz nan  (Im nan)   gamma_k 56.446247697063   |err| nan
+   #13 Ritz nan  (Im nan)   gamma_k 59.347044002602   |err| nan
+   #14 Ritz nan  (Im nan)   gamma_k 60.831778524610   |err| nan
+   #15 Ritz nan  (Im nan)   gamma_k 65.112544048082   |err| nan
+   #16 Ritz nan  (Im nan)   gamma_k 67.079810529494   |err| nan
+   #17 Ritz nan  (Im nan)   gamma_k 69.546401711174   |err| nan
+   #18 Ritz nan  (Im nan)   gamma_k 72.067157674482   |err| nan
+   #19 Ritz nan  (Im nan)   gamma_k 75.704690699084   |err| nan
+   #20 Ritz nan  (Im nan)   gamma_k 77.144840068875   |err| nan
+   #21 Ritz nan  (Im nan)   gamma_k 79.337375020249   |err| nan
+   #22 Ritz nan  (Im nan)   gamma_k 82.910380854086   |err| nan
+   #23 Ritz nan  (Im nan)   gamma_k 84.735492980517   |err| nan
+   #24 Ritz nan  (Im nan)   gamma_k 87.425274613125   |err| nan
+   #25 Ritz nan  (Im nan)   gamma_k 88.809111207634   |err| nan
+   #26 Ritz nan  (Im nan)   gamma_k 92.491899270558   |err| nan
+   #27 Ritz nan  (Im nan)   gamma_k 94.651344040520   |err| nan
+   #28 Ritz nan  (Im nan)   gamma_k 95.870634228245   |err| nan
+   #29 Ritz nan  (Im nan)   gamma_k 98.831194218194   |err| nan
+   #30 Ritz nan  (Im nan)   gamma_k 101.317851005731   |err| nan

@@ -1,0 +1,55 @@
+"""S1-parity, answer to board B48 (S1-mirror): shift part tau_n and mirror part h_n of each atom on the two ground states.
+phi on (0, L], f_e = phi(|x|), f_o = sgn(x) phi(|x|); autocorrelation g_e(u) = tau(u) + h(u), g_o(u) = tau(u) - h(u),
+  tau(u) = 2 int_0^{L-u} phi(y) phi(y+u) dy (0 if u >= L),  h(u) = int phi(x) phi(u-x) dx  (mirror / Hankel part).
+Atom of weight m at n contributes -m n^{-1/2} 2 g(log n) to the block. g from the atom matrices of implementation B (exact in the basis),
+h from closed-form integrals of the trigonometric eigenvector, tau = g -+ h.
+usage: python3 b48.py.txt L N [dps]"""
+import sys, math, importlib.util, importlib.machinery, time
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+L = float(sys.argv[1]); N = int(sys.argv[2]); mp.mp.dps = int(sys.argv[3]) if len(sys.argv) > 3 else 110
+t0 = time.time(); Lm = mp.mpf(L)
+lam = {x: c for x, c in wb.mangoldt(math.exp(2 * L)).items() if math.log(x) < 2 * L - 1e-12}
+atoms = [n for n in range(2, int(math.exp(2 * L)) + 1) if math.log(n) < 2 * L - 1e-12]
+Q = wb.add(wb.arch_blocks(L, N, 'int'), wb.pole_blocks(L, N, 'int'))
+U = {n: wb.atom_blocks(L, N, 'int', n) for n in atoms}
+for n, c in lam.items(): Q = wb.add(Q, U[n], c)
+ws = wb.freqs(Lm, N, 'int')
+def cint(al, be, u, a, b, kind):
+    """int_a^b t1(al x) t2(be (u-x)) dx, kind 'cc' or 'ss'"""
+    # cos(A)cos(B) = [cos(A-B) + cos(A+B)]/2 ; sin(A)sin(B) = [cos(A-B) - cos(A+B)]/2 ; A = al x, B = be(u-x)
+    def I(k, c0):          # int_a^b cos(k x + c0) dx
+        return (b - a) * mp.cos(c0) if k == 0 else (mp.sin(k * b + c0) - mp.sin(k * a + c0)) / k
+    m = I(al + be, -be * u); p = I(al - be, be * u)
+    return (m + p) / 2 if kind == 'cc' else (m - p) / 2
+res = {}
+for b, kind, nm in ((0, 'cc', 'EVEN'), (1, 'ss', 'ODD')):
+    ev, V = mp.eigsy(Q[b]); i = min(range(len(ev)), key=lambda j: ev[j])
+    v = [V[k, i] for k in range(V.rows)]
+    fr = ws if b == 0 else ws[1:]
+    nrm = [mp.sqrt(2 * Lm) if om == 0 else mp.sqrt(Lm) for om in fr]
+    co = [v[k] / nrm[k] for k in range(len(fr))]
+    phi = lambda x: mp.fsum(co[k] * (mp.cos(fr[k] * x) if b == 0 else mp.sin(fr[k] * x)) for k in range(len(fr)))
+    xs = [Lm * (j + mp.mpf(1) / 2) / 400 for j in range(400)]; vals = [phi(x) for x in xs]
+    sg = 1 if sum(vals) > 0 else -1
+    vals = [sg * y for y in vals]
+    nchg = sum(1 for j in range(399) if vals[j] * vals[j + 1] < 0)
+    second = sorted(ev)[1]
+    print("%s ground state, L=%g N=%d: eigenvalue %s (second %s); folded phi on (0,L]: min %s max %s, sign changes on a 400-point grid: %d   (%.0fs)" % (nm, L, N,
+          mp.nstr(ev[i], 6), mp.nstr(second, 4), mp.nstr(min(vals), 4), mp.nstr(max(vals), 4), nchg, time.time() - t0), flush=True)
+    vm = mp.matrix(v)
+    for n in atoms:
+        u = mp.log(n)
+        g = -(vm.T * U[n][b] * vm)[0] * mp.sqrt(n) / 2                       # autocorrelation of the ground state at log n
+        a_, b_ = max(mp.mpf(0), u - Lm), min(Lm, u)
+        h = mp.fsum(co[j] * co[k] * cint(fr[j], fr[k], u, a_, b_, kind) for j in range(len(fr)) for k in range(len(fr)))
+        tau = g - h if b == 0 else g + h
+        first = ev[i] / (2 * g / mp.sqrt(n)) if g != 0 else mp.inf           # first-order cap on the absolute change of the weight at n
+        res[(nm, n)] = (g, tau, h)
+        print("   n=%d: g(log n) = %s ; shift tau = %s ; mirror h = %s ; h/tau = %s ; first-order cap mu/(2 n^-1/2 g) = %s (%s the weight)" % (n, mp.nstr(g, 5),
+              mp.nstr(tau, 5), mp.nstr(h, 5), mp.nstr(h / tau, 4) if abs(tau) > mp.mpf(10) ** (-mp.mp.dps + 20) else "tau=0", mp.nstr(abs(first), 4),
+              "RAISING" if g > 0 else "LOWERING"), flush=True)
+print("total %.0fs" % (time.time() - t0))

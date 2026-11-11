@@ -1,0 +1,36 @@
+"""Floating-point exploration (NOT a certificate) of the capped Weil form in the Legendre basis.
+M = beta*I + G +- 2 p p^T,  G_jk = (-1)^((j-k)/2) (2L/pi) sqrt((2j+1)(2k+1)) int_0^R (Psi - beta) j_j(rL) j_k(rL) dr
+Psi(r) = Re psi(1/4 + i r/2) - log pi - sum_atoms 2 m cos(r y);   beta = Re psi(1/4 + iR/2) - log pi - sum 2|m|.
+usage: explore.py.txt L R nmax [y m]   (default atom: y = log 2, m = log2/sqrt2 ; 'none' for no atom)"""
+import sys, numpy as np
+from scipy.special import digamma, spherical_jn, spherical_in
+def build(L, R, nmax, atoms, panels_per_unit=4, deg=24):
+    xs, ws = np.polynomial.legendre.leggauss(deg)
+    npan = int(R * panels_per_unit) + 1
+    edges = np.linspace(0, R, npan + 1)
+    r = np.concatenate([(a + b) / 2 + (b - a) / 2 * xs for a, b in zip(edges[:-1], edges[1:])])
+    w = np.concatenate([(b - a) / 2 * ws for a, b in zip(edges[:-1], edges[1:])])
+    a = lambda t: digamma(0.25 + 0.5j * t).real - np.log(np.pi)
+    beta = a(R) - sum(2 * abs(m) for m, y in atoms)
+    psi = a(r) - sum(2 * m * np.cos(r * y) for m, y in atoms)
+    n = np.arange(nmax)
+    J = np.array([spherical_jn(k, r * L) for k in n])            # nmax x nodes
+    sq = np.sqrt(2 * n + 1)
+    G = (2 * L / np.pi) * (J * (w * (psi - beta))) @ J.T * np.outer(sq, sq)
+    p = np.sqrt(2 * L * (2 * n + 1)) * spherical_in(n, L / 2)
+    out = {}
+    for par in (0, 1):
+        idx = n[par::2]
+        sg = np.array([[(1 if ((int(j) - int(k)) // 2) % 2 == 0 else -1) for k in idx] for j in idx])
+        M = beta * np.eye(len(idx)) + sg * G[np.ix_(idx, idx)] + (2 if par == 0 else -2) * np.outer(p[idx], p[idx])
+        out[par] = M
+    return beta, out
+if __name__ == "__main__":
+    L = eval(sys.argv[1], {'log': np.log}); R = float(sys.argv[2]); nmax = int(sys.argv[3])
+    if len(sys.argv) > 4 and sys.argv[4] == 'none': atoms = []
+    elif len(sys.argv) > 5: atoms = [(float(sys.argv[5]), float(sys.argv[4]))]
+    else: atoms = [(np.log(2) / np.sqrt(2), np.log(2))]
+    beta, out = build(L, R, nmax, atoms)
+    for par in (0, 1):
+        ev = np.linalg.eigvalsh(out[par])
+        print(f"L={L:.6f} R={R} nmax={nmax} beta={beta:.4f} parity={'even' if par==0 else 'odd'} lowest eigenvalues: {ev[:3]}")

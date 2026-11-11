@@ -1,0 +1,147 @@
+import sys, math, itertools, importlib.machinery, importlib.util, numpy as np
+import scipy.linalg as sla
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+R = load("ref_lib", "/home/user/ysolucki/rh/experiments/r2_cubic/refuter/ref_lib.py.txt")
+
+def gammas(H, a):
+    """site forms G1[k], G2[k] with Gamma(f)(k) = f^T G1[k] f, Gamma_2(f)(k) = f^T G2[k] f; built from L = K - I by definition
+    (via the bilinear carre du champ 2 Gamma(f,g) = L(fg) - f Lg - g Lf written as tensors)."""
+    m = len(a); s = H @ a
+    K = (H * a[None, :]) / s[:, None]; Lg = K - np.eye(m)
+    # C[k,i,j]: Gamma(f,g)(k) = sum_ij C[k,i,j] f_i g_j ;  L(fg)(k) = sum_i L_ki f_i g_i
+    C = np.zeros((m, m, m))
+    for k in range(m):
+        C[k] += 0.5 * np.diag(Lg[k])
+        C[k, k, :] -= 0.5 * Lg[k]
+        C[k, :, k] -= 0.5 * Lg[k]
+    G1 = C.copy()
+    # Gamma_2(f)(k) = 1/2 [ sum_i L_ki Gamma(f)(i) - 2 Gamma(f, Lf)(k) ]
+    G2 = np.zeros((m, m, m))
+    LG = np.einsum('ki,iab->kab', Lg, G1)
+    for k in range(m):
+        X = G1[k] @ Lg            # f^T G1[k] (L f)
+        G2[k] = 0.5 * (LG[k] - (X + X.T))
+    return K, Lg, G1, G2
+
+def rho_be(G1, G2):
+    m = G1.shape[0]
+    # basis of mean-zero-free quotient: drop constants via an orthonormal complement of 1
+    Qc = sla.null_space(np.ones((1, m)))
+    best = np.inf
+    for k in range(m):
+        A = Qc.T @ G2[k] @ Qc; B = Qc.T @ G1[k] @ Qc
+        ev = sla.eigh(A, B, eigvals_only=True)
+        best = min(best, ev[0])
+    return best
+
+def tbe(H, a):
+    m = len(a); s = H @ a; pi = a * s
+    K, Lg, G1, G2 = gammas(H, a)
+    A1 = np.diag(1 / a)
+    T = np.zeros((m, m, m))
+    for k in range(m):
+        T[:, :, k] = np.outer(H[:, k], H[:, k]) / s[k] - s[k] * (A1 @ (G2[k] - G1[k]) @ A1)
+    return T, K, G1, G2
+
+def theta_def(H, a):
+    """Theta of Theorem F from its DEFINITION (trilinear products), as a tensor in x-coordinates."""
+    m = len(a); s = H @ a; pi = a * s
+    K = (H * a[None, :]) / s[:, None]
+    U0 = np.diag(1 / a); U1 = K @ U0; U2 = K @ U1
+    br = lambda X, Y, Z: np.einsum('l,li,lj,lk->ijk', pi, X, Y, Z)
+    return 0.5 * (br(U0, U1, U1) + br(U1, U0, U1) + br(U1, U1, U0)) - 0.25 * (br(U2, U0, U0) + br(U0, U2, U0) + br(U0, U0, U2)) + 0.25 * br(U0, U0, U0)
+
+def f5(H, a):
+    m = len(a); s = H @ a; HDH = H @ np.diag(a / s) @ H
+    T = np.zeros((m, m, m))
+    for i, j, k in itertools.product(range(m), repeat=3):
+        if len({i, j, k}) == 3:
+            T[i, j, k] = 0.5 * (H[i, j] * H[i, k] / s[i] + H[i, j] * H[j, k] / s[j] + H[i, k] * H[j, k] / s[k])
+        elif i == j == k:
+            T[i, j, k] = 1.5 * H[i, i] ** 2 / s[i] - 0.75 * HDH[i, i] / a[i] + s[i] / (4 * a[i] ** 2)
+        else:
+            u = i if (i == j or i == k) else j
+            v = [t for t in (i, j, k) if t != u][0]
+            T[i, j, k] = H[u, u] * H[u, v] / s[u] + H[u, v] ** 2 / (2 * s[v]) - HDH[u, v] / (4 * a[u])
+    return T
+
+def symdef(T):
+    return max(np.abs(T - np.transpose(T, pp)).max() for pp in itertools.permutations(range(3)))
+
+def Hmat(kind, L, n):
+    at = None if kind == "zeta" else R.beurling(math.exp(2 * L))
+    N, p, q, _ = R.build(L, n, at); return R.ext(N, p, q)
+
+which = sys.argv[1]
+if which == "alg":
+    rng = np.random.default_rng(11)
+    for trial in range(3):
+        m = 7
+        # random symmetric H (any signs) and positive a with Ha > 0: Theorem F claims are pure algebra
+        while True:
+            H = rng.normal(size=(m, m)); H = H + H.T + 3 * np.ones((m, m)); a = rng.uniform(0.5, 1.5, m)
+            if (H @ a).min() > 0: break
+        T, K, G1, G2 = tbe(H, a); TD = theta_def(H, a); TF = f5(H, a)
+        print("random H (mixed signs), m=7: symdef(T from Gamma_2)=%.1e  |T - Theta_def|=%.1e  |T - F5|=%.1e  |T.a - H|=%.1e" % (
+            symdef(T), np.abs(T - TD).max(), np.abs(T - TF).max(), np.abs(np.einsum('ijk,k->ij', T, a) - H).max()))
+    for m in (5, 10, 20, 40):
+        H = np.ones((m, m)) / m; a = np.ones(m)
+        K, Lg, G1, G2 = gammas(H, a)
+        print("resampling m=%d: rho_BE=%.6f  (1/2+1/m=%.6f)" % (m, rho_be(G1, G2), 0.5 + 1.0 / m))
+    # CD(rho, n) on the resampling chain: best rho with Gamma_2 >= rho Gamma + (1/nn)(Lf)^2 at every site
+    for m in (40, 400):
+        H = np.ones((m, m)) / m; a = np.ones(m); K, Lg, G1, G2 = gammas(H, a)
+        Qc = sla.null_space(np.ones((1, m)))
+        for nn in (5.0, 8.0, 20.0):
+            k = 0; LL = np.outer(Lg[k], Lg[k])
+            ev = sla.eigh(Qc.T @ (G2[k] - LL / nn) @ Qc, Qc.T @ G1[k] @ Qc, eigvals_only=True)[0]
+            print("  CD(rho,n) resampling m=%d n=%g: best rho=%.5f (claim 1/2 - 2/n + O(1/m) = %.5f); Lichnerowicz rho n/(n-1) = %.5f" % (m, nn, ev, 0.5 - 2 / nn, ev * nn / (nn - 1)))
+if which == "zeta":
+    for kind in ("zeta", "beurling"):
+        for n in (12, 24, 48):
+            H = Hmat(kind, 1.0, n); lam, a = R.perron(H)
+            assert a.min() > 0
+            T, K, G1, G2 = tbe(H, a)
+            ev = np.sort(np.linalg.eigvalsh(H))[::-1]
+            npos = [int((np.linalg.eigvalsh(T[:, :, k]) > 1e-9).sum()) for k in range(n + 2)]
+            s = H @ a
+            wp = min(np.linalg.eigvalsh(np.outer(H[:, k], H[:, k]) / s[k] - T[:, :, k])[0] for k in range(n + 2))
+            dmin = min(T[i, j, k] for i in range(n + 2) for j in range(i) for k in range(j))
+            print("%s L=1 n=%d: #pos(H)=%d gap=1-ev2/ev1=%.5f rho_BE=%.4f slices #pos min %d max %d  symdef=%.1e |T-F5|=%.1e worst lam_min(P_k)=%.4f min distinct entry=%.3e" % (
+                kind, n, (ev > 1e-10).sum(), 1 - ev[1] / ev[0], rho_be(G1, G2), min(npos), max(npos), symdef(T), np.abs(T - f5(H, a)).max() if n <= 24 else float('nan'), wp, dmin), flush=True)
+    for (L, n) in ((0.5, 12), (0.5, 24)):
+        H = Hmat("zeta", L, n); lam, a = R.perron(H); T, K, G1, G2 = tbe(H, a)
+        print("zeta L=%.2f n=%d rho_BE=%.4f" % (L, n, rho_be(G1, G2)))
+if which == "cone":
+    for (L, n) in ((1.0, 12), (0.5, 24), (0.75, 24), (1.0, 24), (1.25, 24), (1.5, 24)):
+        H = Hmat("zeta", L, n); lam, a = R.perron(H); m = n + 2
+        l = H @ a; s = a @ l
+        T = (np.einsum('ij,k->ijk', H, l) + np.einsum('ik,j->ijk', H, l) + np.einsum('jk,i->ijk', H, l) - (2 / s) * np.einsum('i,j,k->ijk', l, l, l)) / s
+        npos = [int((np.linalg.eigvalsh(T[:, :, k]) > 1e-10).sum()) for k in range(m)]
+        rho = min((H[i, j] / (a[i] * a[j]) + H[i, k] / (a[i] * a[k]) + H[j, k] / (a[j] * a[k])) / (2 * lam) for i in range(n) for j in range(i) for k in range(j))
+        neg = np.mean([T[i, j, k] < 0 for i in range(n) for j in range(i) for k in range(j)])
+        print("cone zeta L=%.2f n=%d: |T.a-H|=%.1e slices #pos %s  rho=%.4f  share of distinct box triples negative=%.3f" % (L, n, np.abs(np.einsum('ijk,k->ij', T, a) - H).max(), sorted(set(npos)), rho, neg))
+if which == "fam":
+    def sig(H, a):
+        m = len(a); s = H @ a; pi = a * s; K = (H * a[None, :]) / s[:, None]
+        U0 = np.diag(1 / a); U1 = K @ U0; U2 = K @ U1
+        br = lambda X, Y, Z: np.einsum('l,li,lj,lk->ijk', pi, X, Y, Z)
+        s1 = br(U1, U0, U0) + br(U0, U1, U0) + br(U0, U0, U1); s2 = br(U2, U0, U0) + br(U0, U2, U0) + br(U0, U0, U2)
+        s11 = br(U1, U1, U0) + br(U1, U0, U1) + br(U0, U1, U1); s111 = br(U1, U1, U1)
+        return s1, s2, s11, s111
+    def worst(H, a, T):
+        s = H @ a
+        return min(np.linalg.eigvalsh(np.outer(H[:, k], H[:, k]) / s[k] - T[:, :, k])[0] for k in range(len(a)))
+    cases = [("resampling m=12", np.ones((12, 12)) / 12, np.ones(12))]
+    for kind, L, n in (("zeta", 0.5, 12), ("zeta", 1.0, 12), ("zeta", 1.0, 24), ("beurling", 1.0, 12)):
+        H = Hmat(kind, L, n); lam, a = R.perron(H); cases.append(("%s L=%.2f n=%d" % (kind, L, n), H, a))
+    for tag, H, a in cases:
+        s1, s2, s11, s111 = sig(H, a)
+        res = []
+        for t in np.arange(-1, 2.0001, 0.01):
+            T = t * (s1 - s2) + (0.5 - t) * s11 + (3 * t - 0.5) * s111
+            res.append((worst(H, a, T), t, np.abs(np.einsum('ijk,k->ij', T, a) - H).max()))
+        b = max(res)
+        print("%s: Theta_t best t=%.2f worst lam_min(P_k)=%.4e  max over t of |T.a-H|=%.1e" % (tag, b[1], b[0], max(r[2] for r in res)))

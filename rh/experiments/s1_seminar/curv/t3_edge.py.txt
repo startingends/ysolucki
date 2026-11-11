@@ -1,0 +1,46 @@
+"""S1-curv turn 3 (B155): the first-prime window (1/2) log 2 < L < (1/2) log 3 in boxes.
+Q_0 = pole + Gamma (no atom); P1 = unit atom at log 2 (Galerkin); zeta: Q = Q_0 - c P1, c = log2/sqrt2.
+usage: t3_edge.py.txt M delta [delta ...]"""
+import sys, math, importlib.machinery, importlib.util, numpy as np, mpmath as mp
+from scipy.optimize import brentq
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib'); S2 = load('s2lib')
+M = int(sys.argv[1]); deltas = [float(a) for a in sys.argv[2:]]
+ell = math.log(2); c = math.log(2) / math.sqrt(2); cinf = float(mp.log(mp.pi) - mp.digamma(0.25))
+Wbar = lambda t: math.atanh(math.exp(-t / 2)) + math.atan(math.exp(-t / 2))
+tri = lambda t: max(0.0, 1 - abs(t))
+Be, Bo = S2.parity_bases(M); h = M // 2
+print("M=%d  c = log2/sqrt2 = %.5f  c_inf = %.5f" % (M, c, cinf))
+for dl in deltas:
+    L = (ell + dl) / 2; b = S.build(L, M, 'arch'); d = b['d']; x = b['x']
+    Q0 = 2 * np.outer(b['c'], b['c']) - 2 * np.outer(b['s'], b['s']) - b['N']
+    idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+    P1 = np.array([tri((ell - k * d) / d) for k in range(M)])[idx] * math.sqrt(2) / math.sqrt(2)     # <b_i, (delta_l + delta_-l) * b_j>, unit weight Lambda/sqrt n = 1
+    # strip indicator (Galerkin: fractional overlap of each box with S+ u S-)
+    lo = ell - L; ov = np.clip(np.minimum(np.abs(x) + d / 2, L) - np.maximum(np.abs(x) - d / 2, lo), 0, None) / d
+    St = np.diag(ov)
+    e = lambda A, B: np.linalg.eigvalsh(B.T @ A @ B)
+    q0e, q0o = e(Q0, Be), e(Q0, Bo); Qz = Q0 - c * P1; qze, qzo = e(Qz, Be)[0], e(Qz, Bo)[0]
+    Qc = Q0 - c * St; qce, qco = e(Qc, Be)[0], e(Qc, Bo)[0]
+    npm = np.linalg.eigvalsh(P1); theta = c / (Wbar(dl) + Wbar(2 * L))
+    print("delta=%.3f L=%.4f | Wbar(delta)=%.3f theta=%.4f | P1 spectrum [%.3f, %.3f] | Q_0 low even %.5f odd %+.5f (2nd odd %.4f) | zeta low even %.3e odd %.3e | crude Q_0 - c 1_strips: even %+.5f odd %+.5f" % (
+        dl, L, Wbar(dl), theta, npm[0], npm[-1], q0e[0], q0o[0], q0o[1], qze, qzo, qce, qco))
+    # admissible weights: {c' : Q_0 - c' P1 >= 0}, per block (concave min-eigenvalue)
+    def interval(B):
+        A0 = B.T @ Q0 @ B; A1 = B.T @ P1 @ B; m = lambda t: np.linalg.eigvalsh(A0 - t * A1)[0]
+        from scipy.optimize import minimize_scalar
+        r = minimize_scalar(lambda t: -m(t), bounds=(-8, 8), method='bounded', options=dict(xatol=1e-10))
+        if -r.fun <= 0: return (float('nan'), float('nan'))
+        a = brentq(m, -8, r.x) if m(-8) < 0 else -np.inf
+        bb = brentq(m, r.x, 8) if m(8) < 0 else np.inf
+        return a, bb
+    ie, io = interval(Be), interval(Bo)
+    cm, cp = max(ie[0], io[0]), min(ie[1], io[1])
+    # one-vector tests on the Q_0 ground states
+    w, V = np.linalg.eigh(Bo.T @ Q0 @ Bo); psi = Bo @ V[:, 0]; pp = psi @ P1 @ psi
+    we, Ve = np.linalg.eigh(Be.T @ Q0 @ Be); pse = Be @ Ve[:, 0]; ppe = pse @ P1 @ pse
+    mass_o = psi @ St @ psi; mass_e = pse @ St @ pse
+    need = w[0] / pp if pp != 0 else float('nan'); cap = we[0] / ppe if ppe != 0 else float('nan')
+    print("      admissible weight of an atom at log 2: even block [%.4f, %.4f], odd block [%.4f, %.4f] => [%.5f, %.5f] ; (c_+ - c)/c = %.3e, (c - c_-)/c = %.3e" % (ie[0], ie[1], io[0], io[1], cm, cp, (cp - c) / c, (c - cm) / c))
+    print("      one-vector tests: odd ground state of Q_0: <psi,P1 psi> = %+.5f, strip mass %.4f => weight %s %.5f ; even ground state: <psi,P1 psi> = %+.5f, strip mass %.4f => weight <= %.5f" % (pp, mass_o, ">=" if pp < 0 else "<=", need, ppe, mass_e, cap))

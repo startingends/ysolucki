@@ -1,0 +1,57 @@
+"""BOOTSTRAP.md: is there a combination of prime-weight changes the near-null ladder does not see?
+G_st = <W_s, W_t>_F (Frobenius, whitened W_s = Li B_s Li^T, all in arb); smallest eigenvector e of G (mp, high precision);
+E = sum e_s B_s whitened IN ARB (cancellation kept), then |E| and the interval of t with A + t E >= 0 (bisection, float).
+Also each coordinate direction for comparison."""
+import sys, pickle, math
+import numpy as np, mpmath as mp, flint
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+d = pickle.load(open(sys.argv[1], 'rb')); NB = d['NB']; prec = d['prec']; flint.ctx.prec = prec; mp.mp.prec = prec - 40
+LQ = Fr(d['L']); L = arb(LQ.numerator) / arb(LQ.denominator)
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/prime_dual.py.txt').read()
+exec(src[src.index("def gl("):src.index("Qm = mp.matrix")])
+Qm = mp.matrix(NB, NB); Dm = mp.matrix(NB, NB)
+for i in range(NB):
+    for j in range(NB):
+        Qm[i, j] = (mp.mpf(d['Q'][i][j]) + mp.mpf(d['Q'][j][i])) / 2; Dm[i, j] = (mp.mpf(d['D'][i][j]) + mp.mpf(d['D'][j][i])) / 2
+Lim = mp.inverse(mp.cholesky(Dm)); dig = int(prec * 0.29)
+toa = lambda M: arb_mat(NB, NB, [arb(mp.nstr(M[i, j], dig)) for i in range(NB) for j in range(NB)])
+Li = toa(Lim); Qa = toa(Qm)
+fl = lambda M: np.array([[float(M[i, j].mid()) for j in range(NB)] for i in range(NB)])
+A = fl(Li * Qa * Li.transpose()); A = (A + A.T) / 2
+X = math.exp(2 * float(LQ))
+def isprimepow(n):
+    for p in range(2, n + 1):
+        if n % p == 0:
+            while n % p == 0: n //= p
+            return n == 1
+S = [n for n in range(2, int(math.floor(X - 1e-12)) + 1) if isprimepow(n)]
+B = [gamma_sym(arb(n).log(), NB + 2) for n in S]
+Wa = [Li * Bn * Li.transpose() for Bn in B]
+m = len(S)
+G = mp.matrix(m, m)
+for a in range(m):
+    for b in range(a, m):
+        P = Wa[a] * Wa[b]; tr = sum((P[i, i] for i in range(NB)), arb(0))
+        G[a, b] = G[b, a] = mp.mpf(tr.mid().str(dig, radius=False))
+eg, Ug = mp.eigsy(G)
+def interval(Ea, name):
+    E = fl(Ea); E = (E + E.T) / 2; nE = np.abs(np.linalg.eigvalsh(E)).max()
+    def ok(t): return np.linalg.eigvalsh(A + t * E)[0] >= 0
+    res = []
+    for sgn in (1, -1):
+        lo, hi = 0.0, 1.0
+        while ok(sgn * hi) and hi < 1e12: lo, hi = hi, hi * 4
+        for _ in range(80):
+            mid = (lo + hi) / 2
+            if ok(sgn * mid): lo = mid
+            else: hi = mid
+        res.append(sgn * lo)
+    print(f"  {name}: |whitened E| = {nE:.3e}; allowed t in [{res[1]:+.3e}, {res[0]:+.3e}]", flush=True)
+print(f"zeta L = {d['L']}: prime powers {S}; sqrt of Gram eigenvalues (|sum e W| for unit e): {[mp.nstr(mp.sqrt(abs(x)), 3) for x in eg]}")
+for k in range(m):
+    e = [Ug[i, k] for i in range(m)]
+    Ea = sum((Wa[i] * arb(mp.nstr(e[i], dig)) for i in range(m)), arb_mat(NB, NB))
+    interval(Ea, f"Gram eigvec {k} e = {[mp.nstr(x, 3) for x in e]}")
+for i in range(m):
+    interval(Wa[i], f"coordinate s = {S[i]}")

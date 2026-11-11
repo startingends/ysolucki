@@ -1,0 +1,33 @@
+import sys, time, math, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/r2_parity/wb.py.txt")
+mp.mp.dps = 110
+t0 = time.time()
+def atoms_sum(L, N, lat, cn):
+    M = None
+    for x, c in cn.items():
+        if math.log(float(x)) < 2 * L - 1e-12:
+            B = wb.atom_blocks(L, N, lat, x)
+            M = (c * B[0], c * B[1]) if M is None else wb.add(M, B, c)
+    return M
+L, N = 1.25, 56
+which = sys.argv[1]
+if which == 'beurling':
+    bl = {}
+    for p in (mp.mpf('2.1'), 3, 5, 7, 11):
+        pk = mp.mpf(p)
+        while pk <= math.exp(2 * L): bl[pk] = mp.log(p); pk *= p
+    A = wb.arch_blocks(L, N, 'int'); P = atoms_sum(L, N, 'int', bl)
+    ev = sorted([-e for e in wb.eigs(wb.add(A, P))], reverse=True)
+    print("J16 control Beurling L=1.25 N=56 int: #pos=%d ; top three %s" % (sum(1 for e in ev if e > 0), [mp.nstr(e, 5) for e in ev[:3]]))
+else:
+    A = wb.arch_blocks(L, N, which); P = atoms_sum(L, N, which, wb.mangoldt(math.exp(2 * L)))
+    Qn = wb.add(A, P)
+    for b, nm in ((0, 'even'), (1, 'odd')):
+        e = sorted([-x for x in mp.eigsy(Qn[b], eigvals_only=True)], reverse=True)
+        print("J16 %s L=1.25 N=56 %s block of N: top three %s" % (which, nm, [mp.nstr(x, 6) for x in e[:3]]), flush=True)
+    ev = sorted([-e for e in wb.eigs(Qn)], reverse=True)
+    print("J16 %s: #pos=%d ; largest %s ; second %s ; third %s (%.0fs)" % (which, sum(1 for e in ev if e > 0), mp.nstr(ev[0], 7), mp.nstr(ev[1], 5), mp.nstr(ev[2], 5), time.time() - t0))

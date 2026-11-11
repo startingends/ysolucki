@@ -1,0 +1,20 @@
+import sys, math, numpy as np, scipy.linalg as sl
+exec(open("/home/user/ysolucki/rh/experiments/r2_judge/j3.py.txt").read().split('which = sys.argv[1]')[0])
+def be_sites(N, sites):
+    M = len(N); ev, lam1, u, q, Lg = chain(N)
+    def Gam(i):
+        D = np.zeros((M, M)); D[np.diag_indices(M)] = 0.5 * q[i]
+        D[i, :] -= 0.5 * q[i]; D[:, i] -= 0.5 * q[i]; D[i, i] += 0.5 * q[i].sum(); return D
+    out = []
+    for i in sites:
+        Gi = Gam(i); LG = np.zeros((M, M))
+        for y in range(M):
+            if y != i: LG += q[i, y] * (Gam(y) - Gi)
+        G2 = 0.5 * LG - 0.5 * (Gi @ Lg + Lg.T @ Gi)
+        out.append(be_const(G2, Gi, i) / lam1)
+    return lam1, out
+for name, shift, Ms in (("zeta", None, (80, 160, 320)), ("beurling", 2.1, (160,))):
+    for M in Ms:
+        N, p, q_ = jb.boxN(1.0, M, shift)
+        lam1, r = be_sites(N, (0, 1, M // 2))
+        print("J15 %s M=%d lambda_1=%.6f  BE/lambda_1: site 0 %.4f  site 1 %.4f  centre %.4f" % (name, M, lam1, r[0], r[1], r[2]), flush=True)

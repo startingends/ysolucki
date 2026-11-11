@@ -1,0 +1,65 @@
+kind=zeta L=1 M=20 d=0.1000  diag N_ii=-0.862567  W_1=0.71790 W_2=0.28608  neg offdiag fraction=0.0000  min offdiag=0.04181
+  eigenvalues of N: top 4.3028104807  second -4.379079e-02  third -6.820915e-02   #positive=1   min(u)/max(u)=0.861
+  Weil form Q=pole-N in boxes: min eig even 6.520104e-03  odd 2.715481e-02
+  even block:  2<cosh,N^-1 cosh> - 1 = 1.730672e-03 (RH_even <=> >=0 given one positive eig);  odd: 1 - 2<sinh,(-N)^-1 sinh> = 9.773503e-02 (RH_odd <=> >= 0 given N_odd<0)
+  top eig of N_odd -6.820915e-02 ; second eig of N_even -4.379079e-02
+  total rate: min 5.165377 max 5.165377  (should equal lambda_1 - N_ii = 5.165377)
+  gap=4.3466012681  lambda_1=4.3028104807  gap/lambda_1 - 1 = 1.017725e-02
+  Bakry-Emery rho per site: min 2.330014 at site 0 (x=-0.950) ; centre 2.372029 ; max 2.474439
+  rho_BE/lambda_1 = 0.54151   rho_BE/gap = 0.53605   (centre site: 0.55127)
+  Ollivier (Lin-Lu-Yau) curvature, nearest sites: min -0.584847 at pair 18 ; centre 1.589706 ; max 2.102209 ; min/lambda_1 = -0.13592 ; centre/lambda_1 = 0.36946
+ -0.1359]
+  Dobrushin (TV-metric Ollivier) curvature: min over ALL pairs 2.594800 at pair (np.int64(7), np.int64(12)) ; /lambda_1 = 0.60305 ; /gap = 0.59697
+  LLY symmetry check: pair(0,1)=-0.584847 pair(M-2,M-1)=-0.584847
+kind=zeta L=1 M=40 d=0.0500  diag N_ii=-1.568158  W_1=0.70559 W_2=0.27400  neg offdiag fraction=0.0000  min offdiag=0.02033
+  eigenvalues of N: top 4.3030937794  second -1.445236e-02  third -2.124538e-02   #positive=1   min(u)/max(u)=0.8494
+  Weil form Q=pole-N in boxes: min eig even 1.990533e-03  odd 8.106015e-03
+  even block:  2<cosh,N^-1 cosh> - 1 = 5.592234e-04 (RH_even <=> >=0 given one positive eig);  odd: 1 - 2<sinh,(-N)^-1 sinh> = 3.207444e-02 (RH_odd <=> >= 0 given N_odd<0)
+  top eig of N_odd -2.124538e-02 ; second eig of N_even -1.445236e-02
+  total rate: min 5.871251 max 5.871251  (should equal lambda_1 - N_ii = 5.871251)
+  gap=4.3175461374  lambda_1=4.3030937794  gap/lambda_1 - 1 = 3.358597e-03
+  Bakry-Emery rho per site: min 2.135693 at site 0 (x=-0.975) ; centre 2.247231 ; max 2.294201
+  rho_BE/lambda_1 = 0.49632   rho_BE/gap = 0.49465   (centre site: 0.52224)
+  Ollivier (Lin-Lu-Yau) curvature, nearest sites: min -15.045596 at pair 38 ; centre 1.529789 ; max 1.974085 ; min/lambda_1 = -3.49646 ; centre/lambda_1 = 0.35551
+  0.4063]
+  Dobrushin (TV-metric Ollivier) curvature: min over ALL pairs 1.852369 at pair (np.int64(1), np.int64(38)) ; /lambda_1 = 0.43047 ; /gap = 0.42903
+  LLY symmetry check: pair(0,1)=-15.045596 pair(M-2,M-1)=-15.045596
+kind=zeta L=1 M=80 d=0.0250  diag N_ii=-2.267541  W_1=0.69938 W_2=0.26785  neg offdiag fraction=0.0000  min offdiag=0.009496
+  eigenvalues of N: top 4.3043096523  second -4.167584e-03  third -6.525134e-03   #positive=1   min(u)/max(u)=0.8454
+  Weil form Q=pole-N in boxes: min eig even 5.464782e-04  odd 2.412587e-03
+  even block:  2<cosh,N^-1 cosh> - 1 = 1.560088e-04 (RH_even <=> >=0 given one positive eig);  odd: 1 - 2<sinh,(-N)^-1 sinh> = 1.066798e-02 (RH_odd <=> >= 0 given N_odd<0)
+  top eig of N_odd -6.525134e-03 ; second eig of N_even -4.167584e-03
+  total rate: min 6.571851 max 6.571851  (should equal lambda_1 - N_ii = 6.571851)
+  gap=4.3084772368  lambda_1=4.3043096523  gap/lambda_1 - 1 = 9.682353e-04
+  Bakry-Emery rho per site: min 1.991305 at site 2 (x=-0.938) ; centre 2.178616 ; max 2.198798
+  rho_BE/lambda_1 = 0.46263   rho_BE/gap = 0.46218   (centre site: 0.50615)
+  Ollivier (Lin-Lu-Yau) curvature, nearest sites: min -26.720252 at pair 77 ; centre 1.612241 ; max 2.095483 ; min/lambda_1 = -6.20779 ; centre/lambda_1 = 0.37456
+  0.3836]
+  Dobrushin (TV-metric Ollivier) curvature: min over ALL pairs 1.436505 at pair (np.int64(3), np.int64(76)) ; /lambda_1 = 0.33374 ; /gap = 0.33341
+  LLY symmetry check: pair(0,1)=-13.644019 pair(M-2,M-1)=-13.644019
+kind=zeta L=0.5 M=40 d=0.0250  diag N_ii=-2.267541  W_1=0.69938 W_2=0.26785  neg offdiag fraction=0.0000  min offdiag=0.0179
+  eigenvalues of N: top 1.9853698054  second -2.770266e-02  third -2.980409e-02   #positive=1   min(u)/max(u)=0.6365
+  Weil form Q=pole-N in boxes: min eig even 2.630607e-03  odd 9.437465e-03
+  even block:  2<cosh,N^-1 cosh> - 1 = 1.706786e-03 (RH_even <=> >=0 given one positive eig);  odd: 1 - 2<sinh,(-N)^-1 sinh> = 3.015931e-01 (RH_odd <=> >= 0 given N_odd<0)
+  top eig of N_odd -2.980409e-02 ; second eig of N_even -2.770266e-02
+  total rate: min 4.252911 max 4.252911  (should equal lambda_1 - N_ii = 4.252911)
+  gap=2.0130724676  lambda_1=1.9853698054  gap/lambda_1 - 1 = 1.395340e-02
+  Bakry-Emery rho per site: min 1.352661 at site 39 (x=0.488) ; centre 1.456989 ; max 1.528355
+  rho_BE/lambda_1 = 0.68131   rho_BE/gap = 0.67194   (centre site: 0.73386)
+  Ollivier (Lin-Lu-Yau) curvature, nearest sites: min -1.702526 at pair 27 ; centre 1.233161 ; max 1.701543 ; min/lambda_1 = -0.85754 ; centre/lambda_1 = 0.62112
+  0.8048]
+  Dobrushin (TV-metric Ollivier) curvature: min over ALL pairs 1.325389 at pair (np.int64(2), np.int64(37)) ; /lambda_1 = 0.66758 ; /gap = 0.65839
+  LLY symmetry check: pair(0,1)=-1.417184 pair(M-2,M-1)=-1.417184
+kind=zeta L=0.75 M=40 d=0.0375  diag N_ii=-1.858957  W_1=0.70249 W_2=0.27093  neg offdiag fraction=0.0000  min offdiag=0.01907
+  eigenvalues of N: top 3.0980330005  second -1.655566e-02  third -2.721172e-02   #positive=1   min(u)/max(u)=0.7845
+  Weil form Q=pole-N in boxes: min eig even 1.931606e-03  odd 7.458977e-03
+  even block:  2<cosh,N^-1 cosh> - 1 = 7.785676e-04 (RH_even <=> >=0 given one positive eig);  odd: 1 - 2<sinh,(-N)^-1 sinh> = 7.624761e-02 (RH_odd <=> >= 0 given N_odd<0)
+  top eig of N_odd -2.721172e-02 ; second eig of N_even -1.655566e-02
+  total rate: min 4.956990 max 4.956990  (should equal lambda_1 - N_ii = 4.956990)
+  gap=3.1145886644  lambda_1=3.0980330005  gap/lambda_1 - 1 = 5.343928e-03
+  Bakry-Emery rho per site: min 1.752749 at site 0 (x=-0.731) ; centre 1.939846 ; max 1.939846
+  rho_BE/lambda_1 = 0.56576   rho_BE/gap = 0.56275   (centre site: 0.62615)
+  Ollivier (Lin-Lu-Yau) curvature, nearest sites: min -3.304260 at pair 36 ; centre 1.904753 ; max 1.904753 ; min/lambda_1 = -1.06657 ; centre/lambda_1 = 0.61483
+ -1.0666]
+  Dobrushin (TV-metric Ollivier) curvature: min over ALL pairs 1.665962 at pair (np.int64(2), np.int64(36)) ; /lambda_1 = 0.53775 ; /gap = 0.53489
+  LLY symmetry check: pair(0,1)=-2.558121 pair(M-2,M-1)=-2.558121

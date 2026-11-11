@@ -1,0 +1,167 @@
+# copy of rh/experiments/foothold/pencil_dh.py.txt up to the assembly of Q and D; then dumps both as float64
+"""Multiprecision (Arb midpoints + mpmath; NOT a certificate) whole-space pencil (Q, D_L) on polynomials of degree < NB.
+Q  = exact Weil form of zeta on the window L (x-space formula of PROOF_forcing_prime2.md, Lemma 5, all prime powers
+     n with log n < 2L), in the orthonormal Legendre basis of L^2[-L, L], by Gauss-Legendre quadrature.
+D_L = least out-of-band energy (band [-lam, lam], lam = e^L) of a companion g supported in [-lam, lam] with E(g) = f
+     on the window (Moebius inverse on [1/lam, lam]), free even part h on (0, 1/lam), with both pole conditions
+     int g = 0 and int_{-lam}^{lam} ghat = 0 (Schur complement).
+usage: pencil_dh.py.txt <zeta|dh> <L=p/q> <NB> [nh=40] [prec_bits=400] [K1,K2,...]
+kind 'dh' = the Davenport-Heilbronn impostor (PROGRESS.md section 23): Gamma rates 2m + 3/2, constant log(5/pi), no pole,
+atoms -2 c_n n^(-1/2) at log n for the coefficients c_n of -f'/f; companion g ODD, inverted with the Dirichlet inverse of
+a_n; band [-lam/5, lam/5]; no pole conditions."""
+import sys, math, time
+import flint, mpmath as mp
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+KIND = sys.argv[1]; assert KIND in ('zeta', 'dh')
+sys.argv = sys.argv[1:]
+LQ = Fr(sys.argv[1]); NB = int(sys.argv[2]); nh = int(sys.argv[3]) if len(sys.argv) > 3 else 40
+prec = int(sys.argv[4]) if len(sys.argv) > 4 else 400
+KS = [int(t) for t in sys.argv[5].split(',')] if len(sys.argv) > 5 else []
+flint.ctx.prec = prec; mp.mp.prec = prec - 40
+t0 = time.time()
+L = arb(LQ.numerator) / arb(LQ.denominator); lam = L.exp(); pi = arb.pi()
+def gl(n, a, b):
+    out = []
+    for k in range(n):
+        x, w = arb.legendre_p_root(n, k, weight=True)
+        out.append(((a + b) / 2 + (b - a) / 2 * x, (b - a) / 2 * w))
+    return out
+NORM = [((2 * arb(j) + 1) / (2 * L)).sqrt() for j in range(NB)]
+def phis(u):
+    """[phi_j(u)] j < NB, orthonormal Legendre on [-L, L]"""
+    t = u / L; P = [arb(1), t]
+    for n in range(1, NB - 1):
+        P.append(((2 * n + 1) * t * P[n] - n * P[n - 1]) / (n + 1))
+    return [NORM[j] * P[j] for j in range(NB)]
+def gamma_sym(x, nin):
+    """S(x)_jk = symmetric part of int_{x-L}^{L} phi_j(u) phi_k(u - x) du"""
+    nodes = gl(nin, x - L, L)
+    A = arb_mat(nin, NB, [v for u, w in nodes for v in phis(u)])
+    B = arb_mat(nin, NB, [w * v for u, w in nodes for v in phis(u - x)])
+    G = A.transpose() * B
+    return (G + G.transpose()) * (arb(1) / 2)
+def midmat(M):
+    return arb_mat(M.nrows(), M.ncols(), [M[i, j].mid() for i in range(M.nrows()) for j in range(M.ncols())])
+# ---------------- Q
+nin = NB + 2; nout = NB + 70
+I = arb_mat(NB, NB, [arb(1) if i == j else arb(0) for i in range(NB) for j in range(NB)])
+acc = arb_mat(NB, NB)
+for x, w in gl(nout, arb(0), 2 * L):
+    S = gamma_sym(x, nin)
+    h = ((x / 2).exp() if KIND == 'zeta' else (-x / 2).exp()) / x.sinh() - 1 / x
+    acc = midmat(acc + (I - S) * (w / x) - S * (w * h))
+C0 = (4 * pi * L).log() + arb.const_euler() if KIND == 'zeta' else (4 * pi * L / 5).log() + arb.const_euler()
+Q = acc - I * C0
+pn = gl(NB + 40, -L, L)
+pv = [arb(0)] * NB
+for u, w in pn:
+    ph = phis(u); e = (u / 2).exp()
+    for j in range(NB): pv[j] += w * e * ph[j]
+if KIND == 'zeta': Q = Q + arb_mat(NB, NB, [pv[j] * pv[k] * ((1 if j % 2 == 0 else -1) + (1 if k % 2 == 0 else -1)) for j in range(NB) for k in range(NB)])
+X = int(math.floor(math.exp(2 * float(LQ)) - 1e-12))
+atoms = []
+for n in range(2, X + 1):
+    for p in range(2, n + 1):
+        if all(p % d for d in range(2, int(p ** 0.5) + 1)):
+            m = n
+            while m % p == 0: m //= p
+            if m == 1: atoms.append((n, p)); break
+            if n % p == 0: break
+KAP = ((10 - 2 * arb(5).sqrt()).sqrt() - 2) / (arb(5).sqrt() - 1)
+def a_dh(n): return [arb(0), arb(1), KAP, -KAP, arb(-1)][n % 5]
+NMAX = int(math.exp(2 * float(LQ))) + 2
+cdh = {1: arb(0)}
+for n in range(2, NMAX + 1):
+    v = a_dh(n) * arb(n).log()
+    for d in range(2, n):
+        if n % d == 0: v -= cdh[d] * a_dh(n // d)
+    cdh[n] = v
+bdh = {1: arb(1)}
+for n in range(2, NMAX + 1):
+    v = arb(0)
+    for d in range(2, n + 1):
+        if n % d == 0: v -= a_dh(d) * bdh[n // d]
+    bdh[n] = v
+if KIND == 'zeta':
+    for n, p in atoms:
+        Q = Q - gamma_sym(arb(n).log(), nin) * (2 * arb(p).log() / arb(n).sqrt())
+else:
+    atoms = [(n, None) for n in range(2, X + 1) if n % 5]
+    for n, _ in atoms:
+        Q = Q - gamma_sym(arb(n).log(), nin) * (2 * cdh[n] / arb(n).sqrt())
+Q = midmat(Q)
+print(f"KIND = {KIND}, L = {sys.argv[1]}, lam^2 = {math.exp(2*float(LQ)):.4f}, NB = {NB}, nh = {nh}, prec = {prec}; prime powers {[n for n, p in atoms]}; Q built {time.time()-t0:.0f}s", flush=True)
+# ---------------- D_L
+def mobius(n):
+    r = 1; d = 2; m = n
+    while d * d <= m:
+        if m % d == 0:
+            m //= d
+            if m % d == 0: return 0
+            r = -r
+        d += 1
+    if m > 1: r = -r
+    return r
+lamf = math.exp(float(LQ))
+sqf = [n for n in range(1, int(lamf * lamf) + 2) if (mobius(n) != 0 if KIND == 'zeta' else n % 5 != 0)]
+COEF = (lambda n: arb(mobius(n))) if KIND == 'zeta' else (lambda n: bdh[n])
+brk = sorted(set([lamf / n for n in sqf if lamf / n > 1 / lamf + 1e-12] + [1 / lamf]))
+def as_arb(v):          # exact break points
+    if abs(v - 1 / lamf) < 1e-12: return 1 / lam
+    n = int(round(lamf / v)); return lam / n
+npc = 60 + NB
+NT = NB + nh
+BAND = lam if KIND == 'zeta' else lam / 5
+xin = gl(160 + int(2 * math.pi * lamf * lamf), arb(0), BAND)
+TRIG = (lambda z: z.cos()) if KIND == 'zeta' else (lambda z: z.sin())
+def node_rows():
+    """yields (x, w, column of companion values) for every quadrature node on (0, lam]; nothing is stored"""
+    for x, w in gl(40 + 2 * nh, arb(0), 1 / lam):
+        t = 2 * lam * x - 1; P = [arb(1), t]
+        for n in range(1, nh - 1): P.append(((2 * n + 1) * t * P[n] - n * P[n - 1]) / (n + 1))
+        yield x, w, [arb(0)] * NB + [((2 * arb(i) + 1) * lam).sqrt() * P[i] for i in range(nh)]
+    for a, b in zip(brk[:-1], brk[1:]):
+        ns = [n for n in sqf if n * (a + b) / 2 <= lamf]
+        for x, w in gl(npc, as_arb(a), as_arb(b)):
+            g = [arb(0)] * NB
+            for n in ns:
+                y = n * x; ph = phis(y.log()); c = COEF(n) / y.sqrt()
+                for j in range(NB): g[j] += c * ph[j]
+            yield x, w, g + [arb(0)] * nh
+Gram = arb_mat(NT, NT); Cm = arb_mat(NT, len(xin)); ell1 = [arb(0)] * NT; nx = 0
+CH = 300
+buf = []
+def flush(buf):
+    global Gram, Cm
+    m = len(buf)
+    Gc = arb_mat(m, NT, [v for x, w, col in buf for v in col])
+    GWc = arb_mat(m, NT, [w * v for x, w, col in buf for v in col])
+    CSc = arb_mat(m, len(xin), [TRIG(2 * pi * x * xi) for x, w, col in buf for xi, wx in xin])
+    Gram = midmat(Gram + (GWc.transpose() * Gc) * arb(2))
+    Cm = midmat(Cm + (GWc.transpose() * CSc) * arb(2))
+    for x, w, col in buf:
+        for a_ in range(NT): ell1[a_] += 2 * w * col[a_]
+for row in node_rows():
+    buf.append(row); nx += 1
+    if len(buf) == CH: flush(buf); buf = []
+if buf: flush(buf); buf = []
+CW = arb_mat(NT, len(xin), [Cm[i, m] * xin[m][1] for i in range(NT) for m in range(len(xin))])
+Aout = midmat(Gram - (CW * Cm.transpose()) * arb(2))
+ell2 = [2 * sum((CW[a, m] for m in range(len(xin))), arb(0)) for a in range(NT)] # int_{-lam}^{lam} ghat
+del Gram, Cm
+sub = lambda M, r, c: arb_mat(len(r), len(c), [M[i, j] for i in r for j in c])
+F = list(range(NB)); Hh = list(range(NB, NT))
+Aff = sub(Aout, F, F); Afh = sub(Aout, F, Hh); Ahh = sub(Aout, Hh, Hh)
+Ahi = midmat(Ahh.inv())
+Dfree = Aff - Afh * Ahi * Afh.transpose()
+Lf = arb_mat(NB, 2, [v for a in F for v in (ell1[a], ell2[a])]); Lh = arb_mat(nh, 2, [v for a in Hh for v in (ell1[a], ell2[a])])
+S2 = Lh.transpose() * Ahi * Lh; T2 = Lf - Afh * Ahi * Lh
+D = midmat(Dfree + T2 * midmat(S2.inv()) * T2.transpose()) if KIND == 'zeta' else midmat(Dfree)
+print(f"D built {time.time()-t0:.0f}s (x nodes {nx}, xi nodes {len(xin)})", flush=True)
+
+import numpy as np
+Qf = np.array([[float(Q[i, j].mid().str(30, radius=False)) for j in range(NB)] for i in range(NB)])
+Df = np.array([[float(D[i, j].mid().str(30, radius=False)) for j in range(NB)] for i in range(NB)])
+np.save(f"/home/user/ysolucki/rh/data/operator_two_zero/QD_{KIND}_{float(LQ):.3f}_{NB}.npy", np.stack([Qf, Df]))
+print("saved", time.time() - t0)

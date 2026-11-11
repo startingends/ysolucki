@@ -1,0 +1,12 @@
+L=0.4 odd polynomials of degree <= 5: lowest Rayleigh quotient -0.07739241006 ; coefficients (c1=1): ['1.0', '-5.0689321', '-0.20849937']
+   rounded witness c = ['1.0', '-5.07', '-0.208'] : |f|^2 = 0.0130945171, pole = -0.0002392346423, arch = -0.0007741812862, Q_bg(f) = -0.001013415929, Q_bg/|f|^2 = -0.077392386
+   g(u) > 0 for u < about 0.25, < 0 beyond; most negative g = -0.0063977963 at u = 0.46 (x = 1.5841); g(log 2) = -0.0017172361
+   weight needed on u in (u0, 2L) if all weights >= 0: sum m_j >= |Q_bg|/(2 max|g|) = 0.07920039 ; zeta's atom at 2: m = 0.49012907, Q(f) with it = Q_bg - 2 m g(log 2) = 0.0006699187034
+L=0.4 odd polynomials of degree <= 7: lowest Rayleigh quotient -0.07774195025 ; coefficients (c1=1): ['1.0', '-7.1537769', '29.855306', '-111.26784']
+   rounded witness c = ['1.0', '-7.15', '29.9', '-111.0'] : |f|^2 = 0.01201135238, pole = -0.0002200647492, arch = -0.0007136277725, Q_bg(f) = -0.0009336925217, Q_bg/|f|^2 = -0.077734171
+   g(u) > 0 for u < about 0.25, < 0 beyond; most negative g = -0.0058646477 at u = 0.46 (x = 1.5841); g(log 2) = -0.0016131838
+   weight needed on u in (u0, 2L) if all weights >= 0: sum m_j >= |Q_bg|/(2 max|g|) = 0.079603461 ; zeta's atom at 2: m = 0.49012907, Q(f) with it = Q_bg - 2 m g(log 2) = 0.0006476439884
+L=0.45 odd polynomials of degree <= 5: lowest Rayleigh quotient -0.2045381341 ; coefficients (c1=1): ['1.0', '-3.9413864', '-0.36626091']
+   rounded witness c = ['1.0', '-3.94', '-0.366'] : |f|^2 = 0.01886734029, pole = -0.0004932166486, arch = -0.003365872445, Q_bg(f) = -0.003859089093, Q_bg/|f|^2 = -0.20453806
+   g(u) > 0 for u < about 0.29, < 0 beyond; most negative g = -0.0092129455 at u = 0.52 (x = 1.682); g(log 2) = -0.0055422313
+   weight needed on u in (u0, 2L) if all weights >= 0: sum m_j >= |Q_bg|/(2 max|g|) = 0.2094384 ; zeta's atom at 2: m = 0.49012907, Q(f) with it = Q_bg - 2 m g(log 2) = 0.001573728318

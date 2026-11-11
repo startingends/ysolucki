@@ -1,0 +1,35 @@
+"""Second route for the judge's wave-packet number: Q_zeta(f) for f = phi(u) cos(mu u) from the PRIME side
+(Guinand-Weil explicit formula; no zeros used), to compare with the zero-side sum in wavepacket.py.txt.
+Q(f) = h(i/2)+h(-i/2) [negligible here, < 1e-9] - g(0) log pi + (1/2pi) int h(r) Re psi(1/4 + i r/2) dr - 2 sum_n Lambda(n) n^-1/2 g(log n),
+g = f*f~, h = |fhat|^2.  With f = phi cos(mu u): g(v) = (1/2) cos(mu v) c(v) + O(mu^-2), c = phi*phi~ ;
+h(r) = (1/4)|phihat(|r| - mu)|^2 + cross terms O(mu^-3).  usage: wp_primeside.py.txt L delta mu TP"""
+import sys, math, numpy as np
+from scipy.special import digamma
+from sympy import primerange
+L = float(sys.argv[1]); delta = float(sys.argv[2]); mu = float(sys.argv[3]); TP = int(sys.argv[4])
+phi = lambda u: np.where(np.abs(u) <= L, np.sinh(delta * u) * (1 - (u / L) ** 2) ** TP, 0.0)
+x, w = np.polynomial.legendre.leggauss(4000)
+def corr_exact(v):   # g(v) = int f(u) f(u - v) du, exact (oscillation resolved with panels)
+    a, b = v - L, L
+    if b <= a: return 0.0
+    npan = max(4, int((b - a) * mu / 20) + 1); tot = 0.0; xs, ws = np.polynomial.legendre.leggauss(64)
+    edges = np.linspace(a, b, npan + 1)
+    for p in range(npan):
+        u = 0.5 * (edges[p + 1] - edges[p]) * xs + 0.5 * (edges[p + 1] + edges[p]); wu = 0.5 * (edges[p + 1] - edges[p]) * ws
+        tot += np.sum(phi(u) * np.cos(mu * u) * phi(u - v) * np.cos(mu * (u - v)) * wu)
+    return tot
+X = math.exp(2 * L); ps = 0.0; nterms = 0
+for p in primerange(2, int(X) + 1):
+    pk = p
+    while pk <= X:
+        ps += math.log(p) / math.sqrt(pk) * corr_exact(math.log(pk)); nterms += 1; pk *= p
+g0 = corr_exact(0.0)
+# archimedean: (1/2pi) int h(r) Re psi(1/4 + i r/2) dr, h even, concentrated at |r| ~ mu
+u = L * x; wu = L * w; ph = phi(u) * wu
+xx = np.linspace(-600, 600, 240001); dx = xx[1] - xx[0]
+phh = np.array([np.sum(ph * np.exp(1j * t * u)) for t in xx])
+hh = 0.25 * np.abs(phh) ** 2
+arch = 2 * np.sum(hh * digamma(0.25 + 0.5j * (mu + xx)).real) * dx / (2 * math.pi)
+Q = -g0 * math.log(math.pi) + arch - 2 * ps
+print("L=%.2f delta=%.2f mu=%.4f taper=%d: prime powers used %d (<= %.1f);  g(0)=||f||^2=%.6e" % (L, delta, mu, TP, nterms, X, g0))
+print("  arch = %.6e   -g(0) log pi = %.6e   -2*prime sum = %.6e   Q_zeta(f) = %.6e   Rayleigh = %.4f" % (arch, -g0 * math.log(math.pi), -2 * ps, Q, Q / g0))

@@ -1,0 +1,28 @@
+zeta     L=0.30 n=12  #pos(Ntilde)=1  eig1=2.14603 eig2=-1.0893e-02 eig3=-2.6207e-01 | #pos(N)=1 | min eig Weil form Q=2.2188e-02 | N offdiag min 5.699e-02
+zeta     L=0.40 n=12  #pos(Ntilde)=1  eig1=2.56334 eig2=-8.0068e-03 eig3=-7.2392e-02 | #pos(N)=1 | min eig Weil form Q=1.8236e-02 | N offdiag min 7.079e-02
+zeta     L=0.50 n=12  #pos(Ntilde)=1  eig1=2.99494 eig2=-5.3750e-03 eig3=-6.5592e-02 | #pos(N)=1 | min eig Weil form Q=1.4769e-02 | N offdiag min 6.278e-02
+zeta     L=0.50 n=14  #pos(Ntilde)=1  eig1=2.99581 eig2=-4.3920e-03 eig3=-5.1204e-02 | #pos(N)=1 | min eig Weil form Q=1.1961e-02 | N offdiag min 5.324e-02
+zeta     L=0.75 n=12  #pos(Ntilde)=1  eig1=4.10235 eig2=-3.5522e-03 eig3=-4.1753e-02 | #pos(N)=1 | min eig Weil form Q=1.2909e-02 | N offdiag min 7.297e-02
+zeta     L=1.00 n=12  #pos(Ntilde)=1  eig1=5.30595 eig2=-1.8115e-03 eig3=-3.4672e-02 | #pos(N)=1 | min eig Weil form Q=8.3833e-03 | N offdiag min 2.086e-01
+zeta     L=1.00 n=14  #pos(Ntilde)=1  eig1=5.30743 eig2=-1.7049e-03 eig3=-3.0533e-02 | #pos(N)=1 | min eig Weil form Q=7.9641e-03 | N offdiag min 1.139e-01
+beurling L=0.30 n=12  #pos(Ntilde)=1  eig1=2.14603 eig2=-1.0893e-02 eig3=-2.6207e-01 | #pos(N)=1 | min eig Weil form Q=2.2188e-02 | N offdiag min 5.699e-02
+beurling L=0.40 n=12  #pos(Ntilde)=1  eig1=2.53304 eig2=-1.0685e-02 eig3=-1.4134e-02 | #pos(N)=1 | min eig Weil form Q=1.4380e-02 | N offdiag min 6.495e-02
+beurling L=0.50 n=12  #pos(Ntilde)=2  eig1=2.96866 eig2=2.9054e-03 eig3=-1.4367e-02 | #pos(N)=1 | min eig Weil form Q=-2.9802e-03 | N offdiag min 6.278e-02
+beurling L=0.50 n=14  #pos(Ntilde)=2  eig1=2.96905 eig2=1.3321e-02 eig3=-1.0626e-02 | #pos(N)=1 | min eig Weil form Q=-1.3656e-02 | N offdiag min 5.324e-02
+beurling L=0.75 n=12  #pos(Ntilde)=3  eig1=4.06532 eig2=4.1283e-02 eig3=9.7714e-03 | #pos(N)=2 | min eig Weil form Q=-4.1867e-02 | N offdiag min 7.297e-02
+beurling L=1.00 n=12  #pos(Ntilde)=2  eig1=5.28690 eig2=1.9953e-02 eig3=-1.3152e-02 | #pos(N)=2 | min eig Weil form Q=-2.4809e-02 | N offdiag min 1.263e-01
+beurling L=1.00 n=14  #pos(Ntilde)=3  eig1=5.28834 eig2=8.9724e-02 eig3=3.6874e-02 | #pos(N)=3 | min eig Weil form Q=-9.7525e-02 | N offdiag min 8.144e-02
+L=0.50 n=12  Perron a: boxes [0.2045 0.2376 0.2497] fibres [0.4111 0.4111] ; (Ha)min 6.125e-01 ; |T.a - H| 2.2e-16
+   positive eigenvalues of the slices: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   distinct box triples: 220, negative: 0 (0%)
+   distinct triples incl. fibres: 364, negative: 0 (0%)
+   a=(1..1, 3,3): slices #pos [1] ; distinct box triples negative 0%
+   a=(h-weights,1,1): slices #pos [1] ; distinct box triples negative 0%
+L=1.00 n=12  Perron a: boxes [0.2591 0.2744 0.2627] fibres [0.3081 0.3081] ; (Ha)min 1.325e+00 ; |T.a - H| 2.2e-16
+   positive eigenvalues of the slices: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   distinct box triples: 220, negative: 0 (0%)
+   distinct triples incl. fibres: 364, negative: 0 (0%)
+   a=(1..1, 3,3): slices #pos [1] ; distinct box triples negative 0%
+   a=(h-weights,1,1): slices #pos [1] ; distinct box triples negative 1%
+product cubic <f^2, N f>: slice k=0 has 11 positive eigenvalues (n=12)
+product cubic <f^2, N f>: slice k=5 has 11 positive eigenvalues (n=12)

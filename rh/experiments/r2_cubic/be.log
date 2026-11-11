@@ -1,0 +1,4 @@
+zeta L=0.50 n=12: #pos(H)=1 ; |sum B - G|=1.3e-15 ; spectrum of -L: 0, 1.0018, 1.0219 ... ; min eig of B_i over sites -4.530e-01 ; #sites with B_i PSD 0/14 ; rho_BE=0.6498 ; T^BE asymmetry 0.00
+zeta L=1.00 n=12: #pos(H)=1 ; |sum B - G|=1.1e-15 ; spectrum of -L: 0, 1.0003, 1.0065 ... ; min eig of B_i over sites -1.034e+00 ; #sites with B_i PSD 0/14 ; rho_BE=0.5902 ; T^BE asymmetry 0.00
+zeta L=1.00 n=24: #pos(H)=1 ; |sum B - G|=2.0e-15 ; spectrum of -L: 0, 1.0002, 1.0026 ... ; min eig of B_i over sites -1.043e+00 ; #sites with B_i PSD 0/26 ; rho_BE=0.5280 ; T^BE asymmetry 0.00
+beurling L=1.00 n=12: #pos(H)=2 ; |sum B - G|=1.4e-15 ; spectrum of -L: 0, 0.9962, 1.0025 ... ; min eig of B_i over sites -1.043e+00 ; #sites with B_i PSD 0/14 ; rho_BE=0.5863 ; T^BE asymmetry 0.00

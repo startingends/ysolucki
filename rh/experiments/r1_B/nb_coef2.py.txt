@@ -1,0 +1,54 @@
+import sys, math
+import numpy as np
+from sympy import mobius, primerange
+exec(open("nb_gram.py.txt").read().split('if __name__')[0])
+C = 2 + EG - math.log(4 * math.pi)
+G = np.load("/home/user/ysolucki/rh/data/r1_B/G2000.npy"); Nmax = G.shape[0]
+b = bvec(Nmax); mu = np.array([int(mobius(k)) for k in range(1, Nmax + 1)], dtype=float)
+ks = np.arange(1, Nmax + 1); lk = np.log(ks)
+def Q(c, N): return 1 - 2 * b[:N] @ c + c @ G[:N, :N] @ c
+def Qsub(B, N):
+    """min of Q over span of columns of B (N x m). returns (Qmin, coeffs)."""
+    A = B.T @ G[:N, :N] @ B; r = B.T @ b[:N]; a = np.linalg.solve(A, r); return 1 - r @ a, a
+# NOTE sign: sum_k mu(k) frac(1/(kx)) = -chi formally, so natural ansatz is c_k = -mu(k) * cutoff.
+print("SIGN-CORRECTED. columns: N | d_N^2 | Q[V_N], V_N=-mu(1-logk/logN) | Q*logN | best M-family Q, logM/logN | best eps-family Q[-mu k^-eps], eps*logN")
+for N in [50, 100, 200, 500, 1000, 2000]:
+    copt = np.linalg.solve(G[:N, :N], b[:N]); dopt = 1 - b[:N] @ copt
+    v = -mu[:N] * (1 - lk[:N] / math.log(N)); qv = Q(v, N)
+    best = (1e9, None)
+    for th in np.linspace(0.8, 3, 441):
+        w = -mu[:N] * (1 - lk[:N] / (th * math.log(N))); q = Q(w, N)
+        if q < best[0]: best = (q, th)
+    beste = (1e9, None)
+    for e in np.linspace(0.0, 3, 601):
+        w = -mu[:N] * ks[:N] ** (-e / math.log(N)); q = Q(w, N)
+        if q < beste[0]: beste = (q, e)
+    print("%5d | %.7f | %.7f | %.5f | %.7f th=%.3f | %.7f e=%.3f" % (N, dopt, qv, qv * math.log(N), best[0], best[1], beste[0], beste[1]))
+print("\nBest Q in low-dimensional explicit subspaces (x logN in brackets); C=%.5f" % C)
+print("   N |  opt        | S1={mu} | S2={mu,mu logk} | S3=+mu log^2k | S4=+mu log^3 k | S2+{1_{k=N}} | S2 x {1, 1_{2|k}, 1_{3|k}} ")
+for N in [100, 200, 500, 1000, 1999, 2000]:
+    copt = np.linalg.solve(G[:N, :N], b[:N]); dopt = 1 - b[:N] @ copt
+    m = mu[:N]; l = lk[:N] / math.log(N)
+    out = []
+    for cols in ([m], [m, m * l], [m, m * l, m * l**2], [m, m * l, m * l**2, m * l**3]):
+        out.append(Qsub(np.array(cols).T, N)[0])
+    eN = np.zeros(N); eN[-1] = 1
+    out.append(Qsub(np.array([m, m * l, eN]).T, N)[0])
+    i2 = (ks[:N] % 2 == 0) * 1.0; i3 = (ks[:N] % 3 == 0) * 1.0
+    q6, a6 = Qsub(np.array([m, m * l, m * i2, m * l * i2, m * i3, m * l * i3]).T, N); out.append(q6)
+    print("%5d | %.6f [%.4f] | " % (N, dopt, dopt * math.log(N)) + " | ".join("%.6f [%.4f]" % (q, q * math.log(N)) for q in out))
+    if N == 2000:
+        print("   S2 coefficients (alpha, beta) in c=-mu*(alpha - beta*logk/logN):", -Qsub(np.array([m, m * l]).T, N)[1] * np.array([1, -1]))
+        print("   S2x{1,2|k,3|k} coeffs:", a6)
+# innovations
+delta = np.load("/home/user/ysolucki/rh/data/r1_B/delta.npy")
+print("\nInnovations delta_N = d_{N-1}^2 - d_N^2,  N*log^2(N)*delta_N :")
+for N in list(range(2, 40)):
+    print("%3d mu=%2d  delta=%.3e  N log^2N delta=%.5f" % (N, mu[N - 1], delta[N - 1], N * math.log(N)**2 * delta[N - 1]))
+sf = mu != 0
+for lo, hi in [(100, 300), (300, 1000), (1000, 2000)]:
+    sel = (ks > lo) & (ks <= hi)
+    tot = delta[sel].sum(); 
+    print("N in (%d,%d]: total gain %.6f ; share from squarefree N: %.4f ; from primes: %.4f ; mu=+1: %.4f mu=-1: %.4f ; predicted C(1/log lo - 1/log hi)=%.6f" % (
+        lo, hi, tot, delta[sel & sf].sum() / tot, delta[sel & np.isin(ks, list(primerange(1, 2001)))].sum() / tot,
+        delta[sel & (mu == 1)].sum() / tot, delta[sel & (mu == -1)].sum() / tot, C * (1 / math.log(lo) - 1 / math.log(hi))))

@@ -1,0 +1,29 @@
+"""E1b: deletion family (Broucke-Debruyne-Revesz 2023, Sec. 5 template). Delete each rational prime p >= P0 independently
+with probability min(1, p^(a-1)); zeta_B = zeta/zeta_S gets a zero at the real point s = a (BDR, cond. on RH).
+N_B(x) = #{n <= x : no prime factor in S}. Measure the oscillation exponent of N_B(x) - (linear trend) in windows [x,2x].
+usage: python3 deletion.py.txt X a seed [P0]"""
+import sys, numpy as np, time
+t0 = time.time()
+X = int(float(sys.argv[1])); a = float(sys.argv[2]); seed = int(sys.argv[3]); P0 = int(sys.argv[4]) if len(sys.argv) > 4 else 50
+s = np.ones(X + 1, dtype=bool); s[:2] = False
+for i in range(2, int(X ** 0.5) + 1):
+    if s[i]: s[i * i::i] = False
+ps = np.nonzero(s)[0]; ps = ps[ps >= P0]
+rng = np.random.default_rng(seed)
+targets = (np.arange(1, int(X**a) + 1) * a * 1.0) ** (1.0 / a) if False else None
+import bisect
+cum = np.cumsum(ps.astype(float) ** (a - 1)); S = ps[np.unique(np.searchsorted(cum, np.arange(1, int(cum[-1]) + 1) - 0.5))]  # deterministic: delete the prime at which the expected count crosses each half-integer
+ok = np.ones(X + 1, dtype=bool); ok[0] = False
+for p in S.tolist(): ok[p::p] = False
+N = np.cumsum(ok)
+print(f"# X={X:g} a={a} seed={seed} P0={P0} |S|={len(S)} (x^a/(a log x) ~ {X**a/(a*np.log(X)):.0f})  N_B(X)={N[-1]}  {time.time()-t0:.1f}s")
+print("# window_lo  rms(local linear detrend)  max|detrended|")
+rows = []
+x = 1000
+while 2 * x <= X:
+    idx = np.arange(x, 2 * x, max(1, x // 200000)); v = N[idx].astype(float)
+    c = np.polyfit(idx.astype(float), v, 1); r = v - np.polyval(c, idx.astype(float))
+    rows.append((x, float(np.sqrt(np.mean(r * r))))); print(f"{x:10d} {rows[-1][1]:12.4f} {float(np.max(np.abs(r))):12.3f}")
+    x *= 2
+xs = np.array([r[0] for r in rows], float); rl = np.array([r[1] for r in rows]); h = len(xs) // 2
+print(f"# exponent fit: all windows {np.polyfit(np.log(xs), np.log(rl), 1)[0]:.3f} ; upper half {np.polyfit(np.log(xs[h:]), np.log(rl[h:]), 1)[0]:.3f} ; predictions: a/2={a/2:.3f}  BDR bound 2a/(a+2)={2*a/(a+2):.3f}")

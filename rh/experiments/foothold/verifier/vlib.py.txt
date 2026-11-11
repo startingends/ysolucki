@@ -1,0 +1,126 @@
+"""V-FH shared helpers: (1) the project's periodic-Fourier/Arb builder (r1_A/weil.py.txt) with one free atom;
+(2) my OWN polynomial-basis implementation of the exact form (mpmath, orthonormal Legendre, Gauss-Legendre in x),
+written from Lemma 5 after re-deriving it by hand; it shares no code with forcing.py.txt."""
+import sys, math, importlib.util, importlib.machinery
+import numpy as np
+import flint
+from flint import arb
+import mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+
+def tonp(M):
+    return np.array([[float(M[i, j].mid()) for j in range(M.ncols())] for i in range(M.nrows())])
+def fblocks(q, N):
+    return [tonp(weil.even_block(q, N)), tonp(weil.odd_block(q, N))]
+def f_arch(L, N):
+    """Gamma term + pole, no primes, periodic basis, blocks [even, odd] as float arrays (built in Arb at ctx.prec)."""
+    return fblocks(weil.build(L, N, kind='zeta', pole=True, primes=False, arch=True)[0], N)
+class _One:
+    def __init__(self, x, c): self.x = x; self.c = c
+    def items(self): return [(self.x, self.c)]
+def f_atom(L, N, y):
+    """blocks of the UNIT atom at log-position y (arb or float):  form = arch - m * unit ... the builder returns
+       -(shift by y + adjoint) so that  Q_{y,m} = f_arch + m * f_atom."""
+    y = arb(y); x = y.exp()
+    saved = weil.dh_logderiv_coeffs
+    weil.dh_logderiv_coeffs = lambda X: _One(x, x.sqrt())      # c / sqrt(x) = 1
+    q = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)[0]
+    weil.dh_logderiv_coeffs = saved
+    return fblocks(q, N)
+def lows(A, B=None, m=0.0):
+    out = []
+    for b in (0, 1):
+        M = A[b] if B is None else A[b] + m * B[b]
+        out.append(np.linalg.eigvalsh(M)[0])
+    return out
+
+# ---------------- my own polynomial-basis implementation (mpmath) ----------------
+class Poly:
+    def __init__(self, L, NB, dps=34, nx=90):
+        mp.mp.dps = dps
+        self.L = mp.mpf(L) if not isinstance(L, mp.mpf) else L
+        self.NB = NB
+        L = self.L
+        self.nu = NB + 4                       # Gauss-Legendre points for the u-integral (exact up to degree 2nu-1 >= 2NB-2)
+        self.xu, self.wu = self._gl(self.nu)
+        xs, ws = self._gl(nx)
+        self.xq = [L * (1 + t) for t in xs]    # nodes on [0, 2L]
+        self.wq = [L * w for w in ws]
+        self.norm = [mp.sqrt((2 * j + 1) / (2 * L)) for j in range(NB)]
+        h = lambda x: mp.exp(x / 2) / mp.sinh(x) - 1 / x
+        C0 = mp.log(4 * mp.pi * L) + mp.euler
+        A = mp.zeros(NB, NB)
+        for x, w in zip(self.xq, self.wq):
+            g = self.gamma(x)
+            hx = h(x)
+            for j in range(NB):
+                for k in range(j % 2, NB, 2):
+                    d = (1 if j == k else 0)
+                    A[j, k] += w * ((d - g[j, k]) / x - hx * g[j, k])
+        # E_j = int phi_j(t) e^{t/2} dt  by Gauss-Legendre (entire integrand; 2*nu points)
+        xe, we = self._gl(2 * self.nu)
+        E = [mp.mpf(0)] * NB
+        for t, w in zip(xe, we):
+            ph = self.phi(L * t); e = mp.exp(L * t / 2)
+            for j in range(NB): E[j] += L * w * ph[j] * e
+        for j in range(NB):
+            for k in range(j % 2, NB, 2):
+                A[j, k] += (-C0 if j == k else 0) + (2 if j % 2 == 0 else -2) * E[j] * E[k]
+        self.A = A; self.E = E
+    @staticmethod
+    def _gl(n):
+        # explicit Newton iteration for Gauss-Legendre nodes (own code, no library tables)
+        xs = []; ws = []
+        for i in range(1, n + 1):
+            x = mp.cos(mp.pi * (i - mp.mpf(1) / 4) / (n + mp.mpf(1) / 2))
+            for _ in range(100):
+                p0, p1 = mp.mpf(1), x
+                for k in range(2, n + 1):
+                    p0, p1 = p1, ((2 * k - 1) * x * p1 - (k - 1) * p0) / k
+                dp = n * (x * p1 - p0) / (x * x - 1)
+                dx = p1 / dp; x -= dx
+                if abs(dx) < mp.mpf(10) ** (-mp.mp.dps + 3): break
+            p0, p1 = mp.mpf(1), x
+            for k in range(2, n + 1):
+                p0, p1 = p1, ((2 * k - 1) * x * p1 - (k - 1) * p0) / k
+            dp = n * (x * p1 - p0) / (x * x - 1)
+            xs.append(x); ws.append(2 / ((1 - x * x) * dp * dp))
+        return xs, ws
+    def phi(self, t):
+        """orthonormal Legendre functions at t (0 outside [-L, L] is the caller's business)."""
+        s = t / self.L
+        p = [mp.mpf(1), s]
+        for n in range(1, self.NB - 1):
+            p.append(((2 * n + 1) * s * p[n] - n * p[n - 1]) / (n + 1))
+        return [self.norm[j] * p[j] for j in range(self.NB)]
+    def gamma(self, x):
+        """matrix gamma_jk(x) = int_{x-L}^{L} phi_j(u) phi_k(u - x) du, 0 <= x <= 2L (exact Gauss-Legendre)."""
+        L = self.L; NB = self.NB
+        a = x - L; b = L
+        g = mp.zeros(NB, NB)
+        for t, w in zip(self.xu, self.wu):
+            u = (a + b) / 2 + (b - a) / 2 * t
+            pj = self.phi(u); pk = self.phi(u - x); ww = (b - a) / 2 * w
+            for j in range(NB):
+                for k in range(j % 2, NB, 2):
+                    g[j, k] += ww * pj[j] * pk[k]
+        return g
+    def blocks(self, y=None, m=None):
+        """[even, odd] matrices of Q_{y,m} = A - 2 m gamma(y) on the orthonormal Legendre basis."""
+        M = self.A.copy()
+        if y is not None and m is not None and y < 2 * self.L:
+            M = M - 2 * mp.mpf(m) * self.gamma(mp.mpf(y))
+        NB = self.NB
+        ev = [j for j in range(0, NB, 2)]; od = [j for j in range(1, NB, 2)]
+        out = []
+        for idx in (ev, od):
+            B = mp.matrix(len(idx), len(idx))
+            for a_, j in enumerate(idx):
+                for b_, k in enumerate(idx):
+                    B[a_, b_] = (M[j, k] + M[k, j]) / 2
+            out.append(B)
+        return out
+    def lows(self, y=None, m=None):
+        return [min(mp.eigsy(B, eigvals_only=True)) for B in self.blocks(y, m)]

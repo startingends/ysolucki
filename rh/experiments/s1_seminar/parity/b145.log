@@ -1,0 +1,13 @@
+(i) even block of zeta, L = 1, N = 60: rung j, mu_j, c_j = Q_odd(x psi_j) from the zero side, mu_j/c_j = d^2 at which rung j turns (first order)
+   j=1: mu = 7.297e-30 ; c = 3.474e-5 (2500 zeros: 3.474e-5) ; d_turn = sqrt(mu/c) = 4.583e-13   (20s)
+   j=2: mu = 2.718e-23 ; c = 0.0052299 (2500 zeros: 0.0052299) ; d_turn = sqrt(mu/c) = 7.208e-11   (32s)
+   j=3: mu = 1.675e-17 ; c = 0.10994 (2500 zeros: 0.10994) ; d_turn = sqrt(mu/c) = 1.234e-8   (45s)
+   j=4: mu = 1.723e-12 ; c = 0.30708 (2500 zeros: 0.30708) ; d_turn = sqrt(mu/c) = 2.369e-6   (58s)
+   j=5: mu = 4.753e-8 ; c = 0.48635 (2500 zeros: 0.48635) ; d_turn = sqrt(mu/c) = 0.0003126   (71s)
+   j=6: mu = 0.0002321 ; c = 0.75362 (2500 zeros: 0.75361) ; d_turn = sqrt(mu/c) = 0.01755   (84s)
+   j=7: mu = 0.1621 ; c = 1.5221 (2500 zeros: 1.521) ; d_turn = sqrt(mu/c) = 0.3263   (96s)
+(ii) pole + Gamma (no atoms), energy of the single odd function sin(pi k x / L)/sqrt(L) (closed form, 40 digits):
+   L=0.40: k=1: 0.0033704699 ; k=2: 0.79950139 ; k=3: 1.2421399 ; k=4: 1.5490433 ; lowest eigenvalue of the 6x6 odd block: -0.054141443
+   L=0.45: k=1: -0.12114738 ; k=2: 0.68002858 ; k=3: 1.1236053 ; k=4: 1.4308374 ; lowest eigenvalue of the 6x6 odd block: -0.18063039
+   L=0.50: k=1: -0.23485416 ; k=2: 0.57257144 ; k=3: 1.017312 ; k=4: 1.324952 ; lowest eigenvalue of the 6x6 odd block: -0.29681831
+   L=0.54: k=1: -0.31977028 ; k=2: 0.49360948 ; k=3: 0.93946041 ; k=4: 1.2474898 ; lowest eigenvalue of the 6x6 odd block: -0.38413593

@@ -1,0 +1,22 @@
+# r_n(m): coefficients of theta^n, theta = 1 + 2 sum_{j>=1} q^(j^2); exact rational arithmetic (J.C.P. Miller recurrence)
+import sys
+from fractions import Fraction as F
+def coeffs(n, M):
+    sq = [j*j for j in range(1, int(M**0.5)+2) if j*j <= M]
+    g = [F(1)] + [F(0)]*M
+    for m in range(1, M+1):
+        s = F(0)
+        for j in sq:
+            if j > m: break
+            s += (n*j - (m-j)) * 2 * g[m-j]
+        g[m] = s / m
+    return g
+if __name__ == "__main__":
+    M = int(sys.argv[1])
+    for ns in sys.argv[2:]:
+        n = F(ns)
+        g = coeffs(n, M)
+        neg = [m for m in range(M+1) if g[m] < 0]
+        zero = [m for m in range(M+1) if g[m] == 0]
+        print("n =", ns, " M =", M, " negatives:", len(neg), " first:", neg[:12], " min value:", float(min(g)), " at m =", g.index(min(g)), " zeros:", zero[:10])
+        if n == F(5,2): print("   r_2.5(2), r(3), r(7) =", g[2], g[3], g[7])

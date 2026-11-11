@@ -1,0 +1,15 @@
+# check: local factor (1 - z)^(+t) (1 - 2z)^(-2t) (roots 1 with m=-1, 2 with m=+2): Hankel matrix of coefficients, i,j = 0..n
+from mpmath import mp, mpf, rf, factorial, matrix, eigsy
+mp.dps = 80
+def series(expo, a, K):   # coefficients of (1 - a z)^(-expo)
+    return [rf(mpf(expo), k) / factorial(k) * mpf(a)**k for k in range(K + 1)]
+def conv(A, B):
+    return [sum(A[i] * B[k - i] for i in range(k + 1)) for k in range(len(A))]
+for t in (0.1, 0.25, 0.5, 0.6, 1.0):
+    cf = conv(series(-t, 1, 14), series(2 * t, 2, 14))
+    for n in (3, 6):
+        M = matrix(n + 1, n + 1)
+        for i in range(n + 1):
+            for j in range(n + 1):
+                M[i, j] = cf[i + j]
+        print(f"t={t} n={n}: min eig {mp.nstr(eigsy(M, eigvals_only=True)[0], 6)}")

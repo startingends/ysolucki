@@ -1,0 +1,10 @@
+L=0.75 n=24: mu_0=4.392e-03 ; Q(x psi_0) = 2.1946e-03 = ladder part (eigenvalues < 0.1) 1.6134e-03 + bulk part 5.8119e-04 ; bulk L2 mass 5.557e-04
+L=0.75 n=48: mu_0=1.539e-03 ; Q(x psi_0) = 1.0369e-03 = ladder part (eigenvalues < 0.1) 4.2797e-04 + bulk part 6.0894e-04 ; bulk L2 mass 4.813e-04
+L=0.75 n=96: mu_0=4.391e-04 ; Q(x psi_0) = 5.7052e-04 = ladder part (eigenvalues < 0.1) 1.1488e-04 + bulk part 4.5565e-04 ; bulk L2 mass 3.009e-04
+L=1.00 n=24: mu_0=3.740e-03 ; Q(x psi_0) = 2.9185e-03 = ladder part (eigenvalues < 0.1) 2.4638e-03 + bulk part 4.5463e-04 ; bulk L2 mass 3.176e-04
+L=1.00 n=48: mu_0=1.155e-03 ; Q(x psi_0) = 1.2043e-03 = ladder part (eigenvalues < 0.1) 6.8582e-04 + bulk part 5.1848e-04 ; bulk L2 mass 2.848e-04
+L=1.00 n=96: mu_0=3.727e-04 ; Q(x psi_0) = 8.6534e-04 = ladder part (eigenvalues < 0.1) 2.1270e-04 + bulk part 6.5264e-04 ; bulk L2 mass 3.393e-04
+
+real	0m3.593s
+user	0m5.046s
+sys	0m0.048s

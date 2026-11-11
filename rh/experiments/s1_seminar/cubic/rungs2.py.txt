@@ -1,0 +1,15 @@
+"""S1-cubic: calibration at L = 0.75 where the true value is known (B90/B91/B99: Q_o(x v_e) = 7.31e-5 in zeta's normalisation):
+the part of Q(x psi_0) carried by eigenvalues >= 0.1 ('bulk part') on boxes, n = 24, 48, 96; then the same at L = 1."""
+import math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+for L in (0.75, 1.0):
+    for n in (24, 48, 96):
+        Nb, p, q = box.boxN(L, n); Q0 = np.outer(p, q) + np.outer(q, p) - Nb
+        w, V = np.linalg.eigh(Q0); xc = np.array([-L + (i + 0.5) * 2 * L / n for i in range(n)])
+        xv = xc * V[:, 0]; ov = (V.T @ xv) ** 2
+        bulk = sum(w[k] * ov[k] for k in range(n) if w[k] >= 0.1); low = sum(w[k] * ov[k] for k in range(n) if w[k] < 0.1)
+        print("L=%.2f n=%d: mu_0=%.3e ; Q(x psi_0) = %.4e = ladder part (eigenvalues < 0.1) %.4e + bulk part %.4e ; bulk L2 mass %.3e" % (
+            L, n, w[0], bulk + low, low, bulk, sum(ov[k] for k in range(n) if w[k] >= 0.1)), flush=True)

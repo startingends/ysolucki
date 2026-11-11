@@ -1,0 +1,65 @@
+# SP-reflection, session 1. Finite tests for "local roots of modulus 1" (answer to board B74).
+# Local data at a prime p: roots alpha_j with multiplicities m_j; s(k) = sum_j m_j alpha_j^k = c(p^k)/log p
+# (analytic normalisation: zeta has the single root 1).
+# Tests:  HANKEL   [s(i+j)]_{i,j=1..n}            >= 0  <=> roots real, m > 0   (mirror; Hamburger / Hermite-Jacobi)
+#         TOEPLITZ R = [s(|i-j|)]_{i,j=0..n}, s(0) = sum m_j (reflected extension), >= 0 for all n
+#                  <=> (for m > 0) all |alpha_j| <= 1   (Herglotz; sum of Poisson kernels)   [one-sided Ramanujan]
+#                  two-sided version [s(i-j)] with s(-k) = sum m_j alpha_j^-k is Hermitian only when the root set is
+#                  closed under alpha -> 1/conj(alpha); then >= 0 <=> all |alpha_j| = 1. For such sets it is printed too.
+#         BOUND    [s(i+j) - s(i+j+2)]_{i,j=1..n} >= 0  <=> (given Hankel >= 0) roots in [-1,1]
+#         PERIOD   s(k+2) - s(k), k = 1..n           = 0  <=> (given Hankel >= 0) roots in {+1,-1}
+import numpy as np, math
+np.set_printoptions(precision=6, suppress=True)
+
+def s(roots, k):
+    return sum(m * a**k for a, m in roots).real
+
+def mats(roots, n):
+    H = np.array([[s(roots, i + j) for j in range(1, n + 1)] for i in range(1, n + 1)])
+    T = np.array([[s(roots, abs(i - j)) for j in range(0, n + 1)] for i in range(0, n + 1)])
+    B = np.array([[s(roots, i + j) - s(roots, i + j + 2) for j in range(1, n + 1)] for i in range(1, n + 1)])
+    P = [s(roots, k + 2) - s(roots, k) for k in range(1, n + 1)]
+    return H, T, B, P
+
+def report(name, roots, n=3):
+    H, T, B, P = mats(roots, n)
+    eh, et, eb = np.linalg.eigvalsh(H), np.linalg.eigvalsh(T), np.linalg.eigvalsh(B)
+    T2 = T[:2, :2]
+    inv_closed = all(any(abs(1 / np.conj(a) - b) < 1e-12 and m == mb for b, mb in roots) for a, m in roots)
+    two = ''
+    if inv_closed:
+        TT = np.array([[sum(m * complex(a)**(i - j) for a, m in roots) for j in range(n + 1)] for i in range(n + 1)])
+        two = f" [two-sided min {np.linalg.eigvalsh((TT + TT.conj().T) / 2)[0]:+.6f}]"
+    print(f"{name:42s} Hankel min {eh[0]:+.6f} | refl.Toeplitz min {et[0]:+.6f} (2x2 det {np.linalg.det(T2):+.6f}){two}"
+          f" | bound min {eb[0]:+.6f} | s(3)-s(1) {P[0]:+.6f} s(4)-s(2) {P[1]:+.6f}")
+
+p = 2.0
+for d in (0.0, 0.01, 0.05, 0.1, 0.25):
+    report(f"F_d at p=2, d={d}: roots 2^d, 2^-d", [(p**d, 1), (p**-d, 1)])
+print("exact: 2x2 Toeplitz det of F_d = -4 sinh^2(d log p):",
+      [round(-4 * math.sinh(d * math.log(2))**2, 6) for d in (0.0, 0.01, 0.05, 0.1, 0.25)])
+print("exact: s(4)-s(2) of F_d = 2cosh(4 d log 2) - 2cosh(2 d log 2):",
+      [round(2 * math.cosh(4 * d * math.log(2)) - 2 * math.cosh(2 * d * math.log(2)), 6) for d in (0.0, 0.01, 0.05, 0.1, 0.25)])
+print()
+report("zeta at p: root 1", [(1.0, 1)])
+report("real character, chi(p) = -1: root -1", [(-1.0, 1)])
+report("zeta*L(chi), chi(p) = -1: roots 1, -1", [(1.0, 1), (-1.0, 1)])
+report("L(chi)L(chibar) mod 5 at p=2: roots i, -i", [(1j, 1), (-1j, 1)])
+th = 1.1
+report("GL2 Ramanujan: roots e^{+-i 1.1}", [(complex(math.cos(th), math.sin(th)), 1), (complex(math.cos(th), -math.sin(th)), 1)])
+report("zeta(s)zeta(s-1) at p=2: roots 1, 2", [(1.0, 1), (2.0, 1)])
+report("zeta(s+0.1) alone at p=2: root 2^-0.1", [(2**-0.1, 1)])
+report("dial n=4 at p=2: roots 1 (m=1), -2 (m=-1)", [(1.0, 1), (-2.0, -1)])
+print()
+# Socrates's G_d = zeta(s) L(s-d,chi4) L(s+d,chi4): at p=2 only the root 1; at p=3 (chi4 = -1): roots 1, -3^d, -3^-d
+for d in (0.0, 0.1):
+    report(f"G_d at p=2, d={d}: root 1", [(1.0, 1)])
+    report(f"G_d at p=3, d={d}: roots 1,-3^d,-3^-d", [(1.0, 1), (-3.0**d, 1), (-3.0**-d, 1)])
+    report(f"G_d at p=5, d={d}: roots 1, 5^d, 5^-d", [(1.0, 1), (5.0**d, 1), (5.0**-d, 1)])
+print()
+# Lattice Kallen-Lehmann: s(k) = r^|k| is BOTH Hankel-positive (k >= 1) and Toeplitz-positive on Z, for 0 < r <= 1
+for r in (2**-0.5, 0.9, 1.0, 1.1):
+    n = 5
+    H = np.array([[r**(i + j) for j in range(1, n + 1)] for i in range(1, n + 1)])
+    T = np.array([[r**abs(i - j) for j in range(n + 1)] for i in range(n + 1)])
+    print(f"r^|k|, r={r:.4f}: Hankel min {np.linalg.eigvalsh(H)[0]:+.2e}, Toeplitz (reflected extension) min {np.linalg.eigvalsh(T)[0]:+.6f}")

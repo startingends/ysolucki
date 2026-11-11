@@ -1,7 +1,7 @@
-# <PROJECT>: context for every session
+# ysolucki (Riemann Hypothesis research): context for every session
 
 **Start at `docs/HUB.md`** (one entry point: projects, live pages, open decisions, running jobs).
-Owner: **<OWNER>**. This file loads automatically. Replace every `<...>` before use.
+Owner: **startingends** (repo owner). This file loads automatically.
 
 ## Where things live (create these on day one)
 | file | what it is | who writes it |
@@ -9,8 +9,10 @@ Owner: **<OWNER>**. This file loads automatically. Replace every `<...>` before 
 | `docs/HUB.md` | index: projects, pages, decisions, running jobs | lead |
 | `docs/JOURNAL.md` | append-only record of every finished job: date, what was done, decisions, useful facts; newest at the bottom; no secrets | **lead only** |
 | `docs/KNOWLEDGE.md` | reference knowledge base, refreshed at checkpoints | lead |
-| `docs/IDEAS.md` | numbered idea backlog (see below) | lead (agents propose) |
+| `docs/IDEAS.md` | MAIN idea log: numbered, reviewed entries only (see below) | lead and the idea auditor |
+| `<job folder>/IDEAS_LOCAL.md` | an agent's OWN idea log, for its own use; unreviewed; other agents do not read it | the agent that owns the folder |
 | `docs/DECISIONS.md` | ONE queue of every open decision, each with its default | lead |
+| `rh/board/<seminar>.md` | shared board of a Socratic seminar (questions, answers, claims, results), written through `tools/board.py` | every participant |
 | `docs/AGENT_REGISTRY.tsv` | every spawned agent / workflow: id, role, folder, status | lead |
 | `docs/SUBAGENT_PREAMBLE.md` | rules pasted at the top of every agent brief | lead |
 | `<project>/PROJECT_BRIEF.md` | current truth for one project; agents never edit it (proposals go in `BRIEF_PROPOSALS.md`) | owner approves |
@@ -28,7 +30,7 @@ Owner: **<OWNER>**. This file loads automatically. Replace every `<...>` before 
 - Say plainly what is unverified, what was chosen after looking, and what was skipped.
 
 ## Agents
-- **Every agent brief starts with `docs/SUBAGENT_PREAMBLE.md`**: read the project's PROJECT_BRIEF.md first; keep PROGRESS.md; write files as you go; check disk before big writes; never write the journal; no commits unless told; name stray scratch code `.py.txt` (not `.py`) outside `tools/` and `tests/`.
+- **Every agent brief starts with `docs/SUBAGENT_PREAMBLE.md`**: read the project's PROJECT_BRIEF.md first; keep PROGRESS.md; keep its own idea log `IDEAS_LOCAL.md` in its job folder (see "Ideas log"); write files as you go; check disk before big writes; never write the journal or the main idea log; no commits unless told; name stray scratch code `.py.txt` (not `.py`) outside `tools/` and `tests/`.
 - Brief agents like peers: goal, what is already ruled out, files to read, narrow scope, the exact output wanted. If you can't write a clear brief, you don't understand the task yet.
 - **Model by judgement:** Haiku for lookups and file chores; Sonnet for mechanical work from a tight brief; Opus for judgement, design and independent review; the strongest model for adversarial audits and judge seats. Quality over speed, no over-spending. If a top-model seat fails on usage limits, rerun it on the next model down, labelled.
 - Track every agent in `docs/AGENT_REGISTRY.tsv` (running → done + one-line result).
@@ -36,10 +38,39 @@ Owner: **<OWNER>**. This file loads automatically. Replace every `<...>` before 
 - Only the lead writes `docs/JOURNAL.md`, one entry per finished job.
 
 ## Workflows (multi-agent, standing opt-in)
-- Use workflows freely for studies, builds, audits. Default shape is a **seminar**: parallel proposers → independent critics who try to refute → proposers answer the critics → a judge who settles disputes with evidence.
+- Use workflows freely for studies, builds, audits. **Two separate tracks; never mix them in one seat.**
+  - **Verification track (proofs and numbers only).** The **seminar** shape: independent refuters who try to break the claim (default to "wounded or refuted" when unsure) → the author answers → a judge who settles disputes with evidence. Use it for anything that asserts a proof, a computed number, or a reproduction. Scores and kill decisions belong here and only here.
+  - **Creation track (new ideas).** Seats get **no lane** (no list of known approaches, no required computations), a **long run** (hours, not 30 to 40 minutes; staying with something strange is the job, finishing something safe is not), and **no refuter attached**: a half-formed idea always looks refutable. No 0-10 "chance it works" score. At the end a **screen** asks exactly two questions of each idea: *is it new* (settled by search, with sources) and *is it precise enough to compute* (is there an object defined well enough that a number can be calculated from it; if not, what is missing). An idea that passes the screen gets computed; only once it has numbers or a proof does it enter the verification track.
+- **Timeboxes are long.** Creation seats: plan for at least two hours of work each, more when a seat is onto something; never under an hour. Verification seats (refuters, judges, auditors): 60 to 90 minutes, enough to recompute independently rather than skim. Never brief a seat with a 30 to 40 minute box: it rewards finishing something safe over staying with something strange.
+- **Socratic seminar: agents talk to each other, not only through a judge.** (owner, 2026-11-10) A relay (worker → checker → judge) has one synthesis point and no exchange. Real exchange runs on a **shared board** (`python3 tools/board.py`, one board per seminar under `rh/board/`) that every participant posts to and reads **while it works**:
+  - **The main move is the question.** Ask for a definition, a reason, an example, a consequence. A participant must answer questions addressed to it (or say "I do not know, and this is what I would need"). A claim may be objected to only after it has been questioned and answered: ask first (the tool enforces it).
+  - **Reply stage on the verification track.** Seats answer their checkers on the board, checkers answer back, and the judge comes only after the exchange has settled or stalled. A checker's objection is a specific gap, counterexample or failed recomputation.
+  - **A moderator ("Socrates")** whose only job is to ask: what exactly is the object, what would change your mind, what does seat X's result say about seat Y's question. The moderator never rules on who is right and never scores.
+  - **Creation seats and anchoring.** A creation seat starts with a **quiet period** (it fills its own pages first and does not read the board); after that it may use the board, where the only moves towards a creation seat are questions, answers, offers to compute or look something up, and results. Nobody posts whether an idea is likely to work. A creation seat may leave the board at any time.
+  - Each participant keeps its own notes file as its memory between turns; the board is the shared memory. The lead closes the board with a summary and copies what matters into the main idea log and the journal.
 - Agent count follows the task. Pipeline stages (no barriers) unless a stage truly needs all prior results.
-- **If a workflow can't be used for any reason, ask the owner.** Never work around a permission or classifier refusal.
+- **If a workflow can't be used for any reason, ask the owner.** A permission or classifier refusal is never worked around silently. It may be worked around **only after asking the owner and getting an explicit yes for that specific action** (owner, 2026-11-11): say what was refused, what you want to do instead (including any change to permission settings), and wait for the answer. Record the question and the answer in `docs/DECISIONS.md`.
 - Long jobs (> ~20 min) whose inputs are in git run as separate cloud sessions; jobs that need this disk run here and are resumed with `resumeFromRunId` after a container restart (commit WIP first).
+
+## Standing structures (owner, 2026-11-10)
+These exist so that work accumulates instead of evaporating. Each has one writer.
+| file | what it is | writer |
+|---|---|---|
+| `rh/THEORY.md` | **the theory document**: lemmas with dependencies, each `open` / `proved` / `checked` / `formal` / `known` / `refuted` (`tools/records.py theory`). A lemma is established only when checked, formal or known; nothing is `checked` on top of an unchecked dependency | the theory keeper (seat K-theory) |
+| `rh/ATLAS.md` | **the failure atlas**, separate from the idea log: for each dead approach the exact step that breaks (as mathematics), what would have to be true for it not to break, and what the approach does supply. A standing job pairs failures: "does what kills A supply what B was missing?" Every pair examined is recorded (`tools/records.py atlas`) | the atlas keeper (seat K-atlas) |
+| `rh/FOOTHOLDS.md` | **the foothold hunt**: any nontrivial case that is actually provable, however small, with a mechanism that could spread it | the foothold seat (FH) |
+| `rh/BIGGER.md` | **the bigger statement**: what RH is a shadow of, and whether the larger statement has a provable base case | the bigger-statement seat (BG) |
+| `rh/specialists/<seat>/` | **specialist seats that persist**: each owns one toolkit deeply (CHARTER, LIBRARY, MEMORY, own idea log) and keeps its memory across sessions; roster in `rh/specialists/ROSTER.md`. Collisions need two deep holders: put two specialists on one question, on a seminar board | each specialist |
+| `rh/library/` | **whole papers read in full**: digests for knowledge only, never a direction (see "Reading") | reader seats |
+| `rh/formal/` | **formal checking**: any lemma a live route depends on must be machine-checked in a proof assistant (status `formal`) or be `known` with a citation, before that route is reported above L2 | the formal seat |
+| `rh/library/` | **whole papers read in full**, one note per paper plus `FRONTIER.md`, so each run starts at the frontier instead of rediscovering it. **For knowledge and understanding only**: reading a paper is never a sign that its direction is the way to go, and nothing in the library is a lane or a recommendation (owner, 2026-11-11) | reader seats; the lead keeps `FRONTIER.md` |
+- Other seats do not write these files; they write proofs and notes in their own folders and the keeper picks them up.
+- **The failure atlas and the Socratic seminar are kept going continuously** (owner, 2026-11-11): both sharp turns so far came from one agent questioning another. After every restart, resume them first.
+- A session of a persistent seat starts by reading its own memory file and ends by rewriting it.
+
+## Reading (owner, 2026-11-11)
+- **Whole papers are read first, in full,** so each run starts at the frontier instead of rediscovering it. Reader seats keep digests in `rh/library/` (index: `rh/library/INDEX.md`); every brief points its seat to the relevant digests as background.
+- **Reading is for knowledge and understanding only.** It is never the way to go and never evidence that a topic is important. A digest states what a paper proves and where it stops; it makes no recommendation. A seat that has read a paper is not thereby assigned to it.
 
 ## Before any new piece of work
 1. **Backlog recheck** (a Haiku agent greps IDEAS / KNOWLEDGE / JOURNAL / reports): "done before? yes / partly / no, idea N, date, result". The owner sees the answer, not the process. If it was done, answer from the record and ask what is new.
@@ -59,8 +90,13 @@ Owner: **<OWNER>**. This file loads automatically. Replace every `<...>` before 
 - Routines pin the code sha they run; a changed sha means "verify only, do not run" until the lead re-pins.
 
 ## Ideas log
-- Every interesting idea or test goes into `docs/IDEAS.md` **the moment it comes up**, with the next number, its source, any raw evidence, and the first test. Agents' idea sections are copied in by the lead. The owner refers to ideas by number ("look deeper into #37").
-- Unconfirmed leads go to IDEAS, not the journal. Optionally render it to a page and republish when the file changes.
+Two levels, one tool (`python3 tools/ideas.py`, `--help` for the commands).
+- **Local logs (every agent has its own).** An agent creates `IDEAS_LOCAL.md` in its job folder (`ideas.py init-local <job folder> <agent id>`) and writes every idea into it **the moment it comes up** (`ideas.py --file <job folder>/IDEAS_LOCAL.md add --title "..."`; only the title is required, so a half-thought costs one line). It is the agent's own working log: it adds, annotates, kills and revives entries freely.
+- **Local logs must not confuse anyone else.** The file opens with a banner saying whose it is and that it is unreviewed. Its numbers are local and are cited as `<agent id>/#N`, never as a bare `#N` (a bare number always means the main log). Agents do not read, cite or build on another agent's local log; they read the main log. Only the lead and the auditor read local logs.
+- **Audit, then promote.** When an agent finishes, an **idea auditor** (a fresh agent that did not write the log, or the lead) goes through its local log and its PROGRESS.md and keeps the most important takeaways: for each entry, either `ideas.py promote --from <local log> N --auditor <id>` (copies it into `docs/IDEAS.md` under the next main number, after the auditor has filled in every required field and checked it against the project's rules), or `ideas.py --file <local log> skip N "reason"`. Duplicates are merged into one main entry; an idea that only restates an existing main entry becomes a note on that entry. Nothing is deleted from a local log.
+- **The main log** (`docs/IDEAS.md`) holds only audited entries, written by the lead and the auditor. The owner refers to ideas by main number ("look deeper into #37"). The lead's own ideas go straight into the main log.
+- `python3 tools/hubcheck.py` lists every local idea still awaiting audit, so nothing sits uncopied unseen. No round is closed while that count is above zero.
+- Unconfirmed leads go to an idea log, not the journal. Optionally render the main log to a page and republish when the file changes.
 
 ## Decisions
 - `docs/DECISIONS.md` holds EVERY open decision in one list, each with the default in use and what changes if the owner says otherwise. New questions go there, not scattered across files.

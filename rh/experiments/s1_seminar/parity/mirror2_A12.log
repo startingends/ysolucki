@@ -1,0 +1,24 @@
+checks of the coefficients (A = 12, X = 144):
+  zeta: max |c_n - Lambda(n)| = 0.0
+  L(chi_4): max |c_n - chi_4(n) Lambda(n)| = 0.0
+  dial n=4: binomial-series r_4(m) == Jacobi 8*sum_{d|m, 4 not| d} d for all m <= X: True
+  dial n=4: max |c_m - [(1+m)Lambda(m) - [m=4^k] m log 4]| = 9.96e-60
+  dial n=1: max |c_m - 2 Lambda(sqrt m)[m square]| = 0.0
+  dial n=2: max |c_m - (1+chi_4(m))Lambda(m)| = 0.0
+  dial n=7/5: r(1..8)/(2n) exact = ['1', '2/5', '-4/25', '141/125', '2084/3125', '-5004/15625', '165184/546875', '11066/390625']
+  impostor: -f'/f(12) from Hurwitz zeta = 0.000047401086789279032645 ; sum_{n<=X} c_n n^-s = 0.000047401086789279032645 ; diff 2.06e-26 (tail ~ 5.79e-26)
+  impostor: -f'/f(20) from Hurwitz zeta = 1.876958448495901509e-7 ; sum_{n<=X} c_n n^-s = 1.876958448495901509e-7 ; diff 1.6e-43 (tail ~ 2.96e-43)
+
+function             min eig [c(ab)]  rank  #neg  #pos   min eig [c(ab)/sqrt(ab)]   c_2..c_9
+zeta                            0.0     5     0     5   -2.0663313e-63   0.6931 1.099 0.6931 1.609 0.0 1.946 0.6931 1.099
+impostor (DH)            -12.810168     9     5     4        -2.546587   0.1969 -0.3121 -1.442 0.0 1.936 0.5528 0.01589 -2.286
+L(chi_4)                        0.0     4     0     4   -9.7234614e-63   0.0 -1.099 0.0 1.609 0.0 -1.946 0.0 1.099
+theta dial n=1.4         -14.147134    11     3     8       -1.8568553   0.2773 -0.1758 1.453 1.073 -0.4591 0.5878 -0.835 2.273
+theta dial n=4           -57.936166     7     1     6       -9.6572499   2.079 4.394 -2.079 9.657 0.0 15.57 6.238 10.99
+theta dial n=1                  0.0     7     0     7              0.0   0.0 0.0 1.386 0.0 0.0 0.0 0.0 2.197
+theta dial n=2                  0.0     6     0     6   -9.7234614e-63   0.6931 0.0 0.6931 3.219 0.0 0.0 0.6931 2.197
+
+  impostor (DH) negative eigenvalues: ['-12.810168', '-2.938222', '-1.6876659', '-0.57065674', '-0.36050552']
+  theta dial n=1.4 negative eigenvalues: ['-14.147134', '-6.2050336', '-3.1538038']
+  theta dial n=4 negative eigenvalues: ['-57.936166']
+total 0.2s

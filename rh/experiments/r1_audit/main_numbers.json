@@ -1,0 +1,11 @@
+{
+ "dial": 12,
+ "rigid": 13,
+ "fee": 14,
+ "price": 15,
+ "vis": 16,
+ "surgery": 17,
+ "horizon": 18,
+ "pencil": 19,
+ "gap": 20
+}

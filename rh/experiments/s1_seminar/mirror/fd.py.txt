@@ -1,0 +1,80 @@
+"""B70: Weil form of F_d = zeta(s-d) zeta(s+d) on L^2[-L, L]; kernel = 2 cosh(d u) x zeta's kernel.
+build_gen = r1_A/weil.py.txt build() with the Gamma shift alpha and the pole exponent beta as parameters:
+  one factor zeta(s -+ d):  alpha = 1/2 -+ d (Gamma((s -+ d)/2) at s = 1/2 + i r), c0 = -log pi, pole kernel 2 cosh((1/2 +- d) u),
+  atoms Lambda(n) n^(-1/2) n^(+-d).   Check: d = 0 must give exactly 2 x (zeta's form).
+usage: python3 fd.py.txt L N"""
+import sys, math, time, importlib.util, importlib.machinery
+import flint
+from flint import arb, acb, arb_mat
+import mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/s1_seminar/mirror/lib.py.txt"
+spec = importlib.util.spec_from_file_location("lib", P, loader=importlib.machinery.SourceFileLoader("lib", P))
+lib = importlib.util.module_from_spec(spec); spec.loader.exec_module(lib)
+weil = lib.weil
+lib.setprec(120)
+def build_gen(L, N, alpha, beta, terms):
+    """q (2N+1 x 2N+1 arb): arch with Gamma shift alpha (c0 = -log pi) + pole kernel 2cosh(beta u) - atoms [(weight, u)]"""
+    L = arb(L); pi = arb.pi(); prec = flint.ctx.prec
+    c0 = -pi.log()
+    M = int(prec * math.log(2) / (4 * float(L) * max(0.05, float(alpha.mid())) * 2)) + 10
+    M = max(M, int(prec * math.log(2) / (4 * float(L))) + 10)
+    am = [2 * m + alpha for m in range(M)]
+    em = [(-2 * a * L).exp() for a in am]
+    w = [pi * k / L for k in range(N + 1)]
+    T = []; d = []
+    for k in range(N + 1):
+        wk = w[k]; z = acb(alpha / 2, wk / 2)
+        t = z.digamma().imag / 2
+        dd = c0 + z.digamma().real + z.polygamma(1).real / (4 * L)
+        for a, e in zip(am, em):
+            den = a * a + wk * wk
+            t -= e * wk / den
+            dd -= e * (a * a - wk * wk) / (den * den) / L
+        for cc, u in terms:
+            t += cc * (wk * u).sin()
+            dd -= cc * 2 * (wk * u).cos() * (1 - u / (2 * L))
+        T.append(t); d.append(dd)
+    Tk = lambda k: T[k] if k >= 0 else -T[-k]
+    n = 2 * N + 1
+    q = [[None] * n for _ in range(n)]
+    sh = (beta * L).sinh(); pc = 4 * sh * sh / L
+    inv = [1 / acb(beta, (w[abs(k)] if k >= 0 else -w[-k])) for k in range(-N, N + 1)]
+    for j in range(-N, N + 1):
+        for k in range(j, N + 1):
+            if j == k: v = d[abs(j)]
+            else:
+                sgn = -1 if (j - k) % 2 else 1
+                v = -sgn * (Tk(k) - Tk(j)) / (pi * (j - k))
+            sgn2 = -1 if (j + k) % 2 else 1
+            v = v + pc * sgn2 * (inv[j + N] * inv[k + N]).real
+            q[j + N][k + N] = v; q[k + N][j + N] = v
+    return q
+def Fd_blocks(L, N, dstr):
+    d = arb(dstr); half = arb(1) / 2
+    X = int(math.floor(math.exp(2 * L) + 1e-9))
+    out = None
+    for sg in (1, -1):
+        terms = [(arb(p).log() * (arb(n).log() * (sg * d - half)).exp(), arb(n).log()) for n, (_, p) in sorted(weil.mangoldt_upto(X).items())]
+        q = build_gen(L, N, half - sg * d, half + sg * d, terms)          # factor zeta(s - sg d)
+        b = lib.blocks(q, N)
+        out = b if out is None else [out[i] + b[i] for i in (0, 1)]
+    return out
+if __name__ == "__main__":
+    L = float(sys.argv[1]); N = int(sys.argv[2]); t0 = time.time()
+    ns = lambda x, k=6: mp.nstr(x, k)
+    Z = lib.add(lib.arch(L, N), lib.atoms(L, N, lib.lam(math.exp(2 * L))))
+    B0 = Fd_blocks(L, N, "0")
+    print("check d = 0: max |F_0 - 2 zeta| even %s odd %s" % (ns(mp.norm(B0[0] - 2 * Z[0], mp.inf), 3), ns(mp.norm(B0[1] - 2 * Z[1], mp.inf), 3)))
+    l0 = lib.mineig(B0)
+    print("F_d on L = %.2f, N = %d, 120 digits. lambda(0): even %s odd %s" % (L, N, ns(l0[0]), ns(l0[1])))
+    print("   d         lambda_even     lambda_odd     (l(0)-l(d))/d^2 even      odd")
+    for ds in ("1e-9", "1e-8", "3e-8", "1e-7", "3e-7", "1e-6", "3e-6", "1e-5", "1e-4", "1e-3", "1e-2", "0.05", "0.1", "0.25"):
+        e = lib.mineig(Fd_blocks(L, N, ds)); d = mp.mpf(ds)
+        print("  %-7s  %14s  %14s    %12s  %12s" % (ds, ns(e[0]), ns(e[1]), ns((l0[0] - e[0]) / d ** 2), ns((l0[1] - e[1]) / d ** 2)), flush=True)
+    # first-order perturbation check: lambda(d) ~ lambda(0) + d^2 <v, D v>, D = (F_d - F_0)/d^2 at small d
+    Bs = Fd_blocks(L, N, "1e-6"); d = mp.mpf("1e-6")
+    for b, nm in ((0, "even"), (1, "odd")):
+        ev, V = mp.eigsy(B0[b]); i = min(range(len(ev)), key=lambda j: ev[j]); v = V[:, i]
+        D = (Bs[b] - B0[b]) / d ** 2
+        print("  %s: <v, (F_d - F_0)/d^2 v> = %s  (predicts d* = %s)" % (nm, ns((v.T * D * v)[0]), ns(mp.sqrt(ev[i] / -(v.T * D * v)[0]))))
+    print("time %.1f s" % (time.time() - t0))

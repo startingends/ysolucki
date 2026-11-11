@@ -1,0 +1,321 @@
+"""Stage 2: the 56 merges. One dated note per group of related local entries on the main idea they test; each local
+entry is then closed with "merged into main #K". Facts and numbers are taken from rh/experiments/r2_judge/JUDGEMENT.md
+(authoritative), the seats' and checkers' PROGRESS.md and PROOF files, rh/THEORY.md and docs/JOURNAL.md J4."""
+import json, os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage2")
+M = json.load(open(os.path.join(HERE, "main_numbers.json")))
+assert M == {"alpha": 22, "delta": 23, "beta": 24, "dstar": 25, "eps": 26}, M
+A = " (audit R2-AUD)"
+
+# ------------------------------------------------------------------------------------------------------- #8
+merge_note(8, """MERGED from R2-parity/#5 and R2-parity-ref/#4""" + A + """: the first-failure template is proved, and
+ its existence half is IN PRINT. PROVED (rh/experiments/r2_parity/PROOF_first_failure.md; judge: proved given the
+ cited theorems of Suzuki; rh/THEORY.md T35 to T39): lambda(L), the lowest eigenvalue of the window form, is
+ non-increasing in L, with no domain assumption (Suzuki 2606.09096 Cor. 1.2 gives it as the infimum of the Rayleigh
+ quotient over C_c^inf(-a, a), and those spaces are nested), so its zero set is a closed interval; RH is false iff
+ there is a first window L_0 with a null vector; a null vector on ANY window where the form is >= 0 already
+ contradicts RH. Prop. 5: a null vector at L_0 can be taken real and even or odd; the convex hull of its support is
+ exactly [-L_0, L_0]; its transform has exact type L_0, does not vanish on all on-line zeros, and satisfies an energy
+ identity with a phase condition at a single quartet; the null space is finite dimensional. IN PRINT: Suzuki p. 2
+ and the paragraph after his Thm 1.3 ('if RH is false then Q_W^a must be degenerate for some a, by continuity of
+ lambda_a'), and 'RH iff non-degenerate for every a' is attributed there to Yoshida 1992 Thm 2 (Yoshida's paper was
+ not obtained; rh/library/yoshida-1992.md is secondary). So this entry's novelty field is corrected: 'no
+ first-failure / null-vector argument found' and 'no monotonicity found' are both wrong; ours are only the interval
+ structure (trivial) and Prop. 5. NOT proved, named by the seat as exact statements: end-point regularity of the
+ null vector (wall WP2, T40: 'psi is continuous on [-L_0, L_0] and O(1/|log(L_0 - |x|)|) at the ends') and
+ simplicity and parity of the first null vector (T41). Judge: 'lambda(L) > 0 strictly under RH' also needs
+ attainment of the infimum. Nothing in the template uses the Euler product: the same statements hold for the
+ impostor, where the null vector exists (L_0 in (1.70, 1.72]). An equivalent form of 'RH is false': no ladder
+ level.""", [("parity", 5), ("parity-ref", 4)])
+
+# ------------------------------------------------------------------------------------------------------- #9
+merge_note(9, """MERGED from R2-parity/#2, #3, #4, #6, R2-parity-ref/#1, #2 and R2-judge/#1, #2""" + A + """: this
+ idea's numbers were recomputed by two further implementations (seat R2-parity's own derivation on a half-integer
+ lattice; its checker's third code) and by the judge. Details behind the corrections in the note above, and what is
+ new. (1) OUTER BOUNDS (proved, trivial; seat's wall WP4): 'infeasible in a subspace' is a true statement about the
+ window, 'feasible in a subspace' is not; every interval shrinks as the basis grows (about 17 percent from the
+ integer lattice with N = 40 to the half lattice with N = 60). A certified 'feasible on the full window' needs a lower
+ bound for the form on all of L^2[-L, L], which nobody has. (2) EXACT END POINTS without bisection (checker): Q - tB
+ >= 0 iff t lies between the reciprocals of the extreme generalised eigenvalues of B relative to Q, and the extreme
+ eigenvector is a one-vector certificate of infeasibility just outside. Weight at 6, L = 1: [-1.2504e-13,
+ +1.8239e-14] in the lead's basis (90 digits), [-1.051e-13, 1.520e-14] in the half lattice; the upper end is set by
+ the EVEN block (alone it allows [-8.81e-12, 1.824e-14]) and the lower end by the ODD block ([-1.250e-13,
+ 5.94e-11]). Control: at the Beurling base point (2 -> 2.1) no weight at 6 gives a non-negative form (best lowest
+ eigenvalue -0.434). The sieve digits for n = 2 to 8 reproduce within 0.1 digit in both lattices. (3) POSITION of one
+ atom at L = 0.5: feasible positions form an interval inside (1.9996, 2.0080); the seat's right end 2.0085 was not
+ reproduced (infeasible in every basis); 2 sits within 4e-4 of the LEFT end and the most room is near 2.0075
+ (+2.58e-4, weight 0.5096, about sixteen times the room at 2). Checker: at the best weight the even and odd lowest
+ eigenvalues are equal at every position tried (the optimum is an even/odd crossing), and near x = 2.0076 there is
+ a kink beyond which the value falls 15 times faster; which third constraint becomes active there is not
+ identified. OPEN QUESTION (seat): is the true prime always at an edge of its feasible position interval? (4) JOINT
+ feasible set at L = 1 in the six weights at 2..7 (26 directions, two lattices; 8 patterns reproduced by the
+ checker; this answers the caveat in the first log line): it is not a box. Along equal-sign directions it is, to 3
+ percent, the simplex spanned by the coordinate extents (scaled extent 0.1715 with all six of one sign, against
+ 1/6); in mixed-sign directions it bulges to at most 1.60 times the box corner; no long thin direction was found,
+ so the diameter is set by the weight at 7, about 2e-6. The seat's blind prediction of a direction ten times longer
+ than the box: MISS. HEURISTIC (seat, unchecked): one first-order constraint, sum delta_n b_n <= mu_1 with b_n built
+ from the autocorrelation of the lowest eigenvector, is active on each side. (5) BACKGROUND without primes: the
+ sign change is in (0.370, 0.375) and in the ODD block (odd lowest eigenvalue +0.0075 at 0.370 and -0.0066 at 0.375
+ with N = 60; +0.0055 and -0.0087 with N = 200); the even block stays positive (0.00106; 0.00063 at L = 0.40). So
+ the first prime is forced by the odd-block inequality N_odd <= -2<f,sinh>^2; the earlier value 0.362 was an
+ interpolation between numbers belonging to different parity blocks. Sources: rh/experiments/r2_parity/PROGRESS.md,
+ its refuter/PROGRESS.md, rh/experiments/r2_judge/JUDGEMENT.md 2.10, 2.11, 3.1, 3.2.""",
+ [("parity", 2), ("parity", 3), ("parity", 4), ("parity", 6), ("parity-ref", 1), ("parity-ref", 2),
+  ("judge", 1), ("judge", 2)])
+
+merge_note(9, """MERGED from R2-parity/#8 and R2-parity-ref/#3""" + A + """: Theorem U, the rigorous form of notebook
+ N14 step 4. PROVED, conditional on RH (rh/experiments/r2_parity/PROOF_uniqueness.md; judge: proved; rh/THEORY.md
+ T43): assume RH; if D = sum d_j (delta at u_j + delta at -u_j), with distinct u_j > 0 and sum |d_j| finite, and the
+ Weil distribution plus D is still non-negative on ALL of R, then D = 0. Proof in one line: localise at a height r_0
+ with a Fejer-type multiplier; the zero side contributes O(T^-6) while the perturbation contributes
+ T^-1 E(r_0) ||phi||^2 with E(r) = (1/pi) sum d_j cos(r u_j), and the means of E(1 +- cos(r u_k)) force
+ +-d_k/(2 pi) >= 0. It uses nothing arithmetic (no Euler product, no integrality of positions, no sign of Lambda).
+ SCOPE: it needs RH, the whole line, atoms, no atom at 0 and summability. On any single window it is FALSE, by a
+ one-line argument the checker supplied (under RH, |D(f * f~)| <= 2 sum|d_j| ||f||^2 and lambda(L) > 0 is attained,
+ so the window form stays >= 0 whenever 2 sum|d_j| <= lambda(L); T44); the seat had supported this only by a
+ discretised example, which by the outer-bound remark proves nothing. Wall WP3 (seat): Theorem U gives no rate; how
+ fast the window-L feasible set shrinks, which is this idea's content, is exactly what it cannot give. Novelty: no
+ search by the seat, one query by the checker (nothing found), presumed folklore. It has the form 'RH implies', so
+ it earns no ladder level; it makes this entry's wall field precise: uniqueness of the feasible point is the easy
+ half, existence is RH.""", [("parity", 8), ("parity-ref", 3)])
+
+# ------------------------------------------------------------------------------------------------------- #10
+merge_note(10, """MERGED from R2-cubic/#2, #3, #4, #6, #8 and R2-cubic-ref/#1, #2, #3""" + A + """: the round-2
+ result recorded above as UNVERIFIED has now been judged (rh/experiments/r2_judge/JUDGEMENT.md 1.1, 2.8, 2.9, 3.3;
+ rh/THEORY.md T51 to T54). (1) Lemma B (local-to-global with negative diagonal: slices with at most one positive
+ eigenvalue and H = T.a with non-negative off-diagonal imply H has exactly one; no sign condition on T, the sign is
+ used only in the Perron step): proved, and IN PRINT as Braenden-Leake arXiv 2304.13203v2 Lemma 2.8 at degree 3
+ (read by checker and judge), credited there 'in essence' to Cordero-Erausquin, Klartag, Merigot, Santambrogio 2019,
+ a Bochner-method proof of the Alexandrov-Fenchel inequality. Given T.a = H the slice condition is a linear matrix
+ inequality, so the certificates form a convex set. (2) Lemma C (cone certificate; vacuity): proved; not found in
+ anything seat, checker or judge read ('still only ours', journal J4). If H has one positive eigenvalue and
+ l = Ha >= 0, s = a^T H a, then T_ijk = [H_ij l_k + H_ik l_j + H_jk l_i - (2/s) l_i l_j l_k]/s is a certificate. So
+ 'a certificate exists' <=> 'H has one positive direction' <=> window positivity. The hypothesis l >= 0 is needed
+ (judge J8: with some l_k < 0, 300 of 300 random cases have a slice with two positive eigenvalues; with l >= 0, none).
+ (3) Lemmas D and E (rigidity): proved, elementary; D3 (Hv = 0 forces T(v,.,.) = 0) is Braenden-Huh Lemma 2.15 at
+ degree 3. Consequence: at a critical window every coupled pair of scales needs a third scale. The seat's sentence
+ 'every slice must vanish on the near-null ladder to accuracy 6e-30' is an extrapolation (judge: HEURISTIC; on the
+ box spaces used the smallest eigenvalue is 1e-2 to 1e-3, and D4 bounds a quadratic value, not the vector T_k v).
+ (4) COMPUTED (seat; reproduced by its checker with two solvers; not by the judge): a certificate with T_ijk >= 0 on
+ all distinct triples exists for zeta (margins 0.65 to 0.79) AND for the Beurling control 2 -> 2.1 on windows where
+ its box form is still positive (1.30, 0.78): no discrimination; 'all entries except T_iii >= 0' is impossible for
+ every system tried. Locality: forbidding only the most spread-out triples (first box, any box, last box) makes the
+ problem infeasible in every case run, so certificates are maximally non-local in scale; but the infeasibility
+ slack shrinks with refinement (5.80, 3.19, 2.30, 1.43, 0.82 for n = 2, 3, 4, 6, 8 at L = 1; 0.069 at L = 0.5 with
+ n = 8; two solvers only for n <= 4), so whether it persists for fine boxes is not settled; proved only for radius
+ 0 at a critical window. (5) Tool (checker): every slice defect P_k annihilates a, so 'a certificate exists' must be
+ tested by maximising t with P_k >= t(I - aa^T/|a|^2); a smallest eigenvalue of 1e-12 cannot separate 0 from 1e-9.
+ WHY THE CERTIFICATE SEARCH DIED, as mathematics: the existence of a certificate carries exactly the information
+ of the signature it certifies. Content can only come from a restriction on T: a sign pattern (the control
+ satisfies it too), locality (impossible), or a formula (the one canonical formula is #24, and the graded family of
+ formulas is #25).""",
+ [("cubic", 2), ("cubic", 3), ("cubic", 4), ("cubic", 6), ("cubic", 8), ("cubic-ref", 1), ("cubic-ref", 2),
+  ("cubic-ref", 3)])
+
+merge_note(10, """MERGED from R2-judge/#10""" + A + """: the e10 rows of this idea are reproduced by a second and a
+ third implementation. L = 1.25: one positive eigenvalue 5.668358, second eigenvalue -2.4514e-47 (seat R2-parity's
+ implementation, digit for digit) and -2.610e-47 in the half lattice; the second eigenvalues are basis dependent
+ (-0.013284 at L = 0.5 in the half lattice; -1.74e-23 at L = 1 with N = 60). Beurling control (2 -> 2.1): 3, 5, 9
+ positive eigenvalues at L = 0.5, 1, 1.25, which by the identity of #23 are 1 + (number of negative squares of its
+ Weil form). Pointers: the exact form of this idea's target (both parity-block inequalities as one signature
+ statement about the fibre-extended matrix, and the relation between the signature of N and RH, with its open
+ converse) is #23; the count of negative squares behind wall WJ13 is the theorem #22.""", [("judge", 10)])
+
+# ------------------------------------------------------------------------------------------------------- #11
+merge_note(11, """MERGED from R2-curv/#2, #3, #5, R2-curv-ref/#2, #5, #6, #9 and R2-judge/#4, #7""" + A + """: what
+ round 2 proved on this idea, what is in print, and which readings were refuted (rh/experiments/r2_judge/JUDGEMENT.md
+ 1.2, 2.3, 2.5, 3.4; rh/THEORY.md T63 to T66), beyond the two notes above. PROVED: Theorem B, a Bochner formula for
+ the transformed prime jump process: Gamma_2 = squares over parallelograms (multiplicative ones for the prime
+ jumps) + a discrete Hessian of log u + open-path terms where the parallelogram leaves the window; and B4, the
+ two-step kernel carries Lambda*Lambda = Lambda_2 - Lambda log (Selberg's identity; trivial; two-step rates out of
+ the centre at L = 1: Gamma-Gamma 19.3, Gamma-prime 11.4, prime-prime 1.9; not used for anything). The full-line
+ case (curvature 0, squares of double differences) is known in substance (Spener-Weber-Zacher, arXiv 1903.00517;
+ search summaries only). IN PRINT: Theorem C (resampling chain: Bakry-Emery constant (gap/2)(1 + 2 min pi)) is
+ Schmuckenschlaeger, MSRI Publ. 34 (1998), section 2 (the checker read about 60 lines; the judge did not open it).
+ ADDED by the checker: the converse behind wall W-curv-2 (an exact calibration exists iff gap >= rho; a Poisson
+ equation with mean-zero right-hand side), missing from the seat's proof file. The seat's blind prediction 'lossy by
+ about a factor 2': HIT. REFUTED READINGS. (a) 'The curvature deficit sits in the window-edge terms': measured as
+ the constant in Gamma_2 >= rho Gamma, in units of lambda_1 (L = 1, 40 boxes, centre site): squares only 0; squares
+ + Hessian 0.2405; squares + open paths 0.1999; all three 0.5222; at the edge box 0, 0.0056, -0.2269, 0.4963.
+ Removing the edge term LOWERS the constant. The raw smallest eigenvalues the seat quoted (-0.034, -1.57) depend on
+ the normalisation (restricted to f(x) = 0 they are -0.0337 and -0.0515); only constants normalised by Gamma mean
+ anything. (b) 'The centre constant tends to 1/2': it is 0.5513, 0.5222, 0.5061, 0.4965, 0.4908 at 20, 40, 80, 160,
+ 320 boxes, still falling; the total jump rate grows by about log 2 per doubling (5.17, 5.87, 6.57, 7.27), so the
+ chain has infinite activity and is not near the resampling chain; from 160 boxes on the worst site (0.4415, then
+ 0.4302) is not the edge box but site 4 of 160 and site 9 of 320, near x = -0.94 (its identification with
+ log 7 - L is HEURISTIC: two data points, zeta and Beurling alike).""",
+ [("curv", 2), ("curv", 3), ("curv", 5), ("curv-ref", 2), ("curv-ref", 5), ("curv-ref", 6), ("curv-ref", 9),
+  ("judge", 4), ("judge", 7)])
+
+merge_note(11, """MERGED from R2-curv/#6, #7, #8 and R2-curv-ref/#3, #8, #10""" + A + """: the repairs of the
+ curvature tool that were tried, each with the reason it died (JUDGEMENT.md 2.6, 3.4; rh/THEORY.md T66, T67).
+ (1) Calibrated Bakry-Emery (subtract the generator applied to a quadratic F_f = c (f - mean)^2 + c' Gamma(f); exact
+ for the resampling chain with c = gap/4): best two-parameter constant 0.792 lambda_1 for zeta against 0.769 for the
+ Beurling control (L = 1, 40 boxes; 0.859 against 0.839 at L = 0.5); the seat's blind 'sees the control by more than
+ 0.03': MISS (0.023). The fully general calibration is EQUIVALENT to the gap bound itself (a matrix Poisson
+ equation), hence a reformulation (wall W-curv-2); content would need a restricted family of F that is sharp for
+ zeta, and none is known. (2) Exact calibration computed for zeta (one normalisation; checked by nobody): full rank
+ (36 of 39 singular values above 1e-2), leading part half of the resampling calibration (overlap 0.955); the seat's
+ blind prediction 'rank at most 4': MISS; its own kill line (full rank, no structure) is met for this
+ normalisation; other normalisations untested. (3) Per-site negative index of Gamma_2 - lambda_1 Gamma (exactly one
+ at every site for the resampling chain, proved): equal to one at 38 of 40 sites, 50 of 80, then only 4 of 160 for
+ zeta (histogram 4, 116, 34, 4, 2 sites with index 1 to 5), and at 32, 24, 0 sites for the Beurling control: not
+ stable under refinement; the seat's own kill line is met. (4) Coupling curvatures: Ollivier (Lin-Lu-Yau, nearest
+ sites) has minimum -3.50, -6.21, -10.17 lambda_1 at 40, 80, 160 boxes and diverges (a prime jump cut off by the
+ window edge cannot be matched by the neighbouring site); Dobrushin 0.43, 0.33, 0.29. Reproduced by the checker with
+ a closed formula, not by the judge. (5) PREDICTION (iii) of this entry ('at least 30 percent of the impostor's
+ off-diagonal rates negative'): MISS on the number, right on the fact: 5.51 percent of the impostor's box couplings
+ are negative (minimum -0.517), so there is no process; dial at n = 1.4: 14.62 percent (minimum -0.270); n = 1 and
+ n = 2: none. The lead's 51 percent counted signs of coefficients, a different quantity. Walls of the seat that
+ stand: W-curv-1 (no per-site inequality, linear in the two-step rates, with constant exactly lambda_1 is known;
+ every curvature notion tried is equal to 2 percent for zeta and for a control whose gap is 9 percent smaller) and
+ W-curv-2. W-curv-5 (edge) is withdrawn. The same failure in the language of idea #10 is #24.""",
+ [("curv", 6), ("curv", 7), ("curv", 8), ("curv-ref", 3), ("curv-ref", 8), ("curv-ref", 10)])
+
+# ------------------------------------------------------------------------------------------------------- #21
+merge_note(21, """MERGED from R2-curv/#4 and R2-curv-ref/#4""" + A + """: the source of this idea's first input,
+ with the judge's verdicts (rh/experiments/r2_judge/JUDGEMENT.md 1.2, 1.4, 3.4; rh/THEORY.md T70 to T73). Theorem D
+ (seat R2-curv). D1: [Lambda(ab)/sqrt(ab)] over integers a, b >= 2 equals the sum over primes of (log p) v_p v_p^T
+ (rank 17 for a, b <= 60): proved, two lines, true for any Beurling system on its own semigroup; it fails if a = 1
+ is allowed and fails on the continuum (witness -log p/sqrt p). D3: the Gamma kernel is completely monotone, so its
+ Hankel form is >= 0. The seat's reading 'the primes and the Gamma factor need two different reflections' (wall
+ W-curv-3) was CORRECTED by its checker and by the judge: on the integers >= 2 ONE reflection a -> 1/a serves both,
+ [w(log ab) + Lambda(ab)/sqrt(ab)] is positive semidefinite (59 x 59 for a, b = 2..60: lowest eigenvalue -2e-16),
+ because D1 is itself the Hankel form of the prime measure on atoms at logarithms of integers. The mismatch is
+ integers against rationals: positions 3/2 and 4/3 (product 2) give [[0, 0.490],[0.490, 0]] for the prime part and
+ -0.475 for the whole kernel. COMPUTED (seat; reproduced by the judge, J14; the seat kept no log of this run): on a
+ continuum window the Hankel form (N_even - N_odd)/2 folded onto (0, L] is >= 0 for the Gamma part alone and
+ indefinite with the prime atoms (minimum -1.12, 9 of 20 eigenvalues negative; Beurling control -1.17: no
+ discrimination). Literature (checker, summaries only): arXiv 2407.04124 covers the Gamma matrix w(log ab); a Helson
+ matrix of Lambda(mn) was not found; Perfekt-Pushnitski as in the notes above. OPEN and precise, not computed
+ (checker): what is the largest set S of positive reals containing the integers >= 2 on which [K(log ab)], a, b in
+ S, stays positive semidefinite? It asks which positions the kernel tolerates (barrier B10), and it survives the
+ death of the bridge.""", [("curv", 4), ("curv-ref", 4)])
+
+# ------------------------------------------------------------------------------------------------------- #17
+merge_note(17, """MERGED from R2-judge/#13""" + A + """: a second, exact form of this instrument (round-2 judge, J17
+ and J18; it does part of the 'next' items of the first-test field). Surgery on zeta's own prime-side matrix:
+ remove the real pairs at 14.1347 and 21.0220 and add the quartet +-a +- ib with a = 17.578, as a rank-4 change in
+ closed form from the transforms of the basis functions (seat R2-parity's implementation, 110 digits, integer and
+ half lattices, N = 30 to 56, L = 0.5 to 1.25; about 20 seconds). Normalisation check: zeta minus the two pairs
+ stays positive definite (lowest eigenvalue 3.1e-11, 1.4e-21, 4.8e-38, 1.5e-64). Results: one quartet at offset 0.3
+ is seen as (1,1) negative squares (even, odd) already at L = 0.5 (lowest even eigenvalue -1.2e-3, then -0.040,
+ -0.097, -0.230); the same counts for offsets 0.05 and 0.45 and for weight 3; two quartets (second at 27.718 +
+ 0.3i): (2,1), (2,2), (2,2), (2,2); merged on the line: (0,0). Both kill lines written in this entry's kill-line
+ field are NOT met: the per-block count is right (now the theorem #22), and the one-quartet configuration does not
+ keep N at one positive eigenvalue, it has three (identity #23). Limits: one quartet position plus one second
+ quartet, one implementation of the base form, no window above L = 1.25, and a surgery configuration has no
+ non-negative prime side.""", [("judge", 13)])
+
+# ------------------------------------------------------------------------------------------------------- #2
+merge_note(2, """MERGED from R2-cubic-ref/#5""" + A + """: a 2-second end-to-end validator for any box or atom
+ builder of the window form (a tool for this laboratory, like the Loewner identity above). For box functions of
+ width h the Weil-form entry at separation d is 2 x the sum over zeros of 4 sin^2(gamma h/2) cos(gamma d)/(h
+ gamma^2), plus a smooth tail on the diagonal and for adjacent boxes; with the first 20000 zeros it matches a
+ prime-side builder to about 1e-6. Example, L = 1 with 12 boxes: entry (0,5) is 0.148905 from the zeros and 0.148905
+ from pole + Gamma kernel - primes; without the prime 2 the builder gives 0.226778. It closed a gap: seat R2-cubic's
+ box matrix had been validated only by convergence. The same checker also verified the Gamma side against the
+ digamma form to 10 digits, and the judge's own box matrix (built from seat R2-curv's Theorem E: minus the
+ archimedean term is c ||f||^2 minus a Levy-measure Dirichlet form, c = 5.3721834...) agrees with both seats to
+ every printed digit.""", [("cubic-ref", 5)])
+
+# ------------------------------------------------------------------------------------------------------- #1
+merge_note(1, """MERGED from R2-free/#3""" + A + """: a detector design that is dead by logic, recorded so that it
+ is not rebuilt. Three-window determinant inequalities of Koteljanskii / strong-subadditivity type (the form on two
+ overlapping windows against their union and intersection) were proposed as an earlier detector of an off-line
+ zero. Every such inequality is implied by positivity of the form on the big window, so it can neither fail before
+ positivity fails nor imply more than positivity. Rule for this lab: a multi-window or multi-scale statement is
+ worth computing only if it is STRICTER than positivity of the largest window involved. Killed by the seat before
+ computing; nothing was computed.""", [("free", 3)])
+
+# ------------------------------------------------------------------------------------------------------- #22
+merge_note(22, """MERGED from R2-parity-ref/#5 and R2-judge/#6, #8, #9""" + A + """: what is already in print, and one
+ caution for anyone recounting. (1) 'One parity block suffices' (last line of C1; C4) is Yoshida 1992 Prop. 1 as
+ quoted on p. 2 of Suzuki arXiv 2606.09096v3: 'Q_W(v) >= 0 for all non-zero odd v implies RH, while a similar
+ condition for all non-zero even functions implies RH except for possible real zeros' (zeta has none on (0,1)). The
+ seat had reported it as not found and withdrew the claim. (2) The total count 'negative index = number of distinct
+ zeros with Re > 1/2' is printed, with the same hyperbolic-pair argument, as 'Theorem 1 (global signature)' in an
+ unrefereed account of an agent research run (PDF hosted on www-cdn.anthropic.com), which credits Bombieri 2000 with
+ the upper-bound half for large truncations; its text does not mention parity. (3) The same pages of Suzuki give
+ Yoshida's Thm 2 (RH iff the form is non-degenerate on every window), the existence half of idea #8's template
+ (noted on #8). (4) Caution: on small windows the negative eigenvalues are below 1e-8 of the top eigenvalue. The
+ judge's first toy run (J13: two quartets among 40 real ordinates) used a threshold of 1e-8 and undercounted
+ ((0,0), (1,0), (2,2), (1,1) at successive L); with 1e-45 it gives (2,2) at every L. Still unread by the project:
+ Bombieri 2000 (Rend. Lincei) and Yoshida 1992 (full text not obtained by automated download; a person with a
+ browser can very probably get it from Project Euclid, see rh/library/yoshida-1992.md).""",
+ [("parity-ref", 5), ("judge", 6), ("judge", 8), ("judge", 9)])
+
+# ------------------------------------------------------------------------------------------------------- #23
+merge_note(23, """MERGED from R2-cubic/#1, R2-curv/#1, R2-curv-ref/#1, #7 and R2-parity/#7""" + A + """: four round-2
+ statements that this identity contains or completes. (1) FIBRE CLASSES (seat R2-cubic, Lemma A; proved; known:
+ inertia additivity for a Schur complement, and Weil's Hodge-index picture; rh/THEORY.md T50, T61). Border N with
+ two extra nodes for the pole functionals p = e^(x/2), q = e^(-x/2): Ntilde = [[N, p, q],[p^T, 0, 1],[q^T, 1, 0]].
+ Then #positive(Ntilde) = 1 + #negative(Weil form), nullities agree, and every off-diagonal entry is >= 0. So
+ 'Ntilde has exactly one positive eigenvalue' IS window positivity, both parity blocks at once, and with #22 the
+ signature of Ntilde counts the off-line zeros exactly, per block. COMPUTED (seat, checker, judge): zeta, L = 1,
+ 12 boxes: 5.305946, -1.8115e-3, -3.4672e-2; Beurling 2 -> 2.1: 5.286899, +1.9953e-2. This, not the bare N, is the
+ object idea #10's signature claim should have named. (2) SUM-RULE FORM (seat R2-curv, Theorem A): even block
+ N_e <= 2cc^T iff N_e has one positive eigenvalue and 2c^T N_e^-1 c >= 1; odd block N_o <= -2ss^T iff N_o < 0 and a
+ memory integral of sinh(x/2)/u along the process is <= 1/2. GAP found by the checker and confirmed by the judge:
+ the proof uses lambda_1 > 0, which is not a hypothesis and is false for L <= 0.10 (top eigenvalue of N -0.0728 at
+ L = 0.10, +0.119 at 0.12; at L = 0.10 the Weil form is positive with lowest eigenvalue 0.457, N has no positive
+ direction and the 'sum rule' reads -6.2). Smallest counterexample: N = [[-10, 1],[1, -10]]. Repaired by adding
+ lambda_1 > 0 (T34); it is then the case kappa_-(Q) = 0 of this identity. (3) THE EVEN MARGIN IS A DETERMINANT
+ RATIO (checker; matrix determinant lemma, known; T33): 2c^T N_e^-1 c - 1 = det(Q_e)/|det N_e| = (mu_1(Q_e)/lambda_1)
+ x P with P >= 1 (5.5922e-4 at L = 1 with 40 boxes, agreeing to 12 digits; P = 1.14, 1.21, 1.23, 1.25 at 20 to 160
+ boxes, not visibly converging). So the seat's 'both sum rules saturate at exactly 1/2' is a statement about a limit
+ of box spaces: on a fixed window with a positive Weil form the margin is strictly positive, and it is the lowest
+ Weil eigenvalue in disguise: a reformulation. (4) WALL WP1 (seat R2-parity): 'linear algebra cannot improve
+ one-positive-direction => at most one quartet to => RH'. Judge: a GAP, not a theorem. Only consistency of the
+ inequalities with one quartet was shown; no configuration with one quartet and kappa_+(N) = 1 was exhibited, and
+ in every computed surgery row N has three positive eigenvalues. Its exact form is the open converse T81 in this
+ entry's 'smallest' field.""",
+ [("cubic", 1), ("curv", 1), ("curv-ref", 1), ("curv-ref", 7), ("parity", 7)])
+
+# ------------------------------------------------------------------------------------------------------- #24
+merge_note(24, """MERGED from R2-cubic/#5, #9, #11, R2-cubic-ref/#4 and R2-judge/#5""" + A + """: the neighbours of
+ the canonical cubic that were tried, each with the reason it failed (rh/experiments/r2_judge/JUDGEMENT.md 1.1,
+ 2.2, 2.7; rh/THEORY.md T56, T65). (1) Product cubic <f^2, N f>: its slices contain diag(N e_k) >= 0, so they have
+ 11 positive eigenvalues of 12; not Lorentzian (killed by the seat). (2) Dimension-corrected criterion CD(rho, n),
+ tried in order to recover the factor 2: on the resampling chain on m points the best constant is exactly
+ rho = 1/2 - 2/n + (1 + 2/n)/m (judge, by hand and J9: 0.135, 0.28125, 0.4275 for m = 40 and n = 5, 8, 20), so the
+ dimension term makes it worse. The seat's report sentence 'at most (n-4)/(2(n-1)) < 1/2' is wrong as written (true
+ only as m -> infinity; counterexample m = 40, n = 5: the Lichnerowicz bound is 0.16875 > 0.125). (3) The factor 2
+ itself: 1/2 + 1/m on the resampling chain is PROVED in two lines (the ratio is (3<f^2> + f_k^2)/(2(<f^2> + f_k^2))
+ and f_k^2 <= (m-1)<f^2> for mean-zero f, with equality at f = e_k - 1/m); two seats proved it independently (it is
+ seat R2-curv's Theorem C2 with pi = 1/m) and it is in print (Schmuckenschlaeger 1998). For the prime chain itself
+ the constant is only COMPUTED and is not 1/2 (notes on #11). (4) The mean-field-exact family Theta_t =
+ t(sigma_1 - sigma_2) + (1/2 - t) sigma_11 + (3t - 1/2) sigma_111 (symmetric; contracts to H for every chain; equals
+ the unique certificate on the resampling chain: proved, with total mass of pi equal to 1): no t gives slices with
+ one positive eigenvalue for zeta. On a 0.001 grid the best is t = 0.014 with worst slice defect -0.01836 (L = 1,
+ 12 boxes), t = 0.034 with -0.03794 (24 boxes), t = 0.057 with -0.02170 (L = 0.5); Beurling control t = 0.014,
+ -0.02389: indistinguishable. The seat's 'best t = 0.05, -0.047' was an artefact of a 0.05 grid. One order up, with
+ all products of chain-degree <= 2 and free coefficients, a certificate exists, for zeta and for controls alike, and
+ no formula was found: that is #25.""",
+ [("cubic", 5), ("cubic", 9), ("cubic", 11), ("cubic-ref", 4), ("judge", 5)])
+
+# ------------------------------------------------------------------------------------------------------- #26
+merge_note(26, """MERGED from R2-free/#2""" + A + """: the additive half of this entry was a separate local idea,
+ 'the Wallach set of theta': for which real n are all coefficients r_n(m) of theta^n >= 0? Mechanism carried over
+ (seat): a Wishart law with real shape parameter on r x r matrices exists only for the parameter in {0, 1, ..., r-1}
+ or above r-1 (Gindikin; Wallach). The seat guessed the same pattern with the break at Lagrange's four squares
+ ({0, 1, 2}, then everything from 3 on) and MISSED: the discrete part reaches 4 and the continuum, if there is one,
+ starts later, near 4.15. Its numbers and its triangular-number control are in the claim and prediction fields
+ above. Merged, not promoted separately, because it is the same object (real powers of theta) and S contains M:
+ non-negative coefficients are the precondition for reading the series as a probability law, and M is the stronger
+ property of that law. It passes both of the owner's tests for a proposal (not found in the record; precise enough
+ to compute) and is kept here in full.""", [("free", 2)])
+
+# ------------------------------------------------------------------------------------------------------- #12
+run("note", "12", """POINTER""" + A + """: the settings of this dial at which all prime-side couplings are >= 0, and
+ those at which all coefficients r_n(m) are >= 0, are the subject of #26 (seat R2-free, twenty minutes of work,
+ one implementation, checked by nobody). On the grid n = k/8 up to 14 the couplings are all >= 0 only at n = 1, 2
+ and 8 (n = 8 is, up to a constant, (1 - 2^(1-s) + 4^(2-s)) zeta(s) zeta(s-3)). So the sentence in the log of #10,
+ 'the sign condition picks out exactly the two members with Hecke operators', needs n = 8 added once a second
+ implementation confirms it; by the auditor's remark in #26 (checked by nobody) the zeros of the n = 8 member are
+ off its centre line Re s = 2.""")
+progress("note on main #12 (pointer to #26; no local entry closed)")
+
+open(marker, "w").write("done")
+print("stage 2 done")

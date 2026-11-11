@@ -1,0 +1,49 @@
+"""S1-parity turn 3: polynomial Rayleigh-Ritz for the window form (atom at position e^y with weight m), written from Lemma 5's x-space formula
+with EXACT rational polynomial algebra for the cross-correlations and mpmath (60 digits) for the moments of h. Monomial basis x^j on [-L, L].
+Second route for the foothold seat's polynomial numbers (its code: Legendre basis, Arb balls).
+usage: python3 fh_poly.py.txt L(as p/q) NB"""
+import sys, time
+from fractions import Fraction as Fr
+from math import comb
+import mpmath as mp
+mp.mp.dps = 70; t0 = time.time(); ns = lambda x, k=8: mp.nstr(x, k)
+Lq = Fr(sys.argv[1]); NB = int(sys.argv[2]); L = mp.mpf(Lq.numerator) / Lq.denominator
+def cross(j, k):
+    """coefficients (in u, 0 <= u <= 2L) of c_jk(u) = int_{u-L}^{L} x^j (x-u)^k dx, exact rationals"""
+    out = [Fr(0)] * (j + k + 2)
+    for i in range(k + 1):
+        n = j + k - i; pref = Fr(comb(k, i) * (-1) ** i, n + 1)
+        # u^i * [L^{n+1} - (u-L)^{n+1}]
+        out[i] += pref * Lq ** (n + 1)
+        for r in range(n + 2):
+            out[i + r] -= pref * comb(n + 1, r) * (-Lq) ** (n + 1 - r)
+    return out
+tomp = lambda q: mp.mpf(q.numerator) / q.denominator
+h = lambda x: mp.exp(x / 2) / mp.sinh(x) - 1 / x
+H = [mp.quad(lambda x, n=n: h(x) * x ** n, [0, L / 2, L, 2 * L]) for n in range(2 * NB + 1)]
+E = [mp.quad(lambda t, j=j: t ** j * mp.exp(t / 2), [-L, 0, L]) for j in range(NB)]
+c0 = -(mp.log(4 * mp.pi * L) + mp.euler)
+def mats(par, y=None):
+    idx = [j for j in range(NB) if j % 2 == par]; n = len(idx)
+    A = mp.matrix(n, n); G = mp.matrix(n, n); C = mp.matrix(n, n)
+    for a, j in enumerate(idx):
+        for b, k in enumerate(idx):
+            if b < a: A[a, b], G[a, b], C[a, b] = A[b, a], G[b, a], C[b, a]; continue
+            cf = cross(j, k)
+            val = c0 * tomp(cf[0])
+            for nn in range(1, len(cf)):
+                if cf[nn] != 0: val -= tomp(cf[nn]) * (2 * L) ** nn / nn
+            for nn in range(len(cf)):
+                if cf[nn] != 0: val -= tomp(cf[nn]) * H[nn]
+            val += (2 if par == 0 else -2) * E[j] * E[k]
+            A[a, b] = val; G[a, b] = 2 * L ** (j + k + 1) / (j + k + 1)
+            if y is not None: C[a, b] = mp.fsum(tomp(cf[nn]) * y ** nn for nn in range(len(cf)))
+    return A, G, C
+def bottom(Mx, G):
+    Lc = mp.cholesky(G); Li = mp.inverse(Lc)
+    return min(mp.eigsy(Li * Mx * Li.T, eigvals_only=True))
+y = mp.log(2); m = mp.log(2) / mp.sqrt(2)
+for par, nm in ((0, 'even'), (1, 'odd')):
+    A, G, C = mats(par, y)
+    print("L=%s, polynomials of degree < %d, %s: no atom: bottom %s ; true atom (y = log 2, m = log 2/sqrt 2): bottom %s   (%.0fs)" % (sys.argv[1], NB, nm,
+          ns(bottom(A, G), 9), ns(bottom(A - 2 * m * C, G), 6), time.time() - t0), flush=True)

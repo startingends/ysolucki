@@ -1,0 +1,26 @@
+import sys, math, importlib.util, importlib.machinery
+import numpy as np
+from scipy.optimize import minimize
+loader = importlib.machinery.SourceFileLoader('refute', 'refute.py.txt'); spec = importlib.util.spec_from_loader('refute', loader)
+R = importlib.util.module_from_spec(spec); loader.exec_module(R)
+def calib(L, M, kind):
+    N,xs,c,s,d = R.build(L, M, kind); ev,lam1,u,q,Lg = R.process(N); G,G2 = R.gamma_forms(q,Lg)
+    pi = u*u; P = np.eye(M) - np.outer(np.ones(M), pi)
+    A = np.array([P.T@np.diag(Lg[x])@P for x in range(M)])
+    B = np.array([np.tensordot(Lg[x], G, axes=(0,0)) for x in range(M)])
+    keeps = [[i for i in range(M) if i != x] for x in range(M)]
+    dgs = [np.sqrt(np.diag(G[x])[keeps[x]]) for x in range(M)]
+    def rho(p):
+        cc, cp = p; r = 1e9
+        for x in range(M):
+            Z = (G2[x] - cc*A[x] - cp*B[x])[np.ix_(keeps[x], keeps[x])]/np.outer(dgs[x], dgs[x])
+            r = min(r, np.linalg.eigvalsh(Z)[0])
+        return r
+    best = None
+    for start in ([0,0],[lam1/8,0],[lam1/4,0.1]):
+        res = minimize(lambda p: -rho(p), start, method='Nelder-Mead', options=dict(xatol=1e-4, fatol=1e-6, maxiter=400))
+        if best is None or -res.fun > best[0]: best = (-res.fun, res.x)
+    r1 = minimize(lambda p: -rho([p[0],0]), [lam1/8], method='Nelder-Mead', options=dict(xatol=1e-4, fatol=1e-6))
+    gap = lam1 - ev[-2]
+    print(f"{kind} L={L} M={M}: plain {rho([0,0])/lam1:.4f}; c=lam1/4 only {rho([lam1/4,0])/lam1:.4f}; best 1-par {-r1.fun/lam1:.4f}; best 2-par {best[0]/lam1:.4f} at (c,c')=({best[1][0]:.3f},{best[1][1]:.3f}); /gap {best[0]/gap:.4f}")
+for a in ((1.0,40,'zeta'),(1.0,40,'beurling'),(0.5,40,'zeta'),(0.5,40,'beurling')): calib(*a)

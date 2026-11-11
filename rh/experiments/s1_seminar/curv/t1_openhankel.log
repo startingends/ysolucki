@@ -1,0 +1,26 @@
+zeta L=1 M=40
+ |Obar - Op/2|_max = 3.89e-16 ;  | ||Lf||^2 - (Cl + Op) |_max = 2.08e-15
+ open  Op               gen. eig vs E, /lam1: min 0.1054 2nd 0.1103 max 1.1711  #neg 0
+ closed Cl              gen. eig vs E, /lam1: min -0.0043 2nd 0.5375 max 1.4909  #neg 1
+ Cl + Op = ||Lf||^2     gen. eig vs E, /lam1: min 1.0034 2nd 1.0049 max 1.8659  #neg 0
+ upper-edge half of Op  gen. eig vs E, /lam1: min -0.0335 2nd 0.0002 max 0.7182  #neg 1
+ |J Op J - Op| = 7.2e-16
+   even f, Op : min 0.1103 2nd 0.1317 max 0.6425
+   even f, Cl : min 0.5709 2nd 0.6227 max 1.4719
+   even f, all: min 1.0034 2nd 1.0103 max 1.8507
+   odd  f, Op : min 0.1054 2nd 0.1173 max 1.1711
+   odd  f, Cl : min -0.0043 2nd 0.5375 max 1.4909
+   odd  f, all: min 1.0049 2nd 1.0143 max 1.8659
+beurling L=1 M=40
+ |Obar - Op/2|_max = 3.33e-16 ;  | ||Lf||^2 - (Cl + Op) |_max = 1.53e-15
+ open  Op               gen. eig vs E, /lam1: min 0.1108 2nd 0.1122 max 1.1846  #neg 0
+ closed Cl              gen. eig vs E, /lam1: min -0.0070 2nd 0.5328 max 1.4884  #neg 1
+ Cl + Op = ||Lf||^2     gen. eig vs E, /lam1: min 0.9141 2nd 0.9207 max 1.8451  #neg 0
+ upper-edge half of Op  gen. eig vs E, /lam1: min -0.0310 2nd 0.0007 max 0.7246  #neg 1
+ |J Op J - Op| = 1.2e-15
+   even f, Op : min 0.1122 2nd 0.1246 max 0.6876
+   even f, Cl : min 0.5642 2nd 0.6125 max 1.4744
+   even f, all: min 0.9207 2nd 0.9433 max 1.8451
+   odd  f, Op : min 0.1108 2nd 0.1274 max 1.1846
+   odd  f, Cl : min -0.0070 2nd 0.5328 max 1.4884
+   odd  f, all: min 0.9141 2nd 0.9725 max 1.8411

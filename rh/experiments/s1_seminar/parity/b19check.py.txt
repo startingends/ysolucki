@@ -1,0 +1,47 @@
+"""S1-parity: second-route recomputation of S1-mirror's board numbers B18 (one-prime system) and B19 (weight at 4 / at 2),
+with implementation B (wb.py.txt, mpmath, own derivation) in BOTH lattices; thresholds by an exact pencil (Cholesky + eigenvalues),
+not by bisection. usage: python3 b19check.py.txt"""
+import math, importlib.util, importlib.machinery, time
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+mp.mp.dps = 120
+t0 = time.time()
+ns = lambda x, k=3: mp.nstr(x, k)
+def form(L, N, lat, atoms):
+    M = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+    for x, c in atoms.items():
+        if math.log(float(x)) < 2 * L - 1e-12: M = wb.add(M, wb.atom_blocks(L, N, lat, x), c)
+    return M
+def low(M): return [min(mp.eigsy(M[b], eigvals_only=True)) for b in (0, 1)]
+l2, l3 = mp.log(2), mp.log(3)
+print("B18: one-prime system (atoms 2^k, weight log 2): lowest eigenvalue even / odd")
+for L in (0.50, 0.54, 0.56, 0.58, 0.60, 1.00):
+    row = []
+    for lat, N in (('int', 40), ('half', 40)):
+        e = low(form(L, N, lat, {2: l2, 4: l2}))
+        row.append("%s/%d: %s / %s" % (lat, N, ns(e[0]), ns(e[1])))
+    print("  L=%.2f  %s   (%.0fs)" % (L, "  |  ".join(row), time.time() - t0), flush=True)
+print("B19: atoms 2,3,4 (= zeta for L <= 0.80). lowest eigenvalue even / odd")
+for L in (0.70, 0.75, 0.80):
+    for lab, at in (("(a) true", {2: l2, 3: l3, 4: l2}), ("(b) weight at 4 -> -log 2", {2: l2, 3: l3, 4: -l2}), ("f=2 at 4", {2: l2, 3: l3, 4: 2 * l2}),
+                    ("f=1.01", {2: l2, 3: l3, 4: mp.mpf('1.01') * l2}), ("f=0.99", {2: l2, 3: l3, 4: mp.mpf('0.99') * l2})):
+        row = []
+        for lat, N in (('int', 40), ('half', 40)):
+            e = low(form(L, N, lat, at)); row.append("%s/%d: %s / %s" % (lat, N, ns(e[0]), ns(e[1])))
+        print("  L=%.2f %-26s %s   (%.0fs)" % (L, lab, "  |  ".join(row), time.time() - t0), flush=True)
+print("B19 thresholds: Q >= 0 iff relative change eta of one weight lies in [lo, hi] (exact pencil, both blocks)")
+for L in (0.75, 0.80):
+    for n, lam in ((4, l2), (2, l2)):
+        for lat, N in (('int', 40), ('half', 40), ('half', 60)):
+            Q = form(L, N, lat, {2: l2, 3: l3, 4: l2}); U = wb.atom_blocks(L, N, lat, n)
+            lo, hi = -mp.inf, mp.inf
+            for b in (0, 1):
+                C = mp.cholesky(Q[b]); Ci = mp.inverse(C)
+                mu = mp.eigsy(Ci * U[b] * Ci.T, eigvals_only=True)      # Q + d U >= 0  <=>  1 + d mu >= 0 for all mu
+                mx, mn = max(mu), min(mu)
+                if mx > 0: lo = max(lo, -1 / mx)
+                if mn < 0: hi = min(hi, -1 / mn)
+            print("  L=%.2f weight at %d  %s/%d: eta in [%s, %s]   (%.0fs)" % (L, n, lat, N, ns(lo / lam, 4), ns(hi / lam, 4), time.time() - t0), flush=True)

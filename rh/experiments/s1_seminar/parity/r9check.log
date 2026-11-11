@@ -1,0 +1,4 @@
+arch + primes  a,b=2..60 dps=400: smallest eig 8.3652e-251 ; second 1.0365e-241 ; largest 4.0213 ; #neg (< -tol) 0 ; #|eig|<tol 0
+arch only      a,b=2..60 dps=400: smallest eig 8.4519e-363 ; second 9.9204e-354 ; largest 3.6914 ; #neg (< -tol) 0 ; #|eig|<tol 1
+primes only    a,b=2..60 dps=400: smallest eig -3.9898e-402 ; second -2.1668e-402 ; largest 0.67149 ; #neg (< -tol) 0 ; #|eig|<tol 42
+2x2 at {3/2, 4/3}: eigenvalues ['-0.47515839', '2.4030705']

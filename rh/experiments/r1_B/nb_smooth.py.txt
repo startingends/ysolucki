@@ -1,0 +1,21 @@
+"""D_S(N) = dist(chi, span{e_k : k<=N, all prime factors of k in S}).  Filtration by primes instead of by size."""
+import sys, math
+import numpy as np
+from sympy import factorint, primerange
+exec(open("nb_gram.py.txt").read().split('if __name__')[0])
+C = 2 + EG - math.log(4 * math.pi)
+G = np.load("/home/user/ysolucki/rh/data/r1_B/G2000.npy"); Nmax = G.shape[0]
+b = bvec(Nmax); ks = np.arange(1, Nmax + 1)
+gpf = np.array([1] + [max(factorint(k)) for k in range(2, Nmax + 1)])
+def dist2(idx):
+    A = G[np.ix_(idx, idx)]; r = b[idx]
+    c, *_ = np.linalg.lstsq(A, r, rcond=1e-13); return 1 - r @ c, c
+print("P | #smooth<=2000 | D_S(N)^2 for N=125,250,500,1000,2000 | D^2*logP | compare d_P^2 (all k<=P)")
+d2 = np.load("/home/user/ysolucki/rh/data/r1_B/d2.npy")
+for P in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 97]:
+    row = []
+    for N in [125, 250, 500, 1000, 2000]:
+        idx = np.where((gpf <= P) & (ks <= N))[0]; row.append(dist2(idx)[0])
+    print("%3d | %4d | %s | %.5f | d_P^2=%.6f" % (P, len(idx), "  ".join("%.7f" % x for x in row), row[-1] * math.log(P), d2[P - 1]))
+idx = np.where(gpf <= 2)[0]; q, c = dist2(idx); print("S={2}: coefficients on 1,2,4,...:", np.round(c, 5))
+idx = np.where(gpf <= 3)[0]; q, c = dist2(idx); print("S={2,3}: k:", ks[idx][:14], "c:", np.round(c[:14], 4))

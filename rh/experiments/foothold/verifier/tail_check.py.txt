@@ -1,0 +1,21 @@
+"""V-FH: actual size of the head-tail coupling block of the capped matrix (float, scipy) against the proof's eps12, and
+of the tail block's deviation from beta0*I against eps22.  Modes 0..55 = head, 56..119 = tail sample.  Not a proof."""
+import numpy as np
+from scipy.special import digamma, spherical_jn, spherical_in
+L = np.log(3) / 2; R = 40.0; beta0 = 0.87; m = np.log(2) / np.sqrt(2); u = np.log(2)
+xs, ws = np.polynomial.legendre.leggauss(32)
+edges = np.linspace(0, R, 161)
+r = np.concatenate([(a + b) / 2 + (b - a) / 2 * xs for a, b in zip(edges[:-1], edges[1:])])
+w = np.concatenate([(b - a) / 2 * ws for a, b in zip(edges[:-1], edges[1:])])
+psi = digamma(0.25 + 0.5j * r).real - np.log(np.pi) - 2 * m * np.cos(r * u) - beta0
+n = np.arange(120)
+J = np.array([spherical_jn(int(k), r * L) for k in n])
+sq = np.sqrt(2 * n + 1)
+G = (2 * L / np.pi) * (J * (w * psi)) @ J.T * np.outer(sq, sq)
+p = np.sqrt(2 * L * (2 * n + 1)) * spherical_in(n, L / 2)
+for par in (0, 1):
+    head = [k for k in range(par, 56, 2)]; tail = [k for k in range(56 + par, 120, 2)]
+    B = G[np.ix_(head, tail)] + (2 if par == 0 else -2) * np.outer(p[head], p[tail])     # signs (-1)^((j-k)/2) do not change norms
+    D = G[np.ix_(tail, tail)] + (2 if par == 0 else -2) * np.outer(p[tail], p[tail])
+    print(f"parity {par}: spectral norm of the head-tail block (56 <= k < 120): {np.linalg.norm(B, 2):.3e}  [proof's eps12 = 1.965e-13]; "
+          f"norm of tail block minus beta0*I: {np.linalg.norm(D, 2):.3e}  [eps22 = 1.22e-31]")

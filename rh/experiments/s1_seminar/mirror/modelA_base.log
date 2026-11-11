@@ -1,0 +1,11 @@
+baseline: lowest eigenvalue (even, odd) of Q for zeta; N = 40, 120 digits
+  L=0.50  even 9.5e-7  odd 0.0002148   atoms [2]
+  L=0.60  even 1.701e-9  odd 6.705e-7   atoms [2, 3]
+  L=0.70  even 4.77e-13  odd 2.848e-10   atoms [2, 3, 4]
+  L=0.75  even 4.598e-15  odd 3.727e-12   atoms [2, 3, 4]
+  L=0.80  even 1.932e-17  odd 1.763e-14   atoms [2, 3, 4]
+time 3.7 s
+
+real	0m3.858s
+user	0m3.814s
+sys	0m0.012s

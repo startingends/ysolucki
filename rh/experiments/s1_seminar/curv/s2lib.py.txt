@@ -1,0 +1,34 @@
+"""S1-curv turn 2: box matrices for F_d(s) = zeta(s-d) zeta(s+d). Kernel = zeta's times 2cosh(du) (S1-mirror B15).
+N_d = c_inf(d) + primes_d - Levy form with density w_d;  Q_d = pole_d - N_d.   d = 0 gives 2 x (zeta)."""
+import math, numpy as np, mpmath as mp
+mp.mp.dps = 25
+tri = lambda t: max(0.0, 1 - abs(t))
+def build_d(L, M, d, primes=(2, 3, 5, 7, 11, 13, 17, 19, 23)):
+    dl = 2 * L / M; d = mp.mpf(d)
+    w = lambda u: 2 * mp.cosh(d * u) * mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+    cinf = 2 * mp.log(mp.pi) - mp.digamma(mp.mpf(1) / 4 - d / 2) - mp.digamma(mp.mpf(1) / 4 + d / 2)
+    diag = float(cinf - 2 * mp.quad(lambda u: w(u) * u / dl, [0, dl / 2, dl]) - 2 * mp.quad(w, [dl, 1, 5, 20, mp.inf]))
+    def Wk(k):
+        f = lambda u: w(u) * (1 - abs(u - k * dl) / dl)
+        return mp.quad(f, [0, dl, 2 * dl]) if k == 1 else mp.quad(f, [(k - 1) * dl, k * dl, (k + 1) * dl])
+    ta = np.array([0.0] + [float(Wk(k)) for k in range(1, M)])
+    lam = {}
+    for p in primes:
+        pk = p
+        while pk <= math.exp(2 * L) + 1e-9: lam[pk] = math.log(p); pk *= p
+    df = float(d)
+    tp = np.array([sum(c / math.sqrt(n) * 2 * math.cosh(df * math.log(n)) * (tri((math.log(n) - k * dl) / dl) + tri((math.log(n) + k * dl) / dl)) for n, c in lam.items()) for k in range(M)])
+    idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+    k = ta + tp; k[0] = 0.0
+    N = k[idx] + diag * np.eye(M)
+    x = (np.arange(M) + 0.5) * dl - L
+    def vec(beta, fn):
+        return (2 / (beta * math.sqrt(dl))) * math.sinh(beta * dl / 2) * fn(beta * x)
+    cp, cm = vec(0.5 + df, np.cosh), vec(0.5 - df, np.cosh); sp_, sm = vec(0.5 + df, np.sinh), vec(0.5 - df, np.sinh)
+    Pole = 2 * (np.outer(cp, cp) + np.outer(cm, cm) - np.outer(sp_, sp_) - np.outer(sm, sm))
+    return dict(N=N, k=k, diag=diag, x=x, cp=cp, cm=cm, sp=sp_, sm=sm, Pole=Pole, Q=Pole - N, dl=dl, L=L, M=M, cinf=float(cinf))
+def parity_bases(M):
+    h = M // 2; Be = np.zeros((M, h)); Bo = np.zeros((M, h))
+    for j in range(h):
+        Be[h + j, j] = Be[h - 1 - j, j] = 2 ** -0.5; Bo[h + j, j] = 2 ** -0.5; Bo[h - 1 - j, j] = -2 ** -0.5
+    return Be, Bo

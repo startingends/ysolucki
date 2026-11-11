@@ -1,0 +1,30 @@
+"""S1-cubic turn 2: how far is a single entry T_ijk determined by 'a certificate exists'?  For chosen triples of distinct boxes:
+min and max of T_ijk over all certificates (T.a = H, P_k >= 0 for all k), in units of the mean-field size l_i l_j l_k / s^2,
+and the value in the cone tensor (Lemma C) and in the Bakry-Emery tensor (F5).   usage: locality4.py.txt <n>"""
+import sys, math, itertools, importlib.util, importlib.machinery, numpy as np, cvxpy as cp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+D0 = "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/"
+n = int(sys.argv[1])
+sys.argv = ["x", "zeta", "1.0", str(n), "none"]
+loc = load("loc", D0 + "locality2.py.txt")
+P = loc.P; H, a, m, l = P.H, P.a, P.m, P.l; s = float(a @ l)
+x = cp.Variable(len(P.keys)); cons = [sum(a[k] * (P.Sl[k] @ x) for k in range(m)) == H.reshape(-1)]
+for k in range(m):
+    cons.append(np.outer(H[:, k], H[:, k]) / l[k] - cp.reshape(P.Sl[k] @ x, (m, m), order='C') >> 0)
+def rng(key):
+    out = []
+    for sense in (cp.Minimize, cp.Maximize):
+        pr = cp.Problem(sense(x[P.idx[key]]), cons)
+        try: pr.solve(solver=cp.SCS, eps=1e-7, max_iters=200000); out.append((float(pr.value), pr.status[:7]))
+        except Exception as ex: out.append((float('nan'), 'fail'))
+    return out
+cone = lambda i, j, k: (H[i, j] * l[k] + H[i, k] * l[j] + H[j, k] * l[i] - (2 / s) * l[i] * l[j] * l[k]) / s
+be = lambda i, j, k: 0.5 * (H[i, j] * H[i, k] / l[i] + H[i, j] * H[j, k] / l[j] + H[i, k] * H[j, k] / l[k])
+tr = {8: [(0, 3, 7), (0, 4, 7), (0, 3, 6), (0, 1, 7), (2, 3, 4), (1, 3, 5)], 12: [(0, 5, 11), (0, 5, 10), (0, 4, 11), (0, 1, 11), (4, 5, 6), (2, 5, 8)]}[n]
+print("zeta L=1 n=%d ; entries in units of l_i l_j l_k/s^2 ; [min, max] over ALL certificates (SCS)" % n)
+for key in tr:
+    sc = l[key[0]] * l[key[1]] * l[key[2]] / s ** 2
+    (lo, st1), (hi, st2) = rng(key)
+    print("  T%s: [%+.4f, %+.4f] (%s/%s) ; cone %+.4f ; Bakry-Emery %+.4f ; zero %s the interval" % (key, lo / sc, hi / sc, st1, st2, cone(*key) / sc, be(*key) / sc, "INSIDE" if lo <= 0 <= hi else "OUTSIDE"), flush=True)

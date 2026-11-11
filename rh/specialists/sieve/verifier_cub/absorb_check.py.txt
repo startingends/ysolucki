@@ -1,0 +1,89 @@
+# V-CUB check (1): mu * gamma_2^2 = alpha * conj(gamma_2) on squarefree n, and gamma_2^2 = gamma_1 * conj(G), G = conj(chi_n(4)) gamma_3.
+# Independent code (not SP-modular's). Split primes pi = a + b*omega, primary (a = 1 mod 3, b = 0 mod 3), norm p = 1 mod 3, p <= PMAX,
+# and products n = pi1*pi2 of two such primes with distinct norms (O/n = Z/(p1 p2)).
+# Conventions of the paper (qrh-short (2.6)): chi_n(x) = (x/n)_6, e(z) = exp(4 pi i Im z / sqrt 3), gamma_j(n) = N(n)^(-1/2) sum chi^j e(x/n).
+import cmath, math, itertools, sys
+W = complex(-0.5, math.sqrt(3)/2)            # omega
+Z6 = 1 + W                                    # primitive 6th root of unity e^(i pi/3) = -omega^2
+PMAX = int(sys.argv[1]) if len(sys.argv) > 1 else 400
+def primes(n):
+    s = [True]*(n+1); s[0] = s[1] = False
+    for i in range(2, int(n**0.5)+1):
+        if s[i]:
+            for j in range(i*i, n+1, i): s[j] = False
+    return [i for i in range(n+1) if s[i]]
+def primary_split(p):
+    # all primary a + b omega with a^2 - ab + b^2 = p
+    out = []
+    R = int(2*math.sqrt(p)) + 2
+    for a in range(-R, R+1):
+        for b in range(-R, R+1):
+            if a*a - a*b + b*b == p and a % 3 == 1 and b % 3 == 0: out.append((a, b))
+    return out
+def sextic_char(a, b, p):
+    # returns function x -> (x/pi)_6 as complex, for integer x, pi = a + b omega; omega = r mod pi where a + b r = 0 mod p
+    r = (-a * pow(b, -1, p)) % p
+    assert (r*r + r + 1) % p == 0
+    z6 = (1 + r) % p
+    table = {}; t = 1
+    for k in range(6): table[t] = Z6**k; t = t*z6 % p
+    e = (p - 1)//6
+    def chi(x):
+        x %= p
+        if x == 0: return 0
+        return table[pow(x, e, p)]
+    return chi
+def addchar(x, a, b):
+    # e(x / pi) for integer x; x/pi = x * conj(pi) / N(pi)
+    pi = a + b*W
+    z = x / pi
+    return cmath.exp(4j*math.pi*z.imag/math.sqrt(3))
+def data_prime(a, b):
+    p = a*a - a*b + b*b
+    chi = sextic_char(a, b, p)
+    xs = range(p)
+    ch = [chi(x) for x in xs]; ad = [addchar(x, a, b) for x in xs]
+    g = {}
+    for j in (1, 2, 3, 4, -1):
+        g[j] = sum((c**j if c != 0 else 0)*d for c, d in zip(ch, ad))/math.sqrt(p)
+    pi = a + b*W
+    return dict(p=p, chi=chi, g=g, alpha=pi/abs(pi), chi4=chi(4), pi=pi)
+def gauss_n(pr1, pr2, j):
+    # n = pi1 pi2; x runs over Z/(p1 p2); chi_n(x) = chi_pi1(x) chi_pi2(x); e(x/n)
+    p1, p2 = pr1['p'], pr2['p']; n = pr1['pi']*pr2['pi']; P = p1*p2
+    s = 0
+    for x in range(P):
+        c = pr1['chi'](x)*pr2['chi'](x)
+        if c == 0: continue
+        z = x/n
+        s += c**j * cmath.exp(4j*math.pi*z.imag/math.sqrt(3))
+    return s/math.sqrt(P)
+if __name__ == '__main__':
+    prs = []
+    for p in primes(PMAX):
+        if p % 3 == 1 and p > 7:
+            for (a, b) in primary_split(p): prs.append(data_prime(a, b))
+    e1 = e3 = e6 = emod = 0
+    for d in prs:
+        g, al = d['g'], d['alpha']; mu = -1
+        e1 = max(e1, abs(g[2]**3 - mu*al))
+        e3 = max(e3, abs(mu*g[2]**2 - al*g[2].conjugate()))
+        G = d['chi4'].conjugate()*g[3]
+        e6 = max(e6, abs(g[2]**2 - g[1]*G.conjugate()))
+        emod = max(emod, abs(abs(g[2]) - 1))
+    print(f"split primary primes (13 <= p <= {PMAX}): {len(prs)}")
+    print(f"  (I1) gamma2^3 = mu alpha          max err {e1:.2e}")
+    print(f"  (I3) mu gamma2^2 = alpha conj g2   max err {e3:.2e}")
+    print(f"  (I6) gamma2^2 = gamma1 conj G      max err {e6:.2e}   (G = conj(chi(4)) gamma3)")
+    print(f"  |gamma2| = 1                      max err {emod:.2e}")
+    # composites n = pi1 pi2, mu(n) = +1
+    small = [d for d in prs if d['p'] < 80]
+    e3c = 0; cnt = 0; phases = []
+    for d1, d2 in itertools.combinations(small, 2):
+        if d1['p'] == d2['p']: continue
+        g2 = gauss_n(d1, d2, 2); n = d1['pi']*d2['pi']; al = n/abs(n)
+        e3c = max(e3c, abs(1*g2**2 - al*g2.conjugate())); cnt += 1
+        phases.append(g2/(d1['g'][2]*d2['g'][2]))
+    print(f"composites n = pi1 pi2 (norms < 80, distinct): {cnt}; (I3) mu g2(n)^2 = alpha(n) conj g2(n): max err {e3c:.2e}")
+    cub = max(abs(z**3 - 1) for z in phases)
+    print(f"  twisted multiplicativity: g2(n)/(g2(pi1) g2(pi2)) is a cube root of unity: max |phase^3 - 1| = {cub:.2e}")

@@ -1,0 +1,18 @@
+"""Loss factor L(P,u) = D_P(P^u)^2 / d_{P^u}^2 : cost of restricting to P-smooth k among k <= N = P^u."""
+import math, numpy as np
+from sympy import factorint
+exec(open("nb_gram.py.txt").read().split('if __name__')[0])
+G = np.load("/home/user/ysolucki/rh/data/r1_B/G2000.npy"); Nmax = 2000
+b = bvec(Nmax); ks = np.arange(1, Nmax + 1); d2 = np.load("/home/user/ysolucki/rh/data/r1_B/d2.npy")
+gpf = np.array([1] + [max(factorint(k)) for k in range(2, Nmax + 1)])
+def dist2(idx):
+    A = G[np.ix_(idx, idx)]; r = b[idx]; c = np.linalg.lstsq(A, r, rcond=1e-13)[0]; return 1 - 2 * r @ c + c @ A @ c
+print("  P | u=1.5: N, #smooth/N, D^2, L | u=2 | u=2.5 | u=3")
+for P in [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]:
+    s = "%3d |" % P
+    for u in [1.5, 2, 2.5, 3]:
+        N = int(round(P ** u))
+        if N > Nmax: s += "      -      |"; continue
+        idx = np.where((gpf <= P) & (ks <= N))[0]; D = dist2(idx)
+        s += " N=%4d %.2f D2=%.6f L=%.3f |" % (N, len(idx) / N, D, D / d2[N - 1])
+    print(s)

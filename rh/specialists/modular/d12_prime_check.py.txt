@@ -1,0 +1,16 @@
+# prime-side check of NOTES D12 (c) on f = const on (-L, L): (1 - I_w/(2L))/w  ->  Weil matrix element q_00 (zeta, pole included)
+import sys, mpmath as mp
+mp.mp.dps = 20
+L = mp.mpf('0.5')
+def R(s, w):
+    return ((s-w)*(s-w-1))/((s+w)*(s+w-1))*mp.pi**w*mp.gamma((s-w)/2)/mp.gamma((s+w)/2)
+def Phi(a, w, c=mp.mpf(2)):
+    # Phi_w(a) - a = (1/2 pi) int_R (R(c+it) - 1) e^((c - 1/2 + it) a) / (c - 1/2 + it)^2 dt ; real part, even in t
+    g = lambda t: 2*mp.re((R(mp.mpc(c, t), w) - 1)*mp.exp((c - mp.mpf(1)/2 + 1j*t)*a)/(c - mp.mpf(1)/2 + 1j*t)**2)
+    v = mp.quad(g, mp.linspace(0, 200, 41)) + mp.quad(g, mp.linspace(200, 4000, 77))
+    return a + v/(2*mp.pi), abs(g(mp.mpf(4000)))*4000
+for w in [mp.mpf(x) for x in sys.argv[1:]]:
+    q2 = mp.mpf(2)**w*(1 - mp.mpf(2)**(-2*w))
+    P1, t1 = Phi(2*L, w); P2, t2 = Phi(2*L - mp.log(2), w)
+    I = P1 + q2/mp.sqrt(2)*P2
+    print("w =", mp.nstr(w, 3), " Phi(2L) =", mp.nstr(P1, 10), " Phi(2L-log2) =", mp.nstr(P2, 10), " (1 - I/2L)/w =", mp.nstr((1 - I/(2*L))/w, 8), "  tail scale:", mp.nstr(max(t1, t2), 2))

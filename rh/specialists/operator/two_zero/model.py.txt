@@ -1,0 +1,93 @@
+"""Two-zero model of kappa_min (SP-operator, TWO_ZERO.md).
+Local model at height gamma: zeros = picket fence s(Z+1/2) (spacing s = 2 pi / log(q t / 2 pi)), with the two lattice
+points at +-s/2 replaced by a pair at +-delta (u = delta^2 > 0, on-line) or by a quartet point pair +-i beta (u = -beta^2).
+Space: Paley-Wiener PW_L (F = Fourier transform of f in L^2[-L, L]); background: s * sum_lattice |F|^2 = ||F||^2 (tight
+frame, exact for r = pi/(L s) >= 1). rho(r, u) = min of s*Q_model(F)/||F||^2, closed form via two 2x2 problems.
+usage: python3 model.py.txt check | scan"""
+import sys, cmath, math
+import numpy as np
+
+def S(d, l):                      # sinc(l d), complex-safe
+    z = l * d
+    return 1.0 if abs(z) < 1e-12 else cmath.sin(z) / z
+
+def sector_min(r, u, sign):
+    """lambda_min of M Gamma in the even (sign=+1) or odd (sign=-1) sector; u = (delta/s)^2"""
+    l = math.pi / r; d = cmath.sqrt(u)
+    A = -(1 / r) * (1 + sign * S(1, l))
+    B = (1 / r) * (1 + sign * S(2 * d, l))
+    C = -(1 / r ** 2) * (S(0.5 - d, l) + sign * S(0.5 + d, l)) ** 2
+    A, B, C = A.real if isinstance(A, complex) else A, complex(B).real, complex(C).real
+    return ((A + B) - math.sqrt(max(0.0, (A - B) ** 2 + 4 * C))) / 2, (A, B, C)
+
+def rho(r, u):
+    le, _ = sector_min(r, u, +1); lo, _ = sector_min(r, u, -1)
+    return min(1.0, 1 + le, 1 + lo), (1 + le, 1 + lo)
+
+def pair_share(r, u):
+    """for the minimising sector: fraction of s*Q(F) carried by the pair term (the rest is the lattice minus 2 points)"""
+    best = None
+    for sign in (+1, -1):
+        lam, (A, B, C) = sector_min(r, u, sign)
+        if best is None or lam < best[0]: best = (lam, sign, A, B, C)
+    lam, sign, A, B, C = best
+    # eigenvector of M Gamma: coefficients c with Phi = sum c_i m_i phi_i ... use the dual form: Q~ = I + sum m_i phi phi*;
+    # minimiser F = sum a_i phi_i with (M Gamma) a = lam a ; pair value = m_2 |<F, phi_2>|^2 = m_2 |(Gamma a)_2|^2
+    l = math.pi / r; d = cmath.sqrt(u)
+    G11 = (1 / r) * (1 + sign * S(1, l)); G22 = abs((1 / r) * (1 + sign * S(2 * d, l))) if u >= 0 else None
+    # rebuild Gamma explicitly (complex-safe)
+    if u >= 0:
+        G12 = (1 / r) * (S(0.5 - d, l) + sign * S(0.5 + d, l)); G12 = complex(G12).real; G22 = complex((1 / r) * (1 + sign * S(2 * d, l))).real
+        m2 = 1
+    else:
+        b = math.sqrt(-u)
+        if sign == 1:
+            G22 = (1 / r) * (1 + complex(S(2j * b, l)).real); G12 = (2 / r) * complex(S(0.5 + 1j * b, l)).real; m2 = 1
+        else:
+            G22 = (1 / r) * (complex(S(2j * b, l)).real - 1); G12 = (2 / r) * complex(S(0.5 + 1j * b, l)).imag; m2 = -1
+    Gm = np.array([[G11, G12], [G12, G22]]); M = np.diag([-1.0, m2])
+    w, V = np.linalg.eig(M @ Gm); i = int(np.argmin(w.real)); a = V[:, i].real
+    norm2 = a @ Gm @ a
+    ga = Gm @ a
+    qtot = norm2 + (-1) * ga[0] ** 2 + m2 * ga[1] ** 2
+    pair = m2 * ga[1] ** 2
+    lattice_rest = norm2 - ga[0] ** 2        # s*sum over lattice minus the 2 points
+    return pair / qtot, lattice_rest / qtot, (lam + 1, qtot / norm2)
+
+def check():
+    """independent brute force (no use of the tight-frame identity): f in the orthonormal Legendre basis of L^2[-L, L]
+    (L = 1, degree < N), exact transforms F_j(t) = i^j sqrt(2L(2j+1)) j_j(tL); lattice sum truncated at |k| <= K;
+    min eigenvalue of s*Q_model relative to ||F||^2 = 2 pi |c|^2, against the closed form."""
+    from scipy.special import spherical_jn
+    L = 1.0
+    def Fv(ts, N):
+        ts = np.asarray(ts, dtype=complex)
+        out = np.zeros((len(ts), N), dtype=complex)
+        for j in range(N):
+            if np.all(np.abs(ts.imag) < 1e-15):
+                jj = spherical_jn(j, ts.real * L)
+            else:   # complex argument: sum the series via mpmath
+                import mpmath as mp
+                jj = np.array([complex(mp.sqrt(mp.pi / (2 * (t * L))) * mp.besselj(j + 0.5, t * L)) if abs(t) > 0 else (1.0 if j == 0 else 0.0) for t in ts])
+            out[:, j] = (1j) ** j * math.sqrt(2 * L * (2 * j + 1)) * jj
+        return out
+    for N in (40,):
+        for r, du in ((1.0, 0.04), (1.2, 0.04), (1.2, -0.02), (1.5, 0.09), (1.0, -0.01)):
+            s = math.pi / (L * r); K = 200000
+            lat = s * (np.arange(-K, K) + 0.5); lat = lat[np.abs(lat) > 0.6 * s]
+            Fl = Fv(lat, N)
+            Qm = s * (Fl.conj().T @ Fl)
+            if du >= 0:
+                d = math.sqrt(du) * s; Fp = Fv([d, -d], N); Qm = Qm + s * (Fp.conj().T @ Fp)
+            else:
+                b = math.sqrt(-du) * s
+                Fa = Fv([1j * b], N)[0]; Fb = Fv([-1j * b], N)[0]
+                # F(ib) conj F(-ib) + F(-ib) conj F(ib), F = sum c_j F_j with complex c: Hermitian form c^* H c
+                H = np.outer(Fb.conj(), Fa) ; H = s * (H + H.conj().T)
+                Qm = Qm + H
+            Qm = (Qm + Qm.conj().T) / 2
+            ev = np.linalg.eigvalsh(Qm / (2 * math.pi))
+            print(f" N = {N}, r = {r}, u = {du}: brute force min = {ev[0]:.6f}   closed form rho = {rho(r, du)[0]:.6f}", flush=True)
+
+if __name__ == '__main__':
+    if sys.argv[1] == 'check': check()

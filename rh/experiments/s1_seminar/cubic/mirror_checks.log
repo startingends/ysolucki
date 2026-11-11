@@ -1,0 +1,13 @@
+1) noprimes L=1.0 n=24: sym defect of K_H 0.0e+00 ; eig(K_H) min 1.847e-18 ; eig(K_H - q q^T) min -1.913e-18 ; Hankel(Ntilde) with F1: min -4.520e-18 (#neg 0 of 13) ; with F2: min -5.304e-01
+1) zeta     L=1.0 n=24: sym defect of K_H 0.0e+00 ; eig(K_H) min -8.520e-01 ; eig(K_H - q q^T) min -8.523e-01 ; Hankel(Ntilde) with F1: min -8.522e-01 (#neg 5 of 13) ; with F2: min -8.542e-01
+1) noprimes L=0.5 n=24: sym defect of K_H 0.0e+00 ; eig(K_H) min 4.118e-17 ; eig(K_H - q q^T) min 1.208e-17 ; Hankel(Ntilde) with F1: min 1.804e-17 (#neg 0 of 13) ; with F2: min -1.176e-01
+1) zeta     L=0.5 n=24: sym defect of K_H 0.0e+00 ; eig(K_H) min -4.543e-01 ; eig(K_H - q q^T) min -4.543e-01 ; Hankel(Ntilde) with F1: min -4.543e-01 (#neg 4 of 13) ; with F2: min -4.566e-01
+3) no primes, L=0.30 n=24: lowest eigenvalue of Q: even block 1.2165e-02, odd block 2.3703e-01
+3) no primes, L=0.36 n=24: lowest eigenvalue of Q: even block 6.8435e-03, odd block 4.7794e-02
+3) no primes, L=0.38 n=24: lowest eigenvalue of Q: even block 7.4422e-03, odd block -9.1431e-03
+3) no primes, L=0.40 n=24: lowest eigenvalue of Q: even block 7.8355e-03, odd block -6.3615e-02
+3) no primes, L=0.45 n=24: lowest eigenvalue of Q: even block 2.6841e-03, odd block -1.9081e-01
+3) no primes, L=0.50 n=24: lowest eigenvalue of Q: even block -1.8433e-02, odd block -3.0787e-01
+3) no primes, L=0.54 n=24: lowest eigenvalue of Q: even block -4.8165e-02, odd block -3.9604e-01
+2) L=1.0 n=24 lowest eigenvalue of Q, weight of every power of 2 multiplied by c2 (mirror matrix stays PSD for c2 >= 0): c2=0.00: -4.989e-01 | c2=0.50: -2.326e-01 | c2=0.90: -2.538e-02 | c2=0.97: 4.458e-03 | c2=1.00: 3.740e-03 | c2=1.03: -1.823e-02 | c2=1.10: -7.440e-02 | c2=2.00: -8.505e-01
+2) L=1.0 n=48 lowest eigenvalue of Q, weight of every power of 2 multiplied by c2 (mirror matrix stays PSD for c2 >= 0): c2=0.00: -5.270e-01 | c2=0.50: -2.578e-01 | c2=0.90: -4.271e-02 | c2=0.97: -7.756e-03 | c2=1.00: 1.155e-03 | c2=1.03: -2.168e-02 | c2=1.10: -8.068e-02 | c2=2.00: -8.727e-01

@@ -1,0 +1,18 @@
+import math, numpy as np
+def mang(m):
+    for p in range(2,m+1):
+        if m%p==0:
+            k=m
+            while k%p==0: k//=p
+            return math.log(p) if k==1 else 0.0
+    return 0.0
+w=lambda u: math.exp(-u/2)/(1-math.exp(-2*u))
+A=np.array([[mang(a*b)/math.sqrt(a*b) for b in range(2,61)] for a in range(2,61)])
+W=np.array([[w(math.log(a*b)) for b in range(2,61)] for a in range(2,61)])
+for nm,Z in (('primes',A),('arch w(log ab)',W),('sum',A+W)):
+    e=np.linalg.eigvalsh(Z); print(nm,'min eig',e[0],'max',e[-1])
+# D4-type control: positions x0=log 1.5 and log(2/1.5): 2x2 Hankel matrix of prime atoms + w
+x=[math.log(1.5),math.log(2/1.5)]
+H=np.array([[w(x[i]+x[j])+(math.log(2)/math.sqrt(2) if abs(x[i]+x[j]-math.log(2))<1e-12 else 0.0) for j in range(2)] for i in range(2)])
+Hp=np.array([[(math.log(2)/math.sqrt(2) if abs(x[i]+x[j]-math.log(2))<1e-12 else 0.0) for j in range(2)] for i in range(2)])
+print('rational positions 3/2, 4/3: prime part eig',np.linalg.eigvalsh(Hp),' with w:',np.linalg.eigvalsh(H))

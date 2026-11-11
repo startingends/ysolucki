@@ -1,0 +1,16 @@
+# X=1e+06 rho0=(0.6+4j) c=0.0733-0.4890j mode=smooth P0=50 delta=0.02202 Nmax=1382681 max|eps|=0.0896
+# sieve+sort done 0.2s ; N_B(X) = 1007850
+# A (LSQ fit on [X/50,X]) = 1.0078732309
+# window_lo   rms(R, global A)   rms(R, local linear detrend)   max|R|
+        1000         3.0888         2.3123        8.403
+        2000         4.0323         2.9290       11.493
+        4000         5.9672         4.4807       20.023
+        8000         5.7498         4.8779       17.338
+     1.6e+04         8.1515         6.4235       26.549
+     3.2e+04         9.6969         8.8375       35.131
+     6.4e+04        13.0255        10.9517       44.057
+    1.28e+05        18.5478        17.1509       68.496
+    2.56e+05        25.4279        22.0469      101.517
+# exponent fit of local-detrended rms: all windows 0.402 ; upper half of windows 0.451
+# exponent fit of global-A rms: all windows 0.363 ; upper half of windows 0.422
+# total time 0.2s

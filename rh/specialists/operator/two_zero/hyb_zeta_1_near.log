@@ -1,0 +1,13 @@
+QDmp_zeta_1_1_116.pkl: kind zeta, L = 1, NB = 116; whitening done 6s
+ check: pencil with the actual zeros: kappa_min = 0.297833, second 0.300232; u0 = 0.55111; background alone: kappa_min = 0.000000  (10s)
+  u = +0.55111 (delta = 0.7424): kappa_min = +0.297833, second = +0.300232; share of the moved pair in Q(v_min) = +0.802   (10s)
+  u = +0.55111 (delta = 0.7424): kappa_min = +0.297833, second = +0.300232; share of the moved pair in Q(v_min) = +0.802   (11s)
+  u = +0.55111 (delta = 0.7424): kappa_min = +0.297834, second = +0.300234; share of the moved pair in Q(v_min) = +0.802   (11s)
+  u = +0.55112 (delta = 0.7424): kappa_min = +0.297839, second = +0.300245; share of the moved pair in Q(v_min) = +0.803   (11s)
+  u = +0.55109 (delta = 0.7424): kappa_min = +0.297817, second = +0.300209; share of the moved pair in Q(v_min) = +0.802   (11s)
+  u = +0.55126 (delta = 0.7425): kappa_min = +0.297360, second = +0.299963; share of the moved pair in Q(v_min) = +0.796   (12s)
+  u = +0.55096 (delta = 0.7423): kappa_min = +0.297200, second = +0.299549; share of the moved pair in Q(v_min) = +0.789   (12s)
+  u = +0.55259 (delta = 0.7434): kappa_min = +0.251195, second = +0.291563; share of the moved pair in Q(v_min) = +0.582   (12s)
+  u = +0.54963 (delta = 0.7414): kappa_min = +0.250932, second = +0.288224; share of the moved pair in Q(v_min) = +0.596   (13s)
+  u = +0.56606 (delta = 0.7524): kappa_min = +0.023328, second = +0.097429; share of the moved pair in Q(v_min) = +0.062   (13s)
+  u = +0.53636 (delta = 0.7324): kappa_min = +0.023909, second = +0.098620; share of the moved pair in Q(v_min) = +0.065   (13s)

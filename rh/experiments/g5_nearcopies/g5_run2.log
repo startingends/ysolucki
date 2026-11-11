@@ -1,0 +1,8 @@
+D=20000 H=2000 A1=-14.000 rms=110.272 median|A_d| nonsquares=39.000
+near copies: 269; squares among them: 6; non-squares: [11, 21, 22, 31, 44, 50, 53, 71, 74, 79, 82, 84, 88, 102, 124, 134, 141, 142, 147, 153, 154, 176, 189, 200, 210, 212, 214, 222, 242, 245, 257, 262, 265, 275, 279, 284, 291, 295, 296, 316]
+fraction of non-squares near: 0.1345
+baseline fraction of random non-square pairs within tol: 0.1100; A_1 = -14.00; values A_(k^2) for k=1..6: [-14.0, -14.0, -91.0, -14.0, -61.0, -91.0]
+D=40000 H=1000 A1=-24.000 rms=155.917 median|A_d| nonsquares=59.000
+near copies: 126; squares among them: 5; non-squares: [6, 24, 30, 38, 42, 43, 54, 71, 91, 96, 103, 106, 113, 118, 120, 123, 126, 147, 152, 168, 172, 181, 182, 209, 213, 214, 216, 218, 223, 238, 239, 254, 258, 259, 270, 274, 284, 285, 321, 333]
+fraction of non-squares near: 0.1249
+baseline fraction of random non-square pairs within tol: 0.1000; A_1 = -24.00; values A_(k^2) for k=1..6: [-24.0, -24.0, -127.0, -24.0, -86.0, -127.0]

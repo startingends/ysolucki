@@ -1,0 +1,19 @@
+zeta L=1 M=40 lambda_1=4.303094  #pos=1  total rate Q=5.87125
+ site   0 (x=-0.975) err 2.2e-14 | BE const/lam1: S -0.0000  S+H 0.0056  S+O -0.2269  H+O 0.0523  all 0.4963
+      on f = 1 - delta_x (Rayleigh /lam1): S 0.3351  H 0.6942  O -0.2091  all 0.8202
+ site  10 (x=-0.475) err 1.2e-14 | BE const/lam1: S -0.0000  S+H 0.4044  S+O 0.1635  H+O 0.0127  all 0.5269
+      on f = 1 - delta_x (Rayleigh /lam1): S 0.6282  H 0.2667  O -0.0876  all 0.8073
+ site  20 (x=+0.025) err 3.0e-14 | BE const/lam1: S -0.0000  S+H 0.2405  S+O 0.1999  H+O -0.0297  all 0.5222
+      on f = 1 - delta_x (Rayleigh /lam1): S 0.6720  H 0.2381  O -0.1190  all 0.7911
+ integrated check |sum pi Gamma_2 - L^T Pi L| = 6.7e-16
+ integrated S   : generalised eigenvalues vs Dirichlet form, /lam1: min -0.0000  2nd 0.5271  max 1.484 ; #neg 0 of 39
+ integrated H   : generalised eigenvalues vs Dirichlet form, /lam1: min 0.0498  2nd 0.0506  max 0.588 ; #neg 0 of 39
+ integrated O   : generalised eigenvalues vs Dirichlet form, /lam1: min 0.0527  2nd 0.0551  max 0.586 ; #neg 0 of 39
+ integrated S+H : generalised eigenvalues vs Dirichlet form, /lam1: min 0.5489  2nd 0.7948  max 1.649 ; #neg 0 of 39
+ integrated S+O : generalised eigenvalues vs Dirichlet form, /lam1: min 0.5538  2nd 0.7815  max 1.654 ; #neg 0 of 39
+ integrated H+O : generalised eigenvalues vs Dirichlet form, /lam1: min 0.1051  2nd 0.1093  max 1.173 ; #neg 0 of 39
+ integrated all : generalised eigenvalues vs Dirichlet form, /lam1: min 1.0034  2nd 1.0049  max 1.866 ; #neg 0 of 39
+
+real	0m2.101s
+user	0m1.957s
+sys	0m0.047s

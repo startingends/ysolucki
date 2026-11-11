@@ -1,0 +1,140 @@
+"""S1-parity, PLANK 4 of Bridge 1 (idea #27): second-implementation reproduction of the lead's e27 numbers (rh/experiments/e27_relative).
+Nothing is imported from the lead's scripts or from lane A's builder.
+  * window form: implementation B (wb.py.txt; fd.py.txt for the control F_d), integer or half-integer lattice, any N;
+  * prolate functions: Legendre (Bouwkamp) expansion of the differential operator -((1-t^2) f')' + c^2 t^2 f on [-1,1]
+    (the lead: Nystroem on the sinc kernel). chi_n = (c/2pi) lambda_n^2, lambda_n = int_{-1}^{1} psi_n / psi_n(0) (finite Fourier transform at t = 0);
+  * test vectors v(u) = e^(u/2) sum_{k <= lambda e^-u} G(k e^u / lambda), G = psi_n - (psi_n(0)/psi_b(0)) psi_b, lambda = e^L;
+    coefficients in the basis by Gauss-Legendre on subintervals that respect the breakpoints u = L - log k (jumps of v);
+  * D = lambda [diag(1 - chi_n) + r r^T (1 - chi_b)], r_n = psi_n(0)/psi_b(0); kappa_K = spectrum of D^-1/2 M D^-1/2 on the first K vectors.
+usage: python3 plank4.py.txt L N lattice(int|half) Kmax [d1 d2 ...]     (d: real tilts of the control F_d, form F_d/2)"""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt"); wb = fd.wb
+Ls = sys.argv[1]; L = float(Ls); N = int(sys.argv[2]); lat = sys.argv[3]; Kmax = int(sys.argv[4]); tilts = sys.argv[5:]
+mp.mp.dps = int(80 + 7 * math.exp(2 * L)); t0 = time.time(); ns = lambda x, k=6: mp.nstr(x, k)
+Lm = mp.mpf(Ls); lam = mp.exp(Lm); c = 2 * mp.pi * lam * lam
+tm = lambda: "(%.0fs)" % (time.time() - t0)
+
+# ---------- prolate functions (even order only), Legendre expansion ----------
+nmax_idx = 4 * Kmax + 2 + 2                      # largest prolate index needed: 4K (even block), 4K+2 (odd block)
+J = int(float(c) * 1.6) + nmax_idx + 70          # Legendre degrees 0, 2, ..., 2(J-1)
+A = mp.matrix(J, J)
+for i in range(J):
+    k = 2 * i
+    A[i, i] = k * (k + 1) + c * c * mp.mpf(2 * k * (k + 1) - 1) / ((2 * k + 3) * (2 * k - 1))
+    if i + 1 < J:
+        A[i, i + 1] = A[i + 1, i] = c * c * mp.mpf((k + 1) * (k + 2)) / ((2 * k + 3) * mp.sqrt(mp.mpf((2 * k + 1) * (2 * k + 5))))
+evA, VA = mp.eigsy(A)
+ordA = sorted(range(J), key=lambda i: evA[i])
+def pbar_even(t, Jn):
+    """normalised Legendre values Pbar_{2i}(t), i < Jn"""
+    out = []; p0, p1 = mp.mpf(1), t
+    for k in range(2 * Jn):
+        if k % 2 == 0: out.append(p0 * mp.sqrt(mp.mpf(2 * k + 1) / 2))
+        p0, p1 = p1, ((2 * k + 3) * t * p1 - (k + 1) * p0) / (k + 2)
+    return out
+P0 = pbar_even(mp.mpf(0), J)
+class Prolate:
+    def __init__(self, n):                       # n even
+        i = ordA[n // 2]; self.beta = [VA[j, i] for j in range(J)]
+        self.at0 = mp.fsum(b * p for b, p in zip(self.beta, P0))
+        self.lam = mp.sqrt(2) * self.beta[0] / self.at0
+        self.chi = c / (2 * mp.pi) * self.lam ** 2
+PR = {}
+def prol(n):
+    if n not in PR: PR[n] = Prolate(n)
+    return PR[n]
+print("L=%s lambda=%s c=%s ; basis %s N=%d ; dps %d ; Legendre terms %d %s" % (Ls, ns(lam, 8), ns(c, 10), lat, N, mp.mp.dps, J, tm()), flush=True)
+print("defects 1 - chi_n (Legendre route), n = 0, 2, ..., 20: " + " ".join("%d:%s" % (n, ns(1 - prol(n).chi, 6)) for n in range(0, 22, 2)), flush=True)
+
+# ---------- window form ----------
+def zeta_blocks():
+    M = wb.add(wb.arch_blocks(Lm, N, lat), wb.pole_blocks(Lm, N, lat))
+    for x, cc in wb.mangoldt(math.exp(2 * L)).items():
+        if math.log(x) < 2 * L - 1e-12: M = wb.add(M, wb.atom_blocks(Lm, N, lat, x), cc)
+    return M
+Mz = zeta_blocks()
+eig = [mp.eigsy(Mz[b]) for b in (0, 1)]
+srt = [sorted(range(len(eig[b][0])), key=lambda j: eig[b][0][j]) for b in (0, 1)]
+low = [[eig[b][0][j] for j in srt[b][:4]] for b in (0, 1)]
+print("(a) lowest eigenvalues, even: %s ; odd: %s %s" % ([ns(x) for x in low[0]], [ns(x) for x in low[1]], tm()), flush=True)
+merged = [("even", 1, low[0][0], 4), ("odd", 1, low[1][0], 6), ("even", 2, low[0][1], 8), ("odd", 2, low[1][1], 10), ("even", 3, low[0][2], 12), ("odd", 3, low[1][2], 14)]
+print("    merged ladder / defect: " + " ; ".join("%s#%d/(1-chi_%d) = %s" % (nm, k, n, ns(v / (1 - prol(n).chi), 4)) for nm, k, v, n in merged), flush=True)
+
+# ---------- quadrature points on [-L, L] respecting the jumps ----------
+brk = sorted(set([-Lm, Lm] + [Lm - mp.log(k) for k in range(1, int(mp.floor(lam * lam)) + 1) if Lm - mp.log(k) > -Lm]))
+hmax = min(mp.mpf('0.06'), 6 * Lm / max(N, 30))
+gl = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(5, mp.mp.prec)          # 48 nodes on [-1, 1]
+pts = []
+for a, b in zip(brk[:-1], brk[1:]):
+    m = int(mp.ceil((b - a) / hmax))
+    for i in range(m):
+        lo, hi = a + (b - a) * i / m, a + (b - a) * (i + 1) / m
+        h = (hi - lo) / 2; mid = (hi + lo) / 2
+        for x, w in gl: pts.append((mid + h * x, h * w))
+freqs = wb.freqs(Lm, N, lat)
+def basis_vals(u):
+    ce = [(1 / mp.sqrt(2 * Lm) if om == 0 else mp.cos(om * u) / mp.sqrt(Lm)) for om in freqs]
+    so = [mp.sin(om * u) / mp.sqrt(Lm) for om in freqs if om != 0]
+    return ce, so
+# values of the needed prolates' images at every quadrature point (shared Legendre recurrences)
+need = sorted(set([0, 2] + [4 * k for k in range(1, Kmax + 1)] + [4 * k + 2 for k in range(1, Kmax + 1)]))
+img = {n: [] for n in need}                       # img[n][p] = e^(u/2) sum_k psi_n(k e^u / lambda)
+BV = []
+for u, w in pts:
+    x = mp.exp(u); top = int(mp.floor(lam / x + mp.mpf(10) ** (-mp.mp.dps + 8)))
+    acc = {n: mp.mpf(0) for n in need}
+    for k in range(1, top + 1):
+        pv = pbar_even(k * x / lam, J)
+        for n in need: acc[n] += mp.fsum(b * p for b, p in zip(prol(n).beta, pv))
+    sx = mp.sqrt(x)
+    for n in need: img[n].append(sx * acc[n])
+    BV.append(basis_vals(u))
+print("quadrature: %d breakpoints, %d points ; images of %d prolates done %s" % (len(brk), len(pts), len(need), tm()), flush=True)
+def vector(n, b):
+    r = prol(n).at0 / prol(b).at0
+    vals = [img[n][p] - r * img[b][p] for p in range(len(pts))]
+    ne, no = len(BV[0][0]), len(BV[0][1])
+    ce = [mp.fsum(pts[p][1] * vals[p] * BV[p][0][j] for p in range(len(pts))) for j in range(ne)]
+    co = [mp.fsum(pts[p][1] * vals[p] * BV[p][1][j] for p in range(len(pts))) for j in range(no)]
+    nrm2 = mp.fsum(pts[p][1] * vals[p] ** 2 for p in range(len(pts)))
+    jumps = []
+    for k in range(1, int(mp.floor(lam * lam)) + 1):
+        ub = Lm - mp.log(k)
+        if -Lm < ub <= Lm:
+            g1 = mp.fsum(bb * p for bb, p in zip(prol(n).beta, pbar_even(mp.mpf(1), J))) - r * mp.fsum(bb * p for bb, p in zip(prol(b).beta, pbar_even(mp.mpf(1), J)))
+            jumps.append(mp.exp(ub / 2) * g1)
+    return ce, co, nrm2, r, jumps
+def study(name, par, idx, b, Mb, label):
+    C = []; rs = []
+    for n in idx:
+        ce, co, nrm2, r, jumps = vector(n, b); cv = ce if par == 0 else co
+        C.append(cv); rs.append(r)
+        if label == "zeta" and n in (idx[0], idx[1]):
+            x = mp.matrix(cv); n2 = (x.T * x)[0]; R = (x.T * Mb * x)[0] / n2; xh = x / mp.sqrt(n2)
+            ev, V = eig[par]; j1, j2 = srt[par][0], srt[par][1]
+            ov1 = (xh.T * V[:, j1])[0] ** 2; ov2 = (xh.T * V[:, j2])[0] ** 2
+            print("(b) %s block, prolate n=%d (b=%d): |v|^2 = %s, captured by the block basis %s ; largest jump of v %s (relative to max |v|-scale 1) ; Rayleigh = %s ; Rayleigh/mu_1 = %s ; Rayleigh/mu_2 = %s ; 1 - overlap^2 with eigenvector 1: %s, with 2: %s ; Rayleigh/(1-chi_n) = %s %s" % (
+                  name, n, b, ns(nrm2), ns(n2 / nrm2, 10), ns(max(abs(j) for j in jumps), 3), ns(R), ns(R / ev[j1]), ns(R / ev[j2]), ns(1 - ov1, 4), ns(1 - ov2, 4), ns(R / (1 - prol(n).chi), 5), tm()), flush=True)
+    K = len(idx); Cm = mp.matrix(K, len(C[0]))
+    for i in range(K):
+        for j in range(len(C[0])): Cm[i, j] = C[i][j]
+    M = Cm * Mb * Cm.T; D = mp.matrix(K, K)
+    for i in range(K):
+        for j in range(K):
+            D[i, j] = lam * (((1 - prol(idx[i]).chi) if i == j else 0) + rs[i] * rs[j] * (1 - prol(b).chi))
+    out = []
+    for k in range(1, K + 1):
+        Lc = mp.cholesky(D[:k, :k]); Li = mp.inverse(Lc); Am = Li * M[:k, :k] * Li.T; Am = (Am + Am.T) / 2
+        e = mp.eigsy(Am, eigvals_only=True); out.append("K=%d: %s / %s" % (k, ns(min(e), 5), ns(max(e), 5)))
+    print("(c) %s, %s block, prolate indices %s: kappa_min / kappa_max: %s %s" % (label, name, list(idx), " ; ".join(out), tm()), flush=True)
+ie = [4 * k for k in range(1, Kmax + 1)]; io = [4 * k + 2 for k in range(1, Kmax + 1)]
+study("even", 0, ie, 0, Mz[0], "zeta"); study("odd", 1, io, 2, Mz[1], "zeta")
+for ds in tilts:
+    d = mp.mpf(ds); Md = fd.form(Lm, N, lat, d, d, d); Md = (Md[0] / 2, Md[1] / 2)
+    print("control F_d/2, d = %s: lowest eigenvalue even %s odd %s" % (ds, ns(min(mp.eigsy(Md[0], eigvals_only=True))), ns(min(mp.eigsy(Md[1], eigvals_only=True)))), flush=True)
+    study("even", 0, ie, 0, Md[0], "F_d/2 d=" + ds); study("odd", 1, io, 2, Md[1], "F_d/2 d=" + ds)
+print("total %s" % tm())

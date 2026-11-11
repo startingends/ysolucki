@@ -1,0 +1,8 @@
+zeta L=0.50 n=8 (#pos(H)=1):  [(0, 'infeasible', False), (1, 'infeasible', False), (2, 'infeasible', False), (3, 'infeasible', False), (4, 'infeasible', False), (5, 'infeasible', False), (6, 'infeasible', False), (7, 'optimal_in', np.True_)]
+     with T>=0 on distinct triples, R=0: infeasible
+     with T>=0 on distinct triples, R=1: infeasible
+zeta L=1.00 n=8 (#pos(H)=1):  [(0, 'infeasible', False), (1, 'infeasible', False), (2, 'infeasible', False), (3, 'infeasible', False), (4, 'infeasible', False), (5, 'infeasible', False), (6, 'infeasible', False), (7, 'optimal', np.True_)]
+     with T>=0 on distinct triples, R=0: infeasible
+     with T>=0 on distinct triples, R=1: infeasible
+beurling L=0.50 n=8 (#pos(H)=1):  [(0, 'infeasible', False), (1, 'infeasible', False), (2, 'infeasible', False), (3, 'infeasible', False), (4, 'infeasible', False), (5, 'infeasible', False), (6, 'infeasible', False), (7, 'optimal', np.True_)]
+zeta L=1.00 n=12 (#pos(H)=1):  [(0, 'infeasible', False), (1, 'infeasible', False), (2, 'infeasible', False), (3, 'infeasible', False), (4, 'infeasible', False), (5, 'infeasible', False), (6, 'infeasible', False), (7, 'infeasible', False), (8, 'infeasible', False), (9, 'infeasible', False), (10, 'infeasible', False), (11, 'optimal', np.True_)]

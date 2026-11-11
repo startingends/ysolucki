@@ -1,0 +1,33 @@
+"""Critic: independent spot checks of D3 (kernel log-curvature at u=0.42) and D6 (carry-family zero at tau=0.9)."""
+import math, mpmath as mp
+mp.mp.dps = 30
+kap = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+# D3: closed-form derivatives by mp.diff on my own series (plain loops, different truncation rule)
+def phi_z(u):
+    return sum((2 * mp.pi**2 * n**4 * mp.exp(4.5 * u) - 3 * mp.pi * n**2 * mp.exp(2.5 * u)) * mp.exp(-mp.pi * n * n * mp.exp(2 * u)) for n in range(1, 60))
+def phi_d(u):
+    a = [0, 1, kap, -kap, -1]
+    return 2 * mp.exp(1.5 * u) * sum(a[n % 5] * n * mp.exp(-mp.pi * n * n * mp.exp(2 * u) / 5) for n in range(1, 400))
+h = mp.mpf('1e-6')
+for nm, ph in (("zeta", phi_z), ("DH", phi_d)):
+    u = mp.mpf('0.42'); l = lambda v: mp.log(ph(v))
+    print(nm, "Phi(0.42) =", mp.nstr(ph(u), 8), " (log Phi)''(0.42) by central difference =", mp.nstr((l(u + h) - 2 * l(u) + l(u - h)) / h**2, 6),
+          " evenness Phi(0.3)/Phi(-0.3) =", mp.nstr(ph(mp.mpf('0.3')) / ph(mp.mpf('-0.3')), 12))
+# is the DH kernel positive near 0 where a(n) n has mixed signs? scan
+print("min Phi_DH on u in [0,2] step 0.01:", mp.nstr(min(phi_d(mp.mpf(k) / 100) for k in range(0, 201)), 6))
+# D6: Z_tau(s) = sum_n (2^floor(log2 n))^(-(1-tau)s) n^(-tau s): direct dyadic blocks k<K0, Euler-Maclaurin tail summed as geometric series
+def Ztau(s, tau, K0=12, J=6):
+    w = tau * s; tot = mp.mpf(0)
+    for k in range(K0):
+        Nk = 2**k; tot += mp.power(Nk, -(1 - tau) * s) * sum(mp.power(n, -w) for n in range(Nk, 2 * Nk))
+    # block sum for N=2^k: sum_{n=N}^{2N-1} n^-w = int_N^{2N} x^-w dx + (N^-w - (2N)^-w)/2 - sum_j B_2j/(2j)! (f^(2j-1)(2N)-f^(2j-1)(N))
+    q = lambda e: mp.power(2, K0 * e) / (1 - mp.power(2, e))        # sum_{k>=K0} 2^{k e}, continued
+    tot += (1 - mp.power(2, 1 - w)) / (w - 1) * q(1 - s) + (1 - mp.power(2, -w)) / 2 * q(-s)
+    for j in range(1, J + 1):
+        c = mp.bernoulli(2 * j) / mp.factorial(2 * j) * mp.rf(w, 2 * j - 1)   # f^(2j-1)(x) = -rf(w,2j-1) x^(-w-2j+1)
+        tot += c * (1 - mp.power(2, -w - 2 * j + 1)) * q(-s - 2 * j + 1)
+    return tot
+print("check tau=1: Z(2)-zeta(2) =", mp.nstr(Ztau(mp.mpf(2), 1) - mp.zeta(2), 5), " |Z_1(1/2+i g1)| =", mp.nstr(abs(Ztau(mp.mpc(0.5, '14.134725141734693'), 1)), 5))
+print("check tau=0.5, s=3 against direct sum:", mp.nstr(Ztau(mp.mpf(3), mp.mpf('0.5')), 10), mp.nstr(sum(mp.power(2**int(math.floor(math.log2(n))), -1.5) * mp.power(n, -1.5) for n in range(1, 200000)), 10))
+for tau, guess in ((mp.mpf('0.9'), mp.mpc(0.3874, 14.6025)), (mp.mpf('0.9'), mp.mpc(0.6748, 21.4461)), (mp.mpf('0.8'), mp.mpc(0.2391, 15.1637))):
+    r = mp.findroot(lambda s: Ztau(s, tau), guess); print("tau =", tau, " zero:", mp.nstr(r, 8), " |Z| =", mp.nstr(abs(Ztau(r, tau)), 3))

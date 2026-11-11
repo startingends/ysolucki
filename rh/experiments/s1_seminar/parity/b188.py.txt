@@ -1,0 +1,64 @@
+"""S1-parity turn 3, answer to K-atlas B188.
+(3) zeta's ODD ground state on windows L = 1.0, 1.25, 1.5: shares of the pole square E_+^2 in the identity
+      mu/2 = T_W - E_+^2 + sum_{m>=1} E_m^2 + H_primes        (phi = fold of the unit-norm odd ground state; B25/B60)
+    i.e. E_+^2 = T_W + Gamma squares + prime mirror - mu/2; share of each prime power; E_0^2/E_+^2; centre of mass of phi^2.
+(1) cone test for failed rows: energy of the odd block of a control on zeta's (positive) odd ground state at the same window.
+usage: python3 b188.py.txt shares L N dps  |  python3 b188.py.txt cone"""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+t0 = time.time(); ns = lambda x, k=4: mp.nstr(x, k)
+def odd_state(L, N, atoms):
+    Q = wb.add(wb.arch_blocks(L, N, 'int'), wb.pole_blocks(L, N, 'int'))
+    for x, c in atoms.items():
+        if math.log(float(x)) < 2 * L - 1e-12: Q = wb.add(Q, wb.atom_blocks(L, N, 'int', x), c)
+    ev, V = mp.eigsy(Q[1]); i = min(range(len(ev)), key=lambda j: ev[j])
+    return ev[i], [V[k, i] for k in range(V.rows)]
+def hconv(co, fr, u, Lm):
+    """(phi*phi)(u) = int phi(x) phi(u-x) dx over x in [max(0,u-L), min(L,u)], phi = sum co_k sin(fr_k x)"""
+    a, b = max(mp.mpf(0), u - Lm), min(Lm, u)
+    def I(k, c0): return (b - a) * mp.cos(c0) if k == 0 else (mp.sin(k * b + c0) - mp.sin(k * a + c0)) / k
+    s = mp.mpf(0)
+    for j in range(len(fr)):
+        for k in range(len(fr)):
+            al, be = fr[j], fr[k]
+            s += co[j] * co[k] * (I(al + be, -be * u) - I(al - be, be * u)) / 2
+    return s
+if sys.argv[1] == "shares":
+    L = float(sys.argv[2]); N = int(sys.argv[3]); mp.mp.dps = int(sys.argv[4]); Lm = mp.mpf(sys.argv[2])
+    lamz = {x: c for x, c in wb.mangoldt(math.exp(2 * L)).items() if math.log(x) < 2 * L - 1e-12}
+    mu, v = odd_state(L, N, lamz); fr = wb.freqs(Lm, N, 'int')[1:]; co = [v[k] / mp.sqrt(Lm) for k in range(len(fr))]
+    Eexp = lambda a: mp.fsum(co[k] * mp.im((mp.exp(mp.mpc(a, fr[k]) * Lm) - 1) / mp.mpc(a, fr[k])) for k in range(len(fr)))
+    Ep, E0 = Eexp(mp.mpf(1) / 2), Eexp(-mp.mpf(1) / 2)
+    G = mp.fsum(Eexp(-(2 * m + mp.mpf(1) / 2)) ** 2 for m in range(1, 1500))
+    hp = {n: c / mp.sqrt(n) * hconv(co, fr, mp.log(n), Lm) for n, c in lamz.items()}
+    Hp = mp.fsum(hp.values()); T = mu / 2 + Ep ** 2 - G - Hp
+    # centre of mass of phi^2 on (0, L]: closed form via quadrature at moderate precision
+    cm = mp.quad(lambda x: x * mp.fsum(co[k] * mp.sin(fr[k] * x) for k in range(len(fr))) ** 2, mp.linspace(0, Lm, 21)) / mp.mpf('0.5')
+    print("zeta odd ground state, L=%s N=%d: mu = %s ; shares of E_+^2: T_W %s + Gamma squares (m>=1) %s + prime mirror %s (sum - 1 = %s) ; E_0^2/E_+^2 = %s ; centre of mass of phi^2: x = %s (L = %s)" % (
+          sys.argv[2], N, ns(mu, 5), ns(T / Ep ** 2), ns(G / Ep ** 2), ns(Hp / Ep ** 2), ns((T + G + Hp) / Ep ** 2 - 1, 3), ns(E0 ** 2 / Ep ** 2), ns(cm), sys.argv[2]))
+    print("   prime shares of the mirror term: " + " ; ".join("%s: %s" % (n, ns(hp[n] / Hp, 3)) for n in sorted(hp)) + "   (%.0fs)" % (time.time() - t0), flush=True)
+else:
+    mp.mp.dps = 60; l2, l3 = mp.log(2), mp.log(3)
+    def cone(name, L, N, atoms_ctrl):
+        Lm = mp.mpf(L)
+        lamz = {x: c for x, c in wb.mangoldt(math.exp(2 * L)).items() if math.log(x) < 2 * L - 1e-12}
+        mu, v = odd_state(L, N, lamz)
+        Qc = wb.add(wb.arch_blocks(L, N, 'int'), wb.pole_blocks(L, N, 'int'))
+        for x, c in atoms_ctrl.items():
+            if math.log(float(x)) < 2 * L - 1e-12: Qc = wb.add(Qc, wb.atom_blocks(L, N, 'int', x), c)
+        vm = mp.matrix(v); e = (vm.T * Qc[1] * vm)[0]
+        muc = min(mp.eigsy(Qc[1], eigvals_only=True))
+        print("  %-34s L=%.2f: odd block of the control on zeta's nodeless odd ground state: %s  (zeta's own value %s ; control's lowest odd eigenvalue %s)  => (C) %s   (%.0fs)" % (
+              name, L, ns(e, 5), ns(mu, 4), ns(muc, 4), "FAILS (a one-signed vector has negative energy)" if e < 0 else "not refuted by this vector", time.time() - t0), flush=True)
+    cone("weight at 4 flipped", 0.75, 40, {2: l2, 3: l3, 4: -l2})
+    cone("weight at 4 doubled", 0.75, 40, {2: l2, 3: l3, 4: 2 * l2})
+    cone("one-prime system (no 3)", 0.60, 40, {2: l2, 4: l2})
+    b = mp.mpf('2.1')
+    cone("Beurling 2 -> 2.1", 0.50, 40, {b: mp.log(b)})
+    cone("Beurling 2 -> 2.1", 1.00, 40, {b: mp.log(b), b * b: mp.log(b), 3: l3, 5: mp.log(5), 7: mp.log(7)})
+    cone("Liouville twist", 0.50, 40, {2: -l2})
+    cone("no primes", 0.45, 40, {})

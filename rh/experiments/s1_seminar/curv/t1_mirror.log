@@ -1,0 +1,10 @@
+integers 2..60, prime part: min eig -7.058e-17  rank(>1e-9) 17
+integers 2..60, arch part : min eig -5.062e-16  rank(>1e-9) 4
+integers 2..60, both      : min eig -2.123e-16  rank(>1e-9) 21
+integers 1..60, prime part: min eig -2.6019
+Beurling (2 -> 2.1) own lattice, 56 elements <= 60, prime + arch: min eig -2.473e-16
+   prime part alone: min eig -9.736e-17 rank 17 (generators <= 60: 17)
+zeta atoms on rationals 3/2, 4/3                                        : min eig -0.4901
+zeta atoms on integers and 3/2, 4/3                                     : min eig -0.7454
+zeta atoms on Beurling lattice positions (2.1-lattice) with ZETA atoms  : min eig 0.0000
+arch kernel under theta_2: K(2, theta 6) = w(log 4/3) = 1.9795 ; K(6, theta 2) = w(log 12) = 0.2907

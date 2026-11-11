@@ -1,0 +1,7 @@
+kappa = 0.28407904384041227  target pi/2 - arctan(kappa) = 1.294009147346374
+sigma = 1.010  M = 2.50311  (tail estimate 0.70146)
+sigma = 1.020  M = 2.16002  (tail estimate 0.42650)
+sigma = 1.030  M = 1.96070  (tail estimate 0.29012)
+sigma = 1.050  M = 1.71190  (tail estimate 0.15365)
+sigma = 1.100  M = 1.38078  (tail estimate 0.04242)
+sigma_1 = 1.120362460196351   tail at sigma_1: 0.026574264698236753

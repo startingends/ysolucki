@@ -1,0 +1,103 @@
+"""Idea #9 first test. usage: python3 boot.py.txt <L> <N> <dps>"""
+import sys, math, importlib.util, importlib.machinery, time
+import flint
+from flint import arb
+import mpmath as mp
+
+spec = importlib.util.spec_from_file_location("weil", "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt",
+        loader=importlib.machinery.SourceFileLoader("weil", "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+
+L = float(sys.argv[1]); N = int(sys.argv[2]); dps = int(sys.argv[3])
+mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+X = int(math.floor(math.exp(2 * L) + 1e-9)); ns = list(range(2, X + 1))
+
+def to_mp(M):
+    n = M.nrows(); R = mp.matrix(n, M.ncols())
+    for i in range(n):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+
+def blocks(q):
+    return to_mp(weil.even_block(q, N)), to_mp(weil.odd_block(q, N))
+
+def build_with(kind, cn, arch, pole):
+    """lane A's builder with an arbitrary weight dict cn (n -> float/arb); kind fixes the archimedean term."""
+    saved = weil.dh_logderiv_coeffs, weil.mangoldt_upto
+    if kind == 'dh':
+        weil.dh_logderiv_coeffs = lambda X: dict(cn)
+        q, _ = weil.build(L, N, kind='dh', pole=False, primes=bool(cn), arch=arch)
+    else:  # zeta archimedean term (+pole); primes added separately through unit matrices
+        q, _ = weil.build(L, N, kind='zeta', pole=pole, primes=False, arch=arch)
+    weil.dh_logderiv_coeffs, weil.mangoldt_upto = saved
+    return q
+
+t0 = time.time()
+# unit prime-term matrices: Q = ... - m_n * B_n  => builder with weight 1 and no arch gives -B_n
+B = {n: blocks(build_with('dh', {n: arb(1)}, arch=False, pole=False)) for n in ns}     # these are (-B_n) blocks
+Q0 = {'zeta': blocks(build_with('zeta', {}, arch=True, pole=True)),
+      'c5odd': blocks(build_with('dh', {}, arch=True, pole=False))}
+print("built in %.1fs; L=%g N=%d dps=%d integers %s" % (time.time() - t0, L, N, dps, ns))
+
+def lam_min(kind, m):
+    out = []
+    for b in (0, 1):
+        M = Q0[kind][b].copy()
+        for n in ns:
+            if m.get(n, 0) != 0:
+                M += mp.mpf(m[n]) * B[n][b]
+        out.append(min(mp.eigsy(M, eigvals_only=True)))
+    return min(out), out
+
+Lam = {}
+for n, (_, p) in weil.mangoldt_upto(X).items(): Lam[n] = mp.log(p)
+for n in ns: Lam.setdefault(n, mp.mpf(0))
+print("\n== zeta archimedean term ==")
+mu, (me, mo) = lam_min('zeta', Lam)
+print("weights = von Mangoldt: lowest eigenvalue even %s odd %s" % (mp.nstr(me, 5), mp.nstr(mo, 5)))
+print("no weights at all (m = 0): lowest eigenvalue %s" % mp.nstr(lam_min('zeta', {})[0], 8))
+
+def interval(kind, base, n):
+    """feasible range of delta such that lam_min(base + delta e_n) >= 0, each side to a factor 1.2"""
+    res = []
+    for sgn in (+1, -1):
+        lo, hi = None, None
+        k = -1
+        while k >= -dps + 20:                       # coarse: largest power of ten that is still feasible
+            d = sgn * mp.mpf(10) ** k
+            m = dict(base); m[n] = base[n] + d
+            if lam_min(kind, m)[0] >= 0: lo = d; break
+            hi = d; k -= 2
+        if lo is None: res.append(mp.mpf(0)); continue
+        if hi is None: res.append(sgn * mp.mpf(10)); continue
+        a, b = abs(lo), abs(hi)
+        while b / a > 1.2:
+            c = mp.sqrt(a * b)
+            m = dict(base); m[n] = base[n] + sgn * c
+            if lam_min(kind, m)[0] >= 0: a = c
+            else: b = c
+        res.append(sgn * a)
+    return res
+
+print("\nfeasible interval for each single weight, others held at von Mangoldt (delta = m_n - Lambda(n)):")
+for n in ns:
+    up, dn = interval('zeta', Lam, n)
+    print("  n=%d  Lambda=%-8s  delta in [%s, %s]" % (n, mp.nstr(Lam[n], 6), mp.nstr(dn, 3), mp.nstr(up, 3)))
+
+print("\n== conductor-5 odd archimedean term (shared by L(chi), L(chibar) and the impostor) ==")
+chi_re = {1: 1, 2: 0, 3: 0, 4: -1, 0: 0}
+m1 = {n: Lam[n] * chi_re[n % 5] for n in ns}
+cd = weil.dh_logderiv_coeffs(X); m2 = {n: mp.mpf(cd[n].mid().str(dps, radius=False)) for n in ns}
+for name, m in (("Re(chi)*Lambda (honest pair, averaged)", m1), ("impostor's own coefficients", m2),
+                ("midpoint of the two", {n: (m1[n] + m2[n]) / 2 for n in ns}), ("no weights", {})):
+    mu, (me, mo) = lam_min('c5odd', m)
+    print("  %-40s lowest eigenvalue even %s odd %s   weights %s" % (name, mp.nstr(me, 4), mp.nstr(mo, 4),
+          [mp.nstr(m.get(n, 0), 4) for n in ns]))
+dist = mp.sqrt(sum((m1[n] - m2[n]) ** 2 for n in ns))
+print("  distance between the two feasible points: %s" % mp.nstr(dist, 6))
+print("feasible interval for each single weight around Re(chi)*Lambda:")
+for n in ns:
+    up, dn = interval('c5odd', m1, n)
+    print("  n=%d  base=%-9s delta in [%s, %s]" % (n, mp.nstr(m1[n], 5), mp.nstr(dn, 3), mp.nstr(up, 3)))
+print("total %.0fs" % (time.time() - t0))

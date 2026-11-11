@@ -1,0 +1,14 @@
+"""two-zero Gram formula kappa_2(u) = 2 lambda_min(M(u) G(u)) along u (on-line: two points c +- delta, weight 2 each;
+off-line: the indefinite quartet form), compared with the hybrid kappa(u) (hyb_*.log)."""
+import sys
+args = sys.argv[1:]
+sys.argv = ['h'] + args[:3] + ['0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("for us in sys.argv[4]")[0]
+exec(src)
+for us in args[3].split(','):
+    u = mp.mpf(us)
+    terms = (terms_online(c - mp.sqrt(u)) + terms_online(c + mp.sqrt(u))) if u > 0 else (terms_offline(c, mp.sqrt(-u)) if u < 0 else [(2 * m, v) for m, v in terms_online(c)])
+    W, M = whiten(terms)
+    # nonzero spectrum of W M W^T = spectrum of M^(1/2)-type product: eig(M W^T W)
+    G = W.T @ W; ev = np.sort(np.linalg.eigvals(np.diag(M) @ G).real)
+    print(f"  u = {float(u):+.5f}: two-zero Gram formula kappa_2 = {ev[0]:+.6f}   (kappa_2/u = {ev[0]/float(u) if u != 0 else float('nan'):.3f})", flush=True)

@@ -1,0 +1,16 @@
+"""SP-operator: ladder of small eigenvalues of zeta's window form (even / odd blocks), using lane A's
+validated builder rh/experiments/r1_A/weil.py.txt.  usage: python3 ladder.py.txt prec L:N ...
+Purpose: check the heuristic of board answer B125: the number of negative squares of F_d on the window
+(S1-parity: 5 even, 4-5 odd at L = 1 for d = 0.05, 0.1, 0.25) ~ number of rungs below ~ d^2 x coupling."""
+import sys, math
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+from flint import acb_mat
+prec = int(sys.argv[1]); flint.ctx.prec = prec
+for spec in sys.argv[2:]:
+    L, N = spec.split(":"); L = float(L); N = int(N)
+    q, w = build(L, N, kind="zeta")
+    for name, B in (("even", even_block(q, N)), ("odd", odd_block(q, N))):
+        ev = sorted(float(e.real) for e in acb_mat(mid(B)).eig(algorithm="approx"))
+        print(f"L={L} N={N} {name}: " + " ".join(f"{e:.3e}" for e in ev[:10]))
+        for thr in (1e-4, 1e-3, 1e-2, 1e-1):
+            print(f"     # eigenvalues below {thr:g}: {sum(1 for e in ev if e < thr)}")

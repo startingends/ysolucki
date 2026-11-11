@@ -1,0 +1,21 @@
+C2: BE = 1.5001839663264305  formula (lam/2)(1+2 min pi) = 1.5001839663264305  per-site negative index of G2-lam G: [1, 1, 1, 1, 1, 1, 1]
+D1 a,b>=2: min eig -7.058e-17, rank 17
+D1 a,b>=1: min eig -2.602e+00, rank 18
+Hankel L=1 M=40 arch: min eig -0.0000, #neg(<-1e-10) 0 of 20
+Hankel L=1 M=40 zeta: min eig -1.1227, #neg(<-1e-10) 9 of 20
+Hankel L=1 M=40 beurling: min eig -1.1725, #neg(<-1e-10) 9 of 20
+Hankel L=1 M=80 arch: min eig -0.0000, #neg(<-1e-10) 0 of 40
+Hankel L=1 M=80 zeta: min eig -1.2105, #neg(<-1e-10) 19 of 40
+Hankel L=1 M=80 beurling: min eig -1.3067, #neg(<-1e-10) 19 of 40
+even margin via solve: 0.0005592234356901482  via prod mu_i/|nu_i|: 0.0005592234356900578  mu_1/lam1 = 0.00046258183438710606  prod_{i>=2} mu_i/nu_i = 1.2089178478679263
+Traceback (most recent call last):
+  File "/home/user/ysolucki/rh/experiments/r2_curv/refuter/refute2.py.txt", line 65, in <module>
+    S,Hs,O=parts(x)
+           ~~~~~^^^
+  File "/home/user/ysolucki/rh/experiments/r2_curv/refuter/refute2.py.txt", line 48, in parts
+    ka=kk[abs(a)]; kb=kk[abs(b)]
+                      ~~^^^^^^^^
+IndexError: index 40 is out of bounds for axis 0 with size 40
+B3 site 20: |S+H+O-Gamma2|max=2.8e-14; raw min eig S -0.000, H -0.034 (max 3.24), O -1.569; Gamma-normalised/lam1: S -0.000, S+H 0.240, S+O 0.200, all 0.522
+B3 site 0: |S+H+O-Gamma2|max=1.2e-14; raw min eig S -0.000, H -0.374 (max 9.73), O -2.791; Gamma-normalised/lam1: S -0.000, S+H 0.006, S+O -0.227, all 0.496
+B3 site 5: |S+H+O-Gamma2|max=2.1e-14; raw min eig S 0.000, H -0.167 (max 4.34), O -1.143; Gamma-normalised/lam1: S 0.000, S+H 0.300, S+O 0.110, all 0.527

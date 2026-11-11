@@ -1,0 +1,5 @@
+B(1) = sum mu(n) w/n = -2.129e-05
+Y = 10.0, N = 1500: eps_A (B12 vector) = 0.11371   eps_inf = 0.11337   eps_B (corrected) = 2.834e-04   4*delta/Y threshold => delta > 7.09e-04
+Y = 10.0, N = 3000: eps_A (B12 vector) = 0.11431   eps_inf = 0.11337   eps_B (corrected) = 7.779e-04   4*delta/Y threshold => delta > 1.94e-03
+Y = 0.9, N = 1500: eps_A (B12 vector) = 1.55995   eps_inf = 1.56250   eps_B (corrected) = -5.100e-04   4*delta/Y threshold => delta > -1.15e-04
+Y = 0.9, N = 3000: eps_A (B12 vector) = 1.56136   eps_inf = 1.56250   eps_B (corrected) = -2.299e-04   4*delta/Y threshold => delta > -5.17e-05

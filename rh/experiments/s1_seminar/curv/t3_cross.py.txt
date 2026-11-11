@@ -1,0 +1,29 @@
+"""S1-curv turn 3: test of the derivative lemma: level crossings between parity blocks versus edge-node thresholds. usage: t3_cross.py.txt M delta [delta..]"""
+import sys, math, importlib.machinery, importlib.util, numpy as np
+from scipy.optimize import brentq
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib'); S2 = load('s2lib')
+M = int(sys.argv[1]); ell = math.log(2); tri = lambda t: max(0.0, 1 - abs(t)); Be, Bo = S2.parity_bases(M); h = M // 2
+for dl in [float(a) for a in sys.argv[2:]]:
+    L = (ell + dl) / 2; b = S.build(L, M, 'arch'); d = b['d']
+    Q0 = 2 * np.outer(b['c'], b['c']) - 2 * np.outer(b['s'], b['s']) - b['N']
+    idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M))); P1 = np.array([tri((ell - k * d) / d) for k in range(M)])[idx]
+    Ae, Pe, Ao, Po = Be.T @ Q0 @ Be, Be.T @ P1 @ Be, Bo.T @ Q0 @ Bo, Bo.T @ P1 @ Bo
+    ee = lambda t: np.linalg.eigh(Ae - t * Pe); eo = lambda t: np.linalg.eigh(Ao - t * Po)
+    def edge(vecs, k):                       # value in the last box of eigenvector k, sign fixed by the largest entry
+        v = vecs[:, k]; v = v * np.sign(v[np.argmax(np.abs(v))]); return v[-1] / np.abs(v).max()
+    f1 = lambda t: ee(t)[0][0] - eo(t)[0][0]; f2 = lambda t: eo(t)[0][0] - ee(t)[0][1]
+    grid = np.linspace(0.0, 1.5, 151)
+    def roots(f):
+        vals = [f(t) for t in grid]; return [brentq(f, grid[i], grid[i + 1], xtol=1e-9) for i in range(len(grid) - 1) if (vals[i] > 0) != (vals[i + 1] > 0)]
+    r1, r2 = roots(f1), roots(f2)
+    ne = roots(lambda t: edge(ee(t)[1], 0)); no = roots(lambda t: edge(eo(t)[1], 0))
+    c_minus = roots(lambda t: eo(t)[0][0])
+    print("M=%d delta=%.2f L=%.4f box width %.4f" % (M, dl, L, d))
+    print("   mu_e1 = mu_o1 at weights %s ; even ground state edge value changes sign at %s ; odd lowest eigenvalue = 0 at %s" % (np.round(r1, 5), np.round(ne, 5), np.round(c_minus, 5)))
+    print("   mu_o1 = mu_e2 at weights %s ; odd ground state edge value changes sign at %s" % (np.round(r2, 5), np.round(no, 5)))
+    for t in r1[:1]:
+        w, V = ee(t); wo, Vo = eo(t); ve = V[:, 0]; x = (np.arange(h) + 0.5) * d
+        dv = np.gradient(np.concatenate([ve, [0.0]]), d)[:-1]          # derivative of the folded even ground state, zero beyond the edge
+        dv /= np.linalg.norm(dv); print("   at the first crossing %.5f: mu_e1 = %.3e ; |<v_e'/|v_e'|, odd ground state>| = %.4f" % (t, w[0], abs(dv @ Vo[:, 0])))

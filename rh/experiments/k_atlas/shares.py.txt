@@ -1,0 +1,47 @@
+"""K-atlas: shares of the pole square on zeta's odd ground state (folded to (0, L]).
+1 = [T_W + sum_{m>=1} E_m^2 + H_primes]/E_+^2 up to mu_odd.   usage: python3 shares.py.txt L N bits [L N bits ...]"""
+import sys, math, importlib.util, importlib.machinery
+import flint, mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+mp.mp.dps = 30
+args = sys.argv[1:]
+for i in range(0, len(args), 3):
+    L, N, bits = float(args[i]), int(args[i + 1]), int(args[i + 2])
+    flint.ctx.prec = bits
+    q, w = weil.build(L, N, kind='zeta')
+    mu, vec, _ = weil.lowest(weil.odd_block(q, N))
+    c = [mp.mpf(v.mid().str(40, radius=False)) for v in vec]
+    Lm = mp.mpf(L)
+    # folded phi on (0, L]: f_o(x) = sum_k c_k sqrt2 sin(pi k x/L)/sqrt(2L) = sum c_k sin(pi k x/L)/sqrt(L); phi = f_o on x > 0
+    a = [mp.pi * (k + 1) / Lm for k in range(len(c))]
+    phi = lambda x: sum(ck * mp.sin(ak * x) for ck, ak in zip(c, a)) / mp.sqrt(Lm)
+    if phi(Lm / 2) < 0:
+        c = [-x for x in c]
+    def lap(b):      # int_0^L phi(x) e^(b x) dx, closed form: int sin(a x) e^(b x) = [e^(bx)(b sin ax - a cos ax)]/(a^2+b^2)
+        s = mp.mpf(0)
+        for ck, ak in zip(c, a):
+            s += ck * (mp.exp(b * Lm) * (b * mp.sin(ak * Lm) - ak * mp.cos(ak * Lm)) + ak) / (ak * ak + b * b)
+        return s / mp.sqrt(Lm)
+    Ep = lap(mp.mpf(1) / 2)
+    E0 = lap(-mp.mpf(1) / 2)
+    SG = mp.mpf(0); m = 1
+    while True:
+        t = lap(-(2 * m + mp.mpf(1) / 2)) ** 2
+        SG += t; m += 1
+        if m > 1500 or (m > 50 and t < mp.mpf(10) ** -22 * SG): break
+    tailnote = m
+    HP = mp.mpf(0); per = {}
+    for n, (_, p) in sorted(weil.mangoldt_upto(int(math.floor(math.exp(2 * L) + 1e-9))).items()):
+        u = mp.log(n); lo, hi = max(mp.mpf(0), u - Lm), min(Lm, u)
+        if hi <= lo: continue
+        val = mp.log(p) / mp.sqrt(n) * mp.quad(lambda x: phi(x) * phi(u - x), mp.linspace(lo, hi, 9))
+        per[n] = val; HP += val
+    HW = Ep ** 2 - SG - HP
+    muf = mp.mpf(mu.mid().str(20, radius=False))
+    TW = HW + muf / 2          # Q(f_o) = 2 (T_W - H_W) = mu * |f_o|^2 = mu
+    print("L=%g N=%d mu_odd=%s  E_+^2=%s  shares: T_W %s  Gamma(m>=1) %s  primes %s  [sum %s]  (E_0^2/E_+^2 = %s; m up to %d)"
+          % (L, N, mp.nstr(muf, 4), mp.nstr(Ep ** 2, 8), mp.nstr(TW / Ep ** 2, 5), mp.nstr(SG / Ep ** 2, 5), mp.nstr(HP / Ep ** 2, 5),
+             mp.nstr((TW + SG + HP) / Ep ** 2, 8), mp.nstr(E0 ** 2 / Ep ** 2, 4), tailnote), flush=True)
+    print("     per prime power: " + ", ".join("%d: %s" % (n, mp.nstr(v / Ep ** 2, 4)) for n, v in per.items()), flush=True)

@@ -1,0 +1,69 @@
+"""e27 second experiment: Poisson images of prolate functions as test vectors of the window Weil form.
+usage: python3 vec.py.txt L [N]"""
+import sys, math, importlib.util, importlib.machinery
+import flint, mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+L = float(sys.argv[1]); c = 2 * math.pi * math.exp(2 * L)
+dps = int(70 + 6.5 * math.exp(2 * L)); N = int(sys.argv[2]) if len(sys.argv) > 2 else max(28, int(3.0 * L * math.exp(2 * L)) + 12)
+mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+Lm = mp.mpf(sys.argv[1]); lam = mp.exp(Lm); cc = 2 * mp.pi * lam * lam
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+q, _ = weil.build(L, N, kind='zeta', pole=True, primes=True, arch=True)
+E = to_mp(weil.even_block(q, N)); O = to_mp(weil.odd_block(q, N))
+evE, vecE = mp.eigsy(E); evO, vecO = mp.eigsy(O)
+# prolate functions on [-1, 1] (scaled variable t = y / lambda), Nystrom
+nodes = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(6, mp.mp.prec)
+xs = [x for x, w in nodes]; ws = [w for x, w in nodes]; n = len(xs)
+def kern(t, s):
+    d = t - s
+    return cc / mp.pi if d == 0 else mp.sin(cc * d) / (mp.pi * d)
+K = mp.matrix(n, n)
+for i in range(n):
+    for j in range(n):
+        K[i, j] = mp.sqrt(ws[i]) * kern(xs[i], xs[j]) * mp.sqrt(ws[j])
+chi, V = mp.eigsy(K)
+order = sorted(range(n), key=lambda i: -chi[i])
+def phi(idx):
+    i = order[idx]; col = [V[j, i] / mp.sqrt(ws[j]) for j in range(n)]; ch = chi[i]
+    return (lambda t: sum(ws[j] * kern(t, xs[j]) * col[j] for j in range(n)) / ch), ch
+def testvec(nn, b):
+    f, ch = phi(nn); fb, chb = phi(b)
+    r = f(mp.mpf(0)) / fb(mp.mpf(0))
+    g = lambda t: f(t) - r * fb(t)
+    def v(u):
+        x = mp.exp(u); top = int(mp.floor(lam / x + mp.mpf(10) ** (-dps + 5)))
+        return mp.sqrt(x) * sum(g(k * x / lam) for k in range(1, top + 1))
+    return v, ch
+# Gauss-Legendre on each smooth piece of [-L, L]; breakpoints at u = L - log n
+brk = sorted(set([-Lm, Lm] + [Lm - mp.log(k) for k in range(1, int(mp.floor(lam * lam)) + 1) if Lm - mp.log(k) > -Lm]))
+gl = mp.calculus.quadrature.GaussLegendre(mp.mp).calc_nodes(int(sys.argv[3]) if len(sys.argv) > 3 else 5, mp.mp.prec)   # degree 5 = 48 nodes per piece; 7 = 192
+pts = []
+for a, bnd in zip(brk[:-1], brk[1:]):
+    h = (bnd - a) / 2; m = (bnd + a) / 2
+    for x, w in gl: pts.append((m + h * x, h * w))
+def coeffs(v):
+    vals = [(u, w, v(u)) for u, w in pts]
+    s2L = mp.sqrt(2 * Lm)
+    ce = [sum(w * val for u, w, val in vals) / s2L] + [sum(w * val * mp.sqrt(2) * mp.cos(mp.pi * k * u / Lm) for u, w, val in vals) / s2L for k in range(1, N + 1)]
+    co = [sum(w * val * mp.sqrt(2) * mp.sin(mp.pi * k * u / Lm) for u, w, val in vals) / s2L for k in range(1, N + 1)]
+    nrm2 = sum(w * val * val for u, w, val in vals)
+    return ce, co, nrm2
+def rq(M, cvec):
+    x = mp.matrix(cvec); return (x.T * M * x)[0] / (x.T * x)[0]
+print("L=%s c=%s N=%d dps=%d ; lowest even %s %s ; lowest odd %s %s" % (sys.argv[1], mp.nstr(cc, 8), N, dps, mp.nstr(evE[0], 6), mp.nstr(evE[1], 6), mp.nstr(evO[0], 6), mp.nstr(evO[1], 6)))
+for nn, b, name in ((4, 0, "even"), (8, 0, "even"), (6, 2, "odd"), (10, 2, "odd")):
+    v, ch = testvec(nn, b); ce, co, nrm2 = coeffs(v)
+    se = sum(x * x for x in ce); so = sum(x * x for x in co)
+    M, ev, vec, cvec = (E, evE, vecE, ce) if name == "even" else (O, evO, vecO, co)
+    r = rq(M, cvec); x = mp.matrix(cvec); x = x / mp.sqrt((x.T * x)[0])
+    ov = [(x.T * vec[:, j])[0] ** 2 for j in range(3)]
+    print(" prolate n=%d (b=%d), block %s: 1-chi=%s ; |v|^2=%s captured even %s odd %s ; Rayleigh=%s ; Rayleigh/mu_1=%s Rayleigh/mu_2=%s ; overlap^2 with eigvecs 1,2,3: %s %s %s ; 1-ov1=%s" % (
+        nn, b, name, mp.nstr(1 - ch, 5), mp.nstr(nrm2, 6), mp.nstr(se / nrm2, 8), mp.nstr(so / nrm2, 5), mp.nstr(r, 6), mp.nstr(r / ev[0], 6), mp.nstr(r / ev[1], 6),
+        mp.nstr(ov[0], 12), mp.nstr(ov[1], 6), mp.nstr(ov[2], 6), mp.nstr(1 - ov[0], 5)), flush=True)

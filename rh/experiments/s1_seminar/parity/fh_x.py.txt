@@ -1,0 +1,27 @@
+"""S1-parity: cross-check of the x-space formula of the foothold seat (Lemma 5 of PROOF_forcing_prime2.md) against implementation B on
+test functions that do NOT vanish at the window edge: v = 1, v = cos(pi x/L), v = sin(pi x/(2L)) (the last has a jump as an odd function).
+Lemma 5:  Q(v) = -(log(4 pi L) + gamma) g(0) + int_0^{2L} (g(0) - g(x))/x dx - int_0^{2L} h(x) g(x) dx + 2 E_+ E_- - 2 m g(y)."""
+import importlib.util, importlib.machinery, mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+mp.mp.dps = 30
+h = lambda x: mp.exp(x / 2) / mp.sinh(x) - 1 / x
+y = mp.log(2); m = mp.log(2) / mp.sqrt(2)
+for L in (mp.mpf(1) / 2, mp.mpf(27) / 50):
+    cases = {"v = 1": (lambda x: mp.mpf(1)), "v = cos(pi x/L)": (lambda x: mp.cos(mp.pi * x / L)), "v = sin(pi x/(2L)) (odd, jump at the edge)": (lambda x: mp.sin(mp.pi * x / (2 * L)))}
+    for name, v in cases.items():
+        g = lambda u: mp.quad(lambda x: v(x) * v(x - u), [u - L, 0, L]) if u > L else mp.quad(lambda x: v(x) * v(x - u), [u - L, 0, u, L])
+        g0 = g(mp.mpf(0))
+        Ep = mp.quad(lambda t: v(t) * mp.exp(t / 2), [-L, 0, L]); Em = mp.quad(lambda t: v(t) * mp.exp(-t / 2), [-L, 0, L])
+        A = -(mp.log(4 * mp.pi * L) + mp.euler) * g0 + mp.quad(lambda x: (g0 - g(x)) / x, [0, L, 2 * L]) - mp.quad(lambda x: h(x) * g(x), [0, L, 2 * L]) + 2 * Ep * Em
+        Qx = A - 2 * m * g(y)
+        # implementation B
+        if name == "v = 1":
+            M = wb.add(wb.arch_blocks(L, 2, 'int'), wb.pole_blocks(L, 2, 'int')); M = wb.add(M, wb.atom_blocks(L, 2, 'int', 2), mp.log(2)); QB = M[0][0, 0] * 2 * L
+        elif name.startswith("v = cos"):
+            M = wb.add(wb.arch_blocks(L, 2, 'int'), wb.pole_blocks(L, 2, 'int')); M = wb.add(M, wb.atom_blocks(L, 2, 'int', 2), mp.log(2)); QB = M[0][1, 1] * L
+        else:
+            M = wb.add(wb.arch_blocks(L, 2, 'half'), wb.pole_blocks(L, 2, 'half')); M = wb.add(M, wb.atom_blocks(L, 2, 'half', 2), mp.log(2)); QB = M[1][0, 0] * L
+        print("L=%s %-44s Lemma 5 (quadrature): %s ; implementation B: %s ; difference %s" % (mp.nstr(L, 4), name, mp.nstr(Qx, 15), mp.nstr(QB, 15), mp.nstr(abs(Qx - QB), 3)), flush=True)

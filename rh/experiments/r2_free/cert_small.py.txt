@@ -1,0 +1,10 @@
+# Exact certificate (sympy, QQ): c_m(n) for m in {2,3,4,6,12}; sign on explicit intervals by Sturm root counting.
+exec(open('certify.py.txt').read().split("if __name__")[0])
+comp = comps(12); a, c = cpolys(12, comp)
+for m in (2, 3, 4, 6, 12): print('c_%d(n) =' % m, c[m].as_expr().factor())
+print('r_n(7) =', rpoly(7, comp).as_expr().factor())
+for pt in (1, 2, 8): print('n=%d:' % pt, {m: str(c[m].eval(pt)) for m in range(2, 13)})
+R = Rational
+tests = [(2, 0, 1), (3, 1, 2), (6, 2, R(5,2)), (4, R(9,4), R(19,4)), (6, R(9,2), 8), (12, 8, R(17,2))]
+for m, lo, hi in tests:
+    print('c_%d < 0 on (%s, %s):' % (m, lo, hi), neg_open(c[m], lo, hi))

@@ -1,0 +1,22 @@
+import sys, math, numpy as np, mpmath as mp
+mp.mp.dps = 25
+L = float(sys.argv[1]); M = int(sys.argv[2]); d = 2 * L / M
+w = lambda u: mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+tri = lambda t: max(0.0, 1 - abs(t))
+def Wk(k):
+    f = lambda u: w(u) * (1 - abs(u - k * d) / d)
+    return mp.quad(f, [0, d, 2 * d]) if k == 1 else mp.quad(f, [(k - 1) * d, k * d, (k + 1) * d])
+ta = np.array([0.0] + [float(Wk(k)) for k in range(1, M)])
+idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+J = np.eye(M)[::-1]; h = M // 2
+for kind in ("arch only", "zeta", "beurling"):
+    lam = {}
+    if kind != "arch only":
+        for p in ((2.1 if kind == 'beurling' else 2), 3, 5, 7):
+            pk = p
+            while pk <= math.exp(2 * L): lam[pk] = math.log(p); pk *= p
+    tp = np.array([sum(c / math.sqrt(n) * (tri((math.log(n) - k * d) / d) + tri((math.log(n) + k * d) / d)) for n, c in lam.items()) for k in range(M)])
+    K = (ta + tp)[idx]; np.fill_diagonal(K, 0)
+    H = (K @ J)[h:, h:]          # H_ij = K(x_i, -x_j) = kernel at x_i + x_j, positive half
+    e = np.linalg.eigvalsh((H + H.T) / 2)
+    print("%-10s L=%g M=%d: Hankel form eigenvalues: min %.5f  max %.5f  #negative(< -1e-10) = %d of %d" % (kind, L, M, e[0], e[-1], (e < -1e-10).sum(), len(e)))

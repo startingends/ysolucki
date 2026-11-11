@@ -1,0 +1,30 @@
+zeta L=3/4 c=28.159 NB=80: #eig(Q) < 1e-06: 4;  #prolates of the class with 1-chi < 1e-06: 4
+zeta L=3/4 c=28.159 NB=80: #eig(Q) < 0.001: 5;  #prolates of the class with 1-chi < 0.001: 5
+zeta L=3/4 c=28.159 NB=80: #eig(Q) < 0.1: 7;  #prolates of the class with 1-chi < 0.1: 6
+  lowest 12 of Q: ['3.7e-15', '3.41e-12', '1.17e-9', '2.51e-7', '4.36e-5', '0.00369', '0.089', '0.583', '0.821', '0.863', '0.988', '1.03']
+  lowest 12 defects of the class: ['2.61e-14', '1.24e-12', '6.88e-10', '1.98e-07', '3.12e-05', '0.00267', '0.1', '0.701', '0.985', '1', '1', '1']
+chi5 L=5/4 c=15.309 NB=90: #eig(Q) < 1e-06: 2;  #prolates of the class with 1-chi < 1e-06: 2
+chi5 L=5/4 c=15.309 NB=90: #eig(Q) < 0.001: 3;  #prolates of the class with 1-chi < 0.001: 3
+chi5 L=5/4 c=15.309 NB=90: #eig(Q) < 0.1: 4;  #prolates of the class with 1-chi < 0.1: 4
+  lowest 12 of Q: ['2.05e-11', '2.07e-8', '8.45e-6', '0.00233', '0.141', '0.524', '0.892', '1.18', '1.4', '1.76', '1.91', '1.95']
+  lowest 12 defects of the class: ['1.36e-12', '8.64e-09', '7.1e-06', '0.00166', '0.108', '0.777', '0.994', '1', '1', '1', '1', '1']
+dh L=5/4 c=15.309 NB=90: #eig(Q) < 1e-06: 2;  #prolates of the class with 1-chi < 1e-06: 2
+dh L=5/4 c=15.309 NB=90: #eig(Q) < 0.001: 3;  #prolates of the class with 1-chi < 0.001: 3
+dh L=5/4 c=15.309 NB=90: #eig(Q) < 0.1: 4;  #prolates of the class with 1-chi < 0.1: 4
+  lowest 12 of Q: ['4.8e-10', '5.82e-7', '0.000269', '0.0244', '0.464', '1.39', '1.51', '1.59', '1.67', '1.79', '1.8', '2.12']
+  lowest 12 defects of the class: ['1.58e-10', '2.96e-07', '0.000125', '0.0163', '0.402', '0.955', '0.999', '1', '1', '1', '1', '1']
+chi5 L=3/2 c=25.240 NB=110: #eig(Q) < 1e-06: 5;  #prolates of the class with 1-chi < 1e-06: 5
+chi5 L=3/2 c=25.240 NB=110: #eig(Q) < 0.001: 6;  #prolates of the class with 1-chi < 0.001: 6
+chi5 L=3/2 c=25.240 NB=110: #eig(Q) < 0.1: 8;  #prolates of the class with 1-chi < 0.1: 8
+  lowest 12 of Q: ['6.48e-20', '2.05e-16', '3.26e-13', '3.09e-10', '1.48e-7', '2.31e-5', '0.0016', '0.0671', '0.667', '0.705', '0.771', '1.14']
+  lowest 12 defects of the class: ['-5.33e-15', '1.77e-14', '2.09e-13', '1.92e-10', '7.92e-08', '1.63e-05', '0.00171', '0.0774', '0.658', '0.983', '1', '1']
+dh L=3/2 c=25.240 NB=110: #eig(Q) < 1e-06: 4;  #prolates of the class with 1-chi < 1e-06: 4
+dh L=3/2 c=25.240 NB=110: #eig(Q) < 0.001: 6;  #prolates of the class with 1-chi < 0.001: 6
+dh L=3/2 c=25.240 NB=110: #eig(Q) < 0.1: 7;  #prolates of the class with 1-chi < 0.1: 7
+  lowest 12 of Q: ['2.95e-18', '1.1e-14', '1.52e-11', '7.61e-9', '1.44e-6', '0.000214', '0.0163', '0.413', '1.0', '1.02', '1.21', '1.29']
+  lowest 12 defects of the class: ['-6e-15', '-1.11e-15', '7.07e-12', '4.28e-09', '1.23e-06', '0.000182', '0.0132', '0.298', '0.904', '0.998', '1', '1']
+zeta L=1/1 c=46.427 NB=116: #eig(Q) < 1e-06: 9;  #prolates of the class with 1-chi < 1e-06: 9
+zeta L=1/1 c=46.427 NB=116: #eig(Q) < 0.001: 11;  #prolates of the class with 1-chi < 0.001: 11
+zeta L=1/1 c=46.427 NB=116: #eig(Q) < 0.1: 12;  #prolates of the class with 1-chi < 0.1: 12
+  lowest 12 of Q: ['5.98e-30', '1.53e-26', '2.23e-23', '2.25e-20', '1.44e-17', '5.75e-15', '1.4e-12', '2.41e-10', '3.99e-8', '4.25e-6', '0.000208', '0.00838']
+  lowest 12 defects of the class: ['-5.55e-15', '-5.33e-15', '-5.33e-15', '-4.88e-15', '-2.66e-15', '6.06e-14', '9.99e-13', '2.07e-10', '2.98e-08', '2.99e-06', '0.000206', '0.00903']

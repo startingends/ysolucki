@@ -1,0 +1,74 @@
+import sys, time, math, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/r2_parity/wb.py.txt")
+mp.mp.dps = 110
+t0 = time.time()
+g = [mp.zetazero(n).imag for n in (1, 2, 3, 4)]
+print("zeros", [mp.nstr(x, 12) for x in g], "%.0fs" % (time.time() - t0), flush=True)
+def atoms_sum(L, N, lat, cn):
+    M = None
+    for x, c in cn.items():
+        if math.log(float(x)) < 2 * L - 1e-12:
+            B = wb.atom_blocks(L, N, lat, x)
+            M = (c * B[0], c * B[1]) if M is None else wb.add(M, B, c)
+    return M
+def S(u, L):            # sin(uL)/u, entire
+    return L if u == 0 else mp.sin(u * L) / u
+def transforms(L, N, lat, z):
+    """values at z of the transforms of the even basis (F) and of -i x transforms of the odd basis (G)"""
+    L = mp.mpf(L); w = wb.freqs(L, N, lat)
+    F, G = [], []
+    for om in w:
+        nrm = mp.sqrt(2 * L) if om == 0 else mp.sqrt(L)
+        F.append((S(z - om, L) + S(z + om, L)) / nrm)
+        G.append((S(z - om, L) - S(z + om, L)) / nrm)
+    if lat == 'int': G = G[1:]
+    return F, G
+def outer(u, v):
+    n = len(u); M = mp.matrix(n, n)
+    for i in range(n):
+        for j in range(n): M[i, j] = u[i] * v[j]
+    return M
+def rank_terms(L, N, lat, z, real):
+    F, G = transforms(L, N, lat, z)
+    out = []
+    for V in (F, G):
+        M = outer(V, V)
+        if real: out.append(2 * M.apply(mp.re))                 # pair +-gamma on the line
+        else: out.append(4 * M.apply(mp.re))                    # quartet +-a +- ib
+    return out
+def count(M2, thr=mp.mpf('1e-90')):
+    res = []
+    for b in (0, 1):
+        ev = sorted(mp.eigsy((M2[b] + M2[b].T) / 2, eigvals_only=True))
+        res.append((sum(1 for e in ev if e < -thr), ev[0], ev[1]))
+    return res
+def show(tag, M2):
+    r = count(M2)
+    print("  %-34s (even, odd) = (%d, %d) ; lowest two even %s %s ; odd %s %s" % (tag, r[0][0], r[1][0],
+          mp.nstr(r[0][1], 4), mp.nstr(r[0][2], 4), mp.nstr(r[1][1], 4), mp.nstr(r[1][2], 4)), flush=True)
+b = mp.mpf('0.3')
+a1 = (g[0] + g[1]) / 2; a2 = (g[2] + g[3]) / 2
+lat = sys.argv[1]
+for L, N in ((0.5, 30), (0.75, 30), (1.0, 40), (1.25, 56)):
+    A = wb.add(wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat)), atoms_sum(L, N, lat, wb.mangoldt(math.exp(2 * L))))
+    print("L=%.2f N=%d %s (%.0fs)" % (L, N, lat, time.time() - t0), flush=True)
+    show("(i) zeta", A)
+    rem12 = [rank_terms(L, N, lat, g[0], True), rank_terms(L, N, lat, g[1], True)]
+    rem34 = [rank_terms(L, N, lat, g[2], True), rank_terms(L, N, lat, g[3], True)]
+    base12 = [A[k] - rem12[0][k] - rem12[1][k] for k in (0, 1)]
+    show("    zeta minus pairs 1,2 (PSD?)", base12)
+    dbl = rank_terms(L, N, lat, a1, True)
+    show("(ii) control b=0 (double pair)", [base12[k] + 2 * dbl[k] for k in (0, 1)])
+    q1 = rank_terms(L, N, lat, mp.mpc(a1, b), False)
+    show("(iii) one quartet b=0.3", [base12[k] + q1[k] for k in (0, 1)])
+    show("(v) one quartet, multiplicity 3", [base12[k] + 3 * q1[k] for k in (0, 1)])
+    q2 = rank_terms(L, N, lat, mp.mpc(a2, b), False)
+    show("(iv) two quartets b=0.3", [base12[k] + q1[k] - rem34[0][k] - rem34[1][k] + q2[k] for k in (0, 1)])
+    for bb in ('0.05', '0.45'):
+        qq = rank_terms(L, N, lat, mp.mpc(a1, mp.mpf(bb)), False)
+        show("    one quartet b=%s" % bb, [base12[k] + qq[k] for k in (0, 1)])
+print("total %.0fs" % (time.time() - t0))

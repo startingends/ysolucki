@@ -1,0 +1,19 @@
+"""S1-curv turn 3 (lead's B140): pole strength at which the even ground state gets an edge node, against the level crossing mu_e1(s) = mu_o1. usage: t3_pole.py.txt M L weight"""
+import sys, math, importlib.machinery, importlib.util, numpy as np
+from scipy.optimize import brentq
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib'); S2 = load('s2lib')
+M = int(sys.argv[1]); L = float(sys.argv[2]); wt = float(sys.argv[3]); ell = math.log(2); tri = lambda t: max(0.0, 1 - abs(t)); Be, Bo = S2.parity_bases(M)
+b = S.build(L, M, 'arch'); d = b['d']; idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+P1 = np.array([tri((ell - k * d) / d) for k in range(M)])[idx] if 2 * L > ell else np.zeros((M, M))
+base = -b['N'] - wt * P1; ce = Be.T @ b['c']; so = Bo.T @ b['s']
+Ao = Bo.T @ base @ Bo - 2 * np.outer(so, so); muo = np.linalg.eigvalsh(Ao)[0]
+def ev(s):
+    w, V = np.linalg.eigh(Be.T @ base @ Be + 2 * s * np.outer(ce, ce)); v = V[:, 0]; v = v * np.sign(v[np.argmax(np.abs(v))]); return w[0], v[-1] / np.abs(v).max(), 2 * (ce @ v) ** 2
+grid = np.linspace(0.5, 2.0, 301); f1 = lambda s: ev(s)[0] - muo; f2 = lambda s: ev(s)[1]
+def roots(f):
+    vals = [f(s) for s in grid]; return [brentq(f, grid[i], grid[i + 1], xtol=1e-10) for i in range(len(grid) - 1) if (vals[i] > 0) != (vals[i + 1] > 0)]
+m1, e1, sl = ev(1.0)
+print("M=%d L=%.4f weight at log 2 = %.4f: mu_e1 = %.4e, mu_o1 = %.4e, 2<c,v_e>^2 = %.4f, first-order s_cross = %.5f ; s_cross = %s ; s_node (last box) = %s ; edge value at s = 1: %+.4f" % (
+    M, L, wt, m1, muo, sl, 1 + (muo - m1) / sl, np.round(roots(f1), 5), np.round(roots(f2), 5), e1))

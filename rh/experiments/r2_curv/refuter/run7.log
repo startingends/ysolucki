@@ -1,0 +1,8 @@
+zeta M=20: margin=1.730672e-03 mu1=6.520104e-03 lam1=4.302810 nu2=4.3791e-02 margin/(mu1/lam1)=1.142122  prod check=1.142122
+zeta M=40: margin=5.592234e-04 mu1=1.990533e-03 lam1=4.303094 nu2=1.4452e-02 margin/(mu1/lam1)=1.208918  prod check=1.208918
+zeta M=80: margin=1.560088e-04 mu1=5.464782e-04 lam1=4.304310 nu2=4.1676e-03 margin/(mu1/lam1)=1.228796  prod check=1.228796
+zeta M=160: margin=4.994154e-05 mu1=1.720594e-04 lam1=4.305238 nu2=1.1765e-03 margin/(mu1/lam1)=1.249628  prod check=1.249628
+beurling M=20: margin=1.247653e-02 mu1=-2.037625e-01 lam1=4.279288 nu2=-1.9191e-01 margin/(mu1/lam1)=-0.262024  prod check=-0.262024
+beurling M=40: margin=1.137379e-02 mu1=-3.441495e-01 lam1=4.280512 nu2=-3.3954e-01 margin/(mu1/lam1)=-0.141467  prod check=-0.141467
+beurling M=80: margin=1.084612e-02 mu1=-4.307250e-01 lam1=4.281806 nu2=-4.2949e-01 margin/(mu1/lam1)=-0.107820  prod check=-0.107820
+beurling M=160: margin=1.062885e-02 mu1=-4.705720e-01 lam1=4.282763 nu2=-4.7009e-01 margin/(mu1/lam1)=-0.096735  prod check=-0.096735

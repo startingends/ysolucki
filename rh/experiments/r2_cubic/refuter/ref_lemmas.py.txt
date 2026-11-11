@@ -1,0 +1,72 @@
+import sys, math, itertools, importlib.machinery, importlib.util, numpy as np, cvxpy as cp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+R = load("ref_lib", "/home/user/ysolucki/rh/experiments/r2_cubic/refuter/ref_lib.py.txt")
+rng = np.random.default_rng(5)
+inertia = lambda M, tol=1e-9: ((np.linalg.eigvalsh(M) > tol).sum(), (np.linalg.eigvalsh(M) < -tol).sum())
+# Lemma A on random data (N any symmetric, p, q any vectors)
+bad = 0
+for _ in range(2000):
+    n = rng.integers(1, 7); N = rng.normal(size=(n, n)); N = N + N.T; p = rng.normal(size=n); q = rng.normal(size=n)
+    Q = np.outer(p, q) + np.outer(q, p) - N
+    bad += inertia(R.ext(N, p, q))[0] != 1 + inertia(Q)[1]
+print("Lemma A: 2000 random (N,p,q), violations of #pos(Ntilde) = 1 + #neg(Q):", bad)
+# Lemma C on random Lorentzian H with MIXED signs (lemma needs only: one positive eigenvalue, Ha >= 0, a^T H a > 0)
+bad = tot = 0; worst = 0
+for _ in range(2000):
+    m = rng.integers(2, 8); v = rng.normal(size=m); G = rng.normal(size=(m, m)); H = np.outer(v, v) - 0.3 * G @ G.T
+    if inertia(H)[0] != 1: continue
+    a = rng.normal(size=m); l = H @ a; s = a @ l
+    if l.min() < 0 or s <= 0: continue
+    tot += 1
+    T = (np.einsum('ij,k->ijk', H, l) + np.einsum('ik,j->ijk', H, l) + np.einsum('jk,i->ijk', H, l) - (2 / s) * np.einsum('i,j,k->ijk', l, l, l)) / s
+    worst = max(worst, np.abs(np.einsum('ijk,k->ij', T, a) - H).max())
+    for k in range(m):
+        bad += (np.linalg.eigvalsh(T[:, :, k]) > 1e-9).sum() > 1
+print("Lemma C: %d random instances (mixed-sign H, a not positive), slices with >1 positive eigenvalue: %d ; max|T.a-H| = %.1e" % (tot, bad, worst))
+# is l >= 0 needed in Lemma C?  search for a counterexample when some l_k < 0
+cnt = 0
+for _ in range(4000):
+    m = 4; v = rng.normal(size=m); G = rng.normal(size=(m, m)); H = np.outer(v, v) - 0.3 * G @ G.T
+    if inertia(H)[0] != 1: continue
+    a = rng.normal(size=m); l = H @ a; s = a @ l
+    if s <= 0 or l.min() >= 0: continue
+    T = (np.einsum('ij,k->ijk', H, l) + np.einsum('ik,j->ijk', H, l) + np.einsum('jk,i->ijk', H, l) - (2 / s) * np.einsum('i,j,k->ijk', l, l, l)) / s
+    cnt += any((np.linalg.eigvalsh(T[:, :, k]) > 1e-9).sum() > 1 for k in range(m))
+print("Lemma C hypothesis l >= 0 is used: instances with some l_k < 0 where a slice has 2 positive eigenvalues:", cnt)
+# Lemma B remark (3): reducible example; and D4 on the zeta box matrix with the cone certificate
+N, p, q, _ = R.build(1.0, 8); H = R.ext(N, p, q); lam, a = R.perron(H); m = 10; n = 8
+l = H @ a; s = a @ l
+T = (np.einsum('ij,k->ijk', H, l) + np.einsum('ik,j->ijk', H, l) + np.einsum('jk,i->ijk', H, l) - (2 / s) * np.einsum('i,j,k->ijk', l, l, l)) / s
+Q = np.outer(p, q) + np.outer(q, p) - N; ev, V = np.linalg.eigh(Q); mu = ev[0]; f = V[:, 0]
+vt = np.r_[f, -f @ q, -f @ p]
+D = np.diag(a / l)
+lhs = [vt @ (np.outer(H[:, k], H[:, k]) / l[k] - T[:, :, k]) @ vt for k in range(m)]
+rhs = [(mu + mu ** 2 * f @ D[:n, :n] @ f) / a[k] for k in range(m)]
+print("D4, zeta L=1 n=8, cone certificate: mu=%.4e |H vt + mu(f,0,0)|=%.1e ; sum_k a_k vt P_k vt = %.6e vs vt(HDH-H)vt = %.6e = mu + mu^2 fDf = %.6e" % (
+    mu, np.abs(H @ vt + mu * np.r_[f, 0, 0]).max(), sum(a[k] * lhs[k] for k in range(m)), vt @ (H @ D @ H - H) @ vt, mu + mu ** 2 * f @ D[:n, :n] @ f))
+print("    0 <= vt P_k vt <= bound for all k:", all(-1e-12 <= lhs[k] <= rhs[k] + 1e-12 for k in range(m)), " max ratio %.3f" % max(lhs[k] / rhs[k] for k in range(m)))
+# P6: make the box form singular, solve for a certificate (own formulation, PSD variables), check T_k vt = 0
+Hs = H.copy(); Hs[:n, :n] += mu * np.outer(f, f)     # Q -> Q - mu f f^T  means N -> N + mu f f^T
+lam2, a2 = R.perron(Hs); l2 = Hs @ a2
+Pv = [cp.Variable((m, m), PSD=True) for _ in range(m)]
+Tk = [np.outer(Hs[:, k], Hs[:, k]) / l2[k] - Pv[k] for k in range(m)]
+cons = [Tk[k][i, :] == Tk[i][k, :] for k in range(m) for i in range(k)] + [sum(a2[k] * Tk[k] for k in range(m)) == Hs]
+prob = cp.Problem(cp.Minimize(sum(cp.sum_squares(P) for P in Pv)), cons); prob.solve(solver="CLARABEL")
+Tn = [np.outer(Hs[:, k], Hs[:, k]) / l2[k] - Pv[k].value for k in range(m)]
+print("P6 (singular form, eig2(H)=%.1e, |H vt|=%.1e): status %s  max_k |T_k vt| = %.3e  max_k |vt T_k vt| = %.3e  mean|T_k|=%.3f  max#pos slices=%d" % (
+    np.sort(np.linalg.eigvalsh(Hs))[-2], np.abs(Hs @ vt).max(), prob.status, max(np.abs(Tn[k] @ vt).max() for k in range(m)), max(abs(vt @ Tn[k] @ vt) for k in range(m)),
+    np.mean([np.abs(Tn[k]).max() for k in range(m)]), max(int((np.linalg.eigvalsh(Tn[k]) > 1e-7).sum()) for k in range(m))))
+# uniqueness (U): rank-one H: any certificate equals l l l / s^2 ; test with SDP: maximise a random linear functional of T
+v = rng.uniform(0.5, 1.5, 6); Hr = np.outer(v, v); ar = rng.uniform(0.5, 1.5, 6); lr = Hr @ ar; sr = ar @ lr; mm = 6
+Pv = [cp.Variable((mm, mm), PSD=True) for _ in range(mm)]
+Tk = [np.outer(Hr[:, k], Hr[:, k]) / lr[k] - Pv[k] for k in range(mm)]
+cons = [Tk[k][i, :] == Tk[i][k, :] for k in range(mm) for i in range(k)] + [sum(ar[k] * Tk[k] for k in range(mm)) == Hr]
+W = rng.normal(size=(mm, mm, mm))
+dev = []
+for sgn in (1, -1):
+    prob = cp.Problem(cp.Maximize(sgn * sum(cp.sum(cp.multiply(W[:, :, k], Tk[k])) for k in range(mm))), cons); prob.solve(solver="CLARABEL")
+    Tn = np.array([np.outer(Hr[:, k], Hr[:, k]) / lr[k] - Pv[k].value for k in range(mm)])
+    dev.append(np.abs(Tn - np.einsum('i,j,k->kij', lr, lr, lr) / sr ** 2).max())
+print("(U) rank-one H, m=6: max deviation of an extreme certificate from l l l / s^2 (two random directions): %.1e %.1e" % tuple(dev))

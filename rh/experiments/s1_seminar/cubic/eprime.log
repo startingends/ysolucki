@@ -1,0 +1,24 @@
+zeta L=1.00 n=6 eig2=-5.164e-03 ; G restricted to a-perp: eigenvalues in [5.169e-03, 1.735]
+  (E') best lambda_min over w, per pair: max over pairs = -5.9564 at (2,3) N_ij=0.7729 ; min over pairs = -6.3541 at (0,5) N_ij=0.9215 ; pairs with value >= 0: 0 of 15
+zeta L=1.00 n=8 eig2=-2.789e-03 ; G restricted to a-perp: eigenvalues in [2.790e-03, 1.730]
+  (E') best lambda_min over w, per pair: max over pairs = -4.3809 at (2,5) N_ij=0.6030 ; min over pairs = -4.9571 at (1,6) N_ij=0.5543 ; pairs with value >= 0: 0 of 28
+zeta L=1.00 n=16 eig2=-1.827e-03 ; G restricted to a-perp: eigenvalues in [1.828e-03, 4.005]
+  (E') best lambda_min over w, per pair: max over pairs = -2.0725 at (7,8) N_ij=0.7240 ; min over pairs = -2.7800 at (2,13) N_ij=0.3825 ; pairs with value >= 0: 0 of 120
+zeta L=0.50 n=8 eig2=-8.904e-03 ; G restricted to a-perp: eigenvalues in [8.931e-03, 2.750]
+  (E') best lambda_min over w, per pair: max over pairs = -0.8735 at (0,7) N_ij=0.0979 ; min over pairs = -1.2109 at (1,5) N_ij=0.1553 ; pairs with value >= 0: 0 of 28
+beurling L=0.50 n=8 eig2=-2.353e-02 ; G restricted to a-perp: eigenvalues in [2.372e-02, 3.128]
+  (E') best lambda_min over w, per pair: max over pairs = -0.8574 at (0,7) N_ij=0.0979 ; min over pairs = -1.1691 at (1,6) N_ij=0.1619 ; pairs with value >= 0: 0 of 28
+zeta L=1.00 n=8 eig2=-2.789e-03 ; G restricted to a-perp: eigenvalues in [2.790e-03, 1.730]
+zeta L=1.00 n=8: eig2(Ntilde)=-2.789e-03 #pos=1 ; slack t* CLARABEL / SCS
+  two-close r=3 (0 of 56 distinct triples zeroed): +nan (fail) / +8.7890e-04 (optimal)
+  two-close r=2 (4 of 56 distinct triples zeroed): +nan (fail) / -1.7311e-01 (optimal)
+  two-close r=1 (20 of 56 distinct triples zeroed): +nan (fail) / -4.1910e-01 (optimal)
+  two-close r=0 (56 of 56 distinct triples zeroed): +nan (fail) / -7.2809e-01 (optimal)
+zeta L=1.00 n=12 eig2=-1.812e-03 ; G restricted to a-perp: eigenvalues in [1.812e-03, 2.603]
+zeta L=1.00 n=12: eig2(Ntilde)=-1.812e-03 #pos=1 ; slack t* CLARABEL / SCS
+  two-close r=5 (0 of 220 distinct triples zeroed): +4.8500e-04 (optimal) / +4.8544e-04 (optimal)
+  two-close r=4 (4 of 220 distinct triples zeroed): +4.8543e-04 (optimal) / +4.8544e-04 (optimal)
+  two-close r=3 (20 of 220 distinct triples zeroed): +nan (fail) / -2.0563e-01 (optimal)
+  two-close r=2 (56 of 220 distinct triples zeroed): +nan (fail) / -3.3144e-01 (optimal)
+  two-close r=1 (120 of 220 distinct triples zeroed): +nan (fail) / -4.3975e-01 (optimal)
+  two-close r=0 (220 of 220 distinct triples zeroed): +nan (fail) / -7.9161e-01 (optimal)

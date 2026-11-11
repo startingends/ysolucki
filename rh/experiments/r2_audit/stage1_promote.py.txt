@@ -1,0 +1,376 @@
+"""Stage 1: the five promotions. Fields are filled in the LOCAL entry first (the agent's original text of any
+replaced field is preserved as a note in its local log), then promoted, then the status is set.
+Cross-references use @name@ placeholders. The five main numbers are predicted from the last main number and each
+promotion is checked against its prediction (the lead may be writing the main log at the same time)."""
+import json, os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage1")
+base = main_last()
+M = {"alpha": base + 1, "delta": base + 2, "beta": base + 3, "dstar": base + 4, "eps": base + 5}
+
+
+def R(s):
+    for k, v in M.items():
+        s = s.replace("@%s@" % k, "#%d" % v)
+    assert "@" not in s, s
+    return s
+
+
+def P(name, key, n, fields, status, why):
+    m = promote(key, n, {f: R(t) for f, t in fields.items()}, status, R(why) if why else None)
+    assert m == M[name], "main number moved: %s got %d, expected %d (fix cross-references by hand)" % (name, m, M[name])
+    json.dump(M, open(os.path.join(HERE, "main_numbers.json"), "w"), indent=1)
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# alpha: R2-parity/#1, exact negative-index theorem
+P("alpha", "parity", 1, {
+ "tags": "dictionary,W2,WJ13,B6,T29,T30,T31",
+ "plain english": """Weil's test for RH says that a certain energy is never negative, whatever test shape is used and
+ however wide the window of scales. This theorem says exactly how the test fails if RH fails. The number of independent
+ ways the energy can be made negative, on a wide enough window, equals the number of different zeros to the right of
+ the line: never more, and on wide windows never fewer. Sort the test shapes into mirror-symmetric and
+ mirror-antisymmetric ones; then each kind sees exactly one negative direction for each group of four off-line zeros
+ (a zero and its three mirror images). Example, checked by the judge: take zeta's own zeros, remove the two lowest
+ pairs (heights 14.13 and 21.02) and plant one group of four at height 17.578, 0.3 to the side of the line. On windows
+ of half-width 0.5, 0.75, 1.0 and 1.25 the energy then has exactly one negative direction among symmetric shapes and
+ one among antisymmetric ones; with two planted groups it has two and two; with the pairs merged back on the line,
+ none. One consequence: 'at most one negative direction on every window' already says the same as RH, because
+ off-line zeros come in fours and a single negative direction cannot be half of a pair. This is a dictionary between
+ two ways of stating RH. It is not a step towards proving it, and its main half is already in print.""",
+ "wall": """none: a dictionary (a proved counting theorem), not a route. It bears on W2 and on round 1's wall WJ13
+ without passing either. The seat's own barrier check: it uses only the zero side, never the Euler product (B1);
+ it holds equally for the Davenport-Heilbronn impostor, whose quartets it counts (B2); it claims no margin (B3); and
+ Corollary C1 is an equivalence, not a reduction (B6). What it changes: WJ13's heuristic 'each quartet costs one
+ negative square per parity block' is now a theorem for L >= L_0, and the Krein-Langer route that round 1 proposed
+ for it is not needed.""",
+ "new input": """none as a route. As a result: an exact count where the record had an inequality and a heuristic.
+ (1) On every window the number of negative squares of the Weil form is at most nu, the number of DISTINCT zeros with
+ Re > 1/2, and at most nu/2 in each parity block; equality for all L >= L_0; multiplicity is invisible. (2) A proof
+ device not found in what was read: the multiplier cos(tz)[sinc(z-a)^K + sinc(z+a)^K], which leaves the on-line part
+ bounded and blows each off-line pair up like e^(2tb) with a rotating phase (the seat's first draft, a bare cosine
+ shift, fails when there are infinitely many off-line zeros).""",
+ "claim": """PROVED and CHECKED (seat, its checker, the round-2 judge: every step redone; rh/THEORY.md T29, T30, T31).
+ Let nu be the number of distinct zeros with Re rho > 1/2 (nu is even; nu/2 quartets). For the Weil form Q_L on
+ functions supported in [-L, L]: (1) kappa_-(Q_L) <= nu, and kappa_-(Q_L,even) <= nu/2, kappa_-(Q_L,odd) <= nu/2, for
+ every L; (2) the counts are non-decreasing in L; (3) if nu is finite, all three are equalities for L >= L_0; if nu is
+ infinite both block counts tend to infinity. Corollaries. C1: 'kappa_-(Q_L) <= 1 for every L' <=> RH (nu is even);
+ with 2 or 3 allowed negative squares at most one quartet. C3: WJ13's per-block count is a theorem for L >= L_0.
+ C1 last line and C4 (one parity block suffices) are KNOWN (Yoshida 1992 Prop. 1). C2: if N = primes - arch has at
+ most one positive direction on every window, there is at most one off-line quartet; the exact relation between the
+ signatures of N and Q is @delta@.""",
+ "prediction": """No blind prediction by the seat for the theorem. Judge's kill test J17, written with a
+ command-stamped time (00:27:16 UTC) before computing: on zeta's own form with zero surgery, (i) zeta (0,0) negative
+ squares (even, odd) at every L; (ii) control, the removed pairs merged on the line: (0,0); (iii) one planted quartet:
+ never 2 in a block, (1,1) at L = 0.75, 1.0, 1.25, guess (0,0) at L = 0.5; (iv) two quartets: never 3 in a block,
+ (2,2) at L = 1.0, 1.25; (v) weight 3 on the quartet: same counts as (iii). Result: all HIT except the guess at
+ L = 0.5, where the quartet is already seen as (1,1). What would have differed: any block count above the number of
+ quartets contradicts the theorem; the on-line control (0,0) is the impostor-type contrast.""",
+ "smallest": """Done on content: Corollary C1 with one spare negative square. What is owed before any ladder level
+ (judge): open Bombieri 2000 (Rend. Lincei) and Yoshida 1992, to settle whether the per-block count with attainment
+ is in print; and the brief's three-refuter standard for L2 (one refuter ran). The smallest NEW statement near it is
+ the open converse T81 recorded under @delta@.""",
+ "worth if true": """It is true (checked). Worth: it fixes the bookkeeping for every signature-type target (ideas #10,
+ #20, @delta@): which counts are equivalent to RH (at most one negative square; one parity block) and which are
+ weaker. On content it is the nearest thing in round 2 to ladder level L2; the judge awards no level while the
+ primary sources are unread.""",
+ "first test": """Done. Proof read line by line by the checker R2-parity-ref (inequalities 3b to 3d also tested in 200
+ random cases) and by the judge. Kill test J17 on zeta's own form with zero surgery (110 digits, integer and half
+ lattices, L = 0.5 to 1.25) and toy test J13 (two quartets among 40 real ordinates). Next: full read of Bombieri 2000
+ and Yoshida 1992; surgery scan over heights, offsets and windows above L = 1.25.""",
+ "kill line": """Round-1 judge's kill line for the per-block count: a one-quartet configuration whose form has fewer
+ than two negative squares at every L up to 2; and (J17) any parity block with more negative squares than quartets.
+ NOT met: (1,1) from L = 0.5 on, never more. Novelty kill line: Bombieri 2000 or Yoshida 1992 turn out to contain the
+ per-block count with attainment; then this entry is only a citation.""",
+ "novelty": """NOT NEW AS A WHOLE. (a) Total count: printed, with the word 'distinct' and the same hyperbolic-pair
+ argument, as 'Theorem 1 (global signature)' in an unrefereed account of an agent research run ('How the two-thirds
+ argument was found: two agent runs and their literature', PDF on www-cdn.anthropic.com; the judge read about 150 of
+ about 5400 lines), which credits Bombieri 2000 with the upper-bound half for large truncations. (b) One parity
+ block suffices: Yoshida 1992 Prop. 1, as quoted on p. 2 of Suzuki arXiv 2606.09096v3 (read by checker and judge;
+ Yoshida's paper itself was not obtained, rh/library/yoshida-1992.md is secondary). (c) NOT FOUND: the per-block
+ count with attainment, and the multiplier proof. Searches: seat 3 web queries (summaries only), checker 4 queries
+ (one PDF partly read), judge 3 queries (one refused, weekly limit), plus the judge's full-text search of the
+ agent-run document for 'parity', 'even block', 'odd block', 'even functions', 'odd functions' (no hits) and of
+ Suzuki's paper for 'negative square', 'Pontryagin', 'monoton' (no hits). UNREAD by anyone in the project:
+ Bombieri 2000, Yoshida 1992. Status: per-block part not found, not established as new.""",
+ "evidence": """PROVED: rh/experiments/r2_parity/PROOF_parity_index.md, Theorem 4 (Steps 1 to 5) and section 5.
+ COMPUTED (judge, rh/experiments/r2_judge/JUDGEMENT.md 2.14; j17_int.log, j17_half.log): one quartet 17.578 + 0.3i:
+ (1,1) negative squares at L = 0.5, 0.75, 1.0, 1.25, lowest even eigenvalue -1.2e-3, -0.040, -0.097, -0.230; same
+ counts for offsets 0.05 and 0.45 and for weight 3; two quartets (second at 27.718 + 0.3i): (2,1), (2,2), (2,2),
+ (2,2); on-line control (0,0); zeta minus the two pairs stays positive definite (3.1e-11, 1.4e-21, 4.8e-38, 1.5e-64).
+ Limits: finite subspaces; one implementation of the base form; one quartet position plus one second quartet; not
+ interval-certified; the surgery test checks the theorem together with RH for the untouched zeros.""",
+}, "alive", """proved, checked by the checker and by the round-2 judge, and its kill test (J17) was not met; a
+ dictionary, not a route; no ladder level until Bombieri 2000 and Yoshida 1992 are read (JUDGEMENT.md 1.3)""")
+
+# ---------------------------------------------------------------------------------------------------------------
+# delta: R2-judge/#12, exact inertia relation and the open converse
+P("delta", "judge", 12, {
+ "tags": "WJ13,WP1,T32,T50,T61,T81",
+ "plain english": """Idea #10 hoped to prove RH by showing that one table of numbers (the primes' contribution minus
+ the smooth background) has exactly one 'growing' direction. Round 1 found that this is weaker than RH. This entry
+ says exactly how the two are related. Split test shapes into mirror-symmetric and mirror-antisymmetric ones. In each
+ class, the number of growing directions of the table equals the number of 'negative energy' directions of Weil's
+ test, corrected by a single yes/no switch, and one explicit number decides the switch. Example: for zeta on windows
+ of half-width 0.5 to 1.25 the table has 1 growing direction and Weil's test has 0 negative ones. Plant one group of
+ four zeros off the line (height 17.6, 0.3 to the side): Weil's test gets 1 + 1 negative directions and the table
+ gets 2 + 1 = 3 growing directions, not 1. So in every case computed a single bad group of zeros IS visible in the
+ table's count. Whether it must always be visible is open; if it must, 'one growing direction' would say the same
+ as RH. A companion fact from the cubic seat: add two extra rows to the table for the two pole measurements, and the
+ enlarged table has exactly 1 + (number of negative directions of Weil's test) growing directions, with no switch.
+ All of this is bookkeeping between known statements; none of it proves anything about the zeros.""",
+ "wall": """WJ13 (round-1 judge) and WP1 (seat R2-parity): 'one positive direction of N = primes - arch is weaker
+ than RH by one quartet'. This entry does not pass the wall. It replaces the inequality behind it by an identity and
+ reduces the wall to one open statement (THEORY T81). Not a route: finite linear algebra, valid for any system with
+ the same kind of explicit formula, impostors and Beurling systems included (B2).""",
+ "new input": """none as a route (standard tools: Haynsworth inertia additivity, the matrix determinant lemma). As a
+ result: the two indicator terms. Round 1 and seat R2-parity had only kappa_-(Q) <= kappa_+(N) + 1. The identity says
+ a one-quartet configuration has kappa_+(N) = 1 exactly when c^T Q_e^-1 c <= 1/2 and s^T Q_o^-1 s < -1/2 hold
+ together, and that the fibre-extended form Ntilde of seat R2-cubic's Lemma A has kappa_+ = 1 + kappa_-(Q) with no
+ indicator at all.""",
+ "claim": """PROVED (finite-dimensional subspace, invertible blocks; Haynsworth on [[Q_e, c],[c^T, 1/2]] and
+ [[Q_o, s],[s^T, -1/2]]; three independent derivations: judge J18, S1-parity on the seminar board, K-theory;
+ rh/THEORY.md T32, checked). With N = pole - Q, c = cosh(x/2), s = sinh(x/2): kappa_+(N_even) = kappa_-(Q_even) +
+ [c^T Q_e^-1 c > 1/2] and kappa_+(N_odd) = kappa_-(Q_odd) - [s^T Q_o^-1 s < -1/2]. It contains seat R2-curv's Theorem
+ A (the case kappa_-(Q) = 0, with the hypothesis lambda_1 > 0 that the checker added) and sharpens seat R2-parity's
+ Prop. 3(b). OPEN (T81): if kappa_+(N_L) <= 1 on every window, does RH follow? Proved so far: at most one off-line
+ quartet follows (R2-parity's Corollary C2, T31; the count itself is @alpha@).""",
+ "prediction": """Written by a command with the system time (00:29:04 UTC) before computing (judge J18), for the
+ surgery configurations of @alpha@: c^T Q_e^-1 c huge and positive (> 1e3) and s^T Q_o^-1 s > 0 in every row;
+ positive eigenvalues of N per block: zeta (1,0); on-line control (1,0); one quartet (2,1), THREE in total from
+ L = 0.5; two quartets (3,1) at L = 0.5 and (3,2) from L = 0.75; the identity holds in every row. Stated before the
+ run as the outcome that would differ: 'if the one-quartet row shows (1,0), the signature of N cannot see a single
+ quartet'. Result: identity holds in 36 of 36 rows; every count HIT except two quartets at L = 0.5 (predicted (3,1),
+ measured (2,1): there c^T Q_e^-1 c = -2.7e7, a tiny second negative eigenvalue -2.2e-8 dominates the inverse).
+ Beurling control (2 -> 2.1), not predicted: 3 and 5 positive eigenvalues at L = 0.5 and 1, equal to
+ 1 + kappa_-(Q).""",
+ "smallest": """The open converse T81: for a system with zeta's Gamma factor, a pole and a non-negative prime side,
+ the combination 'c^T Q_e^-1 c <= 1/2 and s^T Q_o^-1 s < -1/2 with exactly one off-line quartet' cannot hold on all
+ large windows. Smaller and finite: exclude it for surgery configurations of zeta on one window, with certified
+ arithmetic. The identity itself is finite linear algebra and was nominated for machine checking (S1-parity, board
+ B92).""",
+ "worth if true": """If the converse holds, idea #10's signature claim ('N has one positive direction on every
+ window') is EQUIVALENT to RH instead of weaker by one quartet, and wall WJ13 disappears. In any case every later
+ signature count (the Beurling controls' 3, 5, 9; surgery rows) can be read off from the Weil form with this identity
+ instead of being recomputed and argued again.""",
+ "first test": """Done: J18, 36 rows (zeta, on-line control, one and two quartets, Beurling 2 -> 2.1; L = 0.5 to 1.25;
+ integer and half lattices; 110 digits). Next: scan the planted quartet over heights, offsets and windows above
+ L = 1.25 for a row with c^T Q_e^-1 c <= 1/2; then the same question on a system with a genuine non-negative prime
+ side and an off-line quartet (none is known to the project: a surgery configuration is a set of zeros, not a prime
+ system).""",
+ "kill line": """For the converse T81: one configuration with zeta's Gamma factor, non-negative prime-side weights,
+ exactly one off-line quartet and kappa_+(N_L) = 1 on every window kills it; then 'one positive direction' is
+ strictly weaker than RH and idea #10's target has to be the fibre-extended form. The round-1 judge's kill line in
+ the other direction ('a one-quartet configuration keeps N at exactly one positive eigenvalue; then the signature
+ target cannot see a single quartet') was NOT met: N has three.""",
+ "novelty": """The identity is elementary and its tools are in print (Haynsworth 1968, cited from memory by the cubic
+ checker; matrix determinant lemma). It was not searched as a statement about the Weil form by the judge. The curv
+ checker ran one web query on the determinant / Aronszajn-Krein form of the sum rule (summaries only): nothing
+ found. Lemma A is Weil's Hodge-index picture transcribed (seat R2-cubic: one query, only the classical
+ function-field statement found). Status: elementary, presumably folklore; the open converse T81 is UNSEARCHED.""",
+ "evidence": """rh/experiments/r2_judge/JUDGEMENT.md sections 1.4 and 2.14; j18_int.log, j18_half.log; rh/THEORY.md
+ T32 (checked), T50, T61, T81 (open). One-quartet rows: kappa_-(Q) = (1,1), kappa_+(N) = (2,1) at L = 0.5, 0.75, 1.0,
+ 1.25, with c^T Q_e^-1 c between 5.8e5 and 7e53. Seat S1-parity reports 0 failures of the identity in 20000 random
+ cases. Limits: finite subspaces; one implementation of the base form; one quartet position plus one second
+ quartet; not interval-certified.""",
+}, "alive", """the identity is proved (three independent derivations) and held in 36 of 36 computed rows; the
+ round-1 kill line was not met; a bookkeeping result with one open converse (T81), not a route""")
+
+# ---------------------------------------------------------------------------------------------------------------
+# beta: R2-cubic/#7, the Bakry-Emery cubic (Theorem F). The agent's own plain english, wall, new input, prediction
+# and smallest fields are kept as written; claim, first test, kill line are added; novelty is extended.
+P("beta", "cubic", 7, {
+ "tags": "W2,B3,T55,T56,T62,T65,ideas10and11",
+ "claim": """PROVED and CHECKED (Theorem F; rh/THEORY.md T55; recomputed by hand by the checker and the judge, and
+ numerically to 2e-14). For any symmetric H and a > 0 with s = Ha > 0, the Bakry-Emery forms Gamma and Gamma_2 of the
+ Doob-transformed chain K = S^-1 H A define a SYMMETRIC 3-tensor T with T.a = H. For distinct i, j, k:
+ T_ijk = (1/2)[H_ij H_ik/s_i + H_ij H_jk/s_j + H_ik H_jk/s_k] (two-step chains through a middle scale; >= 0 when the
+ couplings are >= 0). Every slice of T has at most one positive eigenvalue iff Gamma_2 >= Gamma at every site (the
+ curvature condition CD(1, infinity)). So idea #10's cubic certificate and idea #11's curvature bound are ONE
+ mechanism. (The '(non-symmetric?)' in the title was the seat's prediction before computing; it missed, the cubic is
+ symmetric.) This canonical cubic is NOT a certificate: on the resampling (mean-field) chain on m points its best
+ constant is exactly 1/2 + 1/m where 1 is needed; for zeta at L = 1 it is 0.590, 0.528, 0.482 at 12, 24, 48 boxes and
+ every slice has two positive eigenvalues; the Beurling control (2 -> 2.1), whose form is not positive, gives 0.586,
+ 0.523, 0.483: the cubic cannot tell them apart.""",
+ "first test": """Done (seat, checker, judge J4, J7, J9): symmetry to 2e-16, T.a - H to 7e-16, formula against Gamma_2
+ from its definition to 2e-14 on 40 random mixed-sign H (control: the coefficient 1/4 replaced by 0.3 breaks T.a = H
+ by 0.1 to 0.6); resampling chain 0.7, 0.6, 0.55, 0.525 for m = 5, 10, 20, 40; zeta and Beurling as in the claim.
+ The neighbours of the canonical cubic were then tried (product cubic, dimension-corrected criterion, the
+ mean-field-exact family Theta_t); they are in the notes below. Not run: the Davenport-Heilbronn impostor and the
+ theta dial (they have negative couplings, so the Perron step of the local-to-global lemma does not apply to
+ them).""",
+ "kill line": """None was fixed by the seat for this entry before computing. The kill lines of its two parents apply:
+ idea #10 ('no certificate on the smallest discretisations, or a certificate that also exists for a Beurling system:
+ kill the mechanism') and idea #11 ('curvature constant <= 0: the tool is dead'). Outcome: the constant is positive
+ but 0.48 to 0.65 where 1 is needed, exactly 1/2 + 1/m on the mean-field model, and the same for the control to
+ within 0.005. The identity stands as a proved lemma; as a certificate the canonical cubic is dead. Unparks only with a
+ rule for the coefficients of a lossless cubic that does not use the spectrum of the window form (THEORY T62); the
+ measurable form of that wall is @dstar@.""",
+ "novelty": """SEARCHED 2026-11-10. Seat: 2 web queries (Bakry-Emery with trickle-down / Garland / Lorentzian / cubic;
+ Bakry-Emery Markov chain with Lorentzian / one positive eigenvalue), snippets only: the trickle-down and
+ Bakry-Emery literatures appear separately, no statement of this identity. Checker: not found in 2 further searches,
+ in section 2 of Braenden-Leake arXiv 2304.13203 (read, pp. 6-9), or in a machine summary of Shenfeld-van Handel
+ arXiv 1811.08710 (no Markov chain or Gamma_2 there). KNOWN parts: the local-to-global lemma it plugs into is
+ Braenden-Leake Lemma 2.8, whose ancestor (Cordero-Erausquin, Klartag, Merigot, Santambrogio 2019) is itself a
+ Bochner-method argument, so 'this lemma is a Bochner statement' is known in convex geometry; the constant 1/2 + 1/m
+ on the complete graph is Schmuckenschlaeger 1998 (MSRI Publ. 34); 'Garland's method is a Bochner argument' is
+ folklore (seat, from memory). Journal J4 lists Theorem F as 'still only ours' after the whole-paper readings.
+ Status: not found, NOT established as new.""",
+ "evidence": """rh/experiments/r2_cubic/PROOF_BE_cubic.md (Theorem F; sections 2 to 4), be.log, be2.log;
+ rh/experiments/r2_judge/JUDGEMENT.md 1.1, 2.7, 3.3. Prediction order (judge, section 5): the seat's P8 and P9 have
+ no snapshot separating them from their results; consistent with file times, not provable. Double precision; nothing
+ interval-certified.""",
+}, "parked", """the identity is proved and checked, but as a certificate the canonical cubic fails by a structural
+ factor 2 and is blind to the Beurling control; parked on the wall 'a rule for a lossless cubic' (THEORY T62), in
+ line with the statuses of its parents #10 (parked) and #11 (killed)""")
+
+# ---------------------------------------------------------------------------------------------------------------
+# dstar: R2-cubic/#10, the chain-degree conjecture (title only in the local log; fields from the seat's PROGRESS.md
+# section 4 and PROOF_BE_cubic.md section 4, the checker's PROGRESS.md and JUDGEMENT.md 2.8, 2.9, 3.3)
+P("dstar", "cubic", 10, {
+ "tags": "B3,T62,proposal,ideas10and11",
+ "plain english": """Round 2 learned two things about 'certificates' for the one-growing-direction property of idea
+ #10. Some certificate always exists whenever the property holds, so bare existence says nothing; and the one
+ certificate with a simple formula (@beta@) loses a factor of two. Between these there is a ladder. Allow the
+ certificate to be built only from the walk's own one-step table K: products of three functions, each smoothed by K
+ at most d times. Call d the rung. The conjecture: the lowest rung that works is finite whenever the property holds
+ with room to spare, and climbs without bound as the room shrinks to nothing. Example from the computations: for
+ zeta's table on the window of half-width 1 cut into 12 boxes, rung 1 fails (it misses by 0.014) and rung 2 works,
+ with a safety margin of 0.00046; with 20 boxes, where the box table has less room, the rung-2 margin drops to
+ 0.00026. Random tables behave the same way: rung 1 works for those with a lot of room and fails for those with
+ little. RH is true with no room to spare (on this window the true room is about 0.00000000000000000000002). So if the conjecture is right, no fixed rung can ever certify it, and this whole family of
+ formula-built certificates is closed for good; if instead rung 2 keeps working as the room closes, there is one
+ formula to look for. Either answer is about the method, not about the zeros.""",
+ "wall": """FAILS RULE: it does not get past a wall, it measures one. The wall is the one that parked idea #10 and
+ @beta@: no rule is known for a lossless cubic certificate (THEORY T62), while bare existence of a certificate is
+ vacuous (Lemma C). The proposal asks whether the complexity a certificate needs stays bounded as the zero margin
+ (barrier B3) is approached. If d* diverges, the wall is permanent for every certificate that is a polynomial of
+ fixed degree in the one-step kernel; if d* stays at 2, the wall reduces to finding one formula.""",
+ "new input": """A grading of cubic certificates by chain-degree (how many steps of the Doob chain K each factor may
+ take) and the number d*(H) it attaches to any ferromagnetic form with one positive direction, studied as a function
+ of the margin. It grows from recorded results (owner rule 9): Lemma C (existence is vacuous), Theorem F (@beta@:
+ the degree-1 formula loses a factor 2) and the seat's computations at degrees 1 and 2.""",
+ "claim": """CONJECTURE (seat R2-cubic; not attempted). For a symmetric H with non-negative off-diagonal entries and
+ exactly one positive eigenvalue, with a its Perron vector and K the Doob chain, let d*(H) be the least d such that
+ some combination, with free coefficients and T.a = H imposed, of the symmetrised products [K^a g, K^b f, K^c h],
+ a, b, c <= d (4 tensors for d = 1, 10 for d = 2, 20 for d = 3, 35 for d = 4), has every slice with at most one
+ positive eigenvalue. Then d*(H) is finite whenever the second eigenvalue of H is < 0, and d* is unbounded as the
+ second eigenvalue tends to 0.""",
+ "prediction": """FAILS RULE: no number for d* as a function of the margin was stated before computing. On record
+ from the seat's neighbouring blind predictions (their order cannot be proved: no snapshot; judge, section 5): P11
+ 'no degree-2 certificate for zeta, slack between 0.005 and 0.05': MISS, a degree-2 certificate exists. P12
+ 'degree-2 certificates exist for all random Lorentzian matrices with non-negative off-diagonal': HIT (12 of 12);
+ 'degree 1 fails for most of them': MISS (it works for 11 of 12 on the seat's draws and 7 of 12 on the checker's;
+ it fails for those with second eigenvalue above about -0.28). Control, forced by the local-to-global lemma and
+ observed: no certificate at any degree for the Beurling control at L = 1, whose form is not positive.""",
+ "smallest": """In the seat's words: the least chain-degree d* as a function of the margin on an exactly solvable
+ ferromagnet (the seat did not name the model). A first provable piece: one explicit small family on which degree 1
+ fails and degree 2 succeeds, with the margin of the degree-2 certificate as an explicit function of the second
+ eigenvalue.""",
+ "worth if true": """A divergence of d* at zero margin would be a no-go theorem for the whole family of local,
+ formula-built cubic certificates (ideas #10 and #11 and @beta@ in one stroke) and would say what a certificate at
+ zero margin cannot be (a fixed-degree polynomial in the one-step kernel). A bounded d* would leave a finite search:
+ the formula of the degree-2 certificate.""",
+ "first test": """Partly done (seat; reproduced by its checker with two solvers; not redone by the judge). Zeta:
+ degree 1 fails (slack 0.0144 at L = 1 with 12 boxes, 0.0357 at L = 0.5 with 12 boxes, 0.0726 at L = 1 with 20
+ boxes); degree 2 exists, with margins 1.19e-3, 4.6e-4, 2.6e-4 on the complement of a (checker's robust test: maximise
+ t with P_k >= t(I - aa^T/|a|^2); the seat's own evidence, a smallest eigenvalue of 1e-12, cannot separate 0 from
+ 1e-9). A Beurling control on a window where its form is still positive also has a degree-2 certificate (6.7e-3).
+ To do: a one-parameter family H(eps) with second eigenvalue -eps, d*(eps) for eps from 1 down to 1e-6 with the
+ robust margin; zeta's own box forms at growing numbers of boxes are a second family (their margin shrinks with
+ refinement).""",
+ "kill line": """Seat's own: if d* stays at 2 as the margin is dialled to zero, the conjecture is dead and the
+ question becomes the formula of the degree-2 certificate on the simplest solvable model. Practical stop: degrees 3
+ and 4 gave solver failures in double precision (ill-conditioned powers of K); if d* cannot be decided beyond 2 in
+ higher precision either, park it.""",
+ "novelty": """UNSEARCHED for the conjecture itself. The seat's four web searches of 2026-11-10 (result lists and
+ snippets only: Bakry-Emery with trickle-down / Garland / Lorentzian / cubic; Braenden-Leake; Weil positivity with
+ Lorentzian / trickle-down / Bakry-Emery; Bakry-Emery Markov chain with Lorentzian / one positive eigenvalue) found
+ nothing on degree hierarchies of such certificates. Degree hierarchies for sum-of-squares certificates are
+ standard in optimisation (recall, not searched, so not evidence). Status: not established as new.""",
+ "evidence": """rh/experiments/r2_cubic/PROOF_BE_cubic.md section 4; rh/experiments/r2_cubic/PROGRESS.md (P11, P12,
+ 'what the wall suggests next (b)'); rh/experiments/r2_cubic/refuter/PROGRESS.md; rh/experiments/r2_judge/JUDGEMENT.md
+ 2.8, 2.9, 3.3. Double precision; the semidefinite-programming results were reproduced by the checker only.""",
+}, None, None)
+
+# ---------------------------------------------------------------------------------------------------------------
+# eps: R2-free/#1, two positivity sets of the theta dial (the seat was withdrawn after about 20 minutes; fields from
+# its PROGRESS.md and logs; nothing here was seen by a checker or by the judge)
+P("eps", "free", 1, {
+ "tags": "control,dial,B1,B11,create,unreviewed",
+ "plain english": """The dial (idea #12) is a knob n that turns zeta into other functions. The function at setting n
+ lists in how many ways each whole number m is a sum of n squares; the formula for that count makes sense for
+ fractional n too. Ask two things of each setting. First: are all the counts at least zero? Second, and stronger:
+ read the counts as the odds in a lottery over whole numbers; can that lottery be produced by many small independent
+ multiplicative steps? Functions built from primes in the way zeta is always can; that is what the prime product
+ means. Example: at n = 1.4 the step that lands on 3 would need odds (2/3)(0.4)(-0.6) = -0.16, a negative chance, so
+ the answer is no; and the first question already fails between 1 and 2, because the count for m = 3 is
+ (4/3) n (n-1)(n-2), negative there: 3 is not a sum of two squares. Computed so far (exact fractions, one program,
+ twenty minutes of work, checked by nobody): among settings up to 14 the second question is answered yes only at
+ n = 1, 2 and 8; the first only at n = 0, 1, 2, 3, 4 and, as far as was looked, from about 4.16 on. The setting
+ n = 8 is a warning: it passes both tests and is built from primes, yet its zeros are not on its centre line; and
+ n = 4, also built from primes, fails the second test. So the test detects one particular kind of prime structure,
+ not 'zeros on the line'. This is a fact about the family of impostors, not about zeta.""",
+ "wall": """FAILS RULE: attacks no wall. It sharpens a control (the dial, #12) and tests the sign input of idea #10
+ along it. What it says about walls: on the dial, 'all prime-side couplings >= 0' (idea #10's sign fact) is the same
+ as infinite divisibility of the scale law and holds only at isolated settings; one of them, n = 8, has its zeros off
+ its centre line, so the sign property cannot by itself place zeros (the lesson of barrier B11, from a second
+ example).""",
+ "new input": """A probabilistic reading carried over from infinitely divisible laws and from Wishart / Gindikin
+ theory on symmetric cones (the seat's analogy: a Wishart law with real shape parameter exists only for a discrete
+ set of values plus a half-line, the Wallach set). Two sets: M = {n > 0 : every Dirichlet-logarithm coefficient
+ c_n(m) of sum a_n(m) m^-s is >= 0}, a_n = r_n/(2n), i.e. the scale law is compound Poisson; and S = {n >= 0 :
+ r_n(m) >= 0 for all m}, 'the Wallach set of theta'. Neither is in the dial entries #12, #13, which have only the
+ single coupling at m = 3.""",
+ "claim": """(1) PROVED by hand and rechecked by machine (seat): c_n(2) = n-1, c_n(3) = (2/3)(n-1)(n-2),
+ c_n(4) = 1 + (1/3)(n-1)(n-2)(n-3) - (n-1)^2/2; r_n(2) = 2n(n-1) < 0 on (0,1), r_n(3) = (4/3)n(n-1)(n-2) < 0 on
+ (1,2), r_n(7) = 64 C(n,4) + 128 C(n,7) < 0 on (2,3). Hence S meets [0,3) in {0, 1, 2} and M meets (0,2] in {1, 2}.
+ (2) COMPUTED (exact rational arithmetic, one implementation, never rechecked), on the grid n = k/8: M meets (0, 14]
+ in {1, 2, 8} (m up to 1200; first failures at m = 7 or 4 for n between 2 and 4.75, at m = 6 up to 8, then at
+ m = 12, 18, 24, 30, 36, 60, 120 and on to 420); n = 8 is in M because its series is, up to a constant,
+ (1 - 2^(1-s) + 4^(2-s)) zeta(s) zeta(s-3). S: every sampled n in (3, 4) fails (at m = 23, 28, 16, 64 or 256), n in
+ (4, 4.141] fails at m = 512, and no negative coefficient was found for n from 4.156 to 30 (m up to 600).
+ CONJECTURES (seat): M is discrete with 1 and 2 isolated; S is {0, 1, 2, 3, 4} together with a half-line starting at
+ some n0 in (4.14, 4.6).""",
+ "prediction": """Blind, written 23:12 UTC before any computation (seat's PROGRESS.md; order checked by nobody).
+ P1 'S = {0,1,2} and everything from 3 on' (guessed from the Wishart pattern and Lagrange's four squares): MISS,
+ negatives throughout (3,4) and just above 4. Seat's reason: sparse values of the integer members (r_3(4^k) = 6,
+ r_4(2^k) = 24 stay bounded) drag the neighbouring real members below zero. Control for P1, triangular numbers
+ 'non-negative from 2 on': MISS in the same way (negatives on (2, 2.625] at m = 33 and 176). P2 'M meets (0,30] in
+ exactly {1, 2, 8}': consistent up to 14, open above; its sub-prediction 'n = 16 and 24 fail at a non-prime-power
+ m <= 100': MISS (they survive m <= 150). Controls: the dial at n = 1.4 fails at m = 3 with c = -0.16 (exact); the
+ Davenport-Heilbronn impostor already has coefficients of both signs. Registered and NOT yet computed: P3, n0 in
+ (4.14, 4.6) with every failure just above 4 at a power of 2; P4, for integer n = 15 to 30 the first failing m is
+ highly composite and below 60000 (n = 16: between 1260 and 1680).""",
+ "smallest": """Provable now, by sign analysis of explicit polynomials in n: (a) M meets (2, 8) in the empty set
+ (exhibit for each n one m with c_n(m) < 0; on the grid m = 7, 4 and 6 suffice); (b) 4 is isolated in S from the
+ right (the computed failures just above 4 are all at m = 512); (c) n = 8 lies in M, with all local logarithm
+ coefficients written out (the seat checked the powers of 2 by hand).""",
+ "worth if true": """It would say exactly at which settings of the dial the 'ferromagnetic sign' of idea #10 can
+ hold, replacing the single observation at m = 3 by a complete list, and it supplies a second cheap control next to
+ F_d (barrier B11): n = 8 has an Euler product and non-negative couplings, yet its zeros are not on its centre
+ line. A theorem here is a theorem about the dial, not about zeta.""",
+ "first test": """Done in part (wallach.py.txt, exact rational arithmetic, under 2 seconds per scan; logs add_sq.log,
+ add_fine.log, mul_sq.log; the run with m up to 1200 is reported in PROGRESS.md without a log file). To do: P3 and
+ P4; a second implementation; replace the grid by sign analysis of the polynomials n -> r_n(m) and n -> c_n(m);
+ locate the zeros of the n = 8 member relative to its centre line Re s = 2 explicitly; a literature search.""",
+ "kill line": """None was fixed by the seat (it was withdrawn after about 20 minutes). Proposed by the auditor from
+ the seat's own predictions, for the lead to confirm: if M contains an interval (a continuum of settings with all
+ couplings >= 0 and no Euler product), the reading 'non-negative couplings mark the members built from primes' is
+ wrong on the dial and the entry is dropped as a control; if a search shows that both sets are already described in
+ the literature on real powers of theta, it becomes a citation on #12.""",
+ "novelty": """UNSEARCHED: the seat ran no search before it was withdrawn, and nobody has searched since. Already in
+ the record: the coupling (2/3)(n-1)(n-2) log 3 at m = 3 (round-1 judge; ideas #10, #12, #13), and two papers on
+ Dirichlet series of real powers of theta found by round-1 searches, summaries only (arXiv 2304.09545, 2401.02813:
+ zeros ON the line). Sign changes of coefficients of real powers of theta and Wallach sets are classical subjects
+ (recall, not evidence). Status: not established as new; a search is the first thing owed.""",
+ "evidence": """rh/experiments/r2_free/PROGRESS.md, wallach.py.txt, add_sq.log, add_fine.log, mul_sq.log. One
+ implementation, no checker, not seen by the round-2 judge: the seat was a creation seat and was withdrawn when
+ round 2 was split into two tracks (docs/AGENT_REGISTRY.tsv, line R2-free). Auditor's remark, from the seat's Euler
+ product for n = 8 (Jacobi's eight-squares formula): the zeros of zeta(s) and zeta(s-3) lie in 0 < Re s < 1 and
+ 3 < Re s < 4, away from the centre line Re s = 2 of that member's functional equation; this remark has been checked
+ by nobody else.""",
+}, None, None)
+
+open(marker, "w").write(json.dumps(M))
+print("stage 1 done", M)

@@ -1,0 +1,3 @@
+SIG=model clow=0.3333 alpha=0.6667 rho=-0.1429 cubic_low=True: best sigma0 = 0.813619 at (l_x, b) = (0.37917, 0.05510); low line there 0.813440
+  at (l_x, b) = (0.37917, 0.05510): sigma_best = 0.813619, low line 0.813440
+  at (l_x, b) = (0.35417, 0.12500): sigma_best = 0.833333, low line 0.833333

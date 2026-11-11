@@ -1,0 +1,68 @@
+"""PRIME_SAMPLING section 5 (dual): kappa_P(L) = sup_c lambda_min(A + sum_s c_s W_s), A = Li Q Li^T, W_s = Li B_s Li^T,
+B_s = gamma_sym(log s) (the Legendre matrix of g -> (g*g~)(s), exactly the prime-atom matrix of pencil_dh.py.txt).
+Weak duality: every c gives a LOWER bound kappa_P >= lambda_min(A + sum c W); c = 0 gives kappa_min. B_s and the products are
+computed in arb (python-flint) at the dump precision, then rounded entrywise to float for the eigenvalue evaluations."""
+import sys, pickle, math, time
+import numpy as np, mpmath as mp, flint
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+from scipy.optimize import minimize
+t0 = time.time()
+d = pickle.load(open(sys.argv[1], 'rb')); NB = int(sys.argv[2]) if len(sys.argv) > 2 else d['NB']; prec = d['prec']; flint.ctx.prec = prec; mp.mp.prec = prec - 40
+LQ = Fr(d['L']); L = arb(LQ.numerator) / arb(LQ.denominator)
+def gl(n, a, b):
+    out = []
+    for k in range(n):
+        x, w = arb.legendre_p_root(n, k, weight=True); out.append(((a + b) / 2 + (b - a) / 2 * x, (b - a) / 2 * w))
+    return out
+NORM = [((2 * arb(j) + 1) / (2 * L)).sqrt() for j in range(NB)]
+def phis(u):
+    t = u / L; P = [arb(1), t]
+    for n in range(1, NB - 1): P.append(((2 * n + 1) * t * P[n] - n * P[n - 1]) / (n + 1))
+    return [NORM[j] * P[j] for j in range(NB)]
+def gamma_sym(x, nin):
+    nodes = gl(nin, x - L, L)
+    A_ = arb_mat(nin, NB, [v for u, w in nodes for v in phis(u)]); B_ = arb_mat(nin, NB, [w * v for u, w in nodes for v in phis(u - x)])
+    G = A_.transpose() * B_; return (G + G.transpose()) * (arb(1) / 2)
+Qm = mp.matrix(NB, NB); Dm = mp.matrix(NB, NB)
+for i in range(NB):
+    for j in range(NB):
+        Qm[i, j] = (mp.mpf(d['Q'][i][j]) + mp.mpf(d['Q'][j][i])) / 2; Dm[i, j] = (mp.mpf(d['D'][i][j]) + mp.mpf(d['D'][j][i])) / 2
+Lim = mp.inverse(mp.cholesky(Dm))
+dig = int(prec * 0.29)
+Li = arb_mat(NB, NB, [arb(mp.nstr(Lim[i, j], dig)) for i in range(NB) for j in range(NB)])
+Qa = arb_mat(NB, NB, [arb(mp.nstr(Qm[i, j], dig)) for i in range(NB) for j in range(NB)])
+tofl = lambda M: np.array([[float(M[i, j].mid()) for j in range(NB)] for i in range(NB)])
+A = tofl(Li * Qa * Li.transpose()); A = (A + A.T) / 2
+X2 = math.exp(2 * float(LQ))
+def isprimepow(n):
+    for p in range(2, n + 1):
+        if n % p == 0:
+            while n % p == 0: n //= p
+            return n == 1
+S = [n for n in range(2, int(math.floor(X2 - 1e-12)) + 1) if (isprimepow(n) if d['KIND'] == 'zeta' else n % 5 != 0)]
+W = []
+for n in S:
+    B = gamma_sym(arb(n).log(), NB + 2); Wn = tofl(Li * B * Li.transpose()); W.append((Wn + Wn.T) / 2)
+print(f"kind {d['KIND']}, L = {d['L']}, NB = {NB}, constraints n = {S} (m = {len(S)}); built {time.time()-t0:.0f}s", flush=True)
+nrm = np.array([np.abs(np.linalg.eigvalsh(Wn)).max() for Wn in W])
+ev, V = np.linalg.eigh(A); v = V[:, 0]
+b = np.array([v @ Wn @ v for Wn in W])
+print(f" kappa_min = {ev[0]:.6f} (second {ev[1]:.6f}); |W_s| up to {nrm.max():.2e}; gradient at c = 0 (v^T W_s v / |W_s|): {[f'{x:.1e}' for x in b / nrm]}", flush=True)
+def f(t):          # c_s = t_s * 10^-? / |W_s|, t dimensionless
+    M = A + sum(ti / ni * Wn for ti, ni, Wn in zip(t, nrm, W)); return np.linalg.eigvalsh((M + M.T) / 2)[0]
+best = (ev[0], np.zeros(len(S)))
+def fg(t, scale):
+    M = A + sum(ti * scale / ni * Wn for ti, ni, Wn in zip(t, nrm, W)); e, U = np.linalg.eigh((M + M.T) / 2); u = U[:, 0]
+    return -e[0], -np.array([scale / ni * (u @ Wn @ u) for ni, Wn in zip(nrm, W)])
+for scale in (1e-6, 1e-4, 1e-3, 1e-2):
+    for meth in ('BFGS', 'Nelder-Mead'):
+        if meth == 'BFGS':
+            r = minimize(lambda t: fg(t, scale), best[1] / scale, jac=True, method='BFGS', options={'maxiter': 3000, 'gtol': 1e-12})
+        else:
+            r = minimize(lambda t: fg(t, scale)[0], best[1] / scale, method='Nelder-Mead', options={'maxiter': 1500, 'xatol': 1e-8, 'fatol': 1e-13})
+        val = -r.fun
+        if val > best[0]: best = (val, r.x * scale)
+    M = A + sum(ti / ni * Wn for ti, ni, Wn in zip(best[1], nrm, W)); e2 = np.linalg.eigvalsh((M + M.T) / 2)
+    print(f"  after scale {scale:.0e}: best sup {best[0]:.8f}; at that c the two lowest eigenvalues are {e2[0]:.8f}, {e2[1]:.8f}; |c_s|*|W_s| max {np.abs(best[1]).max():.2e}", flush=True)
+print(f" => kappa_P(L) >= {best[0]:.8f}  (kappa_min = {ev[0]:.8f}; gain {best[0]-ev[0]:.2e})  total {time.time()-t0:.0f}s")

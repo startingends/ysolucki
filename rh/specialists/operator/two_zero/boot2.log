@@ -1,0 +1,7 @@
+zeta L = 17/20 NB = 66: prime powers [2, 3, 4, 5]; kappa_min = 0.3019; |W_s| = ['1.04e+18', '2.39e+15', '4.98e+11', '9.26e+05']
+  else: pr.solve(solver='SCS', max_iters=200000, eps=1e-9)
+  s = 2: c_zeta = -0.98026; R_L range of c_s - c_zeta: [-2.064e-15, +inf]; relative width inf  (status optimal)
+  s = 3: c_zeta = -1.26857; R_L range of c_s - c_zeta: [-inf, +1.323e-12]; relative width inf  (status unbounded_inaccurate)
+  s = 4: c_zeta = -0.69315; R_L range of c_s - c_zeta: [-2.175e-09, +inf]; relative width inf  (status optimal)
+  s = 5: c_zeta = -1.43953; R_L range of c_s - c_zeta: [-3.128e-04, +7.784e-05]; relative width 2.713e-04  (status optimal_inaccurate)
+zeta L = 1 NB = 116: prime powers [2, 3, 4, 5, 7]; kappa_min = 0.2978; |W_s| = ['8.45e+27', '3.52e+25', '3.35e+22', '6.38e+18', '3.94e+06']

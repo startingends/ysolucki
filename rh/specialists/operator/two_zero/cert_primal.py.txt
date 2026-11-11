@@ -1,0 +1,68 @@
+"""PRIMAL certificate for kappa_P < 0 (PRIME_SAMPLING 7.2): explicit H = sum_i g_i g_i^T >= 0 (g_i in the Legendre space of the
+window) with Tr(B_s H) = sum_i (g_i * g_i~)(log s) = 0 for all constraint n and Tr(Q H) < 0.
+Basis: g-space vectors V_g = Li^T u_j, u_j the k lowest eigenvectors of the whitened pencil. All small matrices
+Q~ = V^T Q V, D~ = V^T D V, B~_s = V^T B_s V computed in arb. SDP (cvxpy/Clarabel) with H >= eps I, then an exact
+least-squares correction of the residuals in mpmath and a PSD check of the corrected H.
+usage: cert_primal.py.txt <pkl> <k> <eps>"""
+import sys, pickle, math, time
+import numpy as np, mpmath as mp, flint, cvxpy as cp
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+t0 = time.time()
+d = pickle.load(open(sys.argv[1], 'rb')); NB = d['NB']; prec = d['prec']; flint.ctx.prec = prec; mp.mp.prec = prec - 40
+K = int(sys.argv[2]); EPS = float(sys.argv[3])
+LQ = Fr(d['L']); L = arb(LQ.numerator) / arb(LQ.denominator)
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/prime_dual.py.txt').read()
+exec(src[src.index("def gl("):src.index("Qm = mp.matrix")])     # gl, NORM, phis, gamma_sym
+Qm = mp.matrix(NB, NB); Dm = mp.matrix(NB, NB)
+for i in range(NB):
+    for j in range(NB):
+        Qm[i, j] = (mp.mpf(d['Q'][i][j]) + mp.mpf(d['Q'][j][i])) / 2; Dm[i, j] = (mp.mpf(d['D'][i][j]) + mp.mpf(d['D'][j][i])) / 2
+Lim = mp.inverse(mp.cholesky(Dm)); dig = int(prec * 0.29)
+toa = lambda M, r, c: arb_mat(r, c, [arb(mp.nstr(M[i, j], dig)) for i in range(r) for j in range(c)])
+Li = toa(Lim, NB, NB); Qa = toa(Qm, NB, NB); Da = toa(Dm, NB, NB)
+A = Li * Qa * Li.transpose(); Af = np.array([[float(A[i, j].mid()) for j in range(NB)] for i in range(NB)]); Af = (Af + Af.T) / 2
+ev, U = np.linalg.eigh(Af)
+Ua = arb_mat(NB, K, [arb(float(U[i, j])) for i in range(NB) for j in range(K)])
+Vg = Li.transpose() * Ua                                         # g-space basis vectors (columns)
+X2 = math.exp(2 * float(LQ))
+S = [n for n in range(2, int(math.floor(X2 - 1e-12)) + 1) if n % 5 != 0] if d['KIND'] == 'dh' else None
+sm = lambda M: [[M[i, j] for j in range(K)] for i in range(K)]
+Qt = Vg.transpose() * Qa * Vg; Dt = Vg.transpose() * Da * Vg
+Bt = [Vg.transpose() * gamma_sym(arb(n).log(), NB + 2) * Vg for n in S]
+print(f"kind {d['KIND']} L = {d['L']} NB = {NB}; k = {K}, m = {len(S)}; pencil eigenvalues used: {[f'{x:.4f}' for x in ev[:K]]}; built {time.time()-t0:.0f}s", flush=True)
+f = lambda M: np.array([[float(M[i, j].mid()) for j in range(K)] for i in range(K)])
+Qf, Df = f(Qt), f(Dt); Qf = (Qf + Qf.T) / 2; Df = (Df + Df.T) / 2
+Bf = [f(B) for B in Bt]; sc = [np.abs(B).max() for B in Bf]; Bn = [(B + B.T) / 2 / s for B, s in zip(Bf, sc)]
+H = cp.Variable((K, K), symmetric=True)
+cons = [H >> EPS * np.eye(K), cp.trace(Df @ H) == 1] + [cp.trace(B @ H) == 0 for B in Bn]
+prob = cp.Problem(cp.Minimize(cp.trace(Qf @ H)), cons)
+for solver in (('CLARABEL', 'SCS') if K <= 30 else ('SCS',)):
+    try:
+        prob.solve(solver=solver, **({'max_iters': 200000, 'eps': 1e-10} if solver == 'SCS' else {})); print(' solver', solver, prob.status); break
+    except Exception as e:
+        print(' solver', solver, 'failed:', str(e)[:80])
+print(f" SDP status {prob.status}, value Tr(Q H)/Tr(D H) = {prob.value}", flush=True)
+if H.value is None: sys.exit()
+Hm = mp.matrix((H.value + H.value.T) / 2)
+# exact residuals and minimum-norm correction (in mpmath), constraint rows in true units
+Bmp = [mp.matrix([[mp.mpf(B[i, j].mid().str(dig, radius=False)) for j in range(K)] for i in range(K)]) for B in Bt]
+tr = lambda M, N: mp.fsum(M[i, j] * N[j, i] for i in range(K) for j in range(K))
+r = [tr(B, Hm) for B in Bmp]
+print(f" residuals before correction, |Tr(B_s H)| / |B_s|: max {max(abs(float(ri)) / s for ri, s in zip(r, sc)):.2e}", flush=True)
+# correction Delta = sum_t y_t Bsym_t with Gram system G y = -r
+Bs = [(B + B.T) / 2 for B in Bmp]
+G = mp.matrix(len(S), len(S))
+for a in range(len(S)):
+    for b in range(len(S)): G[a, b] = tr(Bs[a], Bs[b])
+y = mp.lu_solve(G, mp.matrix([-ri for ri in r]))
+Delta = sum((y[t] * Bs[t] for t in range(len(S))), mp.zeros(K, K))
+Hc = Hm + Delta
+r2 = [tr(B, Hc) for B in Bmp]
+eH = mp.eigsy(Hc, eigvals_only=True); eH = sorted([float(x) for x in eH])
+Qmp = mp.matrix([[mp.mpf(Qt[i, j].mid().str(dig, radius=False)) for j in range(K)] for i in range(K)])
+Dmp = mp.matrix([[mp.mpf(Dt[i, j].mid().str(dig, radius=False)) for j in range(K)] for i in range(K)])
+val = tr(Qmp, Hc) / tr(Dmp, Hc)
+print(f" after exact correction: max |Tr(B_s H)| / |B_s| = {max(abs(float(ri)) / s for ri, s in zip(r2, sc)):.2e}; |Delta|_max = {float(max(abs(Delta[i, j]) for i in range(K) for j in range(K))):.2e}; "
+      f"min eigenvalue of corrected H = {eH[0]:.3e} (PSD: {eH[0] > 0}); Tr(Q H)/Tr(D H) = {float(val):.6f}", flush=True)
+print(f" total {time.time()-t0:.0f}s")

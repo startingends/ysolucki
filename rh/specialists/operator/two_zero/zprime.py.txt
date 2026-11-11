@@ -1,0 +1,22 @@
+"""|L'(rho)| at the binding pairs (a Lagrange-interpolation normalisation of kappa_min)."""
+import mpmath as mp
+mp.mp.dps = 30
+k = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1); a = [0, 1, k, -k, -1]
+def fdh(s): return 5 ** (-s) * sum(a[n] * mp.zeta(s, mp.mpf(n) / 5) for n in range(1, 5))
+cases = [('zeta', 1.0, 0.297833, ['59.3470440026023530796536486749922190310988', '60.8317785246098098442599018245240038029101'], 1),
+         ('zeta', 1.25, 0.204610, ['111.029535543169674524656450309944350415346', '111.874659176992637085612078716770594960312'], 1),
+         ('dh', 1.5, 0.137721, ['40.1625784768500110316817', '40.68295279706699969337888'], 5)]
+for name, L, kap, gs, q in cases:
+    out = []
+    for g in gs:
+        s = mp.mpc(0.5, mp.mpf(g))
+        d = mp.diff(mp.zeta, s) if name == 'zeta' else mp.diff(fdh, s)
+        out.append(abs(d))
+    t = mp.mpf(gs[0]); dens = mp.log(q * t / (2 * mp.pi))
+    m = min(out); nm = m / dens
+    print(f"{name} L = {L}: |L'(rho)| = {[mp.nstr(x, 5) for x in out]}, log(qt/2pi) = {mp.nstr(dens, 4)}, normalised min |L'|/log = {mp.nstr(nm, 4)}; kappa = {kap}; kappa/(min|L'|/log)^2 = {mp.nstr(kap / nm ** 2, 4)}; kappa/(min|L'|/log) = {mp.nstr(kap / nm, 4)}")
+# typical size for comparison: zeta zeros 50-120
+import json
+zs = [mp.mpf(x) for x in json.load(open('/home/user/ysolucki/rh/experiments/foothold/zeta_zeros_200.json'))]
+vals = [(float(g), float(abs(mp.diff(mp.zeta, mp.mpc(0.5, g))) / mp.log(g / (2 * mp.pi)))) for g in zs if 45 < g < 125]
+print("zeta, normalised |zeta'(rho)|/log(t/2pi) for 45 < gamma < 125:", [(round(g, 2), round(v, 3)) for g, v in vals])

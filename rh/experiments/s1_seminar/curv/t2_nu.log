@@ -1,0 +1,12 @@
+L=1 M=40: mu_e 1.9905e-03 mu_o 8.1060e-03 | nu_eo 6.1837 (x mu_e = 1.2309e-02; 1/sqrt = 0.4021) | nu_oe 7.9106 (1/sqrt = 0.3555)
+   on the even ground state: Q_o(x v_e) = 1.9104e-03, ||x v_e||^2 = 0.1437, ratio Q_o(x v_e)/mu_e = 0.960, (mu_o/mu_e)||x v_e||^2 = 0.585 ; odd: Q_e(x v_o) = 4.3248e-03, ||x v_o||^2 = 0.2916
+   d=0.1: low eig of Q - tanh Q tanh = 1.97105e-03 ; low eig of Q_d = 3.96907e-03 (Q_d/2 = 1.98454e-03) ; |Q_d - 2 cosh (Q - tanh Q tanh) cosh|_max = 1.82e-04
+   d=0.3: low eig of Q - tanh Q tanh = 1.76177e-03 ; low eig of Q_d = 3.76382e-03 (Q_d/2 = 1.88191e-03) ; |Q_d - 2 cosh (Q - tanh Q tanh) cosh|_max = 1.69e-03
+L=1 M=80: mu_e 5.4648e-04 mu_o 2.4126e-03 | nu_eo 17.0745 (x mu_e = 9.3309e-03; 1/sqrt = 0.2420) | nu_oe 19.2082 (1/sqrt = 0.2282)
+   on the even ground state: Q_o(x v_e) = 1.1114e-03, ||x v_e||^2 = 0.1399, ratio Q_o(x v_e)/mu_e = 2.034, (mu_o/mu_e)||x v_e||^2 = 0.618 ; odd: Q_e(x v_o) = 1.2679e-03, ||x v_o||^2 = 0.2669
+   d=0.1: low eig of Q - tanh Q tanh = 5.34015e-04 ; low eig of Q_d = 1.07430e-03 (Q_d/2 = 5.37148e-04) ; |Q_d - 2 cosh (Q - tanh Q tanh) cosh|_max = 1.38e-04
+   d=0.3: low eig of Q - tanh Q tanh = -2.87918e-02 ; low eig of Q_d = -6.10694e-02 (Q_d/2 = -3.05347e-02) ; |Q_d - 2 cosh (Q - tanh Q tanh) cosh|_max = 1.28e-03
+L=1 M=160: mu_e 1.7206e-04 mu_o 6.5502e-04 | nu_eo 55.5310 (x mu_e = 9.5546e-03; 1/sqrt = 0.1342) | nu_oe 55.7049 (1/sqrt = 0.1340)
+   on the even ground state: Q_o(x v_e) = 8.8429e-04, ||x v_e||^2 = 0.1309, ratio Q_o(x v_e)/mu_e = 5.139, (mu_o/mu_e)||x v_e||^2 = 0.498 ; odd: Q_e(x v_o) = 5.5687e-04, ||x v_o||^2 = 0.2530
+   d=0.1: low eig of Q - tanh Q tanh = 1.55022e-04
+   d=0.3: low eig of Q - tanh Q tanh = -6.56752e-02

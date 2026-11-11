@@ -1,0 +1,27 @@
+"""E4: half-plane detector from Re s > 1 data.  G^(a)_ij = (f(s_i) + conj f(s_j)) / (s_i + conj s_j - 2a),
+f = completed log-derivative (xi'/xi or Lambda_DH'/Lambda_DH), nodes s_j = sigma0 + i t_j with sigma0 > 1.
+G^(a) is PSD for every node set  <=>  f has positive real part on Re s > a  <=>  no zeros with Re s > a
+(zeta: also the pole terms 1/s+1/(s-1) are inside f; for a<1 the pole at s=1 of zeta is NOT a pole of xi'/xi).
+usage: python3 e4_ascan.py.txt <zeta|dh> N sigma0 Tmin Tmax dps a1 a2 ...
+"""
+import sys, mpmath as mp, flint
+mode, N, sig0, Tmin, Tmax, dps = sys.argv[1], int(sys.argv[2]), mp.mpf(sys.argv[3]), mp.mpf(sys.argv[4]), mp.mpf(sys.argv[5]), int(sys.argv[6])
+mp.mp.dps = dps; flint.ctx.dps = dps
+kap = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+def f_zeta(s):
+    return mp.zeta(s, derivative=1) / mp.zeta(s) + 1 / s + 1 / (s - 1) - mp.log(mp.pi) / 2 + mp.digamma(s / 2) / 2
+def f_dh(s):
+    c = [1, kap, -kap, -1]
+    F = sum(c[k] * mp.zeta(s, mp.mpf(k + 1) / 5) for k in range(4))
+    dF = sum(c[k] * mp.zeta(s, mp.mpf(k + 1) / 5, 1) for k in range(4))
+    return -mp.log(5) + dF / F + mp.log(5 / mp.pi) / 2 + mp.digamma((s + 1) / 2) / 2
+f = f_zeta if mode == "zeta" else f_dh
+ss = [mp.mpc(sig0, Tmin + (Tmax - Tmin) * mp.mpf(j) / (N - 1)) for j in range(N)]
+fv = [f(s) for s in ss]
+print("mode=%s N=%d nodes %s+i[%s,%s] dps=%d" % (mode, N, sig0, Tmin, Tmax, dps))
+for a in sys.argv[7:]:
+    a = mp.mpf(a)
+    M = flint.acb_mat(N, N, [(lambda z: flint.acb(flint.arb(mp.nstr(z.real, dps)), flint.arb(mp.nstr(z.imag, dps))))((fv[i] + mp.conj(fv[j])) / (ss[i] + mp.conj(ss[j]) - 2 * a)) for i in range(N) for j in range(N)])
+    ev = sorted(float(e.real.mid()) for e in M.eig(nonstop=True))
+    neg = [e for e in ev if e < 0]
+    print("  a=%-6s negative eigenvalues: %d   most negative %.3e   smallest positive %.3e" % (mp.nstr(a, 4), len(neg), neg[0] if neg else 0.0, min(e for e in ev if e > 0)))

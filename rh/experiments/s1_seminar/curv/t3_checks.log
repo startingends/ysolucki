@@ -1,0 +1,7 @@
+Wbar(0.005): quadrature 4.126454288950  closed form 4.126454288950  (1/2)log(4/t)+pi/4 = 4.127704
+Wbar(0.05): quadrature 2.963938823332  closed form 2.963938823332  (1/2)log(4/t)+pi/4 = 2.976411
+Wbar(0.405): quadrature 1.831618938387  closed form 1.831618938387  (1/2)log(4/t)+pi/4 = 1.930479
+Wbar(1): quadrature 1.248622180704  closed form 1.248622180704  (1/2)log(4/t)+pi/4 = 1.478545
+Wbar(3): quadrature 0.446481859226  closed form 0.446481859226  (1/2)log(4/t)+pi/4 = 0.929239
+c = 0.49012907173427356  max over the range of theta = c/(Wbar(delta)+Wbar(2L)) at delta = log(3/2): 0.16267075863109762
+crude closing needs Wbar(delta) >= 2394.2, i.e. delta <= 4 exp(pi/2 - 2 x 2394.2) = 10^-2078

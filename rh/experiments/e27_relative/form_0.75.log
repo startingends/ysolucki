@@ -1,0 +1,11 @@
+L=0.75 N=28 dps=99
+ even block, prolate indices (4, 8, 12, 16), defects ['1.03e-15', '6.88e-10', '3.12e-5', '0.1']
+   K=1: kappa_min = 1.9232   kappa_max = 1.9232
+   K=2: kappa_min = 1.04664   kappa_max = 2.70713
+   K=3: kappa_min = 0.716438   kappa_max = 3.159
+   K=4: kappa_min = 0.675204   kappa_max = 3.26091
+ odd block, prolate indices (6, 10, 14, 18), defects ['1.24e-12', '1.98e-7', '0.00267', '0.701']
+   K=1: kappa_min = 1.61184   kappa_max = 1.61184
+   K=2: kappa_min = 0.999453   kappa_max = 2.00656
+   K=3: kappa_min = 0.670163   kappa_max = 2.39204
+   K=4: kappa_min = 0.546225   kappa_max = 2.4544

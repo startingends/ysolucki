@@ -1,0 +1,47 @@
+import sys, math
+src = open("/home/user/ysolucki/rh/experiments/r2_judge/j17.py.txt").read().split("b = mp.mpf('0.3')")[0]
+exec(src)
+def posneg(M, thr=mp.mpf('1e-90')):
+    ev = mp.eigsy((M + M.T) / 2, eigvals_only=True)
+    return sum(1 for e in ev if e > thr), sum(1 for e in ev if e < -thr)
+def cvec(L, N, lat):
+    L = mp.mpf(L); w = wb.freqs(L, N, lat); ce = []; so = []
+    for om in w:
+        I = 2 * mp.sinh(mp.mpc(mp.mpf(1) / 2, om) * L) / mp.mpc(mp.mpf(1) / 2, om)
+        nrm = mp.sqrt(2 * L) if om == 0 else mp.sqrt(L)
+        ce.append(I.real / nrm); so.append(I.imag / nrm)
+    if lat == 'int': so = so[1:]
+    return mp.matrix(ce), mp.matrix(so)
+def show2(tag, Q2, P2, c, s):
+    pe, _ = posneg(P2[0] - Q2[0]); po, _ = posneg(P2[1] - Q2[1])
+    _, ne = posneg(Q2[0]); _, no = posneg(Q2[1])
+    xe = (c.T * mp.lu_solve(Q2[0], c))[0]; xo = (s.T * mp.lu_solve(Q2[1], s))[0]
+    ide = (pe == ne + (1 if xe > mp.mpf(1) / 2 else 0)) and (po == no - (1 if xo < -mp.mpf(1) / 2 else 0))
+    print("  %-30s kappa_+(N) (even, odd) = (%d, %d) ; kappa_-(Q) = (%d, %d) ; c^T Q^-1 c = %s ; s^T Q^-1 s = %s ; identity %s" % (
+        tag, pe, po, ne, no, mp.nstr(xe, 4), mp.nstr(xo, 4), "holds" if ide else "FAILS"), flush=True)
+b = mp.mpf('0.3'); a1 = (g[0] + g[1]) / 2; a2 = (g[2] + g[3]) / 2
+lat = sys.argv[1]
+for L, N in ((0.5, 30), (0.75, 30), (1.0, 40), (1.25, 56)):
+    P2 = wb.pole_blocks(L, N, lat)
+    A = wb.add(wb.add(wb.arch_blocks(L, N, lat), P2), atoms_sum(L, N, lat, wb.mangoldt(math.exp(2 * L))))
+    c, s = cvec(L, N, lat)
+    # check that pole_blocks is 2cc^T and -2ss^T
+    chk = max(abs(P2[0][i, j] - 2 * c[i] * c[j]) for i in range(len(c)) for j in range(len(c)))
+    print("L=%.2f N=%d %s  (pole block check %s)" % (L, N, lat, mp.nstr(chk, 3)), flush=True)
+    show2("zeta", A, P2, c, s)
+    rem12 = [rank_terms(L, N, lat, g[0], True), rank_terms(L, N, lat, g[1], True)]
+    rem34 = [rank_terms(L, N, lat, g[2], True), rank_terms(L, N, lat, g[3], True)]
+    base12 = [A[k] - rem12[0][k] - rem12[1][k] for k in (0, 1)]
+    dbl = rank_terms(L, N, lat, a1, True)
+    show2("control b=0", [base12[k] + 2 * dbl[k] for k in (0, 1)], P2, c, s)
+    q1 = rank_terms(L, N, lat, mp.mpc(a1, b), False)
+    show2("one quartet b=0.3", [base12[k] + q1[k] for k in (0, 1)], P2, c, s)
+    q2 = rank_terms(L, N, lat, mp.mpc(a2, b), False)
+    show2("two quartets b=0.3", [base12[k] + q1[k] - rem34[0][k] - rem34[1][k] + q2[k] for k in (0, 1)], P2, c, s)
+    if L in (0.5, 1.0):
+        bl = {}
+        for p in (mp.mpf('2.1'), 3, 5, 7):
+            pk = mp.mpf(p)
+            while pk <= math.exp(2 * L): bl[pk] = mp.log(p); pk *= p
+        B = wb.add(wb.add(wb.arch_blocks(L, N, lat), P2), atoms_sum(L, N, lat, bl))
+        show2("Beurling 2 -> 2.1", B, P2, c, s)

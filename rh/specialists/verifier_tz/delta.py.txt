@@ -1,0 +1,39 @@
+"""V-TZ: independent zeros and Hardy-function derivatives; Delta = -Z'(g1) Z'(g2)/log^2(q gm/2pi) for consecutive pairs.
+Own implementation: Z(t) = exp(i theta(t)) L(1/2+it), theta from the Gamma factor; zeros by sign change + findroot;
+Z' by mp.diff of the real Hardy function.  usage: delta.py.txt <zeta|chi5|dh> <tmax>  -> prints JSON lines."""
+import sys, json
+import mpmath as mp
+mp.mp.dps = 30
+KIND = sys.argv[1]; TMAX = float(sys.argv[2])
+k = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1); A = [0, 1, k, -k, -1]
+CH = [0, 1, -1, -1, 1]
+def Lfun(s):
+    if KIND == 'zeta': return mp.zeta(s)
+    a = A if KIND == 'dh' else CH
+    return 5 ** (-s) * sum(a[n] * mp.zeta(s, mp.mpf(n) / 5) for n in range(1, 5))
+q = 1 if KIND == 'zeta' else 5
+sh = mp.mpf(1) / 4 if KIND in ('zeta', 'chi5') else mp.mpf(3) / 4
+def theta(t):
+    return t / 2 * mp.log(q / mp.pi) + mp.im(mp.loggamma(sh + 1j * t / 2))
+def Zc(t):
+    return mp.exp(1j * theta(t)) * Lfun(mp.mpc(0.5, t))
+# fix a constant phase (dh has root number possibly != 1): measure at a test point
+ph = Zc(mp.mpf(3.3)); ph = ph / abs(ph)
+def Z(t):
+    v = Zc(t) / ph
+    return mp.re(v)
+def Zim(t):
+    return mp.im(Zc(t) / ph)
+step = 0.02
+ts = [0.5 + i * step for i in range(int((TMAX - 0.5) / step))]
+vals = [Z(mp.mpf(t)) for t in ts]
+zs = []
+for i in range(len(ts) - 1):
+    if vals[i] == 0 or vals[i] * vals[i + 1] < 0:
+        r = mp.findroot(Z, (mp.mpf(ts[i]), mp.mpf(ts[i + 1])), solver='anderson')
+        zs.append(r)
+maxim = max(abs(Zim(mp.mpf(t))) for t in [5.1, 17.3, 33.7])
+print(json.dumps({'kind': KIND, 'nzeros': len(zs), 'max_imag_Z': float(maxim)}))
+dZ = [mp.diff(Z, g) for g in zs]
+for i, g in enumerate(zs):
+    print(json.dumps({'gamma': mp.nstr(g, 20), 'Zp': mp.nstr(dZ[i], 10), 'absLp': mp.nstr(abs(mp.diff(Lfun, mp.mpc(0.5, g))), 10)}))

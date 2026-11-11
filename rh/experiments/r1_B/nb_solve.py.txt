@@ -1,0 +1,21 @@
+"""Solve the Baez-Duarte least squares for all N<=Nmax at once via Cholesky; study coefficients."""
+import sys, math
+import numpy as np, scipy.linalg as sla
+sys.path.insert(0, "."); 
+exec(open("nb_gram.py.txt").read().split('if __name__')[0])
+C = 2 + EG - math.log(4 * math.pi)   # 2*lambda_1 = 0.0461914...
+G = np.load("/home/user/ysolucki/rh/data/r1_B/G2000.npy"); Nmax = G.shape[0]
+b = bvec(Nmax)
+L = np.linalg.cholesky(G)
+y = sla.solve_triangular(L, b, lower=True)
+delta = y ** 2                      # innovations: d_{N-1}^2 - d_N^2
+d2 = 1 - np.cumsum(delta)           # d_N^2 for N=1..Nmax
+ev = np.linalg.eigvalsh(G)
+print("C=2*lambda_1=%.10f  cond(G_%d)=%.3e  min eig=%.3e" % (C, Nmax, ev[-1] / ev[0], ev[0]))
+print("  N     d_N^2        d_N^2*logN   d_N^2*(logN+?) ")
+for N in [1, 2, 3, 5, 10, 20, 50, 100, 200, 300, 500, 700, 1000, 1500, 2000]:
+    print("%5d  %.10f  %.8f" % (N, d2[N - 1], d2[N - 1] * math.log(N) if N > 1 else float('nan')))
+np.save("/home/user/ysolucki/rh/data/r1_B/d2.npy", d2); np.save("/home/user/ysolucki/rh/data/r1_B/delta.npy", delta)
+# independent solve at selected N (direct solve, not cumulative Cholesky) as a cross-check
+for N in [100, 1000, 2000]:
+    c = np.linalg.solve(G[:N, :N], b[:N]); print("direct solve N=%d d^2=%.10f  resid %.2e" % (N, 1 - b[:N] @ c, np.abs(G[:N,:N] @ c - b[:N]).max()))

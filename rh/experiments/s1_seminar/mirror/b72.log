@@ -1,0 +1,6 @@
+G_d, d = 0.0                                 c(4)=  0.6931  min eig -6.488e-25  #neg(<-1e-9) 0  rank 6
+   c(3), c(9), c(27) = -1.0986122886681098 3.295836866004329 -1.0986122886681098  (negative couplings at odd powers of p = 3 mod 4)
+G_d, d = 0.1                                 c(4)=  0.6931  min eig -2.151e-16  #neg(<-1e-9) 0  rank 6
+   c(3), c(9), c(27) = -1.1118853201100074 3.349089351678207 -1.2190336684925922  (negative couplings at odd powers of p = 3 mod 4)
+G_d, d = 0.3                                 c(4)=  0.6931  min eig -1.765e-25  #neg(<-1e-9) 0  rank 6
+   c(3), c(9), c(27) = -1.2190336684925922 3.790722045335567 -2.263049511903834  (negative couplings at odd powers of p = 3 mod 4)

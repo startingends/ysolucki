@@ -1,0 +1,34 @@
+import sys, json, math
+import numpy as np
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+res = json.load(open("/home/user/ysolucki/rh/data/r1_B/dbn_zeros.json"))
+ts = sorted(res, key=float); Z = np.array([[float(x) for x in res[t]] for t in ts]); tv = np.array([float(t) for t in ts])
+K = Z.shape[1]; dt = tv[1] - tv[0]
+print("t grid", tv, "K =", K)
+# ODE check at t=0:  dz_k/dt = 2 * sum'_{j} 1/(z_k - z_j) over all zeros (+-z_j), symmetric summation + smooth tail
+J = 20000
+zall = 2 * np.array(rhlib.zeros(J))
+print("max |z_k(0) - 2 gamma_k| =", np.abs(Z[0] - zall[:K]).max())
+lhs = (-3 * Z[0] + 4 * Z[1] - Z[2]) / (2 * dt)           # 3-point forward difference, error O(dt^2)
+lhs5 = (-25 * Z[0] + 48 * Z[1] - 36 * Z[2] + 16 * Z[3] - 3 * Z[4]) / (12 * dt)  # 5-point forward, O(dt^4)
+Zc = zall[-1] + 0.5 * (zall[-1] - zall[-2])
+print(" k   z_k(0)      dz/dt (5pt FD)   2*sum'(1/(z_k-z_j))   diff")
+for k in range(0, K, 4):
+    zk = zall[k]
+    others = np.delete(zall, k)
+    s = np.sum(1 / (zk - others) + 1 / (zk + others)) + 1 / (2 * zk)
+    # tail j > J: sum 2 zk/(zk^2 - z^2) with density (1/4pi) log(z/4pi) dz
+    zz = np.exp(np.linspace(math.log(Zc), math.log(Zc) + 30, 200001)); f = 2 * zk / (zk**2 - zz**2) * np.log(zz / (4 * math.pi)) / (4 * math.pi) * zz
+    tail = np.trapezoid(f, np.log(zz))
+    rhs = 2 * (s + tail)
+    print("%2d  %10.5f  % .7f  % .7f  % .2e" % (k + 1, zk, lhs5[k], rhs, lhs5[k] - rhs))
+# candidate functionals on the window of K zeros
+print("\n t    min gap   mean gap   var(gap)/mean^2   -sum_{j<k} log|z_j-z_k| /K^2 (window energy)   sum 1/gap^2   z_K - z_1")
+for i, t in enumerate(tv):
+    z = Z[i]; g = np.diff(z)
+    E = -sum(np.log(abs(z[a] - z[b])) for a in range(K) for b in range(a + 1, K)) / K**2
+    print("%.2f  %.6f  %.6f  %.6f  %.6f  %.6f  %.6f" % (t, g.min(), g.mean(), g.var() / g.mean()**2, E, np.sum(1 / g**2), z[-1] - z[0]))
+# every individual gap monotone?
+G = np.diff(Z, axis=1); mono_up = np.all(np.diff(G, axis=0) > 0, axis=0)
+print("gaps that increase monotonically in t over [0,0.5]: %d of %d ; smallest 5 gaps at t=0 monotone up: %s" % (mono_up.sum(), K - 1, mono_up[np.argsort(G[0])[:5]]))
+print("backward collision time estimate -g^2/8 for the closest pair at t=0: %.4f (pair index %d, gap %.5f)" % (-G[0].min()**2 / 8, G[0].argmin() + 1, G[0].min()))

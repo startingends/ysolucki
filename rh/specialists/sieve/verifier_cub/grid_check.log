@@ -1,0 +1,4 @@
+GRID SIG=model clow=0.3333 alpha=0.6667 rho=-0.1429 cubic=True: min sigma0 = 0.816000 at (np.float64(0.394), np.float64(0.028))
+GRID SIG=two clow=0.3333 alpha=0.6667 rho=-0.1429 cubic=True: min sigma0 = 1.013333 at (np.float64(0.394), np.float64(0.028))
+GRID SIG=two clow=0.3333 alpha=0.6667 rho=0.0000 cubic=True: min sigma0 = 0.990000 at (np.float64(0.394), np.float64(0.0))
+GRID SIG=two clow=0.1667 alpha=0.8333 rho=0.0000 cubic=False: min sigma0 = 0.904333 at (np.float64(0.01), np.float64(0.924))

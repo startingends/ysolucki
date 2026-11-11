@@ -1,0 +1,12 @@
+"""V-FH: my own polynomial-basis code against the author's logged numbers (exact form, degree < NB).
+usage: poly_check.py.txt"""
+import time
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+t0 = time.time()
+mp.mp.dps = 34
+y2 = mp.log(2); m2 = mp.log(2) / mp.sqrt(2)
+for Lname, L, NB in (("1/2", mp.mpf(1) / 2, 28), ("27/50", mp.mpf(27) / 50, 32), ("(1/2)log3", mp.log(3) / 2, 28), ("(1/2)log3", mp.log(3) / 2, 40)):
+    Pb = Poly(L, NB)
+    e0, o0 = Pb.lows()
+    e1, o1 = Pb.lows(y2, m2)
+    print(f"L={Lname:10s} NB={NB}: no atom even {mp.nstr(e0, 15)} odd {mp.nstr(o0, 15)} | true atom even {mp.nstr(e1, 8)} odd {mp.nstr(o1, 8)}   t={time.time()-t0:.0f}s", flush=True)

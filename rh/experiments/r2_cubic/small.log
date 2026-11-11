@@ -1,0 +1,5 @@
+zeta L=1 n=2 eig2(H)=-1.006e-02 | R=1 CLARABEL: optimal t=-1.027e-10 | R=1 SCS: optimal t=-3.717e-06 | R=0 CLARABEL: optimal t=-5.800e+00 | R=0 SCS: optimal t=-5.800e+00
+zeta L=1 n=3 eig2(H)=-6.911e-03 | R=2 CLARABEL: optimal t=-1.099e-10 | R=2 SCS: optimal t=2.901e-06 | R=1 CLARABEL: optimal t=-3.190e+00 | R=1 SCS: optimal t=-3.190e+00
+zeta L=1 n=4 eig2(H)=-8.343e-03 | R=3 CLARABEL: optimal_inaccurate t=-3.829e-09 | R=3 SCS: optimal t=1.984e-06 | R=2 CLARABEL: optimal t=-2.300e+00 | R=2 SCS: optimal t=-2.300e+00
+zeta L=1 n=6 eig2(H)=-5.164e-03 | R=5 CLARABEL: optimal t=-5.455e-11 | R=5 SCS: optimal t=3.918e-08 | R=4 CLARABEL: fail t=nan | R=4 SCS: optimal t=-1.434e+00
+zeta L=1 n=8 eig2(H)=-2.789e-03 | R=7 CLARABEL: optimal_inaccurate t=-5.760e-08 | R=7 SCS: optimal t=8.314e-08 | R=6 CLARABEL: fail t=nan | R=6 SCS: optimal t=-8.209e-01

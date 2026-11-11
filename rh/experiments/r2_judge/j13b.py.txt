@@ -1,0 +1,33 @@
+import numpy as np, mpmath as mp
+mp.mp.dps = 60
+def blocks(L, K, reals, quartets):
+    ks = range(0, K + 1)
+    def fh(kind, k, z):   # transform of cos(pi k x/L) (even) or sin(pi k x/L) (odd) on [-L, L], unnormalised
+        w = mp.pi * k / L
+        sp = mp.sin((z + w) * L) / (z + w); sm = mp.sin((z - w) * L) / (z - w)
+        return (sp + sm) if kind == 0 else (sm - sp) / 1j * 1j * (-1j)   # odd: int sin(wx) e^{izx} = i (sm - sp)... sign irrelevant
+    out = []
+    for kind in (0, 1):
+        idx = [k for k in ks if not (kind == 1 and k == 0)]
+        Q = mp.zeros(len(idx))
+        for g in reals:
+            v = [fh(kind, k, mp.mpf(g)) for k in idx]
+            for i in range(len(idx)):
+                for j in range(len(idx)):
+                    Q[i, j] += mp.re(v[i] * mp.conj(v[j]))
+        for (a, b, m) in quartets:
+            for z in (mp.mpc(a, b), mp.mpc(-a, b), mp.mpc(a, -b), mp.mpc(-a, -b)):
+                v = [fh(kind, k, z) for k in idx]; vc = [fh(kind, k, mp.conj(z)) for k in idx]
+                for i in range(len(idx)):
+                    for j in range(len(idx)):
+                        Q[i, j] += m * mp.re(v[i] * mp.conj(vc[j]))
+        Q = (Q + Q.T) / 2
+        ev = mp.eigsy(Q, eigvals_only=True)
+        scale = max(abs(e) for e in ev)
+        out.append(sum(1 for e in ev if e < -mp.mpf(10) ** (-45) * scale))
+    return tuple(out)
+reals = [s * (14 + 3 * j) for j in range(20) for s in (1, -1)]
+for L in (0.5, 1, 2, 4):
+    print("J13b thr=1e-45 L=%.1f  two quartets: %s ; one quartet: %s ; one quartet with multiplicity 3: %s ; control b=0: %s" % (
+        L, blocks(L, 40, reals, [(20.5, 0.3, 1), (33.3, 0.2, 1)]), blocks(L, 40, reals, [(20.5, 0.3, 1)]),
+        blocks(L, 40, reals, [(20.5, 0.3, 3)]), blocks(L, 40, reals, [(20.5, 0, 1), (33.3, 0, 1)])), flush=True)

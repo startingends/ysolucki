@@ -1,0 +1,16 @@
+# sanity check for OBJECT_PHI Round 2: M(s) = int_0^inf u^(2s-1) K_{1/3}(u)^2 du
+#   (a) = sqrt(pi) Gamma(s+1/3) Gamma(s-1/3) Gamma(s) / (4 Gamma(s+1/2))      [from memory]
+#   (b) = (pi/4) 3^(3/2-3s) 4^s Gamma(3s-1) Gamma(s) / Gamma(2s)              [(a) + Gauss and Legendre multiplication]
+import mpmath as mp
+mp.mp.dps = 25
+for s in [mp.mpf('0.9'), mp.mpf('1.5'), mp.mpc('1.2', '0.7')]:
+    num = mp.quad(lambda u: u**(2*s-1)*mp.besselk(mp.mpf(1)/3, u)**2, [0, 1, 5, 30, mp.inf])
+    a = mp.sqrt(mp.pi)*mp.gamma(s+mp.mpf(1)/3)*mp.gamma(s-mp.mpf(1)/3)*mp.gamma(s)/(4*mp.gamma(s+mp.mpf(1)/2))
+    b = mp.pi/4*mp.mpf(3)**(mp.mpf(3)/2-3*s)*4**s*mp.gamma(3*s-1)*mp.gamma(s)/mp.gamma(2*s)
+    print("s =", s, " quad =", mp.nstr(num, 15), " (a) =", mp.nstr(a, 15), " (b) =", mp.nstr(b, 15))
+# 3-part of sum |tau(mu)|^2 N(mu)^(-s) from Patterson's table (Dunn-Radziwill (5.7)): direct sum vs closed form
+for s in [mp.mpf(2), mp.mpf('1.3')]:
+    x = mp.mpf(3)**(-s)
+    direct = sum(6*mp.mpf(3)**(n+4)*x**(3*n-4) for n in range(1, 200)) + sum(2*mp.mpf(3)**(n+5)*x**(3*n-3) for n in range(0, 200))
+    closed = 486*mp.mpf(3)**(3*s)*(1 + mp.mpf(3)**(1-2*s))/(1 - mp.mpf(3)**(1-3*s))
+    print("s =", s, " 3-part direct =", mp.nstr(direct, 15), " closed =", mp.nstr(closed, 15))

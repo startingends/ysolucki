@@ -1,0 +1,48 @@
+"""Critic's independent check of D1/D4 (deletion family). Differences from the proposer:
+ - S = {nextprime(t_k)}, t_k a Poisson process of intensity z*u^(a-1)/log u on [P0, X] (no sieve of all primes)
+ - N_B(x) by inclusion-exclusion recursion  N(x) = [x] - sum_{p in S} N_{>p}(x//p)  (no boolean array, no cumsum)
+ - TRUE error E(x) = N_B(x) - A x with A = prod_{p in S, p<=X}(1-1/p) * exp(-z*E1((1-a) log X)) (no local detrending)
+ z = 1 plants a simple zero at s = a; z = 0.5 plants a square-root branch point (control: NOT a zero).
+usage: python3 beurl_check.py.txt X a z seed"""
+import sys, math, numpy as np, sympy, time
+from scipy.special import exp1
+X = float(sys.argv[1]); a = float(sys.argv[2]); z = float(sys.argv[3]); seed = int(sys.argv[4]); P0 = 50
+t0 = time.time(); rng = np.random.default_rng(seed)
+# Poisson process: cumulative intensity Lam(u) = z*(Ei(a log u) - Ei(a log P0)); sample by inversion on a fine log grid
+from scipy.special import expi
+lg = np.linspace(math.log(P0), math.log(X), 400001); Lam = z * (expi(a * lg) - expi(a * lg[0]))
+n = rng.poisson(Lam[-1]); pts = np.exp(np.interp(np.sort(rng.random(n)) * Lam[-1], Lam, lg)) if seed > 0 else np.exp(np.interp(np.arange(0.5, Lam[-1]), Lam, lg))
+S = np.array(sorted(set(int(sympy.nextprime(int(t))) for t in pts)), dtype=np.int64)
+A = float(np.exp(np.sum(np.log1p(-1.0 / S)))) * math.exp(-z * exp1((1 - a) * math.log(X)))
+print(f"# X={X:g} a={a} z={z} seed={seed} |S|={len(S)} A={A:.12f} {time.time()-t0:.1f}s", flush=True)
+import functools
+def N(x, start):
+    """#{n<=x : n has no prime factor among S[start:]}"""
+    if start >= len(S) or x < S[start]: return x
+    hi = int(np.searchsorted(S, x, side="right"))
+    # primes p > sqrt(x): x//p < p, so no further S-prime (all later ones exceed p > x//p): leaf, contributes x//p
+    r = int(math.isqrt(x)); mid = max(start, int(np.searchsorted(S, r, side="right")))
+    tot = x - int(np.sum(x // S[mid:hi]))
+    for i in range(start, mid): tot -= N(x // int(S[i]), i + 1)
+    return tot
+# brute-force self test at small x
+def brute(x):
+    ok = np.ones(x + 1, bool); ok[0] = False
+    for p in S[S <= x].tolist(): ok[p::p] = False
+    return int(ok.sum())
+for xt in (10**5, 10**6 + 7): assert N(xt, 0) == brute(xt), "self-test failed"
+print("# self-test vs boolean sieve at 1e5, 1e6+7: OK", flush=True)
+xs = np.unique(np.round(np.exp(np.linspace(math.log(1e3), math.log(X / 4), 1200))).astype(np.int64))
+E = np.array([N(int(x), 0) - A * float(x) for x in xs])
+print(f"# {len(xs)} sample points, {time.time()-t0:.1f}s")
+print("# window_lo  rms E   mean E   rms(lin-detrended, x2 windows)")
+rows = []; rows2 = []
+w = 1e3
+while w * 2 <= X / 4 * 1.0001:
+    m = (xs >= w) & (xs < 2 * w); e = E[m]; xx = xs[m].astype(float); rms = float(np.sqrt(np.mean(e * e))); xm = 1.5 * w
+    r = e - np.polyval(np.polyfit(xx, e, 1), xx); rd = float(np.sqrt(np.mean(r * r)))
+    rows.append((xm, rms)); rows2.append((xm, rd)); print(f"{w:10.3g} {rms:12.3f} {float(np.mean(e)):12.3f} {rd:12.3f}")
+    w *= 2
+for nm, rw in (("TRUE error", rows), ("detrended", rows2)):
+    lx = np.log([r[0] for r in rw]); lr = np.log([r[1] for r in rw]); hh = len(lx) // 2
+    print(f"# exponent of rms {nm}: all {np.polyfit(lx, lr, 1)[0]:.3f} ; upper half {np.polyfit(lx[hh:], lr[hh:], 1)[0]:.3f} ; a/2={a/2:.3f} a={a}")

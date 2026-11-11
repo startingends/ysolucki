@@ -1,0 +1,3 @@
+csig=0.2500 alpha=0.7500 rho=0.000 tmax=1.5: best sigma0 = 0.810131 at (l_x, b) = (0.33925, 0.14849); sigma_low there 0.810125
+csig=0.3333 alpha=0.6667 rho=0.000 tmax=1.5: best sigma0 = 0.743856 at (l_x, b) = (0.34510, 0.13082); sigma_low there 0.743842
+csig=0.5000 alpha=0.5000 rho=0.000 tmax=1.5: best sigma0 = 0.609375 at (l_x, b) = (0.34396, 0.12457); sigma_low there 0.609375

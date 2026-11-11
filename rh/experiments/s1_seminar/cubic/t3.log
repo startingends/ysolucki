@@ -1,0 +1,56 @@
+zeta     L=0.50 n=48: lowest eigenvalue even 1.9963e-03, odd 6.9338e-03 ; sign changes of folded ground states: even 0, odd 0 ; min/max of even ground state 1.303e-02 / 0.328
+   (a) bordered(N + mu_1): top eigenvalues 3.0007, 1.55e-15, -4.834e-03 ; |M phi(psi)| = 1.4e-15 ; phi(psi) is eigenvector no. 2 from the top ; fibre entries -0.8577 -0.8577 ; Perron vector min 8.858e-02
+       B = -N_e: nu_1 = -1.9858, nu_2 = 2.3407e-02 ; mu_1 - nu_1 = 1.9878, nu_2 - mu_1 = 2.141e-02 ; psi ~ lead - rest: |rest|/|lead| = 0.5731 (L2), max(rest/lead) pointwise = 0.8923
+   (c) t*/t_true = 1.020 (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40) ; sign changes at t = 1: 0
+   Green kernel even block: min entry 7.8422e-01, max 5.541e+01, negative entries 0 of 576
+   Green kernel odd block: min entry 5.9497e-02, max 1.373e+01, negative entries 0 of 576
+   Sturm: sign changes of eigenvectors 0..9 of Q: [0, 1, 2, 3, 6, 7, 8, 9, 6, 11] ; equal to k for all k < 4
+zeta     L=1.00 n=48: lowest eigenvalue even 1.1555e-03, odd 5.0846e-03 ; sign changes of folded ground states: even 0, odd 0 ; min/max of even ground state 1.261e-02 / 0.289
+   (a) bordered(N + mu_1): top eigenvalues 5.3109, 7.43e-16, -3.245e-03 ; |M phi(psi)| = 8.9e-16 ; phi(psi) is eigenvector no. 2 from the top ; fibre entries -1.3048 -1.3048 ; Perron vector min 1.198e-01
+       B = -N_e: nu_1 = -4.3026, nu_2 = 1.0284e-02 ; mu_1 - nu_1 = 4.3037, nu_2 - mu_1 = 9.129e-03 ; psi ~ lead - rest: |rest|/|lead| = 0.5034 (L2), max(rest/lead) pointwise = 0.9271
+   (c) t*/t_true = 1.020 (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40) ; sign changes at t = 1: 0
+   Green kernel even block: min entry 1.6103e+00, max 8.372e+01, negative entries 0 of 576
+   Green kernel odd block: min entry 1.6085e-01, max 1.907e+01, negative entries 0 of 576
+   Sturm: sign changes of eigenvectors 0..9 of Q: [0, 1, 2, 3, 4, 5, 6, 9, 10, 11] ; equal to k for all k < 7
+four2    L=0.75 n=48: lowest eigenvalue even -8.8217e-02, odd 6.8094e-03 ; sign changes of folded ground states: even 2, odd 1 ; min/max of even ground state -1.115e-01 / 0.453
+   (a) bordered(N + mu_1): top eigenvalues 4.0795, -1.11e-15, -4.532e-02 ; |M phi(psi)| = 8.3e-16 ; phi(psi) is eigenvector no. 2 from the top ; fibre entries -0.7037 -0.7037 ; Perron vector min 1.159e-01
+       B = -N_e: nu_1 = -3.1489, nu_2 = -5.8043e-02 ; mu_1 - nu_1 = 3.0606, nu_2 - mu_1 = 3.017e-02 ; psi ~ lead - rest: |rest|/|lead| = 1.4200 (L2), max(rest/lead) pointwise = 2.0104
+   (c) t*/t_true = 0.980 (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40) ; sign changes at t = 1: 2
+   Green kernel even block: block not positive
+   Green kernel odd block: min entry -5.6924e-01, max 1.544e+01, negative entries 72 of 576
+   Sturm: sign changes of eigenvectors 0..9 of Q: [4, 2, 3, 4, 5, 8, 7, 13, 12, 9] ; equal to k for all k < 0
+zeta     L=0.75 n=48: lowest eigenvalue even 1.5390e-03, odd 5.9431e-03 ; sign changes of folded ground states: even 0, odd 0 ; min/max of even ground state 1.320e-02 / 0.284
+   (a) bordered(N + mu_1): top eigenvalues 4.1086, -3.24e-16, -4.065e-03 ; |M phi(psi)| = 7.8e-16 ; phi(psi) is eigenvector no. 2 from the top ; fibre entries -1.1102 -1.1102 ; Perron vector min 1.083e-01
+       B = -N_e: nu_1 = -3.0989, nu_2 = 1.2067e-02 ; mu_1 - nu_1 = 3.1004, nu_2 - mu_1 = 1.053e-02 ; psi ~ lead - rest: |rest|/|lead| = 0.4949 (L2), max(rest/lead) pointwise = 0.9127
+   (c) t*/t_true = 1.020 (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40) ; sign changes at t = 1: 0
+   Green kernel even block: min entry 1.3148e+00, max 6.182e+01, negative entries 0 of 576
+   Green kernel odd block: min entry -1.0267e+00, max 1.652e+01, negative entries 50 of 576
+   Sturm: sign changes of eigenvectors 0..9 of Q: [0, 1, 2, 3, 4, 7, 8, 13, 12, 9] ; equal to k for all k < 5
+beurling L=0.50 n=48: lowest eigenvalue even -3.1917e-02, odd -5.9763e-02 ; sign changes of folded ground states: even 1, odd 0 ; min/max of even ground state -1.905e-01 / 0.341
+   (a) bordered(N + mu_1): top eigenvalues 2.9517, 2.72e-02, 1.099e-16 ; |M phi(psi)| = 6.4e-16 ; phi(psi) is eigenvector no. 3 from the top ; fibre entries -0.2346 -0.2346 ; Perron vector min 8.952e-02
+       B = -N_e: nu_1 = -1.9438, nu_2 = -2.6034e-02 ; mu_1 - nu_1 = 1.9119, nu_2 - mu_1 = 5.883e-03 ; psi ~ lead - rest: |rest|/|lead| = 3.9233 (L2), max(rest/lead) pointwise = 4.7685
+   (c) t*/t_true = 0.960 (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40) ; sign changes at t = 1: 1
+   Green kernel even block: block not positive
+   Green kernel odd block: block not positive
+   Sturm: sign changes of eigenvectors 0..9 of Q: [1, 2, 0, 5, 6, 3, 8, 9, 6, 11] ; equal to k for all k < 0
+noprimes L=0.36 n=48: lowest eigenvalue even 2.7873e-03, odd 3.8082e-02 ; sign changes of folded ground states: even 0, odd 0 ; min/max of even ground state 1.119e-02 / 0.303
+   (a) bordered(N + mu_1): top eigenvalues 2.3711, 1.06e-15, -3.481e-02 ; |M phi(psi)| = 7.5e-16 ; phi(psi) is eigenvector no. 2 from the top ; fibre entries -0.7486 -0.7486 ; Perron vector min 7.257e-02
+       B = -N_e: nu_1 = -1.3287, nu_2 = 5.5419e-01 ; mu_1 - nu_1 = 1.3315, nu_2 - mu_1 = 5.514e-01 ; psi ~ lead - rest: |rest|/|lead| = 0.3474 (L2), max(rest/lead) pointwise = 0.8938
+   (c) t*/t_true = 1.060 (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40) ; sign changes at t = 1: 0
+   Green kernel even block: min entry 2.1411e-01, max 3.344e+01, negative entries 0 of 576
+   Green kernel odd block: min entry 4.5029e-02, max 2.238e+00, negative entries 0 of 576
+   Sturm: sign changes of eigenvectors 0..9 of Q: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] ; equal to k for all k < 48
+noprimes L=0.45 n=48: lowest eigenvalue even -4.3444e-03, odd -2.0047e-01 ; sign changes of folded ground states: even 1, odd 0 ; min/max of even ground state -4.613e-02 / 0.341
+   (a) bordered(N + mu_1): top eigenvalues 2.6648, 1.92e-01, -4.674e-16 ; |M phi(psi)| = 6.1e-16 ; phi(psi) is eigenvector no. 3 from the top ; fibre entries -0.7005 -0.7005 ; Perron vector min 7.581e-02
+       B = -N_e: nu_1 = -1.5923, nu_2 = 3.3030e-01 ; mu_1 - nu_1 = 1.5880, nu_2 - mu_1 = 3.346e-01 ; psi ~ lead - rest: |rest|/|lead| = 0.6691 (L2), max(rest/lead) pointwise = 1.4657
+   (c) t*/t_true = 0.860 (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40) ; sign changes at t = 1: 1
+   Green kernel even block: block not positive
+   Green kernel odd block: block not positive
+   Sturm: sign changes of eigenvectors 0..9 of Q: [1, 2, 2, 3, 4, 5, 6, 7, 8, 9] ; equal to k for all k < 0
+oneprime L=0.54 n=48: lowest eigenvalue even 1.6605e-03, odd 7.2211e-03 ; sign changes of folded ground states: even 0, odd 0 ; min/max of even ground state 1.498e-02 / 0.302
+   (a) bordered(N + mu_1): top eigenvalues 3.1552, -1.55e-15, -5.429e-03 ; |M phi(psi)| = 1.0e-15 ; phi(psi) is eigenvector no. 2 from the top ; fibre entries -0.9359 -0.9359 ; Perron vector min 8.849e-02
+       B = -N_e: nu_1 = -2.1361, nu_2 = 1.3418e-02 ; mu_1 - nu_1 = 2.1378, nu_2 - mu_1 = 1.176e-02 ; psi ~ lead - rest: |rest|/|lead| = 0.4395 (L2), max(rest/lead) pointwise = 0.8804
+   (c) t*/t_true = 1.020 (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40) ; sign changes at t = 1: 0
+   Green kernel even block: min entry 7.4403e-01, max 5.945e+01, negative entries 0 of 576
+   Green kernel odd block: min entry 4.9022e-02, max 1.369e+01, negative entries 0 of 576
+   Sturm: sign changes of eigenvectors 0..9 of Q: [0, 1, 2, 3, 6, 7, 4, 9, 10, 12] ; equal to k for all k < 4

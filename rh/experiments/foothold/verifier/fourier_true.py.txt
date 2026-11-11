@@ -1,0 +1,14 @@
+"""V-FH recomputation (i) and (iii): lowest eigenvalues of the exact Weil form in the periodic Fourier basis
+(project builder r1_A/weil.py.txt, Arb at 160 bits, float eigenvalues).  usage: fourier_true.py.txt"""
+import sys, time, math
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+flint.ctx.prec = 160
+t0 = time.time()
+for name, L in (("0.5", arb(1) / 2), ("(1/2)log3", arb(3).log() / 2)):
+    for N in (20, 40, 80, 160, 320):
+        q = weil.build(L, N, kind='zeta', pole=True, primes=True, arch=True)[0]
+        e, o = lows(fblocks(q, N))
+        print(f"TRUE form  L={name:10s} N={N:4d}  lowest even {e:.6e}  lowest odd {o:.6e}   t={time.time()-t0:.0f}s", flush=True)
+for N in (20, 40, 80, 160, 320):
+    e, o = lows(f_arch(arb(1) / 2, N))
+    print(f"NO ATOM    L=0.5        N={N:4d}  lowest even {e:.8f}  lowest odd {o:.8f}   t={time.time()-t0:.0f}s", flush=True)

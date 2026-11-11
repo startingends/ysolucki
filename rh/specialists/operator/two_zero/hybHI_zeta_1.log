@@ -1,0 +1,7 @@
+QDmpHI_zeta_1_1_116.pkl: kind zeta, L = 1, NB = 116; whitening done 6s
+ check: pencil with the actual zeros: kappa_min = 0.297833, second 0.300232; u0 = 0.55131; background alone: kappa_min = -0.002965  (10s)
+  u = +0.55130 (delta = 0.7425): kappa_min = +0.297828, second = +0.300224; share of the moved pair in Q(v_min) = +0.803   (11s)
+  u = +0.30000 (delta = 0.5477): kappa_min = -0.000464, second = -0.000009; share of the moved pair in Q(v_min) = -0.002   (11s)
+  u = +0.10000 (delta = 0.3162): kappa_min = -0.000269, second = -0.000132; share of the moved pair in Q(v_min) = -0.002   (12s)
+  u = +0.00000 (delta = 0.0000): kappa_min = -0.000690, second = -0.000516; share of the moved pair in Q(v_min) = -0.000   (12s)
+  u = -0.02000 (beta = 0.1414): kappa_min = -0.038156, second = -0.036951; share of the moved pair in Q(v_min) = +1.025   (13s)

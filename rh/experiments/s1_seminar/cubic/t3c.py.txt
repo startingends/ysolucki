@@ -1,0 +1,53 @@
+"""S1-cubic turn 3, board B186: the Barta / Collatz-Wielandt bracket for the critical pole strength t_0, and a separation test.
+Units: true pole strength = 1 (even block Q_e = c c^T - N_e, folded to the boxes in x > 0).  usage: t3c.py.txt bracket | sep <n>"""
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+def nsign(v, tol=1e-9):
+    v = v / np.abs(v).max(); s = [x for x in v if abs(x) > tol]
+    return sum(1 for a, b in zip(s, s[1:]) if a * b < 0)
+def even_block(cn, L, n):
+    N, p, q = box.boxN(L, n, cn); h2 = n // 2; I = np.eye(n)
+    Ue = np.array([(I[i] + I[n - 1 - i]) / math.sqrt(2) for i in range(h2, n)]).T
+    return Ue.T @ N @ Ue, Ue.T @ (p + q) / math.sqrt(2)
+what = sys.argv[1]
+if what == "bracket":
+    n = 48
+    for kind, L in (("zeta", 0.5), ("zeta", 1.0), ("four2", 0.75)):
+        cn = box.lam(math.exp(2 * L))
+        if kind == "four2": cn = {x: (2 * c if abs(x - 4) < 1e-9 else c) for x, c in cn.items()}
+        Ne, c = even_block(cn, L, n); h2 = n // 2
+        f = np.linalg.solve(Ne, c); t0 = 1 / (c @ f)
+        xc = np.array([(i + 0.5) * 2 * L / n for i in range(h2)])
+        w, V = np.linalg.eigh(np.outer(c, c) - Ne); g0 = V[:, 0] * np.sign(V[:, 0] @ c)
+        k = int(np.argmin(f * np.sign(f.sum()))); ek = np.zeros(h2); ek[k] = 1
+        tests = [("constant", np.ones(h2)), ("cos(pi x/2L)", np.cos(math.pi * xc / (2 * L))), ("ground state + 1e-3 second", g0 + 1e-3 * V[:, 1]),
+                 ("f itself", f), ("f - eps N^-1(c_k e_k), k = argmin f, eps = 0.2", f - 0.2 * np.linalg.solve(Ne, c[k] * ek))]
+        print("%s L=%.2f n=%d: t_0 = %.6f ; sign changes of f: %d ; #pos(N_e) = %d ; lowest eigenvalue of the even block %.3e" % (kind, L, n, t0, nsign(f), (np.linalg.eigvalsh(Ne) > 1e-10).sum(), w[0]))
+        for name, phi in tests:
+            pc = phi @ c
+            if pc < 0: phi, pc = -phi, -pc
+            R = (Ne @ phi) / (c * pc)
+            print("    phi = %-48s <phi,c> = %+.4f ; bracket [%.6f, %.6f] width %.3e ; contains t_0: %s" % (name, pc, R.min(), R.max(), R.max() - R.min(), "YES" if R.min() - 1e-12 <= t0 <= R.max() + 1e-12 else "NO"), flush=True)
+if what == "sep":
+    n = int(sys.argv[2]); L = 0.5; base = box.lam(math.exp(2 * L))
+    def at(kappa):
+        cn = {x: c * kappa for x, c in base.items()}          # only the atom 2 is in the window (2L < log 3)
+        Ne, c = even_block(cn, L, n); f = np.linalg.solve(Ne, c); f = f * np.sign(f.sum())
+        return 1 / (c @ f), f.min() / f.max(), nsign(f), (np.linalg.eigvalsh(Ne) > 1e-10).sum()
+    print("L = 0.5, n = %d: weight of the prime 2 multiplied by kappa" % n)
+    for kappa in (0.0, 0.25, 0.5, 0.75, 0.9, 1.0, 1.1, 1.25, 1.5, 2.0):
+        t0, m, sg, npos = at(kappa); print("   kappa = %.2f: t_0 = %.6f ; min(f)/max(f) = %+.4e ; sign changes of f %d ; #pos(N_e) %d" % (kappa, t0, m, sg, npos), flush=True)
+    def root(fun, lo, hi):
+        flo = fun(lo)
+        for _ in range(40):
+            mid = (lo + hi) / 2
+            if (fun(mid) > 0) == (flo > 0): lo = mid
+            else: hi = mid
+        return (lo + hi) / 2
+    grid = np.linspace(0, 2, 41); P = [at(k)[0] - 1 for k in grid]; F = [at(k)[1] for k in grid]
+    for name, vals, fun in (("kappa_P (t_0 = 1)", P, lambda k: at(k)[0] - 1), ("kappa_F (edge value of f = 0)", F, lambda k: at(k)[1])):
+        rts = [root(fun, grid[i], grid[i + 1]) for i in range(40) if (vals[i] > 0) != (vals[i + 1] > 0)]
+        print("   %s: %s" % (name, " ".join("%.6f" % r for r in rts) if rts else "no crossing in [0, 2]"), flush=True)

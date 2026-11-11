@@ -1,0 +1,6 @@
+arch only  L=1 M=40: Hankel form eigenvalues: min -0.00000  max 1.18723  #negative(< -1e-10) = 0 of 20
+zeta       L=1 M=40: Hankel form eigenvalues: min -1.12268  max 2.37991  #negative(< -1e-10) = 9 of 20
+beurling   L=1 M=40: Hankel form eigenvalues: min -1.17246  max 2.39602  #negative(< -1e-10) = 9 of 20
+arch only  L=1 M=80: Hankel form eigenvalues: min -0.00000  max 1.22644  #negative(< -1e-10) = 0 of 40
+zeta       L=1 M=80: Hankel form eigenvalues: min -1.21054  max 2.38634  #negative(< -1e-10) = 19 of 40
+beurling   L=1 M=80: Hankel form eigenvalues: min -1.30675  max 2.40114  #negative(< -1e-10) = 19 of 40

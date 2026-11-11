@@ -1,0 +1,4 @@
+J13b thr=1e-45 L=0.5  two quartets: (2, 2) ; one quartet: (1, 1) ; one quartet with multiplicity 3: (1, 1) ; control b=0: (0, 0)
+J13b thr=1e-45 L=1.0  two quartets: (2, 2) ; one quartet: (1, 1) ; one quartet with multiplicity 3: (1, 1) ; control b=0: (0, 0)
+J13b thr=1e-45 L=2.0  two quartets: (2, 2) ; one quartet: (1, 1) ; one quartet with multiplicity 3: (1, 1) ; control b=0: (0, 0)
+J13b thr=1e-45 L=4.0  two quartets: (2, 2) ; one quartet: (1, 1) ; one quartet with multiplicity 3: (1, 1) ; control b=0: (0, 0)

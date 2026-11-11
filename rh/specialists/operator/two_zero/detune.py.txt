@@ -1,0 +1,36 @@
+"""DETUNE.md: kappa_min of the pencil (Q_eps, D) with Q_eps = Q - sum_p eps_p sum_k 2 Lambda(p^k) p^{-k/2} B_{p^k}."""
+import sys, pickle, math, time
+import numpy as np, mpmath as mp, flint
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+d = pickle.load(open(sys.argv[1], 'rb')); NB = d['NB']; prec = d['prec']; flint.ctx.prec = prec; mp.mp.prec = prec - 40
+LQ = Fr(d['L']); L = arb(LQ.numerator) / arb(LQ.denominator)
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/prime_dual.py.txt').read()
+exec(src[src.index("def gl("):src.index("Qm = mp.matrix")])
+Qm = mp.matrix(NB, NB); Dm = mp.matrix(NB, NB)
+for i in range(NB):
+    for j in range(NB):
+        Qm[i, j] = (mp.mpf(d['Q'][i][j]) + mp.mpf(d['Q'][j][i])) / 2; Dm[i, j] = (mp.mpf(d['D'][i][j]) + mp.mpf(d['D'][j][i])) / 2
+Lim = mp.inverse(mp.cholesky(Dm)); dig = int(prec * 0.29)
+toa = lambda M: arb_mat(NB, NB, [arb(mp.nstr(M[i, j], dig)) for i in range(NB) for j in range(NB)])
+Li = toa(Lim); Qa = toa(Qm)
+fl = lambda M: np.array([[float(M[i, j].mid()) for j in range(NB)] for i in range(NB)])
+A = fl(Li * Qa * Li.transpose()); A = (A + A.T) / 2
+X = math.exp(2 * float(LQ))
+Delta = {}
+for p in (2, 3, 5):
+    acc = None; k = 1
+    while p ** k <= X:
+        W = Li * gamma_sym(arb(p ** k).log(), NB + 2) * Li.transpose()
+        term = W * (2 * arb(p).log() / arb(p ** k).sqrt()); acc = term if acc is None else acc + term; k += 1
+    if acc is not None: Dl = fl(acc); Delta[p] = (Dl + Dl.T) / 2
+Lt = fl(Li.transpose())
+k0 = np.linalg.eigvalsh(A)[0]
+print(f"zeta L = {d['L']} NB = {NB}: kappa_min(0) = {k0:.6f}; primes present {sorted(Delta)}", flush=True)
+for name, dirn in [(f"p={p}", {p: 1.0}) for p in sorted(Delta)] + [("combined 2,3,5", {p: 1.0 for p in Delta})]:
+    row = []
+    for e in (0.3, -0.3, 0.1, -0.1, 0.03, -0.03, 0.01, -0.01):
+        M = A - e * sum(c * Delta[p] for p, c in dirn.items()); ev, V = np.linalg.eigh(M); v = V[:, 0]
+        g = Lt @ v; ladder = 1.0 / float(g @ g)      # D(v)/|g|^2  (D(v) = 1 in whitened coords): tiny => ladder direction
+        row.append(f"{e:+.2f}: {ev[0]:+.3e} (D/|g|^2 {ladder:.0e})")
+    print(f"  {name}: " + "; ".join(row), flush=True)

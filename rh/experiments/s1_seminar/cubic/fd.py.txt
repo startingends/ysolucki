@@ -1,0 +1,120 @@
+"""S1-cubic turn 2: the Weil form of F_d(s) = zeta(s-d) zeta(s+d) on the box space, EXACT compression of the tilted kernel.
+Kernel of F_d = zeta's kernel times m(u) = 2cosh(d u)  (S1-mirror B15):  Q_d(g) = Q(m g), g = f * f~.
+  primes: Lambda(n) n^{-1/2} m(log n);  arch: 2 c0 g(0) + int_0^inf ( 2 g(0) e^{-2u}/u - 2 w(u) m(u) g(u) ) du;
+  pole: 2cosh((1/2+d)u) + 2cosh((1/2-d)u): four functionals e^{+-(1/2+-d)x}.
+Identity to test (derived by hand, NOTES.md):  Q_d(f) = 2 Q(cosh(dx) f) - 2 Q(sinh(dx) f).
+usage: fd.py.txt <what> ..."""
+import sys, math, importlib.util, importlib.machinery, numpy as np, mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+mp.mp.dps = 30
+_cache = {}
+def parts(L, n):
+    """d-independent data"""
+    key = (L, n)
+    if key not in _cache:
+        _cache[key] = (box.lam(math.exp(2 * L) + 1e-9),)
+    return _cache[key]
+def boxNd(L, n, d):
+    """returns N_d (primes_d - arch_d), list of (p_sigma, q_sigma) for sigma = 1/2+d, 1/2-d"""
+    h = mp.mpf(2) * L / n; c0 = -mp.log(mp.pi); cn = parts(L, n)[0]
+    m = lambda u: 2 * mp.cosh(d * u)
+    tri = lambda v: max(mp.mpf(0), h - abs(v))
+    A = []
+    for k in range(n):
+        dist = k * h
+        if k == 0:
+            val = 2 * c0 * h + mp.quad(lambda u: 2 * h * mp.exp(-2 * u) / u - 2 * box.w(u) * m(u) * (h - u), [0, h / 2, h]) + 2 * h * mp.e1(2 * h)
+        else:
+            val = -mp.quad(lambda u: box.w(u) * m(u) * tri(u - dist), [dist - h, dist, dist + h])
+        A.append(val / h)
+    N = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            dist = (i - j) * h; pr = mp.mpf(0)
+            for x, c in cn.items():
+                u = mp.log(x)
+                pr += c / mp.sqrt(x) * m(u) * (tri(u - dist) + tri(u + dist))
+            N[i, j] = float(pr / h - A[abs(i - j)])
+    xs = [-mp.mpf(L) + i * h for i in range(n + 1)]
+    fun = []
+    for sg in (mp.mpf(1) / 2 + d, mp.mpf(1) / 2 - d):
+        p = np.array([float((mp.exp(sg * xs[i + 1]) - mp.exp(sg * xs[i])) / (sg * mp.sqrt(h))) for i in range(n)])
+        q = np.array([float((mp.exp(-sg * xs[i]) - mp.exp(-sg * xs[i + 1])) / (sg * mp.sqrt(h))) for i in range(n)])
+        fun.append((p, q))
+    return N, fun
+def Qd(L, n, d):
+    N, fun = boxNd(L, n, d)
+    P = sum(np.outer(p, q) + np.outer(q, p) for p, q in fun)
+    return P - N, N, fun
+def expker(kappa, L, n):
+    """box compression of e^{kappa |x-y|} (kappa of either sign)"""
+    h = 2 * L / n; dd = np.abs(np.subtract.outer(np.arange(n), np.arange(n)))
+    M = (2 * math.sinh(kappa * h / 2) / kappa) ** 2 / h * np.exp(kappa * dd * h)
+    np.fill_diagonal(M, 2 * (math.exp(kappa * h) - 1 - kappa * h) / (kappa ** 2 * h))
+    return M
+def blocks(Q):
+    n = len(Q); J = np.eye(n)[::-1]; Pe = (np.eye(n) + J) / 2; Po = (np.eye(n) - J) / 2
+    big = 10 * abs(Q).max()
+    return np.linalg.eigvalsh(Pe @ Q @ Pe + big * Po)[0], np.linalg.eigvalsh(Po @ Q @ Po + big * Pe)[0]
+what = sys.argv[1]
+if what == "check":
+    L, n = 1.0, 24
+    Nb, p, q = box.boxN(L, n); Q0 = np.outer(p, q) + np.outer(q, p) - Nb
+    Q, N, fun = Qd(L, n, 0.0)
+    print("d = 0: |Q_0 - 2 Q|max = %.2e" % np.abs(Q - 2 * Q0).max())
+    xc = np.array([-L + (i + 0.5) * 2 * L / n for i in range(n)])
+    for d in (0.02, 0.1, 0.25):
+        Q, N, fun = Qd(L, n, d)
+        C = np.diag(np.cosh(d * xc)); S = np.diag(np.sinh(d * xc))
+        model = 2 * C @ Q0 @ C - 2 * S @ Q0 @ S
+        model2 = Q0 * (2 * np.cosh(d * np.subtract.outer(xc, xc)))
+        print("d = %.2f: |Q_d(exact compression) - [2 C Q C - 2 S Q S](box centres)|max = %.2e (entries of Q_d up to %.2f) ; |2CQC-2SQS - Q o 2cosh|max = %.1e" % (
+            d, np.abs(Q - model).max(), np.abs(Q).max(), np.abs(model - model2).max()))
+if what == "forms":
+    L, n = float(sys.argv[2]), int(sys.argv[3])
+    for d in (0.0, 0.05, 0.1, 0.25, 0.45):
+        Q, N, fun = Qd(L, n, d)
+        E = expker(0.5 + d, L, n) + expker(0.5 - d, L, n); W0 = expker(-(0.5 + d), L, n) + expker(-(0.5 - d), L, n)
+        P = sum(np.outer(p, q) + np.outer(q, p) for p, q in fun)
+        Np = N - W0; off = ~np.eye(n, dtype=bool)
+        eE = np.linalg.eigvalsh(E); negQ = int((np.linalg.eigvalsh(Q) < -1e-11).sum())
+        big = np.block([[Np, E], [E, E]])
+        F = np.zeros((n + 4, n + 4)); F[:n, :n] = N
+        for a, (p, q) in enumerate(fun):
+            F[:n, n + 2 * a] = F[n + 2 * a, :n] = p; F[:n, n + 2 * a + 1] = F[n + 2 * a + 1, :n] = q
+            F[n + 2 * a, n + 2 * a + 1] = F[n + 2 * a + 1, n + 2 * a] = 1.0
+        ee, eo = blocks(Q)
+        print("L=%.2f n=%d d=%.2f: |E_d - (P_d - W0_d)|=%.1e ; eig(E_d) top three %.4f %.3e %.3e (#pos %d) ; min offdiag N'_d %.3e ; lowest eig Q_d even %.3e odd %.3e (#neg %d) ; #pos one-field %d ; #pos 4-fibre %d (min offdiag %.2e)" % (
+            L, n, d, np.abs(E - (P - W0)).max(), eE[-1], eE[-2], eE[-3], (eE > 1e-11).sum(), Np[off].min(), ee, eo, negQ,
+            (np.linalg.eigvalsh(big) > 1e-10).sum(), (np.linalg.eigvalsh(F) > 1e-10).sum(), F[~np.eye(n + 4, dtype=bool)].min()), flush=True)
+if what == "thr":
+    L, n = float(sys.argv[2]), int(sys.argv[3])
+    Nb, p, q = box.boxN(L, n); Q0 = np.outer(p, q) + np.outer(q, p) - Nb
+    w, V = np.linalg.eigh(Q0); mu0, v0 = w[0], V[:, 0]
+    xc = np.array([-L + (i + 0.5) * 2 * L / n for i in range(n)])
+    J = np.eye(n)[::-1]; par = "even" if abs(v0 @ J @ v0 - 1) < 1e-6 else ("odd" if abs(v0 @ J @ v0 + 1) < 1e-6 else "mixed")
+    Qx = (xc * v0) @ Q0 @ (xc * v0)
+    e0, o0 = blocks(Q0)
+    print("L=%.2f n=%d: zeta lowest eigenvalue mu_0 = %.4e (%s; even block %.4e, odd block %.4e) ; Q(x psi) = %.5f ; formula d = sqrt(mu_0/Q(x psi)) = %.5f" % (L, n, mu0, par, e0, o0, Qx, math.sqrt(mu0 / Qx)))
+    def thr(fun):
+        lo, hi = 0.0, 0.4
+        for _ in range(14):
+            mid = (lo + hi) / 2
+            if fun(mid) < 0: hi = mid
+            else: lo = mid
+        return hi
+    model = lambda d: np.linalg.eigvalsh(Q0 * (2 * np.cosh(d * np.subtract.outer(xc, xc))))[0]
+    dm = thr(model)
+    tm = lambda d: np.linalg.eigvalsh(np.diag(np.cosh(d * xc)) @ (Q0 - np.diag(np.tanh(d * xc)) @ Q0 @ np.diag(np.tanh(d * xc))) @ np.diag(np.cosh(d * xc)))[0]
+    print("   model (tilt by box-centre differences): d_crit = %.5f ; d_crit^2 Q(x psi)/mu_0 = %.4f ; contraction form of the same threshold: %.5f" % (dm, dm * dm * Qx / mu0, thr(tm)))
+    for blk, name in ((0, "even"), (1, "odd")):
+        de = thr(lambda d: blocks(Qd(L, n, d)[0])[blk])
+        print("   exact compression, %s block: d_crit = %.5f ; d_crit^2 Q(x psi)/mu_0 = %.4f" % (name, de, de * de * Qx / mu0), flush=True)
+if what == "one":
+    L, n = float(sys.argv[2]), int(sys.argv[3])
+    for d in [float(t) for t in sys.argv[4:]]:
+        Q, N, fun = Qd(L, n, d); ee, eo = blocks(Q)
+        print("exact compression L=%.2f n=%d d=%.3f: lowest eigenvalue of Q_d: even %.4e odd %.4e" % (L, n, d, ee, eo), flush=True)

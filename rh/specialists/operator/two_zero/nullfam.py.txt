@@ -1,0 +1,19 @@
+"""The null family of the pair-removed background: lowest pencil eigenvalues of (Q_bg, D), and the rank of the pair
+functionals (Re F, Im F at c +- delta) restricted to the near-null eigenvectors."""
+import sys
+args = sys.argv[1:]
+sys.argv = ['h'] + args[:3] + ['0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("for us in sys.argv[4]")[0]
+exec(src)
+ev, V = np.linalg.eigh(Abg)
+print(" lowest 10 eigenvalues of the pencil (Q_bg, D):", [f"{x:.2e}" for x in ev[:10]])
+k = int(args[3])
+for us in args[4].split(','):
+    u = mp.mpf(us)
+    pts = [c - mp.sqrt(u), c + mp.sqrt(u)] if u > 0 else [c]
+    rows = []
+    for t in pts:
+        for m, v in terms_online(t):
+            W1, _ = whiten([(m, v)]); rows.append(W1[:, 0] @ V[:, :k])
+    Rm = np.array(rows); sv = np.linalg.svd(Rm, compute_uv=False)
+    print(f"  u = {float(u):.6f}: singular values of the {len(rows)} pair functionals on the {k} lowest background eigenvectors: {[f'{x:.2e}' for x in sv]}")

@@ -1,0 +1,18 @@
+"""S1-curv turn 3: sign changes of the folded ground state of each parity block as the weight of the atom at log 2 varies. usage: t3_nodes.py.txt M delta"""
+import sys, math, importlib.machinery, importlib.util, numpy as np
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib'); S2 = load('s2lib')
+M = int(sys.argv[1]); dl = float(sys.argv[2]); ell = math.log(2); c = ell / math.sqrt(2); L = (ell + dl) / 2
+b = S.build(L, M, 'arch'); d = b['d']; h = M // 2; tri = lambda t: max(0.0, 1 - abs(t))
+Q0 = 2 * np.outer(b['c'], b['c']) - 2 * np.outer(b['s'], b['s']) - b['N']
+idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M))); P1 = np.array([tri((ell - k * d) / d) for k in range(M)])[idx]
+Be, Bo = S2.parity_bases(M)
+def nodes(v):
+    v = v * np.sign(v[np.argmax(np.abs(v))]); thr = 1e-3 * np.abs(v).max(); s = np.sign(v[np.abs(v) > thr]); return int((s[1:] != s[:-1]).sum()), float(v.min() / v.max())
+print("M=%d delta=%g L=%.4f ; c = %.4f.  weight | even: low eig, sign changes, min/max | odd: low eig, sign changes, min/max" % (M, dl, L, c))
+for cw in (-1.0, -0.5, -0.38, 0.0, 0.2, 0.36, 0.4901, 0.54, 0.6, 0.7, 0.9, 1.2, 1.72, 2.0, 2.5):
+    out = []
+    for B in (Be, Bo):
+        w, V = np.linalg.eigh(B.T @ (Q0 - cw * P1) @ B); n, r = nodes(V[:, 0]); out += [w[0], n, r]
+    print("%7.4f | %+.5f %d %+.3f | %+.5f %d %+.3f" % (cw, *out))

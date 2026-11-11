@@ -1,0 +1,16 @@
+# Round 3 formula checks. (1) First Li coefficient of zeta_K, K = Q(sqrt-3):
+#   lambda_1^K = 1 + log(sqrt3/(2pi)) + L'/L(1, chi_-3)  and the split lambda_1(zeta) + lambda_1(L(chi_-3)).
+# (2) BBLS constant for zeta: 2 lambda_1 = 2 + gamma - log(4 pi).  (3) local Paley-Wiener cost 2pi/T (closed form only).
+from mpmath import mp, mpf, log, pi, sqrt, euler, dirichlet, diff, psi
+mp.dps = 30
+chi = [0, 1, -1]
+L = lambda s: dirichlet(s, chi)
+LpL = diff(L, 1) / L(1)
+lam1K = 1 + log(sqrt(3) / (2 * pi)) + LpL
+lam1z = 1 + euler / 2 - log(2) - log(pi) / 2
+lam1L = log(3 / pi) / 2 + psi(0, 1) / 2 + LpL
+print("L(1,chi_-3) =", L(1), " pi/(3 sqrt3) =", pi / (3 * sqrt(3)))
+print("L'/L(1,chi_-3) =", LpL)
+print("lambda_1(zeta) =", lam1z, " lambda_1(L) =", lam1L, " sum =", lam1z + lam1L)
+print("lambda_1^K =", lam1K, "  C_K = 2 lambda_1^K =", 2 * lam1K)
+print("BBLS constant for zeta 2+gamma-log(4pi) =", 2 + euler - log(4 * pi), " = 2 lambda_1(zeta):", 2 * lam1z)

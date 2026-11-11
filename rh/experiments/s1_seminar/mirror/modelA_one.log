@@ -1,0 +1,14 @@
+B5 one-prime system: atoms (log 2) 2^(-k/2) at k log 2 only, zeta's arch and pole. lowest eigenvalue (even, odd); N = 40
+  L=0.30  even 0.007587  odd 0.2268
+  L=0.36  even 0.0008529  odd 0.05066
+  L=0.40  even 0.0001823  odd 0.01546
+  L=0.50  even 9.5e-7  odd 0.0002148
+  L=0.54  even 1.099e-7  odd 2.655e-5
+  L=0.56  even 4.799e-8  odd -1.945e-6
+  L=0.58  even -1.599e-7  odd -0.05749
+  L=0.60  even -0.001342  odd -0.1437
+  L=0.65  even -0.03075  odd -0.335
+  L=0.70  even -0.1019  odd -0.4953
+  L=0.80  even -0.3732  odd -0.6098
+  L=1.00  even -0.4476  odd -1.043
+time 12.2 s

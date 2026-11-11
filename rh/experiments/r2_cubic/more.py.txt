@@ -1,0 +1,78 @@
+import sys, math, itertools, importlib.util, importlib.machinery, numpy as np, cvxpy as cp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/r2_cubic/box.py.txt")
+np.set_printoptions(linewidth=220, precision=4, suppress=True)
+
+def solve_local(H, a, R, nbox, sign=False):
+    m = len(a); l = H @ a; s = float(a @ l)
+    keys = list(itertools.combinations_with_replacement(range(m), 3))
+    idx = {k: i for i, k in enumerate(keys)}
+    x = cp.Variable(len(keys)); cons = []
+    Sl = []
+    for k in range(m):
+        A = np.zeros((m * m, len(keys)))
+        for i in range(m):
+            for j in range(m):
+                A[i * m + j, idx[tuple(sorted((i, j, k)))]] = 1.0
+        Sl.append(A)
+    cons.append(sum(a[k] * (Sl[k] @ x) for k in range(m)) == H.reshape(-1))
+    for k in range(m):
+        cons.append(np.outer(H[:, k], H[:, k]) / l[k] - cp.reshape(Sl[k] @ x, (m, m), order='C') >> 0)
+    for (i, j, k), ii in idx.items():
+        if k < nbox and (k - i) > R: cons.append(x[ii] == 0)          # three box indices, spread > R
+        if sign and len({i, j, k}) == 3: cons.append(x[ii] >= 0)
+    prob = cp.Problem(cp.Minimize(cp.sum_squares(x)), cons)
+    try: prob.solve(solver=cp.CLARABEL)
+    except Exception as ex: return "solver-failed", None
+    if x.value is None: return prob.status, None
+    T = np.zeros((m, m, m))
+    for (i, j, k), ii in idx.items():
+        for pp in set(itertools.permutations((i, j, k))): T[pp] = x.value[ii]
+    return prob.status, T
+
+which = sys.argv[1]
+if which == "p5":
+    for kind, L, n in (("zeta", 0.5, 8), ("zeta", 1.0, 8), ("beurling", 0.5, 8), ("zeta", 1.0, 12)):
+        cn = box.lam(math.exp(2 * L)) if kind == "zeta" else box.beurling(math.exp(2 * L))
+        Nb, p, q = box.boxN(L, n, cn); H = box.ext(Nb, p, q)
+        ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1])
+        res = []
+        for R in range(0, n):
+            st, T = solve_local(H, a, R, n)
+            ok = T is not None and st in ("optimal", "optimal_inaccurate") and max(int((np.linalg.eigvalsh(T[:, :, k]) > 1e-6).sum()) for k in range(n + 2)) == 1 \
+                 and np.abs(np.einsum('ijk,k->ij', T, a) - H).max() < 1e-6
+            res.append((R, st, ok))
+            if ok and R >= 1 and all(r[2] for r in res[-2:]): break
+        print("%s L=%.2f n=%d (#pos(H)=%d): " % (kind, L, n, (ev > 1e-10).sum()), [(R, st[:10], ok) for R, st, ok in res])
+        if kind == "zeta" and n == 8:
+            for R in (0, 1):
+                st, T = solve_local(H, a, R, n, sign=True)
+                print("     with T>=0 on distinct triples, R=%d: %s" % (R, st))
+if which == "p6":
+    L, n = 1.0, 8
+    Nb, p, q = box.boxN(L, n)
+    Qm = np.outer(p, q) + np.outer(q, p) - Nb
+    mu, F = np.linalg.eigh(Qm); f = F[:, 0]
+    for label, Nmod in (("unmodified", Nb), ("made singular", Nb + mu[0] * np.outer(f, f))):
+        H = box.ext(Nmod, p, q); ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1])
+        vt = np.r_[f, -(f @ q), -(f @ p)]
+        st, T = solve_local(H, a, n, n)
+        D = np.diag(a / (H @ a))
+        bound = -(vt @ H @ vt) + vt @ H @ D @ H @ vt
+        print("%s: mu=%.3e  |H vt|=%.2e  eig2(H)=%.2e  status %s" % (label, mu[0], np.linalg.norm(H @ vt), np.sort(ev)[-2], st))
+        print("    max_k |T_k vt| = %.3e   max_k |vt T_k vt| = %.3e   (mean |T_k| = %.3f) ;  sum_k a_k vt^T P_k vt = %.3e  vs  vt^T(HDH - H)vt = %.3e" % (
+            max(np.linalg.norm(T[:, :, k] @ vt) for k in range(n + 2)), max(abs(vt @ T[:, :, k] @ vt) for k in range(n + 2)),
+            np.mean([np.linalg.norm(T[:, :, k]) for k in range(n + 2)]),
+            sum(a[k] * ((H[:, k] @ vt) ** 2 / (H @ a)[k] - vt @ T[:, :, k] @ vt) for k in range(n + 2)), bound))
+if which == "p7":
+    for L in (0.5, 0.75, 1.0, 1.25, 1.5, 2.0):
+        for n in (12, 24):
+            Nb, p, q = box.boxN(L, n); H = box.ext(Nb, p, q)
+            ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1]); lamb = ev[-1]
+            G = H / np.outer(a, a)
+            best = min((G[i, j] + G[i, k] + G[j, k], (i, j, k)) for i in range(n) for j in range(i + 1, n) for k in range(j + 1, n))
+            bestf = min((G[i, j] + G[i, k] + G[j, k], (i, j, k)) for i in range(n + 2) for j in range(i + 1, n + 2) for k in range(j + 1, n + 2))
+            print("L=%.2f n=%d  lambda=%.4f  #pos=%d  rho(boxes)=%.4f at %s   rho(incl fibres)=%.4f at %s  a_fibre/a_box_mid=%.3f" % (
+                L, n, lamb, (ev > 1e-10).sum(), best[0] / (2 * lamb), best[1], bestf[0] / (2 * lamb), bestf[1], a[-1] / a[n // 2]))

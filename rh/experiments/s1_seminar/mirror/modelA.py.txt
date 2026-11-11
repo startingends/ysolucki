@@ -1,0 +1,70 @@
+"""Model A of the two-prime model: all of L^2[-L, L], e^(2L) < 5, where zeta's form has only the atoms 2, 3, 4.
+usage: python3 modelA.py.txt <which>"""
+import sys, math, time
+sys.path.insert(0, "/home/user/ysolucki/rh/experiments/s1_seminar/mirror")
+import importlib.util, importlib.machinery
+P = "/home/user/ysolucki/rh/experiments/s1_seminar/mirror/lib.py.txt"
+spec = importlib.util.spec_from_file_location("lib", P, loader=importlib.machinery.SourceFileLoader("lib", P))
+lib = importlib.util.module_from_spec(spec); spec.loader.exec_module(lib)
+globals().update({k: v for k, v in vars(lib).items() if not k.startswith("__")})
+ns = lambda x, k=4: mp.nstr(x, k)
+which = sys.argv[1]
+t0 = time.time()
+if which == "base":
+    print("baseline: lowest eigenvalue (even, odd) of Q for zeta; N = 40, 120 digits")
+    for L in (0.5, 0.6, 0.7, 0.75, 0.8):
+        N = 40
+        Q0 = add(arch(L, N), atoms(L, N, lam(math.exp(2 * L))))
+        e = mineig(Q0); print("  L=%.2f  even %s  odd %s   atoms %s" % (L, ns(e[0]), ns(e[1]), sorted(lam(math.exp(2*L)).keys())), flush=True)
+elif which == "V1":
+    print("V1/V2: interval of eta with Q >= 0 when one weight is multiplied by (1+eta); N=%s" % sys.argv[2])
+    N = int(sys.argv[2])
+    for L in (0.70, 0.75, 0.80):
+        Q0 = add(arch(L, N), atoms(L, N, lam(math.exp(2 * L))))
+        e = mineig(Q0)
+        print("  L=%.2f  lowest eig even %s odd %s" % (L, ns(e[0]), ns(e[1])))
+        U = {n: atoms(L, N, {n: c}) for n, c in lam(math.exp(2 * L)).items()}
+        for n in sorted(U):
+            pe, po = pencil(Q0, U[n])
+            print("     weight at %d: even block eta in [%s, %s] ; odd block eta in [%s, %s]" % (n, ns(pe[0]), ns(pe[1]), ns(po[0]), ns(po[1])), flush=True)
+        if 4 in U:
+            # twist at 2: c_2 = log2 * r, c_4 = log2 * r^2, r = 1 + s : first order direction U2 + 2 U4
+            D = [U[2][b] + 2 * U[4][b] for b in (0, 1)]
+            pe, po = pencil(Q0, D)
+            print("     twist at 2 (r = 1+s, linearised): even s in [%s, %s] ; odd s in [%s, %s]" % (ns(pe[0]), ns(pe[1]), ns(po[0]), ns(po[1])), flush=True)
+elif which == "V3":
+    print("V3 Liouville twist (weights at 2, 3 negated; 4 kept): lowest eigenvalue (even, odd); N = 30")
+    for L in (0.36, 0.40, 0.50, 0.60, 0.75):
+        N = 30
+        A = arch(L, N)
+        tw = {n: (c if n == 4 else -c) for n, c in lam(math.exp(2 * L)).items()}
+        e0 = mineig(A); e1 = mineig(add(A, atoms(L, N, tw))); e2 = mineig(add(A, atoms(L, N, lam(math.exp(2 * L)))))
+        print("  L=%.2f  no atoms %s %s | Liouville twist %s %s | true %s %s" % (L, ns(e0[0]), ns(e0[1]), ns(e1[0]), ns(e1[1]), ns(e2[0]), ns(e2[1])), flush=True)
+elif which == "lead":
+    print("lead's test (B12): lowest eigenvalue (even, odd). (a) true weights (b) weight at 4 flipped to -log 2 (c) 2 -> 2.1")
+    print("  '23' = only the atoms 2^k, 3^k (two-prime world); 'all' = all primes (zeta)")
+    def beur(X, plist):
+        out = {}
+        for p in plist:
+            pk = p
+            while pk <= X:
+                out[pk] = arb(p).log(); pk *= p
+        return out
+    for L in (0.40, 0.50, 0.60, 0.70, 0.75, 0.80, 0.90, 1.00):
+        N = 40
+        X = math.exp(2 * L)
+        A = arch(L, N)
+        row = []
+        for name, cn in (("a23", lam(X, (2, 3))), ("b23", {n: (-c if n == 4 else c) for n, c in lam(X, (2, 3)).items()}),
+                         ("c23", beur(X, (2.1, 3))), ("a-all", lam(X)), ("b-all", {n: (-c if n == 4 else c) for n, c in lam(X).items()}),
+                         ("c-all", beur(X, (2.1, 3, 5, 7)))):
+            e = mineig(add(A, atoms(L, N, cn)))
+            row.append("%s %s/%s" % (name, ns(e[0], 3), ns(e[1], 3)))
+        print("  L=%.2f  " % L + " | ".join(row), flush=True)
+elif which == "one":
+    print("B5 one-prime system: atoms (log 2) 2^(-k/2) at k log 2 only, zeta's arch and pole. lowest eigenvalue (even, odd); N = 40")
+    for L in (0.30, 0.36, 0.40, 0.50, 0.54, 0.56, 0.58, 0.60, 0.65, 0.70, 0.80, 1.00):
+        N = 40
+        e = mineig(add(arch(L, N), atoms(L, N, lam(math.exp(2 * L), (2,)))))
+        print("  L=%.2f  even %s  odd %s" % (L, ns(e[0]), ns(e[1])), flush=True)
+print("time %.1f s" % (time.time() - t0))

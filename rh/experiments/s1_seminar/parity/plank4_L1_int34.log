@@ -1,0 +1,12 @@
+L=1.0 lambda=2.7182818 c=46.42680871 ; basis int N=34 ; dps 131 ; Legendre terms 164 (62s)
+defects 1 - chi_n (Legendre route), n = 0, 2, ..., 20: 0:2.25973e-39 2:1.48239e-34 4:1.51202e-30 6:5.73004e-27 8:1.07509e-23 10:1.15314e-20 12:7.69442e-18 14:3.36917e-15 16:1.00184e-12 18:2.06506e-10 20:2.97745e-8
+(a) lowest eigenvalues, even: ['9.82998e-30', '3.95331e-23', '2.09969e-17', '2.16257e-12'] ; odd: ['2.65649e-26', '3.38535e-20', '8.71852e-15', '3.50202e-10'] (65s)
+    merged ladder / defect: even#1/(1-chi_4) = 6.501 ; odd#1/(1-chi_6) = 4.636 ; even#2/(1-chi_8) = 3.677 ; odd#2/(1-chi_10) = 2.936 ; even#3/(1-chi_12) = 2.729 ; odd#3/(1-chi_14) = 2.588
+quadrature: 8 breakpoints, 1728 points ; images of 10 prolates done (91s)
+(b) even block, prolate n=4 (b=0): |v|^2 = 0.81934, captured by the block basis 1.0 ; largest jump of v 1.35e-14 (relative to max |v|-scale 1) ; Rayleigh = 1.35682e-29 ; Rayleigh/mu_1 = 1.38028 ; Rayleigh/mu_2 = 3.4321e-7 ; 1 - overlap^2 with eigenvector 1: 7.199e-8, with 2: 1.0 ; Rayleigh/(1-chi_n) = 8.9735 (92s)
+(b) even block, prolate n=8 (b=0): |v|^2 = 1.61279, captured by the block basis 1.0 ; largest jump of v 3.5e-11 (relative to max |v|-scale 1) ; Rayleigh = 4.86548e-23 ; Rayleigh/mu_1 = 4.94963e+6 ; Rayleigh/mu_2 = 1.23074 ; 1 - overlap^2 with eigenvector 1: 0.9992, with 2: 0.0008339 ; Rayleigh/(1-chi_n) = 4.5256 (92s)
+(c) zeta, even block, prolate indices [4, 8, 12, 16]: kappa_min / kappa_max: K=1: 2.7048 / 2.7048 ; K=2: 1.4653 / 3.9246 ; K=3: 1.1779 / 4.3314 ; K=4: 1.0155 / 4.5758 (93s)
+(b) odd block, prolate n=6 (b=2): |v|^2 = 1.16975, captured by the block basis 1.0 ; largest jump of v 8.18e-13 (relative to max |v|-scale 1) ; Rayleigh = 3.23869e-26 ; Rayleigh/mu_1 = 1.21916 ; Rayleigh/mu_2 = 9.56677e-7 ; 1 - overlap^2 with eigenvector 1: 1.271e-7, with 2: 1.0 ; Rayleigh/(1-chi_n) = 5.6521 (93s)
+(b) odd block, prolate n=10 (b=2): |v|^2 = 1.94342, captured by the block basis 1.0 ; largest jump of v 1.13e-9 (relative to max |v|-scale 1) ; Rayleigh = 4.11549e-20 ; Rayleigh/mu_1 = 1.54922e+6 ; Rayleigh/mu_2 = 1.21567 ; 1 - overlap^2 with eigenvector 1: 0.9559, with 2: 0.04414 ; Rayleigh/(1-chi_n) = 3.5689 (93s)
+(c) zeta, odd block, prolate indices [6, 10, 14, 18]: kappa_min / kappa_max: K=1: 2.4323 / 2.4323 ; K=2: 1.5692 / 3.4147 ; K=3: 1.214 / 3.8545 ; K=4: 0.90707 / 4.0366 (94s)
+total (94s)

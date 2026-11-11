@@ -1,0 +1,54 @@
+"""S1-parity turn 3, promised in B170 (K-atlas B148(1)): the impostor's lowest even eigenvector on windows around its first failure
+(L* in (1.70, 1.72]), evaluated at its zeros. Davenport-Heilbronn form: own builder (as b67dh.py.txt). Zero list: lane A, r1_A/dh_zeros.json
+(122 on-line ordinates below 200, 4 off-line zeros). For a real even psi:
+   Q(psi) = 2 sum_{on-line tau > 0} psihat(tau)^2 + 4 sum_{off-line} Re[ psihat(tau + i b)^2 ] + (zeros above 200),   b = beta - 1/2.
+usage: python3 b148.py.txt L N dps"""
+import sys, json, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt"); wb = fd.wb
+L = float(sys.argv[1]); N = int(sys.argv[2]); mp.mp.dps = int(sys.argv[3]); t0 = time.time(); ns = lambda x, k=5: mp.nstr(x, k)
+Lm = mp.mpf(sys.argv[1])
+def dh_c(X):
+    kap = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+    a = [mp.mpf(0)] + [(mp.mpf(0), mp.mpf(1), kap, -kap, mp.mpf(-1))[n % 5] for n in range(1, X + 1)]
+    b = list(a); b[1] = mp.mpf(0); l = [mp.mpf(0)] * (X + 1); pw = list(b); k = 1
+    while 2 ** k <= X:
+        for n in range(2, X + 1): l[n] += mp.mpf((-1) ** (k + 1)) / k * pw[n]
+        new = [mp.mpf(0)] * (X + 1)
+        for d in range(2, X + 1):
+            if pw[d] != 0:
+                for e in range(2, X // d + 1): new[d * e] += pw[d] * b[e]
+        pw = new; k += 1
+    return {n: l[n] * mp.log(n) for n in range(2, X + 1) if l[n] != 0}
+w = wb.freqs(Lm, N, 'int'); vals = []
+for om in w:
+    v, dv = fd.phi_arch_c(om + fd.I, Lm); vals.append((v + mp.log(5) / 2, dv))
+M = wb.blocks(Lm, N, 'int', [v[0] for v in vals], [v[1] for v in vals]); E = M[0].apply(mp.re)
+for n, c in dh_c(int(math.exp(2 * L))).items():
+    if math.log(n) < 2 * L - 1e-12: E = E + c * wb.atom_blocks(Lm, N, 'int', n)[0]
+print("built even block, L=%s N=%d dps=%d   (%.0fs)" % (sys.argv[1], N, mp.mp.dps, time.time() - t0), flush=True)
+ev, V = mp.eigsy(E); order = sorted(range(len(ev)), key=lambda j: abs(ev[j]))
+i = order[0]; mu = ev[i]
+print("eigenvalue of smallest modulus: %s ; next three by modulus: %s   (%.0fs)" % (ns(mu, 7), [ns(ev[j], 4) for j in order[1:4]], time.time() - t0), flush=True)
+co = [V[k, i] / (mp.sqrt(2 * Lm) if w[k] == 0 else mp.sqrt(Lm)) for k in range(len(w))]
+def psihat(z):
+    s = mp.mpf(0)
+    for k in range(len(w)):
+        a, b = w[k] - z, w[k] + z
+        s += co[k] * ((mp.sin(a * Lm) / a if a != 0 else Lm) + (mp.sin(b * Lm) / b if b != 0 else Lm))
+    return s
+Z = json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))
+on = [mp.mpf(t) for t in Z['online']]; off = [(mp.mpf(b), mp.mpf(t)) for b, t in Z['off']]
+p0 = psihat(mp.mpf(0))
+onv = [psihat(t) for t in on]; Eon = 2 * mp.fsum(x ** 2 for x in onv)
+print("psihat(0) = %s ; on-line energy 2 sum psihat(tau)^2 over %d ordinates below 200 = %s" % (ns(p0, 6), len(on), ns(Eon, 7)))
+big = sorted(range(len(on)), key=lambda j: -abs(onv[j]))[:6]
+print("   largest |psihat| at on-line ordinates: " + " ; ".join("tau=%s: %s" % (ns(on[j], 6), ns(onv[j], 4)) for j in big))
+Eoff = mp.mpf(0)
+for beta, tau in off:
+    z = mp.mpc(tau, beta - mp.mpf(1) / 2); v = psihat(z); c = 4 * mp.re(v ** 2); Eoff += c
+    print("   off-line zero %s + %s i: psihat(tau + ib) = %s ; |psihat| = %s ; phase/pi = %s ; contribution 4 Re[psihat^2] = %s" % (ns(beta, 6), ns(tau, 8), ns(v, 5), ns(abs(v), 5), ns(mp.arg(v) / mp.pi, 5), ns(c, 7)))
+print("sum: on-line %s + off-line %s = %s ; eigenvalue (Q(psi), |psi| = 1) = %s ; difference (zeros above 200 + basis) = %s   (%.0fs)" % (ns(Eon, 7), ns(Eoff, 7), ns(Eon + Eoff, 7), ns(mu, 7), ns(mu - Eon - Eoff, 3), time.time() - t0))

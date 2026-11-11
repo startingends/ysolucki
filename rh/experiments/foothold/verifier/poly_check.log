@@ -1,0 +1,4 @@
+L=1/2        NB=28: no atom even -0.0323519539485215 odd -0.322228344654863 | true atom even 9.4166307e-7 odd 0.00019573044   t=4s
+L=27/50      NB=32: no atom even -0.0650680866127705 odd -0.410363725855412 | true atom even 1.0769854e-7 odd 2.4715909e-5   t=10s
+L=(1/2)log3  NB=28: no atom even -0.0739850533930148 odd -0.430295917024621 | true atom even 5.6411493e-8 odd 1.5075893e-5   t=15s
+L=(1/2)log3  NB=40: no atom even -0.0739899834299609 odd -0.430304522634803 | true atom even 5.5785006e-8 odd 1.5018082e-5   t=26s

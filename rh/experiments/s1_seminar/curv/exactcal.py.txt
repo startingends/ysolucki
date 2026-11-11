@@ -1,0 +1,32 @@
+import sys, math, numpy as np, mpmath as mp
+mp.mp.dps = 25
+L = float(sys.argv[1]); M = int(sys.argv[2]); d = 2 * L / M
+w = lambda u: mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+tri = lambda t: max(0.0, 1 - abs(t))
+def Wk(k):
+    f = lambda u: w(u) * (1 - abs(u - k * d) / d)
+    return mp.quad(f, [0, d, 2 * d]) if k == 1 else mp.quad(f, [(k - 1) * d, k * d, (k + 1) * d])
+diag = float(-(-mp.log(mp.pi) + mp.quad(lambda u: mp.exp(-2 * u) / u - 2 * w(u) * (1 - u / d), [0, d / 2, d]) + mp.e1(2 * d)))
+ta = np.array([0.0] + [float(Wk(k)) for k in range(1, M)])
+idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M))); E = np.eye(M)
+lam = {2: math.log(2), 3: math.log(3), 4: math.log(2), 5: math.log(5), 7: math.log(7)}
+tp = np.array([sum(c / math.sqrt(n) * (tri((math.log(n) - k * d) / d) + tri((math.log(n) + k * d) / d)) for n, c in lam.items() if n <= math.exp(2 * L)) for k in range(M)])
+N = (ta + tp)[idx]; np.fill_diagonal(N, diag)
+ev, V = np.linalg.eigh(N); lam1 = ev[-1]; u = np.abs(V[:, -1]); pi = u ** 2 / (u ** 2).sum()
+q = N * u[None, :] / u[:, None]; np.fill_diagonal(q, 0); Lg = q - np.diag(q.sum(1))
+Gs = np.array([sum(0.5 * q[i, y] * np.outer(E[y] - E[i], E[y] - E[i]) for y in range(M) if y != i) for i in range(M)])
+LG = np.einsum('xy,yab->xab', Lg, Gs)
+D = np.array([0.5 * (LG[i] - (Gs[i] @ Lg + Lg.T @ Gs[i])) - lam1 * Gs[i] for i in range(M)])
+Dbar = np.einsum('x,xab->ab', pi, D)
+R = D - Dbar[None]
+# solve L C = R along the site index, with pi-mean zero:  (L - 1 pi^T) C = R  (since pi R = 0 the solution has pi C = 0)
+A = Lg - np.outer(np.ones(M), pi)
+C = np.linalg.solve(A, R.reshape(M, -1)).reshape(M, M, M)
+print("residual |L C - (D - Dbar)|_max = %.1e ; |pi C|_max = %.1e ; min eig Dbar on mean-zero = %.3e" % (np.abs(np.einsum('xy,yab->xab', Lg, C) - R).max(), np.abs(np.einsum('x,xab->ab', pi, C)).max(), np.sort(np.linalg.eigvalsh(Dbar))[1]))
+for y in (M // 2, M // 4, 0):
+    sv = np.linalg.svd(C[y], compute_uv=False)
+    U_, S_, Vt = np.linalg.svd(C[y])
+    cd = E[y] - pi          # centred delta_y
+    ov = abs(U_[:, 0] @ cd) / np.linalg.norm(cd)
+    print("site %2d: singular values of C_y / largest: %s ; rank(>1e-6) = %d ; rank(>1e-2) = %d ; overlap of top vector with centred delta_y = %.3f ; sign of top eigenvalue %+d" % (y, np.round(sv[:8] / sv[0], 4), (sv > 1e-6 * sv[0]).sum(), (sv > 1e-2 * sv[0]).sum(), ov, np.sign(np.linalg.eigvalsh(C[y])[np.argmax(np.abs(np.linalg.eigvalsh(C[y])))])))
+    print("         top eigenvalue of C_y = %.4f ; resampling value would be -lambda_1/4 = %.4f" % (np.linalg.eigvalsh(C[y])[np.argmax(np.abs(np.linalg.eigvalsh(C[y])))], -lam1 / 4))

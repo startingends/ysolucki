@@ -1,0 +1,54 @@
+# two-route check of ||E_psi||^2 for a pseudo-Eisenstein series on PSL2(Z)\H (see PROGRESS.md P4, NOTES D2)
+import mpmath as mp
+mp.mp.dps = 25
+a, b = mp.mpf('-1.2'), mp.mpf('0.3')
+def f(v):
+    if v <= a or v >= b: return mp.mpf(0)
+    x = (2*v - a - b)/(b - a)            # in (-1,1)
+    return mp.exp(-1/(1 - x*x))
+def ukappa(u):
+    # u * kappa(u^2) = u / sqrt(1 - exp(-u^2)), limit 1 at u = 0
+    if u < mp.mpf('1e-10'): return mp.mpf(1)
+    return u/mp.sqrt(-mp.expm1(-u*u))
+def totient(c):
+    r, n, p = c, c, 2
+    while p*p <= n:
+        if n % p == 0:
+            while n % p == 0: n //= p
+            r -= r//p
+        p += 1
+    if n > 1: r -= r//n
+    return r
+# geometric route
+norm2 = mp.quad(lambda v: f(v)**2, [a, b])
+geo = norm2
+terms = []
+c = 1
+while 2*mp.log(c) < -2*a:
+    # inner: int f(v') kappa(-(v+v') - 2 log c) dv' ; substitute w = -(v+v') - 2 log c > 0, v' = -v - 2 log c - w
+    def inner(v, c=c):
+        wmax = -v - 2*mp.log(c) - a
+        if wmax <= 0: return mp.mpf(0)
+        # integrable singularity at w = 0: substitute w = u^2
+        return mp.quad(lambda u: 2*ukappa(u)*f(-v - 2*mp.log(c) - u*u), [0, mp.sqrt(wmax)])
+    t = mp.quad(lambda v: f(v)*inner(v), [a, b])
+    terms.append((c, totient(c), t))
+    geo += mp.mpf(totient(c))/c * t
+    c += 1
+# spectral route
+def xi(w): return mp.pi**(-w/2)*mp.gamma(w/2)*mp.zeta(w)
+def phi(s): return xi(2*s-1)/xi(2*s)
+def fhat(t): return mp.quad(lambda v: f(v)*mp.exp(1j*t*v), [a, b])
+res = (3/mp.pi)*mp.quad(lambda v: f(v)*mp.exp(-v/2), [a, b])**2
+def dens(t):
+    if abs(t) < 1e-12: t = mp.mpf('1e-9')
+    return abs(fhat(-t) + phi(mp.mpc(0.5, -t))*fhat(t))**2
+cont = 2*mp.quad(dens, mp.linspace(0, 60, 61))/(4*mp.pi)      # integrand even in t
+spec = res + cont
+print("int f^2            =", mp.nstr(norm2, 15))
+for c, ph, t in terms: print("  c =", c, " phi(c) =", ph, " Hankel term =", mp.nstr(t, 15))
+print("GEOMETRIC  ||E||^2 =", mp.nstr(geo, 15))
+print("residue term       =", mp.nstr(res, 15), "  continuous part =", mp.nstr(cont, 15))
+print("SPECTRAL   ||E||^2 =", mp.nstr(spec, 15))
+print("difference         =", mp.nstr(geo - spec, 5), "  ratio =", mp.nstr(geo/spec, 15))
+print("tail check: dens(60) =", mp.nstr(dens(mp.mpf(60)), 5))

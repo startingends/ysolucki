@@ -1,0 +1,13 @@
+(c) Beurling control: prime 2 moved to 2.1 (g-prime powers 2.1^k), zeta Gamma factor and pole
+  L=0.30  lowest eigenvalue: Beurling 0.0075964   true primes 0.0075964
+  L=0.36  lowest eigenvalue: Beurling 0.0010859   true primes 0.00085396
+  L=0.38  lowest eigenvalue: Beurling -0.011736   true primes 0.0004101
+  L=0.40  lowest eigenvalue: Beurling -0.036093   true primes 0.000183
+  L=0.42  lowest eigenvalue: Beurling -0.050086   true primes 7.5188e-5
+  L=0.44  lowest eigenvalue: Beurling -0.058187   true primes 2.8042e-5
+  L=0.46  lowest eigenvalue: Beurling -0.062747   true primes 9.4471e-6
+  L=0.48  lowest eigenvalue: Beurling -0.065119   true primes 2.9628e-6
+  L=0.50  lowest eigenvalue: Beurling -0.06619   true primes 9.6364e-7
+  L=0.55  lowest eigenvalue: Beurling -0.069872   true primes 5.6436e-8
+  L=0.60  lowest eigenvalue: Beurling -0.10163   true primes 1.7835e-9
+  L=0.70  lowest eigenvalue: Beurling -0.15595   true primes 5.0915e-13

@@ -1,0 +1,15 @@
+(1) Phi_arch: closed form vs direct quadrature of the kernel, dps 50
+  L=1 om=0  Phi=(-1.94760987138 + 0.0j)  |diff Phi|=5.4e-49  |diff ImPhi'|=5.35e-51
+  L=1 om=4.71239  Phi=(-0.153583513293 - 0.917414397542j)  |diff Phi|=5.45e-49  |diff ImPhi'|=8.35e-53
+  L=1 om=51.3  Phi=(1.04344642172 - 0.793695124008j)  |diff Phi|=5.48e-49  |diff ImPhi'|=8.35e-53
+  L=0.5 om=9.42478  Phi=(0.196389334031 - 0.885392321778j)  |diff Phi|=1.49e-51  |diff ImPhi'|=3.13e-53
+  L=0.4581 om=30  Phi=(0.763353643056 - 0.81087788638j)  |diff Phi|=3.78e-51  |diff ImPhi'|=8.35e-53
+  1.0s
+(2) entrywise vs r1_A builder (integer lattice), L=1, N=12, full zeta form
+  max |A - B| even block 3.34e-50 ; odd block 3.74e-50
+  control (2 -> 2.1 in B): max diff even 0.899
+(3) Q(f) vs sum over zeros; f = w1 cos(w0 x) + w0 cos(w1 x) on [-1,1], half lattice (f(L)=f'(L)=0)
+  B (prime side): 2.9613968981891e-6   zero side (5000 zeros): 2.9613968981891e-6   rel diff 1.09e-15
+  control Beurling 2->2.1: 1.00550452753946  rel diff to zero side 3.4e+5
+  odd test: f = sin(w0 x): B 0.0784079461591416   zero side 0.0775009541114893 (slow tail, expect ~1e-3 agreement)
+total 1.6s

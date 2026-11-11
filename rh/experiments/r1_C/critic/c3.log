@@ -1,0 +1,6 @@
+X=30: 4 real zeros of F_X in (83,88.5): [83.154, 85.262, 86.113, 87.696] | Phi swing: min dPhi/dt 0.58 max 3.91 | total Phi change/pi 3.605
+X=300: 4 real zeros of F_X in (83,88.5): [83.133, 85.474, 85.917, 87.646] | Phi swing: min dPhi/dt -0.57 max 7.52 | total Phi change/pi 3.631
+X=3000: 4 real zeros of F_X in (83,88.5): [83.119, 85.573, 85.822, 87.651] | Phi swing: min dPhi/dt -2.39 max 13.15 | total Phi change/pi 3.666
+X=10000: 4 real zeros of F_X in (83,88.5): [83.125, 85.605, 85.792, 87.645] | Phi swing: min dPhi/dt -4.28 max 17.43 | total Phi change/pi 3.669
+X=100000: 4 real zeros of F_X in (83,88.5): [83.124, 85.646, 85.752, 87.643] | Phi swing: min dPhi/dt -10.86 max 30.11 | total Phi change/pi 3.697
+X=1e+06: 8 real zeros of F_X in (83,88.5): [83.121, 85.398, 85.597, 85.669, 85.729, 85.801, 86.001, 87.66] | Phi swing: min dPhi/dt -24.56 max 52.53 | total Phi change/pi 3.731

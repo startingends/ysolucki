@@ -1,0 +1,26 @@
+"""C2b: off-diagonal kernel at a pair, measured (whitened functionals) vs the formula
+K(g, g') = 1/2 int_1^inf e^{-i(g-g')(L + log N)} conj(R_N(rho)) R_N(rho') dN/N; and the impostor diagonal with A(x) periodic."""
+import sys
+args = sys.argv[1:]
+sys.argv = ['h'] + args[:3] + ['0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("for us in sys.argv[4]")[0]
+exec(src)
+from numpy.polynomial.legendre import leggauss
+g1, g2 = [mp.mpf(x) for x in act[3:].split(',')]
+W1, _ = whiten(terms_online(g1)); W2, _ = whiten(terms_online(g2))
+l1 = W1[:, 0] + 1j * W1[:, 1]; l2 = W2[:, 0] + 1j * W2[:, 1]
+print(f"  measured: K11 = {np.vdot(l1, l1).real:.4f}, K22 = {np.vdot(l2, l2).real:.4f}, <l1,l2> = {np.vdot(l1, l2):.4f}, <l1,conj l2> = {np.vdot(l1, l2.conj()):.4f}")
+Lf = float(L); x, w = leggauss(8); NMAX = 200000
+if d['KIND'] == 'zeta':
+    a = lambda n: np.ones_like(n); pole = True
+else:
+    k = (np.sqrt(10 - 2 * np.sqrt(5)) - 2) / (np.sqrt(5) - 1); per = np.array([0, 1, k, -k, -1])
+    a = lambda n: per[(n.astype(int)) % 5]; pole = False
+n = np.arange(1, NMAX, dtype=float); Nn = n[:, None] + (x[None, :] + 1) / 2; wt = w[None, :] / 2
+def R(g):
+    rho = 0.5 + 1j * g; S = np.cumsum(a(n) * n ** (-rho))
+    return S[:, None] - (Nn ** (1 - rho) / (1 - rho) if pole else 0)
+r1, r2 = R(float(g1)), R(float(g2)); dg = float(g1 - g2)
+k11 = 0.5 * np.sum(np.abs(r1) ** 2 / Nn * wt); k22 = 0.5 * np.sum(np.abs(r2) ** 2 / Nn * wt)
+k12 = 0.5 * np.sum(np.exp(-1j * dg * (Lf + np.log(Nn))) * np.conj(r1) * r2 / Nn * wt)
+print(f"  formula : K11 = {k11:.4f}, K22 = {k22:.4f}, K12 = {k12:.4f} (|K12| = {abs(k12):.4f})")

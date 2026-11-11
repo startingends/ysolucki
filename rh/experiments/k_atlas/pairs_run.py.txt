@@ -1,0 +1,25 @@
+# K-atlas: record all pair verdicts through tools/records.py (skips pairs already recorded)
+import subprocess, itertools, sys
+sys.path.insert(0, "/home/user/ysolucki/tools")
+import records
+ns = {}
+exec(open("/home/user/ysolucki/rh/experiments/k_atlas/pairs_a.py.txt").read(), ns)
+exec(open("/home/user/ysolucki/rh/experiments/k_atlas/pairs_b.py.txt").read(), ns)
+P = ns["P"]
+path = "/home/user/ysolucki/rh/ATLAS.md"
+_, items = records.parse("atlas", path)
+n = len(items)
+allp = list(itertools.combinations(range(1, n + 1), 2))
+missing = [p for p in allp if p not in P]
+extra = [p for p in P if p not in allp]
+print("entries", n, "pairs", len(allp), "written", len(P), "missing", missing, "extra", extra)
+if missing or extra:
+    sys.exit(1)
+done = {(a, b) for a, b, _, _ in records.pairs(records.read(path))}
+k = 0
+for (a, b) in allp:
+    if (a, b) in done: continue
+    v, t = P[(a, b)]
+    subprocess.run(["python3", "/home/user/ysolucki/tools/records.py", "atlas", "pair", "F%d" % a, "F%d" % b, v, t], check=True)
+    k += 1
+print("recorded", k, {v: sum(1 for x in P.values() if x[0] == v) for v in ("no", "maybe", "yes")})

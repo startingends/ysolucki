@@ -1,0 +1,63 @@
+# SP-reflection session 2: sanity check of a formula (the Gamma-orbit of omega as a positive definite measure).
+# For gamma = [[a,b],[c,d]] in SL_2(Z): cosh d(omega, gamma omega) = 1 + (2/3) N(beta), beta = (b+c) + (a-d+c) w, w = omega,
+# N(x + y w) = x^2 - x y + y^2. Find alpha (linear in a,b,c,d) with N(alpha) - N(beta) = 3 det, and count the orbit:
+#   #{gamma in SL_2(Z) : N(beta) = m}  versus  r(m) r(m+3)-type products, r(n) = #{x in Z[w]: N(x) = n}.
+import itertools, math, cmath
+from collections import Counter
+N = lambda x, y: x * x - x * y + y * y
+w = complex(-0.5, math.sqrt(3) / 2)
+# 1. check the distance formula on random elements
+import random
+random.seed(1)
+def rand_sl2():
+    while True:
+        a, b, c = [random.randint(-9, 9) for _ in range(3)]
+        if a != 0 and (1 + b * c) % a == 0:
+            return a, b, c, (1 + b * c) // a
+maxerr = 0
+for _ in range(200):
+    a, b, c, d = rand_sl2()
+    z = (a * w + b) / (c * w + d)
+    u = abs(z - w) ** 2 / (4 * w.imag * z.imag)
+    maxerr = max(maxerr, abs((1 + 2 * u) - (1 + 2 * N(b + c, a - d + c) / 3)))
+print("max error of cosh d = 1 + (2/3) N(beta):", maxerr)
+# 2. find alpha = (P, Q) linear forms with N(P,Q) - N(beta) = 3 (ad - bc) identically
+sols = []
+rng = range(-2, 3)
+tests = [tuple(random.randint(-5, 5) for _ in range(4)) for _ in range(12)]
+for p in itertools.product(rng, repeat=4):
+    for q in itertools.product(rng, repeat=4):
+        ok = True
+        for (a, b, c, d) in tests:
+            P = p[0] * a + p[1] * b + p[2] * c + p[3] * d
+            Q = q[0] * a + q[1] * b + q[2] * c + q[3] * d
+            if N(P, Q) - N(b + c, a - d + c) != 3 * (a * d - b * c):
+                ok = False; break
+        if ok: sols.append((p, q))
+print("number of alpha forms found:", len(sols), "example:", sols[0] if sols else None)
+# 3. count the orbit by m = N(beta) and compare
+M = 40
+B = 40
+cnt = Counter()
+for a in range(-B, B + 1):
+    for b in range(-B, B + 1):
+        for c in range(-B, B + 1):
+            # d from ad - bc = 1
+            if a == 0:
+                if b * c != -1: continue
+                ds = range(-B, B + 1)
+            else:
+                if (1 + b * c) % a: continue
+                ds = [(1 + b * c) // a]
+            for d in ds:
+                m = N(b + c, a - d + c)
+                if m <= M: cnt[m] += 1
+r = Counter()
+for x in range(-30, 31):
+    for y in range(-30, 31):
+        r[N(x, y)] += 1
+print(" m  #gamma(SL2)  r(m)  r(m+3)  r(m)r(m+3)  ratio")
+for m in range(0, M + 1):
+    if cnt[m] or r[m] * r[m + 3]:
+        prod = r[m] * r[m + 3]
+        print(f"{m:3d} {cnt[m]:8d} {r[m]:6d} {r[m+3]:6d} {prod:8d}   {cnt[m]/prod if prod else float('nan'):.4f}")

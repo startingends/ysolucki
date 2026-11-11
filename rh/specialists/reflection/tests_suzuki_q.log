@@ -1,0 +1,8 @@
+d=0.1 A=12: min eig -4.56562e-52, #negative 0, rank 8, formula check failures 0
+d=0.1 A=30: min eig -6.29531e-51, #negative 0, rank 19, formula check failures 0
+d=0.3 A=12: min eig -2.85711e-51, #negative 0, rank 8, formula check failures 0
+d=0.3 A=30: min eig -7.52604e-51, #negative 0, rank 19, formula check failures 0
+d=0.0 A=12: min eig 0.0, #negative 0, rank 1, formula check failures 0
+d=0.0 A=30: min eig 0.0, #negative 0, rank 1, formula check failures 0
+d=-0.1 A=12: min eig -0.57609, #negative 5, rank 8, formula check failures 0
+d=-0.1 A=30: min eig -0.934021, #negative 11, rank 19, formula check failures 0

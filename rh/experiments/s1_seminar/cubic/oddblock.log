@@ -1,0 +1,5 @@
+zeta     L=1.00 n=24: EVEN block: min offdiag 1.213e-01, negative offdiag 0 of 156, eig top two 5.3088 -8.187e-04 | ODD block: min offdiag -5.050e-01, negative offdiag 38 of 156 (fibre column min 1.203e-02), top eig -1.365e-02
+zeta     L=1.00 n=48: EVEN block: min offdiag 5.949e-02, negative offdiag 0 of 600, eig top two 5.3099 -2.599e-04 | ODD block: min offdiag -3.975e-01, negative offdiag 108 of 600 (fibre column min 4.253e-03), top eig -4.196e-03
+zeta     L=0.50 n=24: EVEN block: min offdiag 1.067e-01, negative offdiag 0 of 156, eig top two 2.9980 -2.074e-03 | ODD block: min offdiag -2.563e-01, negative offdiag 12 of 156 (fibre column min 4.253e-03), top eig -2.192e-02
+noprimes L=0.45 n=24: EVEN block: min offdiag 1.049e-01, negative offdiag 0 of 156, eig top two 2.6665 -1.339e-03 | ODD block: min offdiag 3.631e-03, negative offdiag 0 of 156 (fibre column min 3.631e-03), top eig 1.867e-01
+beurling L=1.00 n=24: EVEN block: min offdiag 1.213e-01, negative offdiag 0 of 156, eig top two 5.2906 2.441e-01 | ODD block: min offdiag -5.050e-01, negative offdiag 38 of 156 (fibre column min 1.203e-02), top eig 2.276e-01

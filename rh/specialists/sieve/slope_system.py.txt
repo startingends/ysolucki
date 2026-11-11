@@ -1,0 +1,97 @@
+# Reconstructed exponent comparison system of the 7/8 paper (Prop 19.2, Lemma 20.1/(20.4), Prop 15.3, Lemma 10.4), with parameters:
+#   csig : density of sixth powers in the signal (h/6 in C(sigma0)) and in the low estimate (b/12 = c b/2)
+#   alpha: slope of Lemma 17.6 (sixth-power amplification), alpha = 5/6 in the paper
+#   rho  : relaxation of Lemma 17.1's length condition r + 2z <= 1 + rho (paper: rho = 0)
+#   sixk : plain capacity denominator 6*kappa, kappa = 2 sigma0 - 1 (paper uses the dynamic value)
+# Geometry: l_x, b free; l = 1 - 2 l_x - b; h = 1 - l_x + l; l_y = l_x + b (Eq. 12.4 relations).
+import numpy as np, sys
+def _maxmin(dec0, decs, inc0, incs, lo, hi):
+    # max over r in [lo, hi] of min(dec0 + decs r, inc0 + incs r); incs > 0 assumed; dec may have any slope
+    rc = (dec0 - inc0) / np.where(np.abs(incs - decs) > 1e-15, incs - decs, 1e-15)
+    rr = np.clip(rc, lo, hi)
+    v_c = np.minimum(dec0 + decs*rr, inc0 + incs*rr)
+    v_hi = np.minimum(dec0 + decs*hi, inc0 + incs*hi)   # covers dec increasing faster than inc
+    return np.maximum(v_c, v_hi)
+def Rstar(delta, x, alpha, rho, sixk, cap, lam=0.5, nt=801, tmax=1.5, need=None):
+    d = delta[:,None,None]; xx = x[None,:,None]
+    t = np.linspace(1.0, tmax, nt)[None,None,:]
+    q = xx*d; mu = 1.0/sixk
+    lo = t - 0.5; hi = t
+    # plain count as function of r (m = t - r): inc0 + incs r
+    inc0 = 1 - 2*d*t - 2*q*mu + 4*q*mu*t; incs = 2*d - 4*q*mu
+    # short branch r < 1 + rho, inverse count with slots (capacity lam(1+rho-r), assumed <= cap; checked below)
+    dec0 = 1 - 2*q*lam*(1+rho); decs = -d + 2*q*lam
+    shi = np.minimum(hi, 1+rho)
+    vs = np.where(lo < 1+rho, _maxmin(dec0, decs, inc0, incs, lo, shi), -9.0)
+    # long branch r >= 1 + rho: amplified estimate (slope alpha/(1+rho) in r), no slots
+    c17 = 1 - alpha
+    l0 = c17 + 0*d; ls = alpha/(1+rho) - d
+    llo = np.maximum(lo, 1+rho)
+    vl = np.where(hi > 1+rho, _maxmin(l0, ls, inc0, incs, llo, hi), -9.0)
+    Rt = np.maximum(vs, vl)
+    i = Rt.argmin(axis=2)
+    R = np.take_along_axis(Rt, i[...,None], axis=2)[...,0]
+    if need is not None:   # inverse capacity actually used at the optimal t, at the crossing
+        tt = t[0,0,i]; rc = (dec0 - inc0) / (incs - decs)
+        rcs = np.take_along_axis(np.broadcast_to(rc, Rt.shape), i[...,None], axis=2)[...,0]
+        need.append(float(np.max(lam*np.clip(1+rho-np.clip(rcs, tt-0.5, np.minimum(tt,1+rho)), 0, None))))
+    return R
+def Emax(sigma0, lx, b, csig, alpha, rho, delta0=1/50, nd=401, nx=21, use_dyn_kappa=True, tmax=1.5, need=None):
+    ell = 1 - 2*lx - b; h = 1 - lx + ell; ly = lx + b
+    if ell < 0 or b < 0 or lx <= 0: return 1e9
+    kappa = (2*sigma0 - 1 if use_dyn_kappa else 0.75) if KAPPA_FIXED is None else KAPPA_FIXED
+    sixk = 6*max(kappa, 1e-6)
+    cap = ell/h
+    delta = np.linspace(delta0, alpha, nd); x = np.linspace(0, 0.5, nx)
+    R = Rstar(delta, x, alpha, rho, sixk, cap, tmax=tmax, need=need)
+    D = delta[:,None]; X = x[None,:]
+    E = (1+D)*(1-ly)/2 - sigma0 - h*csig - ell/2 + X*D*ell + h*R + h*D/2
+    # floor bin: R = 1, q <= delta0/2
+    Ef = (1+delta0)*(1-ly)/2 - sigma0 - h*csig - ell/2 + 0.5*delta0*ell + h + h*delta0/2
+    return max(E.max(), Ef)
+CUBIC_LOW = False
+def sigma_low(lx, b, csig):
+    ell = 1 - 2*lx - b; h = 1 - lx + ell
+    base = 1 - csig*h + csig*b/2
+    if CUBIC_LOW:   # row energy with the cubic large sieve K + L + (KL)^(2/3) instead of K + L (Lemma 5.8: rows Z^M, column Z^1)
+        M = 2*lx + b
+        base += 0.5*max(0.0, (2/3)*(3*M - 1) - max(M, 2*M - 1))
+    return base
+KAPPA_FIXED = None
+def sigma_best_geom(lx, b, csig, alpha, rho, tmax=1.5, fine=False):
+    kw = dict(nd=401, nx=21) if fine else dict(nd=81, nx=6)
+    if 1 - 2*lx - b < 0 or b < 0 or lx <= 0: return 2.0
+    sig = 0.875
+    for _ in range(6):   # E = K(kappa(sigma)) - sigma: fixed point of sigma = K
+        K = Emax(sig, lx, b, csig, alpha, rho, tmax=tmax, **kw) + sig
+        if abs(K - sig) < 1e-9: break
+        sig = K
+    return max(sig, sigma_low(lx, b, csig))
+def optimise(csig, alpha, rho, tmax=1.5, starts=None):
+    from scipy.optimize import minimize
+    starts = starts or [(17/48, 1/8), (0.3, 0.05), (0.42, 0.1), (0.22, 0.15)]
+    best = (9, None)
+    for x0 in starts:
+        res = minimize(lambda v: sigma_best_geom(v[0], v[1], csig, alpha, rho, tmax), x0, method='Nelder-Mead',
+                       options=dict(xatol=1e-6, fatol=1e-8, maxiter=400))
+        if res.fun < best[0]: best = (res.fun, tuple(res.x))
+    s_fine = sigma_best_geom(best[1][0], best[1][1], csig, alpha, rho, tmax, fine=True)
+    return s_fine, best[1]
+if __name__ == '__main__':
+    mode = sys.argv[1] if len(sys.argv) > 1 else 'check'
+    if mode == 'check':
+        lx, b = 17/48, 1/8
+        print("paper geometry, csig=1/6, alpha=5/6, rho=0:")
+        print("  Emax at sigma0 = 7/8      :", Emax(7/8, lx, b, 1/6, 5/6, 0.0))
+        print("  Emax at sigma0 = 7/8, kappa=3/4 baseline:", Emax(7/8, lx, b, 1/6, 5/6, 0.0, use_dyn_kappa=False))
+        print("  paper's certificate -E* >= 49/440640 =", 49/440640)
+        print("  sigma_low =", sigma_low(lx, b, 1/6), " sigma_best(geometry fixed) =", sigma_best_geom(lx, b, 1/6, 5/6, 0.0))
+        print("  Part I geometry (lx=1/2, b=0): sigma_best =", sigma_best_geom(0.5, 0.0, 1/6, 5/6, 0.0))
+    elif mode == 'opt':
+        csig, alpha, rho = float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4])
+        tmax = float(sys.argv[5]) if len(sys.argv) > 5 else 1.5
+        if len(sys.argv) > 6 and sys.argv[6] != 'dyn': KAPPA_FIXED = float(sys.argv[6]); print('kappa fixed at', KAPPA_FIXED)
+        if len(sys.argv) > 7 and sys.argv[7] == 'cubic': CUBIC_LOW = True; print('cubic large sieve in the low estimate')
+        s, g = optimise(csig, alpha, rho, tmax)
+        print(f"csig={csig:.4f} alpha={alpha:.4f} rho={rho:.3f} tmax={tmax}: best sigma0 = {s:.6f} at (l_x, b) = ({g[0]:.5f}, {g[1]:.5f}); "
+              f"sigma_low there {sigma_low(g[0], g[1], csig):.6f}")

@@ -1,0 +1,88 @@
+"""Verify the Bochner formula for the Doob-transformed process, split the two-step kernel, inspect the BE minimiser.
+usage: check.py.txt <L> <M>"""
+import sys, math, numpy as np, mpmath as mp, scipy.linalg as sl
+mp.mp.dps = 25
+L = float(sys.argv[1]); M = int(sys.argv[2]); d = 2 * L / M
+w = lambda u: mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+tri = lambda t: max(0.0, 1 - abs(t))
+def Wk(k):
+    f = lambda u: w(u) * (1 - abs(u - k * d) / d)
+    return mp.quad(f, [0, d, 2 * d]) if k == 1 else mp.quad(f, [(k - 1) * d, k * d, (k + 1) * d])
+diag = -(-mp.log(mp.pi) + mp.quad(lambda u: mp.exp(-2 * u) / u - 2 * w(u) * (1 - u / d), [0, d / 2, d]) + mp.e1(2 * d))
+lam = {}
+for p in (2, 3, 5, 7, 11, 13):
+    pk = p
+    while pk <= math.exp(2 * L): lam[pk] = math.log(p); pk *= p
+ta = np.array([0.0] + [float(Wk(k)) for k in range(1, M)])          # arch off-diagonal
+tp = np.array([sum(c / math.sqrt(n) * (tri((math.log(n) - k * d) / d) + tri((math.log(n) + k * d) / d)) for n, c in lam.items()) for k in range(M)])
+idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+Ka = ta[idx]; Kp = tp[idx]; np.fill_diagonal(Kp, 0)   # (tp[0]=0 anyway for d<log 2)
+N = Ka + Kp + float(diag) * np.eye(M)
+ev, V = np.linalg.eigh(N); lam1 = ev[-1]; u = np.abs(V[:, -1])
+q = (Ka + Kp) * u[None, :] / u[:, None]; qt = q.sum(1); Lg = q - np.diag(qt)
+def G(i):
+    g = np.zeros((M, M))
+    for y in range(M):
+        if y != i:
+            e = np.zeros(M); e[y] = 1; e[i] = -1; g += 0.5 * q[i, y] * np.outer(e, e)
+    return g
+Gs = [G(i) for i in range(M)]
+def G2_direct(i):
+    return 0.5 * (sum(q[i, y] * (Gs[y] - Gs[i]) for y in range(M)) - (Gs[i] @ Lg + Lg.T @ Gs[i]))
+def G2_formula(i):
+    # (1/2)(Lf(x))^2 + sum_y q_xy Gamma f(y) - (1/4) sum_z q2_xz (f_z-f_x)^2 ,  q2 = q@q (constant total rate)
+    q2 = q @ q
+    out = 0.5 * np.outer(Lg[i], Lg[i]) + sum(q[i, y] * Gs[y] for y in range(M))
+    for z in range(M):
+        if z != i:
+            e = np.zeros(M); e[z] = 1; e[i] = -1; out -= 0.25 * q2[i, z] * np.outer(e, e)
+    return out
+def G2_bochner(i):
+    # (1/4) sum_{y,z} K_iy K_yz u_z/u_i (f_z - f_y - f_{y'} + f_i)^2 is not expressible on a box lattice with windows unless
+    # indexed by sites: use site form:  (1/4) sum_{y != i} sum_{z != y} q_iy q_yz (f_z - f_y)^2 ... (see PROOF, eq. (B2))
+    # B2: Gamma_2 = (1/2)(Lf)^2 + (1/2) sum_{y,z} q_iy q_yz (f_z-f_y)^2 - (1/4) sum_{y,z} q_iy q_yz (f_z - f_i)^2
+    out = 0.5 * np.outer(Lg[i], Lg[i])
+    for y in range(M):
+        if y == i: continue
+        for z in range(M):
+            if z == y: continue
+            e = np.zeros(M); e[z] += 1; e[y] -= 1
+            out += 0.5 * q[i, y] * q[y, z] * np.outer(e, e)
+            if z != i:
+                e2 = np.zeros(M); e2[z] = 1; e2[i] = -1
+                out -= 0.25 * q[i, y] * q[y, z] * np.outer(e2, e2)
+    return out
+for i in (0, M // 2):
+    A = G2_direct(i)
+    print("site %d: |G2_direct - G2_formula|_max = %.2e ; |G2_direct - G2_B2|_max = %.2e ; |G2|_max = %.3f" % (i, np.abs(A - G2_formula(i)).max(), np.abs(A - G2_bochner(i)).max(), np.abs(A).max()))
+print("total rate constant: spread %.2e" % (qt.max() - qt.min()))
+# two-step kernel split at the centre:  K2 = (Ka+Kp)^2 off-diagonal
+K2 = {"arch*arch": Ka @ Ka, "arch*prime+prime*arch": Ka @ Kp + Kp @ Ka, "prime*prime": Kp @ Kp}
+i = M // 2
+for name, m in K2.items():
+    r = m[i] * u / u[i]; r[i] = 0
+    print("  two-step rate out of centre via %-22s: total %.4f" % (name, r.sum()))
+print("  one-step rates out of centre: arch %.4f  primes %.4f ; total rate %.4f ; lambda_1 %.4f" % ((Ka[i] * u / u[i]).sum(), (Kp[i] * u / u[i]).sum(), qt[i], lam1))
+# Selberg check in the continuum bookkeeping: atoms of prime*prime at log(mn): weight (Lambda*Lambda)(n)/sqrt n
+X = int(math.exp(2 * L)); LL = {}
+for a, ca in lam.items():
+    for b, cb in lam.items():
+        if a * b <= X: LL[a * b] = LL.get(a * b, 0) + ca * cb
+L2 = {}
+for n in range(2, X + 1):
+    # Lambda_2(n) = sum_{d|n} mu(d) log^2(n/d)
+    import sympy
+    L2[n] = float(sum(sympy.mobius(dd) * math.log(n / dd) ** 2 for dd in sympy.divisors(n)))
+print("  Selberg: (Lambda*Lambda)(n) vs Lambda_2(n) - Lambda(n) log n for n <= %d:" % X, {n: (round(LL.get(n, 0), 6), round(L2[n] - lam.get(n, 0) * math.log(n), 6)) for n in range(2, X + 1)})
+# BE minimiser at centre and at the edge
+for i in (M // 2, 0):
+    id_ = [k for k in range(M) if k != i]
+    A = G2_direct(i)[np.ix_(id_, id_)]; B = Gs[i][np.ix_(id_, id_)]
+    val, vec = sl.eigh(A, B)
+    f = np.zeros(M); f[id_] = vec[:, 0]; f /= np.abs(f).max()
+    one = np.ones(M); one[i] = 0
+    cosang = abs(f @ (Gs[i] @ one)) / math.sqrt((f @ Gs[i] @ f) * (one @ Gs[i] @ one))
+    print("site %d: rho=%.4f (=%.4f lambda_1); second gen. eigenvalue %.4f ; top %.4f (=%.3f lambda_1); Gamma-cosine of minimiser with the indicator-of-the-site direction = %.5f" % (i, val[0], val[0] / lam1, val[1], val[-1], val[-1] / lam1, cosang))
+    r1 = (one @ G2_direct(i) @ one) / (one @ Gs[i] @ one)
+    print("   Rayleigh quotient Gamma_2/Gamma on f = 1 - delta_site: %.4f (=%.4f lambda_1)  [resampling chain: exactly rate/2]" % (r1, r1 / lam1))
+    print("   minimiser profile (every M/10):", np.round(f[::max(1, M // 10)], 3))

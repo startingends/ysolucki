@@ -1,0 +1,24 @@
+J7 40 random mixed-sign H, m=7: |def - F5|=1.4e-14  |def - Gamma_2 def|=2.1e-14  |T.a-H|=2.3e-14  asym=3.6e-15 ; control c4=0.3: |T.a-H| min 0.097 max 0.595
+J8 cone certificate: l>=0: 300 instances, 0 with a slice having 2 positive eigenvalues ; some l_k<0: 300 instances, 300 violations
+J9 m=40 n=5: best rho computed 0.135000 ; formula 1/2-2/n+(1+2/n)/m = 0.135000 ; seat's (n-4)/(2(n-1)) after Lichnerowicz factor n/(n-1): computed 0.16875 vs 0.12500
+J9 m=40 n=8: best rho computed 0.281250 ; formula 1/2-2/n+(1+2/n)/m = 0.281250 ; seat's (n-4)/(2(n-1)) after Lichnerowicz factor n/(n-1): computed 0.32143 vs 0.28571
+J9 m=40 n=20: best rho computed 0.427500 ; formula 1/2-2/n+(1+2/n)/m = 0.427500 ; seat's (n-4)/(2(n-1)) after Lichnerowicz factor n/(n-1): computed 0.45000 vs 0.42105
+Traceback (most recent call last):
+  File "/home/user/ysolucki/rh/experiments/r2_judge/j2.py.txt", line 80, in <module>
+    m, n, cd(m, n), 0.5 - 2 / n + (1 + 2 / n) / m, cd(m, n) * n / (n - 1), (n - 4) / (2 * (n - 1))))
+          ~~^^^^^^
+  File "/home/user/ysolucki/rh/experiments/r2_judge/j2.py.txt", line 74, in cd
+    Gs = [Gam(k) for k in range(m)]; k = 0
+          ~~~^^^
+  File "/home/user/ysolucki/rh/experiments/r2_judge/j2.py.txt", line 73, in Gam
+    G = 0.5 * np.diag(Lg[k]); G[k, :] -= 0.5 * Lg[k]; G[:, k] -= 0.5 * Lg[k]; return G
+              ~~~~~~~^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/numpy/lib/_twodim_base_impl.py", line 320, in diag
+    res = zeros((n, n), v.dtype)
+numpy._core._exceptions._ArrayMemoryError: Unable to allocate 7.63 MiB for an array with shape (1000, 1000) and data type float64
+J9 m=200 n=5: best rho computed 0.107000 ; formula 1/2-2/n+(1+2/n)/m = 0.107000 ; seat's (n-4)/(2(n-1)) after Lichnerowicz factor n/(n-1): computed 0.13375 vs 0.12500
+J9 m=40 n=1e+12: best rho computed 0.525000 ; formula 1/2-2/n+(1+2/n)/m = 0.525000 ; seat's (n-4)/(2(n-1)) after Lichnerowicz factor n/(n-1): computed 0.52500 vs 0.50000
+J9 m=5 n=1e+12: best rho computed 0.700000 ; formula 1/2-2/n+(1+2/n)/m = 0.700000 ; seat's (n-4)/(2(n-1)) after Lichnerowicz factor n/(n-1): computed 0.70000 vs 0.50000
+J9 m=10 n=1e+12: best rho computed 0.600000 ; formula 1/2-2/n+(1+2/n)/m = 0.600000 ; seat's (n-4)/(2(n-1)) after Lichnerowicz factor n/(n-1): computed 0.60000 vs 0.50000
+Lemma A: 1000 random (N,p,q): 0 violations of #pos(Ntilde) = 1 + #neg(Q)
+Theorem A toy: N_even = -9.0 (0 positive eigenvalues), inequality N <= 2cc^T on even vectors holds trivially; 2 c^T N^-1 c - 1 = -1.4444 < 0

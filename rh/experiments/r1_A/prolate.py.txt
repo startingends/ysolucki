@@ -1,0 +1,47 @@
+"""Leakage 1 - chi_n(c) of the prolate (time-band limiting) operator, c = 2 pi e^{2L}, compared with mu(L).
+chi_n = (c/2pi) nu_n^2, nu_n eigenvalue of F_c phi(x) = int_{-1}^{1} e^{icxt} phi(t) dt, via Legendre expansion (Bouwkamp/Xiao-Rokhlin-Yarvin)."""
+import sys, math
+import flint
+from flint import arb, acb, arb_mat, acb_mat
+def chis(c, nmax_even, prec):
+    flint.ctx.prec = prec
+    c = arb(c); c2 = c * c
+    K = int(float(c) * 0.9) + 90
+    ks = [2 * i for i in range(K)]
+    A = arb_mat(K, K)
+    for i, k in enumerate(ks):
+        A[i, i] = arb(k * (k + 1)) + c2 * arb(2 * k * (k + 1) - 1) / arb((2 * k + 3) * (2 * k - 1))
+        if i + 1 < K:
+            v = c2 * arb((k + 2) * (k + 1)) / (arb(2 * k + 3) * (arb((2 * k + 1) * (2 * k + 5))).sqrt())
+            A[i, i + 1] = v; A[i + 1, i] = v
+    ev, R = acb_mat(A).eig(right=True, algorithm="approx")
+    order = sorted(range(K), key=lambda i: float(ev[i].real))
+    # P_k(0)
+    p0 = [arb(1)]
+    for i in range(1, K):
+        k = 2 * i
+        p0.append(-p0[-1] * arb(k - 1) / arb(k))
+    out = []
+    for m in range(nmax_even):
+        col = order[m]
+        beta = [R[i, col].real for i in range(K)]
+        nrm = sum((b * b for b in beta), arb(0)).sqrt()
+        beta = [b / nrm for b in beta]
+        integral = beta[0] * arb(2).sqrt()
+        psi0 = sum((beta[i] * (arb(2 * ks[i] + 1) / 2).sqrt() * p0[i] for i in range(K)), arb(0))
+        nu = integral / psi0
+        chi = c / (2 * arb.pi()) * nu * nu
+        out.append(1 - chi)
+    return out
+if __name__ == "__main__":
+    # sanity: c = 10, asymptotic 1-chi_0 ~ 4 sqrt(pi c) e^{-2c}
+    o = chis(10, 2, 300)
+    print("c=10: 1-chi_0 =", o[0].str(8, radius=False), " asymptotic 4 sqrt(pi c) e^-2c =", 4 * math.sqrt(math.pi * 10) * math.exp(-20), " chi_0(c=0.5)~2c/pi:", (1 - chis(0.5, 1, 200)[0]).str(8, radius=False), 1 / math.pi)
+    data = {0.25: (3.3365406e-2, 0.41005278), 0.5: (9.3439741e-7, 1.9970833e-4), 0.75: (3.6815364e-15, 3.5654991e-12), 1.0: (6.3106838e-30, 1.5145064e-26),
+            1.25: (5.0195775e-55, 3.6001846e-51), 1.5: (4.5075962e-97, 9.7061388e-93), 1.75: (3.9777502e-167, 2.6609383e-162)}
+    print("L   c=2pi e^2L   ln(1-chi_0) ln(1-chi_2) ln(1-chi_4) ln(1-chi_6) | ln mu_even  ln mu_odd | ln[mu_even/(1-chi_4)]  ln[mu_odd/(1-chi_6)]")
+    for L, (me, mo) in data.items():
+        c = 2 * math.pi * math.exp(2 * L)
+        o = chis(2 * arb.pi() * (2 * arb(L)).exp(), 4, 1400)
+        ln = [float(abs(x).log()) for x in o]
+        print(f"{L:4.2f} {c:9.3f}  {ln[0]:10.3f} {ln[1]:10.3f} {ln[2]:10.3f} {ln[3]:10.3f} | {math.log(me):10.3f} {math.log(mo):10.3f} | {math.log(me)-ln[2]:8.3f} {math.log(mo)-ln[3]:8.3f}", flush=True)

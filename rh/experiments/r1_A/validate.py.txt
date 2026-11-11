@@ -1,0 +1,47 @@
+"""Validation (a): closed-form matrix (prime + archimedean + pole side) vs sum over zeta zeros.
+Test functions f = sum_k c_k e_k chosen smooth-periodic so fhat decays fast and the zero sum converges."""
+import sys, math
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+import mpmath as mp
+flint.ctx.prec = 200
+gam = rhlib.zeros(5000)
+def zero_side(coef, L):
+    # coef: dict k -> real coefficient in exp basis ; Q = sum over +-gamma |fhat(gamma)|^2
+    tot = 0.0
+    for g in gam:
+        for sgn in (1, -1):
+            r = sgn * g
+            x = r * L
+            s = 0.0
+            for k, c in coef.items():
+                s += c * (-1) ** k / (x + math.pi * k)
+            v = math.sqrt(2 * L) * math.sin(x) * s
+            tot += v * v
+    return tot
+def matrix_side(coef, L, N):
+    q, w = build(L, N)
+    tot = arb(0)
+    for j, cj in coef.items():
+        for k, ck in coef.items():
+            tot += cj * ck * q[j + N][k + N]
+    return tot
+tests = {
+ "cos^2 (k=0,+-1)": {0: 0.5, 1: 0.25, -1: 0.25},
+ "cos^4": {0: 3/8, 1: 1/4, -1: 1/4, 2: 1/16, -2: 1/16},
+ "e_3*(1+cos)^2 (non-even, complex)": {3: 3/8*4, 2: 1.0, 4: 1.0, 1: 0.25, 5: 0.25},
+ "sin*(1+cos)^2-like odd": {1: 1.0, -1: -1.0, 2: 1.0, -2: -1.0, 3: 1/3, -3: -1/3, 0: 0.0},
+}
+for L in (0.3, 0.8, 1.5, 2.2):
+    for name, coef in tests.items():
+        # make endpoint-flat: multiply by (1+cos)^2 already built in for the first three; 4th: (e1-e-1)(1+cos)^2 computed below
+        if name.startswith("sin"):
+            base = {1: 1.0, -1: -1.0}
+            env = {0: 1.5, 1: 1.0, -1: 1.0, 2: 0.25, -2: 0.25}
+            coef = {}
+            for a, ca in base.items():
+                for b, cb in env.items():
+                    coef[a + b] = coef.get(a + b, 0.0) + ca * cb
+        zs = zero_side(coef, L)
+        ms = matrix_side(coef, L, 6)
+        print(f"L={L:4.1f} {name:36s} zeros: {zs:.15e}  primes+arch+pole: {float(ms):.15e}  rel.diff {abs(zs-float(ms))/abs(zs):.2e}")

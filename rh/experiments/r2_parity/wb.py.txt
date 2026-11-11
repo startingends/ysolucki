@@ -1,0 +1,125 @@
+"""Implementation B of the windowed Weil form (R2-parity). mpmath only. Independent of the lead's scripts and
+of the r1_A builder.  Q = pole + arch - atoms on L^2[-L, L];  hermitian form Q(f,h) = int K(u) g(u) du,
+g(u) = int f(x) conj h(x-u) dx.
+Single-frequency function  Phi(w) = "int_0^{2L} K(u) e^{iwu} du" (arch + atoms, regularised):
+   Phi_arch(w) = -log(pi)/2 + psi(1/4 - i w/2)/2 + sum_m e^{-2L(a_m - i w)}/(a_m - i w),  a_m = 2m + 1/2
+   Phi_atom(w) = -c x^{-1/2} e^{i w log x}                       (atom of weight c at position x, log x < 2L)
+   q(a,b) := Q(e^{iax}, e^{ibx}) = 2 Im[e^{i(a-b)L}(Phi(b) + conj Phi(a))]/(a-b) ;  q(a,a) = 4L Re Phi(a) - 2 Im Phi'(a)
+Basis: lattice 'half': w_k = pi (k+1/2)/L, k=0..N-1 ; even cos(w_k x)/sqrt(L), odd sin(w_k x)/sqrt(L)
+       lattice 'int' : w_k = pi k/L ; even k=0..N (k=0 normalised 1/sqrt(2L)), odd k=1..N
+"""
+import mpmath as mp
+
+def w_kernel(u):
+    return mp.exp(u / 2) / (2 * mp.sinh(u))
+
+def phi_arch(om, L):
+    z = mp.mpc(mp.mpf(1) / 4, -om / 2)
+    val = -mp.log(mp.pi) / 2 + mp.digamma(z) / 2
+    dval = -mp.mpc(0, 1) / 4 * mp.polygamma(1, z)
+    M = int(mp.mp.dps * 2.3026 / (4 * L)) + 12
+    for m in range(M):
+        c = mp.mpc(2 * m + mp.mpf(1) / 2, -om)
+        e = mp.exp(-2 * L * c)
+        val += e / c
+        dval += mp.mpc(0, 1) * e * (2 * L / c + 1 / c ** 2)
+    return val, dval
+
+def phi_arch_quad(om, L, pieces=None):
+    """same quantity by direct quadrature of the kernel (no digamma)."""
+    L = mp.mpf(L)
+    npc = pieces or (int(abs(om) * 2 * L / 6) + 4)
+    pts = [2 * L * i / npc for i in range(npc + 1)]
+    c0 = (-mp.log(mp.pi) + mp.e1(4 * L)) / 2 + mp.quad(lambda u: mp.exp(-2 * u) / (2 * u) - w_kernel(u), [0, L, 2 * L])
+    val = c0 + mp.quad(lambda u: -w_kernel(u) * mp.expm1(mp.mpc(0, om * u)), pts)
+    dval = mp.quad(lambda u: -w_kernel(u) * mp.mpc(0, u) * mp.exp(mp.mpc(0, om * u)), pts)
+    return val, dval
+
+def phi_atom(om, x):
+    """unit atom at position x: -x^{-1/2} e^{i om log x}"""
+    lx = mp.log(x)
+    v = -mp.exp(mp.mpc(0, om * lx)) / mp.sqrt(x)
+    return v, mp.mpc(0, lx) * v
+
+def freqs(L, N, lattice):
+    if lattice == 'half':
+        return [mp.pi * (k + mp.mpf(1) / 2) / L for k in range(N)]
+    return [mp.pi * k / L for k in range(N + 1)]
+
+def qval(a, b, Pa, Pb, dPa, L):
+    """q(a,b); Pa = Phi(a), Pb = Phi(b), dPa = Phi'(a) (used if a == b)"""
+    D = a - b
+    if D == 0:
+        return 4 * L * Pa.real - 2 * dPa.imag
+    return 2 * (mp.exp(mp.mpc(0, D * L)) * (Pb + mp.conj(Pa))).imag / D
+
+def blocks(L, N, lattice, P, dP):
+    """even and odd blocks of the form with single-frequency data P[k] = Phi(w_k), dP[k] = Phi'(w_k)."""
+    L = mp.mpf(L)
+    w = freqs(L, N, lattice)
+    n = len(w)
+    E = mp.matrix(n, n); O = mp.matrix(n, n)
+    for j in range(n):
+        for k in range(j, n):
+            qp = qval(w[j], w[k], P[j], P[k], dP[j], L)                       # q(w_j, w_k)
+            if w[j] == 0 and w[k] == 0:
+                qm = qp
+            else:
+                qm = qval(w[j], -w[k], P[j], mp.conj(P[k]), dP[j], L)          # q(w_j, -w_k)
+            nj = mp.sqrt(2 * L) if w[j] == 0 else mp.sqrt(L)
+            nk = mp.sqrt(2 * L) if w[k] == 0 else mp.sqrt(L)
+            E[j, k] = E[k, j] = (qp + qm) / 2 / (nj * nk)
+            O[j, k] = O[k, j] = (qp - qm) / 2 / (nj * nk)
+    if lattice == 'int':
+        O = O[1:, 1:]
+    return E, O
+
+def arch_blocks(L, N, lattice):
+    w = freqs(mp.mpf(L), N, lattice)
+    vals = [phi_arch(x, mp.mpf(L)) for x in w]
+    return blocks(L, N, lattice, [v[0] for v in vals], [v[1] for v in vals])
+
+def atom_blocks(L, N, lattice, x):
+    """blocks of the UNIT atom form  -x^{-1/2}(g(log x) + g(-log x))  (already carries the minus sign)."""
+    w = freqs(mp.mpf(L), N, lattice)
+    vals = [phi_atom(om, mp.mpf(x)) for om in w]
+    return blocks(L, N, lattice, [v[0] for v in vals], [v[1] for v in vals])
+
+def pole_blocks(L, N, lattice):
+    """+2<f,cosh(x/2)>^2 on even, -2<f,sinh(x/2)>^2 on odd"""
+    L = mp.mpf(L)
+    w = freqs(L, N, lattice)
+    n = len(w)
+    ce = []; so = []
+    for om in w:
+        I = 2 * mp.sinh(mp.mpc(mp.mpf(1) / 2, om) * L) / mp.mpc(mp.mpf(1) / 2, om)   # int e^{(1/2+iw)x}
+        nrm = mp.sqrt(2 * L) if om == 0 else mp.sqrt(L)
+        ce.append(I.real / nrm); so.append(I.imag / nrm)
+    E = mp.matrix(n, n); O = mp.matrix(n, n)
+    for j in range(n):
+        for k in range(n):
+            E[j, k] = 2 * ce[j] * ce[k]; O[j, k] = -2 * so[j] * so[k]
+    if lattice == 'int':
+        O = O[1:, 1:]
+    return E, O
+
+def mangoldt(X):
+    out = {}
+    for p in range(2, int(X) + 1):
+        if all(p % d for d in range(2, int(p ** 0.5) + 1)):
+            pk = p
+            while pk <= X:
+                out[pk] = mp.log(p); pk *= p
+    return out
+
+def is_psd(M):
+    try:
+        mp.cholesky(M); return True
+    except Exception:
+        return False
+
+def add(A, B, t=1):
+    return (A[0] + t * B[0], A[1] + t * B[1])
+
+def eigs(M2):
+    return sorted([e for b in (0, 1) for e in mp.eigsy(M2[b], eigvals_only=True)])

@@ -1,0 +1,41 @@
+"""K-atlas: Q_bg(f) = pole(f) + arch(f) (zeta's pole and Gamma factor, NO primes) for explicit odd trial functions.
+arch(f*f~) = -c_inf |f|^2 + int_0^inf w(u) D(u) du, D(u) = int |f(x+u) - f(x)|^2 dx = 2(g(0) - g(u)), w(u) = e^(u/2)/(2 sinh u)
+(R2-curv Theorem E), pole = -2 <f, sinh(x/2)>^2 on odd f.   usage: python3 bg.py.txt"""
+import mpmath as mp, importlib.util, importlib.machinery, flint
+mp.mp.dps = 30
+cinf = mp.log(mp.pi) - mp.digamma(mp.mpf(1) / 4)
+w = lambda u: mp.exp(u / 2) / (2 * mp.sinh(u))
+def Qbg(L, a):
+    """f = sin(a x) on [-L, L]; returns pole, arch, total, norm^2, g"""
+    L = mp.mpf(L)
+    f = lambda x: mp.sin(a * x) if abs(x) <= L else mp.mpf(0)
+    g = lambda u: mp.quad(lambda x: mp.sin(a * x) * mp.sin(a * (x - u)), [-L + u, L]) if u < 2 * L else mp.mpf(0)
+    n2 = g(mp.mpf(0))
+    S = mp.quad(lambda x: mp.sin(a * x) * mp.sinh(x / 2), [-L, L])
+    pole = -2 * S ** 2
+    I1 = mp.quad(lambda u: w(u) * 2 * (n2 - g(u)), [0, L / 4, L, 2 * L])
+    I2 = 2 * n2 * mp.quad(w, [2 * L, 4, mp.inf])
+    arch = -cinf * n2 + I1 + I2
+    return pole, arch, pole + arch, n2, g
+print("c_inf =", mp.nstr(cinf, 12))
+# check against lane A's builder: f = sin(pi x/L) = sqrt(L) * (first odd basis vector)
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil); flint.ctx.prec = 200
+for L in (0.40,):
+    q, _ = weil.build(L, 3, kind='zeta', pole=True, primes=False, arch=True)
+    O = weil.odd_block(q, 3)
+    pole, arch, tot, n2, _ = Qbg(L, mp.pi / L)
+    print("CHECK L=%g f=sin(pi x/L): mine %s ; lane A builder L*O[0,0] = %s" % (L, mp.nstr(tot, 12), (O[0, 0] * L).str(12, radius=False)))
+for L in (0.36, 0.375, 0.38, 0.40, 0.45):
+    a = mp.pi / (2 * mp.mpf(L))
+    pole, arch, tot, n2, g = Qbg(L, a)
+    print("L=%g f=sin(pi x/2L): |f|^2=%s pole=%s arch=%s  Q_bg(f)=%s  Q_bg/|f|^2=%s" % (L, mp.nstr(n2, 8), mp.nstr(pole, 10), mp.nstr(arch, 10), mp.nstr(tot, 10), mp.nstr(tot / n2, 8)))
+    if abs(L - 0.40) < 1e-9:
+        u0 = mp.findroot(g, 0.3)
+        um = mp.findroot(lambda u: mp.diff(g, u), 0.6)
+        print("   g(u) = autocorrelation: zero at u0 = %s (x = e^u0 = %s); min of g on (u0, 2L) at u = %s, g = %s; g(log 2) = %s"
+              % (mp.nstr(u0, 8), mp.nstr(mp.exp(u0), 8), mp.nstr(um, 6), mp.nstr(g(um), 8), mp.nstr(g(mp.log(2)), 8)))
+        G = abs(g(um))
+        print("   necessary total positive weight on log-positions in (u0, 0.8): >= |Q_bg|/(2 max|g|) = %s ; zeta's atom at 2 has weight log2/sqrt2 = %s and contributes -2 m g(log 2) = %s against Q_bg = %s"
+              % (mp.nstr(abs(tot) / (2 * G), 8), mp.nstr(mp.log(2) / mp.sqrt(2), 8), mp.nstr(-2 * mp.log(2) / mp.sqrt(2) * g(mp.log(2)), 8), mp.nstr(tot, 8)))

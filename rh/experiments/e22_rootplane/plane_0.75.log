@@ -1,0 +1,23 @@
+L=0.75 nmax=4 N=24 dps=84  eig at truth (even, odd): ['4.8914e-15', '4.0615e-12']
+axis reach: d2+ 1.37e-13  d2- 1.5679e-11  d4+ 1.582e-5  d4- 6.4938e-5
+pass 0: principal half-axes 1.134e-11, 0.0001067 ; long axis direction (d2, d4) = (-1.31147e-7, 1.0)
+pass 1: principal half-axes 1.21e-11, 0.0001609 ; long axis direction (d2, d4) = (-1.42748e-7, 1.0)
+pass 2: principal half-axes 1.159e-11, 0.0001759 ; long axis direction (d2, d4) = (-1.47246e-7, 1.0)
+extent d2: [-6.914e-11, 3.4316e-13]   extent d4: [-5.6288e-5, 0.00031882]
+s = (1+d2)^2 - (1+d4) on the boundary: min -0.00031882  max 5.6288e-5
+r range on the boundary (where pair is complex, r = |root|; else sqrt of mean square root): [-0.00015942, 2.8143e-5] - 1
+max theta (complex side): 0.0075025 rad ; theta range / r range = 40.0
+real side: roots split up to 1 +- 0.017855
+boundary points with s > 0 (complex pair): 24 of 48
+  bd pt  0: d2 = 1.37204e-13  d4 = 1.95857e-20  s = 2.744e-13  binding block: even
+  bd pt  4: d2 = -1.56913e-12  d4 = 0.00012503  s = -0.000125  binding block: even
+  bd pt  8: d2 = -3.05548e-11  d4 = 0.000307551  s = -0.0003076  binding block: even
+  bd pt 12: d2 = -4.50999e-11  d4 = 0.000315941  s = -0.0003159  binding block: even
+  bd pt 16: d2 = -5.93471e-11  d4 = 0.000318818  s = -0.0003188  binding block: even
+  bd pt 20: d2 = -5.0695e-11  d4 = 0.000185733  s = -0.0001857  binding block: odd
+  bd pt 24: d2 = -1.57023e-11  d4 = -2.24147e-18  s = -3.14e-11  binding block: odd
+  bd pt 28: d2 = 3.43164e-13  d4 = -2.73437e-5  s = 2.734e-5  binding block: even
+  bd pt 32: d2 = 1.48792e-13  d4 = -1.49768e-6  s = 1.498e-6  binding block: even
+  bd pt 36: d2 = 1.45207e-13  d4 = -1.01723e-6  s = 1.017e-6  binding block: even
+  bd pt 40: d2 = 1.43289e-13  d4 = -7.6976e-7  s = 7.698e-7  binding block: even
+  bd pt 44: d2 = 1.41344e-13  d4 = -5.17846e-7  s = 5.178e-7  binding block: even

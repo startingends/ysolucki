@@ -1,0 +1,22 @@
+"""C1 (LOCAL_DISCRIMINANT.md section 5): W_k = lowest eigenvalue of the pencil (Q, D) restricted to V_k = real span of the
+D-kernels at the pair (on-line: Re/Im at gamma_k, gamma_k+1; off-line: Re/Im at z = c + i beta and conj z).
+In whitened coordinates the kernel of a functional l is the vector Li l itself."""
+import sys
+args = sys.argv[1:]
+sys.argv = ['h'] + args[:3] + ['0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("for us in sys.argv[4]")[0]
+exec(src)
+import scipy.linalg as sl
+if act.startswith('on:'):
+    g1, g2 = [mp.mpf(x) for x in act[3:].split(',')]
+    vecs = [v for t in (g1, g2) for m, v in terms_online(t)]
+else:
+    b0 = mp.mpf(act[4:]); cc = mp.mpf(args[1])
+    p = phi(mp.mpc(cc, b0)); q = phi(mp.mpc(cc, -b0))
+    vecs = [[mp.re(x) for x in p], [mp.im(x) for x in p], [mp.re(x) for x in q], [mp.im(x) for x in q]]
+Wv, _ = whiten([(1, v) for v in vecs])          # NB x 4 whitened kernel vectors
+G = Wv.T @ Wv; QV = Wv.T @ Af @ Wv
+w = sl.eigh(QV, G, eigvals_only=True)
+print(f"  W_k (pencil on V_k) = {w[0]:+.6f}; all four: {[f'{x:+.4f}' for x in w]};  kappa_min = {np.linalg.eigvalsh(Af)[0]:+.6f}")
+if act.startswith('on:'):
+    print(f"  pair-alone bound 2 lambda_min(G) = {2*np.linalg.eigvalsh(G)[0]:.6f}; ratio W_k / that = {w[0]/(2*np.linalg.eigvalsh(G)[0]):.3f}")

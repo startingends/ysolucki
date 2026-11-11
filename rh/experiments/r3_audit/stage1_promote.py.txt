@@ -1,0 +1,164 @@
+"""Stage 1: the six promotions. Fields filled by the auditor are marked '(auditor R3-AUD)'; the agents' own fields
+that are replaced are preserved as notes in their local logs by audit_lib.promote."""
+import json, os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage1")
+A = "(auditor R3-AUD) "
+M = {}
+
+# ------------------------------------------------------------------ K-atlas/#8: odd block = (N) nodeless + (C) copositivity
+M["cone"] = promote("atlas", 8, {
+    "wall": A + """Barrier B3 (no slack) and the signature walls WJ13/WP1, for the ODD block, which alone is equivalent to
+ RH (Yoshida 1992 Prop. 1, KNOWN via Suzuki 2606.09096 p. 2). It does not remove B3: it moves all the arithmetic into a
+ COPOSITIVITY statement (C), required only on one-signed functions, where each prime power enters with a definite sign
+ (its mirror term (phi*phi)(log n) is >= 0 for phi >= 0; shift parts of atoms with log n >= L vanish: S1 Fact 1,
+ FORMAL). It meets B3 again exactly as follows (S1-parity, board B207 (3)): on zeta's own odd extremal vector at L = 1.5
+ the margin of (C) is about 1e-83 of E_+^2 while the prime 19 still carries 1e-64 of the prime share, so dropping any
+ single prime power below e^(2L) breaks (C) on that vector; (C) has no more slack than the block. B1: the Euler product
+ enters only as Lambda >= 0, the impostor's first false line (S1-parity S2_B6 (c): its couplings on its own failure
+ vector sum to -0.033). B2: the impostor does not satisfy the hypotheses of the trichotomy (no pole, signed couplings).""",
+    "new input": A + """Restriction of Weil's form to the cone of non-negative functions on (0, L] (copositivity on the
+ orthant instead of positive semidefiniteness), made legitimate by a Perron property: the background odd block is a
+ Perron operator (Beurling-Deny plus the method of images; T84, T85), so the odd minimiser can be one-signed, and on
+ one-signed vectors the sign of the prime weights is usable term by term. Exact split (S1-parity S2_B6 (b)): the odd
+ block on phi is Q_half(phi) + sum_{m>=1} E_m^2 + H_Lambda(phi) - E_+^2: one rank-one pole square against three
+ non-negative terms.""",
+    "prediction": A + """The seat fixed none before computing (FAILS RULE 4 for this entry as written). The one blind
+ prediction on record for the route is S1-mirror's for its first-prime bound (rh/experiments/s1_seminar/mirror/NOTES.md,
+ 00:48 UTC, R1-R4, before firstprime.py.txt ran): R2, R3 hit, R1 half, R4 miss; the bound requires weight >= 1.10 for a
+ 'prime' at 2.1 at L = 0.40, where log 2.1 = 0.742 is available, so that Beurling system is excluded, while the true
+ atom at 2 needs >= 0.407 and has 0.693. Computed afterwards (S1-parity B119, B207): (N) holds on all 11 positive rows
+ (zeta, no primes, one prime, impostor below failure); on 8 failed control rows (N) holds and (C) fails on 3, (N) fails
+ and (C) holds on 1, both fail on 3, impostor at L = 1.8 undecided.""",
+    "smallest": A + """PROVED already: (N) on every window without an atom, L <= (1/2) log 2 (T85; three independent
+ write-ups S1-parity B169, SP-operator P7, S1-mirror B174; finite Perron step FORMAL B189; existence of a minimiser cited)
+ and the first-prime inequality (T86; S1-mirror PROOF_first_prime.md). Smallest OPEN statement: (C) on
+ (1/2) log 2 < L < (1/2) log 3, where only the prime 2 is present: E_+^2 <= T_W + sum_{m>=1} E_m^2 + c (phi*phi)(log 2)
+ for all phi >= 0 on (0, L]. S1-parity (B207 (2)) names the missing piece: a lower bound for the mirror autocorrelation
+ (phi*phi)(log 2) of a one-signed phi in terms of E_+(phi)^2 minus the Gamma squares, a statement about positive
+ functions that contains no prime. (N) on the same window is open: Beurling-Deny fails at the mirror atom of 2.""",
+    "novelty": A + """One web query by the auditor, 2026-11-11 ('Weil explicit formula positivity odd test functions
+ copositive one-signed ground state window', titles and summaries only): nothing on parity blocks, copositivity or
+ one-signed ground states; hits were Connes-Consani 2006.13771 (archimedean window; read whole by a reader, digest in
+ rh/library) and Suzuki-operator preprints (one unrefereed numerical paper, arXiv 2607.24830, not read). In the record:
+ atlas pairing F22 x F30 (rh/ATLAS.md), F30 (nodeless ground states), S1-parity S2_B6.md ('I know no exactness theory
+ for copositivity; in finite dimension it is NP-hard in general'). KNOWN parts: odd block alone is RH (Yoshida 1992 via
+ Suzuki p. 2); the Perron step (Reed-Simon IV XIII.43-44, 50, from memory). Not established as new.""",
+    "evidence": A + """COMPUTED shares of E_+^2 on zeta's odd extremal vector (S1-parity B207, 120-230 digits):
+ L = 1.0: half window 0.057 + Gamma squares 0.430 + prime mirror 0.513; L = 1.5: 0.045 + 0.401 + 0.554; prime 2 carries
+ 0.954 of the prime share at L = 1.5. Seminar S1 closing (rh/experiments/s1_seminar/socrates/CLOSING.md, item B158):
+ S1-mirror's 'odd-block Perron + first-prime inequality' was the one statement offered with controls that violate it;
+ its author: 'it selects nothing'. Notebook N59 (S2): the same split reappears as Vaughan's identity at sqrt(D).""",
+}, "open", "audit R3-AUD: proposal precise enough to compute; (N) proved only on windows without atoms, (C) open")
+
+# ------------------------------------------------------------------ S1-cubic/#13: candidate (F)
+M["F"] = promote("cubic", 13, {
+    "wall": A + """Walls WJ13/WP1 for the EVEN block, the block that fails first for every control (board B95; the
+ positive control of #33 fails there too). It does not escape WJ2 (precision): S1-cubic (board B191) found (F) exactly
+ as sensitive to the weight of the prime 2 as positivity itself; both pin the weight to kappa = 1 in the limit. What it
+ changes is the KIND of statement: given (F), positivity of the even block is equivalent to one test function phi with
+ W*phi >= 0 pointwise on the window (lead's bracket, notebook N39, T90 proved): a linear one-vector certificate instead
+ of a semidefinite one.""",
+    "new input": A + """The rank-one algebra of the pole (T88): the even block is t c c^T - N_e with c = cosh(x/2), the
+ critical pole strength t_0 = 1/(c^T N_e^-1 c) and the vector f = N_e^-1 c; the hypothesis is a maximum-principle /
+ Collatz-Wielandt sign property of f, which is not the even inequality in disguise (separated at fixed strength by
+ reweighting the prime 2 at L = 0.5, board B186 item).""",
+    "prediction": A + """FAILS RULE 4 as recorded: no number was fixed before computing. Computed (TURN3.md 3, 13 rows):
+ t_0 < 1 < t* on every positive row, t* < 1 < t_0 on negative rows with one positive eigenvalue of N_e; at L = 1 on 96
+ boxes the marks are 0.999891 and 1.000388; (F) true for zeta, false for three controls (N39). Proposed by the auditor
+ for the next run, to be written down before computing: on the one-prime window L = 1/2 with the weight of 2 multiplied
+ by kappa, the kappa-interval on which f > 0 contains 1 and has width within a factor 10 of FH-2's certified weight box
+ (0.4886..0.5104 around 0.4901, i.e. 4.5%).""",
+    "first test": A + """Candidate (F) on the one-prime window (seminar open item 5): certify one sign of N_e^-1 cosh(x/2)
+ at L = 1/2 with the foothold seat's exact matrices (rh/experiments/foothold/forcing.py.txt, checked by V-FH), then
+ compute the kappa-interval of the weight of 2 on which it holds, in the continuum limit (grids of 24 and 48 boxes
+ already disagree, B186).""",
+    "kill line": A + """(F) fails for zeta in the continuum on some window where zeta's even block is >= 0 (then the
+ bracket certifies nothing for zeta), or (F) is shown equivalent to the even inequality on every window (then it is a
+ reformulation, rule 2).""",
+    "evidence": A + """T88 (proved), T89 (open: this candidate), T90 (proved: the bracket given (F)). With phi = 1 the
+ archimedean constant 5.3722 cancels against 2 zeta'/zeta(1/2) and what is left is -4 sum sin(gamma L)/gamma (N39).""",
+}, "open", "audit R3-AUD: precise and computed on 13 rows; the continuum statement is open (THEORY T89)")
+
+# ------------------------------------------------------------------ BG/#2: body of positive solutions
+M["body"] = promote("bg", 2, {
+    "first test": A + """The seat's smallest instance: a dual certificate (density matrix Y with tr(Y B_n) = 0 for every
+ integer n in 2..12) in interval arithmetic showing that no real weights on the integers make the odd pole-free form >= 0
+ on L = 1.25 below conductor 2.86. Then a second implementation of lambda*_L for (even, r) at r = 0, 0.5, 1 and
+ (odd, 0), L = 1.0..1.5 (one float64 implementation so far).""",
+    "kill line": A + """V2 fails: lambda*_L at pole weight r = 1.1 levels off instead of falling linearly in L (then one
+ Gamma factor can carry more than one pole and zeta is not a corner); or a second implementation moves q*(odd, 0) or
+ q*(even, 0) by more than 1e-3; or the maximiser at (even, r = 1) on a computed window differs from von Mangoldt
+ beyond the stated precision (that would contradict RH numerics and point to a bug).""",
+    "evidence": A + """COMPUTED, float64, one implementation, N = 40..80 modes (rh/experiments/bigger/threshold_a..e.log;
+ threshold_c_BUGGY.log is invalid): q*_L(even, 1) = 1 to 1e-11 for L >= 1, maximiser Lambda(n) for n <= 19 at L = 1.5;
+ q*(even, 0.5) = 2.009046; q*(even, 0) = 4.036276; q*(odd, 0) = 2.8605506; q*(odd, 1) = 0.9983785; no levelling off at
+ r = 1.1 (even) or 1.25 (odd). V1 implies RH: PROVED (PROGRESS section 4 P-a). Nothing checked by a second seat.""",
+}, "open", "audit R3-AUD: precise, computed (one implementation); V1 contains RH, V3 and V4 are new numbers")
+
+# ------------------------------------------------------------------ SP-reflection/#5: defect function on the modular surface
+M["dfc"] = promote("reflection", 5, {
+    "first test": A + """The seat's blind rate law, stated before computing (OBJECT_PHI.md Round 3; notebook N54):
+ lambda_T(omega)/limit - 1 ~ 2 lambda_1^K / T = 0.15942/T under RH_K, against (1/6) log T / T for the full orbit form;
+ compute lambda_T(omega) to the largest feasible T. Second, Dfc at the class-number-2 point i sqrt 5 from tabulated
+ off-line zeros of its Epstein zeta function (prediction to be written first, as the seat planned).""",
+    "kill line": A + """As a route, met already in substance (N52, N54): e^(2 Dfc(omega)) - 1 is exactly a continuous
+ Nyman-Beurling distance for zeta_K and any unconditional rate for lambda_T is RH_K itself (a reformulation, rule 2);
+ the unconditional certificate Dfc(omega) <= (1/2) log(1 + NB integral) is about 0.16/log X and cannot certify 0. As an
+ instrument it is dead if the rate law cannot tell omega from i sqrt 5 at any computable T.""",
+}, "parked", "audit R3-AUD: proved reformulation of RH for zeta_K (Balazard-Saias-Yor / Nyman-Beurling); its next step is a mollified second moment with mollifier longer than the square root of the height (short-family wall, #32)")
+
+# ------------------------------------------------------------------ SP-sieve/#1: short-family wall, copies extremal
+M["short"] = promote("sieve", 1, {
+    "new input": A + """Exact book-keeping of the copies (rows u = w^6 times units, about H^(1/6) of them, on which the
+ sextic twist is principal): any inequality valid for ALL bounded coefficient vectors is attained in the copy
+ direction, so over all rows the general norm is >= H^(1/6) D^2 and no L^2 Type II / large-sieve bound goes below D^2;
+ the L^1 (Bombieri-Vinogradov) count is zero-density information and never sees the copies. It names the near side of
+ the S2 wall as a statement about extremal vectors.""",
+    "prediction": A + """None blind for the impostor: FAILS RULE 4 (it is a barrier, not a route). Computed exponent
+ bookkeeping (typeII_exponents.log): L^2 Type II never below D^2 at any (M, N); L^1 Type II total D^(7/6) at
+ H = D^(1/2) (per row D^(2/3)), and D for H <= D^(1/5). Impostor: its Dirichlet inverse has poles up to Re s ~ 1.12
+ (SP-modular B27, computed; Saias-Weingartner 2009), so it is excluded at the first line by coefficient size before the
+ mechanism starts.""",
+    "smallest": A + """Done for the Vaughan / Bombieri-Vinogradov mechanism (S2_B10d.md sections 0-2). The smallest
+ open statement on the route is the seat's own SP-sieve/#2 (merged here): a Siebert-type theorem in which a
+ CONSTANT-factor improvement of the short-family mean square at the copies, for H < D, gives a narrow zero-free region
+ of de la Vallee Poussin width. Scope: quasi-RH, not RH.""",
+    "first test": A + """Write the Siebert / Granville / Friedlander-Iwaniec 2022 argument (exceptional character
+ 'pretends to be mu'; sections 1, 3, 10 read by the seat) one level up for the sextic family, and check whether its
+ exceptional-character step has an analogue in the copy direction.""",
+    "kill line": A + """A bounded-coefficient inequality over all rows with S(D^(1/2), D) << D^(2 - delta) (then the
+ barrier statement is false as stated); for mu alone such a bound would already give Re s > 23/24 - delta/2.""",
+    "evidence": A + """PROVED in rh/specialists/sieve/S2_B10d.md: Vaughan's identity holds for any invertible Dirichlet
+ series (so the impostor has it verbatim); Type I negligible off the copies at H = D^(1/2) (smoothed Polya-Vinogradov
+ over Z[omega]); conjugate characters of a single row already reach D^2 in L^2. Not checked by a second seat. Seminar
+ S2 closing (board s2 B25, notebook N59, N60): four seats in four languages name the near side as parity / averaged
+ Chowla / Type II at power strength specific to mu.""",
+}, "parked", "audit R3-AUD: a proved barrier; every bounded-coefficient mean-square inequality is extremal at the copies (the trivial twist), so the Vaughan / large-sieve route stops there")
+
+# ------------------------------------------------------------------ SP-modular/#8: Suzuki's w-dial on a fixed window
+M["wdial"] = promote("modular", 8, {
+    "smallest": A + """(a), (b) of NOTES_session1.md D12 are done. Smallest open: match the normalisation at w = 1/2
+ (Suzuki's Blaschke factor (s-1)/s against the subtraction of the pole square; the constant), so that '1 + K_{1/2}[L]
+ >= 0' is literally the norm identity ||E_psi||^2 = ||f||^2 + sum_c (phi(c)/c) <f, kappa f> of SP-modular/#1 (merged
+ here); then make the first-order statement (c) rigorous on the prime side (distributional limits).""",
+    "kill line": A + """The tilted control F_d must fail at w = d (its dial ends at w = d + d_0, THEORY T96): if the
+ computed lowest eigenvalue of (1 -+ K_w[L])/w for F_d does not change sign at w = d, the identification is wrong. As a
+ calibration instrument it carries only qualitative information, because the w = 1/2 end already has a degenerate
+ margin (SP-modular/#1: 0.415, 0.179, 0.0167, 1.2e-4, <= 1.9e-6 at l = 0.25 .. 1.25, faster than exponential).""",
+    "evidence": A + """COMPUTED (PROGRESS P7, P8 of the seat): on e_0 at L = 0.5, (1 - I_w/2L)/w = 0.0808 (w = 0.5),
+ 0.0839, 0.0857, 0.0875, 0.08776 (w = 0.01), limit 0.088015 against lane A's q_00 = 0.0880146; no general monotonicity
+ in w (a Gaussian goes the other way). At w = 1/2 the positive control shows pinning of weights, missing-atom failure,
+ one wrong-sign pole square and the even block weakest (SP-modular/#1): so those phenomena are NOT signatures of RH.
+ Like every family on record (BG/#1, merged into #30), positivity holds on a ray w > d_0 (T96; Suzuki 1606.05726
+ Prop. 4.3), so RH is again the end point (notebook N61 (b)): no induction along w.""",
+    "novelty": A + """Seat: Suzuki 1606.05726 read only through SP-operator's digest; first-order statement not in the
+ digest. Auditor's web query 2026-11-11 ('Suzuki screw line Hamiltonian xi(s-w)/xi(s+w) w=1/2 scattering matrix modular
+ surface pseudo-Eisenstein totient', summaries only): Suzuki's screw-line papers 2209.04658, 2206.03682 and two
+ unrefereed 2026 numerical preprints (2607.24830) came up; nothing on w = 1/2 as the modular surface or on the
+ first-order limit. The identification at w = 1/2 is very probably known to Suzuki and Lagarias. Not established.""",
+}, "open", "audit R3-AUD: instrument; one family on a fixed window from a theorem (w = 1/2) to the Weil blocks (w -> 0)")
+
+json.dump(M, open(os.path.join(HERE, "main_numbers.json"), "w"))
+open(marker, "w").write("done\n")
+print(M)

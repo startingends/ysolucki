@@ -1,0 +1,67 @@
+"""Critic: independent S_X(t). Gamma term from the standard Guinand-Weil time-domain form with scipy.quad,
+primes from sympy, zero side from rhlib (zeta) or lane A's DH zeros (incl. off-line)."""
+import sys, math, json, numpy as np
+from scipy.integrate import quad
+from sympy import primerange
+sys.path.insert(0, "/home/user/ysolucki/tools")
+def arch(t, V, alpha, c0):
+    # c0 + int_0^inf [e^-u/u - e^{-alpha u}(1-u/2V)_+ cos(tu/2)/(1-e^-u)] du
+    f1 = lambda u: (math.exp(-u)/u - math.exp(-alpha*u)*(1-u/(2*V))*math.cos(t*u/2)/(-math.expm1(-u))) if u > 1e-12 else (alpha - 0.5 + 1/(2*V))
+    a, _ = quad(f1, 0, 2*V, limit=2000, epsabs=1e-12, epsrel=1e-12)
+    from scipy.special import exp1
+    return c0 + a + exp1(2*V)
+def pole(t, V):
+    # h(i/2)+h(-i/2), h(r)=int g e^{irx}, g=(1-|x|/V)e^{-itx}
+    tot = 0
+    for a in (0.5 - 1j*t, -0.5 - 1j*t, 0.5 + 1j*t, -0.5 + 1j*t):   # int_0^V (1-x/V) e^{a x} dx
+        tot += (np.exp(a*V) - 1 - a*V)/(a*a*V)
+    return tot.real
+def lam_zeta(X):
+    out = []
+    for p in primerange(2, int(X)+1):
+        q = p
+        while q <= X: out.append((q, math.log(p))); q *= p
+    return out
+def lam_dh(N):
+    kap = (math.sqrt(10 - 2*math.sqrt(5)) - 2)/(math.sqrt(5) - 1)
+    a = np.array([[0.0, 1.0, kap, -kap, -1.0][n % 5] for n in range(N+1)])
+    L = a*np.log(np.maximum(np.arange(N+1), 1))
+    for d in range(2, N//2 + 1):          # L[d] final here
+        if L[d] != 0:
+            m = np.arange(2, N//d + 1); L[d*m] -= L[d]*a[m]
+    return [(n, L[n]) for n in range(2, N+1) if abs(L[n]) > 1e-15]
+def S_prime(mode, t, X, lam):
+    V = math.log(X)
+    s = sum(L*(1 - math.log(n)/V)*n**-0.5*math.cos(t*math.log(n)) for n, L in lam if n <= X)
+    if mode == "zeta": return pole(t, V) + arch(t, V, 0.25, -math.log(math.pi)) - 2*s
+    return arch(t, V, 0.75, math.log(5/math.pi)) - 2*s
+def K(z, V):  # (4/V) sin^2(zV/2)/z^2, complex z ok
+    return (4/V)*np.sin(z*V/2)**2/z**2
+if __name__ == "__main__":
+    import rhlib
+    g = np.array(rhlib.zeros(30000))
+    for X, t in ((50, 0.0), (50, 14.135), (50, 50.0), (10, 0.0), (100, 7.345), (1000, 0.455), (1e4, 7.32)):
+        V = math.log(X); lam = lam_zeta(X)
+        zs = (K(g - t, V) + K(-g - t, V)).sum() + 2*(2/V)*(math.log(g[-1]/(2*math.pi)) + 1)/(2*math.pi*g[-1])
+        print("zeta X=%g t=%g prime side %.8f  zero side(30000+tail) %.8f" % (X, t, S_prime("zeta", t, X, lam), zs))
+    # local minima scan, own grid
+    for X in (10, 100, 1000):
+        lam = lam_zeta(X); ts = np.arange(0, 120, 0.02)
+        v = np.array([S_prime("zeta", t, X, lam) for t in ts]); i = v.argmin()
+        print("zeta X=%g min over [0,120) step .02: %.6f at t=%.2f" % (X, v[i], ts[i]))
+    d = json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))
+    on = np.array([float(x) for x in d["online"]]); off = [(float(b), float(g_)) for b, g_ in d["off"]]
+    lamd = lam_dh(3000)
+    print("max |Lambda_f| n<=3000:", max(abs(L) for n, L in lamd))
+    for X, t in ((50, 84.455), (70, 84.455), (100, 84.5), (70, 20.0), (70, 60.0)):
+        V = math.log(X)
+        zs = (K(on - t, V) + K(-on - t, V)).sum()
+        for b, g_ in off:
+            for z in (g_ - 1j*(b-0.5), g_ + 1j*(b-0.5), -g_ - 1j*(b-0.5), -g_ + 1j*(b-0.5)):
+                zs += K(z - t, V).real
+        Tm = float(d["T"]); dens = math.log(5*Tm/(2*math.pi))/(2*math.pi)   # N'(T) for conductor 5 degree 1
+        tail = (2/V)*dens*(1/(Tm - t) + 1/(Tm + t))
+        print("DH X=%g t=%g prime side %.6f  zero side(T<=200, %d on + 4 off quadruples) %.6f + tail~%.4f" % (X, t, S_prime("dh", t, X, lamd), len(on), zs, tail))
+    for X in (50, 70):
+        ts = np.arange(80, 90, 0.01); v = np.array([S_prime("dh", t, X, lamd) for t in ts]); i = v.argmin()
+        print("DH X=%g min over [80,90]: %.4f at %.2f" % (X, v[i], ts[i]))

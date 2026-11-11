@@ -1,0 +1,23 @@
+|f((0.5+5.094159844571095j))| = 3.15e-16
+|f((0.808517+85.699348j))| = 6.51e-07
+|f((0.65083+114.163343j))| = 2.57e-07
+|f((0.574356+166.479306j))| = 6.49e-08
+|f((0.724258+176.702461j))| = 4.71e-07
+# grid 100000 pts 95.1s, max |imag part| (should be ~0): 1.33e-15
+real zeros below T=1000: DH (Z1+Z2): 848 ; odd (Z1-Z2): 597 ; Z1: 904 ; Z2: 904
+  T'=100: DH 52, odd 30, Z1 54, Z2 53
+  T'=200: DH 122, odd 76, Z1 130, Z2 129
+  T'=500: DH 377, odd 251, Z1 397, Z2 397
+  T'=1000: DH 848, odd 597, Z1 904, Z2 904
+# critical points of rho: 428
+predicted off-line pairs for lam=+1: 28
+predicted off-line pairs for lam=-1: 153
+  t_c = 85.89903 rho = 0.439670 max
+  t_c = 114.33826 rho = 0.487222 max
+  t_c = 166.50471 rho = 0.886095 max
+  t_c = 176.96664 rho = 0.168096 max
+  T'=100 lam_plus 0.439670 lam_minus -0.074284
+  T'=200 lam_plus 0.168096 lam_minus -0.027028
+  T'=500 lam_plus 0.064301 lam_minus -0.015857
+  T'=1000 lam_plus 0.024535 lam_minus -0.001092
+# total 102.6s

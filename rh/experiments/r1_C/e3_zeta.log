@@ -1,0 +1,6 @@
+zeta X=10       min_t S_X(t) = +0.033377 at t = 0.000 ; min*log X = +0.0769 ; fraction of t in [0,120] with S<0: 0.0000
+zeta X=100      min_t S_X(t) = +0.014718 at t = 7.345 ; min*log X = +0.0678 ; fraction of t in [0,120] with S<0: 0.0000
+zeta X=1000     min_t S_X(t) = +0.010570 at t = 0.455 ; min*log X = +0.0730 ; fraction of t in [0,120] with S<0: 0.0000
+zeta X=10000    min_t S_X(t) = +0.008703 at t = 7.320 ; min*log X = +0.0802 ; fraction of t in [0,120] with S<0: 0.0000
+zeta X=100000   min_t S_X(t) = +0.007019 at t = 0.000 ; min*log X = +0.0808 ; fraction of t in [0,120] with S<0: 0.0000
+zeta X=1e+06    min_t S_X(t) = +0.005356 at t = 0.000 ; min*log X = +0.0740 ; fraction of t in [0,120] with S<0: 0.0000

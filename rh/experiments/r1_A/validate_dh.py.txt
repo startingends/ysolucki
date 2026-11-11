@@ -1,0 +1,40 @@
+"""Validation of the DH Weil matrix (arch + generalized-prime side) against the sum over DH zeros up to height 200
+(122 on-line zeros + 4 off-line quartets), test functions with fhat = O(r^-7) (envelope (1+cos)^3)."""
+import sys, math, json, cmath
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+flint.ctx.prec = 200
+d = json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))
+gam = []
+for t in d["online"]:
+    gam += [complex(float(t), 0), complex(-float(t), 0)]
+for re, im in d["off"]:
+    x = float(im); y = float(re) - 0.5      # rho = 1/2 + i gamma, gamma = x - i y ; quartet +-x +- i y
+    gam += [complex(x, y), complex(x, -y), complex(-x, y), complex(-x, -y)]
+def conv(a, b):
+    out = {}
+    for i, ci in a.items():
+        for j, cj in b.items():
+            out[i + j] = out.get(i + j, 0.0) + ci * cj
+    return out
+env1 = {0: 1.0, 1: 0.5, -1: 0.5}
+env = conv(conv(env1, env1), env1)
+def zero_side(coef, L):
+    tot = 0.0
+    for g in gam:
+        x = g * L
+        s = sum(c * (-1) ** k / (x + math.pi * k) for k, c in coef.items())
+        v = math.sqrt(2 * L) * cmath.sin(x) * s
+        tot += v * v
+    return tot
+def matrix_side(coef, L, N):
+    q, w = build(L, N, kind='dh')
+    tot = arb(0)
+    for j, cj in coef.items():
+        for k, ck in coef.items():
+            tot += cj * ck * q[j + N][k + N]
+    return tot
+for L in (0.5, 1.2, 1.8, 2.0):
+    for name, base in (("env", {0: 1.0}), ("e_4*env", {4: 1.0}), ("(e_2-e_-2)*env", {2: 1.0, -2: -1.0}), ("(e_9+e_-9)*env", {9: 1.0, -9: 1.0})):
+        coef = conv(base, env)
+        zs = zero_side(coef, L); ms = float(matrix_side(coef, L, 14))
+        print(f"L={L:3.1f} {name:16s} zeros: {zs.real:.12e} (im {zs.imag:.1e})  arch+primes: {ms:.12e}  rel.diff {abs(zs.real-ms)/abs(ms):.2e}")

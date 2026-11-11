@@ -1,0 +1,71 @@
+import sys, math, itertools, importlib.machinery, importlib.util, numpy as np, cvxpy as cp
+import scipy.linalg as sla
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+R = load("ref_lib", "/home/user/ysolucki/rh/experiments/r2_cubic/refuter/ref_lib.py.txt")
+def Hmat(kind, L, n):
+    at = None if kind == "zeta" else R.beurling(math.exp(2 * L))
+    N, p, q, _ = R.build(L, n, at); return R.ext(N, p, q)
+def family(H, a, d):
+    """symmetrised [K^a g, K^b f, K^c h]_pi, 0<=a<=b<=c<=d, in x-coordinates; then an ORTHONORMAL basis of their span (QR, pivoted)."""
+    m = len(a); s = H @ a; pi = a * s; K = (H * a[None, :]) / s[:, None]
+    U = [np.diag(1 / a)]
+    for _ in range(d): U.append(K @ U[-1])
+    raw = []
+    for (i, j, k) in itertools.combinations_with_replacement(range(d + 1), 3):
+        t = np.einsum('l,lx,ly,lz->xyz', pi, U[i], U[j], U[k])
+        raw.append(sum(np.transpose(t, pp) for pp in itertools.permutations(range(3))) / 6)
+    M = np.array([r.reshape(-1) / np.linalg.norm(r) for r in raw]).T
+    Q, Rr, piv = sla.qr(M, mode='economic', pivoting=True)
+    rank = int((np.abs(np.diag(Rr)) > 1e-11 * abs(Rr[0, 0])).sum())
+    return [Q[:, i].reshape(m, m, m) for i in range(rank)], len(raw), np.abs(np.diag(Rr))
+def solve(H, a, d, mode, solver="CLARABEL"):
+    m = len(a); s = H @ a; fam, nraw, rd = family(H, a, d)
+    c = cp.Variable(len(fam)); t = cp.Variable()
+    ah = a / np.linalg.norm(a); Pr = np.eye(m) - np.outer(ah, ah)
+    cons = [sum(c[i] * np.einsum('ijk,k->ij', F, a) for i, F in enumerate(fam)) == H]
+    for k in range(m):
+        Tk = sum(c[i] * F[:, :, k] for i, F in enumerate(fam))
+        Pk = np.outer(H[:, k], H[:, k]) / s[k] - Tk
+        cons.append(Pk - t * (Pr if mode == "margin" else np.eye(m)) >> 0)
+    cons.append(t <= 1)
+    prob = cp.Problem(cp.Maximize(t), cons)
+    try: prob.solve(solver=solver)
+    except Exception as ex: return "fail", None, None, len(fam)
+    if c.value is None: return prob.status, None, None, len(fam)
+    T = sum(c.value[i] * F for i, F in enumerate(fam))
+    # independent check of the returned tensor: eigenvalues of P_k on the complement of a
+    B = sla.null_space(a[None, :])
+    lam_perp = min(np.linalg.eigvalsh(B.T @ (np.outer(H[:, k], H[:, k]) / s[k] - T[:, :, k]) @ B)[0] for k in range(m))
+    lam_full = min(np.linalg.eigvalsh(np.outer(H[:, k], H[:, k]) / s[k] - T[:, :, k])[0] for k in range(m))
+    npos = max(int((np.linalg.eigvalsh(T[:, :, k]) > 1e-9).sum()) for k in range(m))
+    res = np.abs(np.einsum('ijk,k->ij', T, a) - H).max()
+    return prob.status, float(t.value), (lam_perp, lam_full, npos, res), len(fam)
+which = sys.argv[1]
+if which == "zeta":
+    for kind, L, n in (("zeta", 0.5, 12), ("zeta", 1.0, 12), ("zeta", 1.0, 20), ("beurling", 0.5, 8), ("beurling", 1.0, 12)):
+        H = Hmat(kind, L, n); lam, a = R.perron(H)
+        for d in (1, 2):
+            for mode in ("slack", "margin"):
+                for solver in ("CLARABEL", "SCS"):
+                    st, t, chk, nf = solve(H, a, d, mode, solver)
+                    print("%s L=%.2f n=%d d=%d (%d tensors) %s %s: %s t*=%s %s" % (kind, L, n, d, nf, mode, solver, st, "%.4e" % t if t is not None else "-",
+                          "check: lam_min(P_k on a-perp)=%.3e lam_min(P_k)=%.3e max#pos=%d |T.a-H|=%.0e" % chk if chk else ""), flush=True)
+if which == "rand":
+    rng = np.random.default_rng(2026)
+    for m in (8, 12):
+        for trial in range(6):
+            v = rng.uniform(0.5, 1.5, m); G = rng.normal(size=(m, m)) * 0.25; B = G @ G.T
+            B = B - np.diag(np.diag(B)); B = np.minimum(B, 0.9 * np.outer(v, v))
+            H = np.outer(v, v) - B - np.diag(rng.uniform(0.5, 3.0, m))
+            ev = np.linalg.eigvalsh(H)
+            while (ev > 1e-10).sum() > 1:
+                H -= 0.2 * np.eye(m); ev = np.linalg.eigvalsh(H)
+            lam, a = R.perron(H)
+            if lam <= 0 or a.min() <= 0: print("skip"); continue
+            out = []
+            for d in (1, 2):
+                st, t, chk, nf = solve(H, a, d, "margin", "CLARABEL")
+                out.append("d=%d %s margin t*=%s lam_perp=%s #pos=%s" % (d, st[:10], "%.3e" % t if t is not None else "-", "%.2e" % chk[0] if chk else "-", chk[2] if chk else "-"))
+            print("m=%d trial %d eig2(H)=%.3f min offdiag=%.3f | " % (m, trial, ev[-2], H[~np.eye(m, dtype=bool)].min()) + " | ".join(out), flush=True)

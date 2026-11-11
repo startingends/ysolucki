@@ -1,0 +1,7 @@
+J14 Hankel zeta: min -1.1227, negative 9 of 20 (threshold -1e-10)
+   odd margin 1 - 2 s^T(-N)^-1 s = 3.207444e-02
+   calibrated BE: plain 0.4963 ; c=lam1/4 only 0.4555 ; sup over (c,c') = 0.7923 at (0.299, 0.210) ; as a fraction of own gap 0.7897
+J14 Hankel beurling: min -1.1725, negative 9 of 20 (threshold -1e-10)
+   odd margin 1 - 2 s^T(-N)^-1 s = 2.397733e-01
+   calibrated BE: plain 0.4989 ; c=lam1/4 only 0.4403 ; sup over (c,c') = 0.7694 at (0.287, 0.182) ; as a fraction of own gap 0.8417
+J14 Hankel arch only: min -0.0000, negative 0 of 20 (threshold -1e-10)

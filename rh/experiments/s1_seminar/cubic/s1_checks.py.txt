@@ -1,0 +1,75 @@
+"""S1-cubic turn 1 checks.
+ a) refuter's finding: Theta_t optimum on a fine grid (zeta L=1 n=12): expected t=0.014, -0.0184
+ b) per-prime completed shift forms q_p = I + Pr_p/log p on the box space: eigenvalue range vs Poisson bounds
+    [(1-r)/(1+r), (1+r)/(1-r)], r = p^{-1/2};  and the decomposition
+    Q = pole + (arch + theta*I) - sum_p log p q_p   (theta = sum of log p over p <= e^{2L})
+ c) CD(rho, n) on the resampling chain, m = 40: refuter's exact constant 1/2 - 2/n + (1+2/n)/m
+"""
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+D = "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/"
+box = load("box", D + "box.py.txt")
+which = sys.argv[1]
+if which == "a":
+    sys.argv = ["x"]  # fam.py.txt runs at import; reuse only its functions by exec of the defs
+    src = open(D + "fam.py.txt").read().split("cases = ")[0]
+    ns = {}; exec(src, ns)
+    for kind, L, n in (("zeta", 1.0, 12), ("zeta", 0.5, 12), ("beurling", 1.0, 12)):
+        cn = box.lam(math.exp(2 * L)) if kind == "zeta" else box.beurling(math.exp(2 * L))
+        Nb, p, q = box.boxN(L, n, cn); H = box.ext(Nb, p, q); ev, V = np.linalg.eigh(H); a = np.abs(V[:, -1])
+        s0, s1, s2, s11, s111 = ns["sigmas"](H, a)
+        res = []
+        for t in np.arange(-0.2, 0.3001, 0.001):
+            T = t * (s1 - s2) + (0.5 - t) * s11 + (3 * t - 0.5) * s111
+            res.append((ns["worst"](T, H, a)[0], t))
+        b = max(res)
+        print("a) %s L=%.2f n=%d: fine grid best t=%.3f worst lambda_min(P_k)=%.4f" % (kind, L, n, b[1], b[0]))
+if which == "b":
+    for L, n in ((1.0, 12), (1.0, 24)):
+        Nb, p, q = box.boxN(L, n)                       # zeta
+        mA = box.boxN(L, n, {})[0]                      # = -arch
+        primes = [pp for pp in (2, 3, 5, 7, 11, 13) if pp <= math.exp(2 * L)]
+        theta = sum(math.log(pp) for pp in primes)
+        S = np.zeros((n, n))
+        for pp in primes:
+            cn = {}; pk = pp
+            while pk <= math.exp(2 * L) + 1e-9:
+                cn[float(pk)] = math.log(pp); pk *= pp
+            Pr = box.boxN(L, n, cn)[0] - mA
+            qp = np.eye(n) + Pr / math.log(pp)
+            e = np.linalg.eigvalsh(qp); r = pp ** -0.5
+            print("b) L=%.1f n=%d p=%d: eig(q_p) in [%.4f, %.4f] ; Poisson bounds [%.4f, %.4f]" % (L, n, pp, e[0], e[-1], (1 - r) / (1 + r), (1 + r) / (1 - r)))
+            S += math.log(pp) * qp
+        pole = np.outer(p, q) + np.outer(q, p)
+        Q = pole - Nb
+        rest = pole - mA + theta * np.eye(n)            # pole + arch + theta I
+        print("   theta=%.4f ; |Q - (rest - sum log p q_p)|max = %.1e ; eig(Q) min %.4e ; eig(rest) in [%.4f, %.4f] ; eig(sum log p q_p) in [%.4f, %.4f]" % (
+            theta, np.abs(Q - (rest - S)).max(), np.linalg.eigvalsh(Q)[0], *np.linalg.eigvalsh(rest)[[0, -1]], *np.linalg.eigvalsh(S)[[0, -1]]))
+        # how tight: on the lowest eigenvector f of Q, the two sides
+        w, V = np.linalg.eigh(Q); f = V[:, 0]
+        print("   on the lowest eigenvector of Q (mu=%.3e): rest(f)=%.6f  sum log p q_p(f)=%.6f ; per prime q_p(f): %s" % (
+            w[0], f @ rest @ f, f @ S @ f, " ".join("%.4f" % (1 + (f @ (box.boxN(L, n, {float(pp ** k): math.log(pp) for k in range(1, 6) if pp ** k <= math.exp(2 * L) + 1e-9})[0] - mA) @ f) / math.log(pp)) for pp in primes)))
+if which == "c":
+    m = 40
+    for nd in (5, 8, 20):
+        # resampling chain uniform on m points: Gamma2 - rho Gamma - (1/nd)(Lf)^2 >= 0 at site k for all f; L f = mean(f) - f
+        I = np.eye(m); J = np.ones((m, m)) / m
+        k = 0; e = I[k]
+        # quadratic forms at site k (as matrices on f)
+        Lk = (np.ones(m) / m - e)                       # (Lf)(k) = Lk . f
+        Gam = 0.5 * (np.diag(np.ones(m) / m) - np.outer(e, np.ones(m) / m) - np.outer(np.ones(m) / m, e) + np.outer(e, e))  # 1/2 sum_y (1/m)(f_y - f_k)^2
+        def Gamma_at(i):
+            ei = I[i]
+            return 0.5 * (np.diag(np.ones(m) / m) - np.outer(ei, np.ones(m) / m) - np.outer(np.ones(m) / m, ei) + np.outer(ei, ei))
+        LG = sum(Gamma_at(i) for i in range(m)) / m - Gam   # L Gamma(f) (k)
+        # Gamma(f, Lf)(k) = 1/2 sum_y (1/m)(f_y - f_k)(Lf_y - Lf_k), Lf_y - Lf_k = -(f_y - f_k)  => = -Gamma(f)(k)
+        G2 = 0.5 * LG + Gam
+        lo, hi = -5.0, 5.0
+        for _ in range(60):
+            mid = (lo + hi) / 2
+            Mx = G2 - mid * Gam - np.outer(Lk, Lk) / nd
+            if np.linalg.eigvalsh((Mx + Mx.T) / 2)[0] > -1e-12: lo = mid
+            else: hi = mid
+        print("c) resampling m=%d, CD(rho, n=%d): rho*=%.5f ; refuter's formula 1/2 - 2/n + (1+2/n)/m = %.5f ; my report's (n-4)/(2(n-1))*(n-1)/n = 1/2-2/n = %.5f" % (m, nd, lo, 0.5 - 2 / nd + (1 + 2 / nd) / m, 0.5 - 2 / nd))

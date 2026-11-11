@@ -1,0 +1,17 @@
+(A) T_2 on span{k_2,k_4,k_8,k_16}:
+  zeta (d=0, single root 1): dim 1 spectrum [1.]
+  F_d d=0.1: dim 2 spectrum [0.93303299 1.07177346]  expected [0.9330329915368074, 1.0717734625362931]
+  F_d d=0.01: dim 2 spectrum [0.9930925  1.00695555]  expected [0.9930924954370359, 1.0069555500567189]
+  F_0 = zeta^2: dim 1 spectrum [1.]
+(B) local Hankel matrix [a_t(i+j)], i,j=0..n, of the coefficients of F^t: smallest eigenvalue (60 digits)
+  zeta^t, t=0.25: n=3: 0.000115132   n=6: 4.01311e-9
+  zeta^t, t=0.5: n=3: 0.000134008   n=6: 4.72064e-9
+  zeta^t, t=1.0: n=3: -1.55575e-61   n=6: -1.58663e-60
+  zeta^t, t=1.01: n=3: -0.00720393   n=6: -0.0134935
+  zeta^t, t=1.5: n=3: -0.463103   n=6: -1.12442
+  zeta^t, t=2.0: n=3: -1.16515   n=6: -3.7179
+  F_d^t at p=2, d=0.1, t=0.25: n=3: 0.000167706   n=6: 7.99448e-9
+  F_d^t at p=2, d=0.1, t=0.5: n=3: 1.73071e-10   n=6: 6.48798e-21
+  F_d^t at p=2, d=0.1, t=0.51: n=3: -0.00581874   n=6: -0.0076255
+  F_d^t at p=2, d=0.1, t=0.6: n=3: -0.148119   n=6: -0.263508
+  F_d^t at p=2, d=0.1, t=1.0: n=3: -1.14924   n=6: -3.57332

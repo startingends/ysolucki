@@ -1,0 +1,5 @@
+zeta L=1 M=20 lam1=4.302810 total rate Q=5.1654 Q/lam1=1.2005  BE/lam1: edge site 0.5415 centre site 0.5513 ; (1/2 + pi_centre)=0.5423 ; BE_centre/Q=0.4592
+zeta L=1 M=40 lam1=4.303094 total rate Q=5.8713 Q/lam1=1.3644  BE/lam1: edge site 0.4963 centre site 0.5222 ; (1/2 + pi_centre)=0.5210 ; BE_centre/Q=0.3828
+zeta L=1 M=80 lam1=4.304310 total rate Q=6.5719 Q/lam1=1.5268  BE/lam1: edge site 0.4652 centre site 0.5061 ; (1/2 + pi_centre)=0.5105 ; BE_centre/Q=0.3315
+zeta L=1 M=160 lam1=4.305238 total rate Q=7.2690 Q/lam1=1.6884  BE/lam1: edge site 0.4483 centre site 0.4965 ; (1/2 + pi_centre)=0.5052 ; BE_centre/Q=0.2941
+zeta L=1 M=320 lam1=4.305671 total rate Q=7.9642 Q/lam1=1.8497  BE/lam1: edge site 0.4405 centre site 0.4908 ; (1/2 + pi_centre)=0.5026 ; BE_centre/Q=0.2653

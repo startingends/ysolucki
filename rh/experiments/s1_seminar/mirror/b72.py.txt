@@ -1,0 +1,10 @@
+"""B72: G_d = zeta(s) L(s-d,chi_4) L(s+d,chi_4): mirror matrix on a,b = 2..12 (local roots 1, chi4(p) p^d, chi4(p) p^-d)."""
+import numpy as np, math, importlib.util, importlib.machinery
+P = "/home/user/ysolucki/rh/experiments/s1_seminar/mirror/mirror2.py.txt"
+src = open(P).read().split("X = 144")[0]
+exec(src)
+chi4 = lambda p: 0 if p == 2 else (1 if p % 4 == 1 else -1)
+for d in (0.0, 0.1, 0.3):
+    c = euler_c(144, lambda p: [(1, 1), (chi4(p) * p ** d, 1), (chi4(p) * p ** -d, 1)])
+    report("G_d, d = %.1f" % d, c)
+    print("   c(3), c(9), c(27) =", c[3], c[9], c[27], " (negative couplings at odd powers of p = 3 mod 4)")

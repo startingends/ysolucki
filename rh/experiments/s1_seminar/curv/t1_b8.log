@@ -1,0 +1,15 @@
+zeta L=1 M=40
+ check B = 4 Hankel(u eta): |B - 4 Hk| = 2.2e-16
+ cos(A, B) = 0.9167 ; A: #neg 10 of 20 (min -0.6892 max 1.2792) ; B: #neg 9 of 20 (min -0.1160 max 0.2382)
+ cos(Op on even eta, B) = -0.3387 ; cos(Op on odd eta, B) = 0.5324
+ edge-mirror forms vs integrated open-path Op (full M x M, mean-zero part): cos(Op, C as matrix) = -0.0035 ; cos(Op, Dirichlet form of C) = 0.7928
+beurling L=1 M=40
+ check B = 4 Hankel(u eta): |B - 4 Hk| = 1.9e-16
+ cos(A, B) = 0.9193 ; A: #neg 9 of 20 (min -0.7266 max 1.3262) ; B: #neg 9 of 20 (min -0.1221 max 0.2428)
+ cos(Op on even eta, B) = -0.3263 ; cos(Op on odd eta, B) = 0.5416
+ edge-mirror forms vs integrated open-path Op (full M x M, mean-zero part): cos(Op, C as matrix) = 0.0102 ; cos(Op, Dirichlet form of C) = 0.7877
+zeta L=1 M=80
+ check B = 4 Hankel(u eta): |B - 4 Hk| = 1.2e-16
+ cos(A, B) = 0.9285 ; A: #neg 19 of 40 (min -0.4677 max 0.6525) ; B: #neg 19 of 40 (min -0.0608 max 0.1196)
+ cos(Op on even eta, B) = -0.3707 ; cos(Op on odd eta, B) = 0.4745
+ edge-mirror forms vs integrated open-path Op (full M x M, mean-zero part): cos(Op, C as matrix) = 0.0105 ; cos(Op, Dirichlet form of C) = 0.8012

@@ -1,0 +1,64 @@
+"""E2: the pencil  Z_lam(t) = Z_1(t) + lam * Z_2(t)  between the two Euler products L(s,chi), L(s,chibar) mod 5
+(chi(2) = i).  Z_j = flint hardy_z (real on the line).  Davenport-Heilbronn is one real value lam_DH.
+Zeros of Z_lam off the line <-> lam in R(half-plane), R = -L_1/L_2; real zeros <-> rho(t) = -Z_1(t)/Z_2(t) = lam.
+Off-line pairs are born exactly at critical values of rho.  usage: python3 pencil.py.txt T h"""
+import sys, json, numpy as np, flint, time
+from scipy.optimize import brentq
+t0 = time.time()
+T = float(sys.argv[1]); h = float(sys.argv[2])
+flint.ctx.prec = 64
+G = flint.dirichlet_group(5)
+c1 = flint.dirichlet_char(5, 2); c2 = flint.dirichlet_char(5, 3)
+def Z1(t): return float(c1.hardy_z(flint.acb(t)).real.mid())
+def Z2(t): return float(c2.hardy_z(flint.acb(t)).real.mid())
+ts = np.arange(h / 2, T, h)
+z1 = np.array([Z1(float(t)) for t in ts]); z2 = np.array([Z2(float(t)) for t in ts])
+print(f"# grid {len(ts)} pts, {time.time()-t0:.1f}s")
+def zeros_of(f, z):
+    out = []
+    for i in np.nonzero(z[:-1] * z[1:] < 0)[0]: out.append(brentq(f, ts[i], ts[i + 1], xtol=1e-12))
+    return np.array(out)
+g1 = zeros_of(Z1, z1); g2 = zeros_of(Z2, z2)
+print(f"# zeros in (0,{T:g}): L(chi) {len(g1)}, L(chibar) {len(g2)}; first: {g1[:3]}, {g2[:3]}")
+# identify lam_DH: DH on-line zeros 5.094159844571, 8.939914408097 must be zeros of Z1 + lam Z2
+dh = [5.094159844571095, 8.939914408096523, 12.133545425800742]
+lams = [-Z1(t) / Z2(t) for t in dh]
+print("# lam_DH from three DH zeros:", lams)
+lamDH = float(np.mean(lams))
+# interlacing: merge zeros, find places where two consecutive zeros belong to the same function
+lab = np.concatenate([np.zeros(len(g1)), np.ones(len(g2))]); allz = np.concatenate([g1, g2]); o = np.argsort(allz)
+allz, lab = allz[o], lab[o]
+viol = [(allz[i], allz[i + 1], int(lab[i])) for i in range(len(allz) - 1) if lab[i] == lab[i + 1]]
+print(f"# interlacing violations (two consecutive zeros of the same L-function): {len(viol)} of {len(allz)-1} gaps; first few (t_a, t_b, which):")
+for v in viol[:12]: print("#   %.4f %.4f  L%d" % (v[0], v[1], v[2] + 1))
+# critical points of rho = -Z1/Z2 : zeros of W = Z1' Z2 - Z1 Z2'
+d = 1e-5
+def W(t): return (Z1(t + d) - Z1(t - d)) * Z2(t) - Z1(t) * (Z2(t + d) - Z2(t - d))
+w = np.gradient(z1, ts) * z2 - z1 * np.gradient(z2, ts)
+crit = []
+for i in np.nonzero(w[:-1] * w[1:] < 0)[0]:
+    try: tc = brentq(W, ts[i], ts[i + 1], xtol=1e-10)
+    except ValueError: continue
+    v = -Z1(tc) / Z2(tc)
+    # type: local max or min of rho
+    e = 2e-4; kind = "max" if (-Z1(tc + e) / Z2(tc + e) < v and -Z1(tc - e) / Z2(tc - e) < v) else "min"
+    crit.append((tc, v, kind))
+print(f"# critical points of rho on (0,{T:g}): {len(crit)}  (0 would mean perfect interlacing / every pencil member real-rooted)")
+json.dump({"T": T, "lamDH": lamDH, "g1": g1.tolist(), "g2": g2.tolist(), "crit": crit}, open("pencil_T%d.json" % int(T), "w"))
+# predicted off-line pairs of DH below height t: (#max with 0<v<lam) - (#min with 0<v<lam) if lam>0 (mirror if lam<0)
+s = np.sign(lamDH)
+print("# critical points whose value lies between 0 and lam_DH (these control DH's off-line zeros):")
+cnt = 0
+for tc, v, kind in crit:
+    if 0 < s * v < s * lamDH:
+        born = (kind == "max") if s > 0 else (kind == "min")
+        cnt += 1 if born else -1
+        if tc < 200: print(f"#   t_c = {tc:.5f}  rho = {v:+.6f}  {kind}  -> {'pair LEAVES the line' if born else 'pair RETURNS'} as lam goes 0 -> lam_DH ; running off-line pairs = {cnt}")
+print(f"# predicted number of off-line pairs of the DH member up to T: {cnt}")
+# threshold: smallest |lam| with an off-line pair, as a function of height
+print("# height T'   lam_plus(T') = min positive local-max value   lam_minus(T') = max negative local-min value")
+for Tp in [50, 100, 200, 500, 1000, 2000, 5000, 10000]:
+    if Tp > T: break
+    vp = [v for tc, v, k in crit if tc < Tp and k == "max" and v > 0]; vm = [v for tc, v, k in crit if tc < Tp and k == "min" and v < 0]
+    print(f"{Tp:8d}   {min(vp) if vp else float('nan'):.6f}   {max(vm) if vm else float('nan'):.6f}   (#zeros L1 below: {int(np.sum(g1 < Tp))})")
+print(f"# total {time.time()-t0:.1f}s")

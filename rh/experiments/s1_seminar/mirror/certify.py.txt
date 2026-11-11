@@ -1,0 +1,22 @@
+"""Ball-arithmetic check that the background odd block (pole + Gamma, no primes) is NOT >= 0 at L = 0.38:
+Rayleigh quotient of one fixed trial vector (the double-precision ground state rounded to 6 decimals) with Arb balls.
+Not enclosed: the truncation of the sum over m in r1_A/weil.py.txt (M terms; neglected tail < 2^-prec)."""
+import sys, math, importlib.util, importlib.machinery
+import numpy as np, flint
+from flint import arb, arb_mat, fmpq
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+flint.ctx.prec = 200
+for Ls, N in (("0.38", 20), ("0.375", 20), ("0.40", 20), ("0.50", 20)):
+    L = arb(Ls)
+    q = weil.build(L, N, kind='zeta', pole=True, primes=False, arch=True)[0]
+    O = weil.odd_block(q, N)
+    Of = np.array([[float(O[i, j].mid()) for j in range(N)] for i in range(N)])
+    ev, V = np.linalg.eigh(Of); v = V[:, 0] * np.sign(V[np.argmax(abs(V[:, 0])), 0])
+    vr = [arb(fmpq(int(round(c * 10**6)), 10**6)) for c in v]
+    num = sum((vr[i] * O[i, j] * vr[j] for i in range(N) for j in range(N)), arb(0)); den = sum((c * c for c in vr), arb(0))
+    r = num / den
+    print("L = %s, N = %d: float lambda_min = %.8f ; Rayleigh quotient of the rounded trial vector = %s ; certainly negative: %s ; max radius of a matrix entry %.1e"
+          % (Ls, N, ev[0], r.str(12), bool(r < 0), max(float(O[i, j].rad()) for i in range(N) for j in range(N))))
+    print("     trial vector (sine coefficients k = 1..8, x 1e6):", [int(round(c * 10**6)) for c in v[:8]])

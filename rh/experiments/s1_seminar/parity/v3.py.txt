@@ -1,0 +1,21 @@
+import sys, time, math, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+mp.mp.dps = 22
+lat = sys.argv[1]; N = int(sys.argv[2]); L = float(sys.argv[3]); xs = sys.argv[4:]
+t0 = time.time()
+A = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+for x in xs:
+    U = wb.atom_blocks(L, N, lat, mp.mpf(x))
+    f = lambda c: min(min(mp.eigsy(A[b] + c * U[b], eigvals_only=True)) for b in (0, 1))
+    lo, hi = mp.mpf('0.5'), mp.mpf('0.9'); g = (mp.sqrt(5) - 1) / 2
+    x1, x2 = hi - g * (hi - lo), lo + g * (hi - lo); f1, f2 = f(x1), f(x2)
+    for _ in range(24):
+        if f1 < f2: lo, x1, f1 = x1, x2, f2; x2 = lo + g * (hi - lo); f2 = f(x2)
+        else: hi, x2, f2 = x2, x1, f1; x1 = hi - g * (hi - lo); f1 = f(x1)
+    c = (lo + hi) / 2; v = f(c)
+    print("  %s/%d L=%g x=%-7s best c=%s (log x=%s) max lowest eig=%s %s (%.0fs)" % (lat, N, L, x, mp.nstr(c, 6), mp.nstr(mp.log(mp.mpf(x)), 6),
+          mp.nstr(v, 4), "FEASIBLE" if v >= 0 else "infeasible", time.time() - t0), flush=True)

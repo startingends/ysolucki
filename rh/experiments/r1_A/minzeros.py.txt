@@ -1,0 +1,38 @@
+"""zeros of the Fourier transform of the minimiser vs zeta zeros.  usage: minzeros.py.txt kind prec L N Rmax"""
+import sys, math, time
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+kind = sys.argv[1]; prec = int(sys.argv[2]); L = float(sys.argv[3]); N = int(sys.argv[4]); R = float(sys.argv[5])
+flint.ctx.prec = prec
+q, w = build(L, N, kind=kind)
+E = even_block(q, N)
+mu, v, _ = lowest(E)
+print(f"# {kind} L={L} N={N} prec={prec} mu={mu.str(10, radius=False)}  e^(2L)={math.exp(2*L):.3f}")
+F = lambda r: fhat_even(v, L, acb(r)).real
+# grid scan
+h = 0.02
+rs = [0.011 + h * i for i in range(int(R / h))]
+vals = [F(arb(r)) for r in rs]
+roots = []
+for i in range(len(rs) - 1):
+    a, b = vals[i], vals[i + 1]
+    if (a > 0 and b < 0) or (a < 0 and b > 0):
+        lo, hi = arb(rs[i]), arb(rs[i + 1]); flo = a
+        for _ in range(prec):
+            m = arb(((lo + hi) / 2).mid()); fm = F(m)
+            if (fm > 0) == (flo > 0): lo, flo = m, fm
+            else: hi = m
+            if float((hi - lo).mid()) < 2.0 ** (-(prec - 40)): break
+        roots.append(lo)
+old = flint.ctx.prec
+gz = flint.acb.zeta_zeros(1, 400)
+gam = [z.imag for z in gz]
+print(f"# real zeros of fhat_min in (0,{R}): {len(roots)} ; zeta zeros below {R}: {sum(1 for g in gam if float(g) < R)} ; exp-type count L*R/pi = {L*R/math.pi:.1f}")
+k = 0
+for i, r in enumerate(roots):
+    # nearest zeta zero
+    j = min(range(len(gam)), key=lambda j: abs(float(r - gam[j])))
+    d = abs(r - gam[j])
+    dd = float(d.mid()) if float(d.mid()) > 0 else 0.0
+    lg = (float(abs(d).log()) / math.log(10)) if dd > 0 or d.mid() != 0 else float('-inf')
+    print(f"{i+1:3d} r={float(r):12.6f}  nearest zeta zero #{j+1:3d} {float(gam[j]):12.6f}  log10|diff|={lg:8.2f}")

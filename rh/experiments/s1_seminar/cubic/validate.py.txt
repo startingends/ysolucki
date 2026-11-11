@@ -1,0 +1,35 @@
+import sys, math, importlib.util, importlib.machinery, numpy as np, mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+weil = load("weil", "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt")
+import flint; flint.ctx.prec = 200
+L = float(sys.argv[1]) if len(sys.argv) > 1 else 0.8
+Nf = 3
+# test function f = c0 e_0 + sum_k (ck cos + sk sin) in the Fourier basis, smooth periodic
+co = {0: 0.7, 1: 0.5, -1: 0.5, 2: 0.3j, -2: -0.3j}       # f = 0.7 e0 + 0.5(e1+e-1) + 0.3 i (e2 - e-2)  (real)
+def f(t):
+    t = mp.mpf(t)
+    return (0.7 + 2 * 0.5 * mp.cos(mp.pi * t / L) - 2 * 0.3 * mp.sin(2 * mp.pi * t / L)) / mp.sqrt(2 * L)
+def fourier_form(pole, primes, arch):
+    q, _ = weil.build(L, Nf, kind='zeta', pole=pole, primes=primes, arch=arch)
+    s = 0
+    for j in range(-Nf, Nf + 1):
+        for k in range(-Nf, Nf + 1):
+            s += complex(co.get(j, 0)).conjugate() * complex(co.get(k, 0)) * float(q[j + Nf][k + Nf].mid())
+    return s.real
+Qfull = fourier_form(True, True, True); Qnopole = fourier_form(False, True, True)
+Nform_F = -Qnopole; pole_F = Qfull - Qnopole
+Nform_K, pole_K = box.general_form(L, f)
+print("L = %.2f  formula check (smooth f): N(f) Fourier-matrix route %.12f   kernel route %.12f   diff %.2e" % (L, Nform_F, float(Nform_K), Nform_F - float(Nform_K)))
+print("          pole: Fourier %.12f   kernel %.12f   diff %.2e" % (pole_F, float(pole_K), pole_F - float(pole_K)))
+# box assembly: project f on n boxes (cell averages), compare x^T N x with the Fourier value: error must fall with n
+for n in (8, 16, 32, 64):
+    Nb, p, q = box.boxN(L, n)
+    h = 2 * L / n
+    x = np.array([float(mp.quad(f, [-L + i * h, -L + (i + 1) * h]) / mp.sqrt(h)) for i in range(n)])
+    # exact value for the SAME piecewise-constant function by the kernel route (general_form on the step function)
+    step = lambda t, x=x, h=h, n=n: mp.mpf(x[min(n - 1, max(0, int(mp.floor((t + L) / h))))] / math.sqrt(h)) if -L <= t <= L else mp.mpf(0)
+    print("  n=%3d  box x^T N x = %.10f   (smooth f: %.10f, diff %.2e)   pole box %.10f (diff %.2e)   offdiag min %.3e" % (
+        n, x @ Nb @ x, Nform_F, x @ Nb @ x - Nform_F, 2 * (x @ p) * (x @ q), 2 * (x @ p) * (x @ q) - pole_F, (Nb - np.diag(np.diag(Nb))).min()))

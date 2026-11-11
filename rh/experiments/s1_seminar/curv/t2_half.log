@@ -1,0 +1,16 @@
+zeta L=1 M=40 lam1=4.30309: rho_half/lam1 = 0.8384 (2nd 0.8431) ; whole window (gap/lam1) 1.0034 ; formula check |A_S - F| = 4.4e-16 ; |L 1_S + sign*Hu/u| = 3.1e-15
+   minimiser: share of even part in Gamma_S: 0.339, odd 0.335, cross 0.326 ; A_S: even-even 0.3416 odd-odd 0.3388 cross 0.1579 (units lam1 * Gamma_S(f)) ; mirror-crossing rate j = Hu/u: min 2.082 max 3.073 (total rate 5.871)
+   on the minimiser (units lam1 * Gamma_S): bulk (1/2)[|1_S Lf|^2 + <1_S f, L^2 f>] = 1.3573 ; boundary term (weight L 1_S = -sign * Hu/u) = -0.5189
+   B3 split summed over the half window: |A_S - S - H - O| = 6.2e-16 ; constants: S 0.0000, S+H 0.5143, S+O 0.4265, all 0.8384 ; on the minimiser: S 0.5276 H 0.2789 O 0.0319
+   cross (even x odd) part on the minimiser: S 0.1187 H 0.1440 O -0.1048
+beurling L=1 M=40 lam1=4.28051: rho_half/lam1 = 0.8158 (2nd 0.8199) ; whole window (gap/lam1) 0.9141 ; formula check |A_S - F| = 4.4e-16 ; |L 1_S + sign*Hu/u| = 3.6e-15
+   minimiser: share of even part in Gamma_S: 0.429, odd 0.268, cross 0.303 ; A_S: even-even 0.4035 odd-odd 0.2719 cross 0.1404 (units lam1 * Gamma_S(f)) ; mirror-crossing rate j = Hu/u: min 2.135 max 3.057 (total rate 5.849)
+   on the minimiser (units lam1 * Gamma_S): bulk (1/2)[|1_S Lf|^2 + <1_S f, L^2 f>] = 1.3125 ; boundary term (weight L 1_S = -sign * Hu/u) = -0.4966
+   B3 split summed over the half window: |A_S - S - H - O| = 1.3e-15 ; constants: S -0.0000, S+H 0.5180, S+O 0.4289, all 0.8158 ; on the minimiser: S 0.5232 H 0.2701 O 0.0226
+   cross (even x odd) part on the minimiser: S 0.1081 H 0.1380 O -0.1057
+zeta L=1 M=160 lam1=4.30524: rho_half/lam1 = 0.8319 (2nd 0.8349) ; whole window (gap/lam1) 1.0003 ; formula check |A_S - F| = 6.1e-16 ; |L 1_S + sign*Hu/u| = 6.2e-15
+   minimiser: share of even part in Gamma_S: 0.340, odd 0.336, cross 0.323 ; A_S: even-even 0.3408 odd-odd 0.3375 cross 0.1536 (units lam1 * Gamma_S(f)) ; mirror-crossing rate j = Hu/u: min 2.074 max 3.636 (total rate 7.269)
+   on the minimiser (units lam1 * Gamma_S): bulk (1/2)[|1_S Lf|^2 + <1_S f, L^2 f>] = 1.3531 ; boundary term (weight L 1_S = -sign * Hu/u) = -0.5212
+beurling L=1 M=160 lam1=4.28276: rho_half/lam1 = 0.8071 (2nd 0.8109) ; whole window (gap/lam1) 0.8873 ; formula check |A_S - F| = 4.2e-16 ; |L 1_S + sign*Hu/u| = 7.1e-15
+   minimiser: share of even part in Gamma_S: 0.418, odd 0.297, cross 0.285 ; A_S: even-even 0.3870 odd-odd 0.2895 cross 0.1306 (units lam1 * Gamma_S(f)) ; mirror-crossing rate j = Hu/u: min 2.101 max 3.626 (total rate 7.247)
+   on the minimiser (units lam1 * Gamma_S): bulk (1/2)[|1_S Lf|^2 + <1_S f, L^2 f>] = 1.2873 ; boundary term (weight L 1_S = -sign * Hu/u) = -0.4803

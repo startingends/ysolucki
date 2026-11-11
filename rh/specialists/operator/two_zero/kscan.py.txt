@@ -1,0 +1,15 @@
+"""K_D at every zero and at every midpoint between consecutive zeros, up to a height cap."""
+import sys, json
+args = sys.argv[1:]
+sys.argv = ['h'] + args[:3] + ['0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("for us in sys.argv[4]")[0]
+exec(src)
+kind = d['KIND']; cap = float(args[3])
+if kind == 'zeta': zs = [mp.mpf(x) for x in json.load(open('/home/user/ysolucki/rh/experiments/foothold/zeta_zeros_200.json'))]
+else: zs = [mp.mpf(x) for x in json.load(open('/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json'))['online']]
+zs = [z for z in zs if z < cap]
+def KD(t):
+    W, M = whiten(terms_online(t)); return float(np.trace(W.T @ W))
+print("  zero gamma : K_D(gamma) | K_D(midpoint to next zero)")
+for a, b in zip(zs[:-1], zs[1:]):
+    print(f"  {float(a):8.3f} : {KD(a):10.3e} | {KD((a + b) / 2):10.3e}", flush=True)

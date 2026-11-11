@@ -1,0 +1,9 @@
+int f^2            = 0.0998145906337457
+  c = 1  phi(c) = 1  Hankel term = 0.159267843101259
+  c = 2  phi(c) = 1  Hankel term = 0.0555645818174114
+  c = 3  phi(c) = 2  Hankel term = 5.46927232827709e-6
+GEOMETRIC  ||E||^2 = 0.286868370825262
+residue term       = 0.169793470175246   continuous part = 0.117074880859508
+SPECTRAL   ||E||^2 = 0.286868351034754
+difference         = 1.9791e-8   ratio = 1.00000006898812
+tail check: dens(60) = 6.9275e-10

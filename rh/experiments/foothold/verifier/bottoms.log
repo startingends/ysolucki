@@ -1,0 +1,18 @@
+L=1/2 poly NB=28: at y=log 2: even 9.4166307e-7 odd 0.00019573044 | at y=0.693147: even 9.0566673e-7 odd 0.00019600898  t=5s
+L=1/2 poly NB=44: at y=log 2: even 9.3661389e-7 odd 0.00019453988 | at y=0.693147: even 9.0060988e-7 odd 0.00019481842  t=20s
+L=1/2 Fourier N=160: even 9.343974e-07 odd 1.997083e-04
+L=1/2 Fourier N=320: even 9.335689e-07 odd 1.967773e-04
+L=27/50 poly NB=32: at y=log 2: even 1.0769854e-7 odd 2.4715909e-5 | at y=0.693147: even 6.4472671e-8 odd 2.4996965e-5  t=28s
+L=27/50 poly NB=44: at y=log 2: even 1.0708924e-7 odd 2.4662092e-5 | at y=0.693147: even 6.3847434e-8 odd 2.4943149e-5  t=44s
+L=27/50 Fourier N=160: even 1.065014e-07 odd 2.518271e-05
+L=27/50 Fourier N=320: even 1.063340e-07 odd 2.489423e-05
+L=0.540000 R=160.0 nmax=150 beta=2.2570 parity=even lowest eigenvalues: [9.68754632e-08 2.05867328e-03 7.09098465e-01]
+L=0.540000 R=160.0 nmax=150 beta=2.2570 parity=odd lowest eigenvalues: [2.33777003e-05 1.20018699e-01 8.48324898e-01]
+L=0.540000 R=320.0 nmax=280 beta=2.9502 parity=even lowest eigenvalues: [1.02387621e-07 2.13610027e-03 7.11813700e-01]
+L=0.540000 R=320.0 nmax=280 beta=2.9502 parity=odd lowest eigenvalues: [2.40733488e-05 1.23830326e-01 8.50281499e-01]
+L=0.500000 R=320.0 nmax=260 beta=2.9502 parity=even lowest eigenvalues: [9.09686879e-07 1.76379548e-02 8.29689204e-01]
+L=0.500000 R=320.0 nmax=260 beta=2.9502 parity=odd lowest eigenvalues: [1.88311022e-04 3.59432456e-01 8.92976965e-01]
+L=0.549306 R=320.0 nmax=280 beta=2.9502 parity=even lowest eigenvalues: [5.40461989e-08 1.43600574e-03 6.85523827e-01]
+L=0.549306 R=320.0 nmax=280 beta=2.9502 parity=odd lowest eigenvalues: [1.43454948e-05 7.56259534e-02 8.30818471e-01]
+L=0.549306 R=40.0 nmax=80 beta=0.8707 parity=even lowest eigenvalues: [1.60847920e-08 9.84024479e-04 6.38364905e-01]
+L=0.549306 R=40.0 nmax=80 beta=0.8707 parity=odd lowest eigenvalues: [5.60092370e-06 3.37899971e-02 7.66994950e-01]

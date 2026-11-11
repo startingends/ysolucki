@@ -1,0 +1,5 @@
+  int/60 L=0.5 x=1.9998  best c=0.691575 (log x=0.693047) max lowest eig=7.707e-6 FEASIBLE (45s)
+  int/60 L=0.5 x=2       best c=0.692306 (log x=0.693147) max lowest eig=1.487e-5 FEASIBLE (85s)
+  int/60 L=0.5 x=2.004   best c=0.707555 (log x=0.695145) max lowest eig=0.0001517 FEASIBLE (117s)
+  int/60 L=0.5 x=2.006   best c=0.715658 (log x=0.696143) max lowest eig=0.0002139 FEASIBLE (150s)
+  int/60 L=0.5 x=2.008   best c=0.722763 (log x=0.697139) max lowest eig=9.96e-6 FEASIBLE (182s)

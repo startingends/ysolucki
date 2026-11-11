@@ -1,0 +1,6 @@
+zero sum (17 zeros each sign, |gamma| < 70): 0.0105228583085
+w = 0.2   (1/(pi w)) int = 0.0184447197847   ratio to zero sum = 1.7528241
+w = 0.1   (1/(pi w)) int = 0.0146018980605   ratio to zero sum = 1.3876361
+w = 0.05   (1/(pi w)) int = 0.0125916998112   ratio to zero sum = 1.1966045
+w = 0.02   (1/(pi w)) int = 0.0113573974133   ratio to zero sum = 1.0793073
+w = 0.01   (1/(pi w)) int = 0.0109412916905   ratio to zero sum = 1.0397642

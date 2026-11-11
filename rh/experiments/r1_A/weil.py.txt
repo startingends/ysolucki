@@ -1,0 +1,177 @@
+"""Weil quadratic form on L^2[-L, L] (log variable) in the periodic Fourier basis
+e_k(x) = exp(i pi k x / L) / sqrt(2L), k = -N..N.   Arb (python-flint) arithmetic.
+
+Explicit formula used (g = f * f~, h = |fhat|^2, fhat(r) = int f(x) e^{irx} dx):
+  sum_rho h(gamma_rho) = h(i/2) + h(-i/2)                                  [pole, zeta only]
+                       + g(0) c0 + (1/2pi) int h(r) Re psi(alpha/2 + i r/2) dr   [archimedean]
+                       - sum_n c_n n^{-1/2} (g(log n) + g(-log n))          [prime powers]
+  zeta: alpha = 1/2, c0 = -log pi, c_n = Lambda(n).
+  DH  : alpha = 3/2, c0 = log(5/pi), c_n = Dirichlet coefficients of -f'/f, no pole.
+
+Closed form of the matrix (derived in PROGRESS.md), w_k = pi k / L, a_m = 2m + alpha:
+  T(w)   = (1/2) Im psi(alpha/2 + i w/2) - sum_m e^{-2 a_m L} w/(a_m^2 + w^2) + sum_n c_n n^{-1/2} sin(w log n)
+  q_jk   = -(-1)^{j-k} (T(w_k) - T(w_j)) / (pi (j-k))                      (j != k)
+  q_jj   = c0 + Re psi(alpha/2 + i w_j/2) + Re psi'(alpha/2 + i w_j/2)/(4L)
+           - (1/L) sum_m e^{-2 a_m L} Re 1/(a_m - i w_j)^2
+           - sum_n c_n n^{-1/2} 2 cos(w_j log n) (1 - log n/(2L))
+  pole   = (4 sinh^2(L/2)/L) (-1)^{j+k} Re[ 1/((1/2 + i w_j)(1/2 + i w_k)) ]
+"""
+import sys, math
+import flint
+from flint import arb, acb, arb_mat
+
+def mangoldt_upto(X):
+    X = int(X)
+    out = {}
+    sieve = bytearray([1]) * (X + 1)
+    for p in range(2, X + 1):
+        if sieve[p]:
+            for q in range(p * p, X + 1, p):
+                sieve[q] = 0
+            pk = p
+            while pk <= X:
+                out[pk] = ('log', p)
+                pk *= p
+    return out
+
+def dh_xi():
+    """the Davenport-Heilbronn parameter xi (a_n = 1, xi, -xi, -1, 0 for n = 1,2,3,4,0 mod 5)."""
+    s5 = arb(5).sqrt()
+    return ((10 - 2 * s5).sqrt() - 2) / (s5 - 1)
+
+def dh_logderiv_coeffs(X):
+    """c_n with -f'/f = sum c_n n^{-s}, f = DH function; returns dict n -> arb (n <= X)."""
+    X = int(X)
+    xi = dh_xi()
+    a = [arb(0)] * (X + 1)
+    for n in range(1, X + 1):
+        r = n % 5
+        a[n] = [arb(0), arb(1), xi, -xi, arb(-1)][r]
+    # (a log) = c * a  (Dirichlet convolution, with c = coefficients of -f'/f):  a_n log n = sum_{d|n} c_d a_{n/d}
+    c = [arb(0)] * (X + 1)
+    for n in range(2, X + 1):
+        s = a[n] * arb(n).log()
+        for d in range(2, n):
+            if n % d == 0:
+                s -= c[d] * a[n // d]
+        c[n] = s  # a_1 = 1
+    return {n: c[n] for n in range(2, X + 1)}
+
+def build(L, N, kind='zeta', pole=True, primes=True, arch=True):
+    """returns (q, w) : q = list of lists (2N+1 x 2N+1) of arb, index j+N ; w = list of arb w_k, k=0..N"""
+    L = arb(L)
+    pi = arb.pi()
+    prec = flint.ctx.prec
+    if kind == 'zeta':
+        alpha = arb(1) / 2; c0 = -pi.log()
+    else:
+        alpha = arb(3) / 2; c0 = (arb(5) / pi).log()
+    X = int(math.floor(math.exp(2 * float(L)) + 1e-9))
+    if kind == 'zeta':
+        cn = {n: arb(p).log() for n, (_, p) in mangoldt_upto(X).items()} if X >= 2 else {}
+    else:
+        cn = dh_logderiv_coeffs(X) if X >= 2 else {}
+    if not primes:
+        cn = {}
+    terms = [(c / arb(n).sqrt(), arb(n).log()) for n, c in sorted(cn.items())]
+    M = int(prec * math.log(2) / (4 * float(L))) + 10
+    am = [2 * m + alpha for m in range(M)]
+    em = [(-2 * a * L).exp() for a in am]
+    w = [pi * k / L for k in range(N + 1)]
+    T = []; d = []
+    for k in range(N + 1):
+        wk = w[k]
+        z = acb(alpha / 2, wk / 2)
+        t = arb(0); dd = arb(0)
+        if arch:
+            t = z.digamma().imag / 2
+            dd = c0 + z.digamma().real + z.polygamma(1).real / (4 * L)
+            for a, e in zip(am, em):
+                den = a * a + wk * wk
+                t -= e * wk / den
+                dd -= e * (a * a - wk * wk) / (den * den) / L   # Re 1/(a - i w)^2 = (a^2 - w^2)/(a^2+w^2)^2
+        for cc, u in terms:
+            t += cc * (wk * u).sin()
+            dd -= cc * 2 * (wk * u).cos() * (1 - u / (2 * L))
+        T.append(t); d.append(dd)
+    def Tk(k):
+        return T[k] if k >= 0 else -T[-k]
+    n = 2 * N + 1
+    q = [[None] * n for _ in range(n)]
+    sh = (L / 2).sinh()
+    pc = 4 * sh * sh / L
+    inv = [1 / acb(arb(1) / 2, (w[abs(k)] if k >= 0 else -w[-k])) for k in range(-N, N + 1)]
+    for j in range(-N, N + 1):
+        for k in range(j, N + 1):
+            if j == k:
+                v = d[abs(j)]
+            else:
+                sgn = -1 if (j - k) % 2 else 1
+                v = -sgn * (Tk(k) - Tk(j)) / (pi * (j - k))
+            if pole and kind == 'zeta':
+                sgn2 = -1 if (j + k) % 2 else 1
+                v = v + pc * sgn2 * (inv[j + N] * inv[k + N]).real
+            q[j + N][k + N] = v; q[k + N][j + N] = v
+    return q, w
+
+def even_block(q, N):
+    """matrix in the basis C_0 = e_0, C_k = (e_k + e_-k)/sqrt2 ; size N+1"""
+    s2 = arb(2).sqrt()
+    E = arb_mat(N + 1, N + 1)
+    for j in range(N + 1):
+        for k in range(N + 1):
+            if j == 0 and k == 0:
+                v = q[N][N]
+            elif j == 0:
+                v = (q[N][N + k] + q[N][N - k]) / s2
+            elif k == 0:
+                v = (q[N + j][N] + q[N - j][N]) / s2
+            else:
+                v = (q[N + j][N + k] + q[N + j][N - k] + q[N - j][N + k] + q[N - j][N - k]) / 2
+            E[j, k] = v
+    return E
+
+def odd_block(q, N):
+    O = arb_mat(N, N)
+    for j in range(1, N + 1):
+        for k in range(1, N + 1):
+            O[j - 1, k - 1] = (q[N + j][N + k] - q[N + j][N - k] - q[N - j][N + k] + q[N - j][N - k]) / 2
+    return O
+
+def mid(M):
+    n = M.nrows(); R = arb_mat(n, M.ncols())
+    for i in range(n):
+        for j in range(M.ncols()):
+            R[i, j] = arb(M[i, j].mid())
+    return R
+
+def lowest(E, iters=60, tol_bits=None):
+    """eigenvalue of smallest modulus by inverse iteration (midpoint arithmetic). returns (mu, vec list, mu2 estimate)"""
+    n = E.nrows()
+    A = mid(E)
+    Ainv = mid(A.inv())
+    x = arb_mat(n, 1, [arb(1) / (1 + i) for i in range(n)])
+    mu = None
+    for it in range(iters):
+        y = mid(Ainv * x)
+        nrm = sum((y[i, 0] * y[i, 0] for i in range(n)), arb(0)).sqrt()
+        y = mid(y * (1 / nrm))
+        Ay = A * y
+        new = arb(sum((y[i, 0] * Ay[i, 0] for i in range(n)), arb(0)).mid())
+        if mu is not None and abs(float((new - mu) / new)) < 1e-25:
+            mu = new; x = y; break
+        mu = new; x = y
+    return mu, [x[i, 0] for i in range(n)], Ainv
+
+def fhat_even(c, L, r):
+    """Fourier transform of f = sum_k c_k C_k (even block eigenvector), at real/complex r (acb).
+       ehat_k(r) = sqrt(2L) (-1)^k sin(rL)/(rL + pi k)"""
+    L = arb(L); pi = arb.pi()
+    r = acb(r)
+    x = r * L
+    s = c[0] / x
+    s2 = arb(2).sqrt()
+    for k in range(1, len(c)):
+        sg = -1 if k % 2 else 1
+        s += sg * c[k] * s2 * x / (x * x - (pi * k) ** 2)   # (1/sqrt2)(1/(x+pi k) + 1/(x - pi k)) = sqrt2 x/(x^2 - pi^2k^2)
+    return (2 * L).sqrt() * x.sin() * s

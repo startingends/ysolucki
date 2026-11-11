@@ -1,0 +1,37 @@
+"""S1-parity, answer to board B67 (S1-cubic): is the folded ground state of each parity block of one sign on (0, L] for the controls?
+Implementation B, integer and half-integer lattices, N = 40, 60 digits. Sign changes counted on 600 points of (0, L);
+'rel' = (largest excursion of the minority sign)/(max |phi|): a sign change with rel < 1e-6 is at the level of the basis ripple."""
+import math, importlib.util, importlib.machinery, time
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+mp.mp.dps = 60; t0 = time.time(); l2, l3 = mp.log(2), mp.log(3)
+def run(name, L, atoms, N=40):
+    for lat in ('int', 'half'):
+        Q = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+        for x, c in atoms.items():
+            if math.log(float(x)) < 2 * L - 1e-12: Q = wb.add(Q, wb.atom_blocks(L, N, lat, x), c)
+        ws = wb.freqs(mp.mpf(L), N, lat); out = []
+        for b in (0, 1):
+            ev, V = mp.eigsy(Q[b]); i = min(range(len(ev)), key=lambda j: ev[j])
+            fr = ws if (b == 0 or lat == 'half') else ws[1:]
+            co = [float(V[k, i]) for k in range(V.rows)]; frf = [float(x) for x in fr]
+            xs = [L * (j + 0.5) / 600 for j in range(600)]
+            vals = [sum(c * (math.cos(f * x) if b == 0 else math.sin(f * x)) for c, f in zip(co, frf)) for x in xs]
+            if sum(vals) < 0: vals = [-y for y in vals]
+            nchg = sum(1 for j in range(599) if vals[j] * vals[j + 1] < 0)
+            rel = max(0.0, -min(vals)) / max(abs(y) for y in vals)
+            out.append("%s: eig %s, sign changes %d, rel %.1e" % (('even', 'odd')[b], mp.nstr(ev[i], 4), nchg, rel))
+        print("  %-44s L=%.2f %-4s  %s   (%.0fs)" % (name, L, lat, " | ".join(out), time.time() - t0), flush=True)
+zeta = lambda L: {x: c for x, c in wb.mangoldt(math.exp(2 * L)).items()}
+run("zeta (reference)", 0.50, zeta(0.5)); run("zeta (reference)", 0.75, zeta(0.75)); run("zeta (reference)", 1.00, zeta(1.0))
+run("(a) no primes", 0.36, {}); run("(a') no primes, after failure", 0.45, {})
+run("(b) one-prime system", 0.54, {2: l2, 4: l2}); run("(b') one-prime system, after failure", 0.60, {2: l2, 4: l2})
+b21 = mp.mpf('2.1')
+run("(c) Beurling 2->2.1 (no atom in window yet)", 0.36, {b21: mp.log(b21)}); run("(c') Beurling 2->2.1, after failure", 0.50, {b21: mp.log(b21)})
+run("(c'') Beurling 2->2.1", 1.00, {b21: mp.log(b21), b21 ** 2: mp.log(b21), 3: l3, 5: mp.log(5), 7: mp.log(7), mp.mpf('6.3'): 0})
+run("(d) zeta, weight at 4 doubled", 0.75, {2: l2, 3: l3, 4: 2 * l2})
+run("(e) zeta, weight at 4 flipped", 0.75, {2: l2, 3: l3, 4: -l2})
+run("(f) Liouville twist (weights at 2,3 negated)", 0.50, {2: -l2})

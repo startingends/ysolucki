@@ -1,0 +1,15 @@
+"""S1-parity: SP-operator's check (B125): the near-null ladder of zeta's blocks (F_0 = 2 x zeta normalisation) at L = 1 and 1.5,
+and how many rungs lie below d^2 x (order one). Compare with the negative-square counts of F_d (fd_count_*.log)."""
+import sys, importlib.util, importlib.machinery, time
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt")
+for L, N, dps in ((1.0, 60, 120), (1.5, 70, 220)):
+    mp.mp.dps = dps; M = fd.form(L, N, 'int', 0, 0, 0)
+    for b, nm in ((0, 'even'), (1, 'odd')):
+        ev = sorted(mp.eigsy(M[b], eigvals_only=True))
+        print("L=%g %s block, lowest 22 eigenvalues (log10): %s" % (L, nm, " ".join("%.1f" % float(mp.log10(e)) for e in ev[:22])))
+        print("      rungs below 1e-6: %d ; below 1e-4: %d ; below 2.5e-3 (= 0.05^2): %d ; below 1e-2: %d ; below 6.25e-2 (= 0.25^2): %d ; below 1: %d" % tuple(
+              sum(1 for e in ev if e < t) for t in (mp.mpf('1e-6'), mp.mpf('1e-4'), mp.mpf('2.5e-3'), mp.mpf('1e-2'), mp.mpf('6.25e-2'), mp.mpf(1))), flush=True)

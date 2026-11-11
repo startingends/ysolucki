@@ -1,0 +1,30 @@
+L=1.0 N=40 even: 8.249e-30 3.292e-23 1.941e-17 1.805e-12 5.490e-08 2.753e-04 1.672e-01 7.216e-01 7.609e-01 9.908e-01
+     # eigenvalues below 0.0001: 5
+     # eigenvalues below 0.001: 6
+     # eigenvalues below 0.01: 6
+     # eigenvalues below 0.1: 6
+L=1.0 N=40 odd: 2.228e-26 2.913e-20 7.855e-15 3.102e-10 4.942e-06 1.078e-02 5.855e-01 7.371e-01 8.781e-01 1.116e+00
+     # eigenvalues below 0.0001: 5
+     # eigenvalues below 0.001: 5
+     # eigenvalues below 0.01: 5
+     # eigenvalues below 0.1: 6
+L=1.0 N=60 even: 7.297e-30 2.718e-23 1.675e-17 1.723e-12 4.753e-08 2.321e-04 1.621e-01 7.203e-01 7.599e-01 9.863e-01
+     # eigenvalues below 0.0001: 5
+     # eigenvalues below 0.001: 6
+     # eigenvalues below 0.01: 6
+     # eigenvalues below 0.1: 6
+L=1.0 N=60 odd: 1.803e-26 2.720e-20 6.640e-15 2.685e-10 4.810e-06 9.819e-03 5.620e-01 7.359e-01 8.590e-01 1.010e+00
+     # eigenvalues below 0.0001: 5
+     # eigenvalues below 0.001: 5
+     # eigenvalues below 0.01: 6
+     # eigenvalues below 0.1: 6
+L=0.75 N=40 even: 4.598e-15 1.327e-09 4.698e-05 8.991e-02 8.216e-01 9.877e-01 1.308e+00 1.335e+00 1.531e+00 1.630e+00
+     # eigenvalues below 0.0001: 3
+     # eigenvalues below 0.001: 3
+     # eigenvalues below 0.01: 3
+     # eigenvalues below 0.1: 4
+L=0.75 N=40 odd: 3.727e-12 2.839e-07 4.360e-03 6.133e-01 8.678e-01 1.028e+00 1.330e+00 1.426e+00 1.593e+00 1.624e+00
+     # eigenvalues below 0.0001: 2
+     # eigenvalues below 0.001: 2
+     # eigenvalues below 0.01: 3
+     # eigenvalues below 0.1: 3

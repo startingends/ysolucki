@@ -1,0 +1,171 @@
+"""JOB 2 recomputations with implementation B. usage: python3 v2.py.txt <section> [args]"""
+import sys, time, math, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+sec = sys.argv[1]
+t0 = time.time()
+def atoms_sum(L, N, lat, cn):
+    M = None
+    for x, c in cn.items():
+        if math.log(float(x)) < 2 * L - 1e-12:
+            B = wb.atom_blocks(L, N, lat, x)
+            M = (c * B[0], c * B[1]) if M is None else wb.add(M, B, c)
+    return M
+def ns(x, k=5): return mp.nstr(x, k)
+
+if sec == "a":
+    mp.mp.dps = 60
+    print("(a) N = primes - arch (no pole): #positive eigenvalues, largest, second, third")
+    for L, N in ((0.5, 30), (0.75, 30), (1.0, 40), (1.0, 60)):
+        for lat in ('int', 'half'):
+            A = wb.arch_blocks(L, N, lat); P = atoms_sum(L, N, lat, wb.mangoldt(math.exp(2 * L)))
+            Qn = wb.add(A, P)
+            ev = sorted([-e for e in wb.eigs(Qn)], reverse=True)
+            print("  L=%.2f N=%d %-4s: #pos=%d ; largest %s ; second %s ; third %s   (%.0fs)" % (L, N, lat, sum(1 for e in ev if e > 0),
+                  ns(ev[0], 7), ns(ev[1], 5), ns(ev[2], 5), time.time() - t0), flush=True)
+            if N == 40:
+                # parity-resolved: positive eigenvalues of N per block, and RH block inequalities
+                for b, nm in ((0, 'even'), (1, 'odd')):
+                    e = sorted([-x for x in mp.eigsy(Qn[b], eigvals_only=True)], reverse=True)
+                    print("      %s block of N: top two %s %s" % (nm, ns(e[0], 7), ns(e[1], 5)))
+    for lat in ('int', 'half'):
+        ev = sorted([-e for e in wb.eigs(wb.arch_blocks(1.0, 40, lat))], reverse=True)
+        print("  no primes, L=1.0 N=40 %-4s: #pos=%d ; top five %s" % (lat, sum(1 for e in ev if e > 0), [ns(e, 4) for e in ev[:5]]), flush=True)
+    print("  control Beurling (2 -> 2.1), L=0.5 and 1.0:")
+    for L, N in ((0.5, 30), (1.0, 40)):
+        bl = {}
+        for p in (mp.mpf('2.1'), 3, 5, 7):
+            pk = mp.mpf(p)
+            while pk <= math.exp(2 * L): bl[pk] = mp.log(p); pk *= p
+        for lat in ('int', 'half'):
+            A = wb.arch_blocks(L, N, lat); P = atoms_sum(L, N, lat, bl)
+            Qn = wb.add(A, P)
+            ev = sorted([-e for e in wb.eigs(Qn)], reverse=True)
+            Qf = wb.add(Qn, wb.pole_blocks(L, N, lat))
+            print("  Beurling L=%.2f N=%d %-4s: #pos(N)=%d ; top three of N %s ; lowest eig of Q: even %s odd %s" % (L, N, lat,
+                  sum(1 for e in ev if e > 0), [ns(e, 5) for e in ev[:3]], ns(min(mp.eigsy(Qf[0], eigvals_only=True))), ns(min(mp.eigsy(Qf[1], eigvals_only=True)))), flush=True)
+
+elif sec == "bg":
+    mp.mp.dps = 40
+    print("(bg) background arch + pole (no primes): lowest eigenvalue (even ; odd)")
+    for L in (0.30, 0.34, 0.3466, 0.35, 0.355, 0.36, 0.365, 0.37, 0.38, 0.40):
+        row = []
+        for lat, N in (('int', 30), ('half', 30), ('half', 60), ('int', 120)):
+            M = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+            row.append("%s/%d: %s ; %s" % (lat, N, ns(min(mp.eigsy(M[0], eigvals_only=True)), 4), ns(min(mp.eigsy(M[1], eigvals_only=True)), 3)))
+        print("  L=%.4f  " % L + "  |  ".join(row), flush=True)
+
+elif sec == "pos":
+    mp.mp.dps = 30
+    L = 0.5
+    print("(pos) one atom at position x, free weight c (form: -c x^{-1/2}(shift+adjoint)), L=0.5: max over c of lowest eigenvalue")
+    for lat, N in (('int', 30), ('half', 30), ('half', 60)):
+        A = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+        for x in ('1.9', '1.98', '1.994', '1.998', '1.999', '1.9995', '2', '2.0005', '2.001', '2.002', '2.014', '2.1'):
+            U = wb.atom_blocks(L, N, lat, mp.mpf(x))
+            f = lambda c: min(min(mp.eigsy(A[b] + c * U[b], eigvals_only=True)) for b in (0, 1))
+            lo, hi = mp.mpf(0), mp.mpf(3); g = (mp.sqrt(5) - 1) / 2
+            x1, x2 = hi - g * (hi - lo), lo + g * (hi - lo); f1, f2 = f(x1), f(x2)
+            for _ in range(34):
+                if f1 < f2: lo, x1, f1 = x1, x2, f2; x2 = lo + g * (hi - lo); f2 = f(x2)
+                else: hi, x2, f2 = x2, x1, f1; x1 = hi - g * (hi - lo); f1 = f(x1)
+            c = (lo + hi) / 2; v = f(c)
+            print("  %s/%d x=%-7s best weight c=%s (log x = %s)  max lowest eig = %s  %s  (%.0fs)" % (lat, N, x, ns(c, 6), ns(mp.log(mp.mpf(x)), 6),
+                  ns(v, 4), "FEASIBLE" if v >= 0 else "infeasible", time.time() - t0), flush=True)
+
+elif sec == "sieve":
+    lat = sys.argv[2]
+    print("(sieve) %s lattice. n, L, N, dps, eig at true weight, room above, room below, digits" % lat)
+    for n in range(2, 9):
+        L = 0.5 * math.log(n + 0.5)
+        dps = int(60 + 5.5 * math.exp(2 * L)); N = max(24, int(2.6 * L * math.exp(2 * L)) + 8)
+        mp.mp.dps = dps
+        lam = wb.mangoldt(n)
+        base = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+        prev = {k: v for k, v in lam.items() if k < n}
+        if prev: base = wb.add(base, atoms_sum(L, N, lat, prev))
+        Bn = wb.atom_blocks(L, N, lat, n)
+        true = lam.get(n, mp.mpf(0))
+        feas = lambda m: wb.is_psd(base[0] + m * Bn[0]) and wb.is_psd(base[1] + m * Bn[1])
+        at_true = min(wb.eigs(wb.add(base, Bn, true)))
+        ends = []
+        for sgn in (1, -1):
+            a = b = None; k = 1
+            while k >= -dps + 15:
+                d = mp.mpf(10) ** k
+                if feas(true + sgn * d): a = d; break
+                b = d; k -= 1
+            if a is None: ends.append(mp.mpf(0)); continue
+            if b is None: ends.append(mp.inf); continue
+            while b / a > 1.05:
+                c = mp.sqrt(a * b)
+                if feas(true + sgn * c): a = c
+                else: b = c
+            ends.append(a)
+        hw = max(ends)
+        print("  n=%d L=%.4f N=%d dps=%d Lambda=%s eig@true=%s above=%s below=%s digits=%.2f (%.0fs)" % (n, L, N, dps, ns(true, 6),
+              ns(at_true, 3), ns(ends[0], 3), ns(ends[1], 3), float(-mp.log10(hw)), time.time() - t0), flush=True)
+
+elif sec == "joint":
+    lat = sys.argv[2]; N = int(sys.argv[3]); L = 1.0
+    mp.mp.dps = 110
+    lam = wb.mangoldt(7); nsx = [2, 3, 4, 5, 6, 7]
+    base = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+    B = {n: wb.atom_blocks(L, N, lat, n) for n in nsx}
+    Q = base
+    for n in nsx:
+        if n in lam: Q = wb.add(Q, B[n], lam[n])
+    ev = [min(mp.eigsy(Q[b], eigvals_only=True)) for b in (0, 1)]
+    print("(joint) L=1 %s N=%d dps=110: lowest eig even %s odd %s ; no weights: %s (%.0fs)" % (lat, N, ns(ev[0]), ns(ev[1]),
+          ns(min(wb.eigs(base)), 8), time.time() - t0), flush=True)
+    def feas(delta):
+        M0 = Q[0]; M1 = Q[1]
+        for n, d in delta.items():
+            if d != 0: M0 = M0 + d * B[n][0]; M1 = M1 + d * B[n][1]
+        return wb.is_psd(M0) and wb.is_psd(M1)
+    def extent(d, res=1.03):
+        """sup t > 0 with Lambda + t d feasible (to a factor res); 0 if none above 1e-60"""
+        a = b = None; k = 1
+        while k >= -60:
+            t = mp.mpf(10) ** k
+            if feas({n: t * x for n, x in d.items()}): a = t; break
+            b = t; k -= 2
+        if a is None: return mp.mpf(0)
+        if b is None: return mp.inf
+        while b / a > res:
+            c = mp.sqrt(a * b)
+            if feas({n: c * x for n, x in d.items()}): a = c
+            else: b = c
+        return a
+    r = {}
+    print("coordinate directions (delta = m_n - Lambda(n)):")
+    for n in nsx:
+        up = extent({n: 1}); dn = extent({n: -1}); r[n] = (up, dn)
+        print("  n=%d  delta in [-%s, +%s]   (%.0fs)" % (n, ns(dn, 4), ns(up, 4), time.time() - t0), flush=True)
+    if len(sys.argv) > 4 and sys.argv[4] == "coord": sys.exit()
+    print("raw diagonal directions (sup-norm 1): extent t")
+    raw = {"e6+e7": {6: 1, 7: 1}, "e6-e7": {6: 1, 7: -1}, "-e6+e7": {6: -1, 7: 1}, "-e6-e7": {6: -1, 7: -1},
+           "e5+e6": {5: 1, 6: 1}, "e5-e6": {5: 1, 6: -1}, "e2+e3": {2: 1, 3: 1}, "e2-e3": {2: 1, 3: -1},
+           "e2+e4 (prime 2 as a whole)": {2: 1, 4: 1}, "-(e2+e4)": {2: -1, 4: -1},
+           "all ones": {n: 1 for n in nsx}, "-all ones": {n: -1 for n in nsx},
+           "Lambda itself (scaling)": {n: lam.get(n, 0) for n in nsx}, "-Lambda": {n: -lam.get(n, 0) for n in nsx},
+           "log n at all n (2..7)": {n: mp.log(n) for n in nsx}, "1/n": {n: mp.mpf(1) / n for n in nsx}}
+    for name, d in raw.items():
+        print("  %-28s t = %s   (%.0fs)" % (name, ns(extent(d), 4), time.time() - t0), flush=True)
+    print("scaled sign patterns d_n = s_n r_n(s_n) (r = coordinate extent on that side): t = 1 box corner, t = 1/k cross-polytope face")
+    import random
+    random.seed(7)
+    pats = [dict(zip(nsx, s)) for s in ([1] * 6, [-1] * 6, [1, -1, 1, -1, 1, -1], [-1, 1, -1, 1, -1, 1])]
+    pats += [{6: 1, 7: 1}, {6: 1, 7: -1}, {6: -1, 7: 1}, {6: -1, 7: -1}, {2: 1, 3: 1}, {2: 1, 3: -1}, {2: -1, 3: -1}, {5: 1, 7: -1}, {2: 1, 7: -1}, {2: -1, 7: 1}]
+    pats += [{n: random.choice((-1, 1)) for n in nsx} for _ in range(10)]
+    best = (0, None)
+    for s in pats:
+        d = {n: sg * (r[n][0] if sg > 0 else r[n][1]) for n, sg in s.items()}
+        t = extent(d)
+        if t > best[0]: best = (t, s)
+        print("  signs %-40s t = %s   (%.0fs)" % (str(s), ns(t, 4), time.time() - t0), flush=True)
+    print("largest scaled extent: %s at %s" % (ns(best[0], 4), best[1]))
+print("total %.0fs" % (time.time() - t0))

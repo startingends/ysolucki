@@ -1,0 +1,7 @@
+residual |L C - (D - Dbar)|_max = 1.8e-15 ; |pi C|_max = 1.7e-16 ; min eig Dbar on mean-zero = 1.521e-03
+site 20: singular values of C_y / largest: [1.     0.4089 0.2455 0.1569 0.1473 0.1355 0.1206 0.1123] ; rank(>1e-6) = 39 ; rank(>1e-2) = 36 ; overlap of top vector with centred delta_y = 0.955 ; sign of top eigenvalue +1
+         top eigenvalue of C_y = 0.5326 ; resampling value would be -lambda_1/4 = -1.0758
+site 10: singular values of C_y / largest: [1.     0.4922 0.2383 0.1555 0.155  0.1205 0.1135 0.1082] ; rank(>1e-6) = 39 ; rank(>1e-2) = 36 ; overlap of top vector with centred delta_y = 0.947 ; sign of top eigenvalue +1
+         top eigenvalue of C_y = 0.5146 ; resampling value would be -lambda_1/4 = -1.0758
+site  0: singular values of C_y / largest: [1.     0.6152 0.2082 0.1362 0.1332 0.1256 0.1234 0.1038] ; rank(>1e-6) = 39 ; rank(>1e-2) = 36 ; overlap of top vector with centred delta_y = 0.934 ; sign of top eigenvalue +1
+         top eigenvalue of C_y = 0.5145 ; resampling value would be -lambda_1/4 = -1.0758

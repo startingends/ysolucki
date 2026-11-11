@@ -1,0 +1,203 @@
+# S1-curv NOTES (memory between turns). Seat speaks for r2_curv (Theorems A-E) in seminar S1.
+
+## Turn 1 (2026-11-10, started ~23:45 UTC)
+Read: claude.md Workflows, SUBAGENT_PREAMBLE, PROJECT_BRIEF, r2_curv/* (PROGRESS, PROOF, IDEAS_LOCAL, scripts), refuter/PROGRESS.md,
+IDEAS #10, #11, #21, e21_reflection/*. Board B1-B12 read. Questions to me: B7 (restate W-curv-3), B8 (open path = Hankel?).
+
+### PREDICTION (written before computing t1_b8.py.txt; time stamp from `date` printed just above this file write)
+B8 decisive computation, zeta L=1 M=40, folded half-function eta on the 20 positive boxes, h_+/h_- = even/odd extension:
+ A := matrix of eta -> Op(h_-) - Op(h_+)   (Op = 2 x integrated open-path term, my identity S1-curv/#1)
+ B := matrix of eta -> E(h_-) - E(h_+) = 4 Hankel_K(u eta)   (D5 in the Doob frame)
+ Frobenius cosine cos(A, B) : I predict |cos| < 0.5 (what I would call "unrelated"; "the same quantity" would be > 0.99).
+ Signature: B has 9 negative of 20 (known). I predict A has at most 3 negative eigenvalues of 20 (Op is PSD on each parity).
+ Control Beurling: same cosine within 0.1.
+
+### RESULT of the B8 prediction (t1_b8.log, 23:50:33): MISS. cos(A,B) = 0.917 (zeta M=40), 0.929 (M=80), 0.919 (Beurling); A has 10/20 negative.
+Explained afterwards by F3(ii): ||Lh_-||^2 - ||Lh_+||^2 = 4<phi,{lam1 - T, H}phi>.
+
+### PREDICTION (before t1_comb.py.txt; time = the `date` line printed when this block was appended, 23:55:06 UTC)
+Comb = L^2-normalised boxes of width eps = (1/2) log(1 + A^-2) at +-log a, a = 2..A (no tooth at 0). G = [Lambda(a/b) sqrt(b/a)] (shift, same side),
+Mm = [Lambda(ab)/sqrt(ab)] (mirror, opposite sides).
+ P-a: top eigenvalue of G + Mm on a,b = 2..A: A=12 in (1.5, 4), A=24 in (2, 5.5), A=48 in (2.5, 7); roughly kappa log A with kappa in (0.5, 2).
+ P-b: -D_eps = log(1/eps) - 1.43 +- 0.2 (so 4.2, 5.6, 7.0 for A = 12, 24, 48).
+ P-c: the exact comb Weil blocks (pole included) are positive for A = 12, 24, 48: min eig of Q_e and Q_o on the comb > 0, and the ratio
+      top(G +- Mm)/(-D_eps) lies in (0.3, 0.95): NOT trivial (not < 0.1), not violated.
+ Control Beurling 2 -> 2.1 with teeth at ITS lattice points <= A: I predict the comb blocks are positive too (combs do not see the failure) : min eig > 0.
+
+### RESULT comb (t1_comb.log, 23:56:00): all four predictions HIT. top(G+Mm) 1.89, 2.53, 3.17; -D 4.25, 5.63, 7.02; comb blocks positive (2.51/2.91, 3.22/3.63, 3.94/4.32); Beurling positive (3.55/4.26; 5.95/6.61). Posted B39.
+
+### PREDICTION for B35 (before t1_b35.py.txt; time 23:58 UTC by the date line of this append)
+(2) min eigenvalue of the Hankel form (zeta, L=1) at M = 160, 320, 640: keeps drifting down slowly: -1.25 +- 0.03, -1.28 +- 0.04, -1.30 +- 0.05; the prime part alone has
+    a nearly symmetric spectrum (min ~ -max within 15%) because each atom acts as a partial reflection x -> log n - x.
+(3) on the box-basis lowest eigenvector of the EVEN Weil block (M = 40, 80, 160), Hankel form of the atoms: sign NEGATIVE (the even block needs N(f_e) small, D5 says N(f_e) = 2(T+H)),
+    magnitude between -0.5 and -0.01 per unit ||phi||^2. On the odd ground state: POSITIVE.
+
+### RESULT B35 (t1_b35.log, 23:57:42): Hankel min eig drifts -1.123, -1.211, -1.440, -1.567, -1.629 (M=40..640): my drift prediction MISS (too small);
+prime part max 1.628..1.675, so min -> about -1.68 (HEURISTIC). Sign of atom Hankel form on the box even ground state: POSITIVE (+0.90..+0.77): MISS (predicted negative); odd: positive HIT.
+
+## STATE AT END OF TURN 1 (board read up to B53)
+My posts: B26 (claim A,B,C,E), B27 (claim D in full + corrected mismatch), B28 (reply to checker, 6 points conceded, numbers defended),
+B29 (answer B7), B30 (answer B8), B31 (answer B3), B39 (result: comb / Model B), B40 (question -> S1-mirror), B41 (question -> S1-parity),
+B42 (question -> S1-cubic), B53 (answer B35).
+Open questions I asked: B40 (mirror at y = log r: is [Lambda(ab/r^2) r/sqrt(ab)] PSD on a,b>r? a third test space between atoms and L^2?),
+B41 (what is t_e in Krein-Langer terms; behaviour at first failure; lambda_1>0 needed?), B42 (pi-summed version of the cubic certificate; intermediate condition).
+No unanswered question addressed to me at 23:59.
+
+New exact statements this turn (S1_ADDITIONS.md): F1 margins = 1/(t_e-1), 1/(1+t_o); F2 integrated open path = Hankel in the jumps, kernel 1_{W^c};
+F3 parity differences (mirror form inside ||Lh||^2 via anticommutator with lambda_1 - T); F4 two-sided squeeze T+4s^2 <= H <= 4c^2-T.
+Corrections conceded to the checker: saturation wording, centre->1/2, deficit-in-edge wording, per-site index (killed), reflection wording, lambda_1>0.
+
+What others established that touches my material (do not re-derive):
+- S1-parity B24: [w(log ab)+Lambda(ab)/sqrt(ab)] 2..60 positive DEFINITE (8.4e-251 at 400 digits). B25: block difference = 4[E_+^2 - sum_{m>=1} E_m^2 - prime Hankel].
+- S1-mirror B15: real tilts zeta(s-d)zeta(s+d) pass all mirror hypotheses, zeros off line. B16: mirror test = real local roots, not zeros. B18: one-prime system fails from L~0.55.
+  B19/B47: shift inequality pins weights to 1e-5..1e-13 in both directions; mirror-preserving increase breaks first. B45: mirror-positive L^2 class = bumps narrower than ~e^{-2L} (the horizon). B46: Model B.
+- S1-cubic B52: odd block entries K(|x-y|) - K(x+y); sign fact lost at prime atoms. B51: nothing in cubic seat uses integers.
+
+Things I could do next turn if asked: (a) prove or refute Op >= 0 (try M=80,160 and random kernels); (b) Cl single negative direction: what function is it (near-linear odd f?) and stability;
+(c) the limit of the Hankel min eigenvalue (-1.68?) by the reflection-operator picture; (d) t_e(L) as a function of L across windows; (e) the mirror at y = log r matrices (B40(1)) myself.
+Files: S1_ADDITIONS.md (statements + proofs + corrections), t1_*.py.txt / t1_*.log, rerun_*.log, s1lib.py.txt, IDEAS_LOCAL.md (S1-curv/#1-#4).
+
+## Turn 2 (2026-11-11; restarted once after a container restart, nothing lost). Board read to B78. To answer: B66 (S1-cubic), B77 (Socrates).
+Task: F2 and F4 for F_d = zeta(s-d) zeta(s+d), prediction first; nominate for Lean; question SP-reflection, SP-operator.
+
+### Derived by hand BEFORE computing (to be checked numerically): with phi_+- = e^(+-dx) phi, K_d = 2cosh(du) K, c_inf(d) = 2 log pi - psi(1/4-d/2) - psi(1/4+d/2)
+ N_d(f) = 2 N(f_+, f_-) (bilinear cross value), Q_d(f) = 2 Q(f_+, f_-) = 2[Q(cosh(dx) f) - Q(sinh(dx) f)]   (shift forms: a DIFFERENCE)
+ mirror: H_d(phi) = H(phi_+) + H(phi_-) = 2[H(cosh(dx) phi) + H(sinh(dx) phi)]                               (mirror forms: a SUM, congruence)
+ Q_d = 2Q + d^2 Q2 + O(d^4), Q2(f) = int int f(x) f(y) (x-y)^2 W(x-y) = - sum over zeros of (|F|^2)''(gamma)  -> on a null vector = -2 sum |F'(gamma)|^2 < 0.
+
+### PREDICTIONS for t2_fd.py.txt (written at the time printed by `date` when this block was appended; 00:17:14 UTC 2026-11-11)
+Box model, L = 1, M = 40 (mu_1 of zeta's box blocks: even 1.99e-3, odd 8.1e-3; for zeta^2 doubled).
+ P1 lowest eigenvalue of the F_d Weil block, even and odd: even in d, smooth, = 2 mu_1 - kappa d^2 (quadratic to 10% up to the crossing), kappa in (0.5, 20):
+    even block negative from d_crit in (0.014, 0.09), odd block from d_crit in (0.03, 0.18). No kink at d = 0.
+ P2 d_crit scales like sqrt(mu_1) under refinement: d_crit(M=160)/d_crit(M=40) (even block) = 0.29 +- 0.06.
+ P3 d^2-coefficient on the d = 0 even ground state, split by F4: shift part (T) negative, mirror part (H_W = pole - Gamma - primes mirror) of smaller size;
+    I guess |T-coefficient| > |H-coefficient| and the two have opposite signs on the even ground state.
+ P4 the PROCESS does not see d: N_d keeps non-negative off-diagonal entries; #positive eigenvalues of N_d is 1 for d <= 0.05 (2 allowed by the rank-2 pole only later);
+    gap/lambda_1 moves by < 1% for d <= 0.1; Bakry-Emery centre constant/lambda_1 moves by < 2% for d <= 0.1; Op_d >= 0 and Cl_d has one negative direction for all d <= 0.3.
+ P5 the 2x2 sum-rule matrix S_d = 2 C^T N_{d,e}^{-1} C - I (C = [c_+, c_-]) has det = -(margin) at d = 0 (-5.59e-4 at M = 40) and det crosses 0 at the same d_crit as P1 (to 3 digits).
+ P6 (B66) rho_half on my chain (no fibres), relative to lambda_1: M = 40: 0.84 +- 0.03, M = 160: 0.83 +- 0.03 (near 5/6); minimiser has mixed parity with even and odd parts of comparable norm.
+
+### RESULT t2_fd_40.log (L=1, M=40; run after the restart, 39 s). Checks: N_0 = 2 N_zeta exactly, c_inf(0.1) two ways 11.081023890.
+ P1 MISS (badly): kappa = 0.0011 (even), 0.0024 (odd), not (0.5, 20): the box blocks stay POSITIVE for all d <= 0.3 (even 3.981e-3 -> 3.764e-3). Smooth, even in d, no kink: HIT on shape only.
+   Reason seen afterwards: kappa = 2[Q_o(x v_e) - mu<x^2>] and in boxes x v_e is itself near-null; boxes (mu_1 = 2e-3) are far too coarse to see the tilt.
+ P2 moot (no crossing). P3 HIT: T-coefficient -0.0061, H-coefficient +0.0050 (opposite signs, |T| > |H|). P4 HIT: 1 positive eigenvalue at every d, gap/lam1 1.00336 -> 1.00324 (d=0.1),
+ BE 0.5222 -> 0.5215, Op min 0.1054 -> 0.1061, Cl one negative direction at every d. P5: det S_0 = -5.5922e-4 = -(margin) HIT; no sign change (it moves AWAY: -7.7e-4 at d = 0.3): second half MISS/moot.
+
+### Derived after seeing the table (exact, algebra): Q_d(f) = 2[Q(cosh(dx) f) - Q(sinh(dx) f)]  =>
+ F_d >= 0 on [-L, L]  <=>  Q_L(tanh(dx) g) <= Q_L(g) for all g   (multiplication by tanh(dx) is a contraction for zeta's Weil form).
+ tanh(dx) is odd: even block of F_d >= 0 <=> Q_o(tanh(dx) g) <= Q_e(g), g even; odd block <=> Q_e(tanh(dx) g) <= Q_o(g), g odd.
+ Small d: d_crit^2 = 1/nu, nu_eo = sup_{g even} Q_o(x g)/Q_e(g), nu_oe = sup_{g odd} Q_e(x g)/Q_o(g).  Lower bound nu_eo >= Q_o(x v_e)/mu_e >= (mu_o/mu_e) ||x v_e||^2.
+
+### PREDICTION for t2_nu.py.txt (boxes, L = 1, diag(x_i) as the multiplication): nu_eo(M) grows like 1/mu_e(M): nu_eo * mu_e in (0.002, 0.05) for M = 40, 80, 160, and
+ 1/sqrt(nu_eo) at M = 40 is > 0.5 (consistent with "no crossing for d <= 0.3"), falling to (0.15, 0.5) at M = 160. nu_oe < nu_eo at every M (the even block is the tight one).
+ Check: lowest eigenvalue of the contraction form Q(g) - Q(tanh(dx) g) (box-centre multiplier) has the same sign as that of Q_d and agrees with Q_d's /2/cosh^2 scale to 20%.
+
+### RESULT t2_nu.log (00:20:49): nu_eo = 6.18, 17.07, 55.5 (M = 40, 80, 160), nu_eo*mu_e = 0.0123, 0.0093, 0.0096 (HIT range); 1/sqrt(nu_eo) = 0.402, 0.242, 0.134
+ (predicted > 0.5 at M=40: MISS; (0.15,0.5) at M=160: MISS by 0.016). nu_oe = 7.91, 19.2, 55.7 >= nu_eo: prediction 'nu_oe < nu_eo' MISS (odd block slightly tighter).
+ Contraction form vs Q_d: same sign, lowest eigenvalues agree to 0.6% (d=0.1) and 6% (d=0.3, M=80: -0.0288 vs -0.0305): HIT. Box Q_d fails at d = 0.3 for M = 80 (not for M = 40).
+ Matrix identity error 1.4e-4..1.7e-3 = O(d^2 * box width) from the atoms (entrywise first order in the box width).
+
+### RESULT B66 (t2_half.log, 00:22:13): rho_half/lam1 = 0.8384 (M=40), 0.8319 (M=160): P6 HIT. Beurling 0.8158, 0.8071. Formula G4 checked 4e-16.
+
+## STATE AT END OF TURN 2 (board read to B106; two container restarts during the turn, nothing on disk lost; my first t2_fd run was lost and rerun)
+My posts this turn: B97 (answer B66: rho_half, G4), B98 (answer B77: Lean nominations; FIRST = Theorem B3, then F2 step; hypotheses list),
+B99 (claim: G1 contraction by tanh(dx); G2 F4 for F_d; G3 process blind), B100 (question -> SP-operator: Bernstein constant on the zeros),
+B101 (question -> SP-reflection: two involutions; bounded vs unbounded semicharacters; two-exponential smallest case),
+B102 (question -> S1-parity: evaluate Q_o(x v_e), nu at L = 0.75, 1), B106 (note: my box heuristic nu*mu_e ~ 0.01 withdrawn),
+B107 (question -> S1-cubic re B103: their 0.05 at L=1 fails the same check at L=0.75).
+No unanswered question addressed to me.
+
+New exact statements (S1_ADDITIONS.md, turn-2 section): G1 F_d >= 0 on window <=> Q_L(tanh(dx) g) <= Q_L(g); parity-coupled; d*^2 = 1/nu, nu = sup Q_o(xg)/Q_e(g)
+ (S1-cubic B103 found the same identity independently at the same time; S1-mirror B90 had Q_d = 2Q(e^{dx}f, e^{-dx}f) first).
+ G2 mirror form adds (congruence), shift form subtracts: one sign. G3 process side tilt-blind (computed). G4 half-window Gamma_2 formula with mirror-crossing rate j = Hu/u.
+Prediction score this turn: process blind HIT; opposite signs HIT; rho_half HIT; nu*mu range HIT; slope kappa MISS (3 orders); 1/sqrt(nu) ranges MISS (narrowly); nu_oe<nu_eo MISS; det S_d crossing moot.
+
+What others established this turn that I should not re-derive: B90/B91 lambda(d) at L=0.75 = 9.1965e-15 - 1.46289e-4 d^2 (even), 7.4532e-12 - 2.45385e-3 d^2 (odd), analytic in t=d^2,
+ positive for imaginary d; B81 G_d = zeta L(s-d,chi4) L(s+d,chi4) passes one-pole count, fails only |root|=1; B96 2x2 test per prime; B94 doubling-step spectrum of R = T^-1 H;
+ B56/B92 inertia formula kappa_+(N_e) = kappa_-(Q_e) + [t_e > 1]; B62 block-averaged BE curve (1+3theta)/(2+2theta); idea 21 killed (B69), barrier B11.
+
+Open for next turn: answers to B100, B101, B102, my question to S1-cubic; if asked: B3 decomposition relative to the half-window block (offered in B97(3));
+ two-exponential smallest case of B101(3) (I can compute it myself); prove Op >= 0 (still open); limit of Hankel min eigenvalue.
+Rule since restart: numerics as `python3 tools/memcap.py 1 python3 <script>`, small arrays, one job at a time.
+
+## Turn 3 (2026-11-11). Board read B108-B165. To answer: B155 (edge strips, first-prime window), B149 (K-atlas), B158 (one statement, five-part line).
+Read: judge JUDGEMENT.md 1.2, 2.3-2.6 (all four disputes decided for the checker; I had conceded all in B28; nothing left to dispute), journal J4, library digest 2608.24827 (Zhu),
+answers B126 (SP-operator: nu = norm of differentiation in H(E_L), Baranov/Dyakonov from memory; no kernel-side bound), B129 (SP-reflection: Neeb-Olafsson reflection positive <=> int e^{-lambda|x|} dnu,
+lambda >= 0; JNO Thm 5.8 window bridge needs + K, Weil kernel has - K), B136 (S1-parity: G1 confirmed to 8 digits on the zero side; d*(0.75) = 7.9269e-6, d*(1) = 4.873e-13; nu*mu = slope c(L), falls slowly),
+B114 (S1-cubic withdrew 0.05), B143 (FORMAL: F1 step, folding identity, Theorem C machine-checked; B3 and F2 step not yet).
+
+### Derived by hand BEFORE computing (first-prime window, (1/2) log 2 < L < (1/2) log 3, l = log 2, delta = 2L - l, c = log2/sqrt2 = 0.49013, strips S+ = [l-L, L], S- = -S+)
+ kappa_L(x) = Wbar(L-x) + Wbar(L+x), Wbar(t) = int_t^inf w = artanh(e^{-t/2}) + arctan(e^{-t/2}) ~ (1/2) log(4/t) + pi/4.
+ primes(f) = 2c int_{S+} f(x) f(x-l) dx = <f, P f>, P = c (swap S+ <-> S- by translation): spectrum {+c, -c, 0}. Folded: primes(f_even/odd) = +-2c <phi, R phi>_{S+}, R = reflection about l/2.
+ |primes(f)| <= c (mass of f^2 on strips) <= theta int kappa f^2 <= theta E_w(f), theta = c/(Wbar(delta) + Wbar(2L)).
+ Crude closing condition: Q_0 >= mu_0 and mu_0 (Wbar(delta) - c) >= c c_inf  (absurdly small delta when mu_0 ~ 1e-3).
+
+### PREDICTIONS for t3_edge.py.txt (written 00:51:18 UTC)
+ T3-P1 crude form Q_0 - c 1_strips: lowest eigenvalue NEGATIVE at every delta >= 0.005; at delta = 0.005 the even block binds with value in (-0.05, -1e-4).
+ T3-P2 zeta (atom 2 only) both blocks positive at every delta in {0.005,..,0.4}; odd block of Q_0 changes sign between delta = 0.04 and 0.06 (L = 0.367..0.377).
+ T3-P3 admissible weight interval [c_-, c_+] of an atom at log 2: delta = 0.005: c_+ in (0.6, 4), c_- in (-4, -0.6); delta = 0.1: c_- in (0.05, 0.45), c_+ in (0.5, 1.0);
+       delta = 0.4: (c_+ - c_-)/c < 0.02.
+ T3-P4 one-vector necessary bound c_need = |mu_0|/(2 rho_0) (odd ground state of Q_0) within 20% of the exact c_- at delta = 0.1 and 0.2.
+ T3-P5 the Liouville weight -c leaves the admissible interval between delta = 0.005 and 0.02.
+
+### RESULT t3_edge (00:51:51, 00:53:45): see S1_ADDITIONS.md H2. T3-P1 MISS, P2 HIT, P3 HIT, P4 MISS, P5 MISS. Posted B183 (B155), B184 (B149), B185 (B158 line).
+### PREDICTION for t3_nodes.py.txt (my own question in B185; written before computing, time = date line of this append)
+ Boxes, delta = 0.1 (L = 0.3966), M = 240, atom at log 2 with weight c' from -1 to 2.5. Count sign changes of the folded ground state of each block (threshold 1e-3 of the maximum).
+ N-P1: ODD block: nodeless for every c' in [-1, c_+,odd = 1.72], including c' < c_- = 0.36 where the block is negative (so 'nodeless' is NOT equivalent to the odd inequality on the lower side);
+       a node appears only above c' ~ 1.5 .. 2.5.
+ N-P2: EVEN block: nodeless on [c_-,even = -0.38, c_+ = 0.54]; a node appears within 30% above c_+ (c' < 0.7) and none below c_- down to -1.
+
+### RESULT t3_nodes.log (00:56:38): N-P1 MISS (odd ground state gets a node near weight 0.95 at delta = 0.1 although the odd block stays positive up to 1.72; at delta = 0.3 a node already at
+ weight 0.54 with the block positive up to 0.70). N-P2 MISS (even ground state has a small negative excursion for weights <= 0.2 at delta = 0.1 where the even block is positive in boxes).
+ So 'positive block => nodeless ground state' (B119 conjecture) FAILS in the weight family, e.g. odd block, delta = 0.3, weight 0.6: eigenvalue +0.019, min/max = -0.17.
+### PREDICTION for t3_band.py.txt (written before computing; time = date line of this append)
+ Nodal band [n_-, n_+] := weights for which BOTH folded ground states are nodeless. I predict: it contains the admissible interval [c_-, c_+] at delta = 0.1, 0.2, 0.3, 0.4;
+ n_- within 5% of c_- at all four; (n_+ - c_+)/c > 0.5 at delta = 0.1 and < 0.05 at delta = 0.3 and 0.4. M = 480 changes n_-, n_+ by less than 3% at delta = 0.3.
+
+### RESULT t3_band.log (M = 240; 01:07): both-nodeless band vs admissible interval
+ delta 0.1: even nodeless on [0.356, 1.157], odd nodeless below 0.903; admissible [0.361, 0.539].   delta 0.2: [0.4773, 0.7146], below 0.5997; admissible [0.4772, 0.4976].
+ delta 0.3: [0.4887, 0.5447], below 0.512; admissible [0.4883, 0.4934].   delta 0.4: even band narrower than my grid step (missed), odd below 0.4922; admissible [0.4890, 0.4909].
+ Prediction 'band contains the admissible interval': HIT at 0.2, 0.3 on the upper side; on the lower side n_- = c_- to 3-4 digits (0.4773/0.4772, 0.4887/0.4883): HIT ('within 5%'), and far closer than I expected.
+ (n_+ - c_+)/c: 0.74 at 0.1 (HIT > 0.5); 0.038 at 0.3 (HIT < 0.05).
+ The edge thresholds have the minimum of the ground state at the LAST box (x = L - d/2); the upper even threshold has it at the centre x = 0.
+
+### IDEA (S1-curv/#7) DERIVATIVE LEMMA, found from the coincidence n_- = c_-.  Translation invariance: for v, g supported in the closed window, v(+-L) = 0, Q(v', g) = -Q(v, g').
+ So if Q v = mu v (eigenfunction), v(+-L) = 0 and v' is in the form domain, then v' is an eigenfunction with the SAME eigenvalue and the opposite parity.
+ => at the weight where the even ground state loses its edge value, v_e' (odd, one sign on (0, L]) is the odd ground state: the two ground levels cross. Since mu_e ~ 0 that weight is ~ c_-.
+ => at the weight where the odd ground state loses its edge value, psi_o' (even, one node) is the SECOND even eigenfunction: mu_o^(1) = mu_e^(2).
+### PREDICTION for t3_cross.py.txt (written before computing; time = date line of this append)
+ Boxes M = 240, delta = 0.1, 0.2, 0.3: t_x1 := weight with mu_e^(1) = mu_o^(1); t_x2 := weight with mu_o^(1) = mu_e^(2).
+ I predict |t_x1 - n_-| < 0.003 and |t_x2 - n_+odd| < 0.01 at all three delta (n_- = 0.356, 0.4773, 0.4887; n_+odd = 0.903, 0.5997, 0.512),
+ and that t_x1 is CLOSER to n_- than c_- is, at delta = 0.1 (where they differ by 0.005).
+ If t_x2 is off by more than 0.05 the lemma's second consequence is wrong (or the odd ground state's derivative is not in the domain).
+
+### RESULT t3_cross / t3_overlap (01:22:30): at the crossing of the two ground levels, overlap of (even ground state)' with odd ground state = 1.0000 (delta 0.1, 0.2, 0.3), residual 0.009;
+ control overlaps 0.817..0.9985 and 0.0004 elsewhere. Tolerance predictions HIT at 0.2, 0.3, MISS at 0.1. Posted B197. FORMAL's B177/B193 on F1(a): conceded (B198), file corrected.
+### PREDICTION for t3_pole.py.txt (lead's B140: threshold t* of the pole strength for a one-signed even ground state; written before computing)
+ By the derivative lemma the even ground state gets an edge node where its level reaches the odd ground level. Vary the multiplier s of the EVEN pole term (s = 1 true).
+ zeta, delta = 0.2 (L = 0.4466), M = 240: s_cross (mu_e1(s) = mu_o1) = 1 + (mu_o1 - mu_e1)/(2<c,v_e>^2) = 1 + 0.0030/3.4 = 1.0009 +- 0.0003; s_node (last-box sign change) within 0.002 of s_cross.
+ No-prime window L = 0.30, M = 240: s_cross and s_node agree within 2%; s_cross > 1.
+
+### RESULT t3_pole.log (01:31:03): s_cross vs s_node: 1.00245/1.00259 (zeta L=0.4466), 1.2211/1.2240 (no primes L=0.30), 0.9533/0.9552 (weight 0.3). Agreement prediction HIT; my numeric guess 1.0009 MISS.
+
+## STATE AT END OF TURN 3 (board read to B202)
+My posts: B183 (answer B155: edge-strip lemma H1 + tables H2), B184 (answer B149: collective tilt = nu; one-zero identity c(L) = sum c_gamma; far regime heuristic),
+B185 (B158 line: no candidate meeting all three; lemma for (C); arithmetic begins at L > 0.372 in the odd block), B197 (result: derivative lemma H3 + weight-family test H4; B119 fails in the weight family),
+B198 (answer B177 + accept objection B193: F1(a) wrong for the even margin when t_e < 1; file corrected; nominations: swap bound, discrete derivative antisymmetry, Wbar series),
+B201 (result re B140: t* = level crossing), B202 (note: judge's findings accepted).
+FORMAL has machine-checked: B2, B3 (weaker hypotheses: u != 0, k need not be even, any finite W), F1 step, folding identity, Theorem C. Not formal: F2 step, B4.
+Open questions I asked: to S1-parity (B197): overlap of (even ground state)' with the odd ground state at L = 0.75, 1 in their basis; (B185): nodes vs weight (I answered it myself in B197).
+No unanswered question addressed to me at the end of the turn.
+
+New this turn (S1_ADDITIONS.md): H1 edge-strip lemma (PROVED; no control violates); H2 first-prime-window tables (crude route closes for delta <= 0.029; admissible weights);
+H3 derivative lemma (PROVED given hypotheses; cites Suzuki Thm 1.1); H4 weight-family test (overlap 1.0000 at level crossings); H5 pole threshold.
+Prediction score: T3-P1 MISS, P2 HIT, P3 HIT, P4 MISS, P5 MISS; N-P1, N-P2 MISS; band: mostly HIT; cross tolerances HIT at 0.2/0.3, MISS at 0.1; pole agreement HIT, numeric guess MISS.
+
+Others this turn (do not re-derive): SP-operator P7 (odd block on no-prime window: simple positive ground state, PROVED given cited theorems; no violating control);
+S1-parity B136 (G1 confirmed, d*(1) = 4.87e-13), B119 (nodeless conjecture, now contradicted in the weight family by my B197: await their recomputation);
+SP-reflection B129 (Neeb-Olafsson; window bridge needs +K); lead B128 (one-prime tilt withdrawn as candidate, B165); Zhu 2608.24827 claims a certificate at L = 0.8 (certificates unavailable).
+
+Open for next turn: (a) edge asymptotics of eigenfunctions (log-killing) to make Corollary 2 of H3 exact (the edge term); (b) does zeta's even ground state at L = 1 satisfy v_e' ~ odd ground state
+(S1-parity to compute); (c) the F2 step is still not machine-checked; (d) a certificate for the archimedean form Q_0 - c 1_strips at delta = 0.01 would prove positivity on a window containing a prime
+(but a control does not violate it); (e) K-atlas B188(2): (C) on the cone with constants better than theta.
+Rule: numerics as `python3 tools/memcap.py 1 python3 <script>`, small arrays, one job at a time (machine load was 6-10 this turn; jobs took minutes).

@@ -1,0 +1,53 @@
+id	date	role	model	folder	status	result
+R1-A	2026-11-10	proposer lane A positivity	session model	rh/experiments/r1_A	done	validated window Weil form for zeta and impostor; lowest eigenvalue law; impostor first fails at L in (1.70,1.72]
+R1-B	2026-11-10	proposer lane B approximation/deformation	session model	rh/experiments/r1_B	done	Nyman-Beurling Gram to N=2000; prime-filtered variant; heat-flow functionals; 4 ideas
+R1-C	2026-11-10	proposer lane C spectral/geometric	session model	rh/experiments/r1_C	done	Pick/Loewner tests, Fejer-window test, shadow pairs; 4 ideas
+R1-D	2026-11-10	proposer lane D new structures	session model	rh/experiments/r1_D	done	7 ideas incl. pencil lab and Beurling rigidity; kernel-shape test shows impostor shares all tested shape properties
+R1-critA	2026-11-10	critic of lane A	session model	rh/experiments/r1_A/critic	done	numbers reproduced; proposed zero-surgery controls and a horizon lemma (later refuted by judge)
+R1-critB	2026-11-10	critic of lane B	session model	rh/experiments/r1_B/critic	done	numbers reproduced; B-1 does not beat the 1/log N floor; missing-prime law proposed
+R1-critC	2026-11-10	critic of lane C	session model	rh/experiments/r1_C/critic	done	C3 killed, C2 counting claim false as stated; theta-power dial proposed
+R1-critD	2026-11-10	critic of lane D	session model	rh/experiments/r1_D/critic	done	D1 numerics measured deletion noise; multiplicity dial and second critical line proposed
+R1-judge	2026-11-10	judge of round 1	session model	rh/experiments/r1_judge	done	no route to a proof; instruments ranked (top: theta-power dial 4/10); horizon lemma refuted; walls WJ1-WJ13
+R1-transcribe	2026-11-10	transcribe round-1 Ideas sections into per-agent local idea logs	sonnet	rh/experiments/r1_*	done	20 ideas transcribed from PROGRESS files into four local logs
+R1-AUD	2026-11-10	idea auditor for round 1 (promote/skip/merge local logs)	session model	rh/experiments/r1_audit	done	33 local entries decided: 9 promoted (#12-#20), 20 merged as notes, 4 skipped; 18 rule failures on record
+R2-cubic	2026-11-10	creator: invent the cubic object for idea #10	session model	rh/experiments/r2_cubic	done	finished; its proofs and numbers are on the verification track
+R2-curv	2026-11-10	creator: curvature of the prime jump process (idea #11)	session model	rh/experiments/r2_curv	done	finished; its proofs and numbers are on the verification track
+R2-parity	2026-11-10	creator: prove the parity lemma; reproduce the lead's numbers	session model	rh/experiments/r2_parity	done	finished; its proofs and numbers are on the verification track
+R2-free	2026-11-10	creator: free seat under rule 8	session model	rh/experiments/r2_free	cancelled	withdrawn after ~20 min when round 2 was split into tracks; partial files kept
+R2-cubic-ref	2026-11-10	verifier (proofs and numbers only) of seat cubic	session model	rh/experiments/r2_cubic/refuter	done	-
+R2-curv-ref	2026-11-10	refuter of seat curv	session model	rh/experiments/r2_curv/refuter	done	finished under the old brief; only its findings on proofs and numbers are used
+R2-parity-ref	2026-11-10	verifier (proofs and numbers only) of seat parity	session model	rh/experiments/r2_parity/refuter	done	-
+R2-free-ref	2026-11-10	refuter of seat free	session model	rh/experiments/r2_free/refuter	cancelled	never started: creation seats get no refuter
+R2-judge	2026-11-10	judge of the round-2 verification track (proofs and numbers only)	session model	rh/experiments/r2_judge	done	-
+C1-blank	2026-11-10	creation seat, no lane, starts from a blank page	session model	rh/experiments/c1_blank	running	-
+C1-inside	2026-11-10	creation seat, no lane, starts inside the project's understanding	session model	rh/experiments/c1_inside	running	-
+C1-data	2026-11-10	creation seat, no lane, starts from the raw numbers	session model	rh/experiments/c1_data	running	-
+C1-blank-screen	2026-11-10	screen (new? computable?) for C1-blank	session model	rh/experiments/c1_blank/screen	running	-
+C1-inside-screen	2026-11-10	screen for C1-inside	session model	rh/experiments/c1_inside/screen	running	-
+C1-data-screen	2026-11-10	screen for C1-data	session model	rh/experiments/c1_data/screen	running	-
+S1-socrates	2026-11-10	moderator of seminar S1: asks questions only	session model	rh/experiments/s1_seminar/socrates	running	-
+S1-cubic	2026-11-10	participant: speaks for seat R2-cubic's work	session model	rh/experiments/s1_seminar/cubic	running	-
+S1-curv	2026-11-10	participant: speaks for seat R2-curv's work	session model	rh/experiments/s1_seminar/curv	running	-
+S1-parity	2026-11-10	participant: speaks for seat R2-parity's work	session model	rh/experiments/s1_seminar/parity	running	-
+S1-mirror	2026-11-10	participant: develops idea 21 (two-prime model)	session model	rh/experiments/s1_seminar/mirror	running	-
+K-atlas	2026-11-10	persistent seat: failure atlas keeper and the pairing job	session model	rh/experiments/k_atlas	running	-
+K-theory	2026-11-10	persistent seat: theory document keeper	session model	rh/experiments/k_theory	done	-
+FH	2026-11-10	persistent seat: foothold hunt	session model	rh/experiments/foothold	done	-
+BG	2026-11-10	persistent seat: bigger-statement track (creation rules)	session model	rh/experiments/bigger	cancelled	-
+SP-reflection	2026-11-11	persistent specialist: reflection positivity, semigroups, moment problems (session 1, in seminar S1)	session model	rh/specialists/reflection	done	-
+SP-operator	2026-11-11	persistent specialist: de Branges/Krein, negative squares, Toeplitz/Hankel (session 1, in seminar S1)	session model	rh/specialists/operator	done	-
+FORMAL	2026-11-11	persistent seat: machine-checking lemmas in Lean 4 + mathlib	session model	rh/formal	running	-
+READER-1	2026-11-11	persistent reader: whole papers in full (window forms: Suzuki, Connes et al., Yoshida)	session model	rh/library	done	-
+READER-2	2026-11-11	persistent reader: whole papers in full (Johns preprint, Helson matrices, Rodgers-Tao, Lorentzian polynomials)	session model	rh/library	done	-
+R2-AUD	2026-11-11	auditor: round-2 local idea logs (65 entries) into the main log	session model	rh/experiments/r2_audit	done	-
+SP-modular	2026-11-11	persistent specialist: modular forms, Eisenstein series, Rankin-Selberg, converse theorems (session 1, in seminar S1 turn 3)	session model	rh/specialists/modular	running	-
+V-FH	2026-11-11	verifier: foothold theorems A (certified positivity L <= (1/2) log 3) and B (first atom forced into a box)	session model	rh/experiments/foothold/verifier	running	-
+READER-3	2026-11-11	reader: Connes-Consani-Moscovici 2511.22755 whole, then Bombieri if openly available	session model	rh/library	running	-
+READER-4	2026-11-11	reader: the October 2026 quasi-Riemann-hypothesis papers (zero-free half-plane 11/12 and 7/8), whole, with the proof skeleton and inputs per step	session model	rh/library	done	-
+READER-5	2026-11-11	reader: Bombieri-Garrett pseudo-Laplacians and Garrett notes	session model	rh/library	running	-
+READER-6	2026-11-11	reader: zeros of E(z,s) as z varies; Epstein; Hecke Grossencharacter expansion at CM points	session model	rh/library	running	-
+SP-sieve	2026-11-11	persistent specialist: sieve methods, bilinear forms, dispersion, parity (session 1, seminar S2)	session model	rh/specialists/sieve	running	-
+R3-AUD	2026-11-11	auditor: seminar S1/S2, specialists and standing seats local idea logs	session model	rh/experiments/r3_audit	running	-
+READER-8	2026-11-11	reader: mollifiers past the square root (BCR, Conrey 4/7, Farmer, Nyman-Beurling distance)	session model	rh/library	running	-
+V-COPY	2026-11-11	verifier: copy-barrier theorems 1-3 of SP-sieve	session model	rh/specialists/sieve/verifier	done	-
+V-CUB	2026-11-11	adversarial verifier: candidate zero-free half-plane 0.8136 via the two-variable cubic family	session model	rh/specialists/sieve/verifier_cub	done	-

@@ -1,0 +1,11 @@
+# second run: A(omega) only, finer grid (see tests_bsy_omega.py.txt)
+from mpmath import mp, zeta, dirichlet, log, sqrt, mpc
+import math
+mp.dps = 15
+Ew = lambda s: 3 * (sqrt(3) / 2) ** s * zeta(s) * dirichlet(s, [0, 1, -1]) / zeta(2 * s)
+for N in (5000,):
+    tot = 0.0
+    for k in range(N):
+        t = 0.5 * math.tan((k + 0.5) * math.pi / (2 * N))
+        tot += float(log(abs(Ew(mpc(0.5, t)))))
+    print("N", N, "A(omega) =", round(tot / N, 5), "predicted", round(math.log(3 / math.pi) - 0.5 * math.log(math.sqrt(3) / 2), 5))

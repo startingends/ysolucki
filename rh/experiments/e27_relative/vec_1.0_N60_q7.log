@@ -1,0 +1,5 @@
+L=1.0 c=46.426809 N=60 dps=118 ; lowest even 7.2974e-30 2.71754e-23 ; lowest odd 1.8028e-26 2.71989e-20
+ prolate n=4 (b=0), block even: 1-chi=1.512e-30 ; |v|^2=0.81934 captured even 1.0 odd 9.0427e-31 ; Rayleigh=1.07849e-29 ; Rayleigh/mu_1=1.47791 Rayleigh/mu_2=3.96863e-7 ; overlap^2 with eigvecs 1,2,3: 0.999999915082 8.49183e-8 3.883e-14 ; 1-ov1=8.4918e-8
+ prolate n=8 (b=0), block even: 1-chi=1.0751e-23 ; |v|^2=1.61279 captured even 1.0 odd 2.4823e-24 ; Rayleigh=3.74012e-23 ; Rayleigh/mu_1=5.12527e+6 Rayleigh/mu_2=1.37629 ; overlap^2 with eigvecs 1,2,3: 0.000832249562754 0.999168 1.79939e-7 ; 1-ov1=0.99917
+ prolate n=6 (b=2), block odd: 1-chi=5.73e-27 ; |v|^2=1.16975 captured even 2.0890961e-27 odd 1.0 ; Rayleigh=2.61898e-26 ; Rayleigh/mu_1=1.45273 Rayleigh/mu_2=9.629e-7 ; overlap^2 with eigvecs 1,2,3: 0.999999853186 1.46814e-7 4.53354e-13 ; 1-ov1=1.4681e-7
+ prolate n=10 (b=2), block odd: 1-chi=1.1531e-20 ; |v|^2=1.94342 captured even 2.7146681e-21 odd 1.0 ; Rayleigh=3.25159e-20 ; Rayleigh/mu_1=1.80363e+6 Rayleigh/mu_2=1.19549 ; overlap^2 with eigvecs 1,2,3: 0.0441498883136 0.95585 5.6427e-7 ; 1-ov1=0.95585

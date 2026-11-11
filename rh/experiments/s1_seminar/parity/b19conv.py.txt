@@ -1,0 +1,21 @@
+"""S1-parity: is S1-mirror's B19 row at L = 0.70 converged in the basis? There the atom at 4 is 0.014 inside the window edge
+(2L - log 4 = 0.0137). Lowest eigenvalue even / odd for (a) true weights, (b) weight at 4 flipped, (c) weight at 4 doubled,
+in both lattices, N = 40, 80, 120. dps 50."""
+import math, importlib.util, importlib.machinery, time
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+mp.mp.dps = 50
+t0 = time.time(); l2, l3 = mp.log(2), mp.log(3); L = 0.70
+for N in (40, 80, 120):
+    for lat in ('int', 'half'):
+        base = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+        base = wb.add(wb.add(base, wb.atom_blocks(L, N, lat, 2), l2), wb.atom_blocks(L, N, lat, 3), l3)
+        U4 = wb.atom_blocks(L, N, lat, 4)
+        out = []
+        for lab, c in (("true", l2), ("flipped", -l2), ("doubled", 2 * l2)):
+            M = wb.add(base, U4, c)
+            out.append("%s: %s / %s" % (lab, mp.nstr(min(mp.eigsy(M[0], eigvals_only=True)), 3), mp.nstr(min(mp.eigsy(M[1], eigvals_only=True)), 3)))
+        print("  L=0.70 %s/%d  %s   (%.0fs)" % (lat, N, "  |  ".join(out), time.time() - t0), flush=True)

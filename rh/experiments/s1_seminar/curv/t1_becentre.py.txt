@@ -1,0 +1,10 @@
+"""S1-curv turn 1: Bakry-Emery constant at centre and edge site under refinement (checker objection 2). usage: t1_becentre.py.txt L M kind"""
+import sys, importlib.machinery, importlib.util, numpy as np
+ld = importlib.machinery.SourceFileLoader('s1lib', 's1lib.py.txt'); sp = importlib.util.spec_from_loader('s1lib', ld); S = importlib.util.module_from_spec(sp); ld.exec_module(S)
+L = float(sys.argv[1]); M = int(sys.argv[2]); kind = sys.argv[3]
+b = S.build(L, M, kind); ev, lam1, u, q, Lg = S.process(b['N'])
+out = []
+for i in (0, M // 2):
+    G, G2 = S.gamma_at(q, Lg, i); out.append(S.geneig_min(G2, G, i) / lam1)
+Q = q.sum(1)[0]
+print("%s L=%g M=%d lam1=%.6f total rate Q=%.4f Q/lam1=%.4f  BE/lam1: edge site %.4f centre site %.4f ; (1/2 + pi_centre)=%.4f ; BE_centre/Q=%.4f" % (kind, L, M, lam1, Q, Q / lam1, out[0], out[1], 0.5 + u[M // 2] ** 2, out[1] * lam1 / Q))

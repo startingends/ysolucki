@@ -1,0 +1,26 @@
+"""SP-operator: plank 7(a), WINDOW side.  Pi(f) (sum over prime powers) against the prime-free 2 <f, f_log>,
+f_log(x) = x^(1/2) sum_n (log n) g(n x) on the window.  usage: python3 plank7a.py.txt L K dps
+Prediction written before running (PROOF_bridge.md Cor. 7.2): equal to working precision (closed forms)."""
+import sys, importlib.util, importlib.machinery
+P = "/home/user/ysolucki/rh/specialists/operator/bridge/bridge5.py.txt"
+spec = importlib.util.spec_from_file_location("b5", P, loader=importlib.machinery.SourceFileLoader("b5", P))
+b5 = importlib.util.module_from_spec(spec); spec.loader.exec_module(b5)
+mp = b5.mp; L = b5.L; lam = b5.lam; d = b5.d; MU = b5.MU; J = b5.J; a = b5.a
+Nw = int(mp.floor(mp.exp(2 * L)))
+S = b5.powersums(Nw)
+fP = b5.make_pieces(-2 * L, mp.mpf(0), Nw, S)
+# pieces of f_log: coefficients lambda^(1/2) a_j sum_{n<=N} log(n) n^j
+SL = [[mp.mpf(0)] * d]
+for n in range(1, Nw + 1):
+    SL.append([SL[-1][i] + mp.log(n) * mp.mpf(n) ** J[i] for i in range(d)])
+sq = mp.sqrt(lam); gP = []
+for N in range(1, Nw + 1):
+    al = max(-mp.log(N + 1), -2 * L); be = -mp.log(N)
+    if al < be: gP.append((al, be, [sq * a[J[i]] * SL[N][i] for i in range(d)]))
+gP.sort(key=lambda p: p[0])
+prime_sum = sum(2 * b5.mangoldt(n) / mp.sqrt(n) * b5.corr(fP, MU, mp.log(n)) for n in range(2, Nw + 1))
+free = 2 * b5.corr(fP, MU, mp.mpf(0), pieces2=gP)
+print("L=%s K=%d: prime powers in the window: %s" % (b5.Lf, b5.K, [n for n in range(2, Nw + 1) if b5.mangoldt(n) != 0]))
+print(" Pi(f) = sum Lambda(n) n^(-1/2) 2 c_f(log n) = %s" % mp.nstr(prime_sum, 30))
+print(" 2 <f, f_log> (no Lambda)                   = %s" % mp.nstr(free, 30))
+print(" relative difference %s" % mp.nstr((prime_sum - free) / prime_sum, 5))

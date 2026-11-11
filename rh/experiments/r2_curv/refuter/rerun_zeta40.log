@@ -1,0 +1,5 @@
+== zeta L=1.0 M=40: lambda1=4.303094 #pos=1 mu2=-1.4452e-02 gap/lam1=1.00336 (gap/lam1-1=3.359e-03) offdiag<0: 0  N00=-1.568158 rate=5.8713..5.8713 umin/umax=0.849
+   even: #pos=1  2c^T N^-1 c - 1 = 5.5922e-04;  odd: #pos=0 1-2 s^T(-N)^-1 s = 3.2074e-02
+   Weil form min eig: even 1.991e-03  odd 8.106e-03
+   int Gamma2 check 8.9e-16;  BE rho/lam1: worst 0.4963 at site 0 (x=-0.975), centre 0.5222;  rho/gap worst 0.4947
+   per-site negative index of Gamma2 - lam1 Gamma: ==1 at 38 of 40; histogram [0, 38, 2]

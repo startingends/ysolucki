@@ -1,0 +1,18 @@
+zeta, L = 1: margins three ways
+M= 20 lam1=4.302810 mu1(Qe)=6.520104e-03  even margin 1.730672012e-03 = 1/(t_e-1) 1.730672012e-03 ; odd margin 9.773503289e-02 = 1/(1+t_o) 9.773503289e-02
+      P_M = 1.142122 ; lam1/(2<c,v1>^2) = 1.157254 ; share of v1 in t_e: 0.9852 ; 2<c,v1>^2 = 3.71812
+M= 40 lam1=4.303094 mu1(Qe)=1.990533e-03  even margin 5.592234357e-04 = 1/(t_e-1) 5.592234357e-04 ; odd margin 3.207444151e-02 = 1/(1+t_o) 3.207444151e-02
+      P_M = 1.208918 ; lam1/(2<c,v1>^2) = 1.226931 ; share of v1 in t_e: 0.9848 ; 2<c,v1>^2 = 3.50720
+M= 80 lam1=4.304310 mu1(Qe)=5.464782e-04  even margin 1.560088138e-04 = 1/(t_e-1) 1.560088138e-04 ; odd margin 1.066798111e-02 = 1/(1+t_o) 1.066798111e-02
+      P_M = 1.228796 ; lam1/(2<c,v1>^2) = 1.246096 ; share of v1 in t_e: 0.9860 ; 2<c,v1>^2 = 3.45424
+M=160 lam1=4.305238 mu1(Qe)=1.720594e-04  even margin 4.994153779e-05 = 1/(t_e-1) 4.994153779e-05 ; odd margin 3.178933196e-03 = 1/(1+t_o) 3.178933196e-03
+      P_M = 1.249628 ; lam1/(2<c,v1>^2) = 1.272795 ; share of v1 in t_e: 0.9817 ; 2<c,v1>^2 = 3.38251
+small windows (M = 40): sign of lambda_1 and the even sum rule
+L=0.05 lam1=-0.7913  #pos eig N_e=0  min eig Q_e=0.9841  2c^T N^-1 c - 1 = -1.2468  t_e=0.1980  1/(t_e-1)=-1.2468
+L=0.10 lam1=-0.0742  #pos eig N_e=0  min eig Q_e=0.4587  2c^T N^-1 c - 1 = -6.2291  t_e=0.8395  1/(t_e-1)=-6.2291
+L=0.12 lam1=+0.1177  #pos eig N_e=1  min eig Q_e=0.3431  2c^T N^-1 c - 1 = +2.9456  t_e=1.3395  1/(t_e-1)=+2.9456
+L=0.20 lam1=+0.6664  #pos eig N_e=1  min eig Q_e=0.0966  2c^T N^-1 c - 1 = +0.1492  t_e=7.7034  1/(t_e-1)=+0.1492
+
+real	0m4.275s
+user	0m3.998s
+sys	0m0.047s

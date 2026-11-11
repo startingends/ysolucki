@@ -1,0 +1,20 @@
+zeta L=1.00 n=8: eig2(Ntilde)=-2.789e-03 #pos=1 ; slack t* CLARABEL / SCS
+zeta L=1 n=8 ; entries in units of l_i l_j l_k/s^2 ; [min, max] over ALL certificates (SCS)
+  T(0, 3, 7): [+0.0226, +2.4716] (optimal/optimal) ; cone +1.2451 ; Bakry-Emery +1.7542 ; zero OUTSIDE the interval
+  T(0, 4, 7): [+0.0226, +2.4716] (optimal/optimal) ; cone +1.2451 ; Bakry-Emery +1.7542 ; zero OUTSIDE the interval
+  T(0, 3, 6): [+0.3499, +2.8185] (optimal/optimal) ; cone +1.5265 ; Bakry-Emery +2.0684 ; zero OUTSIDE the interval
+  T(0, 1, 7): [+0.5578, +3.0108] (optimal/optimal) ; cone +1.6882 ; Bakry-Emery +2.2558 ; zero OUTSIDE the interval
+  T(2, 3, 4): [+0.6450, +3.1060] (optimal/optimal) ; cone +1.7667 ; Bakry-Emery +2.2996 ; zero OUTSIDE the interval
+  T(1, 3, 5): [-0.5829, +1.8026] (optimal/optimal) ; cone +0.6708 ; Bakry-Emery +1.1804 ; zero INSIDE the interval
+zeta L=1.00 n=12: eig2(Ntilde)=-1.812e-03 #pos=1 ; slack t* CLARABEL / SCS
+zeta L=1 n=12 ; entries in units of l_i l_j l_k/s^2 ; [min, max] over ALL certificates (SCS)
+  T(0, 5, 11): [-3.1603, +3.7572] (optimal/optimal) ; cone +0.5814 ; Bakry-Emery +1.0827 ; zero INSIDE the interval
+  T(0, 5, 10): [-2.6578, +3.7355] (optimal/optimal) ; cone +0.6641 ; Bakry-Emery +1.0634 ; zero INSIDE the interval
+  T(0, 4, 11): [-1.4855, +5.3357] (optimal/optimal) ; cone +1.8126 ; Bakry-Emery +2.3508 ; zero INSIDE the interval
+  T(0, 1, 11): [-0.6870, +6.0981] (optimal/optimal) ; cone +2.2604 ; Bakry-Emery +2.8779 ; zero INSIDE the interval
+  T(4, 5, 6): [+0.4173, +7.9867] (optimal/optimal) ; cone +3.2255 ; Bakry-Emery +4.2687 ; zero OUTSIDE the interval
+  T(2, 5, 8): [-3.3061, +3.2932] (optimal/optimal) ; cone +0.2921 ; Bakry-Emery +0.8406 ; zero INSIDE the interval
+
+real	1m15.007s
+user	1m14.656s
+sys	0m0.180s

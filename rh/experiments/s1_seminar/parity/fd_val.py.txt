@@ -1,0 +1,36 @@
+"""validation of fd.py.txt: (1) delta = 0 equals 2 x implementation B entrywise; (2) the form of a C^1 test function against
+the ZERO side, sum over zeros gamma of fhat(gamma + i delta)^2 + fhat(gamma - i delta)^2 (5000 zeros, rhlib), for real and
+imaginary delta; control: tilt only the primes (must disagree)."""
+import sys, time, math, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt"); wb = fd.wb
+mp.mp.dps = 50; t0 = time.time()
+L, N = 0.75, 10
+for lat in ('int', 'half'):
+    A = fd.form(L, N, lat, 0, 0, 0)
+    B = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+    for x, c in wb.mangoldt(math.exp(2 * L)).items():
+        if math.log(float(x)) < 2 * L: B = wb.add(B, wb.atom_blocks(L, N, lat, x), c)
+    print("(1) %s lattice L=%.2f N=%d: max |fd(0) - 2 x B| even %s odd %s" % (lat, L, N,
+          mp.nstr(max(abs(A[0][i, j] - 2 * B[0][i, j]) for i in range(A[0].rows) for j in range(A[0].rows)), 3),
+          mp.nstr(max(abs(A[1][i, j] - 2 * B[1][i, j]) for i in range(A[1].rows) for j in range(A[1].rows)), 3)))
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+zs = [mp.mpf(g) for g in rhlib.zeros(5000)]
+L = mp.mpf(1); w = wb.freqs(L, 2, 'half'); v = mp.matrix([w[1] * mp.sqrt(L), w[0] * mp.sqrt(L)])
+def fhat(r):
+    s = 0
+    for coef, om in ((w[1], w[0]), (w[0], w[1])):
+        s += coef * (mp.sin((om - r) * L) / (om - r) + mp.sin((om + r) * L) / (om + r))
+    return s
+print("(2) even test function f = w1 cos(w0 x) + w0 cos(w1 x) on [-1,1]; prime side (fd) vs zero side")
+for name, delta in (("delta = 0", mp.mpf(0)), ("delta = 0.1 (real)", mp.mpf('0.1')), ("delta = 0.25 (real)", mp.mpf('0.25')), ("delta = 0.3 i", mp.mpc(0, '0.3')), ("delta = 2 i", mp.mpc(0, 2))):
+    E, O = fd.form(L, 2, 'half', delta, delta, delta)
+    QB = (v.T * E * v)[0]
+    QZ = 2 * mp.fsum(fhat(g + fd.I * delta) ** 2 + fhat(g - fd.I * delta) ** 2 for g in zs)
+    QZ = mp.re(QZ)
+    E2, _ = fd.form(L, 2, 'half', 0, 0, delta); QC = (v.T * E2 * v)[0]
+    print("  %-20s prime side %s ; zero side %s ; rel diff %s ; control (only primes tilted) %s   (%.0fs)" % (name, mp.nstr(QB, 15), mp.nstr(QZ, 15),
+          mp.nstr(abs(QB - QZ) / abs(QZ), 3), mp.nstr(QC, 8), time.time() - t0), flush=True)

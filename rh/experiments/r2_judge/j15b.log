@@ -1,0 +1,3 @@
+J15b zeta M=160: min over sites 0..M/2 of BE/lambda_1 = 0.4415 at site 4 ; site 0 0.4483
+J15b beurling M=160: min over sites 0..M/2 of BE/lambda_1 = 0.4435 at site 4 ; site 0 0.4490
+J15b zeta M=320: min over sites 0..39 of BE/lambda_1 = 0.4302 at site 9 ; site 0 0.4405

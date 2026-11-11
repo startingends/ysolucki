@@ -1,0 +1,61 @@
+"""S1-parity turn 3: second route for the foothold seat's Theorem B(ii) IN THE SAME TEST SPACE (real polynomials of degree < NB on [-L, L]):
+for which positions y is there a weight m >= 0 with A_par - 2 m C_par(y) >= 0 in both parities, and what is the hull of those weights?
+Exact rational cross-correlations + mpmath 70 digits (my fh_poly.py.txt); feasibility of a weight interval by the exact pencil.
+usage: python3 fh_poly3.py.txt L NB"""
+import sys
+src = open("/home/user/ysolucki/rh/experiments/s1_seminar/parity/fh_poly.py.txt").read().split("y = mp.log(2); m = mp.log(2) / mp.sqrt(2)")[0]
+exec(src)
+cache = {}
+def base(par):
+    idx = [j for j in range(NB) if j % 2 == par]
+    A, G, _ = mats(par)
+    cfs = {(j, k): [tomp(c) for c in cross(j, k)] for j in idx for k in idx if k >= j}
+    Lc = mp.cholesky(G); Li = mp.inverse(Lc)
+    return idx, Li * A * Li.T, cfs, Li
+B = [base(0), base(1)]
+def interval(y):
+    """set of m >= 0 with both blocks >= 0, or None. A is indefinite, so: block >= 0 on {m} is an interval; find it from the pencil of (An, Cn)."""
+    lo, hi = mp.mpf(0), mp.inf
+    for idx, An, cfs, Li in B:
+        n = len(idx); C = mp.matrix(n, n)
+        for a, j in enumerate(idx):
+            for b, k in enumerate(idx):
+                cf = cfs[(min(j, k), max(j, k))]
+                C[a, b] = mp.fsum(cf[nn] * y ** nn for nn in range(len(cf)))
+        Cn = Li * C * Li.T
+        f = lambda m: min(mp.eigsy(An - 2 * m * Cn, eigvals_only=True))
+        # concave in m: maximise, then bisect the two ends
+        a_, b_ = mp.mpf('0.3'), mp.mpf('0.7'); g = (mp.sqrt(5) - 1) / 2
+        x1, x2 = b_ - g * (b_ - a_), a_ + g * (b_ - a_); f1, f2 = f(x1), f(x2)
+        for _ in range(60):
+            if f1 < f2: a_, x1, f1 = x1, x2, f2; x2 = a_ + g * (b_ - a_); f2 = f(x2)
+            else: b_, x2, f2 = x2, x1, f1; x1 = b_ - g * (b_ - a_); f1 = f(x1)
+        ms = (a_ + b_) / 2
+        if f(ms) < 0: return None
+        e = []
+        for sgn in (-1, 1):
+            p, q = ms, ms + sgn * mp.mpf('0.2')
+            for _ in range(60):
+                mid = (p + q) / 2
+                if f(mid) >= 0: p = mid
+                else: q = mid
+            e.append(p)
+        lo, hi = max(lo, e[0]), min(hi, e[1])
+    return (lo, hi) if lo <= hi else None
+y2 = mp.log(2)
+print("L=%s NB=%d: weight interval at y = log 2: %s" % (sys.argv[1], NB, [ns(v, 9) for v in interval(y2)]), flush=True)
+ends = []
+for sgn, far in ((-1, mp.mpf('0.02')), (1, mp.mpf('0.02'))):
+    p, q = y2, y2 + sgn * far
+    for _ in range(34):
+        mid = (p + q) / 2
+        if interval(mid) is not None: p = mid
+        else: q = mid
+    ends.append(p)
+print("   feasible positions in this test space: y in [%s, %s], e^y in [%s, %s]   (%.0fs)" % (ns(ends[0], 9), ns(ends[1], 9), ns(mp.exp(ends[0]), 8), ns(mp.exp(ends[1]), 8), time.time() - t0), flush=True)
+hl, hh = mp.inf, mp.mpf(0)
+for i in range(41):
+    yy = ends[0] + (ends[1] - ends[0]) * i / 40
+    iv = interval(yy)
+    if iv: hl, hh = min(hl, iv[0]), max(hh, iv[1])
+print("   hull of feasible weights over 41 positions: [%s, %s]   (%.0fs)" % (ns(hl, 8), ns(hh, 8), time.time() - t0), flush=True)

@@ -1,0 +1,41 @@
+import sys, math, importlib.machinery, importlib.util, numpy as np
+from scipy.integrate import quad
+from scipy.special import digamma
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+R = load("ref_lib", "/home/user/ysolucki/rh/experiments/r2_cubic/refuter/ref_lib.py.txt")
+np.set_printoptions(linewidth=200, precision=6)
+# (A) formula check of arch entries by the digamma (frequency-side) form:
+#   arch_ij = -log(pi) delta_ij + (1/2pi) int fhat_i conj(fhat_j) Re psi(1/4 + i r/2) dr,  |fhat|^2-type = (4 sin^2(r h/2)/(h r^2)) cos(r d)
+def arch_freq(h, d):
+    rp = lambda r: digamma(0.25 + 0.5j * r).real
+    full = lambda r: (4 * math.sin(r * h / 2) ** 2 / (h * r * r)) * math.cos(r * d) * rp(r) if r > 0 else h * rp(0.0)
+    r0 = 1.0
+    I0 = quad(full, 0, r0, epsabs=1e-13, epsrel=1e-13)[0]
+    # r > r0: 4 sin^2(rh/2) cos(rd) = 2cos(rd) - cos(r(d+h)) - cos(r(d-h))
+    g = lambda r: rp(r) / (h * r * r)
+    tot = 0.0
+    for coef, om in ((2.0, d), (-1.0, d + h), (-1.0, abs(d - h))):
+        if om == 0.0:
+            tot += coef * quad(g, r0, np.inf, epsabs=1e-13, epsrel=1e-12, limit=500)[0]
+        else:
+            tot += coef * quad(g, r0, np.inf, weight='cos', wvar=om, epsabs=1e-12, limit=2000, limlst=2000)[0]
+    val = 2 * (I0 + tot) / (2 * math.pi)
+    return val + (-math.log(math.pi) if d == 0 else 0.0)
+L, n = 1.0, 12
+N, p, q, arch = R.build(L, n)
+h = 2 * L / n
+print("arch entries, kernel form (mine) vs digamma form (independent formula), L=1 n=12:")
+for m in (0, 1, 2, 5, 11):
+    print("  |i-j|=%2d  kernel %.10f   digamma %.10f" % (m, arch[m], arch_freq(h, m * h)))
+# (B) eigenvalues of Ntilde
+for kind in ("zeta", "beurling"):
+    for (L, n) in ((1.0, 12), (0.5, 12), (0.5, 14), (1.0, 14), (0.75, 12), (0.4, 12)):
+        at = None if kind == "zeta" else R.beurling(math.exp(2 * L))
+        N, p, q, _ = R.build(L, n, at)
+        H = R.ext(N, p, q); ev = np.sort(np.linalg.eigvalsh(H))[::-1]
+        Q = np.outer(p, q) + np.outer(q, p) - N
+        eq = np.sort(np.linalg.eigvalsh(Q))
+        print("%-8s L=%.2f n=%d  #pos(Ntilde)=%d  eigs: %.6f %.6e %.6e | #neg(Q)=%d  min eig Q=%.4e | min offdiag N=%.3e" % (
+            kind, L, n, (ev > 1e-12).sum(), ev[0], ev[1], ev[2], (eq < -1e-12).sum(), eq[0], N[~np.eye(n, dtype=bool)].min()))

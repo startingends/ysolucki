@@ -1,0 +1,25 @@
+"""V-FH: is the form Q of the two proofs the Weil form (sum over zeros)?  One even and one odd test function on [-1/2, 1/2],
+true atom.  Left: my polynomial code (x-space, Lemma 5).  Right: sum over the first 150 zeros of F(gamma) F(-gamma) conj...
+for real f: sum_rho F(gamma) conj(F(conj gamma)) = 2 sum_{gamma > 0} |F(gamma)|^2 when the zeros are on the line."""
+import time
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+mp.mp.dps = 30
+t0 = time.time()
+L = mp.mpf(1) / 2
+Pb = Poly(L, 28)
+y = mp.log(2); m = mp.log(2) / mp.sqrt(2)
+zs = [mp.im(mp.zetazero(n)) for n in range(1, 151)]
+print(f"zeros done t={time.time()-t0:.0f}s")
+for name, v in (("even (1/4 - t^2)^4", lambda t: (mp.mpf(1) / 4 - t * t) ** 4), ("odd t (1/4 - t^2)^4", lambda t: t * (mp.mpf(1) / 4 - t * t) ** 4)):
+    # coefficients in the orthonormal Legendre basis by my Gauss-Legendre rule
+    xs, ws = Poly._gl(40)
+    c = [mp.mpf(0)] * 28
+    for x, w in zip(xs, ws):
+        ph = Pb.phi(L * x); val = v(L * x)
+        for j in range(28): c[j] += L * w * ph[j] * val
+    Mfull = Pb.A - 2 * m * Pb.gamma(y)
+    Q = sum(c[j] * c[k] * Mfull[j, k] for j in range(28) for k in range(j % 2, 28, 2))
+    F = lambda r: mp.quad(lambda t: v(t) * mp.exp(1j * r * t), [-L, 0, L])
+    S = 2 * mp.fsum(abs(F(g)) ** 2 for g in zs)
+    print(f"{name}: Q (x-space, mine) = {mp.nstr(Q, 16)}   2 sum_(150 zeros) |F(gamma)|^2 = {mp.nstr(S, 16)}   ratio - 1 = {mp.nstr(Q / S - 1, 3)}   [author: {'1.1753288841703535e-8' if name[0]=='e' else '5.344742566406391e-9'}]")
+print(f"total {time.time()-t0:.0f}s")

@@ -1,0 +1,9 @@
+import sys, math, time
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+from flint import acb_mat
+flint.ctx.prec = 500
+q, w = build(1.0, 80); E = even_block(q, 80)
+t = time.time()
+ev = acb_mat(mid(E)).eig(algorithm="approx")
+ev = sorted(ev, key=lambda z: float(z.real))
+print(time.time() - t, [e.real.str(8, radius=False) for e in ev[:6]], max(abs(float(e.imag)) for e in ev))

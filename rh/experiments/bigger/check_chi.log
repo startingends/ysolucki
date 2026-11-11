@@ -1,0 +1,6 @@
+L=1.00 chi_-3: lowest eigenvalue at its own conductor 3: 7.650e-10 ; smallest conductor at which these weights stay feasible on this window: 3.00000000
+L=1.00 chi_-4: lowest eigenvalue at its own conductor 4: 6.333e-07 ; smallest conductor at which these weights stay feasible on this window: 3.99999747
+L=1.00 chi_5: lowest eigenvalue at its own conductor 5: 2.061e-06 ; smallest conductor at which these weights stay feasible on this window: 4.99998970
+L=1.25 chi_-3: lowest eigenvalue at its own conductor 3: 4.441e-16 ; smallest conductor at which these weights stay feasible on this window: 3.00000000
+L=1.25 chi_-4: lowest eigenvalue at its own conductor 4: 5.458e-13 ; smallest conductor at which these weights stay feasible on this window: 4.00000000
+L=1.25 chi_5: lowest eigenvalue at its own conductor 5: 2.422e-11 ; smallest conductor at which these weights stay feasible on this window: 5.00000000

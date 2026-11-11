@@ -1,0 +1,29 @@
+"""Stage 3: the four skips, each with its reason written into the local log."""
+import os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage3")
+
+skip("cubic", 12, """a proposal that is not precise enough to compute (the owner's second test fails): 'the cubic is
+ the triple intersection form on C x C x C, and the surface statement is a slice of it' names no object on the
+ number-field side from which a number can be calculated; the seat marked it 'not developed', and its PROGRESS.md
+ says the slice at a fibre node 'was not identified'. Newness was not assessed. If someone defines the fibre-node
+ slice as a window form, enter it as a note on main #24.""")
+
+skip("free", 4, """killed by the seat before any computation, on a heuristic only: Hadamard infinite divisibility of
+ the zero-side kernel would make the zeros an additive semigroup, which linear-independence and GUE heuristics say
+ they are not. No object was defined and nothing was computed, so it fails the owner's second test (precise enough
+ to compute), and it has no parent idea in the main log to carry the reason. The reason is kept here and in
+ rh/experiments/r2_audit/AUDIT.md.""")
+
+skip("judge", 3, """a process recommendation to the lead, not a mathematical idea: typed clock stamps ran ahead of
+ the system clock for at least three agents, so prediction order should be certified with a command-written time
+ or a git snapshot. It is recorded in rh/experiments/r2_judge/JUDGEMENT.md section 5 and passed on in
+ rh/experiments/r2_audit/AUDIT.md ('For the lead').""")
+
+skip("judge", 11, """a process recommendation to the lead, not a mathematical idea: commit 1e3f60a is the only hard
+ evidence of prediction order in round 2; snapshot PROGRESS.md by command right after each prediction block. Same
+ subject as R2-judge/#3; recorded in rh/experiments/r2_judge/JUDGEMENT.md section 5 and passed on in
+ rh/experiments/r2_audit/AUDIT.md ('For the lead').""")
+
+open(marker, "w").write("done")
+print("stage 3 done")

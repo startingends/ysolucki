@@ -1,0 +1,50 @@
+"""REVERSE_R4 section 4: LP feasibility of 'g + p >= 0 on a grid' with p in the ladder span.
+Ladder Lambda_eps = span of L2-eigenvectors of Q (Legendre orthonormal basis) with 0 <= eigenvalue <= eps; P_eps = Lambda_eps with
+a(p) = b(p) = 0 imposed (E); Lambda_eps itself (variant E'). LP: max t s.t. g(u_i) + sum c_j p_j(u_i) >= t*max|g|, |c_j| <= CB.
+usage: effect.py.txt <pkl> <eps>"""
+import sys
+args = sys.argv[1:]
+sys.argv = ['h', args[0], '0', 'on:1,2', '0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("c = mp.mpf(sys.argv[2])")[0]
+exec(src)
+from numpy.polynomial.legendre import legval
+from scipy.optimize import linprog
+EPS = float(args[1]); CB = 1e3; Lf = float(L)
+Qf = np.array([[float(Q[i, j]) for j in range(NB)] for i in range(NB)]); Qf = (Qf + Qf.T) / 2
+av = np.array([float(mp.re(x)) for x in phi(mp.mpc(0, 0.5))]); bv = np.array([float(mp.re(x)) for x in phi(mp.mpc(0, -0.5))])
+eq, Vq = np.linalg.eigh(Qf)
+lad = Vq[:, (eq >= 0) & (eq <= EPS)]
+C = np.stack([av, bv]) @ lad; _, sv, Wt = np.linalg.svd(C); P0 = lad @ Wt[2:].T          # degree-zero part of the ladder
+print(f"{d['KIND']} L = {d['L']} NB = {NB}: Q eigenvalues below eps = {EPS}: {lad.shape[1]} (lowest {[f'{x:.1e}' for x in eq[:4]]}); "
+      f"degree-zero ladder dim {P0.shape[1]}; negative eigenvalues of Q (L2): {int(np.sum(eq < 0))}", flush=True)
+grid = np.linspace(-Lf, Lf, 2001)
+Phi = np.array([legval(grid / Lf, [0] * j + [1]) * np.sqrt((2 * j + 1) / (2 * Lf)) for j in range(NB)]).T   # 2001 x NB
+def lp(g, basis, name):
+    gv = Phi @ g; s = np.abs(gv).max(); Pv = Phi @ basis
+    k = basis.shape[1]
+    # variables (c_1..c_k, t): maximise t  <=>  minimise -t ;  -(Pv c) + s t <= gv
+    A = np.hstack([-Pv, s * np.ones((len(grid), 1))]); res = linprog(np.r_[np.zeros(k), -1.0], A_ub=A, b_ub=gv,
+        bounds=[(-CB, CB)] * k + [(-10, 10)], method='highs')
+    t = -res.fun if res.status == 0 else float('nan')
+    print(f"   {name}: min g / max|g| = {gv.min() / s:+.4f}; best t with ladder correction = {t:+.4f} ({'FEASIBLE' if t >= 0 else 'infeasible'}); "
+          f"a(g) = {av @ g:+.2e}, b(g) = {bv @ g:+.2e}, Q(g)/|g|^2 = {g @ Qf @ g / (g @ g):+.3e}", flush=True)
+nrm = lambda x: x / np.linalg.norm(x)
+U = np.stack([np.array([float(x) for x in Li * mp.matrix(list(av))]), np.array([float(x) for x in Li * mp.matrix(list(bv))])], 1)
+ev, V = np.linalg.eigh(Af)
+Lt = np.array([[float(Li[j, i]) for j in range(NB)] for i in range(NB)])      # Li^T
+dirs = []
+if d['KIND'] == 'dh':
+    Qo, _ = np.linalg.qr(U); Pw = np.eye(NB) - Qo @ Qo.T; eB, VB = np.linalg.eigh(Pw @ Af @ Pw)
+    i0 = int(np.argmin(np.where(np.abs(eB) > 1e-12, eB, np.inf))); w = VB[:, i0]
+    g = Lt @ w; g = g - np.stack([av, bv]).T @ np.linalg.lstsq(np.stack([av, bv]).T, g, rcond=None)[0] * 0
+    dirs.append((nrm(g), f"impostor degree-zero negative direction (whitened value {eB[i0]:+.4f})"))
+else:
+    e2, V2 = np.linalg.eigh(np.outer(av, bv) + np.outer(bv, av) - Qf); dirs.append((nrm(V2[:, -1]), "zeta: L2-top direction of D.D"))
+    g = Lt @ (U[:, 0] + U[:, 1]); dirs.append((nrm(g), "zeta: D-dual of the fibre functionals, D^-1(a + b)"))
+rng = np.random.default_rng(3); bulk = Vq[:, eq > 0.1]; r = bulk @ rng.standard_normal(bulk.shape[1])
+r = r - np.stack([av, bv]).T @ np.linalg.lstsq(np.stack([av, bv]).T, r, rcond=None)[0]
+dirs.append((nrm(r), "control: random degree-zero bulk combination"))
+for g, name in dirs:
+    print(f"  {name}:")
+    lp(g, P0, "E  (degree-zero ladder)")
+    lp(g, lad, "E' (whole ladder)     ")

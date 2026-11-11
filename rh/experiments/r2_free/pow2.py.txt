@@ -1,0 +1,10 @@
+import sys
+sys.path.insert(0,'.')
+from fractions import Fraction as F
+exec(open('wallach.py.txt').read().split("if __name__")[0])
+K = int(sys.argv[1]); mmax = 2**K
+f = base('sq', mmax)
+for ns in sys.argv[2:]:
+    n = F(ns); g = power(f, n, mmax)
+    neg = [m for m in range(1, mmax+1) if g[m] < 0]
+    print(float(n), 'negatives m<=%d:' % mmax, neg[:12], ' r_n(2^k)/2^(k(n/2-1)):', ['%.3f' % (float(g[2**k])/2**(k*(float(n)/2-1))) for k in range(1, K+1)])

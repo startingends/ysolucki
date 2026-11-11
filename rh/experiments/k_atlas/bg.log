@@ -1,0 +1,15 @@
+c_inf = 5.37218341923
+CHECK L=0.4 f=sin(pi x/L): mine 0.00134818794253 ; lane A builder L*O[0,0] = 0.00134818794253
+L=0.36 f=sin(pi x/2L): |f|^2=0.36 pole=-0.005551686018 arch=0.0529744824  Q_bg(f)=0.04742279638  Q_bg/|f|^2=0.13172999
+L=0.375 f=sin(pi x/2L): |f|^2=0.375 pole=-0.006539830949 arch=0.03971617528  Q_bg(f)=0.03317634433  Q_bg/|f|^2=0.088470252
+L=0.38 f=sin(pi x/2L): |f|^2=0.38 pole=-0.006896891732 arch=0.03515722797  Q_bg(f)=0.02826033624  Q_bg/|f|^2=0.074369306
+L=0.4 f=sin(pi x/2L): |f|^2=0.4 pole=-0.008473825662 arch=0.01624578039  Q_bg(f)=0.007771954725  Q_bg/|f|^2=0.019429887
+   g(u) = autocorrelation: zero at u0 = 0.28338106 (x = e^u0 = 1.327611); min of g on (u0, 2L) at u = 0.85, g = 0.0; g(log 2) = -0.10066389
+Traceback (most recent call last):
+  File "/home/user/ysolucki/rh/experiments/k_atlas/bg.py.txt", line 41, in <module>
+    % (mp.nstr(abs(tot) / (2 * G), 8), mp.nstr(mp.log(2) / mp.sqrt(2), 8), mp.nstr(-2 * mp.log(2) / mp.sqrt(2) * g(mp.log(2)), 8), mp.nstr(tot, 8)))
+               ~~~~~~~~~^~~~~~~~~
+  File "<string>", line 7, in __div__
+  File "/usr/local/lib/python3.13/site-packages/mpmath/libmp/libmpf.py", line 960, in mpf_div
+    raise ZeroDivisionError
+ZeroDivisionError

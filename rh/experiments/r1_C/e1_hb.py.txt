@@ -1,0 +1,97 @@
+"""E1: real-rooted prime-only family.  F_X(t) = Re[ e^{i theta(t)} P_X(1/2+it) ],
+log P_X(s) = sum_{n<=X} Lambda(n)/log(n) * w(n) * n^{-s},  w(n) = 1 - log n/log X  (Fejer weight) or 1 (sharp).
+Zeros of F_X <=> theta(t) + Im log P_X(1/2+it) = pi/2 mod pi.  No zeta zeros used to build F_X.
+usage: python3 e1_hb.py.txt <mode: zeta|fake|dh> <weight: fejer|sharp> X1 X2 ...
+"""
+import sys, math
+import numpy as np
+sys.path.insert(0, "/home/user/ysolucki/tools")
+import rhlib, mpmath as mp
+from scipy.special import loggamma
+
+mode, wt = sys.argv[1], sys.argv[2]
+Xs = [float(x) for x in sys.argv[3:]]
+import os
+TMAX = float(os.environ.get("TMAX", "80"))
+T = np.linspace(0.5, TMAX, int((TMAX-0.5)*500)+1)
+from scipy.special import exp1
+
+def theta_zeta(t):   # arg of pi^{-s/2} Gamma(s/2) at s=1/2+it
+    return np.imag(loggamma(0.25 + 0.5j * t)) - 0.5 * t * math.log(math.pi)
+def theta_dh(t):     # arg of (5/pi)^{s/2} Gamma((s+1)/2)
+    return np.imag(loggamma(0.75 + 0.5j * t)) + 0.5 * t * math.log(5 / math.pi)
+
+def mangoldt_zeta(N, fake=False):
+    sieve = np.ones(N + 1, bool); sieve[:2] = False
+    for i in range(2, int(N ** 0.5) + 1):
+        if sieve[i]: sieve[i * i::i] = False
+    ps = np.nonzero(sieve)[0].astype(float)
+    if fake:   # Beurling-type control: same count, shifted "primes" q = p + 0.5 (multiplicative system, no additive structure)
+        ps = ps + 0.5
+    out = []
+    for p in ps:
+        q = p
+        while q <= N:
+            out.append((q, math.log(p)))
+            q *= p
+    return out   # list of (n, Lambda(n))
+
+def mangoldt_dh(N):
+    # DH coefficients a_n (period 5): 1, kappa, -kappa, -1, 0 ; Lambda_f by a_n log n = sum_{d|n} Lambda_f(d) a_{n/d}
+    kap = (math.sqrt(10 - 2 * math.sqrt(5)) - 2) / (math.sqrt(5) - 1)
+    a = [0.0] * (N + 1)
+    for n in range(1, N + 1):
+        a[n] = [0.0, 1.0, kap, -kap, -1.0][n % 5]
+    L = [0.0] * (N + 1)
+    divs = [[] for _ in range(N + 1)]
+    for d in range(2, N + 1):
+        for m in range(d, N + 1, d): divs[m].append(d)
+    for n in range(2, N + 1):
+        s = a[n] * math.log(n)
+        for d in divs[n]:
+            if d < n: s -= L[d] * a[n // d]
+        L[n] = s
+    return [(float(n), L[n]) for n in range(2, N + 1) if abs(L[n]) > 1e-14]
+
+def zeros_of(X):
+    N = int(X)
+    lam = mangoldt_dh(N) if mode == "dh" else mangoldt_zeta(N, fake=(mode == "fake"))
+    ph = np.zeros_like(T)
+    for n, L in lam:
+        if n > X: continue
+        ln = math.log(n)
+        w = (1 - ln / math.log(X)) if wt == "fejer" else 1.0
+        ph += -(L / ln) * w * n ** -0.5 * np.sin(T * ln)      # Im of n^{-1/2-it} = -n^{-1/2} sin(t log n)
+    th = theta_dh(T) if mode == "dh" else theta_zeta(T)
+    if mode != "dh" and "nopole" not in sys.argv[0]:
+        # pole correction: Im log zeta = lim Im[Sum_X - G_X(1-s)] - arg(s-1);  G(z)=int_0^V w(v)(e^{zv}-1)/v dv, z=1-s
+        V = math.log(X); mz = (-0.5 + 1j * T) * V          # -zV
+        G = -exp1(mz) - np.log(mz) - np.euler_gamma
+        if wt == "fejer":
+            G = G - (np.exp(-mz) - 1) / (-mz) + 1
+        ph = ph - np.imag(G) + np.arctan(2 * T)
+    F = np.cos(th + ph)
+    idx = np.nonzero(F[:-1] * F[1:] < 0)[0]
+    z = T[idx] - F[idx] * (T[idx + 1] - T[idx]) / (F[idx + 1] - F[idx])
+    return z
+
+if mode == "dh":
+    import json
+    d = json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))
+    true = None; rawd = d
+else:
+    true = np.array(rhlib.zeros(21))
+print("mode", mode, "weight", wt)
+for X in Xs:
+    z = zeros_of(X)
+    if mode == "dh":
+        print("X=%g  n_zeros(0.5,80)=%d  first 12: %s" % (X, len(z), np.round(z[:12], 4)))
+        np.save("e1_dh_X%d.npy" % int(X), z)
+        continue
+    k = min(20, len(z))
+    err = np.abs(z[:20] - true[:20]) if len(z) >= 20 else None
+    cnt = len(z[z < 0.5 * (true[19] + true[20])])
+    if err is None:
+        print("X=%g: only %d zeros" % (X, len(z))); continue
+    print("X=%-8g count below (g20+g21)/2: %d (want 20)  max|err| first20 = %.4f  mean = %.4f  err#1 = %.5f  err#20 = %.4f"
+          % (X, cnt, err.max(), err.mean(), err[0], err[19]))

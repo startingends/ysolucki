@@ -1,0 +1,95 @@
+"""Float exploration (NOT a certificate): generalised eigenvalues of the Weil form Q against the band-limiting leak D_L
+(definition of notebook N40) on all polynomials of degree < NB on the window L = 1/2 (one prime, 2).
+usage: pencil.py.txt [NB=28] [nh=14] [L=1/2 as p/q]   (L < (1/2) log 3; for L <= (1/2) log 2 there is no atom and no Moebius term)"""
+import sys, math, numpy as np
+from fractions import Fraction as Fr
+NB = int(sys.argv[1]) if len(sys.argv) > 1 else 28
+nh = int(sys.argv[2]) if len(sys.argv) > 2 else 14
+sys_argv = list(sys.argv)
+LARG = sys_argv[3] if len(sys_argv) > 3 else '1/2'
+sys.argv = ['forcing', str(NB), '600', LARG]
+src = open('/home/user/ysolucki/rh/experiments/foothold/forcing.py.txt').read()
+ns = {'__name__': 'lib'}
+exec(compile(src, 'forcing', 'exec'), ns)
+A0 = ns['A0']; Gy = ns['Gy']; IDX = ns['IDX']; fmpq = ns['fmpq']
+L = float(Fr(LARG)); lam = math.exp(L); ATOM = (2 * L > math.log(2))
+ylog2 = fmpq(int(round(math.log(2) * 10**17)), 10**17)
+m2 = math.log(2) / math.sqrt(2)
+Q = {par: (A0[par] - 2 * m2 * Gy(par, ylog2)) if ATOM else A0[par] for par in (0, 1)}
+# ---- companions on x in (0, lambda]: pieces (0, 1/lam) [free part h], [1/lam, lam/2], [lam/2, lam]
+xs, ws = np.polynomial.legendre.leggauss(80)
+def piece(a, b):
+    return (a + b) / 2 + (b - a) / 2 * xs, (b - a) / 2 * ws
+xm = max(lam / 2, 1 / lam)
+x0, w0 = piece(0.0, 1 / lam); x1, w1 = piece(1 / lam, xm); x2, w2 = piece(xm, lam)
+X = np.concatenate([x0, x1, x2]); Wt = np.concatenate([w0, w1, w2])
+from numpy.polynomial import legendre as Lg
+def phi(j, u):     # orthonormal Legendre on [-L, L]
+    c = np.zeros(j + 1); c[j] = 1
+    return math.sqrt((2 * j + 1) / (2 * L)) * Lg.legval(u / L, c)
+G = np.zeros((NB + nh, len(X)))       # rows: companions g_j (j < NB), then free functions h_i
+for j in range(NB):
+    G[j, len(x0):len(x0) + len(x1)] = x1 ** -0.5 * (phi(j, np.log(x1)) - 2 ** -0.5 * phi(j, np.log(2 * x1)))
+    G[j, len(x0) + len(x1):] = x2 ** -0.5 * phi(j, np.log(x2))
+for i in range(nh):
+    c = np.zeros(i + 1); c[i] = 1
+    G[NB + i, :len(x0)] = Lg.legval(2 * lam * x0 - 1, c) * math.sqrt((2 * i + 1) * lam)
+# even extension to R:  <g, g'> = 2 int_0^lam g g' ;  ghat(xi) = 2 int_0^lam g(x) cos(2 pi x xi) dx ; <g, B g'> = 2 int_0^lam ghat ghat' dxi
+xi, wxi = np.polynomial.legendre.leggauss(200); xi = lam / 2 * (xi + 1); wxi = lam / 2 * wxi
+C = 2 * (G * Wt) @ np.cos(2 * np.pi * np.outer(X, xi))          # (NB+nh) x nxi
+Gram = 2 * (G * Wt) @ G.T
+Aout = Gram - 2 * (C * wxi) @ C.T                                 # out-of-band energy form
+ell = 2 * (G * Wt).sum(axis=1)                                    # ghat(0)
+Aff = Aout[:NB, :NB]; Afh = Aout[:NB, NB:]; Ahh = Aout[NB:, NB:]
+print("L = " + LARG + ", NB = %d, nh = %d; lowest eigenvalues of A_hh (free part, c = 2 pi): %s" % (NB, nh, np.round(np.linalg.eigvalsh(Ahh)[:3], 7)))
+D_h0 = Aff                                                        # companion with h = 0  (upper bound of D_L)
+Ahi = np.linalg.inv(Ahh)
+D_free = Aff - Afh @ Ahi @ Afh.T                                  # min over h, no constraint
+# min over h subject to ghat(0) = 0:  h = -Ahi (Afh^T c + mu lh),  mu fixed by lf.c + lh.h = 0
+lf = ell[:NB]; lh = ell[NB:]
+s = lh @ Ahi @ lh
+T = lf - Afh @ Ahi @ lh
+D_con = D_free + np.outer(T, T) / s
+import scipy.linalg as sl
+for name, D in (("h = 0", D_h0), ("min over h", D_free), ("min over h with ghat(0) = 0", D_con)):
+    off = max(abs(D[i, j]) for i in range(NB) for j in range(NB) if (i - j) % 2)
+    print(f" D = [{name}]: largest parity-mixing entry {off:.2e}")
+    for par in (0, 1):
+        idx = IDX[par]
+        Dp = D[np.ix_(idx, idx)]
+        dev = np.linalg.eigvalsh(Dp)
+        for K in (4, 6, 8, 10, len(idx)):
+            k = sl.eigh(Q[par][:K, :K], Dp[:K, :K], eigvals_only=True)
+            print(f"   parity {par}, degree < {2*K}: kappa_min = {k[0]:.5f}  kappa_max = {k[-1]:.4f}", end='')
+            print(f"   | lowest eig of D {np.linalg.eigvalsh(Dp[:K,:K])[0]:.3e}, of Q {np.linalg.eigvalsh(Q[par][:K,:K])[0]:.3e}")
+# ---- D_L is NOT parity-diagonal: the pencil on the FULL polynomial space (both parities together)
+Qfull = np.zeros((NB, NB))
+for par in (0, 1):
+    Qfull[np.ix_(IDX[par], IDX[par])] = Q[par]
+J = np.diag([(-1.0) ** j for j in range(NB)])        # the reflection u -> -u in the Legendre basis
+for name, D in (("min over h", D_free), ("min over h with ghat(0) = 0", D_con)):
+    for K in (12, 20, NB):
+        k = sl.eigh(Qfull[:K, :K], D[:K, :K], eigvals_only=True)
+        Ds = (D + J @ D @ J) / 2
+        ks = sl.eigh(Qfull[:K, :K], Ds[:K, :K], eigvals_only=True)
+        print(f" FULL space, D = [{name}], degree < {K}: kappa_min = {k[0]:.5f} kappa_max = {k[-1]:.4f};  with D symmetrised under u -> -u: kappa_min = {ks[0]:.5f} kappa_max = {ks[-1]:.4f}")
+# ---- both conditions of N40 as CONTINUOUS functionals: ghat(0) = 0 and (B g)(0) = int_{-lam}^{lam} ghat = 0
+ell2 = 2 * (C * wxi).sum(axis=1)
+Lf = np.stack([ell[:NB], ell2[:NB]], axis=1); Lh = np.stack([ell[NB:], ell2[NB:]], axis=1)
+S2 = Lh.T @ Ahi @ Lh; T2 = Lf - Afh @ Ahi @ Lh
+D_con2 = D_free + T2 @ np.linalg.inv(S2) @ T2.T
+Ds2 = (D_con2 + J @ D_con2 @ J) / 2
+print(" D = [min over h with ghat(0) = 0 and (Bg)(0) = 0]: largest parity-mixing entry %.2e" % max(abs(D_con2[i, j]) for i in range(NB) for j in range(NB) if (i - j) % 2))
+for K in (12, 20, NB):
+    k = sl.eigh(Qfull[:K, :K], D_con2[:K, :K], eigvals_only=True); ks = sl.eigh(Qfull[:K, :K], Ds2[:K, :K], eigvals_only=True)
+    print(f"   FULL space, degree < {K}: kappa_min = {k[0]:.5f} kappa_max = {k[-1]:.4f};  symmetrised D: kappa_min = {ks[0]:.5f} kappa_max = {ks[-1]:.4f};  lowest eigs of D {np.linalg.eigvalsh(D_con2[:K,:K])[:3]}, of Q {np.linalg.eigvalsh(Qfull[:K,:K])[:3]}")
+for par in (0, 1):
+    idx = IDX[par]; k = sl.eigh(Q[par], D_con2[np.ix_(idx, idx)], eigvals_only=True)
+    print(f"   parity {par} block alone, degree < {NB}: kappa_min = {k[0]:.5f} kappa_max = {k[-1]:.4f}; three lowest kappa: {k[:3]}")
+# ---- where is kappa_min attained?  (D(v)/|v|^2 of order 1 = bulk; tiny = ladder)
+kk, VV = sl.eigh(Qfull, D_con2)
+for i in range(3):
+    v = VV[:, i]; n2 = v @ v
+    print(f"   pencil eigenvector {i}: kappa = {kk[i]:.5f}, D(v)/|v|^2 = {v @ D_con2 @ v / n2:.3e}, Q(v)/|v|^2 = {v @ Qfull @ v / n2:.3e}, even part of |v|^2: {sum(v[j]**2 for j in IDX[0]) / n2:.3f}")
+de, DV = np.linalg.eigh(D_con2)
+print("   ladder ratios Q(d_i)/D(d_i) on the three lowest eigenvectors d_i of D:", [round(float(DV[:, i] @ Qfull @ DV[:, i] / de[i]), 4) for i in range(3)])

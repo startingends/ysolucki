@@ -1,0 +1,17 @@
+"""C2: the conjectured kernel formula (LOCAL_DISCRIMINANT 3.3) on the diagonal: K(gamma) = 1/2 int_1^inf |R_N(rho)|^2 dN/N,
+R_N(s) = sum_{n<=N} n^-s - N^(1-s)/(1-s). Piecewise-constant partial sums, Gauss-Legendre on each [n, n+1], N up to NMAX,
+tail beyond NMAX bounded by the O(N^-1/2) asymptotics (reported)."""
+import numpy as np, sys
+from numpy.polynomial.legendre import leggauss
+NMAX = int(sys.argv[1]) if len(sys.argv) > 1 else 200000
+x, w = leggauss(8)
+for g in (14.134725141734694, 21.022039638771555, 59.347044002602353, 60.831778524609810, 111.02953554316967, 111.87465917699264):
+    rho = 0.5 + 1j * g
+    n = np.arange(1, NMAX, dtype=float)
+    S = np.cumsum(n ** (-rho))                          # zeta_n(rho), constant on [n, n+1)
+    Nn = n[:, None] + (x[None, :] + 1) / 2              # nodes in [n, n+1]
+    R = S[:, None] - Nn ** (1 - rho) / (1 - rho)
+    val = 0.5 * np.sum(np.abs(R) ** 2 / Nn * (w[None, :] / 2))
+    tail_est = 0.5 * np.mean(np.abs(R[-1000:]) ** 2 * Nn[-1000:]) / NMAX     # |R|^2 ~ c/N  =>  int_NMAX c/N^2
+    half = 0.5 * np.sum((np.abs(R) ** 2 / Nn * (w[None, :] / 2))[: int(g / (2 * np.pi)) + 1])
+    print(f"  gamma = {g:9.4f}: 1/2 int_1^NMAX |R_N|^2 dN/N = {val:.4f}  (tail beyond NMAX ~ {tail_est:.1e}; part with N < gamma/2pi: {half:.4f})")

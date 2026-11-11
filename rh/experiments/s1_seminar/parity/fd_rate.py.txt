@@ -1,0 +1,17 @@
+"""S1-parity turn 2 (B73a): how small a real tilt d does the window L see?  d_c(L) = sqrt(mu_b(0)/c_b), with mu_b(0) the lowest
+eigenvalue of block b of F_0 (= 2 x zeta) and c_b = (mu_b(0) - mu_b(d))/d^2 measured at d = 1e-3 d_guess (quadratic regime)."""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt")
+t0 = time.time(); ns = lambda x, k=4: mp.nstr(x, k)
+for L, N, dps in ((0.3, 30, 40), (0.4, 30, 40), (0.5, 30, 50), (0.6, 30, 60), (0.7, 40, 70), (0.75, 40, 80), (0.8, 40, 90), (0.9, 40, 110), (1.0, 40, 130)):
+    mp.mp.dps = dps
+    base = fd.low(fd.form(L, N, 'int', 0, 0, 0))
+    d = mp.sqrt(min(base)) * mp.mpf('1e-3')
+    e = fd.low(fd.form(L, N, 'int', d, d, d))
+    c = [(base[b] - e[b]) / d ** 2 for b in (0, 1)]
+    print("L=%.2f: mu(0) even %s odd %s ; c even %s odd %s ; d_c even %s odd %s   (%.0fs)" % (L, ns(base[0]), ns(base[1]), ns(c[0]), ns(c[1]),
+          ns(mp.sqrt(base[0] / c[0])) if c[0] > 0 else "none", ns(mp.sqrt(base[1] / c[1])) if c[1] > 0 else "none", time.time() - t0), flush=True)

@@ -1,0 +1,13 @@
+zeta                                         c(4)=  0.6931  min eig -7.480e-17  #neg(<-1e-9) 0  rank 5
+B6: L(chi)L(chi-bar), chi mod 5, chi(2)=i    c(4)= -1.3863  min eig -3.892e+00  #neg(<-1e-9) 3  rank 6
+zeta(s) zeta(s-1)  (zeros off its centre line) c(4)=  3.4657  min eig  0.000e+00  #neg(<-1e-9) 0  rank 7
+dial n=4 = (1-4^(1-s)) zeta(s) zeta(s-1)     c(4)= -2.0794  min eig -5.794e+01  #neg(<-1e-9) 1  rank 7
+zeta(s-0.3) zeta(s+0.3) (zeros off the line) c(4)=  1.5079  min eig -5.031e-16  #neg(<-1e-9) 0  rank 7
+Liouville twist of zeta = zeta(2s)/zeta(s)   c(4)=  0.6931  min eig -7.480e-17  #neg(<-1e-9) 0  rank 5
+L(s, Delta) (Ramanujan tau; primes <= 11)    c(4)= -1.1913  min eig -3.616e+00  #neg(<-1e-9) 5  rank 7
+  dial n=4, a,b<=4 (rescaled by 1/ab): #neg 1, min eig -1.367e+00
+  dial n=4, a,b<=8 (rescaled by 1/ab): #neg 1, min eig -2.050e+00
+  dial n=4, a,b<=12 (rescaled by 1/ab): #neg 1, min eig -2.050e+00
+  dial n=4, a,b<=16 (rescaled by 1/ab): #neg 1, min eig -2.757e+00
+  dial n=4, a,b<=24 (rescaled by 1/ab): #neg 1, min eig -2.757e+00
+  dial n=4, a,b<=32 (rescaled by 1/ab): #neg 1, min eig -3.450e+00

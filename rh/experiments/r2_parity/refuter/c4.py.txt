@@ -1,0 +1,34 @@
+"""Numerical sanity check of Step (3c),(3d) of Theorem 4 (multiplier M = cos(tz)[sinc(z-a)^K + sinc(z+a)^K])."""
+import mpmath as mp, random
+mp.mp.dps = 40; random.seed(1)
+sinc = lambda w: mp.sin(w) / w if w != 0 else mp.mpf(1)
+def M(z, a, t, K): return mp.cos(t * z) * (sinc(z - a) ** K + sinc(z + a) ** K)
+worst = 0
+for trial in range(200):
+    a = mp.mpf(random.choice([-1, 1])) * random.uniform(14.2, 300); b = mp.mpf(random.uniform(0.001, 0.499))
+    z = mp.mpc(a, b); C = mp.mpc(random.gauss(0, 1), random.gauss(0, 1))
+    K = random.randint(2, 60)
+    t0 = (mp.arg(C) - mp.pi) / (2 * a); step = mp.pi / abs(a)
+    n = mp.ceil((K - 1 - t0) / step); t = t0 + n * step
+    assert K - 1 <= t <= K, (t, K)
+    sigma = mp.sinh(b) / b; eta = (sinc(2 * a + mp.mpc(0, b)) / sigma) ** K
+    assert abs(eta) <= mp.mpf('0.06') ** K
+    lhs = (M(z, a, t, K) ** 2 * C).real
+    rhs = -abs(C) * sigma ** (2 * K) * (mp.exp(2 * t * b) * (1 - 3 * abs(eta)) / 4 - mp.mpf(3) / 4 * (1 + abs(eta)) ** 2)
+    assert lhs <= rhs + abs(rhs) * mp.mpf(10) ** -30, (lhs, rhs)
+    # (3c): points outside Near(a), |Im| < 1/2
+    for _ in range(20):
+        x = random.uniform(-400, 400); y = random.uniform(-0.4999, 0.4999); zz = mp.mpc(x, y)
+        if abs(zz - a) >= mp.e ** 2 and abs(zz + a) >= mp.e ** 2:
+            v = abs(M(zz, a, t, K)); worst = max(worst, v / (2 * mp.exp(-K)))
+            assert v <= 2 * mp.exp(-K) * (1 + mp.mpf(10) ** -30)
+    # (3b)
+    for _ in range(5):
+        assert abs(M(mp.mpf(random.uniform(-400, 400)), a, t, K)) <= 2
+print("200 random (a, b, C, K): inequality (3d) holds in all; (3c) bound holds, max ratio |M|/(2e^-K) = %s; (3b) holds" % mp.nstr(worst, 4))
+# does the bound actually go negative? smallest K with rhs<0 for b = 0.01, 0.1, 0.4
+for b in ('0.01', '0.1', '0.4'):
+    b = mp.mpf(b); sigma = mp.sinh(b) / b
+    K = 2
+    while mp.exp(2 * (K - 1) * b) * (1 - 3 * mp.mpf('0.06') ** K) / 4 - mp.mpf(3) / 4 * (1 + mp.mpf('0.06') ** K) ** 2 <= 0: K += 1
+    print("  b=%s: bracket positive from K=%d on (window needed about t+K = %d)" % (b, K, 2 * K))

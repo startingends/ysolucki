@@ -1,0 +1,23 @@
+L = 0.75, N = 28, dps = 99 ; zeta lowest even 4.83891e-15 odd 3.8537e-12
+  explicit vector n = 4 (even): prolate defect 1.0336e-15 ; zeta Rayleigh quotient 6.58202e-15 ; ratio to defect 6.368
+  explicit vector n = 8 (even): prolate defect 6.88035e-10 ; zeta Rayleigh quotient 2.03997e-9 ; ratio to defect 2.965
+  explicit vector n = 6 (odd): prolate defect 1.24412e-12 ; zeta Rayleigh quotient 4.48535e-12 ; ratio to defect 3.605
+  explicit vector n = 10 (odd): prolate defect 1.97876e-7 ; zeta Rayleigh quotient 3.77694e-7 ; ratio to defect 1.909
+  zeta (check)                       lowest eig even 4.839e-15 odd 3.854e-12 | Rayleigh of zeta's vectors: n=4: 6.582e-15 (ratio 1.0) ; n=8: 2.04e-9 (ratio 1.0) ; n=6: 4.4854e-12 (ratio 1.0) ; n=10: 3.7769e-7 (ratio 1.0)
+  F_d, d = 1e-6 (relative to 2 zeta) lowest eig even 9.531e-15 odd 7.705e-12 | Rayleigh of zeta's vectors: n=4: 1.302e-14 (ratio 0.9890213) ; n=8: 4.0799e-9 (ratio 0.99999522) ; n=6: 8.9683e-12 (ratio 0.99973068) ; n=10: 7.5539e-7 (ratio 0.99999986)
+  F_d, d = 5e-6 (relative to 2 zeta) lowest eig even 6.01e-15 odd 7.646e-12 | Rayleigh of zeta's vectors: n=4: 9.5509e-15 (ratio 0.72553251) ; n=8: 4.0795e-9 (ratio 0.99988043) ; n=6: 8.9103e-12 (ratio 0.99326707) ; n=10: 7.5538e-7 (ratio 0.9999966)
+  F_d, d = 1e-5 (relative to 2 zeta) lowest eig even -5.0e-15 odd 7.462e-12 | Rayleigh of zeta's vectors: n=4: -1.2884e-15 (ratio -0.097869941) ; n=8: 4.078e-9 (ratio 0.99952171) ; n=6: 8.7291e-12 (ratio 0.97306826) ; n=10: 7.5538e-7 (ratio 0.99998641)
+  F_d, d = 1e-4 (relative to 2 zeta) lowest eig even -1.565e-12 odd -1.688e-11 | Rayleigh of zeta's vectors: n=4: -1.4321e-12 (ratio -108.78699) ; n=8: 3.8848e-9 (ratio 0.95217118) ; n=6: -1.5189e-11 (ratio -1.6931737) ; n=10: 7.5436e-7 (ratio 0.99864115)
+  F_d, d = 1e-3 (relative to 2 zeta) lowest eig even -1.733e-8 odd -2.973e-9 | Rayleigh of zeta's vectors: n=4: -1.4451e-10 (ratio -10977.696) ; n=8: -1.5434e-8 (ratio -3.7828817) ; n=6: -2.407e-9 (ratio -268.31731) ; n=10: 6.5274e-7 (ratio 0.86411535)
+  weight at 4 times (1 + 1e-5)       lowest eig even 1.804e-15 odd 4.428e-12 | Rayleigh of zeta's vectors: n=4: 2.9409e-15 (ratio 0.44681346) ; n=8: 1.9785e-9 (ratio 0.96984896) ; n=6: 5.181e-12 (ratio 1.1551016) ; n=10: 3.8056e-7 (ratio 1.0075866)
+  weight at 4 times (1 + -1e-5)      lowest eig even 7.644e-15 odd 3.267e-12 | Rayleigh of zeta's vectors: n=4: 1.0223e-14 (ratio 1.5531865) ; n=8: 2.1015e-9 (ratio 1.030151) ; n=6: 3.7897e-12 (ratio 0.84489841) ; n=10: 3.7483e-7 (ratio 0.99241338)
+  weight at 4 times (1 + 0.01)       lowest eig even -3.163e-5 odd -3.952e-11 | Rayleigh of zeta's vectors: n=4: -3.6345e-12 (ratio -552.18654) ; n=8: -5.9467e-8 (ratio -29.151041) ; n=6: 7.0017e-10 (ratio 156.10159) ; n=10: 3.2431e-6 (ratio 8.5866155)
+  F_d, d = 1e-5, even block: lowest eigenvalue -4.99977e-15 ; 1 - overlap^2 with zeta's ground state 3.49e-9 ; with zeta's explicit vector n = 4: 4.967e-7
+  d^2-coefficient on zeta's explicit vector n = 4: c = 0.000144524 ; so F_d(w) < 0 from d = 9.54387e-6 ; c / (2 R_zeta) = 1.098e+10
+  d^2-coefficient on zeta's explicit vector n = 8: c = 0.0195139 ; so F_d(w) < 0 from d = 0.000457252 ; c / (2 R_zeta) = 4.783e+6
+  d^2-coefficient on zeta's explicit vector n = 6: c = 0.00241597 ; so F_d(w) < 0 from d = 6.09351e-5 ; c / (2 R_zeta) = 2.693e+8
+  d^2-coefficient on zeta's explicit vector n = 10: c = 0.102646 ; so F_d(w) < 0 from d = 0.00271278 ; c / (2 R_zeta) = 1.359e+5
+
+real	0m21.442s
+user	0m21.157s
+sys	0m0.044s

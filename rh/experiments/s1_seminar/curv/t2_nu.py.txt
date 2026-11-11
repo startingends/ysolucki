@@ -1,0 +1,26 @@
+"""S1-curv turn 2: the tilt as a multiplication operator in zeta's Weil geometry (boxes; multiplier evaluated at box centres).
+nu_eo = sup_{g even} Q_o(x g)/Q_e(g), nu_oe = sup_{g odd} Q_e(x g)/Q_o(g); contraction form Q(g) - Q(tanh(dx) g).  usage: t2_nu.py.txt L M"""
+import sys, importlib.machinery, importlib.util, numpy as np, scipy.linalg as sl
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib'); S2 = load('s2lib')
+L = float(sys.argv[1]); M = int(sys.argv[2]); b = S.build(L, M); x = b['x']
+Q = 2 * np.outer(b['c'], b['c']) - 2 * np.outer(b['s'], b['s']) - b['N']
+Be, Bo = S2.parity_bases(M); X = np.diag(x)
+Qe, Qo = Be.T @ Q @ Be, Bo.T @ Q @ Bo
+XQoX = Be.T @ X @ Q @ X @ Be; XQeX = Bo.T @ X @ Q @ X @ Bo
+mue, Ve = np.linalg.eigh(Qe); muo, Vo = np.linalg.eigh(Qo)
+neo = sl.eigh(XQoX, Qe, eigvals_only=True)[-1]; noe = sl.eigh(XQeX, Qo, eigvals_only=True)[-1]
+ve = Be @ Ve[:, 0]; vo = Bo @ Vo[:, 0]
+print("L=%g M=%d: mu_e %.4e mu_o %.4e | nu_eo %.4f (x mu_e = %.4e; 1/sqrt = %.4f) | nu_oe %.4f (1/sqrt = %.4f)" % (L, M, mue[0], muo[0], neo, neo * mue[0], neo ** -0.5, noe, noe ** -0.5))
+print("   on the even ground state: Q_o(x v_e) = %.4e, ||x v_e||^2 = %.4f, ratio Q_o(x v_e)/mu_e = %.3f, (mu_o/mu_e)||x v_e||^2 = %.3f ; odd: Q_e(x v_o) = %.4e, ||x v_o||^2 = %.4f" % ((x * ve) @ Q @ (x * ve), (x * ve) @ (x * ve), (x * ve) @ Q @ (x * ve) / mue[0], muo[0] / mue[0] * ((x * ve) @ (x * ve)), (x * vo) @ Q @ (x * vo), (x * vo) @ (x * vo)))
+for d in (0.1, 0.3):
+    Tm = np.diag(np.tanh(d * x)); Cm = np.diag(np.cosh(d * x)); Cf = Q - Tm @ Q @ Tm
+    lo_c = min(np.linalg.eigvalsh(Be.T @ Cf @ Be)[0], np.linalg.eigvalsh(Bo.T @ Cf @ Bo)[0])
+    if M <= 80:
+        bd = S2.build_d(L, M, d); Qd = bd['Q']
+        lo_d = min(np.linalg.eigvalsh(Be.T @ Qd @ Be)[0], np.linalg.eigvalsh(Bo.T @ Qd @ Bo)[0])
+        # exact-in-continuum identity: Q_d = 2 C (Q - T Q T) C ; compare the matrices
+        err = np.abs(Qd - 2 * Cm @ Cf @ Cm).max()
+        print("   d=%.1f: low eig of Q - tanh Q tanh = %.5e ; low eig of Q_d = %.5e (Q_d/2 = %.5e) ; |Q_d - 2 cosh (Q - tanh Q tanh) cosh|_max = %.2e" % (d, lo_c, lo_d, lo_d / 2, err))
+    else: print("   d=%.1f: low eig of Q - tanh Q tanh = %.5e" % (d, lo_c))

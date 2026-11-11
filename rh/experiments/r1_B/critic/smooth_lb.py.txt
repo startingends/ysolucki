@@ -1,0 +1,80 @@
+"""Critic: rigorous-in-exact-arithmetic LOWER bound for D_S^2 (float64 here), independent of Vasyunin.
+y = 1/x. f(y) = chi - sum c_k frac(y/k) = 1 - lam*y + F(n) on [n,n+1), F(n) = sum_{j<=n} g(j_S),
+g = c*1 on <S>, j_S = S-part of j.  F(n) = lam' n - sum_m g(m) E_S(n/m), E_S(z) = delta z - Phi_S(floor z).
+LB_Y = min over (g(m), m<Y; lam; nu) of  lam^2 + sum_{n=1}^{Y-1} int_n^{n+1} (p_n - lam (y-n))^2 dy/y^2,
+p_n = 1 + nu n - sum_m g(m) E_S(n/m).  Any finite combination has ||f||^2 >= LB_Y  => D_S^2 >= LB_Y.
+Also the 'local' bound using only [1,2) and [q-1,q+1) for q coprime to S."""
+import sys, math, numpy as np, time
+from sympy import primerange
+def smooth(S, N):
+    out = [1]
+    for p in S:
+        new = []
+        for x in out:
+            y = x
+            while y < N:
+                new.append(y); y *= p
+        out = new
+    return np.array(sorted(out))
+def weights(Y):
+    n = np.arange(1, Y, dtype=np.float64); e = 1.0 / n
+    D = e * e / (1 + e)
+    J = np.where(n < 50, np.log1p(e) - e / (1 + e), 0.0); K = np.where(n < 50, 1 - 2 * n * np.log1p(e) + n / (n + 1), 0.0)
+    big = n >= 50; eb = e[big]; Js = np.zeros_like(eb); Ks = np.zeros_like(eb); pw = eb * eb
+    for j in range(0, 14):
+        Js += (-1) ** j * (j + 1) * pw / (j + 2); Ks += (-1) ** j * (j + 1) * pw / (j + 3); pw = pw * eb
+    J[big] = Js; K[big] = Ks
+    return D, J, K
+def lb(S, Y):
+    ms = smooth(S, Y); M = len(ms)
+    cop = np.ones(Y + 1, dtype=np.int32); cop[0] = 0
+    for p in S: cop[::p] = 0
+    Phi = np.cumsum(cop); delta = np.prod([1 - 1.0 / p for p in S])
+    D, J, K = weights(Y)
+    # unknown vector x = (g(ms), nu, lam); p_n = 1 + X_n . (g, nu), X_n = (-E_S(n/m), n)
+    H = np.zeros((M + 2, M + 2)); r = np.zeros(M + 2); const = 0.0; CH = max(1000, int(4e7 // (M + 2)))
+    for a in range(1, Y, CH):
+        n = np.arange(a, min(a + CH, Y)); w = slice(a - 1, a - 1 + len(n))
+        X = np.empty((len(n), M + 1))
+        X[:, :M] = -(delta * n[:, None] / ms[None, :] - Phi[n[:, None] // ms[None, :]])
+        X[:, M] = n
+        Dn, Jn, Kn = D[w], J[w], K[w]
+        H[:M + 1, :M + 1] += X.T @ (X * Dn[:, None]); r[:M + 1] += X.T @ Dn; const += Dn.sum()
+        H[:M + 1, M + 1] += -(X.T @ Jn); H[M + 1, M + 1] += Kn.sum(); r[M + 1] += -Jn.sum()
+    H[M + 1, :M + 1] = H[:M + 1, M + 1]; H[M + 1, M + 1] += 1.0
+    # minimise const + 2 r.x + x.H.x
+    vals = []
+    for rc in (1e-10, 1e-12, 1e-14):
+        x = np.linalg.lstsq(H, -r, rcond=rc)[0]; vals.append(const + 2 * r @ x + x @ H @ x)
+    return M, vals, x, ms
+def local_lb(S, Y=2000000):
+    """min over (u, lam) of lam^2 + int_1^2 (u-lam y)^2 + sum_q min_v [int_{q-1}^q (v-lam y)^2 + int_q^{q+1} (v+u-1-lam y)^2], dy/y^2,
+    q>1 coprime to S (q<Y).  For P=2 neighbouring q share no interval only if spaced >= 2: all q odd, ok."""
+    cop = np.ones(Y, dtype=bool); cop[:2] = False
+    for p in S: cop[::p] = False
+    q = np.nonzero(cop)[0].astype(np.float64)
+    # closed form in (u, lam): quadratic. Build numerically by evaluating on a basis.
+    def I(a, n):  # int_n^{n+1} (a - lam y)^2 dy/y^2 = a^2 D - 2 a lam L + lam^2 ; return coefficient arrays
+        return 1 / (n * (n + 1)), np.log1p(1 / n)
+    def val(u, lam):
+        D1, L1 = I(None, 1.0); t = lam * lam + u * u * D1 - 2 * u * lam * L1 + lam * lam
+        Da, La = I(None, q - 1); Db, Lb = I(None, q)
+        # minimise over v: v^2 Da - 2 v lam La + (v+w)^2 Db - 2 (v+w) lam Lb, w = u-1 ; + 2 lam^2
+        w = u - 1; v = (lam * La + lam * Lb - w * Db) / (Da + Db)
+        t += np.sum(v * v * Da - 2 * v * lam * La + (v + w) ** 2 * Db - 2 * (v + w) * lam * Lb + 2 * lam * lam)
+        return t
+    # quadratic in (u,lam): fit exactly from 6 evaluations
+    pts = [(0, 0), (1, 0), (0, 1), (1, 1), (2, 0), (0, 2)]
+    A = np.array([[1, u, l, u * u, u * l, l * l] for u, l in pts], float); z = np.array([val(u, l) for u, l in pts])
+    c0, cu, cl, cuu, cul, cll = np.linalg.solve(A, z)
+    Hm = np.array([[2 * cuu, cul], [cul, 2 * cll]]); sol = np.linalg.solve(Hm, -np.array([cu, cl]))
+    return val(*sol), sol
+if __name__ == "__main__":
+    P = int(sys.argv[1]); Ys = [int(float(a)) for a in sys.argv[2:]]
+    S = list(primerange(2, P + 1))
+    loc, sol = local_lb(S)
+    half = 0.5 * (math.pi ** 2 / 6 * np.prod([1 - 1.0 / p ** 2 for p in S]) - 1)
+    print("P=%d  local LB = %.7f (u=%.4f lam=%.5f)   (1/2)sum_{n>1 coprime}1/n^2 = %.7f   1/(2 P log P) = %.5f" % (P, loc, sol[0], sol[1], half, 0.5 / (P * math.log(P))), flush=True)
+    for Y in Ys:
+        t0 = time.time(); M, vals, x, ms = lb(S, Y)
+        print("   Y=%8d  #g=%5d  LB_Y (rcond 1e-10,1e-12,1e-14) = %.8f %.8f %.8f  g(1)=%.5f nu=%.2e lam=%.5f  (%.0fs)" % (Y, M, *vals, x[0], x[M], x[M + 1], time.time() - t0), flush=True)

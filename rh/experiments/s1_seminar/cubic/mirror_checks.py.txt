@@ -1,0 +1,43 @@
+"""S1-cubic turn 1: three checks about mirror positivity against the box Weil form.
+ 1) Hankel (mirror) form of the fibre-extended matrix Ntilde on the half space {boxes in x>0} + {F1}:
+    claim  Hank(phi, alpha) = K_H(phi) + 2 alpha <phi,q> + alpha^2 = primes_H(phi) + sum_{m>=1}( int phi e^{-(2m+1/2)x} )^2 + (alpha + <phi,q>)^2
+    check: without primes it is PSD; min over alpha equals K_H - q q^T; with zeta atoms: negative eigenvalues (R2-curv D4).
+ 2) systems that keep mirror positivity on the integers but are not zeta: reweight the prime 2 by c2 >= 0 (all powers of 2).
+    lowest eigenvalue of the box Weil form Q on the window.
+ 3) no primes at all: lowest eigenvalue of Q for L = 0.30 .. 0.50.
+"""
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+which = sys.argv[1]
+if which == "1":
+    for L, n in ((1.0, 24), (0.5, 24)):
+        for kind in ("noprimes", "zeta"):
+            cn = {} if kind == "noprimes" else box.lam(math.exp(2 * L))
+            Nb, p, q = box.boxN(L, n, cn); h = n // 2
+            pos = list(range(h, n)); neg = [n - 1 - i for i in pos]          # box i in x>0  <->  mirror box n-1-i
+            KH = Nb[np.ix_(pos, neg)]                                         # K_H(phi) = sum phi_i phi_j N[pos_i, mirror(pos_j)]
+            qh = q[pos]; ph = p[pos]
+            Hk1 = np.zeros((h + 1, h + 1)); Hk1[:h, :h] = KH; Hk1[:h, h] = Hk1[h, :h] = qh; Hk1[h, h] = 1.0     # half space with F1
+            Hk2 = Hk1.copy(); Hk2[:h, h] = Hk2[h, :h] = ph                                                      # half space with F2
+            e = np.linalg.eigvalsh
+            # arch-only m=0 term: K_H - q q^T should be PSD without primes
+            print("1) %-8s L=%.1f n=%d: sym defect of K_H %.1e ; eig(K_H) min %.3e ; eig(K_H - q q^T) min %.3e ; Hankel(Ntilde) with F1: min %.3e (#neg %d of %d) ; with F2: min %.3e" % (
+                kind, L, n, np.abs(KH - KH.T).max(), e(KH)[0], e(KH - np.outer(qh, qh))[0], e(Hk1)[0], (e(Hk1) < -1e-10).sum(), h + 1, e(Hk2)[0]))
+if which == "2":
+    for L, n in ((1.0, 24), (1.0, 48)):
+        base = box.lam(math.exp(2 * L))
+        out = []
+        for c2 in (0.0, 0.5, 0.9, 0.97, 1.0, 1.03, 1.1, 2.0):
+            cn = {x: (c * c2 if abs(math.log2(x) - round(math.log2(x))) < 1e-12 else c) for x, c in base.items()}
+            Nb, p, q = box.boxN(L, n, cn); Q = np.outer(p, q) + np.outer(q, p) - Nb
+            out.append("c2=%.2f: %.3e" % (c2, np.linalg.eigvalsh(Q)[0]))
+        print("2) L=%.1f n=%d lowest eigenvalue of Q, weight of every power of 2 multiplied by c2 (mirror matrix stays PSD for c2 >= 0): " % (L, n) + " | ".join(out), flush=True)
+if which == "3":
+    for L in (0.30, 0.36, 0.38, 0.40, 0.45, 0.50, 0.54):
+        Nb, p, q = box.boxN(L, 24, {}); Q = np.outer(p, q) + np.outer(q, p) - Nb
+        J = np.eye(24)[::-1]; Pe = (np.eye(24) + J) / 2; Po = (np.eye(24) - J) / 2
+        ee = np.linalg.eigvalsh(Pe @ Q @ Pe + 10 * Po)[0]; eo = np.linalg.eigvalsh(Po @ Q @ Po + 10 * Pe)[0]
+        print("3) no primes, L=%.2f n=24: lowest eigenvalue of Q: even block %.4e, odd block %.4e" % (L, ee, eo), flush=True)

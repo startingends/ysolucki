@@ -1,0 +1,279 @@
+T3 [refuted] Symmetrisation lemma (Hermite-Biehler form)
+T6 [refuted] Bridge: mirror positivity implies the block inequalities
+  T5 [checked] Parity-block form of RH on a window
+    T1 [known] Weil's positivity criterion
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+    T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
+  T70 [formal] Mirror Gram identity: the von Mangoldt function on products of integers >= 2 is a sum
+  T71 [checked] The Gamma kernel is completely monotone, hence mirror (Hankel) positive on the half 
+T13 [open] Burnol's lower bound for the Nyman-Beurling distance
+  T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the i
+T14 [open] Krein's extension theorem applied to the window form
+T15 [open] Krein-Langer: Pick matrices of a generalised Nevanlinna function
+T17 [open] Positive-solutions duality and the conductor threshold (Johns preprint)
+T18 [known] Hecke's dimension count: the functional equation of the theta dial has a unique solution
+T19 [known] Moment criterion for multiplicative Hankel (Helson) matrices indexed by a, b >= 1
+T20 [checked] Missing-prime floor: the prime-filtered Nyman-Beurling distance D_S is positive when S
+T21 [checked] An off-line zero puts a floor under the Nyman-Beurling distance (resolution lemma behi
+T22 [checked] Dissipation identity for the zero dynamics of the heat flow (finite systems)
+T23 [proved] Equivalence (Fejer-window test, Lemma F): RH iff S_X(t) >= 0 for all t and X
+  T1 [known] Weil's positivity criterion
+  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
+T24 [open] Loewner (Pick) form of a truncated convolution form in the exponential basis
+T25 [open] Symmetrisation lemma (Hermite-Biehler form), repaired statement
+T28 [checked] RH implies that N = primes - arch has at most one positive direction on every window
+  T5 [checked] Parity-block form of RH on a window
+    T1 [known] Weil's positivity criterion
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+    T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
+  T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
+T33 [checked] The two sum-rule margins are the pole vector seen through the inverse Weil block
+T34 [checked] Sum-rule form of the two block inequalities (Theorem A, second lines, with the hypothe
+T40 [open] End-point regularity of a first-failure null vector
+  T38 [checked] The equation of a null vector of a non-negative window form (all terms)
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+    T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum, i
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+T41 [open] Simplicity and parity of the first null vector
+  T39 [proved] Properties of a null vector at the first failure: reality, parity, full support, tran
+    T37 [proved] Equivalence (first-failure template): RH is false iff there is a first window with 
+      T2 [known] Continuity of the lowest window eigenvalue
+      T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum,
+        T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
+      T29 [checked] Exact negative index of the Weil form: the number of negative squares on large w
+        T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ord
+      T35 [checked] The lowest window eigenvalue is non-increasing in the window size
+        T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectru
+          T7 [known] Weil's explicit formula in the project's normalisation (and the notation used b
+      T36 [proved] No null vector under RH; in general a non-positive vector must see an off-line ze
+        T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ord
+        T9 [known] Selberg: a positive proportion of the zeros lie on the line, counted as distinct 
+          T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest o
+        T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectru
+          T7 [known] Weil's explicit formula in the project's normalisation (and the notation used b
+        T80 [open] The zero-side formula on the whole form domain of the window form
+          T7 [known] Weil's explicit formula in the project's normalisation (and the notation used b
+          T10 [known] Operator realisation of the window form: closed, bounded below, discrete spect
+            T7 [known] Weil's explicit formula in the project's normalisation (and the notation used
+    T36 [proved] No null vector under RH; in general a non-positive vector must see an off-line zero
+      T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordin
+      T9 [known] Selberg: a positive proportion of the zeros lie on the line, counted as distinct po
+        T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ord
+      T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum,
+        T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
+      T80 [open] The zero-side formula on the whole form domain of the window form
+        T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
+        T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectru
+          T7 [known] Weil's explicit formula in the project's normalisation (and the notation used b
+    T38 [checked] The equation of a null vector of a non-negative window form (all terms)
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+      T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum,
+        T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
+    T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum, i
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+    T80 [open] The zero-side formula on the whole form domain of the window form
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+      T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum,
+        T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
+T42 [open] A Hadamard-type formula for the derivative of the lowest window eigenvalue (target of ide
+  T2 [known] Continuity of the lowest window eigenvalue
+  T35 [checked] The lowest window eigenvalue is non-increasing in the window size
+    T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum, i
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+  T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum, inf
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+T44 [proved] Under RH the feasible set of weights on a single window has non-empty interior
+  T36 [proved] No null vector under RH; in general a non-positive vector must see an off-line zero
+    T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinat
+    T9 [known] Selberg: a positive proportion of the zeros lie on the line, counted as distinct poin
+      T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordin
+    T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum, i
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+    T80 [open] The zero-side formula on the whole form domain of the window form
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+      T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum,
+        T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
+  T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum, inf
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+T45 [checked] First-order caps on the change of one weight (trial-vector bound)
+T46 [open] Positivity of the folded ground states of the two parity blocks
+T47 [open] A certified finite statement: at L = 1 positivity pins each weight at 2..7 to a tiny inte
+T48 [open] The prime-free dual inequality
+  T1 [known] Weil's positivity criterion
+  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
+T54 [checked] Every coupled pair needs a third scale at a critical window (Lemma E)
+  T53 [checked] Rigidity: null directions of H are lineality directions of every certificate (Lemma 
+    T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
+    T50 [formal] Fibre classes: both block inequalities are one signature statement about the border
+T56 [checked] At mean field the certificate is unique, and a one-parameter family of local cubics is
+  T53 [checked] Rigidity: null directions of H are lineality directions of every certificate (Lemma 
+    T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
+    T50 [formal] Fibre classes: both block inequalities are one signature statement about the border
+  T55 [checked] The Bakry-Emery cubic: the one certificate candidate with a formula, and it is the c
+    T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
+T57 [checked] Pair obstruction: a coupled pair whose third indices are restricted forces a rank-two 
+  T53 [checked] Rigidity: null directions of H are lineality directions of every certificate (Lemma 
+    T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
+    T50 [formal] Fibre classes: both block inequalities are one signature statement about the border
+T58 [checked] Block trickle-down: Lemma B with slices replaced by block contractions
+  T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contractio
+T59 [checked] One fibre field: pole minus the slowest Gamma exponential is the kernel e^{|x-y|/2}, a
+T60 [checked] Per-prime Poisson decomposition of the Weil form
+  T49 [checked] The archimedean term is a constant minus the Dirichlet form of a Levy measure
+T61 [checked] The signature of the fibre-extended form counts the off-line zeros exactly, per parity
+  T50 [formal] Fibre classes: both block inequalities are one signature statement about the bordered
+  T29 [checked] Exact negative index of the Weil form: the number of negative squares on large windo
+    T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinat
+  T30 [checked] Equivalence: one spare negative square, or one parity block, costs nothing
+    T29 [checked] Exact negative index of the Weil form: the number of negative squares on large win
+      T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordin
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+    T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinat
+    T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
+  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
+T62 [open] A structured cubic certificate given by a rule (the wall of idea #10)
+  T4 [checked] Sign of the arithmetic kernel
+  T50 [formal] Fibre classes: both block inequalities are one signature statement about the bordered
+  T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contractio
+  T52 [checked] The cone certificate: bare existence of a cubic certificate is equivalent to the con
+    T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
+  T55 [checked] The Bakry-Emery cubic: the one certificate candidate with a formula, and it is the c
+    T51 [checked] Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contract
+T66 [checked] An exact calibration exists if and only if the gap is at least rho (converse of C4)
+  T65 [checked] The resampling chain: Bakry-Emery loses exactly a factor two at mean field (Theorem 
+T67 [checked] Block-averaged Bakry-Emery: the 'factor two' is the small-block end of an exact curve
+  T65 [checked] The resampling chain: Bakry-Emery loses exactly a factor two at mean field (Theorem 
+T68 [proved] The integrated open-path term of the Bochner formula is a Hankel-type form in the two j
+  T64 [checked] Bochner formula for the transformed prime jump process (Theorem B)
+T69 [checked] Parity differences of the integrated Bochner quantities contain the mirror form
+  T63 [checked] Ground-state transform: the form of N is lambda_1 minus a Dirichlet form, and 'one p
+T72 [checked] The prime atoms are not mirror positive on L^2 functions (D4)
+T73 [checked] On the integers >= 2 the whole kernel (Gamma part plus primes) is mirror positive defi
+  T70 [formal] Mirror Gram identity: the von Mangoldt function on products of integers >= 2 is a sum
+  T71 [checked] The Gamma kernel is completely monotone, hence mirror (Hankel) positive on the half 
+T75 [checked] Equivalence: the two block inequalities are a two-sided bound of the mirror form by th
+  T74 [checked] The even and odd blocks differ by four times the mirror form: one positive square (t
+  T5 [checked] Parity-block form of RH on a window
+    T1 [known] Weil's positivity criterion
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+    T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
+T78 [open] Conditional gap lemma of lane A (not a reduction)
+  T11 [known] Connes-van Suijlekom: simple isolated even ground state has a transform with only real
+T79 [checked] Tilt identity: the Weil form of zeta(s-d) zeta(s+d) is zeta's bilinear form at e^{dx} 
+  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
+T81 [open] Open converse (wall WP1): does 'N has at most one positive direction on every window' imp
+  T31 [checked] 'N has at most one positive direction on every window' implies at most one off-line 
+    T27 [formal] Negative squares of Q are bounded by positive squares of N (per parity block), with
+      T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
+    T29 [checked] Exact negative index of the Weil form: the number of negative squares on large win
+      T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordin
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+  T32 [formal] Exact inertia relation between a Weil block and the corresponding block of N (rank-on
+T83 [checked] Forcing of the first prime: on a window that sees one atom, positivity confines its po
+  T82 [checked] Window positivity with one prime: the Weil form is strictly positive on every window
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+T86 [proved] The first-prime inequality: if the odd block is non-negative on a window where the back
+  T85 [proved] On a window with no atom the odd block has a simple lowest eigenvalue with a strictly
+    T84 [checked] Odd fold of the background: pole + arch on odd functions is a jump Dirichlet form 
+      T49 [checked] The archimedean term is a constant minus the Dirichlet form of a Levy measure
+    T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum, i
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+T87 [checked] Unconditional uniqueness of the weights: every summable atomic perturbation of the pri
+  T43 [checked] Under RH the von Mangoldt weights are isolated: no summable atomic perturbation keep
+    T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinat
+  T29 [checked] Exact negative index of the Weil form: the number of negative squares on large windo
+    T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinat
+  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
+T89 [open] Candidate (F): the even solution of N f = cosh(x/2) on the window has one sign
+  T88 [proved] Rank-one algebra of the pole strength: the even block t c c^T - N_e is non-negative i
+    T32 [formal] Exact inertia relation between a Weil block and the corresponding block of N (rank-
+T90 [proved] Pointwise bracket for the critical pole strength, given candidate (F) (Barta / Collatz-
+  T88 [proved] Rank-one algebra of the pole strength: the even block t c c^T - N_e is non-negative i
+    T32 [formal] Exact inertia relation between a Weil block and the corresponding block of N (rank-
+T91 [proved] Modulus-one local roots as positivity for the other involution (local Toeplitz / Ramanu
+  T76 [proved] Mirror criterion on a, b >= 2: non-negative multiplicative Hankel matrices are mixtur
+  T77 [proved] Mirror positivity of an Euler product is exactly: all local roots real with positive 
+T92 [proved] Fractional powers: real local roots with positive multiplicities give Helson-positive c
+  T77 [proved] Mirror positivity of an Euler product is exactly: all local roots real with positive 
+T93 [checked] Schur ray in the damping parameter, and multiplier duality
+T94 [proved] The window space is a de Branges space whenever the window form is strictly positive
+  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
+  T10 [known] Operator realisation of the window form: closed, bounded below, discrete spectrum, inf
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+  T2 [known] Continuity of the lowest window eigenvalue
+T95 [proved] Poisson splitting: the log-derivative of the completed zeta function is a generalised N
+  T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinate)
+T96 [proved] Suzuki's dial: reflection symmetry in the shift, and where the dial of the tilted contr
+  T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinate)
+T97 [proved] Derivative in the window of the ratio of the two parity determinants (bounded continuou
+T98 [proved] Explicit dial coefficients: the first log-coefficients of theta^n as polynomials in n, 
+T103 [open] Bridge planks 7b, 7c: heuristic model for the comparison constant (about 2L, growing lin
+  T100 [checked] Bridge plank 7: Moebius inversion on the window removes the von Mangoldt function f
+T105 [open] Bridge plank 8 (the span): the lower comparison Q_L >= kappa D_L on all directions
+  T102 [open] Bridge plank 6: the least-leak form D_L on the whole window space, and the upper compa
+    T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+  T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its t
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+  T104 [open] Bridge plank 8a: the cross terms between dilates and the pole term are bounded by a co
+    T102 [open] Bridge plank 6: the least-leak form D_L on the whole window space, and the upper com
+      T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of i
+        T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
+    T100 [checked] Bridge plank 7: Moebius inversion on the window removes the von Mangoldt function
+  T1 [known] Weil's positivity criterion
+  T99 [known] Archimedean positivity on the window with no prime (Connes-Consani)
+  T82 [checked] Window positivity with one prime: the Weil form is strictly positive on every window
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+T107 [checked] Copy barrier, Theorem 1 over a number field, with the corrected constant
+  T106 [formal] Copy barrier, Theorem 1 over Q: a general-coefficient large sieve pays for every cop
+T113 [checked] Copy barrier, Theorem 3 (corrected, with the verifier's optimality step): amplificati
+  T108 [checked] Copy barrier, Corollary 1: a copy amplifier fed by a general-coefficient mean squar
+    T106 [formal] Copy barrier, Theorem 1 over Q: a general-coefficient large sieve pays for every c
+  T111 [checked] Copy barrier, Theorem 2 (corrected): in a homomorphic family of Hecke characters, c
+    T110 [formal] Kernel lemma and copy count over N: if every exponent of n is a multiple of an ord
+      T109 [formal] Squarefull count: #{n <= X squarefull} <= 3 sqrt(X), and <= zeta(3/2) sqrt(X)
+  T112 [formal] Amplifier arithmetic: with at most 3 sqrt(H) copies, the amplifier never beats D^(3/
+T114 [formal] Orthogonality of Dirichlet characters as a mean value (finite core L5)
+T117 [checked] Bounded-height equivalence: no zeros in Re s > sigma iff the mollified mean square at
+  T115 [checked] Bounded powers of zeta right of a zero-free half-plane
+  T116 [known] Bettin-Gonek: a mollified mean square of polynomial size excludes zeros right of 1/2 
+T118 [open] Nyman-Beurling, bounded version (notebook N53 (a)): RH iff the Moebius approximants are 
+  T126 [checked] Bounded Levinson-weighted Nyman-Beurling functions imply RH (and polynomial growth 
+    T116 [known] Bettin-Gonek: a mollified mean square of polynomial size excludes zeros right of 1/
+  T127 [known] Under RH the damped Moebius approximants converge (Baez-Duarte; Balazard-de Roton rat
+    T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the
+  T128 [known] Bettin-Conrey-Farmer: under RH and a moment bound for 1/zeta', the Levinson-weighted 
+    T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the
+  T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the i
+T119 [checked] A one-sided bound for psi with a slowly growing factor implies RH (notebook N63, corr
+  T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinate)
+T121 [checked] Buchstab recursion for the Nyman-Beurling tail, and the box identity
+  T120 [checked] Nyman-Beurling window identity: on the divisor-closed window the Moebius vector is 
+    T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the
+T124 [proved] Exact identity: e^(2 Dfc(omega)) - 1 is a Nyman-Beurling distance for zeta_K
+  T123 [proved] Szego-Krein characterisation of the defect: lambda_T(z) decreases to (9/32 pi^2) ht(
+    T122 [proved] Defect function on the modular surface (Jensen / Balazard-Saias-Yor for Eisenstein
+T125 [proved] Rankin-Selberg identity of the cubic theta function, with matching Gamma factors
+T129 [checked] Two-zero model M3: collision expansion of the pair Gram eigenvalue, kappa_2 = 4 J u +
+T130 [refuted] Statement (S): the comparison constant tracks the local discriminant of the binding p
+T131 [open] D-kernel at the zeros: a Mellin-Gram of the regularised partial sums (formula of N85)
+  T102 [open] Bridge plank 6: the least-leak form D_L on the whole window space, and the upper compa
+    T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+  T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its t
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+T133 [refuted] H-1(a): the local discriminant of an off-line quartet is negative at the first failin
+  T132 [checked] Local Weil discriminant W_k: elementary facts (restriction bound, pair part, signat
+T134 [checked] Barrier lemma: in the class 'Lambda times a weight of forced sign' every zero weighs 
+T135 [checked] Lemma 2 (operator triangle): a Krein isometry power-bounded in the positive norm cann
+T136 [proved] Moving Rankin-Selberg pole: for an automorphic Pi with a non-unitary Hecke-character c
+T137 [proved] No T_p-equivariant truncation of the Eisenstein series in S = {infinity, p}
+T138 [proved] A cusp over Q forces a continuous archimedean height: a Q-split torus is R-split
+T139 [checked] Frequency-group no-go: zeta is not a product or quotient of zeta functions whose orbi
+T140 [checked] H-3: exact decoupling of the Landau-Gonek form on a divisor box
+T142 [proved] Levinson's method as an exact identity (Littlewood's lemma for V B), and the perfect m
+  T141 [known] Radziwill: no mollifier of length T^theta mollifies zeta completely on [T, 2T]
+T143 [open] Twist-blindness at 100%: almost all zeros of a Davenport-Heilbronn-type combination lie 
+T144 [open] Idea #33: Suzuki's family (1 -+ K_w[L])/w joins the half-shift (w = 1/2) to the Weil blo
+  T16 [known] Equivalence (Suzuki): RH iff a canonical-system Hamiltonian exists for every parameter
+  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 

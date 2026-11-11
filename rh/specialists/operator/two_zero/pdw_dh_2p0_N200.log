@@ -1,0 +1,9 @@
+kind dh, L = 2, NB = 200, constraints n = [2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 36, 37, 38, 39, 41, 42, 43, 44, 46, 47, 48, 49, 51, 52, 53, 54] (m = 43); built 70s
+ kappa_min = -0.306666 (second -0.305583); |W_s| up to 5.16e+52; gradient at c = 0 (v^T W_s v / |W_s|): ['5.7e-08', '5.7e-08', '5.7e-08', '5.6e-08', '5.6e-08', '5.6e-08', '5.5e-08', '5.4e-08', '5.3e-08', '5.3e-08', '5.2e-08', '5.0e-08', '4.9e-08', '4.7e-08', '4.6e-08', '4.3e-08', '4.1e-08', '3.9e-08', '3.7e-08', '3.2e-08', '3.0e-08', '2.7e-08', '2.4e-08', '1.8e-08', '1.5e-08', '1.1e-08', '7.2e-09', '-8.8e-10', '-5.2e-09', '-9.6e-09', '-1.4e-08', '-2.4e-08', '-2.9e-08', '-3.4e-08', '-3.9e-08', '-4.9e-08', '-5.4e-08', '-5.8e-08', '-6.2e-08', '-6.6e-08', '-6.5e-08', '-5.7e-08', '-2.7e-08']
+  after scale 1e-06: best sup -0.30666571; at that c the two lowest eigenvalues are -0.30666571, -0.30558278; |c_s|*|W_s| max 1.33e-10
+  after scale 1e-04: best sup -0.30666571; at that c the two lowest eigenvalues are -0.30666571, -0.30558278; |c_s|*|W_s| max 1.33e-10
+  after scale 1e-03: best sup -0.30666571; at that c the two lowest eigenvalues are -0.30666571, -0.30558278; |c_s|*|W_s| max 1.33e-10
+  after scale 1e-02: best sup -0.30666571; at that c the two lowest eigenvalues are -0.30666571, -0.30558278; |c_s|*|W_s| max 1.33e-10
+  after scale 1e-01: best sup -0.30666571; at that c the two lowest eigenvalues are -0.30666571, -0.30558278; |c_s|*|W_s| max 1.33e-10
+  after scale 1e+00: best sup -0.30666517; at that c the two lowest eigenvalues are -0.30666517, -0.30558209; |c_s|*|W_s| max 1.20e+01
+  after scale 1e+01: best sup -0.30666485; at that c the two lowest eigenvalues are -0.30666485, -0.30559294; |c_s|*|W_s| max 4.79e+01

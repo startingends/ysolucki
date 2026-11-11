@@ -1,0 +1,53 @@
+"""S1-parity turn 2, check of the lead's remark (B69) on S1-mirror's sharper control (B81):
+G_d(s) = zeta(s) L(s - d, chi_4) L(s + d, chi_4). Pole: zeta's only (one pole, at s = 1). Gamma: Gamma_R(s) Gamma((s+1-d)/2) Gamma((s+1+d)/2),
+conductor 4 twice (rates 2m + 3/2 -+ d, all positive: Selberg's Re mu >= 0 holds). Euler product, integers, functional equation s <-> 1-s.
+Local roots at odd p: 1, chi_4(p) p^d, chi_4(p) p^-d. Zeros: zeta's and rho_chi +- d.
+Form = zeta form + sum over +-d of [arch(exponents 2m+3/2 +- d, constant log(4/pi)/2) - atoms chi_4(n) Lambda(n) n^(+-d)].
+Lowest eigenvalue per parity block; first failing window. d imaginary (mp.mpc(0, eps)) = zeros moved along the line (control)."""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt"); wb = fd.wb
+mp.mp.dps = 50; N = 30; t0 = time.time(); ns = lambda x, k=3: mp.nstr(x, k)
+chi4 = lambda n: 0 if n % 2 == 0 else (1 if n % 4 == 1 else -1)
+def gform(L, d, lat='int'):
+    Lm = mp.mpf(L); w = wb.freqs(Lm, N, lat)
+    M = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+    vals = []
+    for om in w:
+        a = fd.phi_arch_c(om + fd.I * (1 + d), Lm); b = fd.phi_arch_c(om + fd.I * (1 - d), Lm)
+        vals.append((a[0] + b[0] + mp.log(4), a[1] + b[1]))
+    M = wb.add(M, wb.blocks(L, N, lat, [v[0] for v in vals], [v[1] for v in vals]))
+    M = (M[0].apply(mp.re), M[1].apply(mp.re))
+    for x, c in wb.mangoldt(math.exp(2 * L)).items():
+        if math.log(x) < 2 * L - 1e-12:
+            M = wb.add(M, wb.atom_blocks(L, N, lat, x), c)
+            if chi4(x):
+                A = fd.atom_blocks(L, N, lat, x, d); M = wb.add(M, (A[0].apply(mp.re), A[1].apply(mp.re)), chi4(x) * c)
+    return M
+def scan(d, Ls):
+    out = [None, None]; prev = None; rows = []
+    for L in Ls:
+        e = fd.low(gform(L, d)); rows.append((L, e))
+        for b in (0, 1):
+            if out[b] is None and e[b] < 0: out[b] = [prev, L]
+        prev = L
+        if out[0] and out[1]: break
+    for b in (0, 1):
+        if out[b] is None or out[b][0] is None: continue
+        lo, hi = out[b]
+        for _ in range(6):
+            mid = (lo + hi) / 2
+            if min(mp.eigsy(gform(mid, d)[b], eigvals_only=True)) < 0: hi = mid
+            else: lo = mid
+        out[b] = [round(lo, 4), round(hi, 4)]
+    return out, rows
+grid = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+for name, d in (("d = 0  (zeta L(chi_4)^2, control)", mp.mpf(0)), ("d = 0.3 i (zeros along the line, control)", mp.mpc(0, '0.3')), ("d = 0.1", mp.mpf('0.1')), ("d = 0.25", mp.mpf('0.25'))):
+    grid2 = grid if name.startswith("d = 0") else [0.20 + 0.05 * i for i in range(15)]
+    out, rows = scan(d, grid2)
+    print("%s: first failing window even %s odd %s" % (name, out[0], out[1]))
+    print("    grid (L: even / odd): " + " ; ".join("%.2f: %s / %s" % (L, ns(e[0]), ns(e[1])) for L, e in rows) + "   (%.0fs)" % (time.time() - t0), flush=True)
+print("local roots at p = 3 for d = 0.1: %s, %s, %s ; at p = 5: %s, %s, %s" % (1, ns(-mp.mpf(3) ** 0.1, 5), ns(-mp.mpf(3) ** -0.1, 5), 1, ns(mp.mpf(5) ** 0.1, 5), ns(mp.mpf(5) ** -0.1, 5)))

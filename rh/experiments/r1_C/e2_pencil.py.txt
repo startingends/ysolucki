@@ -1,0 +1,92 @@
+"""E2: Hermitian pencil from prime-side data only (values of the completed log-derivative in Re s > 1).
+Nodes s_j = sigma0 + i t_j (Re s_j > 1), w = i(s - 1/2), u = w^2,
+S(u) = i f(s) / (2w),  f = xi'/xi (zeta)  or Lambda'/Lambda (Davenport-Heilbronn).
+Formally S(u) = sum_{gamma>0} 1/(gamma^2 - u)  (sum over zeros), but NO zero is used: f is evaluated where the
+Dirichlet series  -sum Lambda(n) n^{-s}  converges absolutely.
+A_ij = (S_i - conj S_j)/(u_i - conj u_j)     [Pick matrix: Gram matrix of 1/(gamma^2 - conj u_i); PSD for all node sets <=> all zeros on the line]
+B_ij = (u_i S_i - conj(u_j S_j))/(u_i - conj u_j)
+Generalised eigenvalues of (B, A) = Rayleigh-Ritz values of 'multiplication by gamma^2' on a rational Krylov space.
+usage: python3 e2_pencil.py.txt <zeta|dh|zetaX:<X>> N sigma0 Tmax dps
+"""
+import sys, time, math
+import mpmath as mp
+import flint
+sys.path.insert(0, "/home/user/ysolucki/tools")
+import rhlib
+mode, N, sig0, Tmax, dps = sys.argv[1], int(sys.argv[2]), mp.mpf(sys.argv[3]), mp.mpf(sys.argv[4]), int(sys.argv[5])
+mp.mp.dps = dps
+flint.ctx.dps = dps
+t0 = time.time()
+
+def f_zeta(s):
+    return mp.zeta(s, derivative=1) / mp.zeta(s) + 1 / s + 1 / (s - 1) - mp.log(mp.pi) / 2 + mp.digamma(s / 2) / 2
+def make_f_trunc(X):
+    lam = []
+    for p in range(2, X + 1):
+        if all(p % q for q in range(2, int(p ** 0.5) + 1)):
+            q = p
+            while q <= X:
+                lam.append((q, mp.log(p))); q *= p
+    def f(s):
+        return -sum(L * mp.power(n, -s) for n, L in lam) + 1 / s + 1 / (s - 1) - mp.log(mp.pi) / 2 + mp.digamma(s / 2) / 2
+    return f
+kap = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+def f_dh(s):
+    c = [1, kap, -kap, -1]
+    F = sum(c[k] * mp.zeta(s, mp.mpf(k + 1) / 5) for k in range(4))
+    dF = sum(c[k] * mp.zeta(s, mp.mpf(k + 1) / 5, 1) for k in range(4))
+    return -mp.log(5) + dF / F + mp.log(5 / mp.pi) / 2 + mp.digamma((s + 1) / 2) / 2
+
+if mode == "zeta": f = f_zeta
+elif mode == "dh": f = f_dh
+else: f = make_f_trunc(int(mode.split(":")[1]))
+
+Tmin = mp.mpf(sys.argv[6]) if len(sys.argv) > 6 else mp.mpf(1)
+ts = [Tmin + (Tmax - Tmin) * mp.mpf(j) / (N - 1) for j in range(N)]
+ss = [mp.mpc(sig0, t) for t in ts]
+us = [(1j * (s - mp.mpf(1) / 2)) ** 2 for s in ss]
+Sv = [1j * f(s) / (2 * 1j * (s - mp.mpf(1) / 2)) for s in ss]
+A = mp.matrix(N, N); B = mp.matrix(N, N)
+for i in range(N):
+    for j in range(N):
+        d = us[i] - mp.conj(us[j])
+        A[i, j] = (Sv[i] - mp.conj(Sv[j])) / d
+        B[i, j] = (us[i] * Sv[i] - mp.conj(us[j] * Sv[j])) / d
+print("mode=%s N=%d sigma0=%s Tmax=%s dps=%d  (function values: %.1fs)" % (mode, N, sig0, Tmax, dps, time.time() - t0))
+def to_flint(M):
+    return flint.acb_mat(N, N, [flint.acb(flint.arb(mp.nstr(M[i, j].real, dps)), flint.arb(mp.nstr(M[i, j].imag, dps))) for i in range(N) for j in range(N)])
+Af, Bf = to_flint(A), to_flint(B)
+# spectrum of the Pick matrix A (Hermitian)
+evA = Af.eig(nonstop=True)
+evA = sorted(float(e.real.mid()) for e in evA)
+neg = [e for e in evA if e < 0]
+print("Pick matrix A: %d negative eigenvalues; most negative %.3e ; smallest positive %.3e ; largest %.3e"
+      % (len(neg), (neg[0] if neg else 0.0), min(e for e in evA if e > 0), evA[-1]))
+C = Af.solve(Bf)          # A^{-1} B
+ev = C.eig(nonstop=True)
+g = []
+for e in ev:
+    z = mp.sqrt(mp.mpc(mp.mpf(e.real.mid().str(dps, radius=False)), mp.mpf(e.imag.mid().str(dps, radius=False))))
+    if z.real < 0: z = -z
+    g.append(z)
+g.sort(key=lambda z: z.real)
+print("time %.1fs" % (time.time() - t0))
+if mode == "dh":
+    import json
+    d = json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))
+    on = [float(x) for x in d["online"]]
+    print("Ritz values sqrt(lambda) with |Im| > 1e-6 and Re < 130:")
+    for z in g:
+        if abs(z.imag) > 1e-6 and z.real < 130: print("   ", mp.nstr(z, 12))
+    print("true off-line zeros (gamma = t -+ i(beta-1/2)): 85.699348 -+ 0.308517i ; 114.163343 -+ 0.150830i")
+    re = [float(z.real) for z in g if abs(z.imag) <= 1e-6]
+    for k in range(0, 40, 3):
+        print("   DH on-line zero #%d = %.10f   nearest real Ritz value error %.2e" % (k + 1, on[k], min(abs(r - on[k]) for r in re)))
+else:
+    true = rhlib.zeros(30)
+    nreal = sum(1 for z in g if abs(z.imag) < 1e-30 * max(1, abs(z.real)))
+    print("Ritz values: %d of %d real to 1e-30" % (nreal, N))
+    for k in range(30):
+        zk = g[k] if k < len(g) else None
+        if zk is None: break
+        print("   #%2d Ritz %.12f  (Im %.1e)   gamma_k %.12f   |err| %.2e" % (k + 1, float(zk.real), float(zk.imag), true[k], abs(float(zk.real) - true[k])))

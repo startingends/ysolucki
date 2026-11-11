@@ -1,0 +1,17 @@
+(1) phi = 1 on (0, L]: direct quadrature of Q(f_e) - Q(f_o) against the right-hand side
+  L=0.3 primes=False: Q(f_e)=0.0950163268969 Q(f_o)=0.283908303941 ; LHS -0.188891977044538 ; RHS -0.188891977044538 ; diff 4.93e-31
+  L=0.38 primes=True: Q(f_e)=0.0970667080326 Q(f_o)=0.238953581407 ; LHS -0.141886873373942 ; RHS -0.141886873373942 ; diff 6.16e-31
+  L=1.0 primes=True: Q(f_e)=0.106682248344 Q(f_o)=0.245376193551 ; LHS -0.138693945207398 ; RHS -0.138693945207398 ; diff 1.18e-30
+(2) background (pole + arch, NO primes), integer lattice N=30: ground states and the Hankel form of the full kernel
+  L=0.36 arch form A alone: lowest eigenvalue even -1.32972 ; odd 0.0520851   [PROVED from D3+D5: even <= odd]
+  L=0.36 even ground state: lambda=0.0010859 ; E_+^2=0.15755 ; sum_{m>=1}E_m^2=0.33163 ; 4*Hankel_Q=-0.69632 ; Gamma-Hankel(4x)=1.8182 pole-Hankel(4x)=1.1219 ; energy of the ODD extension of the same phi = 0.69741
+  L=0.36 odd  ground state: lambda=0.039036 ; E_+^2=0.18986 ; sum_{m>=1}E_m^2=0.1213 ; 4*Hankel_Q=0.27424 ; Gamma-Hankel(4x)=0.98891 pole-Hankel(4x)=1.2632 ; energy of the EVEN extension of the same phi = 0.31328
+  L=0.37 arch form A alone: lowest eigenvalue even -1.36166 ; odd 0.0244417   [PROVED from D3+D5: even <= odd]
+  L=0.37 even ground state: lambda=0.0010586 ; E_+^2=0.15797 ; sum_{m>=1}E_m^2=0.33167 ; 4*Hankel_Q=-0.69482 ; Gamma-Hankel(4x)=1.8194 pole-Hankel(4x)=1.1246 ; energy of the ODD extension of the same phi = 0.69587
+  L=0.37 odd  ground state: lambda=0.010268 ; E_+^2=0.19627 ; sum_{m>=1}E_m^2=0.11939 ; 4*Hankel_Q=0.30751 ; Gamma-Hankel(4x)=0.99234 pole-Hankel(4x)=1.2998 ; energy of the EVEN extension of the same phi = 0.31777
+  L=0.38 arch form A alone: lowest eigenvalue even -1.39286 ; odd -0.00248088   [PROVED from D3+D5: even <= odd]
+  L=0.38 even ground state: lambda=0.0010456 ; E_+^2=0.15771 ; sum_{m>=1}E_m^2=0.33164 ; 4*Hankel_Q=-0.6957 ; Gamma-Hankel(4x)=1.8186 pole-Hankel(4x)=1.1229 ; energy of the ODD extension of the same phi = 0.69675
+  L=0.38 odd  ground state: lambda=-0.017844 ; E_+^2=0.20275 ; sum_{m>=1}E_m^2=0.11751 ; 4*Hankel_Q=0.34094 ; Gamma-Hankel(4x)=0.99573 pole-Hankel(4x)=1.3367 ; energy of the EVEN extension of the same phi = 0.3231
+  L=0.4 arch form A alone: lowest eigenvalue even -1.45318 ; odd -0.0543135   [PROVED from D3+D5: even <= odd]
+  L=0.4 even ground state: lambda=0.00062921 ; E_+^2=0.15497 ; sum_{m>=1}E_m^2=0.33112 ; 4*Hankel_Q=-0.70461 ; Gamma-Hankel(4x)=1.8099 pole-Hankel(4x)=1.1053 ; energy of the ODD extension of the same phi = 0.70524
+  L=0.4 odd  ground state: lambda=-0.072254 ; E_+^2=0.21592 ; sum_{m>=1}E_m^2=0.11383 ; 4*Hankel_Q=0.40835 ; Gamma-Hankel(4x)=1.0024 pole-Hankel(4x)=1.4107 ; energy of the EVEN extension of the same phi = 0.3361

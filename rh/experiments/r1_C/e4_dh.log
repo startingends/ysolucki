@@ -1,0 +1,11 @@
+mode=dh N=30 nodes 1.25+i[76.0,96.0] dps=200
+  a=1.2    negative eigenvalues: 0   most negative 0.000e+00   smallest positive 2.240e+01
+  a=1.0    negative eigenvalues: 0   most negative 0.000e+00   smallest positive 4.739e-01
+  a=0.9    negative eigenvalues: 0   most negative 0.000e+00   smallest positive 8.321e-02
+  a=0.82   negative eigenvalues: 0   most negative 0.000e+00   smallest positive 2.011e-02
+  a=0.81   negative eigenvalues: 0   most negative 0.000e+00   smallest positive 1.674e-02
+  a=0.8    negative eigenvalues: 0   most negative 0.000e+00   smallest positive 1.390e-02
+  a=0.75   negative eigenvalues: 0   most negative 0.000e+00   smallest positive 5.028e-03
+  a=0.6    negative eigenvalues: 1   most negative -4.785e-02   smallest positive 3.739e-04
+  a=0.5    negative eigenvalues: 1   most negative -1.464e-01   smallest positive 4.799e-24
+  a=0.4    negative eigenvalues: 14   most negative -2.243e-01   smallest positive 1.627e-03

@@ -1,0 +1,92 @@
+import sys, math, time, importlib.util, importlib.machinery
+import flint
+from flint import arb
+import mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+dps = 120; mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+
+def to_mp(M):
+    R = mp.matrix(M.nrows(), M.ncols())
+    for i in range(M.nrows()):
+        for j in range(M.ncols()):
+            R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+    return R
+def blocks(q, N): return [to_mp(weil.even_block(q, N)), to_mp(weil.odd_block(q, N))]
+def arch(L, N, pole): return blocks(weil.build(L, N, kind='zeta', pole=pole, primes=False, arch=True)[0], N)
+def atoms(L, N, cn):
+    """blocks of  -sum_x c_x x^(-1/2) (shift by log x + adjoint);  cn: position x (any real <= e^(2L)) -> weight"""
+    cn = {x: c for x, c in cn.items() if math.log(float(x)) < 2 * L - 1e-12}
+    if not cn: return None
+    saved = weil.dh_logderiv_coeffs
+    weil.dh_logderiv_coeffs = lambda X: dict(cn)
+    q = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)[0]
+    weil.dh_logderiv_coeffs = saved
+    return blocks(q, N)
+def add(A, B, t=1): return A if B is None else [A[b] + mp.mpf(t) * B[b] for b in (0, 1)]
+def eigs(M): return sorted([e for b in (0, 1) for e in mp.eigsy(M[b], eigvals_only=True)])
+def lam(X):
+    return {n: arb(p).log() for n, (_, p) in weil.mangoldt_upto(int(X)).items()}
+
+which = sys.argv[1]
+if which == "a":
+    print("(a) N = primes - arch (no pole): positive eigenvalues and second-largest eigenvalue")
+    for L, N in ((0.5, 30), (0.75, 30), (1.0, 40), (1.25, 56)):
+        Qn = add(arch(L, N, pole=False), atoms(L, N, lam(math.exp(2 * L))))      # arch - primes
+        ev = [-e for e in eigs(Qn)]; ev.sort(reverse=True)                       # eigenvalues of N
+        print("  zeta L=%.2f: #positive = %d ; largest %s ; second %s ; third %s" % (L, sum(1 for e in ev if e > 0),
+              mp.nstr(ev[0], 6), mp.nstr(ev[1], 4), mp.nstr(ev[2], 4)))
+    print("    control: zeta arch only (no primes), L=1.0:")
+    ev = sorted([-e for e in eigs(arch(1.0, 40, pole=False))], reverse=True)
+    print("    #positive = %d ; top three %s" % (sum(1 for e in ev if e > 0), [mp.nstr(e, 4) for e in ev[:3]]))
+elif which == "b":
+    c = weil.dh_logderiv_coeffs(60)
+    vals = {n: float(c[n].mid()) for n in range(2, 61)}
+    nz = {n: v for n, v in vals.items() if abs(v) > 1e-12}
+    neg = [n for n, v in nz.items() if v < 0]
+    print("(b) impostor couplings c_n, n<=60: %d non-zero, %d negative = %.0f%%" % (len(nz), len(neg), 100 * len(neg) / len(nz)))
+    print("    non-zero at non-prime-powers: %d of %d non-zero" % (sum(1 for n in nz if n not in weil.mangoldt_upto(60)), len(nz)))
+    print("    first values:", {n: round(v, 3) for n, v in list(vals.items())[:14]})
+elif which == "c":
+    print("(c) Beurling control: prime 2 moved to 2.1 (g-prime powers 2.1^k), zeta Gamma factor and pole")
+    def beurling(X):
+        out = {}
+        for p in (2.1, 3, 5, 7, 11, 13):
+            pk = p
+            while pk <= X:
+                out[pk] = arb(p).log(); pk *= p
+        return out
+    for L in (0.30, 0.36, 0.38, 0.40, 0.42, 0.44, 0.46, 0.48, 0.50, 0.55, 0.60, 0.70):
+        N = 30
+        A = arch(L, N, pole=True)
+        tb = min(eigs(add(A, atoms(L, N, beurling(math.exp(2 * L))))))
+        tz = min(eigs(add(A, atoms(L, N, lam(math.exp(2 * L))))))
+        print("  L=%.2f  lowest eigenvalue: Beurling %s   true primes %s" % (L, mp.nstr(tb, 5), mp.nstr(tz, 5)))
+elif which == "d":
+    L, N = 0.5, 30
+    A = arch(L, N, pole=True)
+    print("(d) one atom at position y with free weight m, L = 0.5: for which y does a feasible m exist?")
+    for y in (0.45, 0.55, 0.60, 0.64, 0.66, 0.68, 0.69, math.log(2), 0.70, 0.71, 0.73, 0.76, 0.80, 0.90, 0.98):
+        U = atoms(L, N, {math.exp(y): arb(1) * arb(math.exp(y)).sqrt()})        # unit weight m: -m (S + S*)
+        best = None
+        f = lambda m: min(eigs(add(A, U, m)))
+        # maximise the lowest eigenvalue over m by golden section on [0, 3]
+        lo, hi = mp.mpf(0), mp.mpf(3); g = (mp.sqrt(5) - 1) / 2
+        x1, x2 = hi - g * (hi - lo), lo + g * (hi - lo); f1, f2 = f(x1), f(x2)
+        for _ in range(40):
+            if f1 < f2: lo, x1, f1 = x1, x2, f2; x2 = lo + g * (hi - lo); f2 = f(x2)
+            else: hi, x2, f2 = x2, x1, f1; x1 = hi - g * (hi - lo); f1 = f(x1)
+        m = (lo + hi) / 2
+        print("  y=%.4f (x=%.3f): best m = %s  max lowest eigenvalue = %s  %s" % (y, math.exp(y), mp.nstr(m, 6), mp.nstr(f(m), 4),
+              "FEASIBLE" if f(m) >= 0 else "infeasible"), flush=True)
+elif which == "e":
+    print("(e) sanity: lowest eigenvalue vs position x of ONE atom of weight log x, fixed window; N = 30 and N = 60")
+    for L in (0.38, 0.45):
+        for N in (30, 60):
+            A = arch(L, N, pole=True)
+            row = []
+            for x in (1.9, 1.95, 2.0, 2.05, 2.1, 2.13):
+                if math.log(x) >= 2 * L: row.append("  out "); continue
+                row.append(mp.nstr(min(eigs(add(A, atoms(L, N, {x: arb(x).log()})))), 4))
+            print("  L=%.2f N=%d no atom: %s ; x=1.9,1.95,2.0,2.05,2.1,2.13: %s" % (L, N, mp.nstr(min(eigs(A)), 4), row), flush=True)

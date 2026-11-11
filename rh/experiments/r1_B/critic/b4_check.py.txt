@@ -1,0 +1,28 @@
+"""Critic: B-4 checks. (1) dissipation identity on a random polynomial zero system; (2) dz_1/dt at t=0 and min gap from Arb zeros."""
+import sys, math, numpy as np
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+rng = np.random.default_rng(7)
+# conjugation-symmetric system: 20 real zeros + 5 non-real pairs
+x = np.sort(rng.uniform(-10, 10, 20)); w = rng.uniform(-8, 8, 5) + 1j * rng.uniform(0.2, 1.5, 5)
+z = np.concatenate([x.astype(complex), w, w.conj()])
+def vel(z):
+    d = z[:, None] - z[None, :]; np.fill_diagonal(d, 1); inv = 1 / d; np.fill_diagonal(inv, 0); return 2 * inv.sum(1)
+def Y(z): return np.sum(z.imag ** 2)
+def rhs(z):
+    y = z.imag; d = np.abs(z[:, None] - z[None, :]) ** 2; np.fill_diagonal(d, 1)
+    return -2 * np.sum((y[:, None] - y[None, :]) ** 2 / d)   # = -4 sum_{j<k}
+h = 1e-6
+def rk4(z, h):
+    k1 = vel(z); k2 = vel(z + h / 2 * k1); k3 = vel(z + h / 2 * k2); k4 = vel(z + h * k3); return z + h / 6 * (k1 + 2 * k2 + 2 * k3 + k4)
+zp = rk4(z, h); zm = rk4(z, -h)
+print("dY/dt numeric %.8f   identity RHS %.8f   bound -4*#pairs = %d" % ((Y(zp) - Y(zm)) / (2 * h), rhs(z), -4 * 5))
+# single pair landing time
+z1 = np.array([0.3j, -0.3j]); t = 0; dt = 1e-5
+while z1[0].imag > 1e-3: z1 = rk4(z1, dt); t += dt
+print("single pair y0=0.3: y<1e-3 at t=%.5f  (predicted 0.3^2/2 = 0.045)" % t)
+g = np.array(rhlib.zeros(20000), float)
+g1 = g[0]; s = np.sum(g1 / (g1 ** 2 - g[1:] ** 2)) + 1 / (4 * g1)
+T = g[-1]; tail = -g1 * (math.log(T / (2 * math.pi)) + 1) / (2 * math.pi * T)
+print("dz_1/dt at t=0 (z=2*gamma units): %.7f  (proposer -0.5796306)" % (2 * (s + tail)))
+gaps = 2 * np.diff(g[:40]); print("min gap among first 40 zeros (z units): %.4f at k=%d (proposer 1.690)" % (gaps.min(), gaps.argmin() + 1))
+print("var(gap)/mean^2 = %.4f (proposer 0.1949)   sum 1/gap^2 = %.4f (proposer 2.210)" % (gaps.var() / gaps.mean() ** 2, np.sum(1 / gaps ** 2)))

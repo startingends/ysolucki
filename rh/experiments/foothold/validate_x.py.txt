@@ -1,0 +1,35 @@
+"""Independent check (mpmath, NOT a certificate) of the x-space formula and of the ball matrix AA of forcing.py.txt.
+Test functions v(t) = (1/4 - t^2)^4 (even) and t (1/4 - t^2)^4 (odd) on [-1/2, 1/2]; atom y = log 2, m = log2/sqrt2.
+(1) frequency side:  (1/pi) int_0^inf (Re psi(1/4 + ir/2) - log pi - 2 m cos(r y)) |F(r)|^2 dr + 2 F(i/2) F(-i/2)   [mpmath quad]
+(2) x side by mpmath quad;   (3) b^T (AA - 2 m Gam(y)) b from the Arb/rational code."""
+import sys, mpmath as mp
+mp.mp.dps = 25
+sys.argv = ['forcing', '28', '600', '1/2']
+src = open('/home/user/ysolucki/rh/experiments/foothold/forcing.py.txt').read()
+ns = {'__name__': 'lib'}
+exec(compile(src, 'forcing', 'exec'), ns)
+fmpq_poly = ns['fmpq_poly']; fmpq = ns['fmpq']; P = ns['P']; Vec = ns['Vec']; IDX = ns['IDX']; arbq = ns['arbq']
+y = mp.log(2); m = mp.log(2) / mp.sqrt(2)
+for par, vpoly in ((0, fmpq_poly([fmpq(1, 4), 0, -1]) ** 4), (1, fmpq_poly([0, 1]) * fmpq_poly([fmpq(1, 4), 0, -1]) ** 4)):
+    # coefficients b_j of v in the basis P_j(2t):  b_j = (2j+1) int_{-1/2}^{1/2} v(t) P_j(2t) dt
+    b = []
+    for j in IDX[par]:
+        pr = (vpoly * P[j]).integral()
+        b.append((2 * j + 1) * (pr(fmpq(1, 2)) - pr(fmpq(-1, 2))))
+    V = Vec(par, b)
+    yq = fmpq(int(mp.floor(y * 10**30)), 10**30)
+    Q3 = V.A - 2 * arbq(fmpq(int(mp.floor(m * 10**30)), 10**30)) * arbq(V.g(yq))
+    c = [mp.mpf(int(t.p)) / mp.mpf(int(t.q)) for t in vpoly.coeffs()]
+    v = lambda t: mp.polyval(c[::-1], t)
+    bf = [mp.mpf(int(t.p)) / mp.mpf(int(t.q)) for t in b]
+    sj = lambda n, z: mp.sqrt(mp.pi / (2 * z)) * mp.besselj(n + 0.5, z)
+    # F(r) = sum_j b_j i^j j_j(r/2)   (int_{-1/2}^{1/2} P_j(2t) e^{irt} dt = i^j j_j(r/2));  F(+-i/2) by direct quadrature
+    Fabs2 = lambda r: abs(sum(bj * (1j) ** j * sj(j, r / 2) for bj, j in zip(bf, IDX[par]))) ** 2
+    Fc = lambda z: mp.quad(lambda t: v(t) * mp.exp(1j * z * t), [-0.5, 0, 0.5])
+    sym = lambda r: mp.re(mp.digamma(0.25 + 0.5j * r)) - mp.log(mp.pi) - 2 * m * mp.cos(r * y)
+    Q1 = mp.quad(lambda r: sym(r) * Fabs2(r), mp.linspace(mp.mpf(10)**-12, 300, 61)) / mp.pi + 2 * mp.re(Fc(0.5j) * Fc(-0.5j))
+    g = lambda x: mp.quad(lambda s: v(s + x) * v(s), [-0.5, 0.5 - x])
+    h = lambda x: mp.exp(x / 2) / mp.sinh(x) - 1 / x
+    Q2 = -(mp.log(2 * mp.pi) + mp.euler) * g(0) + mp.quad(lambda x: (g(0) - g(x)) / x, [0, 0.5, 1]) - mp.quad(lambda x: h(x) * g(x), [0, 0.5, 1]) \
+         + 2 * mp.quad(lambda t: v(t) * mp.exp(t / 2), [-0.5, 0.5]) * mp.quad(lambda t: v(t) * mp.exp(-t / 2), [-0.5, 0.5]) - 2 * m * g(y)
+    print(f"parity {par}: frequency side {mp.nstr(Q1, 20)}   x side (mpmath) {mp.nstr(Q2, 20)}   Arb/rational code {Q3.str(20)}")

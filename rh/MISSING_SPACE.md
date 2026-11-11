@@ -1,0 +1,144 @@
+# The missing space: a specification derived from what the session proved (lead, 2026-11-11)
+Owner: "What's needed is a new kind of mathematical space ... now you need to fill it, which requires an idea that
+doesn't exist yet." This file does not claim to fill the hole. It turns the hole into a SPECIFICATION precise
+enough that a candidate can be checked against it, and records the one design principle the session's proved
+results point to. Ratings at the end. Facts recalled from memory are marked (m).
+
+## 1. What the space must contain (each line is a proved or checked fact of this session, or Weil's)
+- (S1) Divisors D(f), f a test function on ℝ₊*, with D(f)·D(g) = Weil's form (Connes' normalisation; N112).
+- (S2) Degree: D·ξ₀ = ĝ(i/2), D·ξ₁ = ĝ(−i/2) (the two poles; N112).
+- (S3) An archimedean Riemann–Roch that is an exact identity, the prolate count (N111).
+- (S4) Positivity on EFFECTIVE classes, already proved: for f ≥ 0, D·D(f) ≥ −W_∞(f∗f̃), because Λ ≥ 0 (N113).
+- (S5) Exact principal divisors and an intersection form continuous with respect to them; impossible on finite
+  windows (N114), so the space is global.
+- (S6) The impostor must fail inside the space exactly where its coefficients change sign (N113, N114).
+
+## 2. The design principle: the gap between (S4) and Weil positivity is a GROUP LAW
+(S4) is positivity for POSITIVE combinations of Frobenius graphs, D(f) = ∫ Ψ(λ) f(λ) d*λ with f ≥ 0. Weil positivity
+needs it for SIGNED combinations. Over a finite field the same gap exists and is closed in Weil's second proof, by
+the Jacobian (m):
+- On C × C, a positive combination Σ a_k Γ_{π^k} (a_k ≥ 0) is an effective correspondence, so its positivity is
+  "points are counted positively", which is (S4).
+- A signed combination φ = Σ a_k π^k is not effective on C × C, but it is still a MORPHISM of the Jacobian J,
+  because J is a group ([−1] is a morphism). Pull-back by a morphism preserves effectivity, so φ*Θ is effective, and
+  Tr(φφ′) = c·(φ*Θ·Θ^(g−1)) ≥ 0 for the Rosati involution φ ↦ φ′ (positivity of the Rosati trace). With φ′ the
+  dual of φ under the polarisation, this is |α| = √q for every eigenvalue α of π.
+- So: **the group law is what converts signed combinations of Frobenius into geometric maps, and that is exactly
+  what extends (S4) from f ≥ 0 to all f.** Read against this session: every positivity we proved is for positive
+  combinations (S4); every obstruction we hit is a signed combination (oscillation, N84; fake weights, N95;
+  near-principal classes of the wrong sign, N114).
+- The Rosati involution is the functional equation: φ = U_f ↦ φ′ = U_{f̌} with f̌(λ) = f(1/λ)/λ (duality on H¹ is
+  Poincaré duality, i.e. ρ ↦ 1 − ρ). Weil positivity is "Tr(φφ′) ≥ 0", the Rosati positivity.
+
+**Specification of the missing object (call it the arithmetic Jacobian J):**
+- (J1) a commutative group object, with a theory of effective divisors and pull-back;
+- (J2) a ring map ℤ[ℝ₊*] (signed combinations of scalings) → End(J), whose kernel is the ideal of principal classes
+  (f with f̂(ρ) = 0 at every zero and pole), so that End(J) ⊗ ℂ "is" the ring of functions on the zeros;
+- (J3) a polarisation Θ whose Rosati involution is f ↦ f̌ (the functional equation);
+- (J4) pull-back by endomorphisms preserves effectivity (automatic for morphisms of a group object);
+- (J5) ampleness: effective · Θ ≥ 0, the analogue of (S4).
+Then Tr(φφ′) ≥ 0 for every φ, which is Weil positivity, which is RH. The impostor has no (J2): its coefficients do
+not come from a ring of scalings (no multiplicativity), so End is not available.
+
+## 3. What a naive candidate does, and why it collapses
+- Any group on which scaling acts LINEARLY (ℝ₊*, the adeles, the idele class group with the power maps
+  x ↦ x^λ of Connes–Consani's Fr_λ) gives End ⊇ ℝ with Σ a_i[λ_i] ↦ Σ a_i λ_i: the ring map of (J2) collapses to
+  evaluation at ONE point (the pole s = 1, the degree). An abelian variety has End ⊗ ℚ ⊇ ℚ(π) of degree 2g because
+  π satisfies a polynomial of degree 2g; the arithmetic J would need End to see every zero, i.e. an
+  infinite-dimensional group whose endomorphisms realise every character λ ↦ λ^(ρ−½). No known group does.
+
+## 4. Where the intersection numbers must live: the Arakelov shape
+- Over a finite field, intersection numbers are integers (times log q). Over ℚ, Weil's form produces values
+  Σ (integers)·log p + (archimedean real part). The log p are ℚ-linearly independent, so the natural integral
+  structure is the free group ⊕_p ℤ·log p ≅ ℚ₊*: one INTEGER intersection number per prime, plus a real number at ∞.
+  That is exactly the shape of Arakelov intersection theory (local intersection i_p ∈ ℤ at each p, times log p, plus
+  a Green-function term at ∞), where the arithmetic Hodge index theorem IS PROVED (Faltings, Hriljac (m)). So the
+  missing space should be "Arakelov-like": ∞ enters through Green functions, on the same footing as the primes,
+  which is the requirement of N89–N90 in a form that already exists in mathematics.
+- The obvious candidate, and why it is not enough: modular curves over ℤ with Hecke correspondences T_n as the
+  "Frobenius graphs". Arithmetic Hodge index gives positivity of Néron–Tate pairings ⟨φ(T)x, φ(T)x⟩ for signed Hecke
+  combinations φ (the group law of the Jacobian J₀(N) makes them morphisms, exactly as in §2), and Gross–Kohnen–Zagier
+  (m) packages ⟨T_n x, x⟩ as Fourier coefficients of a modular form. But the positivity is indexed by the HECKE
+  SPECTRUM (the eigenforms f; it yields statements like L′(f, 1)·L(f, χ, 1) ≥ 0 at the centre (m)), not by the ZEROS of
+  any one L-function; and ζ enters only through the Eisenstein / cuspidal part, which is torsion and has height 0.
+  This is the triangle of N83 again: positivity attaches to spectral parameters, and zeros are not spectral
+  parameters of anything known.
+
+## 5. The specification in one sentence
+**An Arakelov-type space (integer intersection numbers per prime, a Green-function term at ∞) carrying a GROUP law,
+on which signed combinations of the scaling flow act as endomorphisms whose joint eigenvalues are the zeros of ζ,
+with the functional equation as Rosati involution.** Every ingredient but one exists separately: Arakelov
+intersection with Hodge index (Faltings–Hriljac), group laws with Rosati positivity (abelian varieties), the scaling
+flow with the zeros as spectrum (Connes), the effective-class positivity (S4, proved here), the archimedean
+Riemann–Roch (S3, proved here). The missing ingredient is an object having the group law AND the zeros of ζ as
+eigenvalues of its endomorphisms at once.
+
+## 6. Honest status and ratings
+- This is a specification, not a construction. Its new content (to be checked against the literature): (i) the
+  identification of the session's proved positivity (S4) with "positive combinations of Frobenius graphs" and of
+  every obstruction met with "signed combinations", so that the missing structure is precisely a group law (Weil's
+  Jacobian proof, read backwards); (ii) the Rosati involution as the functional equation and Rosati positivity as
+  Weil positivity, stated for ℚ; (iii) the ⊕_p ℤ log p integrality pointing to Arakelov theory; (iv) why the modular-
+  curve candidate gives spectral, not zero, positivity.
+- Quality 4 (clean and consistent with every result of the session; several links from memory). Toward RH 2 (it
+  names the object more sharply; it does not build it).
+
+## 7. A construction attempt, and the no-go it produced (lead, 2026-11-11, after the owner: "you NEED to fill it")
+Attempt. Look for J among existing groups with the scaling action, sorted by how End sees the scalings λ ∈ ℚ₊*:
+- (a) Groups with a lattice and finite-rank endomorphism algebras (G_m over ℤ with the power maps [n], the adelic
+  solenoid 𝔸/ℚ with End = ℚ, the Bohr torus T^∞ = dual of ℚ₊*, abelian varieties, tori): the group law is there and
+  positivity can come from a polarisation (theta functions on the lattice), but ℤ[ℚ₊*] → End collapses (§3) or the
+  zeros appear as POINTS (the Kronecker line in T^∞, N88), not as eigen-characters of endomorphisms.
+- (b) Connes' L²(adele class space): every signed combination of scalings acts (by convolution), the zeros are the
+  absorption spectrum, but they live on a cokernel where the induced form is not the L² form, and its positivity is
+  Weil positivity, open.
+The hole sits between (a) and (b). Trying to place a candidate there produced the following obstruction.
+
+**Proposition (no-go for integral models; lead, proof by a known transcendence theorem; to be verified).** Let
+γ ≠ 0 be real and p₁, p₂, p₃ distinct primes. Then at least one of p₁^(iγ), p₂^(iγ), p₃^(iγ) is transcendental.
+Proof: the six exponentials theorem (Lang, Ramachandra (m)): if x₁, x₂ are ℚ-linearly independent and y₁, y₂, y₃ are
+ℚ-linearly independent, one of the six numbers e^(x_i y_j) is transcendental. Take x = (1, iγ) (independent since iγ
+is not rational) and y_j = log p_j (independent by unique factorisation); the e^(1·y_j) = p_j are algebraic, so some
+p_j^(iγ) is transcendental. ∎
+**Consequence.** On the γ-component of H¹, the scaling by p acts by p^(iγ) (times p^(½) in the usual normalisation).
+If J had a lattice (an integral structure) preserved by the scalings by p₁, p₂, p₃ with the γ-component inside a
+FINITE-RANK invariant sublattice, those scalings would have characteristic polynomials with integer coefficients there,
+hence algebraic eigenvalues: a contradiction. So:
+- **no zero of ζ (indeed no real γ ≠ 0) can sit in a finite-rank integral piece on which three prime scalings act;**
+- hence J cannot be an abelian variety, a torus, or any finite-rank lattice object over ℚ̄ with the prime scalings
+  as endomorphisms, and positivity cannot come from a polarisation of finite rank (Riemann relations on a lattice);
+- over F_q(t) there is no contradiction because every Frobenius is a power of ONE π, whose eigenvalues are algebraic
+  Weil numbers; over ℚ the primes are independent (log p ℚ-independent), and independence plus algebraicity is what
+  the six exponentials theorem forbids.
+- So each zero must live in a piece of INFINITE rank with no finite invariant sublattice (like the shift on ℓ²(ℤ)),
+  or J has no integral structure at all. Either way, the positivity of the missing space cannot be inherited from
+  finite-dimensional algebraic geometry; it must come from an infinite-rank or analytic polarisation.
+- Status: rigorous modulo (m) for the six exponentials theorem and the standard fact that endomorphisms preserving a
+  finite-rank lattice have integral characteristic polynomials; the conclusion "J is not algebraic of finite rank"
+  is new as far as the lead knows (not searched). Quality 6, Toward RH 2: it removes a whole class of candidates for
+  the missing space and says what kind the space must be; it does not build it.
+
+## 8. Adversarial check (SP-modular, `rh/specialists/modular/MISSING_SPACE_CHECK.md`; mostly from memory) and corrections
+- **§2's design principle is WRONG as worded.** Signed combinations of Frobenius graphs are already divisors on C × C,
+  and Weil's first proof (Castelnuovo–Severi, Hodge index on C × C) handles them with no group law; correspondences
+  modulo degenerate ones = End(J), and Rosati positivity is Castelnuovo positivity in another form. In both proofs the
+  real ingredient is an AMPLE class plus a Riemann–Roch amplifier: the L3–L4 link of REVERSE.md. The group law is a
+  convenience, not the missing idea. "Rosati = functional equation" holds on the spectrum (ρ ↦ 1 − ρ), but the
+  polarisation is extra data; over ℚ, (J3) + (J5) amount to RH stated as self-adjointness.
+- **§3's collapse is WRONG as stated.** It holds only for scalar (homothety) actions. Function spaces on the idele
+  class group (scaling by translation; Connes) and the big Witt vectors with the operators F_n (Borger's F₁; Σ aₙ Fₙ
+  acts with eigenvalue Σ aₙ n^(−s) for every s) see every character. Their obstacle: they see EVERY s and single out
+  the zeros only through the kernel of Σ Fₙ (Nyman–Beurling again), and they have no archimedean place to carry a
+  polarisation. Connes' adele class space is not a group.
+- §4 correct with fix: Faltings–Hriljac positivity is Néron–Tate positivity, indexed by the Hecke spectrum; ζ enters
+  constants (Green functions, ω̂², Gillet–Soulé arithmetic Riemann–Roch). Closest instance for ζ itself: Bost–Kühn,
+  the self-intersection of the Hodge bundle on the level-1 modular curve over ℤ involves ζ′(−1)/ζ(−1): a value at ONE
+  point, not Weil's quadratic form.
+- **§7 CORRECT**, normalisation irrelevant: six exponentials with (1, ρ − c) works for any non-real ρ, on or off the
+  line. It rules out finite-rank structures with algebraic coefficients and inductive towers of them (e.g. a tower of
+  J₀(N)); it does NOT rule out completed infinite-rank objects or an analytic archimedean part, so §4's Arakelov idea
+  survives. Known in spirit (Deninger, Manin); the exact argument not recalled in print.
+- **The three-way picture that remains.** Big Witt vectors: group law and every character, no ∞. Connes' adele class
+  space: zeros and scaling, no group law. Modular Jacobians: group law, polarisation and Hodge index, but they see the
+  Hecke spectrum, not zeros. No known object has the ample class, the zeros, and ∞ at once. Ratings (seat): Quality 6,
+  Toward RH 1 ("the new ingredient turns out to be the ample class of L3–L4").

@@ -1,0 +1,6 @@
+site 20 full-matrix eigenvalues: Hessian piece min -0.0343 max 3.2386 ; open-path piece min -1.5691 max 0.8572
+site 0 full-matrix eigenvalues: Hessian piece min -0.3740 max 9.7291 ; open-path piece min -2.7908 max 2.1868
+M=20 lambda_1=4.302810 total rate lambda_1 - N_ii = 5.1654 ; even margin via box: mu1(Q)=6.5201e-03
+M=40 lambda_1=4.303094 total rate lambda_1 - N_ii = 5.8713 ; even margin via box: mu1(Q)=1.9905e-03
+M=80 lambda_1=4.304310 total rate lambda_1 - N_ii = 6.5719 ; even margin via box: mu1(Q)=5.4648e-04
+M=160 lambda_1=4.305238 total rate lambda_1 - N_ii = 7.2690 ; even margin via box: mu1(Q)=1.7206e-04

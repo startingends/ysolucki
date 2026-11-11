@@ -1,0 +1,30 @@
+# grid 50000 pts, 89.4s
+# zeros in (0,1000): L(chi) 904, L(chibar) 904; first: [ 6.1835782   8.45722917 12.67494642], [ 4.13290371  9.44293113 11.28289644]
+# lam_DH from three DH zeros: [0.9999999999999994, 1.0000000000000016, 1.000000000000001]
+# interlacing violations (two consecutive zeros of the same L-function): 424 of 1807 gaps; first few (t_a, t_b, which):
+#   6.1836 8.4572  L1
+#   9.4429 11.2829  L2
+#   17.3378 18.9986  L1
+#   19.7291 21.2830  L2
+#   24.3653 25.5312  L1
+#   26.4728 27.8125  L2
+#   34.4572 35.4909  L1
+#   37.8476 39.0916  L2
+#   41.5365 42.9921  L1
+#   45.0858 46.2664  L2
+#   51.9771 53.4422  L1
+#   55.5326 56.1844  L2
+# critical points of rho on (0,1000): 430  (0 would mean perfect interlacing / every pencil member real-rooted)
+# critical points whose value lies between 0 and lam_DH (these control DH's off-line zeros):
+#   t_c = 85.89903  rho = +0.439670  max  -> pair LEAVES the line as lam goes 0 -> lam_DH ; running off-line pairs = 1
+#   t_c = 114.33826  rho = +0.487222  max  -> pair LEAVES the line as lam goes 0 -> lam_DH ; running off-line pairs = 2
+#   t_c = 166.50471  rho = +0.886095  max  -> pair LEAVES the line as lam goes 0 -> lam_DH ; running off-line pairs = 3
+#   t_c = 176.96664  rho = +0.168096  max  -> pair LEAVES the line as lam goes 0 -> lam_DH ; running off-line pairs = 4
+# predicted number of off-line pairs of the DH member up to T: 28
+# height T'   lam_plus(T') = min positive local-max value   lam_minus(T') = max negative local-min value
+      50   nan   -0.108517   (#zeros L1 below: 21)
+     100   0.439670   -0.074284   (#zeros L1 below: 54)
+     200   0.168096   -0.027028   (#zeros L1 below: 130)
+     500   0.064301   -0.015857   (#zeros L1 below: 397)
+    1000   0.024535   -0.001092   (#zeros L1 below: 904)
+# total 117.3s

@@ -1,0 +1,9 @@
+(sieve) int lattice. n, L, N, dps, eig at true weight, room above, room below, digits
+  n=2 L=0.4581 N=24 dps=73 Lambda=0.693147 eig@true=1.06e-5 above=0.000835 below=0.0104 digits=1.98 (1s)
+  n=3 L=0.6264 N=24 dps=79 Lambda=1.09861 eig@true=2.98e-10 above=7.23e-5 below=0.00034 digits=3.47 (2s)
+  n=4 L=0.7520 N=24 dps=84 Lambda=0.693147 eig@true=3.84e-15 above=7.5e-6 below=3.28e-5 digits=4.48 (4s)
+  n=5 L=0.8524 N=24 dps=90 Lambda=1.60944 eig@true=4.56e-20 above=1.38e-6 below=4.07e-6 digits=5.39 (5s)
+  n=6 L=0.9359 N=24 dps=95 Lambda=0.0 eig@true=4.24e-25 above=2.46e-7 below=7.23e-7 digits=6.14 (7s)
+  n=7 L=1.0075 N=27 dps=101 Lambda=1.94591 eig@true=4.35e-30 above=5.83e-8 below=1.6e-7 digits=6.80 (9s)
+  n=8 L=1.0700 N=31 dps=106 Lambda=0.693147 eig@true=4.13e-35 above=1.54e-8 below=3.65e-8 digits=7.44 (12s)
+total 12s

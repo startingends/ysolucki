@@ -1,0 +1,20 @@
+== zeta L=1.0 M=80: lambda1=4.304310 #pos=1 mu2=-4.1676e-03 gap/lam1=1.00097 (gap/lam1-1=9.682e-04) offdiag<0: 0  N00=-2.267541 rate=6.5719..6.5719 umin/umax=0.845
+   even: #pos=1  2c^T N^-1 c - 1 = 1.5601e-04;  odd: #pos=0 1-2 s^T(-N)^-1 s = 1.0668e-02
+   Weil form min eig: even 5.465e-04  odd 2.413e-03
+   int Gamma2 check 7.8e-16;  BE rho/lam1: worst 0.4626 at site 2 (x=-0.938), centre 0.5061;  rho/gap worst 0.4622
+   per-site negative index of Gamma2 - lam1 Gamma: ==1 at 50 of 80; histogram [0, 50, 26, 2, 2]
+== beurling L=1.0 M=80: lambda1=4.281806 #pos=5 mu2=4.4987e-01 gap/lam1=0.89494 (gap/lam1-1=-1.051e-01) offdiag<0: 0  N00=-2.267541 rate=6.5493..6.5493 umin/umax=0.843
+   even: #pos=3  2c^T N^-1 c - 1 = 1.0846e-02;  odd: #pos=2 1-2 s^T(-N)^-1 s = 2.0078e-01
+   Weil form min eig: even -4.307e-01  odd -4.550e-01
+   int Gamma2 check 5.6e-16;  BE rho/lam1: worst 0.4648 at site 77 (x=0.938), centre 0.5069;  rho/gap worst 0.5194
+   per-site negative index of Gamma2 - lam1 Gamma: ==1 at 24 of 80; histogram [0, 24, 52, 2, 2]
+== zeta L=1.0 M=160: lambda1=4.305238 #pos=1 mu2=-1.1765e-03 gap/lam1=1.00027 (gap/lam1-1=2.733e-04) offdiag<0: 0  N00=-2.963810 rate=7.2690..7.2690 umin/umax=0.808
+   even: #pos=1  2c^T N^-1 c - 1 = 4.9942e-05;  odd: #pos=0 1-2 s^T(-N)^-1 s = 3.1789e-03
+   Weil form min eig: even 1.721e-04  odd 6.550e-04
+   int Gamma2 check 7.8e-16;  BE rho/lam1: worst 0.4415 at site 4 (x=-0.944), centre 0.4965;  rho/gap worst 0.4414
+   per-site negative index of Gamma2 - lam1 Gamma: ==1 at 4 of 160; histogram [0, 4, 116, 34, 4, 2]
+== beurling L=1.0 M=160: lambda1=4.282763 #pos=5 mu2=4.8270e-01 gap/lam1=0.88729 (gap/lam1-1=-1.127e-01) offdiag<0: 0  N00=-2.963810 rate=7.2466..7.2466 umin/umax=0.816
+   even: #pos=3  2c^T N^-1 c - 1 = 1.0629e-02;  odd: #pos=2 1-2 s^T(-N)^-1 s = 1.9032e-01
+   Weil form min eig: even -4.706e-01  odd -4.886e-01
+   int Gamma2 check 5.6e-16;  BE rho/lam1: worst 0.4435 at site 155 (x=0.944), centre 0.4959;  rho/gap worst 0.4998
+   per-site negative index of Gamma2 - lam1 Gamma: ==1 at 0 of 160; histogram [0, 0, 124, 32, 2, 2]

@@ -1,0 +1,6 @@
+max |C - builder| even block: 5.21e-60
+max |C - builder| odd block: 5.21e-60
+  pole only, even block: max diff 2.48e-61
+  arch only, even block: max diff 4.71e-60
+control (2 -> 2.1 in C only): max diff even block 0.899
+0.5s

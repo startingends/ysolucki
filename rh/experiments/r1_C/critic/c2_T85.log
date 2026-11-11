@@ -1,0 +1,1 @@
+dh nodes t in [70,100] N=48 step 0.638 dps=120: #neg=1  negatives: ['-5.31e-6'] ; smallest positive 1.33e-47 ; largest 0.00118

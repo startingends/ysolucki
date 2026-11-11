@@ -1,0 +1,8 @@
+"""Stage 3: the two skips."""
+import os, sys
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "audit_lib.py.txt")).read())
+marker = once("stage3")
+skip("operator", 4, "audit R3-AUD: not promoted: a reading promise (Burnol; Connes-Consani archimedean place), nothing defined, proved or computed beyond the task; carried as open item 6 of the S1 closing; the de Branges chain itself is noted on main #8")
+skip("atlas", 6, "audit R3-AUD: not promoted: a pointer to four atlas pairings (F1 x F6, F2 x F3, F2 x F8, F3 x F8) already recorded in rh/ATLAS.md, each a reformulation by the seat's own statement; their contents are on main #8, #23, #24")
+open(marker, "w").write("done\n")
+print("stage 3 done")

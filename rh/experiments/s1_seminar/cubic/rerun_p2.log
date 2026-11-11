@@ -1,0 +1,12 @@
+L=0.50 n=12  Perron a: boxes [0.2045 0.2376 0.2497] fibres [0.4111 0.4111] ; (Ha)min 6.125e-01 ; |T.a - H| 2.2e-16
+   positive eigenvalues of the slices: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   distinct box triples: 220, negative: 0 (0%)
+   distinct triples incl. fibres: 364, negative: 0 (0%)
+   a=(1..1, 3,3): slices #pos [1] ; distinct box triples negative 0%
+   a=(h-weights,1,1): slices #pos [1] ; distinct box triples negative 0%
+L=1.00 n=12  Perron a: boxes [0.2591 0.2744 0.2627] fibres [0.3081 0.3081] ; (Ha)min 1.325e+00 ; |T.a - H| 2.2e-16
+   positive eigenvalues of the slices: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   distinct box triples: 220, negative: 0 (0%)
+   distinct triples incl. fibres: 364, negative: 0 (0%)
+   a=(1..1, 3,3): slices #pos [1] ; distinct box triples negative 0%
+   a=(h-weights,1,1): slices #pos [1] ; distinct box triples negative 1%

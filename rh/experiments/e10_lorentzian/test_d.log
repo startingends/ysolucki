@@ -1,0 +1,16 @@
+(d) one atom at position y with free weight m, L = 0.5: for which y does a feasible m exist?
+  y=0.4500 (x=1.568): best m = 0.292595  max lowest eigenvalue = -0.1477  infeasible
+  y=0.5500 (x=1.733): best m = 0.287128  max lowest eigenvalue = -0.05342  infeasible
+  y=0.6000 (x=1.822): best m = 0.304679  max lowest eigenvalue = -0.0233  infeasible
+  y=0.6400 (x=1.896): best m = 0.346264  max lowest eigenvalue = -0.008955  infeasible
+  y=0.6600 (x=1.935): best m = 0.382382  max lowest eigenvalue = -0.004365  infeasible
+  y=0.6800 (x=1.974): best m = 0.436282  max lowest eigenvalue = -0.001251  infeasible
+  y=0.6900 (x=1.994): best m = 0.474739  max lowest eigenvalue = -0.0002296  infeasible
+  y=0.6931 (x=2.000): best m = 0.489498  max lowest eigenvalue = 1.578e-5  FEASIBLE
+  y=0.7000 (x=2.014): best m = 0.512293  max lowest eigenvalue = -0.00377  infeasible
+  y=0.7100 (x=2.034): best m = 0.52035  max lowest eigenvalue = -0.01688  infeasible
+  y=0.7300 (x=2.075): best m = 0.539933  max lowest eigenvalue = -0.04209  infeasible
+  y=0.7600 (x=2.138): best m = 0.579211  max lowest eigenvalue = -0.07771  infeasible
+  y=0.8000 (x=2.226): best m = 0.654854  max lowest eigenvalue = -0.122  infeasible
+  y=0.9000 (x=2.460): best m = 1.06974  max lowest eigenvalue = -0.2232  infeasible
+  y=0.9800 (x=2.664): best m = 2.71459  max lowest eigenvalue = -0.3009  infeasible

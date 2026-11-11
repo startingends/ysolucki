@@ -1,0 +1,4 @@
+(1) L=0.75: Q0_odd(x v_even) from 5000 zeros = 0.00014628861   (2500 zeros: 0.00014628861) ; mu_even(0) = 9.19651e-15   (12s)
+(1) L=0.75: Q0_even(x v_odd) from 5000 zeros = 0.0024538506   (2500 zeros: 0.0024538506) ; mu_odd(0) = 7.45319e-12   (20s)
+(2) L=0.75 even block: measured slope c = 0.00014628861 (zero-side value above: 0.00014628861, ratio 1.0) ; first-order d_c = 7.9287799e-6 ; EXACT d* = 7.9269169e-6 ; d*/d_c = 0.99976503 ; nu = 1/d*^2 = 1.59144e+10 ; nu x mu(0) = 0.000146357   (67s)
+(2) L=0.75 odd block: measured slope c = 0.0024538506 (zero-side value above: 0.0024538506, ratio 1.0) ; first-order d_c = 5.5112094e-5 ; EXACT d* = 5.5097155e-5 ; d*/d_c = 0.99972894 ; nu = 1/d*^2 = 3.29414e+8 ; nu x mu(0) = 0.00245518   (114s)

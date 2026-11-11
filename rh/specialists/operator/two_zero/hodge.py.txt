@@ -1,0 +1,25 @@
+"""REVERSE_R1 section 4: the self-intersection form D.D = 2ab - Q on the window (zeta), D.D = -Q (impostor, no pole), in
+D_L-whitened coordinates; Hodge-index count nu_+ and the candidates K1, K2 on the extremal direction."""
+import sys
+args = sys.argv[1:]
+sys.argv = ['h', args[0], '0', 'on:1,2', '0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("c = mp.mpf(sys.argv[2])")[0]
+exec(src)
+pa = phi(mp.mpc(0, 0.5)); pb = phi(mp.mpc(0, -0.5))          # a(g) = ghat(i/2) = int g e^{-u/2}, b(g) = ghat(-i/2)
+al = Li * mp.matrix([mp.re(x) for x in pa]); be = Li * mp.matrix([mp.re(x) for x in pb])
+al = np.array([float(al[k]) for k in range(NB)]); be = np.array([float(be[k]) for k in range(NB)])
+zeta = d['KIND'] == 'zeta'
+DD = (np.outer(al, be) + np.outer(be, al) if zeta else 0) - Af
+ed, Vd = np.linalg.eigh(DD)
+tol = 1e-9 * np.abs(ed).max()
+npos = int(np.sum(ed > tol))
+print(f"{d['KIND']} L = {d['L']} NB = {NB}: D.D form: positive squares nu_+ = {npos}; largest eigenvalues {[f'{x:.4g}' for x in ed[-4:]]}; |alpha| = {np.linalg.norm(al):.3e}, |beta| = {np.linalg.norm(be):.3e}")
+ev, V = np.linalg.eigh(Af); Pp = (Vd[:, ed > tol] * ed[ed > tol]) @ Vd[:, ed > tol].T      # D+ (positive part)
+for i in range(min(2, int(np.sum(ev < 0)) + 1)):
+    v = V[:, i]
+    for sgn in (1, -1):
+        w = sgn * v; a, b = al @ w, be @ w; dd = w @ DD @ w; h1 = w @ Pp @ w
+        h2 = h1 if (a + b) > 0 else 0.0
+        print(f"  direction {i} (pencil value {ev[i]:+.5f}), sign {sgn:+d}: a = {a:+.3e}, b = {b:+.3e}, deg = {a+b:+.3e}, D.D = {dd:+.5f}, h1 = {h1:.5f}, h2 = {h2:.5f}")
+    hp, hm = v @ Pp @ v, v @ Pp @ v
+    print(f"    K1: C1 [h1(v)+h1(-v) >= D.D/2]: {2*hp >= 0.5*(v@DD@v)}; C2 [h1>0 => deg>0] for both signs: {(hp <= 0) or ((al@v+be@v) > 0 and (-(al@v+be@v)) > 0)}")

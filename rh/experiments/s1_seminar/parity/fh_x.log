@@ -1,0 +1,6 @@
+L=0.5 v = 1                                        Lemma 5 (quadrature): 0.0880146104737051 ; implementation B: 0.0880146104737051 ; difference 1.04e-30
+L=0.5 v = cos(pi x/L)                              Lemma 5 (quadrature): 0.10314110785043 ; implementation B: 0.10314110785043 ; difference 9.86e-32
+L=0.5 v = sin(pi x/(2L)) (odd, jump at the edge)   Lemma 5 (quadrature): 0.0999872151050998 ; implementation B: 0.0999872151050998 ; difference 2.47e-31
+L=0.54 v = 1                                        Lemma 5 (quadrature): 0.123229111864307 ; implementation B: 0.123229111864307 ; difference 7.03e-31
+L=0.54 v = cos(pi x/L)                              Lemma 5 (quadrature): 0.145567930309039 ; implementation B: 0.145567930309039 ; difference 1.23e-31
+L=0.54 v = sin(pi x/(2L)) (odd, jump at the edge)   Lemma 5 (quadrature): 0.0622425277239076 ; implementation B: 0.0622425277239076 ; difference 9.24e-32

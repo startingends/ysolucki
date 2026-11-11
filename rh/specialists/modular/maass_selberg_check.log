@@ -1,0 +1,8 @@
+T = 1.0  t = 0.3  |phi| = 1.0  norm^2: via phi'/phi 0.04791861854  via xi'/xi 0.04791861854  via 399 zeros 0.04259183
+T = 1.0  t = 1.0  |phi| = 1.0  norm^2: via phi'/phi 0.1464629811  via xi'/xi 0.1464629811  via 399 zeros 0.14113616
+T = 1.0  t = 5.0  |phi| = 1.0  norm^2: via phi'/phi 0.3130983541  via xi'/xi 0.3130983541  via 399 zeros 0.30777055
+T = 1.0  t = 7.0673623  |phi| = 1.0  norm^2: via phi'/phi 8.021813576  via xi'/xi 8.021813576  via 399 zeros 8.0164848
+T = 2.0  t = 0.3  |phi| = 1.0  norm^2: via phi'/phi 0.5208716976  via xi'/xi 0.5208716976  via 399 zeros 0.51554491
+T = 2.0  t = 1.0  |phi| = 1.0  norm^2: via phi'/phi 1.351103256  via xi'/xi 1.351103256  via 399 zeros 1.3457764
+T = 2.0  t = 5.0  |phi| = 1.0  norm^2: via phi'/phi 1.755641103  via xi'/xi 1.755641103  via 399 zeros 1.7503133
+T = 2.0  t = 7.0673623  |phi| = 1.0  norm^2: via phi'/phi 9.62712532  via xi'/xi 9.62712532  via 399 zeros 9.6217965

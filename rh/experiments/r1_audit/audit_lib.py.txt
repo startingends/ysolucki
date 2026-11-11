@@ -1,0 +1,81 @@
+"""Helpers for the round-1 idea audit (auditor R1-AUD). Drives tools/ideas.py with argument lists (no shell quoting).
+Each stage script refuses to run twice (marker file), because notes and promotions are not idempotent."""
+import os, subprocess, sys
+
+ROOT = "/home/user/ysolucki"
+TOOL = os.path.join(ROOT, "tools", "ideas.py")
+EXP = os.path.join(ROOT, "rh", "experiments")
+HERE = os.path.join(EXP, "r1_audit")
+AUD = "R1-AUD"
+LOGS = {
+    "A": os.path.join(EXP, "r1_A", "IDEAS_LOCAL.md"),
+    "critA": os.path.join(EXP, "r1_A", "critic", "IDEAS_LOCAL.md"),
+    "B": os.path.join(EXP, "r1_B", "IDEAS_LOCAL.md"),
+    "critB": os.path.join(EXP, "r1_B", "critic", "IDEAS_LOCAL.md"),
+    "C": os.path.join(EXP, "r1_C", "IDEAS_LOCAL.md"),
+    "critC": os.path.join(EXP, "r1_C", "critic", "IDEAS_LOCAL.md"),
+    "D": os.path.join(EXP, "r1_D", "IDEAS_LOCAL.md"),
+    "critD": os.path.join(EXP, "r1_D", "critic", "IDEAS_LOCAL.md"),
+    "judge": os.path.join(EXP, "r1_judge", "IDEAS_LOCAL.md"),
+}
+sys.path.insert(0, os.path.join(ROOT, "tools"))
+import ideas as ideas_mod  # noqa: E402  (read-only use: parse)
+
+
+def once(stage):
+    m = os.path.join(HERE, ".done_" + stage)
+    if os.path.exists(m):
+        sys.exit("stage %s already ran" % stage)
+    return m
+
+
+def run(*args):
+    for a in args:
+        assert isinstance(a, str) and "\n" not in a, a
+        assert not a.startswith("-") or a.startswith("--"), "text must not start with '-': " + a[:40]
+    r = subprocess.run([sys.executable, TOOL, *args], capture_output=True, text=True, cwd=ROOT)
+    out = (r.stdout + r.stderr).strip()
+    if r.returncode != 0:
+        sys.exit("TOOL FAILED %r\n%s" % (args[:4], out))
+    if out:
+        print(out)
+    return out
+
+
+def get(local, n, field):
+    _, its = ideas_mod.parse(local)
+    for it in its:
+        if it["n"] == n:
+            return it["fields"].get(field)
+    raise KeyError(n)
+
+
+def fill(local, n, fields):
+    """Set fields in a local entry. Returns {field: original text} for fields that existed and were replaced."""
+    replaced = {}
+    for f, text in fields.items():
+        old = get(local, n, f)
+        if old and " ".join(old.split()) != " ".join(text.split()):
+            replaced[f] = old
+        run("--file", local, "set", str(n), f, text)
+    return replaced
+
+
+def promote(local, n, fields, status, why, expect):
+    replaced = fill(local, n, fields)
+    out = run("promote", "--from", local, str(n), "--auditor", AUD)
+    m = int(out.rsplit("#", 1)[1])
+    assert m == expect, (m, expect)
+    run("status", str(m), status, why)
+    for f, old in replaced.items():   # nothing is lost from the agent's own log
+        run("--file", local, "note", str(n), "auditor %s replaced the '%s' field before promotion; the agent's original text was: %s" % (AUD, f, old))
+    return m
+
+
+def merge(local, n, main, text):
+    run("note", str(main), text)
+    run("--file", local, "skip", str(n), "merged into main #%d" % main)
+
+
+def skip(local, n, why):
+    run("--file", local, "skip", str(n), why)

@@ -1,0 +1,12 @@
+import sys, math, time
+exec(open("/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt").read())
+kind = sys.argv[1]; prec = int(sys.argv[2])
+flint.ctx.prec = prec
+for spec in sys.argv[3:]:
+    L, N = spec.split(":"); L = float(L); N = int(N)
+    t = time.time()
+    q, w = build(L, N, kind=kind)
+    E = even_block(q, N); O = odd_block(q, N)
+    mu, v, _ = lowest(E)
+    muo, vo, _ = lowest(O)
+    print(f"{kind} L={L} N={N} prec={prec}  mu_even={mu.str(8, radius=False)}  mu_odd={muo.str(8, radius=False)}  log10(mu_even)={float(abs(mu).log())/math.log(10):.3f}  [{time.time()-t:.1f}s]", flush=True)

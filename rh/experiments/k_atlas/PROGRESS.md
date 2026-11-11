@@ -1,0 +1,182 @@
+# K-atlas PROGRESS (keeper of the failure atlas)
+
+Labels: PROVED / COMPUTED / HEURISTIC / CONJECTURE. Atlas written only through `tools/records.py atlas`.
+
+## Session 1 (2026-11-10 23:57 start; container restart in the middle; resumed 2026-11-11)
+
+### Before the restart (nothing was written to the atlas; only reading)
+Read in full: claude.md, SUBAGENT_PREAMBLE, PROJECT_BRIEF, ATLAS (F1-F3), HUB, KEY_LEMMA_SHAPE, KNOWLEDGE,
+r1_judge/JUDGEMENT.md, IDEAS.md #1-#21, r1_audit/AUDIT.md, PROGRESS of r1_A..D and the four critics,
+r2_cubic / r2_curv / r2_parity PROGRESS and their three refuters, r2_judge PROGRESS (predictions only, no
+JUDGEMENT.md exists), r2_free PROGRESS, e9/e10/e21 PROGRESS, PROOF_bochner_parity, PROOF_first_failure,
+PROOF_uniqueness, PROOF_trickle (Lemma D), UNDERSTANDING, THEORY, NOTEBOOK N9-N32.
+
+Corrections to the seed entries found while reading (applied with `atlas set`):
+- F3 said "the entire deficit sits in open paths at the window edge". REFUTED by R2-curv-ref: Gamma-normalised
+  constant at the centre: squares only 0; squares+Hessian 0.240; squares+open 0.200; all three 0.522. Deleting the
+  open-path term LOWERS the constant.
+- F2: Lemma B (trickle-down with negative diagonal) is KNOWN: Braenden-Leake arXiv 2304.13203 Lemma 2.8 (refuter read pp. 6-9).
+- F3 / W-curv-3: "primes and Gamma need different reflections" is true only OFF the integers: on integers a, b >= 2
+  the matrix [w(log ab) + Lambda(ab)/sqrt(ab)] is PSD (refuter R9: min eig -2.1e-16, 2 <= a, b <= 60).
+
+### After the restart
+(see below, written as I go)
+
+### After the restart: atlas completed to 25 entries (F4-F25 added, F1-F3 corrected), MEMORY.md checkpoint written.
+
+### PREDICTIONS written BEFORE computing (2026-11-11, script signs.py.txt; rule 4)
+Object: the lowest eigenvector of each parity block of the window Weil form, folded to (0, L]; S = number of sign
+changes on a 2000-point grid (points with |f| < 1e-9 max|f| ignored). S1-parity found S = 0 for zeta at L = 0.75, 1 (B58 Fact 2).
+- P1 zeta: S = 0 in both blocks at L = 1.0 and at L = 1.6.
+- P2 DH impostor BELOW its failure (L = 1.0 and 1.6 < L* = 1.71): S >= 1 in at least one block (my confidence: 65%).
+  Reason: the DH analogue of the near-null vectors is e^(u/2) sum a(n) phi(n e^u) with a = (1, xi, -xi, -1, 0) mod 5,
+  which changes sign. If S = 0 for DH below L*, the sign of the ground state is NOT an early warning (pairing F10 x F21 = no).
+- P3 DH at L = 1.72 (just past failure, eigenvalue -7.9e-30 in the even block): S >= 20 in the even block
+  (a wave packet near frequency 85 would have about 85 x 1.72/pi = 46).
+- P4 zeta with the prime 5 REMOVED (all other weights true): negative already at L = 0.815 (first failure within 0.01 of
+  (1/2) log 5 = 0.8047), the ODD block fails first, and at L = 0.90 the values are -0.12 (even) / -0.45 (odd), the
+  'two-prime world' row of board B19. Control: with 5 present all values positive (about 1e-17 .. 1e-21).
+- P5 Hausdorff 1x1 test at p = 2: c(4) - c(16) = (log 2)(x - 1)(1/x^2 - x), x = 2^(2d): -0.0403 at d = 0.1, 0 at d = 0.
+
+### RESULTS (COMPUTED, signs.py.txt on lane A's validated builder r1_A/weil.py.txt, Arb midpoints / mpmath; logs signs_zeta1.log,
+### signs_gs.log, signs_rm5.log; each run under flock heavy.lock + memcap 1; total under 10 s; ONE implementation, not certified)
+- P1 HIT. zeta folded ground states: 0 sign changes, both blocks, L = 1.0 (N = 60: 7.297e-30 / 1.803e-26) and L = 1.6
+  (N = 120: 2.888e-117 / 6.107e-113).
+- P2 MISS. DH below its failure: 0 sign changes in BOTH blocks at L = 0.5, 1.0, 1.6, 1.70 (eigenvalues 0.299/1.44,
+  3.4e-5/1.3e-2, 5.2465e-23/4.04e-19, 1.11828e-28/7.0e-25; the 1.6 and 1.70 values equal lane A's 5.2e-23, 1.1183e-28).
+  So one-signedness of the folded ground state does not use the sign of the couplings and is NOT an early warning.
+- P3 MISS, and the miss is the finding. DH at L = 1.72: the vector of the eigenvalue -7.91085e-30 (lane A: -7.9109e-30)
+  has 0 sign changes (min/max over max = 4.5e-15 / 1), largest mode k = 1 (frequency 1.83), share 0.485: it is NOT a wave
+  packet at height 85.7; it is the bottom rung of the prolate ladder, a one-signed function, that crosses zero. Same at
+  L = 1.74 for the odd block (-2.084e-26, 0 sign changes above the 1e-9 threshold; min/max = -4.2e-11). The packet at
+  frequency 84.3 reported by lane A belongs to the eigenvalue -0.263 at L = 1.9, well past the failure.
+  Consequences: (a) notebook N13's picture of the null vector at a first failure (a wave packet at the height of the bad
+  zero) is wrong at the failure itself; (b) a one-signed null vector EXISTS for an impostor, so no key lemma of the form
+  'a null vector must change sign' / 'Perron positivity excludes a null vector' can be true; (c) S1-parity's Fact 2
+  (board B58) holds for DH as well, whose couplings are 51% negative: it is a property of the ladder, not of the primes.
+- P4 HIT. zeta with the prime 5 removed: L = 0.800: identical to the control; 0.806: +1.08e-17 / +9.50e-15 (control
+  +1.01e-17 / +9.64e-15); 0.810: +8.2e-18 / -4.36e-14; 0.815: -3.4e-16 / -6.1e-5; 0.82: -2.4e-8 / -0.0148; 0.85: -0.0117 / -0.211;
+  0.90: -0.11728 / -0.45431 (board B19: -0.12 / -0.45). First failure L*(5) in (0.806, 0.810], i.e. (1/2) log 5 + (0.0013, 0.0053];
+  the ODD block fails first; while still positive the EVEN block is slightly RAISED by the removal (as Fact 3 says).
+  With board values: L*(2) - (1/2) log 2 in (0.0234, 0.0284), L*(3) - (1/2) log 3 in (0, 0.0107).
+- P5 (hand, checked): (log 2)(x - 1)(1/x^2 - x) at x = 2^0.2 = 1.148698: -0.040284.
+- A derivation I got WRONG first and corrected before recording: 'a missing prime q = zeros of 1 - q^-s on Re s = 0, so
+  Theorem 4 counts it'. False as an identity: 1 - q^-s has no functional equation; the correct statement is
+  Q_{zeta without q}(f) = Q_zeta(f) + (log q/2 pi) int |fhat(t)|^2 (P_r(t log q) - 1) dt, P_r the Poisson kernel, r = q^(-1/2)
+  (the Poisson-kernel form q_p of board B65), which is indefinite: negative where t log q is near pi mod 2 pi.
+
+### Pairing job (done in this session)
+- All 300 pairs of the 25 entries recorded with `records.py atlas pair` (texts in pairs_a.py.txt, pairs_b.py.txt, driver
+  pairs_run.py.txt; the driver skips pairs already recorded). Verdicts: 290 no, 6 maybe, 4 yes.
+- Method: needs sorted into kinds (convergence / formula or sum-of-squares identity / prime-side impossibility / estimate /
+  separating quantity / sum rule / zero-free region / Hilbert space / geometry / centre-knowing input / soft existence),
+  supplies into kinds (exact finite stage / sum of squares / exact count / rigidity / control instrument / proved floor /
+  localisation curve). Time went to the pairs where a supply-kind meets a need-kind; about 110 pairs with no contact in
+  kind carry the one-line 'No relation' (honest, but not individually reasoned beyond the kinds).
+- yes (all four are reformulations already made in the record): F1xF6, F2xF3, F2xF8, F3xF8.
+- maybe: F2xF22, F3xF22 (two-block / mirror; already on the board), F9xF22 (visibility law = tilt threshold, slope 1/2),
+  F12xF13 (= main idea #15), F12xF21 (missing-prime law on the window), F17xF22 (F_d = Eisenstein L-function; B11 = WJ8).
+- Two pairs I expected to be maybe/yes and found to be no by computing or by finding my own error: F4xF21 / F10xF21
+  (nodeless null vector for the impostor) and F7xF22 (no symmetric zero side for a missing prime).
+- Board s1: read B1-B146; posted three questions: B147 (F17xF22, to S1-mirror), B148 (nodeless null vector + missing-prime
+  law, to S1-parity), B149 (F9xF22, to S1-curv).
+- Atlas updates after the coordinator's messages: F1 restated (Connes-van Suijlekom hypotheses; digest read, paper not),
+  F22 supplies (tilt identity, d_c table, second involution), F2/F3 breaks (blind to the tilt), F3 supplies (G4),
+  F10 needs (a definition of the Krein function now exists on the board), F22 needs (no infrared upper bound found).
+- Local idea log: K-atlas/#1 .. #7.
+
+### Answer to board B160 (S1-socrates): the finite sentence for 'no prime' on [-0.40, 0.40]
+PREDICTION before computing (bg.py.txt): with the explicit odd trial function f(x) = sin(pi x/(2L)) on [-L, L], L = 0.40,
+pole(f) + arch(f) is NEGATIVE, between -0.10 and -0.02 per unit norm (the lowest odd eigenvalue in lane A's periodic basis is
+-0.077 at N = 200, the half-integer basis gives lower values, and my f is the first half-integer mode). Check of the formula:
+the same code on f = sin(pi x/L) must reproduce L x (first diagonal entry of lane A's odd block without primes).
+RESULT (bg.log): formula check HIT (0.00134818794253 both routes, 12 digits). Prediction MISSED: f = sin(pi x/(2L)) gives
+Q_bg(f)/|f|^2 = +0.0194 at L = 0.40 (pole -0.00847, arch +0.01625, |f|^2 = 0.4): POSITIVE. The first half-integer mode is not a
+witness. Next (bg2.py.txt): odd polynomials c1 x + c3 x^3 + c5 x^5 on [-0.4, 0.4]; prediction: the best one is negative,
+between -0.12 and -0.05 per unit norm (below the periodic-basis value -0.077, since polynomials do not vanish at the edge).
+RESULT (bg2.log): prediction HIT (-0.0774 in (-0.12, -0.05)). Witness f(x) = x - 5.07 x^3 - 0.208 x^5 on [-0.4, 0.4]:
+|f|^2 = 0.0130945171, pole = -0.0002392346, arch = -0.0007741813, Q_bg(f) = -0.0010134159. Autocorrelation g < 0 on
+u in (0.2593, 0.8), min -0.0063978 at u = 0.46, g(log 2) = -0.0017172. One-vector consequence and control rows:
+ANSWER_B160.md (posted on the board as the answer to B160). NOT NEW as numerics: Connes-Consani 2106.01715 sec. 2.2, 2.4
+(digests grepped, not read): sign change of the archimedean form past log 2 and the omitted-prime-power effect for
+2, 3, 4, 5, 7. So prediction P4 (prime 5 removed) reproduced a known numerical effect; recorded in F21 and in K-atlas/#2.
+A first, over-long version of the board answer was refused by the tool (4000-character limit); nothing was posted twice.
+
+## Session 1, continuation after the first report (coordinator's list: new entries, fold in B147-B149, pair, 'Wiles move')
+Read: r2_judge/JUDGEMENT.md sections 1, 2, 4; NOTEBOOK N34-N38; e22_rootplane/RESULT.md; board B122-B172 (B127, B129, B132,
+B139 in full); specialists/operator/PROOFS.md P7 (rest by headings); JOURNAL J4. NOT read: specialists' IDEAS_LOCAL.md
+(other agents' unreviewed logs; the preamble forbids it and PROOFS/NOTES/board had what I needed), reflection
+NOTES_session1.md beyond its headings (its content is on the board as B117, B129, B130, B139, B146).
+Board: B147, B149 unanswered so far; B148 answered by S1-parity in B170 (PROVED unconditionally: every non-zero l^1 atomic
+perturbation of the prime side makes zeta's form negative on SOME window; the window itself is not given).
+
+### The 'Wiles move' search: a sign that one failure lacks and another supplies exactly
+Candidate (pair F22 x F30, with F2's doubling): in the ODD block, folded to (0, L],
+   Q(f_o)/2 = T_W(phi) - E_+(phi)^2 + sum_{m>=1} E_m(phi)^2 + H_primes(phi),
+E_+ = int phi e^(x/2), E_m = int phi e^(-(2m+1/2)x), H_primes = sum_n Lambda(n) n^(-1/2) int phi(x) phi(log n - x) dx,
+T_W = the Weil form on the half-size window. The prime mirror atoms enter with a PLUS sign. Three recorded facts meet:
+(i) F22 died because H_primes >= 0 holds on atoms and FAILS on L^2 (9 of 20 negative directions); (ii) the odd minimiser is
+nodeless (PROVED for L <= (1/2) log 2 by SP-operator P7, COMPUTED for every positive window, F30), and on a one-signed phi
+H_primes >= 0 by the sign of the couplings alone; (iii) one parity block suffices (Yoshida, known). The same sign has a cost:
+the mirror atoms are exactly the wrong-sign entries that break the Perron argument for (ii) beyond (1/2) log 2 (N34, B169).
+So 'what kills the Perron proof of nodelessness' IS 'what makes the prime term help on the positive cone'.
+Sentence to compute: on zeta's odd ground state phi_0 at window L, the pole square is paid as
+   1 = s_T(L) + s_Gamma(L) + s_P(L),  s_T = T_W/E_+^2, s_Gamma = sum_{m>=1} E_m^2/E_+^2, s_P = H_primes/E_+^2  (up to mu_odd).
+S1-mirror has one row (B94, L = 0.6): 0.0997 + 0.4988 + 0.4015. The Gamma share 0.4988 is suspiciously close to 1/2.
+PREDICTION (written before computing, shares.py.txt): 0.4988 is NOT structural. s_Gamma decreases with L: above 0.60 at
+L = 0.45, below 0.35 at L = 1.0; s_P increases with L; s_T stays between 0.05 and 0.30. All three terms positive at every L.
+If instead s_Gamma stays within [0.49, 0.51] on 0.45 <= L <= 1.0, there is an exact factor 1/2 (the trivial zeros pay half of
+the pole on the odd ground state) and that would be a 'factor supplied exactly'. Validation: reproduce B94's row at L = 0.6.
+RESULT (shares.log; lane A's builder, odd block, N = 60..100; one implementation; validation HIT: at L = 0.6 I get
+0.0995 + 0.4986 + 0.4019 against S1-mirror's 0.0997 + 0.4988 + 0.4015):
+  L      s_T      s_Gamma   s_P     (prime 2 alone)   E_0^2/E_+^2
+ 0.45   0.1867   0.5600   0.2589    0.2589            0.640
+ 0.50   0.1386   0.5334   0.3285    0.3284            0.630
+ 0.60   0.0995   0.4986   0.4019    0.4017            0.617
+ 0.68   0.0831   0.4776   0.4393    0.4375            0.609
+ 0.75   0.0741   0.4636   0.4622    0.4584            0.604
+ 0.90   0.0618   0.4409   0.4972    0.4881            0.595
+ 1.00   0.0569   0.4304   0.5127    0.5002            0.591
+ 1.25   0.0496   0.4130   0.5375    0.5178            0.584
+Prediction: 'not structural, s_Gamma decreasing, s_P increasing, all three positive': HIT. Sizes: MISS twice (I said s_Gamma
+> 0.60 at 0.45: it is 0.560; < 0.35 at 1.0: it is 0.430); s_T in [0.05, 0.30]: holds to L = 1.0, 0.0496 at 1.25.
+So there is NO exact factor 1/2: 0.4988 at L = 0.6 is where a slowly falling curve crosses 1/2 (and the prime 2 crosses 1/2 at
+L = 1.0: 0.5002, equally accidental). What the table does say: on the odd ground state the pole square is paid almost
+entirely by two manifestly non-negative mirror terms (trivial zeros m >= 1: 0.56 -> 0.41; prime mirror: 0.26 -> 0.54, of which
+the prime 2 alone is 96-100%), the inductive half-window term shrinks (0.19 -> 0.05), and the odd ground state stays near the
+origin as L grows (E_0^2/E_+^2 = 0.64 -> 0.58), so it never 'sees' primes beyond 2 and 3 with any weight (5: 3e-7 at L = 1.25).
+
+### Continuation: what was done
+- Atlas now 30 entries, 435 of 435 pairs (424 no, 7 maybe, 4 yes). New entries F26 (trace cubic, N37), F27 (infrared bounds),
+  F28 (Borodin-Okounkov / Wiener-Hopf+Hankel), F29 (de Branges chain; damping plane N35), F30 (nodeless ground states).
+  Not made into entries, folded into existing ones instead: N38 (function-field twin of B11 -> F18 supplies), e22 (-> F21),
+  r2 judge's findings (-> F2, F3, F7, F8 sources/breaks), journal J4's 'already published' list (-> F6, F14, F20 sources).
+- Of the 135 new pairs, 68 carry a per-entry 'No contact in kind' sentence (judged by kind), 67 have their own reasoning.
+- Answers folded in: B170 (S1-parity, to B148) -> F21, F12; B178 (S1-mirror, to B147) -> F17; B184 (S1-curv, to B149) -> F9;
+  B174/B175 (S1-mirror's first-prime lemma, overlapping my B168) -> F30.
+- 'Wiles move' search (coordinator's item 4), result:
+  (a) FOUND, a sign: pair F22 x F30 (recorded maybe; posted as B188; idea K-atlas/#8). The prime mirror form lacks a sign on
+      L^2 (what killed idea 21) and has it for free on one-signed functions (what nodelessness supplies), on the helpful
+      side in the odd block, which alone suffices. Statement (N) + (C) above. Cost, equally exact: the mirror atoms are
+      the only wrong-sign entries for the Perron proof of (N).
+  (b) TESTED, a factor: is S1-mirror's Gamma share 0.4988 an exact 1/2? Prediction written first: no. COMPUTED: no
+      (0.560 .. 0.413 over L = 0.45 .. 1.25).
+  (c) NOT FOUND: an exact match between the curvature factor 2, the two-halves constant 5/6 and the doubling inequality.
+      S1-curv's G4 says the deficit 1/6 is purely even-odd cross terms; on parity eigenfunctions the half-window constant
+      is the full gap, but only because Gamma_2 of a parity eigenfunction is even (a symmetry, not a supply).
+  (d) NOT A MATCH as stated: 'opposite signs of mirror and shift forms against the anti-maximum structure of the even block'.
+      The even ground state is (B - mu_1)^-1 c with mu_1 just BELOW the second eigenvalue of B (8e-30 against 2e-23 at L = 1),
+      not just above the first, so the anti-maximum principle is not literally applicable (recorded under F8 x F30).
+  (e) The signature swap of F26 (N: slices PSD, contraction Lorentzian; W: slices one positive square, contraction PSD) is a
+      sign mismatch that NO entry supplies: the only swap theorem on record (Widder / Kallen-Lehmann, F27) has the other sign.
+
+## Batch N80-N108 (coordinator's request; CORE.md and NOTEBOOK N80-N108 read)
+- Entries F31-F43 added (entries4.py.txt): (S), H-1, triangle / P_rho / scaling flow, S = {inf, p}, approximate Harder,
+  H-3, Levinson theta, H-4, hybrid FE, analytic tensor power, Bagchi converter, base-change amplifiers, Robin/Nicolas.
+- 468 new pairs recorded (pairs_d.py.txt, pairs_run_d.py.txt): 466 no, 2 maybe; 45 with their own reasoning, 423 kind-level.
+  Atlas: 43 entries, 903 of 903 pairs. Board s1 is closed: nothing posted. No numerics run for this batch.
+- maybe F39 x F41: off-line zero -> large value of the Dirichlet polynomial S_X (no zero to avoid, so recurrence is
+  unconditional) -> mean-value count; fails by recurrence density exp(-c X/log X) against slack X^(-2 beta) (Turan route).
+- maybe F21 x F38: B170's fixed-perturbation argument forces fake hiding weights to be unbounded in l^1 across windows.
+- The lead's glue (F33 amplifier + F41 bound) examined: does not compose, the amplifier multiplies exponents
+  (Satake parameters k beta, boosts), the bound counts zeros; base change keeps A+B+C (from memory) but stays Eisenstein.

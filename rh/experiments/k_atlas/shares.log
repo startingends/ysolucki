@@ -1,0 +1,24 @@
+L=0.6 N=60 mu_odd=6.533e-7  E_+^2=0.26182732  shares: T_W 0.099484  Gamma(m>=1) 0.49859  primes 0.40193  [sum 1.0000012]  (E_0^2/E_+^2 = 0.6173; m up to 4001)
+     per prime power: 2: 0.4017, 3: 0.0002764
+L=0.45 N=60 mu_odd=0.00253  E_+^2=0.22735649  shares: T_W 0.18669  Gamma(m>=1) 0.56002  primes 0.25886  [sum 1.0055648]  (E_0^2/E_+^2 = 0.6396; m up to 4001)
+     per prime power: 2: 0.2589
+L=0.5 N=60 mu_odd=0.0002086  E_+^2=0.24247264  shares: T_W 0.13857  Gamma(m>=1) 0.53341  primes 0.32845  [sum 1.0004301]  (E_0^2/E_+^2 = 0.6302; m up to 4001)
+     per prime power: 2: 0.3284
+L=0.68 N=60 mu_odd=1.679e-9  E_+^2=0.27321825  shares: T_W 0.083112  Gamma(m>=1) 0.4776  primes 0.43929  [sum 1.0]  (E_0^2/E_+^2 = 0.6093; m up to 4001)
+     per prime power: 2: 0.4375, 3: 0.001819
+L=0.75 N=60 mu_odd=3.701e-12  E_+^2=0.28080993  shares: T_W 0.074143  Gamma(m>=1) 0.46364  primes 0.46221  [sum 1.0]  (E_0^2/E_+^2 = 0.604; m up to 4001)
+     per prime power: 2: 0.4584, 3: 0.003829, 4: 1.036e-7
+
+real	0m47.660s
+user	0m47.047s
+sys	0m0.046s
+L=0.9 N=70 mu_odd=7.888e-20  E_+^2=0.2934479  shares: T_W 0.06182  Gamma(m>=1) 0.44094  primes 0.49724  [sum 1.0]  (E_0^2/E_+^2 = 0.595; m up to 1501)
+     per prime power: 2: 0.4881, 3: 0.009101, 4: 5.983e-6, 5: 7.186e-10
+L=1 N=80 mu_odd=1.724e-26  E_+^2=0.29947739  shares: T_W 0.056882  Gamma(m>=1) 0.43041  primes 0.51271  [sum 1.0]  (E_0^2/E_+^2 = 0.5907; m up to 1501)
+     per prime power: 2: 0.5002, 3: 0.01249, 4: 1.74e-5, 5: 1.535e-8, 7: 3.8e-20
+L=1.25 N=100 mu_odd=4.567e-51  E_+^2=0.30977047  shares: T_W 0.049577  Gamma(m>=1) 0.41298  primes 0.53745  [sum 1.0]  (E_0^2/E_+^2 = 0.5835; m up to 1501)
+     per prime power: 2: 0.5178, 3: 0.01955, 4: 6.591e-5, 5: 3.216e-7, 7: 1.394e-13, 8: 6.955e-18, 9: 4.066e-22, 11: 6.726e-34
+
+real	0m28.361s
+user	0m28.168s
+sys	0m0.016s

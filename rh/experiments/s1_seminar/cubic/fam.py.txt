@@ -1,0 +1,36 @@
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+def sigmas(H, a):
+    """tensors in x-coordinates of sigma_0, sigma_1, sigma_2, sigma_11, sigma_111 ; U = K A^{-1} = S^{-1} H (maps x -> Kf), I_ = A^{-1}"""
+    m = len(a); s = H @ a; pi = a * s
+    U0 = np.diag(1 / a); U1 = H / s[:, None]; U2 = (H * (a / s)[None, :]) @ H / s[:, None]   # f, Kf, K^2 f as linear maps of x
+    def br(X, Y, Z): return np.einsum('l,li,lj,lk->ijk', pi, X, Y, Z)
+    def sym(X, Y, Z):
+        t = br(X, Y, Z); return (t + np.transpose(t, (1, 0, 2)) + np.transpose(t, (2, 1, 0)) + np.transpose(t, (0, 2, 1)) + np.transpose(t, (1, 2, 0)) + np.transpose(t, (2, 0, 1))) / 2
+    s0 = br(U0, U0, U0); s1 = sym(U1, U0, U0); s2 = sym(U2, U0, U0); s11 = sym(U1, U1, U0); s111 = br(U1, U1, U1)
+    return s0, s1, s2, s11, s111
+def worst(T, H, a):
+    s = H @ a; m = len(a)
+    ev = [np.linalg.eigvalsh(np.outer(H[:, k], H[:, k]) / s[k] - T[:, :, k])[0] for k in range(m)]
+    npos = [int((np.linalg.eigvalsh(T[:, :, k]) > 1e-9).sum()) for k in range(m)]
+    return min(ev), max(npos)
+cases = [("resampling m=12", np.ones((12, 12)) / 12, np.ones(12))]
+for kind, L, n in (("zeta", 0.5, 12), ("zeta", 1.0, 12), ("zeta", 1.0, 24), ("beurling", 1.0, 12)):
+    cn = box.lam(math.exp(2 * L)) if kind == "zeta" else box.beurling(math.exp(2 * L))
+    Nb, p, q = box.boxN(L, n, cn); H = box.ext(Nb, p, q); ev, V = np.linalg.eigh(H)
+    cases.append(("%s L=%.2f n=%d" % (kind, L, n), H, np.abs(V[:, -1])))
+for name, H, a in cases:
+    s0, s1, s2, s11, s111 = sigmas(H, a)
+    BE = 0.25 * s0 - 0.25 * s2 + 0.5 * s11
+    chk = lambda T: np.abs(np.einsum('ijk,k->ij', T, a) - H).max()
+    res = []
+    for t in np.linspace(-1, 2, 61):
+        T = t * (s1 - s2) + (0.5 - t) * s11 + (3 * t - 0.5) * s111
+        w, npos = worst(T, H, a); res.append((w, t, npos, chk(T)))
+    best = max(res)
+    wBE, nBE = worst(BE, H, a)
+    print("%-22s BE: |T.a-H|=%.0e worst lambda_min(P_k)=%.4f max#pos=%d || family: best t=%.2f worst lambda_min(P_k)=%.3e max#pos=%d |T.a-H|=%.0e ; at t=0: %.3e, t=1/6: %.3e, t=1/2: %.3e" % (
+        name, chk(BE), wBE, nBE, best[1], best[0], best[2], best[3], res[20][0], min(res, key=lambda r: abs(r[1] - 1 / 6))[0], res[30][0]))

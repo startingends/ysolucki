@@ -1,0 +1,4 @@
+zeros done t=16s
+even (1/4 - t^2)^4: Q (x-space, mine) = 1.175328884170354e-8   2 sum_(150 zeros) |F(gamma)|^2 = 1.175328884169878e-8   ratio - 1 = 4.05e-13   [author: 1.1753288841703535e-8]
+odd t (1/4 - t^2)^4: Q (x-space, mine) = 5.344742566406391e-9   2 sum_(150 zeros) |F(gamma)|^2 = 5.344742566405234e-9   ratio - 1 = 2.16e-13   [author: 5.344742566406391e-9]
+total 23s

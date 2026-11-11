@@ -1,0 +1,20 @@
+import sys, math, importlib.machinery, importlib.util, numpy as np
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+R = load("ref_lib", "/home/user/ysolucki/rh/experiments/r2_cubic/refuter/ref_lib.py.txt")
+nz = int(sys.argv[1]) if len(sys.argv) > 1 else 20000
+g = np.array(rhlib.zeros(nz)); T = g[-1]
+L, n = 1.0, 12; h = 2 * L / n
+N, p, q, _ = R.build(L, n)
+Q = np.outer(p, q) + np.outer(q, p) - N
+N0, _, _, _ = R.build(L, n, atoms=[])            # control: no primes
+Q0 = np.outer(p, q) + np.outer(q, p) - N0
+print("zeros used: %d, T = %.2f" % (nz, T))
+for (i, j) in ((0, 0), (5, 5), (3, 4), (0, 2), (0, 5), (2, 9), (0, 11)):
+    # box i = [-L + i h, -L + (i+1) h]; fhat_i(r) = e^{i r c_i} 2 sin(r h/2)/(r sqrt h); Re(fhat_i conj fhat_j) = 4 sin^2(rh/2)/(h r^2) cos(r d)
+    d = (i - j) * h
+    S = 2 * np.sum(4 * np.sin(g * h / 2) ** 2 / (h * g ** 2) * np.cos(g * d))
+    tail = (2 / (math.pi * h)) * (math.log(T / (2 * math.pi)) + 1) / T if i == j else 0.0
+    print("Q[%2d,%2d]: zeros sum %.6f + tail %.6f = %.6f | builder (pole + arch - primes) %.6f | diff %.1e | builder WITHOUT primes %.6f" % (i, j, S, tail, S + tail, Q[i, j], S + tail - Q[i, j], Q0[i, j]))

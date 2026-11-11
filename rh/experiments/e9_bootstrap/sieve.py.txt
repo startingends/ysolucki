@@ -1,0 +1,61 @@
+"""Idea #9, 'positivity sieve'. For each n: window L = (1/2) log(n + 1/2) admits integers 2..n only.
+Hold m_k = Lambda(k) for k < n; find the interval of m_n for which the windowed Weil form (zeta archimedean
+term + pole) is non-negative.  usage: python3 sieve.py.txt <nmin> <nmax>"""
+import sys, math, time, importlib.util, importlib.machinery
+import flint
+from flint import arb
+import mpmath as mp
+P = "/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt"
+spec = importlib.util.spec_from_file_location("weil", P, loader=importlib.machinery.SourceFileLoader("weil", P))
+weil = importlib.util.module_from_spec(spec); spec.loader.exec_module(weil)
+
+def run(n):
+    L = 0.5 * math.log(n + 0.5)
+    dps = int(60 + 5.5 * math.exp(2 * L)); N = max(24, int(2.6 * L * math.exp(2 * L)) + 8)
+    mp.mp.dps = dps; flint.ctx.prec = int(dps * 3.33) + 40
+    def to_mp(M):
+        R = mp.matrix(M.nrows(), M.ncols())
+        for i in range(M.nrows()):
+            for j in range(M.ncols()):
+                R[i, j] = mp.mpf(M[i, j].mid().str(dps + 10, radius=False))
+        return R
+    blocks = lambda q: (to_mp(weil.even_block(q, N)), to_mp(weil.odd_block(q, N)))
+    q, _ = weil.build(L, N, kind='zeta', pole=True, primes=False, arch=True); Q0 = blocks(q)
+    saved = weil.dh_logderiv_coeffs
+    def unit(cn):
+        weil.dh_logderiv_coeffs = lambda X: dict(cn)
+        q, _ = weil.build(L, N, kind='dh', pole=False, primes=True, arch=False)
+        weil.dh_logderiv_coeffs = saved
+        return blocks(q)
+    lam = {k: arb(p).log() for k, (_, p) in weil.mangoldt_upto(n).items()}
+    prev = {k: v for k, v in lam.items() if k < n}
+    base = [Q0[b] + unit(prev)[b] if prev else Q0[b] for b in (0, 1)] if prev else list(Q0)
+    Bn = unit({n: arb(1)})                       # = -B_n blocks
+    true = mp.log(weil.mangoldt_upto(n)[n][1]) if n in weil.mangoldt_upto(n) else mp.mpf(0)
+    def lmin(m):
+        return min(min(mp.eigsy(base[b] + mp.mpf(m) * Bn[b], eigvals_only=True)) for b in (0, 1))
+    at_true = lmin(true)
+    ends = []
+    for sgn in (1, -1):
+        a = None; b = None; k = 1
+        while k >= -dps + 15:
+            d = mp.mpf(10) ** k
+            if lmin(true + sgn * d) >= 0: a = d; break
+            b = d; k -= 1
+        if a is None: ends.append(mp.mpf(0)); continue
+        if b is None: ends.append(mp.inf); continue
+        while b / a > 1.3:
+            c = mp.sqrt(a * b)
+            if lmin(true + sgn * c) >= 0: a = c
+            else: b = c
+        ends.append(a)
+    return L, N, dps, true, at_true, ends
+
+print("%3s %6s %4s %4s %10s %12s %12s %12s %7s  %s" % ("n", "L", "N", "dps", "Lambda(n)", "eig at true", "room above", "room below", "digits", "decides?"))
+for n in range(int(sys.argv[1]), int(sys.argv[2]) + 1):
+    t = time.time()
+    L, N, dps, true, at_true, (up, dn) = run(n)
+    hw = max(up, dn)
+    digits = float(-mp.log10(hw)) if 0 < hw < mp.inf else float('nan')
+    print("%3d %6.4f %4d %4d %10s %12s %12s %12s %7.1f  %s  (%.0fs)" % (n, L, N, dps, mp.nstr(true, 6), mp.nstr(at_true, 3),
+          mp.nstr(up, 3), mp.nstr(dn, 3), digits, "yes" if hw < 0.1 else "NO", time.time() - t), flush=True)

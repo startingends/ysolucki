@@ -1,0 +1,62 @@
+"""S1-parity, answer to board B135 (SP-operator): t_1(L) = <1, Q_L^-1 1> (1 = the constant function on the window) for zeta and for the
+Davenport-Heilbronn impostor, and one-sided slopes of log t_1 around L_n = (1/2) log n, n = 2, 3, 4.
+Integer lattice (the constant is the k = 0 basis vector times sqrt(2L)):  t_1 = 2L (Q_even^-1)_00.
+usage: python3 b135.py.txt grid | jump <N>"""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt"); wb = fd.wb
+t0 = time.time(); ns = lambda x, k=6: mp.nstr(x, k)
+def dh_c(X):
+    kap = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+    a = [mp.mpf(0)] + [(mp.mpf(0), mp.mpf(1), kap, -kap, mp.mpf(-1))[n % 5] for n in range(1, X + 1)]
+    b = list(a); b[1] = mp.mpf(0); l = [mp.mpf(0)] * (X + 1); pw = list(b); k = 1
+    while 2 ** k <= X:
+        for n in range(2, X + 1): l[n] += mp.mpf((-1) ** (k + 1)) / k * pw[n]
+        new = [mp.mpf(0)] * (X + 1)
+        for d in range(2, X + 1):
+            if pw[d] != 0:
+                for e in range(2, X // d + 1): new[d * e] += pw[d] * b[e]
+        pw = new; k += 1
+    return {n: l[n] * mp.log(n) for n in range(2, X + 1) if l[n] != 0}
+def even_block(kind, L, N):
+    if kind == 'zeta':
+        M = wb.add(wb.arch_blocks(L, N, 'int'), wb.pole_blocks(L, N, 'int'))
+        at = wb.mangoldt(math.exp(2 * L))
+    else:
+        Lm = mp.mpf(L); w = wb.freqs(Lm, N, 'int'); vals = []
+        for om in w:
+            v, dv = fd.phi_arch_c(om + fd.I, Lm); vals.append((v + mp.log(5) / 2, dv))
+        M = wb.blocks(L, N, 'int', [v[0] for v in vals], [v[1] for v in vals]); M = (M[0].apply(mp.re), M[1].apply(mp.re))
+        at = dh_c(max(2, int(math.exp(2 * L)))) if math.exp(2 * L) >= 2 else {}
+    for x, c in at.items():
+        if math.log(float(x)) < 2 * L - 1e-12: M = wb.add(M, wb.atom_blocks(L, N, 'int', x), c)
+    return M[0]
+def t1(kind, L, N):
+    E = even_block(kind, L, N); n = E.rows
+    e0 = mp.matrix(n, 1); e0[0] = 1
+    x = mp.lu_solve(E, e0)
+    return 2 * L * x[0], min(mp.eigsy(E, eigvals_only=True))
+if sys.argv[1] == "grid":
+    for kind, Ls in (('zeta', [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]),
+                     ('impostor', [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7])):
+        prev = None
+        for L in Ls:
+            mp.mp.dps = int(40 + (95 if kind == 'zeta' else 22) * L ** 3); N = 40 if L <= 1.2 else 60
+            t, mu = t1(kind, L, N)
+            sl = "" if prev is None else "  slope of log t_1 since previous = %s" % ns((mp.log(t) - mp.log(prev[1])) / (L - prev[0]), 5)
+            print("%-8s L=%.2f N=%d: t_1 = %s ; lowest even eigenvalue mu = %s ; t_1 x mu = %s%s   (%.0fs)" % (kind, L, N, ns(t), ns(mu, 4), ns(t * mu, 4), sl, time.time() - t0), flush=True)
+            prev = (L, t)
+else:
+    N = int(sys.argv[2]); mp.mp.dps = 50
+    cz = {2: mp.log(2), 3: mp.log(3), 4: mp.log(2)}; cd = dh_c(4)
+    for kind in ('zeta', 'impostor'):
+        for n in (2, 3, 4):
+            Ln = 0.5 * math.log(n); offs = [-0.04, -0.03, -0.02, -0.01, 0.01, 0.02, 0.03, 0.04]
+            vals = [(Ln + o, mp.log(t1(kind, Ln + o, N)[0])) for o in offs]
+            sl = [(vals[i + 1][1] - vals[i][1]) / (vals[i + 1][0] - vals[i][0]) for i in range(len(vals) - 1)]
+            c = cz[n] if kind == 'zeta' else cd.get(n, mp.mpf(0))
+            print("%-8s N=%d n=%d (L_n = %.5f, coefficient c_n = %s): slopes of log t_1 on [-.04,-.03], [-.03,-.02], [-.02,-.01] | across [-.01,+.01] | [.01,.02], [.02,.03], [.03,.04]:" % (kind, N, n, Ln, ns(c, 4)))
+            print("      %s | %s | %s    (%.0fs)" % (", ".join(ns(s, 5) for s in sl[:3]), ns(sl[3], 5), ", ".join(ns(s, 5) for s in sl[4:]), time.time() - t0), flush=True)

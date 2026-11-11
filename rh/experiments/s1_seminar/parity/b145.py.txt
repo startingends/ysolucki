@@ -1,0 +1,33 @@
+"""S1-parity: (i) answer to B145 (SP-operator): couplings c_j = Q_odd(x psi_j) (zeta normalisation) for the rungs j = 1..7 of the even block
+at L = 1, from the zero side (5000 zeros), against mu_j / d^2;  (ii) for K-atlas B148(2), q = 2: explicit odd trial vectors with negative
+energy in the form pole + Gamma (= zeta's form with the powers of 2 removed, on any window L < (1/2) log 3 = 0.5493)."""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+t0 = time.time(); ns = lambda x, k=4: mp.nstr(x, k)
+mp.mp.dps = 120; L = 1.0; N = 60; Lm = mp.mpf(1)
+Q = wb.add(wb.arch_blocks(L, N, 'int'), wb.pole_blocks(L, N, 'int'))
+for x, c in wb.mangoldt(7).items(): Q = wb.add(Q, wb.atom_blocks(L, N, 'int', x), c)
+ev, V = mp.eigsy(Q[0]); order = sorted(range(len(ev)), key=lambda j: ev[j])
+ws = wb.freqs(Lm, N, 'int')
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+mp.mp.dps = 30
+zs = [mp.mpf(g) for g in rhlib.zeros(5000)]
+def dC(w, r):
+    a, b = w - r, w + r
+    return (mp.sin(a * Lm) - a * Lm * mp.cos(a * Lm)) / a ** 2 + (b * Lm * mp.cos(b * Lm) - mp.sin(b * Lm)) / b ** 2
+print("(i) even block of zeta, L = 1, N = 60: rung j, mu_j, c_j = Q_odd(x psi_j) from the zero side, mu_j/c_j = d^2 at which rung j turns (first order)")
+for j in range(7):
+    i = order[j]; co = [mp.mpf(V[k, i]) / (mp.sqrt(2 * Lm) if ws[k] == 0 else mp.sqrt(Lm)) for k in range(len(ws))]
+    S = 2 * mp.fsum(mp.fsum(co[k] * dC(ws[k], g) for k in range(len(ws))) ** 2 for g in zs)
+    S2 = 2 * mp.fsum(mp.fsum(co[k] * dC(ws[k], g) for k in range(len(ws))) ** 2 for g in zs[:2500])
+    mu = mp.mpf(ev[i])
+    print("   j=%d: mu = %s ; c = %s (2500 zeros: %s) ; d_turn = sqrt(mu/c) = %s   (%.0fs)" % (j + 1, ns(mu), ns(S, 5), ns(S2, 5), ns(mp.sqrt(mu / S)), time.time() - t0), flush=True)
+print("(ii) pole + Gamma (no atoms), energy of the single odd function sin(pi k x / L)/sqrt(L) (closed form, 40 digits):")
+mp.mp.dps = 40
+for L in (0.40, 0.45, 0.50, 0.54):
+    M = wb.add(wb.arch_blocks(L, 6, 'int'), wb.pole_blocks(L, 6, 'int'))
+    print("   L=%.2f: " % L + " ; ".join("k=%d: %s" % (k + 1, mp.nstr(M[1][k, k], 8)) for k in range(4)) + " ; lowest eigenvalue of the 6x6 odd block: %s" % mp.nstr(min(mp.eigsy(M[1], eigvals_only=True)), 8))

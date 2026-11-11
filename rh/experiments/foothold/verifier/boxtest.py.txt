@@ -1,0 +1,93 @@
+"""V-FH recomputation (ii): Theorem B at L = 1/2, points just outside / inside the claimed box.
+Route P: my own polynomial code (degree < 28: exactly the hypothesis of Theorem B (ii)).
+Route F: the project's periodic Fourier/Arb builder at N = 160 and 320 (a different basis; only an upper bound for the
+infimum over L^2, so a positive Fourier value does NOT contradict infeasibility, a negative one confirms it).
+lam(y, m) = min(lowest even, lowest odd eigenvalue);  lam*(y) = max over m >= 0.   usage: boxtest.py.txt"""
+import time
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+t0 = time.time()
+mp.mp.dps = 34; flint.ctx.prec = 160
+L = mp.mpf(1) / 2
+Pb = Poly(L, 28)
+A = Pb.blocks()
+def Gblocks(y):
+    g = Pb.gamma(mp.mpf(y)); out = []
+    for idx in (range(0, 28, 2), range(1, 28, 2)):
+        idx = list(idx); B = mp.matrix(len(idx), len(idx))
+        for a_, j in enumerate(idx):
+            for b_, k in enumerate(idx): B[a_, b_] = (g[j, k] + g[k, j]) / 2
+        out.append(B)
+    return out
+def lamP(G, m):
+    return min(min(mp.eigsy(A[b] - 2 * mp.mpf(m) * G[b], eigvals_only=True)) for b in (0, 1))
+def gold(f, a, b, it=80):
+    gr = (mp.sqrt(5) - 1) / 2
+    c = b - gr * (b - a); d = a + gr * (b - a); fc = f(c); fd = f(d)
+    for _ in range(it):
+        if fc > fd: b, d, fd = d, c, fc; c = b - gr * (b - a); fc = f(c)
+        else: a, c, fc = c, d, fd; d = a + gr * (b - a); fd = f(d)
+    x = (a + b) / 2
+    return x, f(x)
+def starP(y):
+    G = Gblocks(y)
+    return gold(lambda m: lamP(G, m), mp.mpf(0), mp.mpf(6))
+FA = {N: f_arch(arb(1) / 2, N) for N in (160, 320)}
+def starF(y, N):
+    B = f_atom(arb(1) / 2, N, arb(mp.nstr(y, 40)))
+    f = lambda m: min(lows(FA[N], B, float(m)))
+    m, v = gold(f, mp.mpf(0), mp.mpf(6), it=60)
+    return float(m), v, B
+yl = mp.mpf(70957) / 102400; yr = mp.mpf(7139) / 10240
+mlo = mp.mpf('0.488558'); mhi = mp.mpf('0.510367')
+ylog2 = mp.log(2); mtrue = mp.log(2) / mp.sqrt(2)
+print(f"box: y in ({mp.nstr(yl, 10)}, {mp.nstr(yr, 10)}), m in [{mlo}, {mhi}]")
+print("--- y direction: lam*(y) = max_m min(even, odd) ---")
+for side, base, sg in (("left ", yl, -1), ("right", yr, +1)):
+    for d in ('0', '1e-5', '3e-5', '1e-4', '3e-4', '1e-3'):
+        y = base + sg * mp.mpf(d)
+        mP, vP = starP(y)
+        m1, v1, _ = starF(y, 160); m2, v2, _ = starF(y, 320)
+        print(f"{side} d={d:5s} y={mp.nstr(y, 10)} e^y={mp.nstr(mp.exp(y), 8)} | P: m*={mp.nstr(mP, 8)} lam*={mp.nstr(vP, 6)} | F160: m*={m1:.6f} lam*={v1:.4e} | F320: m*={m2:.6f} lam*={v2:.4e}  t={time.time()-t0:.0f}s", flush=True)
+print("--- m direction: max over y of lam(y, m)  (P: grid on (0,1) then refinement; F at the P-argmax and neighbours) ---")
+def best_y_P(m):
+    # coarse grid over (0, 1), then fine grid around the best
+    best = None
+    for i in range(1, 100):
+        y = mp.mpf(i) / 100
+        v = lamP(Gblocks(y), m)
+        if best is None or v > best[1]: best = (y, v)
+    lo, hi = best[0] - mp.mpf('0.01'), best[0] + mp.mpf('0.01')
+    for rnd in range(6):
+        pts = [lo + (hi - lo) * i / 20 for i in range(21)]
+        vals = [(y, lamP(Gblocks(y), m)) for y in pts if 0 < y < 1]
+        best = max(vals, key=lambda t: t[1])
+        w = (hi - lo) / 10
+        lo, hi = best[0] - w, best[0] + w
+    return best
+for side, base, sg in (("below", mlo, -1), ("above", mhi, +1)):
+    for d in ('0', '1e-5', '1e-4', '1e-3', '1e-2', '1e-1'):
+        m = base + sg * mp.mpf(d)
+        yb, vb = best_y_P(m)
+        fv = {}
+        for N in (160, 320):
+            cand = []
+            for dy in (0, -2e-6, 2e-6, -1e-5, 1e-5):
+                B = f_atom(arb(1) / 2, N, arb(mp.nstr(yb + dy, 40)))
+                cand.append(min(lows(FA[N], B, float(m))))
+            fv[N] = max(cand)
+        print(f"{side} d={d:5s} m={mp.nstr(m, 9)} | P: best y={mp.nstr(yb, 10)} max_y lam={mp.nstr(vb, 6)} | F160 (5 y near): {fv[160]:.4e} | F320: {fv[320]:.4e}  t={time.time()-t0:.0f}s", flush=True)
+print("--- inside the box ---")
+for name, y, m in (("true prime (log 2, log2/sqrt2)", ylog2, mtrue), ("(log 2, 0.50)", ylog2, mp.mpf('0.5')), ("(0.695, 0.50)", mp.mpf('0.695'), mp.mpf('0.5')),
+                   ("(0.6965, 0.49)", mp.mpf('0.6965'), mp.mpf('0.49'))):
+    G = Gblocks(y); vP = lamP(G, m)
+    out = []
+    for N in (160, 320):
+        B = f_atom(arb(1) / 2, N, arb(mp.nstr(y, 40))); out.append(min(lows(FA[N], B, float(m))))
+    print(f"inside {name:32s} | P: lam={mp.nstr(vP, 6)} | F160: {out[0]:.4e} | F320: {out[1]:.4e}")
+for y in (mp.mpf('0.6935'), mp.mpf('0.695'), mp.mpf('0.6965')):
+    mP, vP = starP(y); m1, v1, _ = starF(y, 160); m2, v2, _ = starF(y, 320)
+    print(f"inside y={mp.nstr(y, 6)} best m | P: m*={mp.nstr(mP, 8)} lam*={mp.nstr(vP, 6)} | F160: m*={m1:.6f} lam*={v1:.4e} | F320: m*={m2:.6f} lam*={v2:.4e}")
+G = Gblocks(mp.mpf(693147) / 10**6)
+print("author's 'float check' point y = 0.693147 exactly, m = log2/sqrt2: P even/odd:",
+      [mp.nstr(min(mp.eigsy(A[b] - 2 * mtrue * G[b], eigvals_only=True)), 8) for b in (0, 1)])
+print(f"total {time.time()-t0:.0f}s")

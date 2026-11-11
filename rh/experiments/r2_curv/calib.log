@@ -1,0 +1,20 @@
+zeta L=1 M=40: lambda_1=4.303094 gap=4.317546 gap/lambda_1=1.00336
+  plain BE rho*(0,0)/lambda_1 = 0.49632
+  resampling-exact calibration c = lambda_1/4, c'=0:  rho*/lambda_1 = 0.45545
+  one-parameter family c' = 0: best over grid c: (np.float64(0.7523), np.float64(0.4))
+  two-parameter optimum: rho*/lambda_1 = 0.79234  rho*/gap = 0.78969 at c = 0.2782 lambda_1/4, c' = 0.2105
+beurling L=1 M=40: lambda_1=4.280512 gap=3.912822 gap/lambda_1=0.91410
+  plain BE rho*(0,0)/lambda_1 = 0.49889
+  resampling-exact calibration c = lambda_1/4, c'=0:  rho*/lambda_1 = 0.44032
+  one-parameter family c' = 0: best over grid c: (np.float64(0.73608), np.float64(0.4))
+  two-parameter optimum: rho*/lambda_1 = 0.76939  rho*/gap = 0.84169 at c = 0.2677 lambda_1/4, c' = 0.1818
+zeta L=0.5 M=40: lambda_1=1.985370 gap=2.013072 gap/lambda_1=1.01395
+  plain BE rho*(0,0)/lambda_1 = 0.68131
+  resampling-exact calibration c = lambda_1/4, c'=0:  rho*/lambda_1 = 0.46121
+  one-parameter family c' = 0: best over grid c: (np.float64(0.77696), np.float64(0.3))
+  two-parameter optimum: rho*/lambda_1 = 0.85937  rho*/gap = 0.84755 at c = 0.0411 lambda_1/4, c' = 0.2835
+beurling L=0.5 M=40: lambda_1=1.943338 gap=1.908749 gap/lambda_1=0.98220
+  plain BE rho*(0,0)/lambda_1 = 0.68625
+  resampling-exact calibration c = lambda_1/4, c'=0:  rho*/lambda_1 = 0.41261
+  one-parameter family c' = 0: best over grid c: (np.float64(0.76058), np.float64(0.2))
+  two-parameter optimum: rho*/lambda_1 = 0.83912  rho*/gap = 0.85432 at c = -0.0058 lambda_1/4, c' = 0.2754

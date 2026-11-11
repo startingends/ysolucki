@@ -1,0 +1,54 @@
+type=zeta poleweight=0.5 L=0.500 N=40 integers 2..2  time 0s
+  lambda* = -0.663312380146   threshold conductor on this window q*_L = 1.941211728   (no weights: lambda = -0.755762)
+  maximiser m_n: 2:-0.595022
+type=zeta poleweight=0.5 L=0.750 N=40 integers 2..4  time 0s
+  lambda* = -0.695296712095   threshold conductor on this window q*_L = 2.004303687   (no weights: lambda = -0.802426)
+  maximiser m_n: 2:-0.340447 3:1.114417 4:-2.029760
+type=zeta poleweight=0.5 L=1.000 N=40 integers 2..7  time 0s
+  lambda* = -0.697596675788   threshold conductor on this window q*_L = 2.008918818   (no weights: lambda = -1.16078)
+  maximiser m_n: 2:-0.328977 3:1.016824 4:-0.851108 5:1.537930 6:-0.411513 7:3.920335
+type=zeta poleweight=0.5 L=1.250 N=40 integers 2..12  time 0s
+  lambda* = -0.697659296443   threshold conductor on this window q*_L = 2.009044622   (no weights: lambda = -1.57043)
+  maximiser m_n: 2:-0.328679 3:1.014673 4:-0.839462 5:1.486500 6:-0.176792 7:1.752596 8:-1.595518 9:1.114591 10:-0.552227 11:3.105449 12:-51.512961
+type=zeta poleweight=0.9 L=0.500 N=40 integers 2..2  time 0s
+  lambda* = -0.125274817214   threshold conductor on this window q*_L = 1.133459905   (no weights: lambda = -0.313985)
+  maximiser m_n: 2:0.353709
+type=zeta poleweight=0.9 L=0.750 N=40 integers 2..4  time 0s
+  lambda* = -0.138451209688   threshold conductor on this window q*_L = 1.148493645   (no weights: lambda = -0.81187)
+  maximiser m_n: 2:0.483309 3:1.130540 4:-0.318988
+type=zeta poleweight=0.9 L=1.000 N=40 integers 2..7  time 0s
+  lambda* = -0.139502952502   threshold conductor on this window q*_L = 1.1497022   (no weights: lambda = -1.28407)
+  maximiser m_n: 2:0.488644 3:1.082820 4:0.381215 5:1.608956 6:-0.148160 7:3.109744
+type=zeta poleweight=0.9 L=1.250 N=40 integers 2..12  time 1s
+  lambda* = -0.139531460077   threshold conductor on this window q*_L = 1.149734976   (no weights: lambda = -1.82541)
+  maximiser m_n: 2:0.488780 3:1.081837 4:0.386559 5:1.585098 6:-0.036159 7:1.909716 8:0.228123 9:1.123071 10:-0.177458 11:2.826117 12:-29.459727
+type=zeta poleweight=1.1 L=0.500 N=40 integers 2..2  time 0s
+  lambda* = 0.00428445855696   threshold conductor on this window q*_L = 0.9957247066   (no weights: lambda = -0.321112)
+  maximiser m_n: 2:0.721576
+type=zeta poleweight=1.1 L=0.750 N=40 integers 2..4  time 0s
+  lambda* = -0.00367353208409   threshold conductor on this window q*_L = 1.003680288   (no weights: lambda = -0.836875)
+  maximiser m_n: 2:0.696811 3:1.111049 4:0.711834
+type=zeta poleweight=1.1 L=1.000 N=40 integers 2..7  time 0s
+  lambda* = -0.00932456483236   threshold conductor on this window q*_L = 1.009368174   (no weights: lambda = -1.34664)
+  maximiser m_n: 2:0.688899 3:1.108739 4:0.721180 5:1.609184 6:0.043132 7:1.882560
+type=zeta poleweight=1.1 L=1.250 N=40 integers 2..12  time 1s
+  lambda* = -0.0151997274629   threshold conductor on this window q*_L = 1.015315831   (no weights: lambda = -1.95515)
+  maximiser m_n: 2:0.681117 3:1.110241 4:0.697966 5:1.634259 6:0.037599 7:1.961796 8:0.721817 9:1.131014 10:0.052483 11:2.481141 12:-6.937946
+type=zeta poleweight=1.25 L=0.500 N=40 integers 2..2  time 0s
+  lambda* = 0.00260292565715   threshold conductor on this window q*_L = 0.997400459   (no weights: lambda = -0.326467)
+  maximiser m_n: 2:0.727743
+type=zeta poleweight=1.25 L=0.750 N=40 integers 2..4  time 0s
+  lambda* = -0.00941424983131   threshold conductor on this window q*_L = 1.009458703   (no weights: lambda = -0.85572)
+  maximiser m_n: 2:0.702191 3:1.128689 4:0.798344
+type=zeta poleweight=1.25 L=1.000 N=40 integers 2..7  time 1s
+  lambda* = -0.023950612786   threshold conductor on this window q*_L = 1.024239732   (no weights: lambda = -1.39392)
+  maximiser m_n: 2:0.681744 3:1.123467 4:0.763337 5:1.607291 6:0.104296 7:2.093621
+type=zeta poleweight=1.25 L=1.250 N=40 integers 2..12  time 1s
+  lambda* = -0.0388618079459   threshold conductor on this window q*_L = 1.039626806   (no weights: lambda = -2.0532)
+  maximiser m_n: 2:0.658922 3:1.133535 4:0.696860 5:1.661302 6:0.111738 7:1.987891 8:0.760287 9:1.176531 10:0.112141 11:2.530459 12:-5.805768
+type=odd poleweight=0 L=1.500 N=60 integers 2..20  time 4s
+  lambda* = 0.558423790352   threshold conductor on this window q*_L = 2.860550595   (no weights: lambda = -0.296681)
+  maximiser m_n: 2:-0.879940 3:0.894383 4:-1.737661 5:1.316635 6:-0.405895 7:1.468552 8:-2.948849 9:0.970259 10:-0.732948 11:1.841589 12:-0.407975 13:1.890331 14:-1.005318 15:0.173556 16:-4.770032 17:2.346833 18:-1.131967 19:4.920079 20:-1500.803065
+type=zeta poleweight=1 L=1.000 N=40 integers 2..7  time 1s
+  lambda* = -9.76585661357e-13   threshold conductor on this window q*_L = 1   (no weights: lambda = -1.31529)
+  maximiser m_n: 2:0.693147 3:1.098612 4:0.693147 5:1.609438 6:0.000000 7:1.946712

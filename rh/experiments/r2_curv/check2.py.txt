@@ -1,0 +1,44 @@
+"""Verify Theorem B (parallelogram / Bochner form with open-path boundary terms) on the box lattice. usage: check2.py.txt L M"""
+import sys, math, numpy as np, mpmath as mp
+mp.mp.dps = 25
+L = float(sys.argv[1]); M = int(sys.argv[2]); d = 2 * L / M
+w = lambda u: mp.exp(-u / 2) / (-mp.expm1(-2 * u))
+tri = lambda t: max(0.0, 1 - abs(t))
+def Wk(k):
+    f = lambda u: w(u) * (1 - abs(u - k * d) / d)
+    return mp.quad(f, [0, d, 2 * d]) if k == 1 else mp.quad(f, [(k - 1) * d, k * d, (k + 1) * d])
+diag = -(-mp.log(mp.pi) + mp.quad(lambda u: mp.exp(-2 * u) / u - 2 * w(u) * (1 - u / d), [0, d / 2, d]) + mp.e1(2 * d))
+lam = {2: math.log(2), 3: math.log(3), 4: math.log(2), 5: math.log(5), 7: math.log(7)}
+lam = {n: c for n, c in lam.items() if n <= math.exp(2 * L)}
+k = np.array([0.0] + [float(Wk(j)) + sum(c / math.sqrt(n) * tri((math.log(n) - j * d) / d) for n, c in lam.items()) for j in range(1, M)])
+idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M)))
+N = k[idx] + float(diag) * np.eye(M)
+ev, V = np.linalg.eigh(N); u = np.abs(V[:, -1])
+q = k[idx] * u[None, :] / u[:, None]; Lg = q - np.diag(q.sum(1)); E = np.eye(M)
+Gs = [sum(0.5 * q[i, y] * np.outer(E[y] - E[i], E[y] - E[i]) for y in range(M) if y != i) for i in range(M)]
+inW = lambda j: 0 <= j < M
+worst = 0
+for x in (0, 3, M // 2, M - 2):
+    direct = 0.5 * (sum(q[x, y] * (Gs[y] - Gs[x]) for y in range(M)) - (Gs[x] @ Lg + Lg.T @ Gs[x]))
+    sos = np.zeros((M, M)); hess = np.zeros((M, M)); bdry = np.zeros((M, M)); nopen = 0; nclosed = 0
+    for a in range(-M + 1, M):
+        if a == 0 or not inW(x + a): continue
+        for b in range(-M + 1, M):
+            if b == 0: continue
+            kk = k[abs(a)] * k[abs(b)]
+            if inW(x + b):
+                A = E[x + a] - E[x]; B = E[x + b] - E[x]
+                rho = u[x + a + b] / u[x] if inW(x + a + b) else 0.0
+                H = u[x + a] * u[x + b] / u[x] ** 2 - rho
+                hess += 0.5 * kk * H * 0.5 * (np.outer(A, B) + np.outer(B, A))
+                if rho:
+                    D = E[x + a + b] - E[x + a] - E[x + b] + E[x]
+                    sos += 0.25 * kk * rho * np.outer(D, D); nclosed += 1
+            elif inW(x + a + b):
+                rho = u[x + a + b] / u[x]
+                Bp = E[x + a + b] - E[x + a]; S = E[x + a + b] - E[x]
+                bdry += 0.5 * kk * rho * (np.outer(Bp, Bp) - 0.5 * np.outer(S, S)); nopen += 1
+    err = np.abs(direct - sos - hess - bdry).max(); worst = max(worst, err)
+    es = lambda m: np.linalg.eigvalsh(m)
+    print("site %2d: |Gamma_2 - (SOS + Hess + boundary)|_max = %.1e ; closed parallelograms %d, open paths %d ; min eig: SOS %.1e, Hess %.3f, boundary %.3f ; max eig: Hess %.3f boundary %.3f" % (x, err, nclosed, nopen, es(sos)[0], es(hess)[0], es(bdry)[0], es(hess)[-1], es(bdry)[-1]))
+print("worst error", worst)

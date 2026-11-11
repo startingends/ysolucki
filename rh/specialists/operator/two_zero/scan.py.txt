@@ -1,0 +1,19 @@
+"""Prediction (e): which consecutive pair does the two-zero model pick? (closed form, local density at each pair)"""
+import sys, json, math
+exec(open('/home/user/ysolucki/rh/specialists/operator/two_zero/model.py.txt').read().split("if __name__")[0])
+ZETA = [float(t) for t in json.load(open('/home/user/ysolucki/rh/experiments/foothold/zeta_zeros_200.json'))]
+DH = [float(t) for t in json.load(open('/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json'))['online']]
+def scan(name, zs, q, L, top=6, tmax=200):
+    edge = 2 * math.pi * math.exp(2 * L) / q
+    out = []
+    for a, b in zip(zs[:-1], zs[1:]):
+        c = (a + b) / 2
+        if c <= edge or b > tmax: continue
+        s = 2 * math.pi / math.log(q * c / (2 * math.pi)); r = math.pi / (L * s); g = (b - a) / s
+        out.append((rho(r, (g / 2) ** 2)[0], a, b, r, g))
+    out.sort()
+    print(f" {name}, L = {L} (band edge {edge:.1f}): lowest rho: " + "; ".join(f"{a:.2f}/{b:.2f} (r {r:.3f}, gap {g:.3f}): {x:.3f}" for x, a, b, r, g in out[:top]))
+for L in (0.75, 0.85, 1.0, 1.25): scan("zeta", ZETA, 1, L)
+for L in (1.3, 1.4, 1.5, 1.6): scan("DH", DH, 5, L)
+print(" same, restricted to heights the foothold basis resolves (t < degree/L: 116 at L = 1, 160 at L = 1.25)")
+scan("zeta", ZETA, 1, 1.0, tmax=116); scan("zeta", ZETA, 1, 1.25, tmax=160)

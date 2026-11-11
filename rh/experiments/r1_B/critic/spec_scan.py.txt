@@ -1,0 +1,19 @@
+"""Critic: is the residual r(N) = d_N^2 log N - C oscillatory at zero-related frequencies in log N?  (reads proposer's d2.npy,
+validated by the critic at N = 10, 50, 100, 200 to 10 digits)."""
+import math, numpy as np, sys
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+EG = 0.57721566490153286061; C = 2 + EG - math.log(4 * math.pi)
+d2 = np.load("/home/user/ysolucki/rh/data/r1_B/d2.npy"); N = np.arange(1, len(d2) + 1)
+m = N >= 60; L = np.log(N[m]); r = d2[m] * L - C; w = 1.0 / N[m]          # weight 1/N = uniform in log N
+print("r(N): mean %.5f  rms %.5f  (C = %.5f); r*logN mean %.4f" % (np.average(r, weights=w), math.sqrt(np.average(r * r, weights=w)), C, np.average(r * L, weights=w)))
+r0 = r - np.average(r, weights=w)
+oms = np.arange(0.2, 45, 0.02); amp = []
+for om in oms:
+    z = np.sum(w * r0 * np.exp(-1j * om * L)) / np.sum(w); amp.append(2 * abs(z))
+amp = np.array(amp); idx = np.argsort(amp)[::-1]
+peaks = [i for i in range(1, len(oms) - 1) if amp[i] > amp[i - 1] and amp[i] > amp[i + 1]]
+peaks.sort(key=lambda i: -amp[i])
+g = rhlib.zeros(6)
+print("zeros:", np.round(g, 3), " diffs:", np.round([g[1] - g[0], g[2] - g[1], g[2] - g[0], g[3] - g[2]], 3))
+print("top peaks (omega, amplitude):", [(round(float(oms[i]), 2), round(float(amp[i]), 5)) for i in peaks[:10]])
+print("resolution in omega ~ 2pi/(log 2000 - log 60) = %.2f" % (2 * math.pi / (math.log(2000) - math.log(60))))
