@@ -1048,3 +1048,15 @@ classical, and is believed FALSE — which rules out a whole class of approaches
   theorem and are confined to the edge; Weil's form positivity is the only positivity in the record not confined by
   it — and its near side is the short-family wall (#34). The two remaining kinds of input are therefore exactly:
   form positivity on the near side, or Type II cancellation on the near side.
+
+**N64. The wall HAS been crossed, by a little, in one of its forms — recalled, being checked** (lead, 2026-11-11).
+In the t-family (mollified second moments of ζ) the self-dual point is mollifier length T^(1/2). Recalled, unread:
+Conrey (1989) reached θ = 4/7 for Möbius-type mollifiers using Deshouillers–Iwaniec bounds for sums of Kloosterman
+sums (spectral theory of SL₂(ℤ)); Bettin–Chandee–Radziwiłł reached θ < ½ + 1/66 for general coefficients. If accurate,
+this is the architecture of N57 (spectral formula + Kloosterman bounds past the self-dual point) actually working,
+over ℚ, in the t-family, and it is the furthest anyone has pushed into the near side in that form. What it buys is
+PROPORTIONS of zeros on the line (Levinson–Conrey), not zero-free regions (SP-sieve's #32: zero-density, never
+exclusion), and Nyman–Beurling boundedness (N53) needs θ → ∞ at bounded height. READER-8 is checking exact statements
+and inputs. The question to carry: **why do Möbius-type coefficients go further than general ones (4/7 against
+½ + 1/66)?** That difference is Type II structure specific to μ crossing the self-dual point — the one thing S2 said
+is needed.
