@@ -1120,3 +1120,22 @@ is needed.
   copy mechanism that is NOT a homomorphism kernel — approximate copies of positive density, which in the t-family is
   Bagchi recurrence (⟺ RH). The one concrete new theorem-shaped item this phase produced is an extension of the
   quasi-RH theorem (N66: Grössencharacters of every infinity type, CM elliptic curves), which is not RH.
+
+**N68. A correction to my own rule H10, and the Stepanov/Chebyshev analogy examined** (lead, 2026-11-11).
+- CORRECTION TO N63 / H10. The one-sided bound believed false is the one with a CONSTANT (M(x) ≤ C√x; ψ(x) − x ≤ C√x:
+  Littlewood's Ω₊(√x log log log x) and Ingham kill those). With a slowly growing factor, a one-sided bound is
+  RH-EQUIVALENT, not false: ψ(x) ≤ x + C√x log²x one-sided implies RH by Landau (the extra term contributes only the
+  real singularity at ½), and RH implies it two-sided. So coefficient positivity at ½ is NOT ruled out; what is ruled
+  out is positivity with a constant. H10 is restated below. The rest of N63 (Landau ties positivity to the pole at 1 for
+  weights on the integers; that is why positive-weight methods hug the edge) stands.
+- STEPANOV OVER ℤ (where nobody in the project had looked, but the literature has). Function-field RH by Stepanov /
+  Bombieri: an auxiliary polynomial vanishing to high order at all F_q-points gives a one-sided bound
+  N_n ≤ qⁿ + C q^(n/2) uniformly in n; rationality of the zeta function then forces |α| ≤ √q. Its ℤ-analogue is an
+  auxiliary INTEGER divisible by p^m for every p ≤ x and of small size: Chebyshev's C(2n, n), Nair's ∫ xⁿ(1 − x)ⁿ. That is
+  exactly Chebyshev's method, and its limits are known (recalled): it gives ψ(x) ≍ x with constants, and the integer
+  Chebyshev problem (Gorshkov, Montgomery, Borwein–Erdélyi) prevents it from even reaching the prime number theorem.
+  What Stepanov has and ℤ lacks is the multiplicity trick from Frobenius (d(x^q)/dx = 0 in characteristic p), which
+  makes high-order vanishing CHEAP; over ℤ high p-adic valuation at all primes at once costs size linearly. The
+  arithmetic analogue of that derivation is Buium's p-derivation δ_p(x) = (x − x^p)/p, but there is one per prime, not
+  one for all primes. Closed, with the exact missing ingredient named: a single derivation that kills a "Frobenius"
+  simultaneously at every prime.

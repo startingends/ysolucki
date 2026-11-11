@@ -264,9 +264,9 @@ Nikolski, Hedenmalm–Lindqvist–Seip); (iii) the adelic picture, where the pro
 - **H9 (lead, from N46).** Before building on an identity, check whether it is LINEAR in the object whose zeros are
   sought (Hecke relations, Poisson summation, factorisations are). A linear identity evaluated at a zero returns the
   zero. Information must come from a quadratic or non-linear object that is not a function of the modulus on the line.
-- **H10 (lead, from N63).** Coefficient positivity at the critical line is (conjecturally) unavailable: Landau's theorem
-  ties every non-negative arithmetic weight to the pole at 1, and the one-sided Mertens bound that would move it to ½
-  is believed false (Ingham). A proposal must use two-sided cancellation or positivity of a FORM on the near side.
+- **H10 (lead, from N63; CORRECTED in N68).** Landau's theorem ties every non-negative arithmetic weight on the integers
+  to the pole at 1. Positivity at ½ with a CONSTANT is false (Littlewood, Ingham); with a slowly growing factor it is
+  RH-equivalent, so it is not excluded but is the statement itself. A proposal must say which it uses.
 
 ## G. Where nobody has looked: candidates after the copy principle (lead, 2026-11-11). Honest odds attached.
 The record now says (N49, N50, N60, N63, N67): amplification by copies is capped at 3/4 (copies are kernels of
