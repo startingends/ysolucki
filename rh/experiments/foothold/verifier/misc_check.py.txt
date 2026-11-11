@@ -1,0 +1,27 @@
+"""V-FH: (a) fmpq_poly composition / division semantics used by forcing.py.txt class Vec; (b) Lemma 6 on a grid;
+(c) Connes-Consani section 2.3 reproduced (weight tied to p: m = log p / sqrt p, window L = (1/2) log 3)."""
+import time
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+from flint import fmpq, fmpq_poly
+q = fmpq_poly([fmpq(1, 3), fmpq(-2, 7), 5, fmpq(1, 2)])
+yc = fmpq(7, 10)
+sh = q(fmpq_poly([yc, 1]))
+t = fmpq(3, 1000)
+print("(a) composition q(yc + t): type", type(sh).__name__, " value check:", sh(t) == q(yc + t), " degree", sh.degree())
+g = q * fmpq_poly([fmpq(1), -1])
+qq, rem = divmod(g, fmpq_poly([fmpq(1), -1])); print("    exact division recovers q:", qq == q, " rem == 0:", rem == 0)
+mp.mp.dps = 30
+h = lambda x: mp.exp(x / 2) / mp.sinh(x) - 1 / x
+vals = [h(mp.mpf(i) / 1000) for i in range(1, 1100)]
+print("(b) Lemma 6 on (0, 1.099]: min h =", mp.nstr(min(vals), 8), " max h =", mp.nstr(max(vals), 8), "  h(0+) -> 1/2:", mp.nstr(h(mp.mpf(10) ** -10), 10))
+flint.ctx.prec = 160
+t0 = time.time()
+L = mp.log(3) / 2; La = arb(3).log() / 2
+Pb = Poly(L, 40)
+FA = f_arch(La, 320)
+for p in ('1.9995', '1.9999', '2', '2.0001', '2.0005', '2.001'):
+    pm = mp.mpf(p); y = mp.log(pm); m = mp.log(pm) / mp.sqrt(pm)
+    e, o = Pb.lows(y, m)
+    B = f_atom(La, 320, arb(mp.nstr(y, 40)))
+    fe, fo = lows(FA, B, float(m))
+    print(f"(c) L=(1/2)log3, p={p:7s} weight tied to p: poly(deg<40) even {mp.nstr(e, 6)} odd {mp.nstr(o, 6)} | Fourier N=320 even {fe:.5e} odd {fo:.5e}   t={time.time()-t0:.0f}s", flush=True)

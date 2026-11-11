@@ -57,6 +57,15 @@ Owner's standing instructions:
 These are enforced as required fields in `tools/ideas.py` (wall, new input, prediction, smallest, novelty).
 A field may honestly read "FAILS RULE: …"; such ideas cannot be `alive`.
 
+12. **Build the bridge; do not throw darts.** (owner, 2026-11-11) "We don't know exactly where the island is and
+    have no idea where to start building the bridge, but when you understand more and more of the ocean you get a
+    better idea of where the vicinity is, and then start building a bridge to there. This requires BUILDING the
+    bridge, not just throwing darts: understanding the ocean, having a hunch and going off that hunch, and getting
+    confirmation as you keep building." In practice: one hunch at a time is the project's main line; it is built in
+    planks, each plank a precise statement with a confirmation (a number predicted first, a proof checked, a control
+    that fails) before the next plank is laid; a failed confirmation moves or abandons the bridge, and says so.
+    The record of the current bridge is `rh/BRIDGE.md`.
+
 ### The deeper version
 - *What a top professional would do that wasn't asked:* keep a barrier list and test every idea against known
   counterexamples before investing in it; build the numerical laboratory first; demand that each route says

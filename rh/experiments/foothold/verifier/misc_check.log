@@ -1,0 +1,9 @@
+(a) composition q(yc + t): type fmpq_poly  value check: True  degree 3
+    exact division recovers q: True  rem == 0: True
+(b) Lemma 6 on (0, 1.099]: min h = 0.38874237  max h = 0.49995827   h(0+) -> 1/2: 0.5
+(c) L=(1/2)log3, p=1.9995  weight tied to p: poly(deg<40) even -0.000106163 odd 0.000360777 | Fourier N=320 even -1.06326e-04 odd 3.61051e-04   t=12s
+(c) L=(1/2)log3, p=1.9999  weight tied to p: poly(deg<40) even -1.37792e-5 odd 8.41669e-5 | Fourier N=320 even -1.37913e-05 odd 8.44166e-05   t=13s
+(c) L=(1/2)log3, p=2       weight tied to p: poly(deg<40) even 5.5785e-8 odd 1.50181e-5 | Fourier N=320 even 5.53513e-08 odd 1.52620e-05   t=13s
+(c) L=(1/2)log3, p=2.0001  weight tied to p: poly(deg<40) even 9.21138e-6 odd -5.41292e-5 | Fourier N=320 even 9.20479e-06 odd -5.38910e-05   t=14s
+(c) L=(1/2)log3, p=2.0005  weight tied to p: poly(deg<40) even -9.43017e-6 odd -0.000330702 | Fourier N=320 even -9.69898e-06 odd -3.30485e-04   t=14s
+(c) L=(1/2)log3, p=2.001   weight tied to p: poly(deg<40) even -0.000164047 odd -0.000676378 | Fourier N=320 even -1.65085e-04 odd -6.76187e-04   t=15s
