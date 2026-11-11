@@ -171,3 +171,9 @@ mpmath or numpy; one implementation each; nothing interval-certified).
 Sources downloaded (untrusted text): rh/library/src/sp_modular_zagier1981, sp_modular_lagarias_suzuki,
 sp_modular_conrey_ghosh, sp_modular_misc/{1003.0559, 1509.00797, 1809.07605, 0707.3315, 2011.07796, 0710.2994,
 1012.3223, 0906.5284, math_0402371, 2609.28514, math_0611148, 2002.07929, 2109.07463}.
+
+## H_CUB (2026-11-11)
+- (H_cub) = Heath-Brown Thm 2 after g(h,n) = conj((h/n)_3) g(n) + reciprocity; arbitrary coefficients, so uniform in alpha. Square parts of
+  h cost K^(1/3) L (harmless for L <= K). Family sign: conj((h/n)_3) on conj gamma_2 = frequency h^2: tau_3(h^2) = 0, no residue; N76's
+  dilation sign is DR's sharp witness. Post-theta twist chi^4 (cubic) by digest (2.14) bookkeeping: risk R1. My CUBIC_ABSORB 3(c) was wrong.
+- Excess removal needs GRH-type axiom (DR Prop main) or a level-uniform Kuznetsov on the cubic cover: not available.

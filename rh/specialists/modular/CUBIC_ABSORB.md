@@ -87,3 +87,8 @@ coefficient is mu(z) gamma_2(z).
  - Summary rule (PROVED from (I1)-(I6) and (2.14)): absorption needs the column Gauss sum to contain mu (sextic, or cubic squared); the sharp
    sieve needs the transformed twist to contain the quadratic character; in any family built from cubic symbols alone the second fails.
    The sextic family is the one where both hold, because the sextic character is the product of the quadratic and the cubic ones.
+
+CORRECTION (2026-11-11, H_CUB.md sec. 2): 3(c)'s "no character left in h to give orthogonality" is WRONG. g(h,n) = conj((h/n)_3) g(1,n)
+is a cubic character of h (cubic reciprocity), exactly Heath-Brown's large-sieve configuration (Dunn-Radziwill, proof of Thm hboptimal;
+DDDS24). The (2.14) parity statement stands, but the post-theta twist for the family's sign is chi^(+-4), a NON-trivial cubic character
+(H_CUB sec. 3, HEURISTIC, risk R1).

@@ -1310,3 +1310,20 @@ against Liu's 0.874957; predictions written first).
   series (arXiv 2410.03048, §6: Σ_{N(m)≤M}|ψ(hm, σ+it)|² ≪ N(h)^(1/2) M^(1+ε), 1 < σ ≤ 5/4). Whether it implies (H_cub)
   (or a weaker version enough for an exponent below 7/8) is the next question. This is the most concrete
   theorem-shaped item of the whole session; its honest scope is quasi-RH.
+
+**N77. (H_cub) follows from Heath-Brown's cubic large sieve — so 0.8136 may rest on published results; now under
+adversarial verification** (lead, after `rh/specialists/modular/H_CUB.md`).
+- A shift of a Gauss sum's frequency is a cubic character: g(h, n) = conj((h/n)₃)·g(1, n), plus reciprocity; so
+  Heath-Brown's cubic large sieve (Thm 2, as quoted in Dunn–Radziwiłł) gives (H_cub) with arbitrary coefficients, in
+  the form SP-sieve's assumption A2 uses (L ≤ K, so non-squarefree rows cost nothing). SP-modular's earlier "no
+  character left in h" (CUBIC_ABSORB 3(c)) was wrong and is corrected there. The dual is a multiplicative twist
+  (PROVED); N76's dilation sign was slightly off (the family carries the frequency h², with τ₃(h²) = 0, so no theta main
+  term — consistent).
+- REMAINING RISKS, stated: R1, the theta multiplier's sign after the step (2.14) (App. A.2 of the paper not re-read;
+  if wrong only the pre-theta bound of length D remains); and the comparison system for the cubic family is SP-sieve's
+  RECONSTRUCTION with modelling assumptions A1–A3, not a written proof; removing the (KL)^(2/3) term (→ ≈ 0.766) fails
+  on every route examined.
+- STATUS: a CANDIDATE zero-free half-plane Re s > 0.8136 for ζ (below 7/8 and below the published follow-ups at
+  0.8749), resting on (i) published inputs, (ii) one sign to re-read, (iii) a reconstruction to be turned into a proof.
+  Honest scope: it would improve the quasi-RH theorem, not prove RH. Sent to an independent adversarial verifier
+  before anything else is built on it.

@@ -226,3 +226,7 @@ PREDICTION: all five hold to 1e-12 at every prime; (I3), (I4) are algebraic cons
 Result of P11 (cubic_absorb_check.log; double precision, 74 split primary primes, N <= 400): I1 3.5e-14, I2 2.3e-14, I3 2.6e-14,
 I4 2.2e-14, I5 3.1e-14. HIT (all five).
 ## 05:48 UTC: CUBIC_ABSORB.md written (88 lines).
+## 06:30 UTC (approx.): H_CUB.md written (N76 task). No numerics (no prediction). Read: S3_SLOPE sec. 1, 7; DDDS24 2410.03048 sec. 5-6
+statements; Dunn-Radziwill 2109.07463 sec. 2, 5.1, Prop typeI, sec. "Improved cubic large sieve"; Dunn 2403.13151 sec. 4.
+Finding: (H_cub) in A2's shape follows from Heath-Brown's cubic large sieve (frequency shift = cubic character of h); family sign is
+frequency h^2 (opposite to N76's dilation hn): no theta residue, post-theta twist non-trivial cubic (HEURISTIC, R1). CUBIC_ABSORB 3(c) corrected.
