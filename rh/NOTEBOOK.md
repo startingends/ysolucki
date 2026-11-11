@@ -780,3 +780,29 @@ SP-operator's round 2; labels on each line; novelty NOT searched).
   of one factor forces real zeros of the other" can exist (proved by the fake). The theta adds only Landau's lemma at
   Re s = 1. The one positivity tied to θ₃ that does not factor through K is the cusp part ⟨|θ₃|², u_j⟩ (Ichino-type
   triple products); unexamined. Recorded as dead except for that item.
+
+**N53. Three walls are one wall: a Möbius-specific mean square in the SHORT-FAMILY regime** (lead, 2026-11-11;
+labels per line; novelty not searched).
+- (a) NYMAN–BEURLING, BOUNDED VERSION (elementary; probably known: Báez-Duarte, Bagchi, Burnol). Let f_N be the Möbius
+  approximants Σ_{k≤N} μ(k) w_N(k) ρ(1/(kx)) of 1 on (0, 1). If sup_N ‖f_N‖₂ < ∞ and f_N → 1 in any weaker sense
+  (in L^p, p > 1, which follows from a zero-free region by Beurling's L^p theorem, now available at p = 8/7 if the
+  October 2026 theorem stands), then 1 lies in the weak, hence (Mazur) the norm, closure of the span in L²: RH. Conversely
+  RH gives bounded approximants. So **RH ⟺ the Möbius approximants are bounded in L²**: a statement WITH ROOM (any
+  constant). By Mellin–Plancherel ‖f_N‖₂² = (1/2π)∫ |ζ(½+it) M_N(½+it)|² dt/(¼+t²), M_N = Σ μ(k)w_N(k)k^(−s).
+- (b) WHERE IT IS HARD. Dyadic block at height T contributes T^(−2)∫_T^{2T}|ζM_N|². For T ≥ N^(7/4) the mollifier has
+  length ≤ T^(4/7) and Conrey's theorem bounds the block by ≍ T^(−1): summable, harmless. Everything lies at heights
+  T ≪ N^(7/4), above all at BOUNDED height with N → ∞: a mollifier infinitely longer than the height. Expanding |M_N|²
+  turns it into the twisted second moment of ζ with twists (a/b)^(it), a, b ≤ N ≫ T, known only for lengths up to
+  about T^(1/2+δ) (Bettin–Chandee–Radziwiłł; recalled, unread).
+- (c) THE SAME WALL IN THE QUASI-RH PROOF. Their mean square needs a family LONGER than the sum (H = D^(1+θ), θ > 0):
+  that is the large-sieve regime, where Montgomery–Vaughan's (H + D)·Σ|a_n|² has the diagonal as main term. In the
+  NB problem the "family" is the t-interval of length T and the sum has length N ≫ T: the opposite regime, where the
+  large-sieve bound is dominated by the D-term for EVERY sequence and carries no information. And the amplifier of
+  N49 needs H ≥ D for the same reason. So: **the amplifier's 3/4 cap, the twisted-moment length barrier, and RH via
+  bounded Nyman–Beurling approximants all sit at one wall: a mean square of twisted Möbius sums in which the family
+  is NOT longer than the sum, where only arithmetic specific to μ can help.**
+- (d) RULE 13 (c): what object would make the short-family regime trivial? An exact formula (Poisson, theta, trace
+  formula) for Σ_{u in a family of size H}|A_u(D)|² that stays exact when H < D, i.e. a family whose dual under
+  Poisson is again SHORT. Their transfer step (two Poisson summations, "returns to the same family with
+  H′/Σ′ ≤ H/Σ") changes the ratio of family to length; whether it can run in the regime H < D is the precise
+  question. Given to two seats at once (rule 13 (b)).
