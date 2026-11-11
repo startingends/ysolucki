@@ -31,3 +31,7 @@ impostor L=1.00 N=40: t_1 = 43349.9 ; lowest even eigenvalue mu = 3.491e-5 ; t_1
 impostor L=1.10 N=40: t_1 = 2.10767e+6 ; lowest even eigenvalue mu = 7.292e-7 ; t_1 x mu = 1.537  slope of log t_1 since previous = 38.84   (29s)
 impostor L=1.20 N=40: t_1 = 1.91069e+8 ; lowest even eigenvalue mu = 8.146e-9 ; t_1 x mu = 1.556  slope of log t_1 since previous = 45.071   (31s)
 impostor L=1.30 N=60: t_1 = 6.04177e+10 ; lowest even eigenvalue mu = 2.6e-11 ; t_1 x mu = 1.571  slope of log t_1 since previous = 57.564   (34s)
+impostor L=1.40 N=60: t_1 = 1.03456e+14 ; lowest even eigenvalue mu = 1.529e-14 ; t_1 x mu = 1.581  slope of log t_1 since previous = 74.456   (40s)
+impostor L=1.50 N=60: t_1 = 4.39441e+17 ; lowest even eigenvalue mu = 3.621e-18 ; t_1 x mu = 1.591  slope of log t_1 since previous = 83.541   (47s)
+impostor L=1.60 N=60: t_1 = 2.58205e+22 ; lowest even eigenvalue mu = 6.19e-23 ; t_1 x mu = 1.598  slope of log t_1 since previous = 109.81   (54s)
+impostor L=1.70 N=60: t_1 = 1.07599e+28 ; lowest even eigenvalue mu = 1.491e-28 ; t_1 x mu = 1.604  slope of log t_1 since previous = 129.4   (64s)

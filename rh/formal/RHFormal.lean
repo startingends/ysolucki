@@ -5,3 +5,9 @@ import RHFormal.C1_ResamplingGamma2
 import RHFormal.OnePositiveDirection
 import RHFormal.LemmaA_FibreClasses
 import RHFormal.LemmaC_ConeTensor
+import RHFormal.B56_BorderedIdentity
+import RHFormal.B25_Folding
+import RHFormal.B32_NegativeSubspaceDim
+import RHFormal.HankelPowerSums
+import RHFormal.T45_FirstOrderCaps
+import RHFormal.T26_ParityDecomposition

@@ -10,9 +10,9 @@ T13 [open] Burnol's lower bound for the Nyman-Beurling distance
   T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the i
 T14 [open] Krein's extension theorem applied to the window form
 T15 [open] Krein-Langer: Pick matrices of a generalised Nevanlinna function
-T16 [open] Equivalence (Suzuki): RH iff a canonical-system Hamiltonian exists for every parameter va
+T16 [known] Equivalence (Suzuki): RH iff a canonical-system Hamiltonian exists for every parameter v
 T17 [open] Positive-solutions duality and the conductor threshold (Johns preprint)
-T18 [open] Hecke's dimension count: the functional equation of the theta dial has a unique solution 
+T18 [known] Hecke's dimension count: the functional equation of the theta dial has a unique solution
 T19 [known] Moment criterion for multiplicative Hankel (Helson) matrices indexed by a, b >= 1
 T20 [checked] Missing-prime floor: the prime-filtered Nyman-Beurling distance D_S is positive when S
 T21 [checked] An off-line zero puts a floor under the Nyman-Beurling distance (resolution lemma behi
@@ -28,13 +28,6 @@ T28 [checked] RH implies that N = primes - arch has at most one positive directi
     T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
     T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
   T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
-T31 [checked] 'N has at most one positive direction on every window' implies at most one off-line qu
-  T27 [checked] Negative squares of Q are bounded by positive squares of N (per parity block), with 
-    T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
-  T29 [checked] Exact negative index of the Weil form: the number of negative squares on large windo
-    T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinat
-  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
-T32 [proved] Exact inertia relation between a Weil block and the corresponding block of N (rank-one 
 T33 [checked] The two sum-rule margins are the pole vector seen through the inverse Weil block
 T34 [checked] Sum-rule form of the two block inequalities (Theorem A, second lines, with the hypothe
 T40 [open] End-point regularity of a first-failure null vector
@@ -173,3 +166,11 @@ T78 [open] Conditional gap lemma of lane A (not a reduction)
   T11 [known] Connes-van Suijlekom: simple isolated even ground state has a transform with only real
 T79 [checked] Tilt identity: the Weil form of zeta(s-d) zeta(s+d) is zeta's bilinear form at e^{dx} 
   T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 
+T81 [open] Open converse (wall WP1): does 'N has at most one positive direction on every window' imp
+  T31 [checked] 'N has at most one positive direction on every window' implies at most one off-line 
+    T27 [checked] Negative squares of Q are bounded by positive squares of N (per parity block), wit
+      T26 [checked] Parity decomposition of the window forms and the pole in the two parity blocks
+    T29 [checked] Exact negative index of the Weil form: the number of negative squares on large win
+      T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordin
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+  T32 [checked] Exact inertia relation between a Weil block and the corresponding block of N (rank-o

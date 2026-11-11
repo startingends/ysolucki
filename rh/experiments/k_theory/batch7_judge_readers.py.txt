@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""K-theory, 2026-11-11: ingest rh/experiments/r2_judge/JUDGEMENT.md and the readers' addenda (rh/library/). Run ONCE.
+Every write goes through tools/records.py theory."""
+import os, subprocess, sys
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+sys.path.insert(0, os.path.join(ROOT, "tools")); import records
+TH = os.path.join(ROOT, "rh", "THEORY.md")
+def run(*a):
+    p = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "records.py"), "theory"] + list(a), capture_output=True, text=True)
+    if p.returncode: sys.exit(f"FAILED {a[:3]}: {p.stdout}{p.stderr}")
+    return p.stdout.strip()
+def get(tag, field):
+    _, items = records.parse("theory", TH)
+    return next(x for x in items if x["n"] == int(tag[1:]))["f"].get(field, "")
+def app(tag, field, text, sep=" | "):
+    old = get(tag, field)
+    run("set", tag, field, (old + sep if old else "") + text)
+J = "R2-judge (rh/experiments/r2_judge/JUDGEMENT.md section %s: %s)"
+judge = {
+ "T50": ("1.1", "'proved, known': U-perp and the form on it expanded by hand, Sylvester"),
+ "T51": ("1.1", "'proved, known': Steps 1 to 5 checked; read Braenden-Leake Lemma 2.8 and its proof and matched the hypotheses one by one"),
+ "T52": ("1.1", "'proved': contraction, slice decomposition expanded by hand, Weyl; l >= 0 needed (J8)"),
+ "T53": ("1.1", "'proved': D1 to D4 checked; D4 bounds the quadratic value only"),
+ "T54": ("1.1", "'proved' together with Lemma D"),
+ "T55": ("1.1", "'proved': F1, the four collected lines, the pairing, F3 and the distinct-triple case of F5 by hand; own code J7"),
+ "T56": ("1.1", "'proved': (U) from D3; (V) the four contractions by hand; needs total mass 1"),
+ "T65": ("1.1 and 1.2", "'proved, known': C1 to C4 rederived; the constant (m+2)/(2m) rederived"),
+ "T64": ("1.2", "'proved': B1, B2 rederived by hand, B3 bracket by hand, own code J5 to 2e-14"),
+ "T49": ("1.2", "'proved, known in substance': the split, t = 2u, Gauss's integral; own box matrix built from it reproduces every number"),
+ "T70": ("1.2", "'proved, trivial' (D1; holds for any Beurling system)"),
+ "T71": ("1.2", "'proved, trivial' (D3 termwise)"),
+ "T72": ("1.2", "D4 'correct'; hand example at 3/2, 4/3"),
+ "T74": ("1.2", "D5 'correct'"),
+ "T66": ("1.2", "'proved by the checker': a Poisson equation with pi-mean-zero right side"),
+ "T63": ("1.2", "A0 and the first lines of A1, A2 'are right'"),
+ "T34": ("1.2 and 1.4", "the gap line confirmed (J3: top eigenvalue of N is -0.0728 at L = 0.10; smallest counterexample N = [[-10,1],[1,-10]]); the repaired statement is the case kappa_-(Q) = 0 of the judge's signature identity"),
+ "T26": ("1.3", "'proved, trivial'"),
+ "T5":  ("1.3", "parity lemma (Lemmas 1, 2) 'proved, trivial'"),
+ "T27": ("1.3", "'proved'; the one unwritten step supplied"),
+ "T28": ("1.3", "'proved' (a consequence of RH)"),
+ "T29": ("1.3", "'proved': every step redone, including (3c), (3d) and all four cases of the Gram matrix; kill test J17 on zeta's own form with surgery: one quartet (1,1), two (2,2), never more; J13 toy zero sets"),
+ "T30": ("1.3", "'proved' (C1) and 'proved, known' (C1 last line, C4: Yoshida 1992 Prop. 1 via Suzuki p. 2, read by the judge)"),
+ "T31": ("1.3", "first half 'proved'; second half a gap, see note"),
+ "T35": ("1.3", "monotonicity 'needs no assumption' by Suzuki's Corollary 1.2 (read)"),
+ "T43": ("1.3", "'proved, conditional on RH': Steps 1 to 3 redone"),
+ "T33": ("1.4", "the determinant form 2c^T N_e^-1 c - 1 = det(Q_e)/|det N_e| 'proved, known' (matrix determinant lemma); J10: 5.592234356886e-4 against 5.592234356884e-4"),
+ "T73": ("1.4", "'proved, trivial' for the semidefinite statement (D1; w(log ab) = sum_m (ab)^-(2m+1/2))"),
+}
+for tag, (sec, what) in judge.items():
+    app(tag, "checked by", J % (sec, what), sep="; ")
+
+# T32: the judge derived the same identity independently
+run("set", "T32", "proof", "rh/experiments/r2_judge/JUDGEMENT.md, section 1.4 (last row) and 2.14 (c) (Haynsworth on [[Q_e, c],[c^T, 1/2]] and [[Q_o, s],[s^T, -1/2]]); rh/board/s1.md B56 and B92 (the seat: statement, and the even half by one polynomial identity plus Sylvester); steps written out in rh/experiments/k_theory/PROGRESS.md")
+run("set", "T32", "source", "S1-parity (board B56) and, independently, R2-judge (J18)")
+run("set", "T32", "checked by", "R2-judge (JUDGEMENT.md section 1.4: 'proved, elementary', derived independently of the seat, COMPUTED in 36 rows) for the seat's claim; K-theory for the judge's bordered-matrix argument (same matrices up to a factor sqrt 2, both Schur complements) and for the seat's identity on board B92")
+run("set", "T32", "note", "Three independent derivations agree: the seat (B56; even half written on B92), the judge (J18), K-theory. In the judge's words it 'contains curv's Theorem A as the case kappa_-(Q) = 0 and sharpens parity's Prop. 3(b)', i.e. T34 and T27. Consequence (judge, 2.14): a one-quartet configuration has kappa_+(N) = 1 exactly when c^T Q_e^-1 c <= 1/2 and s^T Q_o^-1 s < -1/2; in the computed surgery rows c^T Q_e^-1 c lies between 5.8e5 and 7e53 and N has THREE positive eigenvalues. The Beurling counts 3 and 5 reported by all seats are 1 + kappa_-(Q). COMPUTED also by the seat: 0 failures in 20000 random cases. Finite linear algebra; nominated for Lean by S1-parity (B92).")
+run("status", "T32", "checked", "the round-2 judge derived the identity independently (JUDGEMENT.md 1.4) and K-theory checked both written arguments")
+
+app("T31", "note", "JUDGE (JUDGEMENT.md 1.3, 2.14): the second half ('cannot be improved by linear algebra alone') is a GAP, label open; exact line: PROOF_parity_index.md section 5, C2, the sentence beginning 'the second cannot be improved by linear algebra alone, because'. New evidence J18: on surgery configurations of zeta with one quartet N has three positive eigenvalues, not one. The open converse is T81.")
+app("T29", "note", "Novelty (judge, section 6): the total count, with the word 'distinct' and the same hyperbolic-pair argument, is printed as 'Theorem 1 (global signature)' in an unrefereed account of an agent research run, which credits Bombieri 2000 with the upper-bound half; the per-block count was not found. Bombieri 2000 and Yoshida 1992 are still unread by the project.")
+app("T36", "note", "JUDGE (JUDGEMENT.md 1.3): 'proved given the cited theorems; known in substance'; the judge also notes that (i) needs attainment of the infimum. The judge did not examine the class on which the zero-side formula is stated, so the downgrade stands.")
+app("T37", "note", "JUDGE: 'proved given the cited theorems; known in substance' (existence half: Suzuki p. 2 and the paragraph after Theorem 1.3).")
+app("T39", "note", "JUDGE: (a) to (d) 'proved given S1 and the domain facts'; (a), (b) by translation, (c) including conj(psihat(conj z)) = +-psihat(z) rechecked.")
+app("T44", "note", "JUDGE (JUDGEMENT.md 1.3, 1.4): the seat's own support for 'false on every single window' was a GAP (PROOF_uniqueness.md, 'Exact scope', second bullet: a discretised computation); the checker's one-line repair is 'proved (one line, given attainment of lambda(L))'. READER (rh/library/johns-positive-solutions.md): no counterpart in the Johns preprint, which has no window.")
+app("T47", "note", "JUDGE (JUDGEMENT.md 1.3, 3.1, 4.3): 'all computed feasible intervals of idea #9 are outer bounds' is proved, trivial; in the lead's own basis the interval at 6 is [-1.2504e-13, +1.8239e-14] (J12). READER: no counterpart in the Johns preprint.")
+app("T63", "note", "JUDGE (section 4, item 4): the lead's wording in N29 step 3 with 'exactly one positive eigenvalue' needs lambda_1 > 0 (for L <= 0.10 the top eigenvalue of N is negative and N has no positive direction); the statement here says 'at most one' and is correct without it.")
+app("T65", "note", "JUDGE (2.5 and section 4, item 7): 'the factor 2 is structural' is PROVED for the resampling model only; for the prime chain the constant is COMPUTED and is not 1/2 (centre 0.5061, 0.4965, 0.4908 at M = 80, 160, 320; minimum over sites 0.4302 at M = 320, still falling; the total jump rate grows with refinement). The report sentence 'CD(rho, n) gives at most (n-4)/(2(n-1))' is wrong as written: exact constant on m points 1/2 - 2/n + (1 + 2/n)/m.")
+app("T64", "note", "JUDGE (2.3): wall W-curv-5 as worded is not a fact.")
+
+# readers' addenda (each checked against the digest named)
+run("set", "T53", "source", "R2-cubic. Item (D3) is in the literature: Braenden-Huh, 'Lorentzian polynomials', Lemma 2.15 at d = 3 (its proof uses only that each slice has one positive eigenvalue and a^T T_k a > 0), per the note rh/library/branden-huh-lorentzian.md (seat R-read-1; the paper was read in part). (D1), (D2), (D4) have no literature source on record")
+app("T52", "source", "Not in the parts of Braenden-Huh that were read (rh/library/branden-huh-lorentzian.md); listed in journal J4 as 'still only ours'", sep=". ")
+run("set", "T71", "source", "lead (N29); R2-curv. The matrix version [w(log ab)] lies in a known class: Helson matrices alpha(n) = int n^-s dnu(s), Perfekt-Pushnitski arXiv 1611.03772, section 5.1 and Theorem 5.1 (whole paper read by READER-2 and R-read-2; rh/library/perfekt-pushnitski-helson.md); also arXiv 2407.04124 (abstract only)")
+app("T77", "source", "Not in Perfekt-Pushnitski (rh/library/perfekt-pushnitski-helson.md, whole paper)", sep=". ")
+app("T22", "note", "READER (rh/library/rodgers-tao-newman.md): the ODE for REAL SIMPLE zeros of H_t is Csordas-Smith-Varga 1994, Lemma 2.4, restated as Theorem 11 of Rodgers-Tao (arXiv 1801.05914) for Lambda < t <= 0 with a principal-value sum; that paper has no statement on the motion of non-real zeros and nothing on sum y_k^2, so this identity is not in it. Journal J4: the monotone quantities of the forward flow that lane B computed are in Rodgers-Tao (Lemma 12).")
+run("set", "T17", "statement", "(Claims of an unreviewed preprint; theorem numbers from the reader's digest, exact hypotheses there.) An 'admissible pair' is a positive measure on the zero side together with a positive measure on the prime side carried by [log 2, infinity) solving the explicit formula with zeta's Gamma factor and pole. (a) [Theorem 2.7 with Prop. 2.10] an admissible pair exists iff a prime-free, zero-free inequality kappa* >= 0 holds (conic duality over the cone of F >= 0 on R, analytic in a strip, with Fourier transform >= 0 on [xi_2, infinity)). (b) [Theorems 3.6, 3.8, 3.11, Prop. 3.5] uniqueness of the pair under restrictions on the zero-side support. (c) [Prop. 5.10 with Prop. 2.10] with a conductor q as parameter: one certified pair at q = e^{0.02}, hence q_min < 1.017182 and pairs for all q >= q_min.")
+run("set", "T17", "source", "N. Johns, 'Positive solutions of the explicit formula for zeta(s): near-criticality and uniqueness', v1.4, October 2026, github.com/nic410/zeta-positive-solutions (UNREVIEWED, AI-produced); read in full by the reader seats (rh/library/johns-2026-part1.md, johns-positive-solutions.md)")
+run("set", "T17", "note", "OPEN and must stay so until a human has checked the proofs: the preprint's README says nobody has; the reader seats read it, which is not checking it. Nothing in the project may rest on it. Note (reader): kappa* >= 0 gives existence of a pair; RH follows only with uniqueness (the preprint's Conjecture U / Part II claim). The project's own statements in this area are T43 (special case of the preprint's Prop. 3.2(b) for atoms at positions >= log 2, per the reader) and T44, T47 (no counterpart there).")
+app("T43", "source", "Overlap made exact by the reader (rh/library/johns-positive-solutions.md): for atoms at positions >= log 2 this is a special case of Proposition 3.2(b) of the unreviewed Johns preprint (which allows a diffuse positive part and needs only the negative part finite), once form positivity is translated into 'the zero side is a positive measure' (Bochner; that translation is not written anywhere); for atoms below log 2 it is not covered", sep=". ")
+app("T48", "note", "READER (rh/library/johns-positive-solutions.md): this statement as worded is NOT in the Johns preprint. Its Theorem 2.7 is the corresponding claim for a different cone (F >= 0 on R analytic in a strip, Fourier transform >= 0 on all of [xi_2, infinity)) and is equivalent to the existence of an admissible pair, not to RH. Ours tests only F = |fhat|^2 with f of compact support (smaller class) and asks g >= 0 only at the logarithms of integers (weaker hypothesis); neither statement contains the other; under RH both hold.")
+run("set", "T16", "statement", "(Quoted; the objects K_L^{omega,nu}[t] and J_L^{omega,nu}(t;z,w) are defined in the paper, sections 2 to 5; S_R is the paper's subclass of the Selberg class.) 'The validity of GRH(L) for L in S_R is equivalent to the condition that there exists a sequence (omega_n, nu_n) in R_{>0} x Z_{>0}, n >= 1, such that (1) omega_m < omega_n if m > n and omega_n -> 0 as n -> infinity, (2) nu_n omega_n d_L > 1, (3) det(1 +- K_L^{omega_n,nu_n}[t]) != 0 for every t >= 0, and (4) lim_{t -> infinity} J_L^{omega_n,nu_n}(t;z,z) = 0 for every z in C_+.' Condition (3) is the existence of the Hamiltonian of the canonical system on the whole half-line.")
+run("set", "T16", "source", "M. Suzuki, 'Hamiltonians arising from L-functions in the Selberg class', arXiv 1606.05726 v3, Theorem 2.4; read in full by READER-1 (rh/library/1606.05726.md: 109,006 of 109,006 characters)")
+run("set", "T16", "note", "Corrections to the project's earlier wording (reader): the condition is imposed along a sequence of shifts omega_n -> 0 with powers nu_n, not 'for every a > 0' and not in a window size; existence of the Hamiltonian (3) is only one of two conditions, the limit condition (4) is also required and is not shown to follow from (3); the class is S_R, not the whole Selberg class; 'J. Funct. Anal. 2021' is not supported (the JFA paper is a companion on the inverse problem). A reformulation of RH; relevant because lane A's 'kicked Krein system' (merged into idea #8) is this in substance. The companion arXiv 1204.1827 was not read.")
+run("status", "T16", "known", "exact statement quoted from the paper by a reader who read all of it (rh/library/1606.05726.md)")
+run("set", "T18", "statement", "(1) For real k >= 0: dim M_k(Gamma_theta, +) = floor((k+4)/4) = 1 + [k/4] and dim M_k(Gamma_theta, -) = floor((k+2)/4) (modular forms of weight k for the theta group with the theta automorphy factor, moderate growth). With k = n/2 for theta^n: the space is one-dimensional for 0 <= n < 8. (2) (Bochner's converse theorem, as stated in the paper's Remark after Proposition 4.1) a Dirichlet series with the corresponding functional equation and finitely many poles is L_f for some f in M_k(Gamma_theta, +-) plus a finite combination of derivatives of explicit kernels attached to the extra poles. Hence for 0 < n < 8 the solution of the functional equation of Z_n(s) = sum r_n(m) m^-s is unique ONCE THE POLES ARE PRESCRIBED.")
+run("set", "T18", "source", "Bondarenko, Radchenko, Seip, 'Fourier interpolation with zeros of zeta and L-functions', arXiv 2005.02996 v3: Proposition 3.1 (cited there to Berndt-Knopp, 'Hecke's theory of modular forms and Dirichlet series', Thm 6.3, with a short proof) and the Remark after Proposition 4.1; read in full by seat R-read-2 (rh/library/brs-fourier-interpolation.md), sections 1 to 3 by READER-2 (rh/library/2005.02996.md). First used in the project by the round-1 judge from memory")
+run("set", "T18", "note", "Upgraded from open after checking BOTH digests: READER-2's partial digest (sections 1 to 3) has only the modular-form count; R-read-2's complete note locates the passage to Dirichlet series (the Remark after Prop. 4.1). Caveats: part (2) is a remark in the paper citing Bochner, and its growth hypotheses are recorded here only as 'finitely many poles' and bounded in vertical strips; uniqueness is 'once the poles are prescribed', which is the precise form of the statement idea #13 uses ('uniqueness of the solution of the functional equation does not force RH'). Nothing in the paper concerns zeros of the dial members.")
+run("status", "T18", "known", "dimension count and the Bochner remark located in a paper read in full by a reader seat")
+app("T10", "note", "READER (rh/library/2106.01715.md, Connes-Consani 'Spectral triples and zeta-cycles', whole paper): with the Connes-Consani definition the form is defined on all of L^2 of the window with values in (-inf, +inf] (Prop. 2.1) and its domain is exactly {int log(2+|s|)|fhat(s)|^2 ds < infinity} (through the proofs of 2.1 and 2.2); the exponentials are a form core (Prop. 2.3); Rayleigh-Ritz values in the exponential basis converge to the bottom of the form (Cor. 2.4).")
+app("T80", "note", "READER (rh/library/2106.01715.md): in Connes-Consani's paper the form domain IS the logarithmic Sobolev space and the exponentials are a form core (Prop. 2.1 to 2.3). So what remains to be written is exactly: continuity of v -> sum_gamma m_gamma |vhat(gamma)|^2 (and of the off-line pairing) in that norm, for v supported in the window.")
+app("T4", "note", "READERS (rh/library/R-read-1_PROGRESS.md item 8; connes-consani-weil-positivity-archimedean.md; burnol-explicit-formula-propagator.md): the positive off-diagonal kernel of every local term is implicit in Weil 1952, Haran 1990, Burnol 1998, and for the archimedean place it is remarked in the introduction of Connes-Consani arXiv 2006.13771; it is not used there as an input.")
+app("T1", "note", "READERS: the same window criterion is Proposition C.1 of Connes-Consani arXiv 2006.13771 (proof: Yoshida's) and is restated in the introduction of Connes-Consani-Moscovici arXiv 2310.18423; per READER-1 the sentence 'RH fails iff lambda_a < 0 for some a' is Suzuki's own step, while Yoshida is credited with positive definiteness on C_c^inf(-a,a) for every a. Journal J4: nothing is PROVED for any window that contains a prime (proved range of positivity: e^{2L} <= 2).")
+
+# the open converse behind wall WP1
+print(run("add", "--name", "Open converse (wall WP1): does 'N has at most one positive direction on every window' imply RH?",
+    "--statement", "Notation of T7, T27. If kappa_+(N_L) <= 1 for every L > 0, then RH. (By T31 the hypothesis leaves at most one off-line quartet; by T32, in finite sections with invertible blocks a one-quartet configuration has kappa_+(N) = 1 exactly when c^T Q_e^-1 c <= 1/2 and s^T Q_o^-1 s < -1/2. So the statement is: this combination cannot occur on all large windows for zeta with one off-line quartet.)",
+    "--depends", "T31, T32", "--source", "round-1 judge (wall WJ13), R2-parity (wall WP1), R2-judge (JUDGEMENT.md 1.3 'Label for the second half: open'; 2.14)", "--routes", "#10"))
+run("set", "T81", "note", "OPEN. Evidence only (R2-judge J18, one implementation, finite subspaces): in every surgery configuration of zeta with one quartet (b = 0.3; L = 0.5 to 1.25) N has three positive eigenvalues, and c^T Q_e^-1 c lies between 5.8e5 and 7e53. A surgery configuration is not a system with a non-negative prime side. If true it would make idea #10's signature claim equivalent to RH; idea #10 is parked.")
+print(run("check"))
