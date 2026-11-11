@@ -1603,3 +1603,27 @@ the moving bound** (lead, after READER-10: `rh/library/haran-1508.04636.md`, `de
   the amplifier's boost grows like a power of the height; whether a decaying defect can replace exact vanishing in
   Harder's argument is a precise question), or (b) deform ℚ together with ∞ (the q → 1 picture), keeping the
   functional equation at every stage, then pass to the limit by Hurwitz. (a) is the one the project can attack.
+
+**N91. Two constructions by the lead, both closed by counting before any run** (lead, 2026-11-11).
+- **Correction to N90 (a).** "Approximate vanishing deep in the cusp" cannot help P_ρ: Harder's mechanism makes a CUSP
+  FORM equal its (zero) constant term; P_ρ is an Eisenstein series whose constant term y^(½+β) + c·y^(½−β) is the
+  obstruction itself (it is the moving pole of N87). The decay e^(−2πy) of the non-constant terms is irrelevant.
+  (a) is withdrawn; (b) (deform ℚ with ∞, keep the functional equation, pass to the limit) stands as stated.
+- **H-3, the separable form (construction, rule 13(a): where is the hard object exactly solvable?).** The
+  Landau–Gonek formula Σ_{0<γ≤T} x^ρ = −(T/2π)Λ(x) + error is unconditional, so for a Dirichlet polynomial A of
+  length N ≤ T^(1−ε) the zero sum G_T(A) = Σ_{0<γ≤T} A(ρ)·conj A(1 − ρ̄) equals (T/2π)·a*Ma + error with
+  M = diag(log(T/2πn)) − (Λ(m/n)(m/n)^(−½) + transpose). Both parts are SUMS OVER PRIMES of operators acting on
+  one exponent v_p(n) each (log n is additive; Λ(m/n) ≠ 0 only when m/n is a prime power). On a divisor box
+  {n | M₀} the domain is a product too, so M = log(T/2π) + Σ_p M_p EXACTLY, the M_p commute, and the bottom of M is
+  attained at an Euler-product-shaped A = ⊗_p A_p (Minkowski sum of spectra). This is the Euler product acting as an
+  exact decoupling in the bulk (N up to T^(1−ε) is far beyond Montgomery's line N = T^(½)). The impostor's Λ is not
+  supported on prime powers with multiplicative structure, so its M does not decouple: a clean, exact difference.
+- Why it does not detect RH (counting, done before any run): G_T sums over ALL zeros up to T, about (T/2π)log T of
+  them, and a polynomial of length N ≤ T has fewer degrees of freedom than that, so it cannot be small at every
+  on-line zero while large at one off-line quartet; a quartet's negative term is diluted, and G_T ≥ 0 is expected
+  whether or not RH holds. So positivity of M with margin (even if proved, and it is a finite one-prime problem per
+  prime) says nothing about where the zeros are. To detect a quartet the zero sum must be WEIGHTED to the quartet's
+  neighbourhood (Weil's ĝ(γ)), and the weight in γ is exactly what breaks the product structure (a weight in t
+  couples the primes, like the window in N88). Ratings: Quality 4, Toward RH 1.
+- Lesson recorded as rule H12: **the Euler product decouples the primes exactly; any localisation in the height t
+  re-couples them.** Decoupling and localisation are the analytic face of N88 (torus versus line) and N90 (∞).

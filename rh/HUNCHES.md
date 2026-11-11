@@ -384,3 +384,7 @@ from the centre to the line of absolute convergence (for ζ, r = β/(½) = 2β; 
   "local parameters over a fixed base" is the property that every global construction on the record lacks, and it
   is the same property the October authors used without saying so (their sextic theta lives on a cover, whose Gauss
   sums are LOCAL parameters at each prime, N75).
+
+- **H12 (lead, from N91).** The Euler product decouples the primes exactly (Landau–Gonek form on a divisor box is a
+  sum of one-prime operators); any localisation in the height t (needed to see ONE zero) re-couples them. A hunch
+  must say what plays the role of the localisation and why it does not undo the decoupling.
