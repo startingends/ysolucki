@@ -2131,3 +2131,25 @@ that prime power enters the window, on the prolate ladder, not on a closest pair
   Deligne's amplifier needs an a priori pole bound from a base of positive dimension, which a single virtual curve
   lacks. So in the function-field shadow: Euler product + functional equation + positivity + amplification without a
   geometric a-priori bound do not give RH.
+
+**N123. Bootstrap test: Weil positivity on a window pins every prime weight inside a super-exponentially small box
+around ζ's, but the pinning comes from the functional equation and does not single out ζ** (SP-operator,
+`rh/specialists/operator/BOOTSTRAP.md`; uncertified; exact arithmetic along coordinate lines at L ≥ 0.85).
+- R_L (weights c on prime powers ≤ e^(2L) with the window form ⪰ 0) is bounded (proved: two-bump tests make every
+  nonzero weight combination indefinite); c_ζ is INTERIOR (κ_min > 0) but close to one face. Widths of c_s − c_ζ,s:
+  L = 0.45: c₂ ∈ [−2e-3, 2e-2]; 0.6: c₂ ~1e-5, c₃ ~1e-2; 0.85: c₂ ~2e-16, c₃ ~1.5e-14, c₄ ~2e-11, c₅ ~5e-6; 1.0:
+  c₂ < 1e-24, c₃ 2.5e-24, c₄ 1e-21, c₅ 2.5e-18, c₇ 1e-6. Each prime power is pinned at its own ladder depth; only the
+  newest is loose.
+- Impostor: by the H-4 duality, R_L ≠ ∅ ⇔ κ_P(L) ≥ 0, so the bootstrap region is the dual of the prime-sampling cone;
+  at L = 1.72 it is nonempty (fake weights) and the true weights lie outside; at 1.8 undetermined (as N97).
+- Logic: "R_∞ ≠ ∅ ⇒ RH" would need R_∞ ⊆ {c_ζ}, which needs (i) the Euler product (weights here are free), (ii)
+  discreteness with integer multiplicities of the zero measure (positivity alone gives only a positive measure),
+  (iii) a determinacy theorem. As it stands the bootstrap says "R_∞ ∋ c_ζ", which is RH. Ratings: Quality 6,
+  Toward RH 1.
+- Lead: the missing (ii) points at a field this project has not used: **crystalline measures / Fourier quasicrystals**.
+  Under RH the zero measure Σ δ_γ and the prime-power measure are a Poisson-summation pair (Guinand–Weil), and
+  Kurasov–Sarnak (2020, m) build crystalline measures whose atoms are the zeros of P(e^(i l₁ x), …, e^(i l_n x)) for a
+  STABLE (Lee–Yang) multivariate polynomial P: the zeros are real BECAUSE of multivariate stability, and the Fourier
+  support is {Σ k_j l_j}. With l_j = log p_j this is the prime side, and the restriction to x ↦ (p^(−ix)) is the
+  Kronecker line of the torus of N88. In music: a chord of incommensurable tones whose silences all fall on the real
+  axis because of a polydisc stability. A reader goes to the papers (knowledge), then the construction "Guess D".

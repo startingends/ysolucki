@@ -389,3 +389,10 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
 - Every detuning, both signs, eps from 0.3 down to 0.01, breaks positivity 0.005-0.21 in L after p first enters (L* for p=2:
   0.38-0.56, p=3: 0.58-0.60, p=5: 0.81-0.83); catastrophic later (-1e27 at L = 1). Negative direction = bottom ladder rung
   (D/|g|^2 down to 6e-30), never closest pair. log log(1/eps) law (prolate defect < eps). 13 small-L zeta dumps made.
+
+## SESSION (BOOTSTRAP.md): prime weights as bootstrap unknowns
+- R_L bounded (two-bump proof), c_zeta interior (kappa_min > 0) but lopsided; widths: L=0.45 c2 2e-2; 0.6 c2 1e-5, c3 2e-2;
+  0.85 c2 2e-16, c3 2e-14, c4 2e-11, c5 5e-6; 1.0 c2 < 1e-24 ... c7 1e-6. No ladder-invisible combination (Gram eigvecs = axes).
+- SCS fails at scale spread 1e18-1e28 (spurious 'unbounded'); exact-arithmetic directions (invis.py.txt) instead.
+- R_L != empty <=> kappa_P(L) >= 0 (dual of H-4 cone). Impostor 1.72: nonempty, true weights outside. Rigidity needs Euler
+  product + discreteness + determinacy. Ratings Quality 6, Toward RH 1.
