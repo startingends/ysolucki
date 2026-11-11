@@ -7,3 +7,6 @@ zeta L=1.50 N=70: mu = 3.29678e-87 ; T = 0.12658419 ; pole E_+^2 = 0.22601394 ; 
 impostor L=1.70 N=100: mu = 1.11828e-28 ; T = 0.28778204 ; pole E_+^2 = 0.0 ; Gamma squares = 0.32105868 ; arithmetic mirror H_arith = -0.033276639 (positive terms 0.067813, negative terms -0.10109 ; from the mirror-only range log n >= L: 0.007042)   (503s)
     in units of T: T 1.0 ; Gamma 1.1156 ; arithmetic mirror -0.11563 ; mu/2 1.94e-28
     largest arithmetic terms c_n n^-1/2 (phi*phi)(log n): n=2 (c=0.1969): 0.06064 ; n=4 (c=-1.442): -0.05984 ; n=3 (c=-0.3121): -0.04111 ; n=6 (c=1.936): 0.006655 ; n=7 (c=0.5528): 0.0005116 ; n=9 (c=-2.286): -0.0001355 ; n=11 (c=2.398): 7.703e-6 ; n=8 (c=0.01589): 3.799e-6
+impostor L=1.72 N=100: mu = -7.91085e-30 ; T = 0.28755808 ; pole E_+^2 = 0.0 ; Gamma squares = 0.32107532 ; arithmetic mirror H_arith = -0.033517244 (positive terms 0.067906, negative terms -0.10142 ; from the mirror-only range log n >= L: 0.0071348)   (765s)
+    in units of T: T 1.0 ; Gamma 1.1166 ; arithmetic mirror -0.11656 ; mu/2 -1.38e-29
+    largest arithmetic terms c_n n^-1/2 (phi*phi)(log n): n=2 (c=0.1969): 0.06063 ; n=4 (c=-1.442): -0.0601 ; n=3 (c=-0.3121): -0.04118 ; n=6 (c=1.936): 0.006743 ; n=7 (c=0.5528): 0.0005218 ; n=9 (c=-2.286): -0.0001408 ; n=11 (c=2.398): 8.234e-6 ; n=8 (c=0.01589): 3.908e-6

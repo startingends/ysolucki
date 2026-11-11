@@ -1,0 +1,47 @@
+# Exponent bookkeeping for the Vaughan / bilinear large sieve route in the sparse sextic family.
+# Everything is in powers of D. Family: rows u with N(u) ~ D^eta (primitive, squarefree rows: no copies).
+# Sieve norm Delta(A,B) (A rows, B column length), exponents:
+#   proved sextic (BGL / QRH Lemma 9.1): max(A, B, 2(A+B)/3)
+#   conjectured sextic (dFDH (1.6), n=6):  max(A, B, 5A/6+B/3, A/3+5B/6)
+#   idealised quadratic-type:             max(A, B)
+#   full family of all characters, conductor <= Q (size Q^2), Huxley-type: max(2A, B) with A = log Q
+# L1 bound for a Type II piece (M = D^a, N = D^(1-a)):  D^(1/2) * sqrt(Delta(eta,a) Delta(eta,1-a))
+# L2 bound (mean square S_II): min over the three ways = always >= 2 (one member), checked below.
+# Vaughan: Type I with smooth variable of length >= D/V^2 is negligible on primitive rows iff D/V^2 >= D^eta,
+# i.e. v <= (1-eta)/2; Type II needed for a in [v, 1/2]. Best v = (1-eta)/2.
+import itertools
+def sieves():
+    return {
+      'proved':    lambda A,B: max(A,B,2*(A+B)/3),
+      'conj_dFDH': lambda A,B: max(A,B,5*A/6+B/3,A/3+5*B/6),
+      'quadratic': lambda A,B: max(A,B),
+      'fullfamily':lambda A,B: max(2*A,B),
+    }
+def L1_exp(Dl, eta, a):
+    return 0.5 + 0.5*(Dl(eta,a)+Dl(eta,1-a))
+def worst_L1(Dl, eta):
+    v = (1-eta)/2
+    grid = [v + (0.5-v)*k/2000 for k in range(2001)]
+    return max(L1_exp(Dl,eta,a) for a in grid)
+def L2_exp(Dl, eta, a):
+    # three bounds for sum_u |sum_{m,k} alpha beta chi_{mk}(u)|^2, general bounded coefficients
+    b1 = Dl(eta,1.0) + 1.0                 # unstructured: Delta(H,D) * ||c||^2
+    b2 = 2*a + Dl(eta,1-a) + (1-a)         # max_u |A_u(M)|^2 * sum_u |B_u(N)|^2
+    b3 = 2*(1-a) + Dl(eta,a) + a
+    return min(b1,b2,b3)
+if __name__ == '__main__':
+    S = sieves()
+    print("L2: min over a in [0,1/2] of best mean-square exponent (one member = 2):")
+    for name,Dl in S.items():
+        for eta in (0.25, 0.5):
+            m = min(L2_exp(Dl,eta,k/1000) for k in range(501))
+            print(f"  {name:10s} eta={eta}: {m:.4f}")
+    print("L1 (sum over rows of |Type II|), worst a in Vaughan range; per-row average = e - eta; one member = 1:")
+    for name,Dl in S.items():
+        for eta in (1/6, 1/5, 1/4, 1/3, 0.4, 0.5):
+            e = worst_L1(Dl,eta)
+            print(f"  {name:10s} eta={eta:.4f}: total {e:.4f}  per-row {e-eta:.4f}  (trivial per-row 1)")
+    # which eta minimises the per-row exponent
+    for name,Dl in S.items():
+        best = min(((worst_L1(Dl,k/600)-k/600), k/600) for k in range(1,301))
+        print(f"  best per-row saving, {name:10s}: per-row exp {best[0]:.4f} at eta={best[1]:.4f}")

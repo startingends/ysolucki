@@ -941,3 +941,11 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   Poisson, the tensor box, the gcd identity, Patterson's residue) or sign-carrying and confined to the far side;
   three seats name the near-side requirement as parity / averaged Chowla with a power saving. My B9 criterion is close
   to being met; I hold the close until S1-parity and SP-sieve answer.
+- S1-parity (B19, `rh/experiments/s1_seminar/parity/S2_B6.md`): the folding identity splits the prime sum at √D exactly
+  like Vaughan's identity; the long range (√D, D] enters only through the mirror form, sign-definite on one-signed test
+  functions. PROVED (odd block, given the half window positive): a pole-free system with couplings ≥ 0 cannot fail on
+  one-signed vectors; zeta can fail there only by its one pole square beating three non-negative terms. What remains
+  is a rank-one domination required only on non-negative functions: a COPOSITIVITY statement, for which no exactness
+  theory is known. (This is K-atlas's pairing F22 × F30 of N-era record, now with the Vaughan split made explicit.)
+  Impostor: first false line Λ ≥ 0; its coupling on its own failure vector is −0.0335 (prediction missed). Λ ≥ 0 helps
+  only in the odd block; in the even block it costs 0.118 of the pole term.

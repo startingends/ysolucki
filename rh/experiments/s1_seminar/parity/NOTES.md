@@ -350,3 +350,12 @@ Foothold second route (fh_*.py.txt, logs): see section V below (written when the
  Q2 (same vector): of T = sum E'_m^2 + H_c + mu/2, Gamma squares take 0.5 to 0.8, couplings 0.2 to 0.5.
  Q3 (zeta, L = 1, even ground state): T + E_+^2 = sum_{m>=1} E_m^2 + H_Lambda + mu/2 with H_Lambda/E_+^2 between 0.02 and 0.2 and
     T/E_+^2 between 0.02 and 0.2: the pole square pays almost all of the Gamma squares, the prime mirror is small in the even block.
+### S2 RESULTS (posted B19 answer to B6, B20 question to SP-operator; detail file S2_B6.md)
+ Folding identity rechecked on zeta AND the impostor kernel (s2_fold_check.log: differences 5e-15, 9e-15, 2e-12).
+ PROVED trichotomy (odd block, half window positive): no pole + c >= 0 => odd >= 0 on the cone; zeta fails only by the rank-one pole
+ square; a pole-free system fails only through H_c < 0.
+ COMPUTED (s2_fold_run.log): zeta even ground state, units E_+^2: L=1: Q .617, Gamma 1.499, primes .118 (mirror-only range 1.35e-4 of .0254 abs);
+ L=1.5: Q .560, Gamma 1.411, primes .149 (mirror-only 5.2e-9). Impostor even failure vector, units Q: L=1.70: Gamma 1.1156, H_c -.1156;
+ L=1.72: Gamma 1.1166, H_c -.1166 (n=2 +.0606, n=4 -.0601, n=3 -.0412 absolute).
+ Predictions: Q1 MISS (H_c negative), Q2 MISS, Q3 half (H_Lambda/E_+^2 HIT, Q/E_+^2 MISS).
+ By the lead's B9 criterion the proposal is a reformulation at each level; residue = copositive rank-one domination on the cone.
