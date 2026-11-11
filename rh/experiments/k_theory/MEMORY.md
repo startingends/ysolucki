@@ -1,10 +1,14 @@
 # K-theory MEMORY (rewritten at the end of session 1, 2026-11-11, after the round-2 judgement was ingested). Read this first.
 
 ## State of rh/THEORY.md
-128 entries, `records.py theory check` clean. 9 formal (T27, T32, T50, T70, T106, T109, T110, T112, T114), 56 checked, 15 known,
-23 proved, 23 open, 2 refuted. SEVENTH BATCH: T118 restated with weights; T126 (bounded Levinson NB => RH, checked by me),
-T127 (Balazard-de Roton, known, paper read in part), T128 (Bettin-Conrey-Farmer, known). Name of T118 still says 'RH iff ...'
-(records.py cannot rename); its statement is the open direction only. SIXTH BATCH: T115 checked by me (LEMMA_T115.md; +1 power restricted to |t| >= 2), T117 checked
+144 entries, `records.py theory check` clean. 9 formal, 62 checked, 16 known, 28 proved, 25 open, 4 refuted.
+EIGHTH BATCH (batch11_n80_n93.py.txt + batch11b_continue.py.txt, notebook N80-N93): T129 collision expansion (checked), T130 (S)
+REFUTED (V-TZ), T131 D-kernel formula (open, ADM), T132 W_k facts (checked), T133 H-1(a) REFUTED (computed, uncertified), T134 barrier
+lemma and T135 Lemma 2 (checked), T136 moving pole (proved, from memory), T137/T138 (proved, from memory), T139 frequency no-go and T140
+H-3 decoupling (checked), T141 Radziwill (known), T142 Levinson identity (proved), T143 Bombieri-Hejhal twist-blindness (open, from
+memory), T144 idea #33 family (open). T101 (plank 5) moved to proved (PROOF_bridge.md Thm 5.1).
+STALE, to do next: T102 (plank 6) and the other bridge planks against PROOF_bridge.md (Prop. 6.1, 6.2; Thm 7.1) and rh/BRIDGE.md (planks
+8b, 13 etc.); notebook N80, N82-N84, N88, N90, N92 are readings, not entered.
 (both directions on established entries; step 6 of Bettin-Gonek added to T116's statement).
 MAIN LINE since the fourth batch: the bridge (rh/BRIDGE.md, idea #27): T99 (known base case), T100 (plank 7, checked by me),
 T101 (plank 5, open: FIRST OPEN LINK), T102 (plank 6, D_L), T103 (7b/7c heuristic), T104 (8a), T105 (plank 8, the span).

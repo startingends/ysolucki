@@ -183,3 +183,10 @@ Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+
 - Read: bettin-gonek digest section 6 (READER-8's adaptation), bcf-1211.5191 digest (whole paper read), balazard-deroton-0812.1689 digest
   (paper read partly, ~40%). T126 checked by me: step 6 x |zeta|^2/(1/4+t^2), Tonelli, Mellin-Plancherel ||f_y||^2 = (1/2pi) int |zeta M_y|^2/|s|^2.
 - Check: 128 entries, 0 errors; 23 open, 23 proved, 56 checked, 9 formal, 15 known, 2 refuted.
+
+### Eighth batch (N80-N93): T129-T144, T101 -> proved
+- Checked by me: T129 (Gram det/trace expansion), T132 (P1, P2a-c linear algebra; dependency on the open kernel formula removed: the
+  facts hold for any bounded positive D with evaluation kernels), T134 (barrier lemma a-d), T135 (eigenvalue bound), T139 (periodicity
+  plus irrationality of log2/log3), T140 (exponents additive; Lambda(m/n) moves one exponent), the P_rho example of T136.
+- Not checked (cited from memory or long): T136 general case, T137 (1b), T138 (Godement), T142, T143, T144 (c), T131 (ADM), T101 (iv).
+- Check: 144 entries, 0 errors; 25 open, 28 proved, 62 checked, 9 formal, 16 known, 4 refuted.

@@ -10,7 +10,6 @@ T13 [open] Burnol's lower bound for the Nyman-Beurling distance
   T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the i
 T14 [open] Krein's extension theorem applied to the window form
 T15 [open] Krein-Langer: Pick matrices of a generalised Nevanlinna function
-T16 [known] Equivalence (Suzuki): RH iff a canonical-system Hamiltonian exists for every parameter v
 T17 [open] Positive-solutions duality and the conductor threshold (Johns preprint)
 T18 [known] Hecke's dimension count: the functional equation of the theta dial has a unique solution
 T19 [known] Moment criterion for multiplicative Hankel (Helson) matrices indexed by a, b >= 1
@@ -212,13 +211,13 @@ T103 [open] Bridge planks 7b, 7c: heuristic model for the comparison constant (a
   T100 [checked] Bridge plank 7: Moebius inversion on the window removes the von Mangoldt function f
 T105 [open] Bridge plank 8 (the span): the lower comparison Q_L >= kappa D_L on all directions
   T102 [open] Bridge plank 6: the least-leak form D_L on the whole window space, and the upper compa
-    T101 [open] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its t
+    T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its
       T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
-  T101 [open] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its tai
+  T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its t
     T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
   T104 [open] Bridge plank 8a: the cross terms between dilates and the pole term are bounded by a co
     T102 [open] Bridge plank 6: the least-leak form D_L on the whole window space, and the upper com
-      T101 [open] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its
+      T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of i
         T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by 
     T100 [checked] Bridge plank 7: Moebius inversion on the window removes the von Mangoldt function
   T1 [known] Weil's positivity criterion
@@ -235,10 +234,16 @@ T113 [checked] Copy barrier, Theorem 3 (corrected, with the verifier's optimalit
       T109 [formal] Squarefull count: #{n <= X squarefull} <= 3 sqrt(X), and <= zeta(3/2) sqrt(X)
   T112 [formal] Amplifier arithmetic: with at most 3 sqrt(H) copies, the amplifier never beats D^(3/
 T114 [formal] Orthogonality of Dirichlet characters as a mean value (finite core L5)
-T117 [proved] Bounded-height equivalence: no zeros in Re s > sigma iff the mollified mean square at 
-  T115 [open] Bounded powers of zeta right of a zero-free half-plane
+T117 [checked] Bounded-height equivalence: no zeros in Re s > sigma iff the mollified mean square at
+  T115 [checked] Bounded powers of zeta right of a zero-free half-plane
   T116 [known] Bettin-Gonek: a mollified mean square of polynomial size excludes zeros right of 1/2 
 T118 [open] Nyman-Beurling, bounded version (notebook N53 (a)): RH iff the Moebius approximants are 
+  T126 [checked] Bounded Levinson-weighted Nyman-Beurling functions imply RH (and polynomial growth 
+    T116 [known] Bettin-Gonek: a mollified mean square of polynomial size excludes zeros right of 1/
+  T127 [known] Under RH the damped Moebius approximants converge (Baez-Duarte; Balazard-de Roton rat
+    T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the
+  T128 [known] Bettin-Conrey-Farmer: under RH and a moment bound for 1/zeta', the Levinson-weighted 
+    T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the
   T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the i
 T119 [checked] A one-sided bound for psi with a slowly growing factor implies RH (notebook N63, corr
   T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinate)
@@ -249,3 +254,26 @@ T124 [proved] Exact identity: e^(2 Dfc(omega)) - 1 is a Nyman-Beurling distance 
   T123 [proved] Szego-Krein characterisation of the defect: lambda_T(z) decreases to (9/32 pi^2) ht(
     T122 [proved] Defect function on the modular surface (Jensen / Balazard-Saias-Yor for Eisenstein
 T125 [proved] Rankin-Selberg identity of the cubic theta function, with matching Gamma factors
+T129 [checked] Two-zero model M3: collision expansion of the pair Gram eigenvalue, kappa_2 = 4 J u +
+T130 [refuted] Statement (S): the comparison constant tracks the local discriminant of the binding p
+T131 [open] D-kernel at the zeros: a Mellin-Gram of the regularised partial sums (formula of N85)
+  T102 [open] Bridge plank 6: the least-leak form D_L on the whole window space, and the upper compa
+    T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its
+      T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by la
+  T101 [proved] Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its t
+    T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+T133 [refuted] H-1(a): the local discriminant of an off-line quartet is negative at the first failin
+  T132 [checked] Local Weil discriminant W_k: elementary facts (restriction bound, pair part, signat
+T134 [checked] Barrier lemma: in the class 'Lambda times a weight of forced sign' every zero weighs 
+T135 [checked] Lemma 2 (operator triangle): a Krein isometry power-bounded in the positive norm cann
+T136 [proved] Moving Rankin-Selberg pole: for an automorphic Pi with a non-unitary Hecke-character c
+T137 [proved] No T_p-equivariant truncation of the Eisenstein series in S = {infinity, p}
+T138 [proved] A cusp over Q forces a continuous archimedean height: a Q-split torus is R-split
+T139 [checked] Frequency-group no-go: zeta is not a product or quotient of zeta functions whose orbi
+T140 [checked] H-3: exact decoupling of the Landau-Gonek form on a divisor box
+T142 [proved] Levinson's method as an exact identity (Littlewood's lemma for V B), and the perfect m
+  T141 [known] Radziwill: no mollifier of length T^theta mollifies zeta completely on [T, 2T]
+T143 [open] Twist-blindness at 100%: almost all zeros of a Davenport-Heilbronn-type combination lie 
+T144 [open] Idea #33: Suzuki's family (1 -+ K_w[L])/w joins the half-shift (w = 1/2) to the Weil blo
+  T16 [known] Equivalence (Suzuki): RH iff a canonical-system Hamiltonian exists for every parameter
+  T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by later 

@@ -898,12 +898,13 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - checked by: K-theory, 2026-11-11 (re-derived both: the inverse of Z from sum_{m | N} mu(m) = [N = 1]; the lower cut u + log n >= -L is automatic and the upper cut is harmless because psi vanishes above L; Lambda * 1 = log; Pi(f) = 2 <f, P+ f> for real f, P+ the one-sided prime shift)
 
 ## T101 · Bridge plank 5: the window form of a cut Poisson image equals the Weil form of its tail
-- statement: (HEURISTIC; not yet a precise statement.) lambda = e^L. For g even on R with g(0) = ghat(0) = 0 put E(g)(x) := x^{1/2} sum_{n >= 1} g(n x). If g is supported in [-lambda, lambda], then E(g) vanishes for x > lambda; let f be its restriction to the window [1/lambda, lambda] and T its restriction to x < 1/lambda, T(x) = x^{-1/2} sum_{m >= 1} (B-perp ghat)(m/x), B-perp ghat := the part of ghat outside the band [-lambda, lambda]. CLAIM: Q_L(f) = W(T), the Weil form of the tail.
-- status: open
+- statement: lambda = e^L. Let g be even, supported in [-lambda, lambda], continuous, piecewise C^2 with g' continuous (so g(+-lambda) = g'(+-lambda) = 0 and ghat(xi) = O(|xi|^-3)), with g(0) = 0 and ghat(0) = 0. Put F := E(g), E(g)(x) = x^{1/2} sum_{n >= 1} g(n x), f := F 1_{[1/lambda, lambda]}, T := F 1_{(0, 1/lambda)}. Then (i) F = 0 for x > lambda; (ii) T(x) = x^{-1/2} sum_{m >= 1} (B-perp ghat)(m/x) for 0 < x < 1/lambda, B-perp ghat the part of ghat outside [-lambda, lambda], and T(x) = O(x^{5/2}) as x -> 0; (iii) the Mellin transform of F is zeta(s) Mg(s) with Mg entire, so it vanishes at every zero; (iv) Q(F, chi) = 0 for every admissible chi; (v) Q_L(f) = Q(T) = W(T) = -Q(f, T), each part (pole, archimedean, primes) of W(T) converging absolutely, and Q_L(f) = - int int_{u < -L <= u'} T(u) f(u') k(u' - u) du du' with the one-sided Weil kernel k(t) = e^{t/2} - sum_{m >= 1} e^{-(2m+1/2)t} - sum_n Lambda(n) n^{-1/2} delta(t - log n), t > 0 (log variable u).
+- status: proved
 - depends: T7
-- source: lead (notebook N40; rh/BRIDGE.md plank 5). The input 'the range of E lies in the radical of the Weil form (its Mellin transform is zeta times something)' is the explanation offered in Connes-Consani arXiv 2106.01715, section 3 (read in full by the reader seats)
+- source: SP-operator (board B205); conjectured by the lead (notebook N40, rh/BRIDGE.md plank 5)
 - routes: #27
-- note: OPEN. What a proof must supply (the bridge's own demand): the class of g for which the Weil form is defined on E(g) and on T (neither has compact support), the convergence, the pole bookkeeping; and a numerical check of both sides to 10 digits on one g. Formally: Qz(E(g), h) = 0 because the transform of E(g) vanishes at every zero, so Q(f) = Q(E(g) - T) = Q(T) - 2 Re Q(E(g), T) + ... = W(T): each step needs the form on non-compactly supported functions. 'What would end this bridge': this plank false, or true only with corrections as large as the form.
+- note: OPEN. What a proof must supply (the bridge's own demand): the class of g for which the Weil form is defined on E(g) and on T (neither has compact support), the convergence, the pole bookkeeping; and a numerical check of both sides to 10 digits on one g. Formally: Qz(E(g), h) = 0 because the transform of E(g) vanishes at every zero, so Q(f) = Q(E(g) - T) = Q(T) - 2 Re Q(E(g), T) + ... = W(T): each step needs the form on non-compactly supported functions. 'What would end this bridge': this plank false, or true only with corrections as large as the form. | UPDATE: a written proof now exists (SP-operator, PROOF_bridge.md Thm 5.1, numerical confirmation in its section 2; rh/BRIDGE.md marks plank 5 'PROVED for a stated class and CONFIRMED'). Statement rewritten to the proved class. Not independently checked; K-theory read the proof (Poisson summation for g, Mellin transform zeta Mg, the null-vector algebra Q(f) = Q(F) - 2Q(F,T) + Q(T)); the step (iv) uses the explicit formula on a class 'of section 0' of non-compactly supported functions, which is an input not re-read here. The seat remarks that nothing uses the Euler product (plank 5 is not where a control fails). | 2026-11-11 -> proved: a complete written proof exists (PROOF_bridge.md Thm 5.1); not independently checked
+- proof: rh/specialists/operator/PROOF_bridge.md, Theorem 5.1 (and Prop. 5.2, 5.3 for the pole bookkeeping and jumps)
 
 ## T102 · Bridge plank 6: the least-leak form D_L on the whole window space, and the upper comparison
 - statement: (Definition and target.) Notation of T101. For a window function f put D_L(f) := inf || B-perp ghat ||^2 over all even g supported in [-lambda, lambda] with g(0) = ghat(0) = 0 and E(g) = f on the window (g is free on (0, 1/lambda)). TARGETS: (i) the set of such g is non-empty for f in a dense subspace of the window space, so D_L is a densely defined non-negative quadratic form; (ii) Q_L <= C(L) D_L.
@@ -1152,6 +1153,158 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - source: S. Bettin, J. B. Conrey, D. W. Farmer, 'An optimal choice of Dirichlet polynomials for the Nyman-Beurling criterion', arXiv 1211.5191, Theorem 1; read in full by READER-8 (rh/library/bcf-1211.5191.md: 18,458 of 18,458 characters)
 - routes: #34
 - note: The moment hypothesis forces simple zeros; it is predicted (Gonek, Hughes-Keating-O'Connell: the sum ~ (6/pi^3) T) but not known. So for Levinson weights the direction 'RH => bounded' is known only under MORE than RH. | 2026-11-11 -> known: theorem quoted from a paper read in full by a reader seat
+
+## T129 · Two-zero model M3: collision expansion of the pair Gram eigenvalue, kappa_2 = 4 J u + O(u^2)
+- statement: Let t -> k(t) be an analytic family of vectors in a Hilbert space (here: D-reproducing kernels at the points t), c real with k(c) != 0, and for u > 0 let k_+- := k(c +- sqrt(u)). Then the smallest eigenvalue of the Gram matrix of {k_+, k_-} is 2 u J(c) + O(u^2), where J(c) := || k'(c) - (<k'(c), k(c)>/||k(c)||^2) k(c) ||^2. In the two-zero model M3, kappa_2 := 2 lambda_min of the pair Gram, so kappa_2(u) = 4 J(c) u + O(u^2), continued analytically to u = -beta^2 for an off-line quartet: kappa_2 vanishes exactly at the collision and changes sign linearly in the heat-flow parameter.
+- status: checked
+- proof: rh/specialists/operator/TWO_ZERO.md, section 3.4 ('Collision expansion (PROVED, elementary)')
+- source: SP-operator (session 2); notebook N81
+- routes: #27
+- note: Proved INSIDE the model (an identity about Gram matrices); checked for u > 0; the continuation to u = -beta^2 (indefinite Krein Gram at a quartet) is the seat's statement, analytic in u because the Gram entries are even in sqrt(u). NOT proved: the transfer to zeta (that J stays bounded along Lehmer pairs; the D-kernel is enormous between zeros). COMPUTED: kappa_2 of the closest pair 0.336 / 0.229 / 0.169 against measured kappa_min 0.298 / 0.205 / 0.138 (zeta L = 1, 1.25; impostor L = 1.5); along u at the impostor pair kappa_2/u -> 2.99 / 3.14. It makes N80's de Bruijn-Newman reading exact inside the model: the margin of the comparison Q >= kappa D is u J. | 2026-11-11 -> checked: elementary expansion re-derived
+- checked by: K-theory (with a = p + m, b = p - m, p = (k_+ + k_-)/2 = k(c) + O(u), m = (k_+ - k_-)/2 = sqrt(u) k'(c) + O(u^{3/2}): det Gram(a, b) = 4 det Gram(p, m) = 4 u ||k||^2 J + O(u^2), trace = 2||k||^2 + O(u), so lambda_min = det/trace + O(u^2) = 2 u J + O(u^2))
+
+## T130 · Statement (S): the comparison constant tracks the local discriminant of the binding pair
+- statement: (Conjecture of notebook N81.) For a Dirichlet L-function of conductor q with the explicit formula, let Delta := -Z'(gamma_1) Z'(gamma_2)/log^2(q gamma/2 pi) for the consecutive pair (gamma_1, gamma_2) with both zeros in the band 2 pi e^{2L}/q < gamma < 1.55 x 2 pi e^{2L}/q minimising Delta (negative for an off-line quartet). CLAIM: c Delta <= kappa_min(L) <= C Delta with absolute constants 0 < c <= C (kill line: kappa/Delta outside [0.3, 2]).
+- status: refuted
+- source: SP-operator (TWO_ZERO.md section 5); notebook N81
+- routes: #27
+- note: REFUTED AS WRITTEN (independent verifier V-TZ, rh/specialists/verifier_tz/VERDICT.md, section 5: 'KILLED as written'). Counterexample: the impostor (Davenport-Heilbronn) at L = 1.45 gives kappa/Delta = 0.18 and at the original point L = 1.5 the stated rule gives Delta = 0.849 and kappa/Delta = 0.16 < 0.3; the original three points had been scored by the pair the minimiser sits on (chosen after seeing the data). No band factor rescues the rule (zeta needs f < 1.66 at L = 1.0 and f > 1.97 at L = 1.1). COMPUTED, one implementation of kappa_min (the foothold seat's pencil), zeros and Z' recomputed by the verifier. Surviving weaker form (S'): Delta at the pair the minimiser sits on gives kappa/Delta in [0.66, 1.17] on 9 points (zeta, chi_5, impostor), with no a-priori selection rule: no content as a statement. The 'spike' (kappa collapses when the pair is moved by 1e-2 off the true zeros) is real (reproduced in all-mpmath). | 2026-11-11 -> refuted: V-TZ: kappa/Delta = 0.16-0.18 for the impostor under the stated rule, below the kill line 0.3
+
+## T131 · D-kernel at the zeros: a Mellin-Gram of the regularised partial sums (formula of N85)
+- statement: Notation of T102 (D = D_L) and of the window [-L, L]; for a zero rho = 1/2 + i gamma let k_gamma be the D-evaluation kernel (F(gamma) = D(f, k_gamma)) and K(gamma, gamma') := D(k_gamma', k_gamma). Put R_N(s) := zeta_N(s) - N^{1-s}/(1 - s) with zeta_N(s) = sum_{n<=N} n^{-s} (= zeta(s) - {N} N^{-s} + s int_N^infinity {x} x^{-s-1} dx for Re s > 0). CLAIM: for zeros below the pinning height T_D(L) (about 1.55 x 2 pi e^{2L}/q), K(gamma, gamma') = (1/2) int_1^infinity e^{-i(gamma - gamma')(L + log N)} conj(R_N(rho)) R_N(rho') dN/N. For the Davenport-Heilbronn function the same with the periodic summatory function of its coefficients in place of -{x} (no pole term).
+- status: open
+- depends: T102, T101
+- source: SP-operator (session 3); notebook N85
+- routes: #27
+- proof: rh/specialists/operator/LOCAL_DISCRIMINANT.md, section 3 (3.1-3.3)
+- note: OPEN: DERIVED under the hypothesis (ADM) (admissible leaks are dense in the pole-orthogonal part of L^2(w > L)), which is not proved. COMPUTED (one implementation, multiprecision whitening, uncertified): diagonal 0.1-0.7%, off-diagonal 0.2-3.5% (up to a complex conjugation convention) on 9 kernel entries for zeta and the impostor below T_D; fails above T_D (111.03 at L = 1: 1.71 against 1.34), where (ADM) should fail. Reading: the kernel contains neither mu nor Lambda; 98-99% of the integral comes from N < gamma/2 pi, where by the approximate functional equation it is a mean square of the dual Dirichlet polynomials sum_{m <= M} m^{-1/2+i gamma} at the zeros (a Gonek-type discrete moment).
+
+## T132 · Local Weil discriminant W_k: elementary facts (restriction bound, pair part, signature at a quartet, double zero)
+- statement: Setting: D is a bounded, strictly positive quadratic form on the window space with evaluation kernels at the zeros (plank 6; e.g. D = D_L of T102, bounded and strictly positive by SP-operator's PROOF_bridge.md Prop. 6.1); notation of T131 for the kernels. For consecutive on-line zeros gamma_k < gamma_{k+1} let V_k be the real span of Re k_{gamma_j}, Im k_{gamma_j} (j = k, k+1), G_k the D-Gram of these vectors, and W_k(L) := min over 0 != v in V_k of Q(v)/D(v); for an off-line quartet with z = gamma - i beta use the kernels at z and conj z. (P1) W_k >= kappa_min(L) := inf Q/D; so RH implies W_k >= 0 for all k, L. (P2a) If all zeros other than the pair are on the line, W_k >= lambda_min(G_k) > 0 (the pair's own part of Q on V_k is G_k^2 in the coordinates of the spanning vectors). (P2b) For an off-line pair the own part is G J G with J of signature (2, 2), so the restricted pencil has two negative eigenvalues from the pair alone. (P2c) At a double zero V_k degenerates to the span of k_gamma and its derivative, the own part has rank 2, and W_k equals the contribution of the OTHER zeros on the 2-dimensional kernel, >= 0 and in general > 0.
+- status: checked
+- depends: (none)
+- proof: rh/specialists/operator/LOCAL_DISCRIMINANT.md, section 2 (P1)-(P3)
+- source: SP-operator (session 3); notebook N85
+- routes: #27
+- note: Linear algebra; it does not use T131's formula, only the existence of the D-kernels (D bounded and strictly positive, plank 6 Prop 6.1). (P3, seat): 'W_k >= 0 for all k, L' is equivalent to RH only under a separation hypothesis SEP on the cross kernels, and then it is a pure reformulation of Weil's criterion. H-1's claim 'W_k = 0 exactly at a double zero' is false for W_k (P2c) and holds only for lambda_min(G_k) (collision expansion, T129). | 2026-11-11 -> checked: linear algebra re-derived
+- checked by: K-theory (P1: restriction of a pencil to a subspace; P2a: for v = sum c_j k_j the transform at gamma_i is (G c)_i, so the pair's own zero terms give c* G^2 c and D(v) = c* G c, whence the Rayleigh quotient >= lambda_min(G); P2b: Sylvester, G invertible; P2c: limit of the difference quotient)
+
+## T133 · H-1(a): the local discriminant of an off-line quartet is negative at the first failing window
+- statement: (Hunch H-1(a), rh/HUNCHES.md part H.) For the first window L at which the window form of a Dirichlet series with an off-line quartet becomes indefinite, the quartet's own local discriminant W (T132) is negative.
+- status: refuted
+- depends: T132
+- source: lead's hunch H-1 (HUNCHES part H); tested by SP-operator
+- routes: #27
+- note: REFUTED (COMPUTED, one implementation, multiprecision whitening, NOT certified; SP-operator LOCAL_DISCRIMINANT.md section 5.1 (C1)): Davenport-Heilbronn at its failed window L = 1.72: the quartet at height 85.70 has W = +0.428 while kappa_min = -0.048 (at L = 1.70: W = +0.480, kappa_min = +0.041). The negative direction of Q is not in the span of the quartet's kernels (it combines the neighbours and the ladder); the quartet sits at 2.2 x the band edge, above the pinning height where kernels are local. A certified recomputation would make this firm. | 2026-11-11 -> refuted: computed counterexample: impostor quartet W = +0.43 while kappa_min = -0.048 at L = 1.72 (one implementation, uncertified)
+
+## T134 · Barrier lemma: in the class 'Lambda times a weight of forced sign' every zero weighs less than the pole, and resolving a pair costs a pole term
+- statement: Let h = h_0 + h_1 be a real test function with supp h_0 in (-log 2, log 2) and h_1 >= 0 supported in log 2 <= |x| <= X; H, H_0, H_1 the Fourier transforms (H(t) = int h(x) e^{itx} dx), m := int h_1, P_1 := int h_1(x)(e^{x/2} + e^{-x/2}) dx (the pole term of h_1). (a) |H_1(t)| <= m for real t, and |H_0(t) - H_0(t')| <= |t - t'| log 2 ||H_0||_inf. (b) P_1 >= sqrt(2) m, and for every zero rho = 1/2 + beta + i gamma with 0 <= beta < 1/2: |H_1(gamma - i beta)| <= int h_1 e^{beta |x|} <= 2^{-(1/2 - beta)} P_1 < P_1. (c) If ||H||_inf <= 1 and |H(gamma) - H(gamma')| >= eta for consecutive zeros at gap s, then m >= (eta - s log 2)/(2 + s log 2), hence P_1 >= sqrt(2)(eta - s log 2)/(2 + s log 2). (d) With m -> 0, separation is possible only for s >= eta/((1 + m) log 2).
+- status: checked
+- proof: rh/specialists/operator/TRIANGLE.md, section 1 (Lemma 1)
+- source: SP-operator (session 4); notebook N86. KNOWN IN SUBSTANCE: the positivity mechanism of de la Vallee Poussin's zero-free region and Landau's theorem (T119); the packaging with constants not searched
+- routes: #34
+- note: 'Forced-sign criteria count zeros and never locate one' (N86): N84/N85's barrier as a lemma. A barrier for one class of arguments, not progress. | 2026-11-11 -> checked: short proof re-derived
+- checked by: K-theory (a: h_1 >= 0; Bernstein's inequality for type < log 2; b: e^{|x|/2} >= sqrt 2 and e^{(beta - 1/2)|x|} <= 2^{-(1/2 - beta)} on |x| >= log 2, and |e^{i(gamma - i beta)x}| = e^{beta x}; c: eta <= 2m + s log 2 (1 + m) using ||H_0|| <= ||H|| + ||H_1||; d: c read backwards)
+
+## T135 · Lemma 2 (operator triangle): a Krein isometry power-bounded in the positive norm cannot boost an off-line quartet
+- statement: Let T be a bounded operator on the window space (H_L, D) with Q(Tf, Tg) = Q(f, g) and sup_k ||T^k||_D < infinity, and suppose a vector with Q < 0 spans, with its partner, a T-invariant hyperbolic plane on which T has eigenvalues lambda and 1/conj(lambda). Then |lambda| = 1.
+- status: checked
+- proof: rh/specialists/operator/TRIANGLE.md, section 2 (Lemma 2)
+- source: SP-operator (session 4); notebook N86
+- routes: #27
+- note: Companion facts in the same file (PROVED by the seat, not re-checked here): the only Krein isometries coming from the Dirichlet-series structure are the translations (scaling flow), unitary on on-line zeros and a boost of rapidity a beta on each quartet; compressed to a fixed window they are nilpotent; no nontrivial multiplier preserves a fixed Paley-Wiener space. So the missing object is a Q-isometry of a FIXED window, D-power-bounded for an arithmetic reason, boosting every quartet. | 2026-11-11 -> checked: two-line proof re-derived
+- checked by: K-theory (T^k u = lambda^k u with ||T^k u||_D <= C ||u||_D gives |lambda| <= 1; the partner eigenvalue 1/conj(lambda) gives |lambda| >= 1)
+
+## T136 · Moving Rankin-Selberg pole: for an automorphic Pi with a non-unitary Hecke-character constituent, L(s, Sym^k Pi x Sym^k Pi~) has a pole at 1 + 2 k beta
+- statement: Let Pi be an isobaric automorphic representation of GL_n over Q with a Hecke-character constituent |.|^z chi, Re z = beta != 0. Then L(s, Sym^k Pi x Sym^k Pi~) has a pole at s = 1 + 2 k beta (k >= 1). So Langlands' a-priori input 'rightmost pole at s = 1' holds for Pi iff beta = 0. Example: for a zero rho = 1/2 + beta + i gamma of zeta, P_rho := |det|^{i gamma} (x) Ind(|.|^beta, |.|^{-beta}) on GL_2 has Satake parameters p^{+-beta + i gamma}, L(s, P_rho) = zeta(s + beta + i gamma) zeta(s - beta + i gamma), and L(s, Sym^k P_rho x Sym^k P_rho~) contains the factor zeta(s - 2 k beta).
+- status: proved
+- proof: rh/specialists/modular/TRIANGLE.md, section 2 (Theorem 1) and section 1
+- source: SP-modular (session 2); notebook N87. Inputs FROM MEMORY: Jacquet-Shalika's absolute convergence and the classification of isobaric representations; the Rankin-Selberg integral; Zagier's renormalisation (read by the seat in session 1)
+- routes: #34
+- note: PROVED by the seat from facts cited FROM MEMORY; not independently checked in general. K-theory checked the example: the constituents of Sym^k P_rho include |.|^{(k - 2j) beta + i k gamma}, j = 0..k; pairing |.|^{-k beta + i k gamma} with the contragredient of |.|^{k beta + i k gamma} gives zeta(s - 2k beta), whose pole at 1 + 2k beta is not cancelled (the other factors are zeta(s - a) with Re(s - a) > 1 there, or zeta(s + c) with Re(s + c) >= 1, non-zero). Reading: the moving pole is the non-L^2 growth of the Eisenstein series (no cuspidal constituent); zero-free regions are bounds toward Ramanujan for P_rho ('B_k for k <= K iff no zeros with Re s > 1/2 + 1/(2K)', unitarity of Sym^k from Tadic, FROM MEMORY), and nothing automorphic supplies them. Kim-Sarnak 7/64 (FROM MEMORY) excludes beta > 7/64 only for archimedean parameters of GL_2 cusp forms.
+
+## T137 · No T_p-equivariant truncation of the Eisenstein series in S = {infinity, p}
+- statement: In the S-arithmetic setting S = {infinity, p} (quotient SL_2(Z)\H, S-height h = y p^n, u = log h at the cusp), T_p acts on functions of u as a two-term difference operator of step log p, f -> f(u + log p) + p f(u - log p) (up to normalisation). (1a) A multiplication operator m(u) commutes with it iff m is (log p)-periodic; so no T_p-equivariant cutoff (= 1 low in the cusp, = 0 high in it) exists. (1b) Any operator commuting with T_p maps E(., s) into the T_p-eigenspace of p^{s-1/2} + p^{1/2-s}; its Eisenstein part vanishes only if it is zero, and its cuspidal part needs a cusp form with T_p-eigenvalue p^{beta + i gamma} + p^{-beta - i gamma}, which is real only if beta = 0 or gamma log p in pi Z (for two primes only gamma = 0).
+- status: proved
+- proof: rh/specialists/modular/DISCRETE_ORBIT.md, section 1 (1a), (1b)
+- source: SP-modular (session 3); notebook N89
+- routes: #34
+- note: PROVED: (1a) checked by K-theory; (1b) uses the standard fact, cited FROM MEMORY, that moderate-growth eigenfunctions are Eisenstein series plus cusp forms, and self-adjointness of T_p on cusp forms; not independently checked. The seat's correction of N87 ('over F_q(t) the truncation is not Hecke-invariant either; the fixed bound there is Harder's compact support of cusp forms') rests on Harder, FROM MEMORY (READER-10: the side claim is in none of the texts read).
+- checked by: K-theory for (1a) only (m D f = D(m f) for all f iff m(u + log p) = m(u) = m(u - log p))
+
+## T138 · A cusp over Q forces a continuous archimedean height: a Q-split torus is R-split
+- statement: Let G be a reductive group over Q with a cusp (Q-rank >= 1). Then G has a non-trivial Q-split torus, which is R-split, so every cusp carries a continuous archimedean height coordinate in R_+ and the S-height group contains R_+ for every finite S. If G is anisotropic over Q there are no cusps and no Eisenstein series.
+- status: proved
+- proof: rh/specialists/modular/DISCRETE_ORBIT.md, section 2 (2b)
+- source: SP-modular (session 3); notebook N89. Inputs: Borel-Tits / Godement's compactness criterion (Q-rank >= 1 iff non-compact quotient iff cusps), standard, FROM MEMORY
+- routes: #34
+- note: PROVED given the standard criterion (cited from memory); the step 'split over Q implies split over R' is immediate (a torus isomorphic to G_m^r over Q stays so over any extension). Reading (N89, N90): over Q a lattice of heights is impossible with a cusp; the function-field mechanism (Harder's compact support) needs a cusp without an archimedean direction.
+
+## T139 · Frequency-group no-go: zeta is not a product or quotient of zeta functions whose orbit lengths lie in a lattice
+- statement: Let Z_1, ..., Z_r (or a product converging absolutely in a half-plane) be generalised Dirichlet series sum_lambda a_lambda e^{-lambda s} whose frequencies all lie in a lattice c Z, c > 0. Then zeta(s) is not equal to prod_j Z_j(s)^{e_j} (e_j = +-1) on any half-plane.
+- status: checked
+- proof: rh/specialists/modular/DISCRETE_ORBIT.md, section 3 ('NO-GO')
+- source: SP-modular (session 3); notebook N89. Uses uniqueness of the coefficients of an absolutely convergent Dirichlet series (standard)
+- routes: #34
+- note: Consequence (seat): any discrete-orbit setting (Ihara zeta of finite graphs, definite quaternion algebras, Connes-Consani site prime by prime) can see zeta only through a non-Dirichlet channel (a scattering matrix, or a period with an archimedean integral). | 2026-11-11 -> checked: direct argument re-derived
+- checked by: K-theory (each Z_j has period 2 pi i/c in s, so the product would satisfy zeta(s + 2 pi i/c) = zeta(s) on a half-plane Re s > s_1 >= 1; comparing coefficients, n^{-2 pi i/c} = 1 for all n, so (2 pi/c) log 2 and (2 pi/c) log 3 lie in 2 pi Z, impossible since log 2/log 3 is irrational)
+
+## T140 · H-3: exact decoupling of the Landau-Gonek form on a divisor box
+- statement: For an integer M_0 >= 1 let B := {n : n | M_0} and, for T > 2 pi M_0, let M be the real symmetric matrix on B with M_{nn} = log(T/(2 pi n)) and, for m != n, M_{mn} = -(Lambda(m/n)(m/n)^{-1/2} + Lambda(n/m)(n/m)^{-1/2}) (Lambda(x) := 0 unless x is an integer prime power). Identify B with the product over p | M_0 of {0, ..., v_p(M_0)} by n -> (v_p(n))_p. Then M = log(T/2 pi) I + sum_{p | M_0} M_p, where M_p acts only on the exponent of p: (M_p)_{a a'} = -a log p if a = a', and = -(log p) p^{-|a - a'|/2} if a != a' (tensored with the identity on the other exponents). The M_p commute, the spectrum of M is log(T/2 pi) + (Minkowski sum of the spectra of the M_p), and the bottom of M is attained at a tensor product (Euler-product-shaped) vector.
+- status: checked
+- proof: rh/NOTEBOOK.md, entry N91 ('H-3, the separable form')
+- source: lead (N91). The link to zeros: by the Landau-Gonek formula sum_{0 < gamma <= T} x^rho = -(T/2 pi) Lambda(x) + error (unconditional; cited FROM MEMORY, error term not written in the record), G_T(A) := sum_{0 < gamma <= T} A(rho) conj(A(1 - conj rho)) = (T/2 pi) a* M a + error for a Dirichlet polynomial A of length N <= T^{1-eps} supported on B
+- routes: #34
+- note: The decoupling is exact linear algebra and is what is checked; the identification of a* M a with the zero sum G_T(A) rests on the Landau-Gonek formula (from memory). The lead's own counting (N91): G_T sums over all ~ (T/2pi) log T zeros up to T, more than the N degrees of freedom of A, so positivity of M says nothing about where the zeros are; to detect a quartet the sum must be weighted in gamma, and that weight re-couples the primes (rule H12). The impostor's matrix does not decouple (its coefficients are not supported on prime powers with multiplicative structure). | 2026-11-11 -> checked: exact decoupling re-derived
+- checked by: K-theory (log n = sum_p v_p(n) log p is additive, giving the diagonal; Lambda(m/n) != 0 with m, n in B forces m = n p^k, i.e. m and n differ only in the exponent of one prime p, with Lambda = log p and (m/n)^{-1/2} = p^{-k/2}; so the off-diagonal part is a sum over p of operators on one tensor factor each, which commute)
+
+## T141 · Radziwill: no mollifier of length T^theta mollifies zeta completely on [T, 2T]
+- statement: Let M_theta(s) = sum_{n <= T^theta} a(n) n^{-s} with a(n) << n^eps and a(1) = 1, and I(M) := (1/T) int_T^{2T} |1 - zeta(1/2 + it) M(1/2 + it)|^2 dt. There is an absolute c > 0 such that for every theta > 0 and all large T: I(M_theta) >= c/theta.
+- status: known
+- source: M. Radziwill, 'Limitations to mollifying zeta(s)', arXiv 1207.6583, Theorem 1 (unconditional); read in full by READER-8 (rh/library/radziwill-1207.6583.md: 65,866 of 65,866 characters)
+- routes: #34
+- note: c depends on the proportion of zeros on the line (via a well-spaced set of >> T log T zeros on the line, Selberg) and cannot exceed 1 (else Farmer's conjecture would be false). The seat SP-sieve reads it as the forced part (A) of theta in Levinson-Conrey (the uncertainty principle at infinity). Impostor-blind as an argument (the seat's reading). | 2026-11-11 -> known: theorem quoted from a paper read in full by a reader seat
+
+## T142 · Levinson's method as an exact identity (Littlewood's lemma for V B), and the perfect mollifier as a tautology
+- statement: Let L = log T, sigma_0 = 1/2 - R/L, V = Q(-(1/L) d/ds) zeta with Q(0) = 1, and B a mollifier with b(1) = 1. Then (1/T) int_T^{2T} log|V B(sigma_0 + it)| dt = (2 pi/T) [ sum over zeros of V with Re > sigma_0 of (Re rho - sigma_0) + sum over zeros of B with Re > sigma_0 of (Re rho - sigma_0) ] + o(1) (zeros with ordinates in [T, 2T]); with B = 1/zeta (infinite length, meromorphic) the same identity holds with the zeros of zeta entering with a minus sign: (1/T) int log|V/zeta(sigma_0 + it)| dt = (2 pi/T) [ sum_V (beta - sigma_0) - sum_zeta (beta - sigma_0) ] + o(1).
+- status: proved
+- depends: T141
+- proof: rh/specialists/sieve/LEVINSON_THETA.md, section 2 (2.1)
+- source: SP-sieve (session); Littlewood's lemma (textbook); Levinson's lemma relating zeros of V right of the line to zeros of zeta off it (KNOWN in type, FROM MEMORY)
+- routes: #34
+- note: PROVED per the seat (Littlewood's lemma on the rectangle [sigma_0, 3] x [T, 2T]; the right edge contributes o(1) because log|1 + g| has mean 0 for an almost-periodic g with |g| < 1); not independently checked. Reading: theta enters twice, (A) the main term, forced by T141, and (B) the error term (Conrey's Type II term T^{-1/2} y^{7/8}, technology); the perfect mollifier makes Levinson's method a tautology; the method is not tight along colliding pairs (a collision moves kappa by O(1/(T log T))).
+
+## T143 · Twist-blindness at 100%: almost all zeros of a Davenport-Heilbronn-type combination lie on the line, yet it has >> T zeros off the line
+- statement: For linear combinations f = sum_j c_j L(s, chi_j) of Dirichlet L-functions sharing a functional equation (e.g. the Davenport-Heilbronn function): (i) almost all zeros of f up to height T lie on the critical line (100% in proportion), under GRH for the components and a zero-spacing hypothesis; (ii) f has >> T zeros with 1/2 < Re s < 1 up to height T. Consequently a proportion kappa = 1 of zeros on the line (even Farmer's theta = infinity for a Levinson-type method) is consistent with off-line zeros.
+- status: open
+- source: (i) Bombieri-Hejhal 1995; (ii) Davenport-Heilbronn 1936, Voronin; ALL CITED FROM MEMORY by SP-sieve (LEVINSON_THETA.md section 3, 'RISK as to exact hypotheses') and the lead (N93); the round-1 critic of lane D quoted (i) from a search summary (Bombieri-Hejhal / Lamzouri-Lee arXiv 2010.10490)
+- routes: #34
+- note: OPEN: cited from memory, unverified; the exact hypotheses of Bombieri-Hejhal are not recorded. If correct, density methods are twist-blind at 100% and only a bounded-height statement (T117) sees an off-line zero. KNOWLEDGE B2 records the Bombieri-Hejhal phenomenon in the same words.
+
+## T144 · Idea #33: Suzuki's family (1 -+ K_w[L])/w joins the half-shift (w = 1/2) to the Weil blocks (w -> 0)
+- statement: For 0 < w <= 1/2 let Theta_w(z) := xi_S(1/2 - w - iz)/xi_S(1/2 + w - iz), xi_S(s) := s(s-1) xi(s), let calK_w be the unitary involution 'multiplication by Theta_w composed with z -> -z' (an integral operator with kernel K_w(x + y)), and K_w[t] its compression to functions supported in (-t, t). (a) K_w(x) = sum_n q_w(n) n^{-1/2} G_w(x - log n) on x >= 0 with q_w the coefficients of zeta(s - w)/zeta(s + w) and an explicit G_w. (b) At w = 0: Theta_0 = 1, calK_0 = R (reflection), so 1 - K_0[t] annihilates the even and 1 + K_0[t] the odd functions on (-t, t). (c) CLAIM: for f supported in (-t, t), <f, (1 - K_w[t]) f> = w Q_W(f) + o(w) if f is even and <f, (1 + K_w[t]) f> = w Q_W(f) + o(w) if f is odd, Q_W the Weil form on the window: the two parity blocks are the w-derivatives at w = 0.
+- status: open
+- depends: T16, T7
+- source: SP-modular (session 1, NOTES D12); Suzuki arXiv 1606.05726 (family Theta_w; formulas taken from SP-operator's digest, the paper read whole by READER-1)
+- routes: #33
+- proof: rh/specialists/modular/NOTES_session1.md, D12
+- note: OPEN as a whole: (a), (b) are PROVED by the seat (algebra from the digest's formulas; not re-checked here); (c) is a SKETCH on the zero side under RH (sin^2(theta_w)/w -> pi sum over on-line zeros of delta) and only FORMAL on the prime side (distributional limits not justified). COMPUTED: on the unitary side with a Gaussian f, ratio to the zero sum 1.040 at w = 0.01, deviation linear in w; on the prime side, constant f on [-0.5, 0.5], (1 - I_w/2L)/w -> 0.088015 against lane A's q_00 = 0.0880146 (pole included), agreement 3e-5. Open item named by the audit: match the normalisation at w = 1/2 (Suzuki's Blaschke factor against the subtraction of the pole square).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
