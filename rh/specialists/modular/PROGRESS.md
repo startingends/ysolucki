@@ -239,3 +239,6 @@ Theorem 1: character constituent => RS pole at 1 + 2k beta, so uniform B_k <=> b
 ## (session 3 of the object) DISCRETE_ORBIT.md written. Construction only, no numerics. Read N87, N88.
 Findings: T_p-equivariant cutoffs are (log p)-periodic, so no equivariant truncation even with a lattice (also false over F_q(t);
 there the bound is Harder's compact support). A cusp over Q forces a continuous archimedean height. Zeta has no lattice-frequency factorisation.
+## MISSING_SPACE_CHECK.md written (adversarial check of rh/MISSING_SPACE.md). No numerics; literature mostly FROM MEMORY.
+Verdicts: sec 2 correct with fix (the gap is ample class + RR amplifier, not the group law; C x C handles signed classes); sec 3 wrong as
+stated (Witt vectors with F_n, function spaces see all characters); sec 4 correct with fix (closest: Bost-Kuehn omega-hat^2 ~ zeta'(-1)/zeta(-1)).
