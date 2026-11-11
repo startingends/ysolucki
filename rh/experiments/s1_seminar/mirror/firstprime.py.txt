@@ -1,0 +1,75 @@
+"""B153: the first-prime lemma. Background = pole + Gamma (no primes), odd block A_o on [-L, L], N = 40 Fourier modes.
+eps = -lowest eigenvalue of A_o, psi its ground state. One atom at x with weight m adds m * U (U = unit-weight form).
+  test-function bound (the lemma):   m >= eps / <psi, U psi>      (needs <psi, U psi> > 0: psi folded of one sign, log x >= L)
+  exact thresholds:                  [m_lo, m_hi] = {m : block >= 0}, per block (lambda_min is concave in m).
+Double precision is enough here (all numbers >= 1e-7).   usage: python3 firstprime.py.txt"""
+import sys, math, importlib.util, importlib.machinery
+import numpy as np
+P = "/home/user/ysolucki/rh/experiments/s1_seminar/mirror/lib.py.txt"
+spec = importlib.util.spec_from_file_location("lib", P, loader=importlib.machinery.SourceFileLoader("lib", P))
+lib = importlib.util.module_from_spec(spec); spec.loader.exec_module(lib)
+lib.setprec(40); arb = lib.arb
+N = 40
+tonp = lambda M: np.array(M.tolist(), dtype=float)
+def blocks_np(B): return [tonp(B[0]), tonp(B[1])]
+def fold_values(v, L, parity, npts=600):
+    x = np.linspace(L / npts, L, npts)
+    if parity == 1:   # odd basis: sin(k pi x/L)/sqrt(L), k = 1..N
+        return x, sum(v[k - 1] * np.sin(k * math.pi * x / L) for k in range(1, N + 1)) / math.sqrt(L)
+    return x, v[0] / math.sqrt(2 * L) + sum(v[k] * np.cos(k * math.pi * x / L) for k in range(1, N + 1)) / math.sqrt(L)
+def sign_changes(y):
+    y = y * np.sign(y[np.argmax(abs(y))]); thr = 1e-6 * abs(y).max()
+    s = np.sign(np.where(abs(y) < thr, 0, y)); s = s[s != 0]
+    return int((s[1:] != s[:-1]).sum()), float(y.min() / y.max())
+def interval(A, U, lo=-3.0, hi=6.0):
+    """{m in [lo, hi] : lambda_min(A + m U) >= 0}, by a scan and bisection (concave function of m)"""
+    f = lambda m: np.linalg.eigvalsh(A + m * U)[0]
+    ms = np.linspace(lo, hi, 901); fs = np.array([f(m) for m in ms])
+    if fs.max() < 0:
+        # refine around the maximum
+        i = fs.argmax(); a, b = ms[max(i - 1, 0)], ms[min(i + 1, len(ms) - 1)]
+        for _ in range(60):
+            c1, c2 = a + (b - a) / 3, b - (b - a) / 3
+            if f(c1) < f(c2): a = c1
+            else: b = c2
+        if f((a + b) / 2) < 0: return None, None, f((a + b) / 2)
+        mid = (a + b) / 2
+    else: mid = ms[fs.argmax()]
+    def edge(inside, outside):
+        if f(outside) >= 0: return outside
+        for _ in range(60):
+            c = (inside + outside) / 2
+            if f(c) >= 0: inside = c
+            else: outside = c
+        return inside
+    return edge(mid, lo), edge(mid, hi), f(mid)
+print("FIRST-PRIME LEMMA. background odd block: eps, sign of the folded ground state; then one atom at x.")
+print("R3: background ground states (0 sign changes expected in the odd block for every L)")
+for L in (0.30, 0.38, 0.45, 0.55, 0.70, 0.85, 1.00):
+    A = blocks_np(lib.arch(L, N))
+    out = []
+    for b, nm in ((0, "even"), (1, "odd")):
+        ev, V = np.linalg.eigh(A[b]); x, y = fold_values(V[:, 0], L, b)
+        sc, ratio = sign_changes(y); out.append("%s: lambda_min %+.5f, sign changes %d (min/max %.2e)" % (nm, ev[0], sc, ratio))
+    print("  L = %.2f  %s" % (L, " ; ".join(out)), flush=True)
+print()
+for L in (0.38, 0.40, 0.42, 0.45, 0.50, 0.54):
+    A = blocks_np(lib.arch(L, N))
+    evo, Vo = np.linalg.eigh(A[1]); eps = -evo[0]; psi = Vo[:, 0]
+    eve, Ve = np.linalg.eigh(A[0]); mue = eve[0]; pse = Ve[:, 0]
+    print("L = %.2f : background odd eps = %.6f ; even lambda_min = %+.6f" % (L, eps, mue))
+    for x in (1.90, 1.95, 2.00, 2.05, 2.10, 2.15, 2.20):
+        if math.log(x) >= 2 * L - 1e-9:
+            print("    x = %.2f : not in the window" % x); continue
+        U = blocks_np(lib.atoms(L, N, {x: arb(1)}))
+        g = float(psi @ U[1] @ psi)                      # = 2 x^(-1/2) h(psi) for log x >= L
+        mlb = eps / g if g > 0 else float('inf')
+        ge = float(pse @ U[0] @ pse)                     # negative: the atom lowers the even block
+        mub = mue / (-ge) if (mue > 0 and ge < 0) else float('nan')
+        lo_o, hi_o, _ = interval(A[1], U[1]); lo_e, hi_e, _ = interval(A[0], U[0])
+        fo = "[%.5f, %.5f]" % (lo_o, hi_o) if lo_o is not None else "EMPTY"
+        fe = "[%.5f, %.5f]" % (lo_e, hi_e) if lo_e is not None else "EMPTY"
+        nat = math.log(x)
+        ok = (lo_o is not None and lo_e is not None and max(lo_o, lo_e) <= nat <= min(hi_o, hi_e))
+        print("    x = %.2f (log x = %.4f, pure mirror: %s): lemma m >= %.5f ; even test-function bound m <= %.5f ; exact odd %s ; exact even %s ; natural weight log x %s"
+              % (x, nat, "yes" if math.log(x) >= L else "NO", mlb, mub, fo, fe, "feasible" if ok else "EXCLUDED" + (" (by the lemma)" if mlb > nat else "")), flush=True)

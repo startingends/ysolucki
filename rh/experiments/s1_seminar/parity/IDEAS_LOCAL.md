@@ -70,3 +70,17 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - claim: COMPUTED (fd_rate.log, fd_count logs, ladder.log); slope c = Q_o(x v_e) verified on the zero side to 8 digits. Hybrids: each single part tilted alone is detected at L = 0.39-0.48; the consistent tilt survives nearly longest.
 - log:
+
+## #10 · Theorem U' (unconditional): at most one l1-perturbed weight system keeps the Weil form >= 0 on all windows; exactly one iff RH
+- status: open
+- source: S1-parity
+- date: 2026-11-11
+- claim: PROVED by gluing Theorem U (RH case) with Theorem 4 Step 4 and |M f|_2 <= 2|f|_2 (not-RH case). Covers a removed prime, a changed weight, finitely many moved primes. Gives no window. Novelty UNSEARCHED.
+- log:
+
+## #11 · Odd block of pole + Gamma (and of zeta for L <= (1/2) log 2) is a Perron operator: simple, strictly one-signed ground state
+- status: open
+- source: S1-parity
+- date: 2026-11-11
+- claim: PROVED (NOTES.md Q): Beurling-Deny + method of images; breaks exactly at the mirror part of a positive atom. Possible use: Barta lower bounds on no-atom windows (not done).
+- log:

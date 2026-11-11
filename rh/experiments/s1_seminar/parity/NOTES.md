@@ -212,3 +212,44 @@ WITHDRAWN by me: 'the caps ARE the feasible intervals' (B58): proved is one ineq
  * S1-cubic may reply to B119 (nodeless conjecture); SP-operator may supply one-sided derivative formula for t_1 (B159).
  * If asked: scan t_1 slopes with N of several hundred near L_2, L_3, L_4; zero-side validation of G_d (needs chi_4 zeros).
  * Own question worth asking next: does the ladder spacing (4-7 orders per rung) have a formula? (rungs at L=1.5: 19 below 1, zeta has 20 zeros below 77.2.)
+
+### Q. THEOREM (odd block is a Perron operator on a window without atoms). PROVED (turn 2; checks the lead's B140; posted B169)
+Setting: Q = P + A - Pi with atoms of weights m_n >= 0 (zeta: Lambda), odd functions f_o(x) = sgn(x) phi(|x|), phi on (0, L].
+Hypothesis: no atom with log n < 2L (pole + Gamma alone: all L; zeta: L <= (1/2) log 2).
+Claim: the lowest eigenvalue of the odd block is simple, with an eigenfunction of one strict sign on (0, L].
+Proof. (1) A(f) = (psi(1/4) - log pi)|f|^2 + D_w(f), D_w(f) = (1/2) int int_{R^2} w(|x-y|)(f(x)-f(y))^2 dx dy.
+   [A(f) = -log pi g(0) + int_0^inf (g(0)e^{-2u}/u - 2w(u)g(u))du = g(0)(-log pi + int(e^{-2u}/u - 2w)) + int 2w(u)(g(0)-g(u))du;
+    Gauss: int_0^inf (e^{-2u}/u - 2w(u)) du = psi(1/4); int_0^inf 2w(u)(g(0)-g(u))du = D_w(f).]  (= S1-curv Theorem E, c_inf = log pi - psi(1/4).)
+ (2) odd f: D_w(f_o) = int int_{x,y>0} j(x,y)(phi(x)-phi(y))^2 + 4 int phi^2 W, j = w(|x-y|) - w(x+y) >= 0 (w decreasing), W(x) = int_x^inf w.
+   [regions (+,+),(-,-): int int w(|x-y|)(phi(x)-phi(y))^2; regions (+,-),(-,+): int int w(x+y)(phi(x)+phi(y))^2, and
+    (a+b)^2 = 2a^2 + 2b^2 - (a-b)^2.]
+ (3) pole on odd f: -2<f_o, s>^2 = -8 (int_0^L phi s)^2, s = sinh(x/2) > 0.
+ (4) Hence Q(f_o) = -c_inf * 2|phi|^2 + int int j (phi(x)-phi(y))^2 + 4 int phi^2 W - 8 (int phi s)^2, and Q_o(|phi|) <= Q_o(phi):
+   ||phi(x)|-|phi(y)|| <= |phi(x)-phi(y)|; potential terms unchanged; (int |phi| s)^2 >= (int phi s)^2. Also |phi| is in the domain.
+ (5) phi = phi_+ - phi_-: Q_o(|phi|) - Q_o(phi) = 4 B(phi_+, phi_-), B(a,b) = -2 int int j a(x) b(y) - 8 int a s int b s < 0 if a, b >= 0 are
+   both non-zero (disjoint supports; -8 s(x)s(y) < 0 strictly). So a minimiser cannot change sign; two orthogonal one-signed minimisers
+   would give a sign-changing one; so the eigenvalue is simple. If the minimiser phi >= 0 vanished on a set E of positive measure,
+   test the eigen-equation with h >= 0 supported in E: 0 = mu<phi,h> = Q_o(phi,h) = B(phi,h)-type term < 0. Contradiction.
+ CITED only: existence of a minimiser (discrete spectrum of the window form, Connes-Consani-Moscovici Thm 3.6 via Suzuki; not read by me).
+ Where it breaks: an atom at log n < 2L adds +2 m_n n^{-1/2} int phi(x) phi(log n - x) dx (mirror part, wrong sign). Even block: Gamma and
+ both parts of each positive atom have the right sign, the pole +8(int phi c)^2 the wrong one.
+ Use (not done): Barta-type lower bounds mu_odd >= inf (Q_o h / h) for any h > 0, on no-atom windows: a certified LOWER bound mechanism.
+
+### R. THEOREM U' (unconditional uniqueness of the weights). PROVED given Theorem U and Theorem 4 Steps 3-4 (turn 2; posted B170)
+Let D = sum_j d_j (delta_{u_j} + delta_{-u_j}), u_j > 0 distinct, real d_j, 0 < sum |d_j| < infinity. Then Q + D is negative on some
+window (some f in C_c^infinity with Q(f) + D(f*f~) < 0), with NO hypothesis.
+Proof. RH true: Theorem U. RH false: one off-line quartet; g = M f with f, M as in Theorem 4 Step 4 (k = 1): Q(g) <= 4Q+(f) + B_11 + d_1,
+d_1 -> -infinity as K -> infinity; |M| <= 2 on R so |g|_2 <= 2|f|_2 and |D(g*g~)| <= 2 sum|d_j| |g|^2 <= 8 sum|d_j| |f|^2. QED
+Corollary: {m : sum |m_n - Lambda(n)| n^{-1/2} < infinity (any positions), Q_m >= 0 on every window} = {Lambda} if RH, empty if not.
+Covers: one prime removed (sum_k log q q^{-k/2} < inf), a weight changed, finitely many primes moved (Beurling). No window is given.
+Explicit window for q = 2 (b145.log): pole + Gamma on [-0.45, 0.45]: energy of sin(pi x/0.45)/sqrt(0.45) = -0.12114738 (closed form).
+Novelty: UNSEARCHED (Theorem U itself is unsearched, presumed folklore).
+
+### S. B145 (b145.log): couplings c_j = Q_odd(x psi_j), even rungs at L = 1: 3.474e-5, 5.230e-3, 0.1099, 0.3071, 0.4864, 0.7536, 1.522;
+ first-order rule predicts 6 negative squares for d >= 0.0175; matrices give 5 (6th eigenvalue positive: 1.0e-6, 1.4e-9, 1.8e-13 at
+ d = .05, .1, .25, N = 60; falls with N). Undecided: interaction of rungs vs truncation. Posted B171.
+
+### T. End of turn 2: board posts B91, B92, B93, B112, B113, B118, B119, B136, B159, B162, B169, B170, B171, B172. No question addressed to me is open.
+ FORMAL machine-checked my nominations (B142): B56 bordered identity, B25 folding identity, Theorem 4 Step 2, Fact 1 and Fact 3; see B166 for the inertia count.
+ Promised for next turn (B170): impostor null vector at L = 1.72, psihat at the off-line zero and at on-line zeros (needs lane A's zero list).
+ Promised (B172): run S1-curv's doubling-step statement (C) on G_d with gd.py.txt.
