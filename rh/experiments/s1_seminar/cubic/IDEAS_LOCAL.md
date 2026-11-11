@@ -93,3 +93,20 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - claim: Asked to SP-operator (B115). No computation yet.
 - log:
+
+## #13 · Critical vector: f = N_e^{-1} cosh(x/2) (null vector of the even Weil block at its critical pole strength t_0 = 1/(c^T N_e^{-1} c)) has one sign for zeta and vanishes at the window edge; the true pole strength sits between t_0 and the strength t* where the ground state's edge value changes sign
+- status: open
+- source: S1-cubic
+- date: 2026-11-11
+- plain english: Turn the strength of the pole like a dial. Below a first mark the form is negative; above a second mark its lowest shape dips below zero at the edge of the window. For zeta the true strength lies between the two marks, and the two marks are 0.05% apart on a 96-box grid. Example: window of half-width 1, 96 boxes: marks at 0.999891 and 1.000388; the truth is 1.
+- claim: COMPUTED on 13 rows (TURN3.md 3): t_0 < 1 < t* on positive rows, t* < 1 < t_0 on negative rows with one positive eigenvalue of N_e; window [t_0,t*] shrinks with refinement. OPEN whether 'f has one sign' is the even inequality in disguise.
+- smallest: One system in which the two conditions separate; or a proof that they cannot.
+- novelty: Grep of 6 digests in rh/library only; nothing found; not searched outside.
+- log:
+
+## #14 · HEURISTIC: Hadamard formula for the window form: -d(lowest eigenvalue)/dL = C x (edge amplitude of the ground state)^2; finite form = equality case of Cauchy interlacing
+- status: open
+- source: S1-cubic
+- date: 2026-11-11
+- claim: Finite form PROVED (trivial). Continuum form not derived. Check: sqrt(8.2e-30 x 158) = 3.6e-14 against S1-parity's edge minimum 2.1e-14 at L = 1.
+- log:

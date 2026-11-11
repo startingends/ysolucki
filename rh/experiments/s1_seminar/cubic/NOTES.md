@@ -160,3 +160,26 @@ Predictions: Q5. t*/t_true for zeta L = 1 at 24 and 96 boxes stays in (1, 1.1], 
 Q6. f/cosh(x/2) (f = N_e^{-1} c) varies by less than a factor 5 over the boxes other than the edge box, zeta L = 1, 48 boxes.
 Q7. S (no sign change of N_e^{-1} c) holds on zeta L = 0.3, 0.5, 0.75, 1.0 and one-prime 0.54, fails on four2 0.75 (implied by Q2 logic),
 and for Beurling at L = 0.45 (its even block there? unknown) I make no prediction.
+
+### TURN 3 results (detail TURN3.md; logs t3.log, t3b.log)
+Posted: B180 (answer B156), B181 (answer B158: candidate (F), not put forward; judge 1.1 accepted), B182-ish note to FORMAL (N1 interlacing
+equality case; N2 rank-one ground state).
+Second-batch predictions: Q5 HIT (t* in (1, 1.1], sign lost at the edge box, t* - 1 shrinks: 4.3e-3, 1.3e-3, 3.9e-4 at 24/48/96 boxes).
+Q6 MISS (f/cosh varies by a factor 9.8 without the edge box at 48 boxes, 22.7 at 96: f decays to 0 at the edge). Q7 HIT.
+Key facts:
+- Even ground state = SECOND eigenvector (null) of bordered(N + mu_1), fibre entries negative; odd ground state = PERRON vector of
+  [[N_o + mu, s],[s^T, -1]]. Fiedler says nothing on a complete graph. Anti-maximum principle not applicable (mu_1 far above nu_1).
+- Ground state of B + t c c^T = (N_e + mu(t))^{-1} c; block >= 0 iff t >= t_0 = 1/(c^T N_e^{-1} c); null vector at t_0: f = N_e^{-1} c.
+- On all rows with one positive eigenvalue of N_e: t_0 < 1 < t* (positive rows) or t* < 1 < t_0 (negative rows). Window [t_0, t*] shrinks
+  with refinement (zeta L=1: 5.3e-3, 1.6e-3, 5.0e-4). Sign lost at the EDGE box; f -> 0 at the edge.
+- Candidate (F): 'f = N_e^{-1} cosh has one sign'. Violated by four2 0.75 (interior), no primes 0.45, Beurling 0.45/0.5. OPEN: is (F)
+  equivalent to the even inequality (then rule 2)? Need one system separating them.
+- HEURISTIC Hadamard formula: -d mu/dL = C (edge amplitude)^2; check with parity's numbers: sqrt(8.2e-30 x 158) = 3.6e-14 vs min 2.1e-14.
+- Green kernel of the odd block is NOT entrywise positive at zeta L = 0.75 (Q3 miss) although the ground state is nodeless.
+Board, others (for orientation): FORMAL machine-checked Lemma A (AMOP form + the count T50), Lemma C, B56 count; S1-mirror's first-prime
+lemma (B174) = S1-parity B169 = K-atlas B168 (odd block of pole + Gamma is a Perron operator on every window); S1-parity's candidate:
+uniqueness of the weights (Theorem U type); SP-operator: no t-indexed property sees the tilt; SP-reflection: no infrared bound in the
+needed direction.
+To do next turn: (i) answers/objections to B180, B181; (ii) find a system separating (F) from even positivity (e.g. vary the pole
+functional: replace cosh(x/2) by cosh(sigma x), or reweight atoms keeping t_0 < 1) -- prediction first; (iii) derive the Hadamard
+formula properly or drop it; (iv) S1-cubic/#8 still unsearched.

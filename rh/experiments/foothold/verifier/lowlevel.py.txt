@@ -1,0 +1,44 @@
+"""V-FH: low-level checks of the Arb semantics the two proofs rely on (not a proof; each line is a test)."""
+import flint
+from flint import arb, acb
+flint.ctx.prec = 128
+# 1. digamma on a ball containing a pole must be non-finite (so that acb.integral bisects instead of trusting it)
+z = acb(arb(0, 0.1), arb(0, 0.1))
+print("1. digamma(ball around 0) finite?", z.digamma().is_finite())
+r = acb(arb(0, 0.3), arb(0.5, 0.2))      # r-ball containing the pole r = i/2 of psi(1/4 + i r/2)
+I = acb(0, 1)
+v = (acb(1) / 4 + I * r / 2).digamma()
+print("   psi(1/4 + i r/2) on a ball containing r = i/2 finite?", v.is_finite())
+# 2. integer power of acb: no branch cut (compare a ball straddling the negative real axis with exact product)
+w = acb(arb(-1, 0.01), arb(0, 0.01))
+p5 = w ** 5; q5 = w * w * w * w * w
+print("2. (ball on negative axis)**5 :", p5.str(8), " product:", q5.str(8), " overlaps:", p5.overlaps(q5), " finite:", p5.is_finite())
+print("   w**0 =", (w ** 0).str(5), "  type", type(w ** 5).__name__)
+# 3. regularized 0F1 on a ball with complex argument, compare j_n with sin/cos closed forms
+def sph_j(n, z):
+    return (arb.pi().sqrt() / 2) * (z / 2) ** n * (-(z * z) / 4).hypgeom_0f1(acb(n) + acb(3) / 2, regularized=True)
+zz = acb(1.25, 0.5)
+j0 = zz.sin() / zz; j1 = zz.sin() / zz**2 - zz.cos() / zz
+print("3. j_0 diff:", (sph_j(0, zz) - j0).str(5), "  j_1 diff:", (sph_j(1, zz) - j1).str(5))
+j2 = (3 / zz**3 - 1 / zz) * zz.sin() - 3 / zz**2 * zz.cos()
+print("   j_2 diff:", (sph_j(2, zz) - j2).str(5))
+# 4. arb(mid, rad) constructor as used in Hk of forcing.py.txt
+DELTA = arb(2) ** (-120)
+for k in (0, 3):
+    e = DELTA ** (k + 1)
+    b = arb(e.mid() / 2, e.upper() / 2 * 1.0000001)
+    print(f"4. k={k}: ball lower <= 0 ? {bool(b.lower() <= 0)}  upper >= e ? {bool(b.upper() >= e)}   contains 0: {b.contains(arb(0))} contains e: {b.contains(e)}  rad/e = {float(b.rad()/e):.9f}")
+# 5. arb(0,1) is [-1,1]; arb.max / arb.min are interval max/min
+u = arb(0, 1)
+print("5. arb(0,1) contains -1, 1:", u.contains(arb(-1)), u.contains(arb(1)), " contains 1.01:", u.contains(arb(1.01)))
+a = arb(1, 0.5); b = arb(1.2, 0.01)
+print("   max([0.5,1.5],[1.19,1.21]) =", arb.max(a, b).str(6), "lower", float(arb.max(a,b).lower()), "upper", float(arb.max(a,b).upper()))
+print("   min =", arb.min(a, b).str(6), "lower", float(arb.min(a,b).lower()), "upper", float(arb.min(a,b).upper()))
+# 6. comparisons of overlapping balls are False both ways
+print("6. [0.5,1.5] > [1.19,1.21]:", a > b, "  <:", a < b, "   not(d>0) for ball containing 0:", not (arb(0, 1) > 0))
+# 7. a_sym real on the real axis and equals Re psi
+def a_sym(r):
+    r = acb(r)
+    return ((acb(1) / 4 + I * r / 2).digamma() + (acb(1) / 4 - I * r / 2).digamma()) / 2 - arb.pi().log()
+print("7. a_sym(40) =", a_sym(arb(40)).str(25), "  Re psi(1/4+20i) - log pi =", ((acb(0.25, 20)).digamma().real - arb.pi().log()).str(25))
+print("   a_sym(0) =", a_sym(arb(0)).real.str(25))

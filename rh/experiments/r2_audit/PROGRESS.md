@@ -94,3 +94,16 @@ files .done_stage*). Tool calls are logged below as they happen.
 - 00:52:16 S R2-free/#4: killed by the seat before any computation, on a heuristic only: Hadamard infinite divisibi
 - 00:52:16 S R2-judge/#3: a process recommendation to the lead, not a mathematical idea: typed clock stamps ran ahea
 - 00:52:16 S R2-judge/#11: a process recommendation to the lead, not a mathematical idea: commit 1e3f60a is the only
+
+## Step 2 (done): stages run, each once
+- stage 1: 5 promotions -> main #22 (R2-parity/#1, alive), #23 (R2-judge/#12, alive), #24 (R2-cubic/#7, parked),
+  #25 (R2-cubic/#10, open), #26 (R2-free/#1, open). Predicted numbers 22..26 matched.
+- stage 2: 56 merges as 15 notes on #1, #2, #8, #9 (two), #10 (two), #11 (two), #17, #21, #22, #23, #24, #26,
+  plus one pointer note on #12 that closes no local entry.
+- stage 3: 4 skips (R2-cubic/#12, R2-free/#4, R2-judge/#3, R2-judge/#11).
+- Verified: per-log counts of closures (merged 56, promoted 5, other skips 4 = 65); every one of the eight logs at
+  0 awaiting in hubcheck.
+
+## Step 3 (done): AUDIT.md written; final checks
+26 ideas, 0 errors, 21 recorded rule failures
+hubcheck: 26 ideas in the main log, 154 in agents' local logs (56 awaiting audit), 0 errors

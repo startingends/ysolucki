@@ -30,7 +30,7 @@ for i in range(0, len(args), 3):
     while True:
         t = lap(-(2 * m + mp.mpf(1) / 2)) ** 2
         SG += t; m += 1
-        if m > 4000 or (m > 50 and t < mp.mpf(10) ** -22 * SG): break
+        if m > 1500 or (m > 50 and t < mp.mpf(10) ** -22 * SG): break
     tailnote = m
     HP = mp.mpf(0); per = {}
     for n, (_, p) in sorted(weil.mangoldt_upto(int(math.floor(math.exp(2 * L) + 1e-9))).items()):
