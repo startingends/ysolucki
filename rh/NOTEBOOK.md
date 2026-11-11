@@ -1350,3 +1350,36 @@ valuations by Legendre. Their exponents are Chebyshev's identity log⌊x⌋! = �
 auxiliary integer of square-root quality is a combination of factorial ratios whose coefficients reproduce μ up to
 length x with square-root cancellation. So the construction step IS the Möbius wall (#34), and the asymmetry buys
 nothing. Recorded as the eighth language of the same wall.
+
+**N80. The whole-space constant measures the closest pair of zeros: bridge 1's last gap is closed, and the wall it
+meets is de Bruijn–Newman's** (lead, after the foothold seat's FH session 5; `rh/BRIDGE.md` plank 13).
+- Measured: the impostor's κ_min falls in two steps, 0.43 → 0.16 at L = 1.3–1.4 and 0.12 → 0.04 at L = 1.65–1.70,
+  before going negative at 1.72. The first step is a close ON-line pair (40.163/40.683) carrying 86–99% of the
+  minimiser's Weil value; only the second is the off-line quartet at 85.70, visible 0.05–0.07 in L before the lowest
+  eigenvalue crosses (which at 1.70 still follows the prolate law, 1e-28). Zeta's κ_min (0.33 → 0.30 → 0.205) is
+  likewise carried by its closest resolved pair each time, and the pair was predicted before reading. Both of the
+  lead's predictions missed: the constant is neither flat nor within 20% of zeta's.
+- Structural reading (the point of the measurement). Under the backward heat flow of de Bruijn–Newman, an off-line
+  quartet is what a close on-line pair becomes after it collides: the two configurations are continuous with each
+  other, and the collision is where a form like Q loses positivity. A constant that sees the off-line quartet early
+  must therefore also see close on-line pairs, and it does, with the same signature. So "Q ≥ κ·D_L with κ bounded
+  below for all L" (plank 8) would be a quantitative statement that zeta's zeros stay uniformly away from collision,
+  i.e. a slack-type statement of the kind Λ < 0 would give. Rodgers–Tao (2018) proved Λ ≥ 0: zeta has no slack.
+  HEURISTIC, not a theorem: the link between κ_min at window L and the heat-flow parameter has not been made precise.
+  If made precise it would be a clean negative result: no uniform constant in the comparison Q ≍ D_L.
+- Consequence for hunches (rule H11, new): **any positivity statement for zeta with a margin is false; the margin has
+  to be allowed to depend on the zeros' own spacing, i.e. the statement must be scale-free in pair gaps.** Bridge 1
+  asked for a margin. The next bridge must aim at a statement that is exactly tight along Lehmer pairs (a "Λ = 0"
+  statement rather than "Λ < 0"), and the objects that are exactly tight are equalities or monotonicity statements,
+  not inequalities with constants. This joins H10 (one-sided bounds with a constant are false).
+- Open question worth one structural seat: is there a NORMALISED κ (κ_min divided by the relative gap of the closest
+  resolved pair) that stays bounded below for zeta and goes to zero for the impostor? Back-of-envelope with the
+  local mean spacing 2π/log(qt/2π): zeta 59.35/60.83 (relative gap ≈ 0.53) gives κ 0.30; zeta 111.03/111.88 (≈ 0.39)
+  gives 0.205; the impostor's on-line pair 40.163/40.683 (q = 5, ≈ 0.29) gives ≈ 0.14. Ratio κ/gap ≈ 0.57, 0.53,
+  0.48: roughly proportional on three points across two functions (not a fit; L differs between the points). So the
+  first step of the impostor's fall is ordinary pair behaviour, and the separating question is whether the second
+  step (the off-line quartet) breaks the proportionality. Rule 13 says: find the setting where κ_min has an exact
+  formula. Candidate: the TWO-ZERO MODEL, the minimum of the Weil quadratic form over functions supported in
+  [−L, L] when the zero side is reduced to one pair (γ ± δ, or a quartet ½ ± β + i(γ ± δ)) plus the archimedean
+  term. That is a 2×2 or 4×4 prolate Gram problem with a closed form in (δ, β, L). It would make the de Bruijn–Newman
+  link exact in a model: κ as a function of the pair's position along the heat flow, through the collision.

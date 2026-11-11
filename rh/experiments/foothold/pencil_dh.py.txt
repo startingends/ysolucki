@@ -1,0 +1,249 @@
+"""Multiprecision (Arb midpoints + mpmath; NOT a certificate) whole-space pencil (Q, D_L) on polynomials of degree < NB.
+Q  = exact Weil form of zeta on the window L (x-space formula of PROOF_forcing_prime2.md, Lemma 5, all prime powers
+     n with log n < 2L), in the orthonormal Legendre basis of L^2[-L, L], by Gauss-Legendre quadrature.
+D_L = least out-of-band energy (band [-lam, lam], lam = e^L) of a companion g supported in [-lam, lam] with E(g) = f
+     on the window (Moebius inverse on [1/lam, lam]), free even part h on (0, 1/lam), with both pole conditions
+     int g = 0 and int_{-lam}^{lam} ghat = 0 (Schur complement).
+usage: pencil_dh.py.txt <zeta|dh> <L=p/q> <NB> [nh=40] [prec_bits=400] [K1,K2,...]
+kind 'dh' = the Davenport-Heilbronn impostor (PROGRESS.md section 23): Gamma rates 2m + 3/2, constant log(5/pi), no pole,
+atoms -2 c_n n^(-1/2) at log n for the coefficients c_n of -f'/f; companion g ODD, inverted with the Dirichlet inverse of
+a_n; band [-lam/5, lam/5]; no pole conditions."""
+import sys, math, time
+import flint, mpmath as mp
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+KIND = sys.argv[1]; assert KIND in ('zeta', 'dh')
+sys.argv = sys.argv[1:]
+LQ = Fr(sys.argv[1]); NB = int(sys.argv[2]); nh = int(sys.argv[3]) if len(sys.argv) > 3 else 40
+prec = int(sys.argv[4]) if len(sys.argv) > 4 else 400
+KS = [int(t) for t in sys.argv[5].split(',')] if len(sys.argv) > 5 else []
+flint.ctx.prec = prec; mp.mp.prec = prec - 40
+t0 = time.time()
+L = arb(LQ.numerator) / arb(LQ.denominator); lam = L.exp(); pi = arb.pi()
+def gl(n, a, b):
+    out = []
+    for k in range(n):
+        x, w = arb.legendre_p_root(n, k, weight=True)
+        out.append(((a + b) / 2 + (b - a) / 2 * x, (b - a) / 2 * w))
+    return out
+NORM = [((2 * arb(j) + 1) / (2 * L)).sqrt() for j in range(NB)]
+def phis(u):
+    """[phi_j(u)] j < NB, orthonormal Legendre on [-L, L]"""
+    t = u / L; P = [arb(1), t]
+    for n in range(1, NB - 1):
+        P.append(((2 * n + 1) * t * P[n] - n * P[n - 1]) / (n + 1))
+    return [NORM[j] * P[j] for j in range(NB)]
+def gamma_sym(x, nin):
+    """S(x)_jk = symmetric part of int_{x-L}^{L} phi_j(u) phi_k(u - x) du"""
+    nodes = gl(nin, x - L, L)
+    A = arb_mat(nin, NB, [v for u, w in nodes for v in phis(u)])
+    B = arb_mat(nin, NB, [w * v for u, w in nodes for v in phis(u - x)])
+    G = A.transpose() * B
+    return (G + G.transpose()) * (arb(1) / 2)
+def midmat(M):
+    return arb_mat(M.nrows(), M.ncols(), [M[i, j].mid() for i in range(M.nrows()) for j in range(M.ncols())])
+# ---------------- Q
+nin = NB + 2; nout = NB + 70
+I = arb_mat(NB, NB, [arb(1) if i == j else arb(0) for i in range(NB) for j in range(NB)])
+acc = arb_mat(NB, NB)
+for x, w in gl(nout, arb(0), 2 * L):
+    S = gamma_sym(x, nin)
+    h = ((x / 2).exp() if KIND == 'zeta' else (-x / 2).exp()) / x.sinh() - 1 / x
+    acc = midmat(acc + (I - S) * (w / x) - S * (w * h))
+C0 = (4 * pi * L).log() + arb.const_euler() if KIND == 'zeta' else (4 * pi * L / 5).log() + arb.const_euler()
+Q = acc - I * C0
+pn = gl(NB + 40, -L, L)
+pv = [arb(0)] * NB
+for u, w in pn:
+    ph = phis(u); e = (u / 2).exp()
+    for j in range(NB): pv[j] += w * e * ph[j]
+if KIND == 'zeta': Q = Q + arb_mat(NB, NB, [pv[j] * pv[k] * ((1 if j % 2 == 0 else -1) + (1 if k % 2 == 0 else -1)) for j in range(NB) for k in range(NB)])
+X = int(math.floor(math.exp(2 * float(LQ)) - 1e-12))
+atoms = []
+for n in range(2, X + 1):
+    for p in range(2, n + 1):
+        if all(p % d for d in range(2, int(p ** 0.5) + 1)):
+            m = n
+            while m % p == 0: m //= p
+            if m == 1: atoms.append((n, p)); break
+            if n % p == 0: break
+KAP = ((10 - 2 * arb(5).sqrt()).sqrt() - 2) / (arb(5).sqrt() - 1)
+def a_dh(n): return [arb(0), arb(1), KAP, -KAP, arb(-1)][n % 5]
+NMAX = int(math.exp(2 * float(LQ))) + 2
+cdh = {1: arb(0)}
+for n in range(2, NMAX + 1):
+    v = a_dh(n) * arb(n).log()
+    for d in range(2, n):
+        if n % d == 0: v -= cdh[d] * a_dh(n // d)
+    cdh[n] = v
+bdh = {1: arb(1)}
+for n in range(2, NMAX + 1):
+    v = arb(0)
+    for d in range(2, n + 1):
+        if n % d == 0: v -= a_dh(d) * bdh[n // d]
+    bdh[n] = v
+if KIND == 'zeta':
+    for n, p in atoms:
+        Q = Q - gamma_sym(arb(n).log(), nin) * (2 * arb(p).log() / arb(n).sqrt())
+else:
+    atoms = [(n, None) for n in range(2, X + 1) if n % 5]
+    for n, _ in atoms:
+        Q = Q - gamma_sym(arb(n).log(), nin) * (2 * cdh[n] / arb(n).sqrt())
+Q = midmat(Q)
+print(f"KIND = {KIND}, L = {sys.argv[1]}, lam^2 = {math.exp(2*float(LQ)):.4f}, NB = {NB}, nh = {nh}, prec = {prec}; prime powers {[n for n, p in atoms]}; Q built {time.time()-t0:.0f}s", flush=True)
+# ---------------- D_L
+def mobius(n):
+    r = 1; d = 2; m = n
+    while d * d <= m:
+        if m % d == 0:
+            m //= d
+            if m % d == 0: return 0
+            r = -r
+        d += 1
+    if m > 1: r = -r
+    return r
+lamf = math.exp(float(LQ))
+sqf = [n for n in range(1, int(lamf * lamf) + 2) if (mobius(n) != 0 if KIND == 'zeta' else n % 5 != 0)]
+COEF = (lambda n: arb(mobius(n))) if KIND == 'zeta' else (lambda n: bdh[n])
+brk = sorted(set([lamf / n for n in sqf if lamf / n > 1 / lamf + 1e-12] + [1 / lamf]))
+def as_arb(v):          # exact break points
+    if abs(v - 1 / lamf) < 1e-12: return 1 / lam
+    n = int(round(lamf / v)); return lam / n
+npc = 60 + NB
+NT = NB + nh
+BAND = lam if KIND == 'zeta' else lam / 5
+xin = gl(160 + int(2 * math.pi * lamf * lamf), arb(0), BAND)
+TRIG = (lambda z: z.cos()) if KIND == 'zeta' else (lambda z: z.sin())
+def node_rows():
+    """yields (x, w, column of companion values) for every quadrature node on (0, lam]; nothing is stored"""
+    for x, w in gl(40 + 2 * nh, arb(0), 1 / lam):
+        t = 2 * lam * x - 1; P = [arb(1), t]
+        for n in range(1, nh - 1): P.append(((2 * n + 1) * t * P[n] - n * P[n - 1]) / (n + 1))
+        yield x, w, [arb(0)] * NB + [((2 * arb(i) + 1) * lam).sqrt() * P[i] for i in range(nh)]
+    for a, b in zip(brk[:-1], brk[1:]):
+        ns = [n for n in sqf if n * (a + b) / 2 <= lamf]
+        for x, w in gl(npc, as_arb(a), as_arb(b)):
+            g = [arb(0)] * NB
+            for n in ns:
+                y = n * x; ph = phis(y.log()); c = COEF(n) / y.sqrt()
+                for j in range(NB): g[j] += c * ph[j]
+            yield x, w, g + [arb(0)] * nh
+Gram = arb_mat(NT, NT); Cm = arb_mat(NT, len(xin)); ell1 = [arb(0)] * NT; nx = 0
+CH = 300
+buf = []
+def flush(buf):
+    global Gram, Cm
+    m = len(buf)
+    Gc = arb_mat(m, NT, [v for x, w, col in buf for v in col])
+    GWc = arb_mat(m, NT, [w * v for x, w, col in buf for v in col])
+    CSc = arb_mat(m, len(xin), [TRIG(2 * pi * x * xi) for x, w, col in buf for xi, wx in xin])
+    Gram = midmat(Gram + (GWc.transpose() * Gc) * arb(2))
+    Cm = midmat(Cm + (GWc.transpose() * CSc) * arb(2))
+    for x, w, col in buf:
+        for a_ in range(NT): ell1[a_] += 2 * w * col[a_]
+for row in node_rows():
+    buf.append(row); nx += 1
+    if len(buf) == CH: flush(buf); buf = []
+if buf: flush(buf); buf = []
+CW = arb_mat(NT, len(xin), [Cm[i, m] * xin[m][1] for i in range(NT) for m in range(len(xin))])
+Aout = midmat(Gram - (CW * Cm.transpose()) * arb(2))
+ell2 = [2 * sum((CW[a, m] for m in range(len(xin))), arb(0)) for a in range(NT)] # int_{-lam}^{lam} ghat
+del Gram, Cm
+sub = lambda M, r, c: arb_mat(len(r), len(c), [M[i, j] for i in r for j in c])
+F = list(range(NB)); Hh = list(range(NB, NT))
+Aff = sub(Aout, F, F); Afh = sub(Aout, F, Hh); Ahh = sub(Aout, Hh, Hh)
+Ahi = midmat(Ahh.inv())
+Dfree = Aff - Afh * Ahi * Afh.transpose()
+Lf = arb_mat(NB, 2, [v for a in F for v in (ell1[a], ell2[a])]); Lh = arb_mat(nh, 2, [v for a in Hh for v in (ell1[a], ell2[a])])
+S2 = Lh.transpose() * Ahi * Lh; T2 = Lf - Afh * Ahi * Lh
+D = midmat(Dfree + T2 * midmat(S2.inv()) * T2.transpose()) if KIND == 'zeta' else midmat(Dfree)
+print(f"D built {time.time()-t0:.0f}s (x nodes {nx}, xi nodes {len(xin)})", flush=True)
+# ---------------- pencil in mpmath
+def to_mp(M, K):
+    R = mp.matrix(K, K)
+    for i in range(K):
+        for j in range(K):
+            R[i, j] = (mp.mpf(M[i, j].mid().str(int(prec * 0.3), radius=False)) + mp.mpf(M[j, i].mid().str(int(prec * 0.3), radius=False))) / 2
+    return R
+def pencil(K, vectors):
+    Qm = to_mp(Q, K); Dm = to_mp(D, K)
+    Lc = mp.cholesky(Dm); Li = mp.inverse(Lc)
+    A = Li * Qm * Li.T; A = (A + A.T) / 2
+    if not vectors:
+        ev = mp.eigsy(A, eigvals_only=True); return ev, None, Qm, Dm, Li
+    ev, V = mp.eigsy(A); return ev, V, Qm, Dm, Li
+for K in KS:
+    ev, _, _, _, _ = pencil(K, False)
+    print(f" degree < {K}: kappa_min = {mp.nstr(ev[0], 6)}  second = {mp.nstr(ev[1], 6)}  kappa_max = {mp.nstr(ev[K-1], 6)}   ({time.time()-t0:.0f}s)", flush=True)
+ev, V, Qm, Dm, Li = pencil(NB, True)
+print(f" degree < {NB}: kappa_min = {mp.nstr(ev[0], 6)}  second = {mp.nstr(ev[1], 6)}  third = {mp.nstr(ev[2], 6)}  kappa_max = {mp.nstr(ev[NB-1], 6)}   ({time.time()-t0:.0f}s)", flush=True)
+qe, QV = mp.eigsy(Qm); de = mp.eigsy(Dm, eigvals_only=True)
+print(" ladder of Q (10 lowest):", [mp.nstr(q, 4) for q in qe[:10]])
+print(" ladder of D (10 lowest):", [mp.nstr(d, 4) for d in de[:10]])
+de2, DV = mp.eigsy(Dm)
+print(" rung ratios Q(d)/D(d) on the 8 lowest eigenvectors d of D:", [mp.nstr((DV[:, r].T * Qm * DV[:, r])[0] / de2[r], 4) for r in range(8)])
+print(" rung ratios Q(q)/D(q) on the 8 lowest eigenvectors q of Q:", [mp.nstr(qe[r] / (QV[:, r].T * Dm * QV[:, r])[0], 4) for r in range(8)])
+def describe(i, name):
+    v = Li.T * V[:, i]; n2 = (v.T * v)[0]
+    ov = [((v.T * QV[:, r])[0]) ** 2 / n2 for r in range(NB)]
+    cum = [sum(ov[:r]) for r in (1, 2, 4, 6, 8, 12)]
+    top = sorted(range(NB), key=lambda r: -ov[r])[:4]
+    par = sum(v[j] ** 2 for j in range(0, NB, 2)) / n2
+    hi = sum(v[j] ** 2 for j in range(NB // 2, NB)) / n2
+    print(f" {name}: kappa = {mp.nstr(ev[i], 6)}; D(v)/|v|^2 = {mp.nstr((v.T * Dm * v)[0] / n2, 4)}; Q(v)/|v|^2 = {mp.nstr((v.T * Qm * v)[0] / n2, 4)}; even share {mp.nstr(par, 3)}; share in Legendre degrees >= NB/2: {mp.nstr(hi, 3)};")
+    qv = (v.T * Qm * v)[0] / n2
+    en = [ov[r] * qe[r] / qv for r in range(NB)]
+    topen = sorted(range(NB), key=lambda r: -abs(en[r]))[:5]
+    print(f"      share of the ENERGY Q(v) carried by Q-rungs (rung, share, eigenvalue): {[(r + 1, mp.nstr(en[r], 3), mp.nstr(qe[r], 3)) for r in topen]}; energy share in rungs 1..6: {mp.nstr(sum(en[:6]), 3)}, in rungs 1..12: {mp.nstr(sum(en[:12]), 3)}")
+    keep = [r for r in range(NB) if qe[r] >= mp.mpf(1) / 100]          # off-ladder part: Q-eigenvalue >= 0.01
+    wv = mp.matrix(NB, 1)
+    for r in keep:
+        cr = (v.T * QV[:, r])[0]
+        for j in range(NB): wv[j] += cr * QV[j, r]
+    w2 = (wv.T * wv)[0]
+    print(f"      OFF-LADDER PART w (components on Q-eigenvalues >= 0.01, {len(keep)} of {NB}): |w|^2/|v|^2 = {mp.nstr(w2 / n2, 3)}; Q(w)/|w|^2 = {mp.nstr((wv.T * Qm * wv)[0] / w2, 4)}; D(w)/|w|^2 = {mp.nstr((wv.T * Dm * wv)[0] / w2, 4)}; Q(w)/Q(v) = {mp.nstr((wv.T * Qm * wv)[0] / (qv * n2), 3)}; D(w)/D(v) = {mp.nstr((wv.T * Dm * wv)[0] / (v.T * Dm * v)[0], 3)}")
+    print(f"      overlap^2 with the lowest 1,2,4,6,8,12 eigenvectors of Q (cumulative): {[mp.nstr(c, 4) for c in cum]}; largest overlaps at Q-rungs {[(r + 1, mp.nstr(ov[r], 3), mp.nstr(qe[r], 3)) for r in top]}")
+describe(0, "MINIMISER"); describe(1, "second"); describe(NB - 1, "MAXIMISER")
+# ---- impostor only: how much of Q(v) is the contribution of its OFF-LINE zeros (zero side of the explicit formula)?
+if KIND in ('dh', 'zeta'):
+    OFFZ = [] if KIND == 'zeta' else [(mp.mpf('0.808517'), mp.mpf('85.699348')), (mp.mpf('0.650830'), mp.mpf('114.163343')),
+            (mp.mpf('0.574356'), mp.mpf('166.479306')), (mp.mpf('0.724258'), mp.mpf('176.702461'))]   # r1_A, dhzeros.py.txt
+    Lm = mp.mpf(LQ.numerator) / LQ.denominator
+    def Fhat(vec, z):          # transform of sum_n vec_n phi_n at complex z:  F_n(z) = i^n sqrt(2L(2n+1)) j_n(zL)
+        w = z * Lm; tot = mp.mpc(0)
+        for n in range(NB):
+            jn = mp.sqrt(mp.pi / (2 * w)) * mp.besselj(n + mp.mpf(1) / 2, w)
+            tot += vec[n] * (1j) ** n * mp.sqrt(2 * Lm * (2 * n + 1)) * jn
+        return tot
+    def offline(vec):
+        out = []
+        for beta, t in OFFZ:
+            s_ = mp.mpc(0)
+            for g in (mp.mpc(t, -(beta - mp.mpf(1) / 2)), mp.mpc(-t, beta - mp.mpf(1) / 2), mp.mpc(-t, -(beta - mp.mpf(1) / 2)), mp.mpc(t, beta - mp.mpf(1) / 2)):
+                s_ += Fhat(vec, g) * mp.conj(Fhat(vec, mp.conj(g)))
+            out.append(s_.real)
+        return out
+    for name, vec in (("MINIMISER", Li.T * V[:, 0]), ("lowest eigenvector of Q", QV[:, 0]), ("2nd eigenvector of Q", QV[:, 1]), ("lowest eigenvector of D", DV[:, 0])):
+        n2 = (vec.T * vec)[0]; qv = (vec.T * Qm * vec)[0]; dv = (vec.T * Dm * vec)[0]; off = offline(vec)
+        if name in ("MINIMISER", "lowest eigenvector of Q"):
+            import json
+            if KIND == 'dh':
+                ONZ = [mp.mpf(t) for t in json.load(open("/home/user/ysolucki/rh/experiments/r1_A/dh_zeros.json"))["online"]]
+            else:
+                import os
+                zf = "/home/user/ysolucki/rh/experiments/foothold/zeta_zeros_200.json"
+                if not os.path.exists(zf):
+                    with mp.workdps(45):
+                        zs = []; k = 1
+                        while True:
+                            t = mp.zetazero(k).imag
+                            if t > 200: break
+                            zs.append(mp.nstr(t, 42)); k += 1
+                    json.dump(zs, open(zf, "w"))
+                ONZ = [mp.mpf(t) for t in json.load(open(zf))]
+            contrib = [(t, 2 * abs(Fhat(vec, t)) ** 2) for t in ONZ]
+            tot_on = sum(c for t, c in contrib)
+            top = sorted(contrib, key=lambda tc: -tc[1])[:6]
+            print(f"   ON-LINE ZEROS (all {len(ONZ)} on-line zeros below 200), {name}: sum_on 2|F(gamma)|^2 = {mp.nstr(tot_on / qv, 6)} x Q(v); sum_on + off-line quartets = {mp.nstr((tot_on + sum(off)) / qv, 6)} x Q(v) (missing: zeros above 200); largest contributions (gamma, share of Q(v)): {[(mp.nstr(t, 6), mp.nstr(c / qv, 3)) for t, c in top]}", flush=True)
+        print(f" OFF-LINE ZEROS, {name}: Q(v) = {mp.nstr(qv / n2, 5)} |v|^2, D(v) = {mp.nstr(dv / n2, 5)} |v|^2; contribution of the quartets at 85.7, 114.2, 166.5, 176.7: {[mp.nstr(o / qv, 4) for o in off]} x Q(v); ratio without them (Q - off)/D = {mp.nstr((qv - sum(off)) / dv, 5)}, with them Q/D = {mp.nstr(qv / dv, 5)}", flush=True)
+print(f"total {time.time()-t0:.0f}s")

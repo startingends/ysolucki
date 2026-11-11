@@ -410,3 +410,137 @@ pencil_eps_0p5.log); `flock ... memcap.py 2 python3 pencil_eps.py.txt 3/4 80 40 
     At L = 0.5: eps = 1/16: 6.3e-3, 8.6e-3, 3.2e-2, 0.38. PREDICTION (3): HIT; the precise statement is stronger than
     I predicted: no threshold in eps, each rung is gone once eps exceeds about 10 times its eigenvalue.
 Consistency with the two ends: at eps = 3/8 and 1/2 everything is positive, with bottoms 0.036-0.050.
+
+## Session 5 (2026-11-11): does the whole-space kappa_min see the impostor's failure before its eigenvalue does?
+
+### 23. Set-up and PREDICTION (written before any run of the impostor pencil)
+Impostor = Davenport-Heilbronn f (tools/controls.py: a_n = 1, kappa, -kappa, -1, 0 for n = 1..5 mod 5),
+Lambda_f(s) = (5/pi)^(s/2) Gamma((s+1)/2) f(s). x-space form (Lemma 5 redone with psi(3/4 + ir/2) + log(5/pi), no pole):
+  Q_DH(v) = -(log(4 pi L/5) + gamma) g(0) + int_0^{2L} (g(0) - g(x))/x dx - int_0^{2L} hD(x) g(x) dx - 2 sum_{n < e^(2L)} c_n n^(-1/2) g(log n),
+  hD(x) = e^(-x/2)/sinh x - 1/x (Gamma rates 2m + 3/2), c_n = coefficients of -f'/f (any sign, not on prime powers).
+Leak D_L^DH: companion g ODD on R (the Gamma factor Gamma((s+1)/2) is the odd one), support [-lam, lam],
+E_f(g)(x) = x^(1/2) sum_n a_n g(n x) = f on the window, inverted by the Dirichlet inverse b of a; free odd part on
+(0, 1/lam); band [-lam/5, lam/5] (prolate parameter c = 2 pi e^(2L)/5, the coordinator's choice); no pole
+conditions (none needed: no pole, and an odd g has ghat(0) = 0 = (Bg)(0) automatically).
+Known (r1_A, midpoint arithmetic): impostor's bottom 3.1e-18 (L = 1.5), 5.2e-23 (1.6), 1.1e-28 (1.7), -7.9e-30 (1.72);
+from 1.5 to 1.7 these follow the prolate defect at c = 2 pi e^(2L)/5 (ln-steps 11.0 and 13.1 against 2 dc = 11.2,
+13.6), i.e. the eigenvalue gives NO warning until it crosses.
+PREDICTION:
+ (P1) kappa_min^DH at L = 1.0 is within 20% of zeta's 0.298 and stays within 20% of its own L = 1.0 value through
+      L = 1.65 (bulk constant; the impostor's Gamma factor and atoms are bounded perturbations there).
+ (P2) It falls only at the very end: kappa_min^DH(1.68) >= 0.7 kappa_min^DH(1.0); kappa_min^DH(1.70) in [0, 0.25].
+      The reason I expect it: the off-line zero (0.8085 + 85.70 i) is felt first by ONE direction, whose ratio Q/D
+      starts near 1 (ladder ratios are 0.9-1.1) and must fall below the bulk constant 0.3 before kappa_min moves.
+ (P3) The better early warning is that rung's own ratio (Rayleigh quotient Q/D on the lowest D-eigenvectors): it drops by
+      more than 10% already at L = 1.65 and by more than a factor 2 at 1.68.
+ (P4) Against the coordinator's hypothesis: kappa_min^DH tracks zeta's within 20% until 1.65 (agree), then the fall is
+      not gradual but sudden (between 1.68 and 1.70), so as an early warning it is at most 0.02-0.04 in L ahead of the
+      eigenvalue sign change.
+ Would surprise me: kappa_min^DH at L = 1.0-1.5 far below zeta's (< 0.15): then the comparison already "knows" the
+ impostor is wrong away from the failure, which would be the opposite of plank 9's ladder finding.
+
+### 24. First impostor numbers (COMPUTED; script pencil_dh.py.txt, chain of runs in progress)
+Checks of the new script: zeta branch at L = 1/2, degree < 28 reproduces kappa_min = 0.330738, kappa_max = 2.31888;
+impostor c_n agree with r1_A's dh_logderiv_coeffs exactly for n <= 29; impostor bottom at L = 3/2 (degree < 110) is
+2.949e-18 against r1_A's 3.1e-18 (Fourier N = 120, an upper bound): consistent.
+FIRST RESULT, before the rest of the chain: kappa_min^DH = 0.54884 at L = 1.0 (degree < 40, 50, 60: 0.548865, 0.548846,
+0.548841) and 0.13773 at L = 1.5 (degree < 80, 95, 110: 0.137748, 0.137740, 0.137730). A fall by a factor 4 between
+L = 1.0 and 1.5, at windows where the impostor's lowest eigenvalue still follows the prolate law (2.9e-18 at 1.5) and
+0.2 in L before its first failure. At L = 1.5 the minimiser sits ON the ladder (half of its energy on rungs 1..6,
+85% on rungs 1..12; largest: rung 5, eigenvalue 1.4e-6, 35%), and the Rayleigh ratios Q/D on the eigenvectors of Q
+are 1.16, 0.91, 0.63, 0.46, 0.32, 0.31, 0.47, 0.83 for rungs 1..8 (the middle rungs are depressed).
+Prediction (P1) MISSED: I expected the impostor's constant to stay within 20% through 1.65.
+Chain so far (impostor, kappa_min at three degrees each): L = 1.0: 0.548841; 1.1: 0.465823; 1.2: 0.432984; 1.3: 0.431069;
+1.4: 0.156987 (0.1585, 0.15723 at lower degree); 1.5: 0.137730; 1.6: 0.137596. The fall happens between L = 1.3 and
+1.4, then a plateau at 0.1376-0.1377. Diagnostic added to pencil_dh.py.txt (impostor only): the contribution of the
+four off-line quartets (r1_A's zeros at 85.70, 114.16, 166.48, 176.70) to Q(v), by the zero side of the explicit
+formula, for the minimiser and the bottom eigenvectors. At L = 1.0 it is negligible (< 0.5% of Q(v) for all four
+vectors). Reruns of 1.3-1.6 with the diagnostic queued (logs *_off.log).
+Diagnostics so far: (i) L = 1.3 and 1.5: the off-line quartets contribute -4e-5 and +3.4e-5 of the MINIMISER's Q(v)
+(and at most 1.4% of Q on the bottom eigenvectors). So the fall of kappa_min between 1.3 and 1.4 is NOT the direct
+contribution of the off-line zeros. (ii) nh = 60 instead of 40 at L = 1.5: kappa_min = 0.13773 again (not the free
+part). (iii) memory: the first L = 1.65 run hit the 1 GB cap and stalled; killed; D is now assembled in chunks of 300
+nodes (identical results at L = 0.5 zeta and L = 1.0 impostor), and 1.65 is requeued.
+CONTROL added, because the fall could be a property of "conductor 5 + my D" rather than of the impostor:
+pencil_ctl.py.txt, kind chi5 = L(s, chi_5), chi_5 the quadratic character mod 5 (Euler product, even, conductor 5,
+zeros on the line as far as computed): Gamma(s/2), constant log(5/pi), atoms chi(n) Lambda(n), companion even with
+mu(n) chi(n), band [-lam/5, lam/5], no conditions. L = 1.0: kappa_min = 0.39913; ladders parallel (Q: 2.03e-6,
+5.84e-4, 6.44e-2; D: 1.78e-6, 5.75e-4, 6.29e-2). PREDICTION for the control (written before its runs at 1.3-1.6):
+if the impostor's fall is impostor-specific, kappa_min^chi5 stays within 20% of 0.40 through L = 1.6; I expect that
+(probability about 0.6); the alternative is the same fall between 1.3 and 1.4 (then it is a conductor-5 effect of
+the comparison, not a warning).
+(iv) L = 1.68, degree < 145 (log pencil_dh_dh_42_25.log): kappa_min = 0.13758 at degree < 115 and < 130, but 0.05331 at
+degree < 145 (second 0.0672). For this new minimiser the off-line quartet at 85.70 contributes -3.67 Q(v) (on-line part
+4.67 Q(v)): without it the ratio would be 0.249. The bottom eigenvector of Q (9.13e-28) has off-line share -2.0 Q(v) and
+ratio Q/D = 0.10. So the off-line zero IS seen directly, but only by a basis that resolves its height: a Legendre
+degree of about 85.7 L (= 144 at L = 1.68). My runs at 1.5 and 1.6 (degree < 110, 130 < 85.7 L) could not see it, so
+"the off-line zeros do not contribute" at those windows was a statement about the truncated space. All impostor
+windows from 1.5 up are being rerun with degree >= 85.7 L + 20 (chain 6).
+(v) Zero-by-zero decomposition of Q(v) added (zero side of the explicit formula, 2|F(gamma)|^2 per on-line zero below 200,
+plus the off-line quartets; impostor zeros from r1_A/dh_zeros.json, zeta zeros by mpmath zetazero at 42 digits, cached in
+zeta_zeros_200.json). Validation: it reproduces Q(v) of the minimiser to 5e-4 (impostor, L = 1.3) and 2.4e-4 (zeta, L = 0.5),
+the rest being zeros above 200. WHERE THE MINIMISER SITS, on the zero side:
+  zeta, L = 0.5: 90% of Q(v) on the first zero 14.13, 8% on 21.02.
+  impostor, L = 1.3: 48% on 22.160 and 42% on 23.345: a close pair (gap 1.19, mean spacing there 2.17: normalised 0.55).
+  The impostor's next close pair is 40.163 / 40.683 (gap 0.52, normalised 0.29), and the fall of kappa_min happens
+  exactly when the window starts to resolve height 40 (4 pi e^(2L)/5 = 33.9 at L = 1.3, 41.3 at L = 1.4).
+  HYPOTHESIS (to be tested on the chain-6 logs): kappa_min is set by the closest pair of zeros the window resolves;
+  the plateau 0.1376 at L = 1.5-1.65 is the pair at 40.4; the fall to 0.053 at 1.68 is the off-line quartet.
+Chain 6 results as they come (degree >= 85.7 L + 20 from 1.5 up):
+  impostor 1.4, degree < 100/110/120: 0.156987, 0.156917, 0.156591; minimiser: 43% on 40.163, 43% on 40.683; off-line -0.2%.
+  impostor 1.5, degree < 120/135/150: 0.137727, 0.137722, 0.137721; minimiser: 48% on 40.163, 51% on 40.683; off-line +7e-5.
+  precision check 1.5 at 420 bits (degree < 110): 0.13773, unchanged.
+  control chi5: 1.0: 0.399131; 1.2: 0.394102.
+  impostor 1.6, degree < 130/145/160: 0.137596, 0.137595, 0.137594 (still the pair at 40.4: 48% + 51%); but the THIRD
+     pencil value fell to 0.2011 (0.3727 at 1.5), and the bottom eigenvector of Q now has off-line share -20% (Q/D 0.53).
+  impostor 1.65, degree < 140/155/165: 0.129097, 0.122895, 0.120533 (NOT converged in the degree; Rayleigh-Ritz, so these
+     are upper bounds of the whole-space kappa_min). The minimiser has left the pair: its Q sits on the on-line zeros
+     80.33-90.72 around the off-line point (on-line part 2.15 Q(v)) and the off-line quartet at 85.70 takes -1.19 Q(v);
+     without it the ratio would be 0.264.
+  control chi5: 1.3: 0.393311; 1.4: 0.384047 (no fall).
+  impostor 1.68, degree < 145/158/168: 0.0533096, 0.0515305, 0.0513273; minimiser on on-line zeros 80.3-90.7 (on-line part
+     4.78 Q(v)), off-line quartet 85.70: -3.81 Q(v); without it 0.246.
+  impostor 1.70, degree < 150/160/170: 0.0419647, 0.0415746, 0.0412366; on-line part 5.77 Q(v), off-line -4.87 Q(v);
+     without it 0.241. Bottom of Q: 1.052e-28 (r1_A: 1.1e-28), i.e. the eigenvalue still follows the prolate law.
+  control chi5: 1.5: 0.326345; 1.6: 0.325258.
+  impostor 1.72, degree < 150/162/172: -0.0445159, -0.0478683, -0.0479638; bottom of Q -7.335e-30 (r1_A: -7.9e-30).
+  zeta 0.75 (degree < 80): 0.326506; minimiser: 70% on the first zero 14.13, 13% on the pair 48.01/49.77.
+  zeta 1.0 (degree < 116): 0.297833; minimiser: 51% on 59.347 and 29% on 60.832 (zeta's closest normalised pair below
+     the resolution height 4 pi e^2 = 93); the step of kappa_min between L = 0.75 and 0.85 (section 20) is the window
+     starting to resolve this pair (4 pi e^(2L) = 56 at 0.75, 69 at 0.85).
+PREDICTION for zeta at L = 1.25 (written while that run is in progress, before reading it): the minimiser sits on the pair
+111.030/111.875 (normalised gap about 0.39, the closest below the resolution height 153) and kappa_min falls to [0.15, 0.25].
+  zeta 1.25 (degree < 170/200, 640 bits): 0.204672, 0.204610; bottom of Q 5.19e-55 (r1_A: 5.02e-55); minimiser: 58% on 111.875,
+     39% on 111.030. PREDICTION (pair 111.03/111.88, kappa in [0.15, 0.25]): HIT.
+
+### 25. Summary of session 5 (COMPUTED, multiprecision, one implementation, NOT certified)
+| L | impostor kappa_min (degree) | impostor: where the minimiser's Q(v) sits | chi5 control | zeta |
+|---|---|---|---|---|
+| 1.0 | 0.5488 (60) | mixed | 0.3991 | 0.2978 (116): 80% on the pair 59.35/60.83 |
+| 1.1 | 0.4658 (70) | | | |
+| 1.2 | 0.4330 (80) | | 0.3941 | |
+| 1.25 | | | | 0.2046 (200): 97% on the pair 111.03/111.88 |
+| 1.3 | 0.4311 (90) | 90% on the pair 22.16/23.35 | 0.3933 | |
+| 1.4 | 0.1566 (120) | 86% on the pair 40.16/40.68 | 0.3840 | |
+| 1.5 | 0.1377 (150) | 99% on 40.16/40.68 | 0.3263 | |
+| 1.6 | 0.1376 (160) | 99% on 40.16/40.68 (third value 0.201, falling) | 0.3253 | |
+| 1.65 | <= 0.1205 (165, not converged) | zeros 80-91 + off-line quartet 85.70 at -1.19 Q(v) | | |
+| 1.68 | 0.0513 (168) | off-line quartet -3.81 Q(v) | | |
+| 1.70 | 0.0412 (170) | off-line quartet -4.87 Q(v) | | |
+| 1.72 | -0.0480 (172) | off-line quartet +5.16 Q(v), Q(v) < 0 | | |
+Answers to the coordinator: (1) the impostor's kappa_min is NOT within 20% of zeta's at L = 1 (0.55 against 0.30) and it
+does NOT stay flat: it falls by a factor 2.8 between L = 1.3 and 1.4, 0.3 before the failure, but the cause is a close pair
+of on-line zeros (40.163, 40.683), not the coming failure (the off-line zeros carry < 0.3% of that minimiser's Q). (2) The
+coming failure itself takes over kappa_min from L = 1.65 (0.05-0.07 in L before the eigenvalue changes sign between 1.70
+and 1.72, while the eigenvalue still follows the prolate law at 1.70), and only in a basis that resolves height ~90
+(Legendre degree >= about 90 L). (3) The decisive by-product: for zeta the minimiser also sits on the closest resolved
+pair, and kappa_min falls when a closer pair enters: 0.33 (L <= 0.75) -> 0.30 (pair normalised gap 0.53) -> 0.205 at
+L = 1.25 (pair 111.03/111.88, normalised gap 0.39). HEURISTIC consequence: since ever closer pairs exist (Lehmer pairs, GUE),
+kappa_min(L) for zeta is expected to tend to 0; plank 8 with a constant bounded below would then be false, and the
+comparison constant is a measure of the closest pair of zeros, i.e. barrier B3 (no slack) in a new form.
+Predictions: P1 MISSED (fall at 1.3-1.4, not flat to 1.65); P2 partly (no fall at 1.68 from the off-line zero as I
+predicted, it was already at 0.05 there); P3 HIT in substance (the off-line channel is visible from 1.6 as the falling
+third value 0.37 -> 0.20, identity of that vector not checked); control prediction (chi5 within 20% of 0.40 to 1.6): HIT
+(0.325 = -19%). Zeta 1.25 prediction: HIT.
+Not done: certification; second implementation; the identity of the third pencil vector at 1.6; impostor degree beyond
+172 at 1.65 (value still falling with the degree); a law kappa(normalised gap).

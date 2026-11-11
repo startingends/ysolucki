@@ -1,4 +1,4 @@
-# FH seat MEMORY (rewritten at the end of session 4, 2026-11-11)
+# FH seat MEMORY (rewritten at the end of session 5, 2026-11-11)
 
 ## What exists (all in rh/experiments/foothold/ unless said)
 - PROGRESS.md: running log with predictions, commands, reading record, walls W-FH1, W-FH2.
@@ -44,6 +44,14 @@
   exactly) against the same D_L. d mu/d eps at 0 = 0.10 at L = 0.5 and 0.75 (c_1/mu(0) = 1.1e5, 2.7e13); mu(eps) about
   0.095-0.099 eps up to eps = 1/2; kappa_min not monotone (0.331 -> 0.3325 -> 0.314 at L = 0.5; 0.3265 -> 0.3279 ->
   0.2835 at L = 0.75); ladder dissolves rung by rung at eps about q_r/c_r. PROGRESS 21-22, logs pencil_eps_*.log.
+- SESSION 5: pencil_dh.py.txt <zeta|dh> ... (impostor Q in x-space; odd companion with the Dirichlet inverse of a_n; band
+  lam/5; zero-by-zero decomposition of Q(v) on the zero side; zeta zeros cached in zeta_zeros_200.json);
+  pencil_ctl.py.txt (adds kind chi5 = L(s, chi_5) control). Impostor kappa_min: 0.549 (1.0), 0.466, 0.433, 0.431 (1.3),
+  0.157 (1.4), 0.1377 (1.5), 0.1376 (1.6), <=0.1205 (1.65), 0.0513 (1.68), 0.0412 (1.70), -0.048 (1.72). The minimiser
+  sits on the closest resolved PAIR of zeros (impostor 22.16/23.35, then 40.16/40.68; zeta 59.35/60.83 at L = 1), and from
+  1.65 on the impostor's off-line quartet at 85.70 (needs Legendre degree >= about 90 L to be seen). chi5 control flat-ish (0.399 -> 0.325). Zeta 1.25: 0.2046 on the pair 111.03/111.88 (predicted). So kappa_min of zeta is
+  expected -> 0 along Lehmer pairs (HEURISTIC). Summary table: PROGRESS 25.
+  LESSON: memcap 1 GB: assemble D in chunks (done). Logs pencil_dh_*_N*.log, pencil_ctl_chi5_*.log.
 - Answers given to the coordinator: (1) Connes-Consani Thm 1 does not give plank 8 on the no-prime window as it
   stands (different comparison form, codimension-2 subspace, non-certified numerics); certificate recipe in
   PROGRESS 16 A. (3) The FH-1 certificate run on Q - kappa D does NOT escape the cost explosion (PROGRESS 17).

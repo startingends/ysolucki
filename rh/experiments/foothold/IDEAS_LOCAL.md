@@ -54,3 +54,14 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - log:
   - 2026-11-11: Session 3: multiprecision pencil at L = 0.65, 0.75, 0.85, 1.0: kappa_min = 0.3279, 0.3265, 0.3018, 0.2978 (degree < 68, 80, 96, 116; stable to 3 digits). Not e^(-2L). Minimiser is a ladder/bulk mixture; half of its leak is a cross term (measured at L = 0.85). kappa_max unbounded in the degree. PROGRESS.md section 20.
   - 2026-11-11: audit: not promoted: merged into main #27
+
+## #5 · The comparison constant of Q against the leak D_L is a close-pair detector: kappa_min sits on the closest resolved pair of zeros
+- status: open
+- source: FH
+- date: 2026-11-11
+- tags: bridge,plank8,B3
+- plain english: The pencil constant (how small the Weil energy can be relative to the band-limiting leak) is not a property of the bulk or the ladder: on the zero side of the explicit formula, the worst direction puts almost all of its Weil energy on two neighbouring zeros that are unusually close. Example: for zeta at window 1.25 the worst direction has 97% of its energy on the zeros at 111.03 and 111.88 (gap 0.85, a typical gap there is 2.2), and the constant is 0.205; at window 1.0 it sits on 59.35/60.83 and the constant is 0.30. For the impostor it detects its close pair at 40.16/40.68 and later its off-line zero. Since zeta has ever closer pairs (Lehmer pairs), the constant should drift to zero.
+- claim: COMPUTED (one implementation): zeta 0.33 / 0.30 / 0.205 at L = 0.75 / 1.0 / 1.25 with minimisers on the closest resolved pair; impostor and an L(s, chi_5) control in PROGRESS.md 25. HEURISTIC: kappa_min(L) -> 0 for zeta.
+- first test: zeta at L = 1.5 (resolution 252; closest pair below 252?) and a fitted law kappa(normalised gap)
+- kill line: zeta's kappa_min at a window that resolves a pair of normalised gap < 0.3 stays above 0.2
+- log:
