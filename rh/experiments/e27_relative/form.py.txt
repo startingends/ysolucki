@@ -1,0 +1,38 @@
+"""e27 third experiment: generalised eigenvalues of the Weil form against the band-limiting defect on the span of
+the first K Poisson-prolate vectors. usage: python3 form.py.txt L [N]"""
+import sys
+sys.argv_saved = list(sys.argv)
+src = open("/home/user/ysolucki/rh/experiments/e27_relative/vec.py.txt").read()
+head = src.split('print("L=%s c=%s N=%d')[0]
+exec(head)
+def block(indices, b, name):
+    fb, chb = phi(b); fb0 = fb(mp.mpf(0))
+    C = []; r = []; chis = []
+    for nn in indices:
+        v, ch = testvec(nn, b); ce, co, nrm2 = coeffs(v)
+        f, _ = phi(nn); r.append(f(mp.mpf(0)) / fb0); chis.append(ch)
+        C.append(ce if name == "even" else co)
+    Mb = E if name == "even" else O
+    K = len(indices)
+    Cm = mp.matrix(K, len(C[0]))
+    for i in range(K):
+        for j in range(len(C[0])): Cm[i, j] = C[i][j]
+    M = Cm * Mb * Cm.T
+    D = mp.matrix(K, K)
+    for i in range(K):
+        for j in range(K):
+            D[i, j] = lam * ((1 - chis[i] if i == j else 0) + r[i] * r[j] * (1 - chb))
+    out = []
+    for k in range(1, K + 1):
+        Dk = D[:k, :k]; Mk = M[:k, :k]
+        Lc = mp.cholesky(Dk); Li = Lc ** -1
+        A = Li * Mk * Li.T; A = (A + A.T) / 2
+        ev = mp.eigsy(A, eigvals_only=True)
+        out.append((k, min(ev), max(ev)))
+    return out, [1 - c for c in chis]
+print("L=%s N=%d dps=%d" % (sys.argv[1], N, dps))
+for name, idx, b in (("even", (4, 8, 12, 16), 0), ("odd", (6, 10, 14, 18), 2)):
+    out, defects = block(idx, b, name)
+    print(" %s block, prolate indices %s, defects %s" % (name, idx, [mp.nstr(d, 3) for d in defects]))
+    for k, lo, hi in out:
+        print("   K=%d: kappa_min = %s   kappa_max = %s" % (k, mp.nstr(lo, 6), mp.nstr(hi, 6)), flush=True)

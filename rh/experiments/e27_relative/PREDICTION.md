@@ -31,3 +31,20 @@ phi_n the prolate functions (n = 4 with b = 0 for the even block; n = 6 with b =
  Would surprise me: Rayleigh quotient larger than the eigenvalue by more than 1e4 (then the heuristic vectors are
  not near-null at the needed level and a comparison form built from them fails), or equal to 4 digits (then there
  is an exact formula hiding here).
+
+## Outcome of the second experiment (vec_*.log)
+P4 HIT, P5 HIT. Rayleigh quotient of the explicit vector over the true lowest eigenvalue of its block:
+L = 0.5: 1.22 (even), 1.10 (odd); L = 0.75: 1.36, 1.16; L = 1.0: 1.38, 1.22 (against the eigenvalue in the same
+truncated basis N = 34, which is itself about 1.5 times the converged value). Second rungs: 1.11, 1.07; 1.41, 1.32;
+1.23, 1.22. Overlap deficiency with the true ground state: 7.5e-6, 4.2e-7, 7.2e-8.
+
+## Third experiment, prediction written BEFORE computing
+Form-level test on the span of the first K explicit vectors per parity (K = 1..4; prolate indices 4, 8, 12, 16 even
+block; 6, 10, 14, 18 odd block), with D = lambda * [diag(1 - chi_n) + r r^T (1 - chi_b)], the EXACT Gram matrix of the
+out-of-band parts (the band-limiting defect), and M = Weil form on the same vectors:
+kappa_K(L) = lowest eigenvalue of D^(-1/2) M D^(-1/2).
+ P6. kappa_1 = 0.99, 1.92, 2.70 at L = 0.5, 0.75, 1.0 (already implied by the logs above; not blind).
+ P7 (blind). kappa_K >= 0.3 * kappa_1 for K = 2, 3, 4 at every L: adding more vectors does not collapse the ratio.
+ P8 (blind). kappa_4(L) increases with L across the three windows.
+ Would kill idea 27 in this form: kappa_K falling by orders of magnitude as K grows (cross terms between rungs
+ not controlled by the defect).
