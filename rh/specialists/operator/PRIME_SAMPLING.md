@@ -158,3 +158,12 @@ in the hunch, and a computed, rigorous-up-to-float counterexample to (Detect) fo
 not higher because nothing is certified and the decisive larger-L test was not run. **Toward RH 1/10**: the object's best
 case (Detect for zeta at large L) is a rigidity statement for the archimedean distribution with no handle, and the impostor
 shows the support of Λ alone does not decide positivity; not lower because the duality makes the question exact.
+
+## 7. The decisive run: impostor at L = 1.8 (and 2.0). PREDICTION (written 2026-11-11 before any dump or run)
+At L = 1.72 one negative direction (κ_min = −0.048) was hidden by 24 fake weights (κ_P ≥ +0.0335). At L = 1.8 the full form has
+two negative squares (plank 9: one per parity block) and m = 30 constraints (n ≤ 36, 5 ∤ n); at L = 2.0, m = 43.
+(Q1) L = 1.8: fake weights still hide the quartet, κ_P^{DH}(1.8) > 0. Probability 0.55 (more freedom, m 24 → 30, against a
+     deeper negativity and a second negative direction).
+(Q2) L = 2.0 (if affordable): the cone detects it, κ_P^{DH}(2.0) < 0. Probability 0.5.
+Kill/revive line: detection at some L ≤ 2.0 with hiding at 1.72 ⇒ (Detect) "eventually true" for this case, lag recorded.
+Degree check: κ_min at two degrees (principal submatrices) must agree to 2 digits.
