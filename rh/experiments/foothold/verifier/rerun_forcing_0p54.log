@@ -1,0 +1,81 @@
+moments done 2s; H_0 = [0.491625782148895156793317182919 +/- 2.25e-31], radius of H_0 3.8e-37
+matrices done 2s; max radius of AA entries 4.1e-37
+L = 27/50, NB = 32, prec = 800
+float check, atom at y=0.693147, m=0.490129, parity 0: lowest eigenvalue 6.447267e-08;  no atom: -6.506809e-02
+float check, atom at y=0.693147, m=0.490129, parity 1: lowest eigenvalue 2.499696e-05;  no atom: -4.103637e-01
+background, parity 0: A(v)/||v||^2 = [-0.0650680866127705 +/- 2.50e-17]  certified negative: True
+background, parity 1: A(v)/||v||^2 = [-0.410363725855412 +/- 8.77e-17]  certified negative: True
+   certified infeasible: y in [0.000000, 0.010000]  (m* ~ 0.0000)  t=2s
+   certified infeasible: y in [0.010000, 0.030000]  (m* ~ 0.0000)  t=2s
+   certified infeasible: y in [0.030000, 0.050000]  (m* ~ 0.0000)  t=2s
+   certified infeasible: y in [0.050000, 0.070000]  (m* ~ 0.0000)  t=2s
+   certified infeasible: y in [0.070000, 0.090000]  (m* ~ 0.0000)  t=2s
+   certified infeasible: y in [0.090000, 0.110000]  (m* ~ 0.0000)  t=2s
+   certified infeasible: y in [0.110000, 0.130000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.130000, 0.150000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.150000, 0.170000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.170000, 0.190000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.190000, 0.210000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.210000, 0.230000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.230000, 0.250000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.250000, 0.270000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.270000, 0.290000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.290000, 0.310000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.310000, 0.330000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.330000, 0.350000]  (m* ~ 0.0000)  t=3s
+   certified infeasible: y in [0.350000, 0.370000]  (m* ~ 0.1428)  t=3s
+   certified infeasible: y in [0.370000, 0.390000]  (m* ~ 0.4346)  t=3s
+   certified infeasible: y in [0.390000, 0.410000]  (m* ~ 0.4203)  t=3s
+   certified infeasible: y in [0.410000, 0.430000]  (m* ~ 0.4123)  t=3s
+   certified infeasible: y in [0.430000, 0.450000]  (m* ~ 0.4105)  t=3s
+   certified infeasible: y in [0.450000, 0.470000]  (m* ~ 0.4147)  t=3s
+   certified infeasible: y in [0.470000, 0.490000]  (m* ~ 0.4241)  t=3s
+   certified infeasible: y in [0.490000, 0.510000]  (m* ~ 0.4314)  t=3s
+   certified infeasible: y in [0.510000, 0.530000]  (m* ~ 0.4135)  t=3s
+   certified infeasible: y in [0.530000, 0.550000]  (m* ~ 0.4098)  t=3s
+   certified infeasible: y in [0.550000, 0.570000]  (m* ~ 0.4163)  t=3s
+   certified infeasible: y in [0.570000, 0.590000]  (m* ~ 0.4264)  t=3s
+   certified infeasible: y in [0.590000, 0.610000]  (m* ~ 0.4190)  t=3s
+   certified infeasible: y in [0.610000, 0.630000]  (m* ~ 0.4087)  t=3s
+   certified infeasible: y in [0.630000, 0.650000]  (m* ~ 0.4085)  t=3s
+   certified infeasible: y in [0.650000, 0.670000]  (m* ~ 0.4210)  t=3s
+   certified infeasible: y in [0.670000, 0.680000]  (m* ~ 0.4413)  t=4s
+   certified infeasible: y in [0.680000, 0.690000]  (m* ~ 0.4628)  t=4s
+   certified infeasible: y in [0.690000, 0.691250]  (m* ~ 0.4800)  t=4s
+   certified infeasible: y in [0.691250, 0.691875]  (m* ~ 0.4835)  t=4s
+   certified infeasible: y in [0.691875, 0.692500]  (m* ~ 0.4860)  t=4s
+   certified infeasible: y in [0.692500, 0.692813]  (m* ~ 0.4879)  t=4s
+   certified infeasible: y in [0.692813, 0.692969]  (m* ~ 0.4889)  t=4s
+   certified infeasible: y in [0.692969, 0.693047]  (m* ~ 0.4895)  t=4s
+   certified infeasible: y in [0.693047, 0.693086]  (m* ~ 0.4897)  t=4s
+   certified infeasible: y in [0.693086, 0.693096]  (m* ~ 0.4898)  t=5s
+   certified infeasible: y in [0.693096, 0.693105]  (m* ~ 0.4899)  t=5s
+LEFT sweep: every y in (0, 35487/51200] = (0, 0.6931055] is infeasible for every m >= 0  (45 intervals); exp = 1.999917
+   certified infeasible: y in [1.070000, 1.080000]  (m* ~ 4.7918)  t=5s
+   certified infeasible: y in [1.050000, 1.070000]  (m* ~ 2.6502)  t=5s
+   certified infeasible: y in [1.030000, 1.050000]  (m* ~ 1.9295)  t=5s
+   certified infeasible: y in [1.010000, 1.030000]  (m* ~ 1.5573)  t=5s
+   certified infeasible: y in [0.990000, 1.010000]  (m* ~ 1.3151)  t=5s
+   certified infeasible: y in [0.970000, 0.990000]  (m* ~ 1.1404)  t=5s
+   certified infeasible: y in [0.950000, 0.970000]  (m* ~ 1.0096)  t=5s
+   certified infeasible: y in [0.930000, 0.950000]  (m* ~ 0.9072)  t=5s
+   certified infeasible: y in [0.910000, 0.930000]  (m* ~ 0.8250)  t=5s
+   certified infeasible: y in [0.890000, 0.910000]  (m* ~ 0.7582)  t=5s
+   certified infeasible: y in [0.870000, 0.890000]  (m* ~ 0.7031)  t=5s
+   certified infeasible: y in [0.850000, 0.870000]  (m* ~ 0.6576)  t=5s
+   certified infeasible: y in [0.830000, 0.850000]  (m* ~ 0.6197)  t=5s
+   certified infeasible: y in [0.810000, 0.830000]  (m* ~ 0.5882)  t=5s
+   certified infeasible: y in [0.790000, 0.810000]  (m* ~ 0.5623)  t=5s
+   certified infeasible: y in [0.770000, 0.790000]  (m* ~ 0.5411)  t=5s
+   certified infeasible: y in [0.750000, 0.770000]  (m* ~ 0.5241)  t=5s
+   certified infeasible: y in [0.730000, 0.750000]  (m* ~ 0.5109)  t=5s
+   certified infeasible: y in [0.710000, 0.730000]  (m* ~ 0.5011)  t=5s
+   certified infeasible: y in [0.700000, 0.710000]  (m* ~ 0.4956)  t=5s
+   certified infeasible: y in [0.695000, 0.700000]  (m* ~ 0.4934)  t=6s
+   certified infeasible: y in [0.693750, 0.695000]  (m* ~ 0.4925)  t=6s
+   certified infeasible: y in [0.693711, 0.693750]  (m* ~ 0.4924)  t=6s
+   certified infeasible: y in [0.693691, 0.693711]  (m* ~ 0.4924)  t=6s
+   certified infeasible: y in [0.693682, 0.693691]  (m* ~ 0.4924)  t=6s
+RIGHT sweep: every y in [71033/102400, 2L) = [0.6936816, 2L) (upper end = 2L) is infeasible for every m >= 0  (25 intervals); exp = 2.001069
+RESIDUAL y-interval (0.6931055, 0.6936816): every feasible weight m lies in [[0.4899431551 +/- 1.25e-11], [0.4924197095 +/- 4.85e-11]]   (true: m = log2/sqrt2 = 0.4901291, y = log 2 = 0.6931472)
+total time 16s

@@ -145,3 +145,27 @@ L = 1.0: 0.5002, equally accidental). What the table does say: on the odd ground
 entirely by two manifestly non-negative mirror terms (trivial zeros m >= 1: 0.56 -> 0.41; prime mirror: 0.26 -> 0.54, of which
 the prime 2 alone is 96-100%), the inductive half-window term shrinks (0.19 -> 0.05), and the odd ground state stays near the
 origin as L grows (E_0^2/E_+^2 = 0.64 -> 0.58), so it never 'sees' primes beyond 2 and 3 with any weight (5: 3e-7 at L = 1.25).
+
+### Continuation: what was done
+- Atlas now 30 entries, 435 of 435 pairs (424 no, 7 maybe, 4 yes). New entries F26 (trace cubic, N37), F27 (infrared bounds),
+  F28 (Borodin-Okounkov / Wiener-Hopf+Hankel), F29 (de Branges chain; damping plane N35), F30 (nodeless ground states).
+  Not made into entries, folded into existing ones instead: N38 (function-field twin of B11 -> F18 supplies), e22 (-> F21),
+  r2 judge's findings (-> F2, F3, F7, F8 sources/breaks), journal J4's 'already published' list (-> F6, F14, F20 sources).
+- Of the 135 new pairs, 68 carry a per-entry 'No contact in kind' sentence (judged by kind), 67 have their own reasoning.
+- Answers folded in: B170 (S1-parity, to B148) -> F21, F12; B178 (S1-mirror, to B147) -> F17; B184 (S1-curv, to B149) -> F9;
+  B174/B175 (S1-mirror's first-prime lemma, overlapping my B168) -> F30.
+- 'Wiles move' search (coordinator's item 4), result:
+  (a) FOUND, a sign: pair F22 x F30 (recorded maybe; posted as B188; idea K-atlas/#8). The prime mirror form lacks a sign on
+      L^2 (what killed idea 21) and has it for free on one-signed functions (what nodelessness supplies), on the helpful
+      side in the odd block, which alone suffices. Statement (N) + (C) above. Cost, equally exact: the mirror atoms are
+      the only wrong-sign entries for the Perron proof of (N).
+  (b) TESTED, a factor: is S1-mirror's Gamma share 0.4988 an exact 1/2? Prediction written first: no. COMPUTED: no
+      (0.560 .. 0.413 over L = 0.45 .. 1.25).
+  (c) NOT FOUND: an exact match between the curvature factor 2, the two-halves constant 5/6 and the doubling inequality.
+      S1-curv's G4 says the deficit 1/6 is purely even-odd cross terms; on parity eigenfunctions the half-window constant
+      is the full gap, but only because Gamma_2 of a parity eigenfunction is even (a symmetry, not a supply).
+  (d) NOT A MATCH as stated: 'opposite signs of mirror and shift forms against the anti-maximum structure of the even block'.
+      The even ground state is (B - mu_1)^-1 c with mu_1 just BELOW the second eigenvalue of B (8e-30 against 2e-23 at L = 1),
+      not just above the first, so the anti-maximum principle is not literally applicable (recorded under F8 x F30).
+  (e) The signature swap of F26 (N: slices PSD, contraction Lorentzian; W: slices one positive square, contraction PSD) is a
+      sign mismatch that NO entry supplies: the only swap theorem on record (Widder / Kallen-Lehmann, F27) has the other sign.

@@ -388,3 +388,60 @@ DIFFERENCES / HYPOTHESES LEAN MADE EXPLICIT:
     I - M) and in file 21 (M <= I from the ground-state identity).
 GAP: none found in the informal statements; the continuum versions (B140: nodeless ground state of the odd block on the
   no-prime window) need in addition existence of a minimiser and a continuum Perron argument, not formalised.
+
+### FILE 23 DONE: `RHFormal/LemmaB_PerronStep.lean`  (Lemma B, Steps 4-5 of PROOF_trickle.md; part of T51; board B109)
+INFORMAL (B109): 'M real symmetric, off-diagonal entries >= 0, irreducible, v > 0 entrywise with M v = v, and M^2 - M PSD
+  => every eigenvalue of M other than the simple eigenvalue 1 is <= 0.'
+LEAN (namespace RHFormal.LemmaB): `form_one_sub`; `form_le_normSq`: M symmetric, off-diagonal ≥ 0, M v = v, v > 0 →
+  form M y ≤ normSq y (M ≤ I);  `perron_step`: in addition cut-irreducible and (∀ y, form M y ≤ ∑ i, (∑ j, M i j * y j)^2):
+  for x ≠ 0 with M x = μ x:  μ ≤ 0 ∨ (μ = 1 ∧ ∃ c, ∀ i, x i = c * v i).
+DIFFERENCES: eigenPAIR form (no list of eigenvalues with multiplicity); "M^2 - M PSD" written as y^T M y ≤ |M y|^2;
+  "irreducible" in cut form. No Perron-Frobenius theorem is used (mathlib has none): M ≤ I comes from the ground-state
+  identity (file 21), uniqueness from file 22. NOT formal: the last step of Lemma B ("so H has exactly one positive
+  eigenvalue"), which needs the spectral theorem for symmetric matrices and Sylvester's law. GAP: none.
+
+### FILE 24 DONE: `RHFormal/LemmaB_TrickleInequality.lean`  (Lemma B, Steps 1-3; part of T51)
+INFORMAL: T symmetric 3-tensor, a > 0, H = sum_k a_k T_k, l_k = H e_k, s_k = (Ha)_k > 0, every slice with at most one
+  positive eigenvalue => H <= H D H, D = diag(a_k/s_k).
+LEAN (namespace RHFormal.LemmaB; `contract T a i j = ∑ k, a k * T i j k`, `slice T k = Matrix.of fun i j => T i j k`):
+  `slice_apply_a` (Step 1), `slice_symm`, `slice_le` (Step 3 for one slice), `contract_form` (x^T H x = ∑ a_k x^T T_k x),
+  `trickle_inequality`: T i j k = T j i k = T i k j, a ≥ 0, (∀ k, 0 < ∑ i, a i * H i k), every slice AtMostOnePos →
+     ∑ i, ∑ j, x i * H i j * x j ≤ ∑ k, a k / (∑ i, a i * H i k) * (∑ i, x i * H i k)^2.
+DIFFERENCES: a ≥ 0 suffices (not a > 0); s_k is written a^T T_k a = ∑_i a_i H_ik (equal to (Ha)_k by symmetry);
+  "at most one positive eigenvalue" = AtMostOnePos. Hypothesis (B1) is not used here, as the written proof says. GAP: none.
+STATE OF LEMMA B (T51) AS A WHOLE: Steps 1-3 formal (file 24), Step 2 formal (file 3), Steps 4-5 formal in eigenpair
+  form (file 23); the final sentence "H has exactly one positive eigenvalue" is NOT formal (spectral theorem). So T51 is
+  formal except for that last textbook step; do not mark it `formal` as a whole.
+
+### FILE 25 DONE: `RHFormal/N2_RankOnePush.lean`  (board B182, S1-cubic's (N2))
+INFORMAL: N symmetric, N + mu I invertible, B = -N: (B + t cc^T) psi = mu psi for some psi with c.psi != 0 <=>
+  t c^T (N + mu I)^-1 c = 1, and then psi is a multiple of (N + mu I)^-1 c.
+LEAN (namespace RHFormal.N2; A a bilinear form standing for N + mu I, non-degenerate in the first argument, w with A(w,.) = c):
+  `push_iff`: (∃ ψ, c ψ ≠ 0 ∧ ∀ z, A ψ z = t * c ψ * c z) ↔ t * c w = 1;  `push_unique`: such ψ = (t * c ψ) • w.
+DIFFERENCES: coordinate-free; symmetry not needed. S1-cubic's (N1) (edge form of interlacing) is NOT done: it needs
+  existence of minimisers (compactness). GAP: none.
+
+### FILE 26: `RHFormal/AxiomsAudit.lean`  (no mathematics: `#print axioms` for 50 main theorems; imported last)
+
+### 01:04 FINAL FULL BUILD  `lake -d /home/user/ysolucki/rh/formal build`
+Last lines of the output (lake's "consider adding `module`" warnings filtered out; they are the only warnings):
+```
+info: RHFormal/AxiomsAudit.lean:82:0: 'RHFormal.LemmaB.perron_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:83:0: 'RHFormal.LemmaB.trickle_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:84:0: 'RHFormal.N2.push_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RHFormal/AxiomsAudit.lean:85:0: 'RHFormal.N2.push_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3166/3167] Built RHFormal (2.4s)
+Build completed successfully (3167 jobs).
+```
+- 50 theorems audited, all 50 on exactly [propext, Classical.choice, Quot.sound] (the standard axioms of Lean 4 / mathlib).
+- 0 lines containing "error" or "sorry" in the build output; a text search of RHFormal/ for `sorry`, `axiom`,
+  `native_decide`, `admit` finds nothing.
+- RHFormal.lean imports 28 modules: the lead's 2 (Smoke, MathlibCheck), my 25 statement files, and AxiomsAudit.
+- No file is in RHFormal/drafts/: nothing was left half-done.
+
+### OPEN AT THE END OF SESSION 1
+- Board question B177 (FORMAL -> S1-curv) about T33's last sentence: NOT yet answered when I stopped (asked 00:52, no post
+  by any seat after it except mine). By the seminar rule it becomes an OBJECTION after the author's answer or one turn.
+  The counterexample is machine-checked (`RHFormal.T33.even_margin_counterexample`), so it stands whatever the answer;
+  the keeper should correct T33's last sentence (see FILE 17 above for the wording).
+- No command was refused by the permission rules in this session.

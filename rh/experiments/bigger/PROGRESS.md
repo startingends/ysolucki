@@ -105,3 +105,85 @@ Blind predictions:
  Wrong-picture lines: q*_L above 3 (odd) or above 5 (even) at any L would mean GRH fails for chi_-3 / chi_5
  or the code is wrong. q*_L levelling off clearly below (3 - q* > 0.1 with successive differences shrinking
  by more than a factor 3 per 0.25 in L) means the threshold object is NOT arithmetic: BG-T false as stated.
+
+### 3.2 Result of the first run (threshold_a.log), and the next prediction, written before running it
+COMPUTED (float64, N = 40 modes, one implementation; `python3 threshold.py.txt <type> <L> 40`):
+| type | L=0.3 | 0.5 | 0.75 | 1.0 | 1.25 |
+|---|---|---|---|---|---|
+| zeta (Gamma_R(s), pole) q*_L | 0.99244 | 0.9999846 | 1 - 3e-11 | 1 (to 1e-12) | 1 (to 3e-12) |
+| odd (Gamma_R(s+1), no pole) | 2.2978 | 2.7518 | 2.8532 | 2.86034 | 2.86055 |
+| even, no pole | 3.0647 | 3.8680 | 4.0252 | 4.03596 | 4.03627 |
+P1 HIT: zeta's maximiser is von Mangoldt (0.693147, 1.098612, 0.693147, 1.609438, 0.000000 at 2..6).
+P2 MISS, P3 MISS: both thresholds level off BELOW the first arithmetic conductor (2.8606 < 3; 4.0363 < 5),
+successive differences shrinking by factors 14 and 34. The maximising weights are not those of a character
+(odd: m_2 = -0.880, m_3 = +0.894, m_4 = -1.738; the pair (m_2, m_4) is not of the form (a log 2, a^2 log 2)).
+So BG-T as I stated it is FALSE for the two pole-free types: the threshold object on the integers is not
+arithmetic there, and chi_-3 sits strictly inside. My 80 percent was wrong; the concavity argument was right
+but its hypothesis (local rigidity of chi_-3's own form) fails. Zeta's type is different: threshold exactly 1.
+What differs: the pole. New question: put a weight r on the pole term (r = 1 zeta's type, r = 0 the even
+pole-free type) and compute q*(r). Reasoning before the run: the family "r * (zeros of zeta) + (1-r) * (Gamma
+density) + Lebesgue" is feasible for r <= 1 at conductor exp(5.37 (1-r)) and is infeasible for r > 1 at every
+conductor because the Gamma density cannot pay for r > 1 times the zeros at large height.
+Blind prediction P4: (a) q*(r) is decreasing in r on [0,1], from 4.036 to 1; (b) for r = 1.1 and 1.25 the
+window threshold q*_L does NOT level off: it grows with L (value at L = 1.25 more than 1.5 times the value
+at L = 0.75), i.e. r = 1 is the largest pole weight one Gamma factor can carry, and zeta is the corner
+(r, q) = (1, 1) of the feasible region. If q*_L(r = 1.1) levels off, zeta is not a corner in r and the pole
+weight is not what makes it special.
+
+### 3.3 Result of the pole-weight run (threshold_b.log) and prediction P5, written before the odd+pole run
+COMPUTED (same script, 4th argument = pole weight r; even Gamma factor):
+| r | q*_L at L = 0.5, 0.75, 1.0, 1.25 | reading |
+|---|---|---|
+| 0 | 3.868, 4.0252, 4.03596, 4.03627 | levels off: q*(0) = 4.0363 |
+| 0.5 | 1.9412, 2.0043, 2.00892, 2.00904 | levels off: 2.0090 |
+| 0.9 | 1.13346, 1.14849, 1.14970, 1.14973 | levels off: 1.1497 |
+| 1 | 0.9999846, 1 - 3e-11, 1, 1 | 1 |
+| 1.1 | 0.9957, 1.0037, 1.0094, 1.0153 | does NOT level off: lambda*_L falls linearly, -0.0235 per unit L |
+| 1.25 | 0.9974, 1.0095, 1.0242, 1.0396 | does NOT level off: -0.059 per unit L (= 2.5 x the r = 1.1 slope) |
+P4(a) HIT. P4(b): direction HIT (no levelling off for r > 1, slope proportional to r - 1), size MISSED (I said
+a factor 1.5 between L = 0.75 and 1.25; it is 1.012: the divergence is linear in L, not exponential).
+UNEXPECTED and exact to 6 digits: log q*(r) = (1 - r) * 1.39532 for r = 0, 0.5, 0.9, 1
+(0.697659 = 0.5 x 1.395322; 0.139531 = 0.1 x 1.39532). So the threshold is LINEAR in the pole weight on
+[0, 1] and jumps to +infinity beyond 1: lambda*(r) is concave with a corner at r = 1, and zeta sits AT the
+corner: it is a vertex of the convex body of feasible (pole weight, log conductor, weights).
+Why linear (HEURISTIC, one line): the dual certificate of the pole-free problem is a positive-definite g
+vanishing at every log n; such a g has Weil value sum_gamma ghat(gamma) = A(g) and on these windows it lies
+in zeta's near-null space, so the same certificate is optimal for every r in [0,1].
+Odd factor, L = 1.5, N = 60: q* = 2.8605506 (L = 1.25: 2.8605481): the odd threshold is converged to 6 digits
+and is 2.86055, not 3.
+P5 (blind): the ODD Gamma factor can also carry a pole of weight 1, at conductor 1, with von Mangoldt weights
+(explicit solution: zeta's zeros plus the absolutely continuous density
+(1/2 pi)(Re psi(3/4 + it/2) - Re psi(1/4 + it/2)) > 0). So I predict: odd type, r = 1: q*_L -> 1 from below
+(1 - q*_L < 1e-3 at L = 1.25) with maximiser within 1e-3 of von Mangoldt at n <= 5; r = 0.5: q* =
+sqrt(2.86055) = 1.6913 +- 0.005 (linearity again); r = 1.25: no levelling off.
+If the odd factor with r = 1 has threshold clearly below 1 (q* < 0.99), then von Mangoldt is not forced by
+"pole weight 1 at the smallest conductor" and the vertex picture is wrong.
+
+### 3.4 Odd factor with a pole: a bug, the corrected run, and what it did to P5
+BUG (mine): for the odd type my first pole-weight patch replaced the arch term by r x (zeta's whole matrix);
+the log is kept as threshold_c_BUGGY.log and must not be used. Fixed: pole term built alone (arch=False).
+The even-factor table in 3.3 was not affected (re-checked: r = 0.5, L = 1.0 gives 2.008918818 again).
+COMPUTED, corrected (threshold_c.log), odd Gamma factor Gamma_R(s+1) with pole weight r:
+| r | q*_L at L = 0.75, 1.0, 1.25 (1.5) | reading |
+|---|---|---|
+| 0 | 2.8532, 2.86034, 2.86055 (2.8605506) | levels off |
+| 0.5 | 1.42123, 1.42377, 1.42384 | levels off; NOT on the chord (the chord would give 1.690) |
+| 1 | 0.997972, 0.998362, 0.9983783 (0.9983785) | levels off BELOW 1 |
+| 1.25 | 1.00067, 1.00399, 1.00932 | does not level off |
+P5: the threshold for r = 1 is 0.99838, so "1 - q* < 1e-3" missed narrowly (1.6e-3) and "maximiser = von
+Mangoldt to 1e-3" MISSED clearly: the maximiser is m = 0.68016, 1.05682, 0.66633, 1.4980, 0.0566, 1.7425 at
+n = 2..7 (von Mangoldt: 0.69315, 1.09861, 0.69315, 1.60944, 0, 1.94591), and the composite 6 carries weight.
+Linearity in r fails for the odd factor (strictly concave). r > 1 infeasible again: HIT.
+So: a pole of weight 1 at the smallest conductor does NOT force the primes when the Gamma factor is the odd
+one; a slightly different, non-arithmetic object lives at conductor 0.99838 < 1. The primes are forced only
+by the EXACT pair (even Gamma factor, pole weight 1). That pair is the corner.
+
+### 3.5 Why the pole weight has a corner at 1 (PROVED given theory entry T5; the rest COMPUTED)
+The pole term is +2<f,cosh(x/2)>^2 on even f and -2<f,sinh(x/2)>^2 on odd f (T5). With pole weight r the
+form is W + (r-1) Pole on test vectors orthogonal to all the shift forms. For r < 1 the even block loses
+(1-r) 2<f,cosh>^2; for r > 1 the odd block loses (r-1) 2<f,sinh>^2. By semidefinite duality
+  lambda*_L(r) = min over Y >= 0, tr Y = 1, tr(Y B_n) = 0 for all n, of tr(Y (Arch + r Pole)).
+So lambda*_L(r) <= -(1-r) max{2<f,cosh>^2} (r < 1) and <= -(r-1) max{2<f,sinh>^2} (r > 1), the maxima over
+normalised f whose autocorrelation vanishes at every log n and whose Weil energy is (near) zero. The first
+maximum converges as L grows (1.39532); the second grows linearly in L (0.235 per unit L). That is the
+corner. The two one-sided slopes are the two parity blocks of wall WJ13 seen from the dual side.

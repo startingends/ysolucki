@@ -1,0 +1,83 @@
+"""V-FH: (a) replay the author's sweep with EXACT rational bookkeeping and check the covering is gap-free;
+(b) for every certified interval, re-check the refutation at sample points y with MY OWN evaluation of A(v) and g_v(y)
+(vlib.Poly, mpmath; no code shared with forcing.py.txt beyond the rational test vectors themselves).
+usage: cover_check.py.txt <NB> <prec> <L as p/q>"""
+import sys, time, random
+from fractions import Fraction as Fr
+args = sys.argv[1:]
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+sys.argv = ['forcing'] + args
+src = open('/home/user/ysolucki/rh/experiments/foothold/forcing.py.txt').read()
+ns = {'__name__': 'lib'}
+exec(compile(src, 'forcing', 'exec'), ns)
+fmpq = ns['fmpq']; Vec = ns['Vec']; rat_vec = ns['rat_vec']; A0 = ns['A0']; IDX = ns['IDX']; TWOL = ns['TWOL']; Lq = ns['Lq']; NB = ns['NB']
+np_ = ns['np']
+BASE = [Vec(par, rat_vec(par, np_.linalg.eigh(A0[par])[1][:, 0])) for par in (0, 1)]
+BASE.append(Vec(0, [fmpq(1)] + [fmpq(0)] * (len(IDX[0]) - 1)))
+ns['BASE'] = BASE
+vectors_at = ns['vectors_at']; certify = ns['certify']
+def F(q): return Fr(int(q.p), int(q.q))
+mp.mp.dps = 34
+Lm = mp.mpf(int(Lq.p)) / int(Lq.q)
+Pb = Poly(Lm, NB)
+Am = Pb.A
+def my_eval(v):
+    """my A(v) and a function y -> g_v(y) for the author's rational vector (psi basis -> orthonormal basis)."""
+    idx = IDX[v.par]
+    c = [mp.mpf(int(b.p)) / int(b.q) / Pb.norm[j] for b, j in zip(v.b, idx)]
+    A = sum(c[a] * c[b] * (Am[idx[a], idx[b]] + Am[idx[b], idx[a]]) / 2 for a in range(len(idx)) for b in range(len(idx)))
+    def g(y):
+        G = Pb.gamma(y)
+        return sum(c[a] * c[b] * G[idx[a], idx[b]] for a in range(len(idx)) for b in range(len(idx)))
+    return A, g
+random.seed(20261111)
+smin = fmpq(1, 200000)
+def sweep(start, direction):
+    y = fmpq(start); s = fmpq(1, 100); out = []
+    while True:
+        yc = y + direction * s / 2
+        m, vecs = vectors_at(yc)
+        if certify(yc, s / 2, vecs):
+            lo, hi = (y, y + s) if direction > 0 else (y - s, y)
+            out.append((F(lo), F(hi), vecs))
+            y = y + direction * s
+            if s < fmpq(1, 50): s = s * 2
+        else:
+            s = s / 2
+            if s < smin: break
+    return y, out
+t0 = time.time()
+worst = None; nchk = 0; bad = 0; maxAdiff = mp.mpf(0)
+for name, start, direction in (("LEFT", fmpq(0), 1), ("RIGHT", TWOL, -1)):
+    yend, ivs = sweep(start, direction)
+    # (a) adjacency, exact
+    ivs_sorted = sorted(ivs, key=lambda t: t[0])
+    gaps = [(a[1], b[0]) for a, b in zip(ivs_sorted[:-1], ivs_sorted[1:]) if a[1] != b[0]]
+    print(f"{name}: {len(ivs)} intervals, union = [{ivs_sorted[0][0]}, {ivs_sorted[-1][1]}] = [{float(ivs_sorted[0][0]):.7f}, {float(ivs_sorted[-1][1]):.7f}], exact gaps/overlaps between consecutive intervals: {gaps}")
+    # (b) independent re-check at sample points
+    for lo, hi, vecs in ivs:
+        ev = [my_eval(v) for v in vecs]
+        for v, (A, g) in zip(vecs, ev):
+            d = abs(A - mp.mpf(v.A.mid().str(40, radius=False)))
+            maxAdiff = max(maxAdiff, d)
+        ys = [lo, (lo + hi) / 2, hi] + [lo + (hi - lo) * Fr(random.randint(1, 999), 1000) for _ in range(2)]
+        for yq in ys:
+            y = mp.mpf(yq.numerator) / yq.denominator
+            nchk += 1
+            if yq >= F(TWOL):
+                margin = min(A for A, g in ev)          # atom inactive: need some A(v) < 0
+            else:
+                ub = mp.inf; lb = mp.mpf(0)
+                neg0 = False
+                for A, g in ev:
+                    gy = g(y)
+                    if gy > 0: ub = min(ub, A / (2 * gy))
+                    elif gy < 0: lb = max(lb, A / (2 * gy))
+                # feasible m must satisfy lb <= m <= ub; "margin" = (ub - lb) scaled: negative means empty
+                margin = ub - lb
+            if not (margin < 0):
+                bad += 1; print(f"   NOT REFUTED by my evaluation at y = {float(yq):.8f} in [{float(lo):.7f}, {float(hi):.7f}]: margin {mp.nstr(margin, 8)}")
+            if worst is None or margin > worst[0]: worst = (margin, float(yq))
+    print(f"   {name} done, t={time.time()-t0:.0f}s", flush=True)
+print(f"sample points re-checked with my own evaluation: {nchk}, not refuted: {bad}; largest (least negative) m-interval margin ub - lb: {mp.nstr(worst[0], 6)} at y = {worst[1]:.8f}")
+print(f"max |A(v)_mine - A(v)_author| over all test vectors: {mp.nstr(maxAdiff, 5)}")

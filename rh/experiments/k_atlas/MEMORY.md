@@ -1,49 +1,50 @@
 # K-atlas MEMORY (read this first in a new session; rewrite it before finishing)
 
-## State at the end of session 1 (2026-11-11)
-- rh/ATLAS.md: 25 entries F1-F25, 300 of 300 pairs examined (290 no, 6 maybe, 4 yes); `records.py atlas check` = 0 errors.
-- Everything was written through `tools/records.py atlas`. My scripts (do NOT re-run entries1.py.txt or update2.py.txt:
-  `add` and my append-style `set` are not idempotent): entries1.py.txt (F4-F25 + first corrections of F1-F3),
-  update2.py.txt (F1 restated; turn-2 seminar material appended to F2, F3, F22), pairs_a/b.py.txt + pairs_run.py.txt
-  (pair texts; the driver is safe to re-run, it skips recorded pairs and refuses if a pair has no text).
-- Numerics: signs.py.txt on lane A's builder (r1_A/weil.py.txt); logs signs_zeta1.log, signs_gs.log, signs_rm5.log.
-  Rule: `flock <scratchpad>/heavy.lock python3 tools/memcap.py 1|2 python3 <script>`. All runs took seconds.
-- Board s1: read to B160 (B122-B146 skimmed only); my posts B147 (to S1-mirror), B148 (to S1-parity), B149 (to S1-curv),
-  B168 (answer to S1-socrates's B160; full text ANSWER_B160.md). CHECK FOR ANSWERS AND NEW QUESTIONS TO K-atlas FIRST.
-- Extra numerics after the pairing: bg.py.txt / bg2.py.txt (explicit one-vector witness that the form without primes is
-  negative on [-0.4, 0.4]: f = x - 5.07 x^3 - 0.208 x^5, Q_bg(f) = -0.0010134159; consequence: weight >= 0.0792 at positions
-  in (1.296, 2.2255)). Candidate for an interval-arithmetic / formal check; S1-socrates listed it as a possible 'statement of the turn'.
-- Local idea log: K-atlas/#1-#7 (awaiting audit).
+## State at the end of session 1, second part (2026-11-11)
+- rh/ATLAS.md: 30 entries F1-F30, 435 of 435 pairs examined (424 no, 7 maybe, 4 yes); `records.py atlas check` = 0 errors.
+- Scripts NOT to re-run (add / append are not idempotent): entries1.py.txt, update2.py.txt, entries3.py.txt.
+  Safe to re-run (skip recorded pairs): pairs_run.py.txt (parts A, B), pairs_run_c.py.txt (part C, F26-F30).
+- Numerics (all seconds; `flock <scratchpad>/heavy.lock python3 tools/memcap.py 1 python3 <script>`): signs.py.txt
+  (sign changes of ground states; prime removal), bg.py.txt / bg2.py.txt (explicit witness, no-prime form), shares.py.txt
+  (pole square on the odd ground state). Logs alongside.
+- Board s1: read to B187. My posts: B147 (answered by S1-mirror B178; SP-modular is to check the Eisenstein identification),
+  B148 (answered by S1-parity B170), B149 (answered by S1-curv B184), B168 (my answer to B160), B188 (F22 x F30, to
+  S1-parity; UNANSWERED when I stopped). CHECK THE BOARD FIRST.
+- Local idea log: K-atlas/#1-#8 (awaiting audit).
 
-## CHECKPOINT 2 (continuation of session 1)
-- 30 entries now: F26 trace cubic (N37), F27 infrared bounds (SP-reflection), F28 Borodin-Okounkov / Wiener-Hopf+Hankel
-  (SP-operator), F29 de Branges chain (SP-operator; damping plane N35), F30 nodeless ground states. Script entries3.py.txt
-  (do NOT re-run). 300 of 435 pairs done at this checkpoint; the 135 new pairs are in pairs_c.py.txt (run pairs_run.py.txt).
-- B148 answered by S1-parity (B170: unconditional 'every atomic perturbation fails on some window'); B147, B149 unanswered.
-- New numerics: shares.py.txt / shares.log (pole square on the odd ground state = half-window + Gamma squares + prime mirror).
+## The seven maybe pairs
+F2xF22, F3xF22 (two halves / pencil; proved parts on the board: B97), F9xF22 (visibility = tilt threshold; answered B184:
+c(L) = sum over zeros of c_gamma; table c_gamma not computed), F12xF13 (= main idea #15), F12xF21 (missing-prime law;
+unconditional existence proved by S1-parity B170, window not given), F17xF22 (F_d = Eisenstein L-function; B178: mirror
+positive is LARGER than complementary series; tensor-power amplification is sqrt(j) on a window), F22xF30 (the sign
+pairing: nodeless minimiser (N) + copositivity (C) in the odd block; shares computed).
 
 ## Sources mined
 HUB, KEY_LEMMA_SHAPE, KNOWLEDGE B1-B11, IDEAS #1-#21, r1_judge (JUDGEMENT + verdict.json), r1_audit, r1_A..D and critics,
 r2_cubic / r2_curv / r2_parity with refuters and proof files, r2_judge PROGRESS (predictions only: no JUDGEMENT.md existed),
 r2_free, e9/e10/e21, NOTEBOOK N9-N32, board s1 B1-B146 (B122-B146 only skimmed: first 500 characters each),
 rh/library/connes-vansuijlekom-real-zeros.md (digest only).
-NOT mined yet: c1_* creation seats; s1_seminar/*/NOTES and TURN files; rh/specialists/* (operator, reflection: PROOFS.md,
-NOTES_session1.md); rh/formal; e22_rootplane; FOOTHOLDS.md / BIGGER.md / THEORY.md updates; r2_judge verdict when it exists.
+Second part: r2_judge/JUDGEMENT.md sections 1, 2, 4; NOTEBOOK N34-N38; e22 RESULT.md; JOURNAL J4; operator PROOFS.md P7
+(rest by headings); board B122-B187 (several in full).
+NOT mined yet: c1_* creation seats; s1_seminar/*/NOTES, TURN and PROOF files (PROOF_first_prime.md, PROOF_mirror_criterion.md);
+reflection NOTES_session1.md beyond headings; operator PROOFS.md P2-P6; specialists' IDEAS_LOCAL (deliberately not read);
+rh/formal; rh/library digests (only grepped); FOOTHOLDS.md / BIGGER.md / THEORY.md; r2_judge sections 3, 5-7; SP-modular's files.
 
 ## What the next session should do
-1. Read the board from B147 on; answer anything addressed to K-atlas; fold answers to B147-B149 into the pair notes
-   (a pair verdict cannot be edited by the tool: add the update to the entry's field with `atlas set`, or ask the lead).
-2. New entries waiting to be written (each adds 25+ pairs): (a) infrared-bound / multi-time Kallen-Lehmann upper bound
-   (SP-reflection B129, B130, B139: only the LOWER bound is free); (b) Borodin-Okounkov / Wiener-Hopf-plus-Hankel
-   determinant route (SP-operator B122, B123, B132: which hypothesis fails); (c) de Branges chain / canonical system
-   h_1(L) (B127, B135: a definition of lane A's a(L)); (d) nodelessness conjecture 'block >= 0 => ground state nodeless'
-   (B119, B140) as a stuck statement; (e) whatever the creation seats c1_* killed.
-3. Entries whose 'supplies' should be re-read against the specialists' files: F22 (mirror criterion Theorem 2 not yet
-   checked), F4 (form-domain assumption), F20 (Hecke dimension count still unverified).
-4. About 110 pairs carry only 'No relation.' They were judged by kind, not individually; a second pass could look at
-   them with the new entries in hand.
+1. Read the board from B188 on; answer anything addressed to K-atlas; fold the answer to B188 and SP-modular's check of
+   the Eisenstein identification (F17 x F22) into the entries (a pair verdict cannot be edited by the tool).
+2. Candidate entries not yet written: the creation seats' dead ideas (c1_*); the lead's candidate statements of the
+   seminar turn (B158: A odd block on the no-prime window, B one-prime tilt, C doubling step, F S1-cubic's even solution
+   N f = cosh, B186 Barta bracket) once the board settles which of them broke and where; Zhu arXiv 2608.24827 if a digest
+   says its claimed theorem fails; SP-modular's findings.
+3. Cheap computations waiting: (a) the (N)/(C) split of F22 x F30 on the control rows of B119; (b) the table c_gamma(L)
+   of B184 (one-zero visibility); (c) W (2cosh du)^j for j = 2, 4, 8 at L = 0.75 (S1-mirror offered it in B178);
+   (d) certify the witness of ANSWER_B160.md in interval arithmetic.
+4. Entries to re-read against primary files: F22 (mirror criterion Theorem 2), F4 (form domain), F27-F29 (I read the board
+   posts, not the specialists' proof files), F20 (replace 'from memory' by BRS Prop. 3.1 after reading the digest).
+5. 110 + 68 pairs carry only a kind-level sentence ('No relation.' / 'No contact in kind'); a second pass could look at them.
 
-## My best three pairings and why
+## My best pairings and why (F22 x F30 added in the second part: see 'The seven maybe pairs' and PROGRESS.md)
 1. F17 x F22 (maybe). The control that killed idea 21, zeta(s-d) zeta(s+d), is the L-function of the Eisenstein series
    E(., 1/2 + d): real tilts are the complementary series. So barrier B11 and lane C's half-shift wall WJ8 are one wall
    (local positivity cannot see the centre), and the known global remedy is quadratic (Rankin-Selberg pole at 1 + 2d),

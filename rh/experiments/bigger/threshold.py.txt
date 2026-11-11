@@ -1,5 +1,5 @@
 """BG-T: threshold conductor on a window with free real weights on the integers.
-usage: python3 threshold.py.txt <type: zeta|even0|odd> <L> <N>
+usage: python3 threshold.py.txt <type: zeta|even0|odd> <L> <N> [pole weight r, for zeta/even0]
 Q(m) = Q0 + sum m_n * Bm[n]  (Bm[n] = builder output for unit weight, i.e. minus the shift form), float64.
 maximise t s.t. Q_b(m) - t I >= 0 on both parity blocks (log-det barrier, Newton)."""
 import sys, math, importlib.util, importlib.machinery, time
@@ -23,8 +23,13 @@ if typ == 'odd':
     sv = weil.dh_logderiv_coeffs; weil.dh_logderiv_coeffs = lambda X: {}
     q, _ = weil.build(L, N, kind='dh', pole=False, primes=False, arch=True); weil.dh_logderiv_coeffs = sv; q0 = 5.0
 else:
-    q, _ = weil.build(L, N, kind='zeta', pole=(typ == 'zeta'), primes=False, arch=True); q0 = 1.0
-Q0 = blocks(q); Bm = [unit(n) for n in ns]; k = len(ns)
+    q, _ = weil.build(L, N, kind='zeta', pole=False, primes=False, arch=True); q0 = 1.0
+Q0 = blocks(q)
+R = float(sys.argv[4]) if len(sys.argv) > 4 else (1.0 if typ == 'zeta' else 0.0)   # weight of the pole term
+if R != 0.0:
+    qp, _ = weil.build(L, N, kind='zeta', pole=True, primes=False, arch=False); Qp = blocks(qp)   # pole term only
+    Q0 = [Q0[b] + R * Qp[b] for b in (0, 1)]
+Bm = [unit(n) for n in ns]; k = len(ns)
 def S(x, b):
     M = Q0[b] - x[k] * np.eye(Q0[b].shape[0])
     for i in range(k): M = M + x[i] * Bm[i][b]
@@ -57,6 +62,6 @@ while mu > 1e-13:
         if dec < 1e-10 * mu: break
     mu *= 0.3
 m = x[:k]; ls = lam(m)
-print("type=%s L=%.3f N=%d integers 2..%d  time %.0fs" % (typ, L, N, X, time.time() - t0))
+print("type=%s poleweight=%g L=%.3f N=%d integers 2..%d  time %.0fs" % (typ, R, L, N, X, time.time() - t0))
 print("  lambda* = %.12g   threshold conductor on this window q*_L = %.10g   (no weights: lambda = %.6g)" % (ls, q0 * math.exp(-ls), lam(np.zeros(k))))
 print("  maximiser m_n:", " ".join("%d:%.6f" % (n, v) for n, v in zip(ns, m)))

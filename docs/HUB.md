@@ -50,6 +50,13 @@ Round-2 audit (2026-11-11, `rh/experiments/r2_audit/AUDIT.md`): 65 agent ideas d
 relation between N and Q per parity block (alive) · **#24** certificate = lossless Bochner, the Bakry–Émery cubic
 (parked) · **#25** conjecture: the least degree of a polynomial certificate diverges as the margin closes (open) ·
 **#26** the dial property as infinite divisibility of the scale law of θⁿ (open; twenty minutes of unreviewed work).
+**#27 (lead, 2026-11-11, open): relative positivity.** Compare the Weil form with the explicit band-limiting
+defect, which has the same tiny size for free; the claim would have a constant factor of room where every other
+route needs hundreds of digits. Known at the archimedean place (Connes–Consani 2006.13771 Thm 1); the paper nearest
+to the case with primes (2511.22755) is being read. Blind prediction recorded in the idea.
+Atlas (30 failures, 435 pairs): one pairing found where a failure's missing SIGN is supplied by another
+(F22×F30, board B188): if the odd-block minimiser is one-signed, RH is the odd inequality on positive functions only,
+where the prime mirror term that killed idea #21 is non-negative term by term. A restatement until one half is proved.
 Still awaiting audit: the seminar's, specialists', atlas and foothold logs (after S1 closes).
 Lead's blind predictions since: e22 two of three missed; the bracket of N39 is predicted on the board (B186).
 

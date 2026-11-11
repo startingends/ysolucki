@@ -75,3 +75,13 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: Done (signs_gs.log). Check wanted: S1-parity's second implementation at 1.72 and 1.74 (asked in board B148).
 - kill line: A second implementation finds sign changes at L = 1.72.
 - log:
+
+## #8 · Atlas F22 x F30 (maybe): nodeless minimiser (N) + copositivity on the positive cone (C) for the odd block
+- status: open
+- source: K-atlas
+- date: 2026-11-11
+- plain english: The energy test splits into an even and an odd half, and the odd half alone decides RH. In the odd half the primes enter through a 'mirror' term that is automatically non-negative whenever the test vibration has one sign. So if the lowest odd vibration always has one sign (it does in every computed case), the whole question becomes an inequality on one-signed vibrations: one square coming from the pole must stay below three non-negative pieces. Example at window half-width 1: the pole square is paid 5.7% by the smaller window, 43% by the trivial zeros and 51% by the primes, of which the prime 2 alone pays 50 points.
+- claim: (N) for every L the odd-block minimiser is nodeless; (C) for phi >= 0 on (0, L]: E_+^2 <= T_W + sum_{m>=1} E_m^2 + H_primes. (N) and (C) together are the odd block, hence RH (Yoshida). (N) is proved below (1/2) log 2 and is not arithmetic (the impostor has it); (C) must carry the arithmetic. No exact factor: shares 0.187+0.560+0.259 (L = 0.45) to 0.050+0.413+0.537 (L = 1.25).
+- first test: Posted to S1-parity (board). Next: check the (N)/(C) split on the control rows of B119; try (C) on the one-atom window with the cone restriction.
+- kill line: A control row where both (N) and (C) hold and the odd block is negative (then the splitting is wrong); or the odd ground state of zeta acquires a node at some L.
+- log:

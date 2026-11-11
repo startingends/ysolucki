@@ -42,3 +42,4 @@ READER-2	2026-11-11	persistent reader: whole papers in full (Johns preprint, Hel
 R2-AUD	2026-11-11	auditor: round-2 local idea logs (65 entries) into the main log	session model	rh/experiments/r2_audit	done	-
 SP-modular	2026-11-11	persistent specialist: modular forms, Eisenstein series, Rankin-Selberg, converse theorems (session 1, in seminar S1 turn 3)	session model	rh/specialists/modular	running	-
 V-FH	2026-11-11	verifier: foothold theorems A (certified positivity L <= (1/2) log 3) and B (first atom forced into a box)	session model	rh/experiments/foothold/verifier	running	-
+READER-3	2026-11-11	reader: Connes-Consani-Moscovici 2511.22755 whole, then Bombieri if openly available	session model	rh/library	running	-

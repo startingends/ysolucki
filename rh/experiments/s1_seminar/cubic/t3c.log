@@ -27,3 +27,30 @@ L = 0.5, n = 24: weight of the prime 2 multiplied by kappa
    kappa = 1.25: t_0 = 1.178172 ; min(f)/max(f) = -1.0756e+00 ; sign changes of f 1 ; #pos(N_e) 1
    kappa = 1.50: t_0 = 0.938793 ; min(f)/max(f) = -3.8294e-01 ; sign changes of f 1 ; #pos(N_e) 2
    kappa = 2.00: t_0 = 0.961264 ; min(f)/max(f) = -2.7518e-01 ; sign changes of f 2 ; #pos(N_e) 2
+   kappa_P (t_0 = 1): 0.441888 1.044049 1.283697
+   kappa_F (edge value of f = 0): 0.872482 1.144703
+L = 0.5, n = 48: weight of the prime 2 multiplied by kappa
+   kappa = 0.00: t_0 = 1.039786 ; min(f)/max(f) = -2.8500e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.25: t_0 = 1.021872 ; min(f)/max(f) = -2.2947e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.50: t_0 = 1.009042 ; min(f)/max(f) = -1.7773e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.75: t_0 = 1.000399 ; min(f)/max(f) = -1.1536e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.90: t_0 = 0.997704 ; min(f)/max(f) = -4.3578e-02 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 1.00: t_0 = 0.998671 ; min(f)/max(f) = +5.2862e-02 ; sign changes of f 0 ; #pos(N_e) 1
+   kappa = 1.10: t_0 = 1.025804 ; min(f)/max(f) = -7.3371e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 1.25: t_0 = 0.978918 ; min(f)/max(f) = -3.2998e-01 ; sign changes of f 1 ; #pos(N_e) 2
+   kappa = 1.50: t_0 = 0.982157 ; min(f)/max(f) = -2.3001e-01 ; sign changes of f 1 ; #pos(N_e) 2
+   kappa = 2.00: t_0 = 0.987851 ; min(f)/max(f) = -2.2821e-01 ; sign changes of f 2 ; #pos(N_e) 2
+   kappa_P (t_0 = 1): 0.765893 1.024765 1.126686
+   kappa_F (edge value of f = 0): 0.957522 1.073899
+L = 0.5, n = 96: weight of the prime 2 multiplied by kappa
+   kappa = 0.00: t_0 = 1.045217 ; min(f)/max(f) = -2.9523e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.25: t_0 = 1.026652 ; min(f)/max(f) = -2.4016e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.50: t_0 = 1.013234 ; min(f)/max(f) = -1.9317e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.75: t_0 = 1.003751 ; min(f)/max(f) = -1.4265e-01 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 0.90: t_0 = 1.000006 ; min(f)/max(f) = -8.5152e-02 ; sign changes of f 1 ; #pos(N_e) 1
+   kappa = 1.00: t_0 = 0.999534 ; min(f)/max(f) = +1.8339e-02 ; sign changes of f 0 ; #pos(N_e) 1
+   kappa = 1.10: t_0 = 0.976902 ; min(f)/max(f) = -5.2292e-01 ; sign changes of f 1 ; #pos(N_e) 2
+   kappa = 1.25: t_0 = 0.989725 ; min(f)/max(f) = -2.4284e-01 ; sign changes of f 1 ; #pos(N_e) 2
+   kappa = 1.50: t_0 = 0.988831 ; min(f)/max(f) = -1.9757e-01 ; sign changes of f 2 ; #pos(N_e) 2
+   kappa = 2.00: t_0 = 0.994157 ; min(f)/max(f) = -2.1966e-01 ; sign changes of f 2 ; #pos(N_e) 2
+   kappa_P (t_0 = 1): 0.900325 1.014846 1.081986
