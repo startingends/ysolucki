@@ -806,3 +806,19 @@ labels per line; novelty not searched).
   Poisson is again SHORT. Their transfer step (two Poisson summations, "returns to the same family with
   H′/Σ′ ≤ H/Σ") changes the ratio of family to length; whether it can run in the regime H < D is the precise
   question. Given to two seats at once (rule 13 (b)).
+
+**N54. SP-reflection round 3 lands on the same wall independently** (lead, 2026-11-11; it had not read N53).
+- PROVED there: e^(2Dfc(ω)) − 1 is exactly a continuous Nyman–Beurling distance for ζ_K (Pythagoras + Krein–Szegő);
+  an unconditional certificate Dfc(ω) ≤ ½ log(1 + NB integral of any admissible test function), useless
+  quantitatively (≈ 0.16/log X) and unable to certify Dfc = 0; the explicit Möbius vector f* is square integrable
+  iff RH_K. Its truncation is a double sum of μ_K against the orbit counts, and what that needs is "an asymptotic for
+  a mollified second moment of ζ_K on the critical line" — the long-mollifier wall of N53 (b), reached from the
+  positivity toolkit without seeing N53. Fake first: at i√5 the first step the fake cannot take is the explicit
+  vector itself (its Dirichlet inverse diverges at s = 1), consistent with N53 (c)'s pole at 0.808.
+- So four independent routes (bridge 1 via the impostor, the amplifier formula, the operator determinant, the
+  positivity determinant) end at ONE wall: Möbius-specific mean squares in which the family is not longer than the
+  sum (equivalently: twisted / mollified second moments with mollifier longer than the square root of the height,
+  at bounded height in the limit). The October 2026 proof works on the other side of that wall (family longer than
+  the sum). Two seats (SP-modular, SP-operator) are on "what object makes the short-family regime exact".
+- Blind conjecture of SP-reflection to keep (testable later, not now under rule 13): λ_T^Eis(ω) − limit ≈ 0.15942/T
+  under RH_K.
