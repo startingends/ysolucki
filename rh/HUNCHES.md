@@ -267,3 +267,33 @@ Nikolski, Hedenmalm–Lindqvist–Seip); (iii) the adelic picture, where the pro
 - **H10 (lead, from N63).** Coefficient positivity at the critical line is (conjecturally) unavailable: Landau's theorem
   ties every non-negative arithmetic weight to the pole at 1, and the one-sided Mertens bound that would move it to ½
   is believed false (Ingham). A proposal must use two-sided cancellation or positivity of a FORM on the near side.
+
+## G. Where nobody has looked: candidates after the copy principle (lead, 2026-11-11). Honest odds attached.
+The record now says (N49, N50, N60, N63, N67): amplification by copies is capped at 3/4 (copies are kernels of
+homomorphisms; character families give at most square-root density); moments do not change the copy proportion
+(2k-th moments need families of size D^k and their copies grow by the same power); the October bootstrap's fixed
+point is (1 + κ)/2 with κ ≥ ½ at square-root cancellation, again 3/4; coefficient positivity at ½ is believed false;
+on the Möbius side there are no controls. What is left has to be a mechanism of a different KIND. Candidates:
+- G1. Copies across SCALES instead of across twists (Buchstab: A(D) = −Σ_p A^(<p)(D/p), exact, SP-operator's S2
+  recursion). The family is the set of scales D/p; self-similarity, not orthogonality. Odds: low; the recursion is the
+  Dirichlet series in disguise unless a contraction is found. Plank zero: is the Buchstab map a contraction on any
+  normed space of "Möbius-like" sequences, with fixed point μ? If yes, its rate is an exponent.
+- G2. Galois/Artin families (twists by characters of a non-abelian extension): copies = Frobenius in a subgroup, of
+  positive density ⇒ finite family ⇒ circular by the copy principle. DEAD before birth; recorded so no seat tries it.
+- G3. Copositivity hierarchy for the odd block (#28): Parrilo/Pólya certificates exist at some level r for each
+  strictly copositive form; RH would need r uniform in L while margins are 10^(−30): DEAD by the same accuracy wall
+  as WJ2 unless the certificate is relative (bridge 1's lesson). Odds: very low.
+- G4. A mechanism that is not a mean square and not linear, with positivity at every level (Deligne's shape, S2 B9):
+  the record has no candidate positivity at level k. The one structural place where positivity at all levels exists
+  is the Rankin–Selberg / tensor-power tower of a CM form (SP-modular: the theta kernel factors K ⋆ K(3·)). Odds: low,
+  but it is the only shape not yet killed.
+- G5 (the boldest, and the one I hold): **near-copies that are not kernels.** Bagchi recurrence says ζ approximately
+  recurs along t on a positive-density set iff RH. The October proof replaced approximate recurrence along t by exact
+  recurrence in an algebraic family. Is there an INTERMEDIATE object: a family in which the untwisted sum recurs
+  approximately, with a proportion strictly between H^(1/2) and H, proved by an equidistribution theorem rather than
+  by an algebraic identity (e.g. twists by Hecke characters of growing conductor whose values on primes up to D are
+  close to 1 for a provable proportion, via equidistribution of Frobenius / Sato–Tate-type statements for the family
+  of characters)? The copy principle forbids EXACT kernels of intermediate density above ½, not approximate ones.
+  Plank zero (computable, cheap): for the family of characters (u/·)_6 with N(u) ≤ H, measure the proportion of u for
+  which |A_u(D) − A₁(D)| ≤ D^(1−η) for small η, at D = 10⁴–10⁶; predict first: only the sixth powers (proportion
+  H^(1/6)/H). A surprise there would be the first sign of a mechanism of a new kind.
