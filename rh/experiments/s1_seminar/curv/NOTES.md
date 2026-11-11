@@ -56,3 +56,23 @@ What others established that touches my material (do not re-derive):
 Things I could do next turn if asked: (a) prove or refute Op >= 0 (try M=80,160 and random kernels); (b) Cl single negative direction: what function is it (near-linear odd f?) and stability;
 (c) the limit of the Hankel min eigenvalue (-1.68?) by the reflection-operator picture; (d) t_e(L) as a function of L across windows; (e) the mirror at y = log r matrices (B40(1)) myself.
 Files: S1_ADDITIONS.md (statements + proofs + corrections), t1_*.py.txt / t1_*.log, rerun_*.log, s1lib.py.txt, IDEAS_LOCAL.md (S1-curv/#1-#4).
+
+## Turn 2 (2026-11-11; restarted once after a container restart, nothing lost). Board read to B78. To answer: B66 (S1-cubic), B77 (Socrates).
+Task: F2 and F4 for F_d = zeta(s-d) zeta(s+d), prediction first; nominate for Lean; question SP-reflection, SP-operator.
+
+### Derived by hand BEFORE computing (to be checked numerically): with phi_+- = e^(+-dx) phi, K_d = 2cosh(du) K, c_inf(d) = 2 log pi - psi(1/4-d/2) - psi(1/4+d/2)
+ N_d(f) = 2 N(f_+, f_-) (bilinear cross value), Q_d(f) = 2 Q(f_+, f_-) = 2[Q(cosh(dx) f) - Q(sinh(dx) f)]   (shift forms: a DIFFERENCE)
+ mirror: H_d(phi) = H(phi_+) + H(phi_-) = 2[H(cosh(dx) phi) + H(sinh(dx) phi)]                               (mirror forms: a SUM, congruence)
+ Q_d = 2Q + d^2 Q2 + O(d^4), Q2(f) = int int f(x) f(y) (x-y)^2 W(x-y) = - sum over zeros of (|F|^2)''(gamma)  -> on a null vector = -2 sum |F'(gamma)|^2 < 0.
+
+### PREDICTIONS for t2_fd.py.txt (written at the time printed by `date` when this block was appended; see the line above the block in the turn log: 00:1x UTC 2026-11-11)
+Box model, L = 1, M = 40 (mu_1 of zeta's box blocks: even 1.99e-3, odd 8.1e-3; for zeta^2 doubled).
+ P1 lowest eigenvalue of the F_d Weil block, even and odd: even in d, smooth, = 2 mu_1 - kappa d^2 (quadratic to 10% up to the crossing), kappa in (0.5, 20):
+    even block negative from d_crit in (0.014, 0.09), odd block from d_crit in (0.03, 0.18). No kink at d = 0.
+ P2 d_crit scales like sqrt(mu_1) under refinement: d_crit(M=160)/d_crit(M=40) (even block) = 0.29 +- 0.06.
+ P3 d^2-coefficient on the d = 0 even ground state, split by F4: shift part (T) negative, mirror part (H_W = pole - Gamma - primes mirror) of smaller size;
+    I guess |T-coefficient| > |H-coefficient| and the two have opposite signs on the even ground state.
+ P4 the PROCESS does not see d: N_d keeps non-negative off-diagonal entries; #positive eigenvalues of N_d is 1 for d <= 0.05 (2 allowed by the rank-2 pole only later);
+    gap/lambda_1 moves by < 1% for d <= 0.1; Bakry-Emery centre constant/lambda_1 moves by < 2% for d <= 0.1; Op_d >= 0 and Cl_d has one negative direction for all d <= 0.3.
+ P5 the 2x2 sum-rule matrix S_d = 2 C^T N_{d,e}^{-1} C - I (C = [c_+, c_-]) has det = -(margin) at d = 0 (-5.59e-4 at M = 40) and det crosses 0 at the same d_crit as P1 (to 3 digits).
+ P6 (B66) rho_half on my chain (no fibres), relative to lambda_1: M = 40: 0.84 +- 0.03, M = 160: 0.83 +- 0.03 (near 5/6); minimiser has mixed parity with even and odd parts of comparable norm.

@@ -159,3 +159,17 @@ Tasks: (1) F_d computation (B59), (2) lead's B70 (lowest eigenvalue of each bloc
        d_c(even) in (3e-8, 1e-6), d_c(odd) in (9e-7, 3e-5). So 'one-sided in d^2, smooth': zeta is NOT a kink point.
  Would surprise me: a term linear in |d|; c_b < 0 (real tilt raising the eigenvalue); negative eigenvalue for imaginary d.
 prediction block M written at 00:08:40 UTC
+
+### N. BLIND PREDICTIONS for Socrates' B73 (written 00:14:30 UTC after the container restart; still NO F_d code exists, nothing computed)
+ (a) L_d -> infinity as d -> 0 (at fixed L failure needs c(L) d^2 > 2 mu_0(L) and mu_0(L) > 0), but only DOUBLY LOGARITHMICALLY:
+     from mu_0 = 1e-6, 4.6e-15, 8e-30 at L = 0.5, 0.75, 1 I read -log10 mu_0 ~ 4.3 L e^(2L), so L_d solves 4.3 L e^(2L) ~ 2 log10(1/d):
+     L_d ~ (1/2) log log(1/d) + O(1). Anchors: d = 1e-7 <-> L ~ 0.75; d = 1e-14 <-> L ~ 1.0. For d = 0.05..0.25 I keep section K: L_d in (0.30, 0.70).
+ (b) hybrids at d = 0.1 (one part tilted, the other two at d = 0, all in the F_d normalisation = 2 x zeta at d = 0):
+     primes only: fails in the EVEN block (weights too heavy: +0.24% at 2), first failing L in (0.40, 0.52);
+     pole only: fails in the ODD block (odd pole more negative), L in (0.35, 0.50);
+     Gamma only: fails in the EVEN block (diagonal constant lowered, kernel raised), L in (0.38, 0.52).
+ (c) pairs (one part left untilted): Gamma left untilted fails LATEST (pole and primes partly cancel in each block);
+     primes left untilted fails in the ODD block, pole left untilted in the EVEN block, both earlier.
+     All six hybrids fail before L = 0.75; none fails later than the full tilt by more than 0.05.
+ Reading I expect: all three parts carry the information (each single mismatch is detected at about the same window).
+ Would surprise me: a hybrid that stays positive to L = 0.75; a hybrid failing LATER than the consistent tilt F_d.

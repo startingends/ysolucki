@@ -1,0 +1,77 @@
+"""S1-parity, turn 2: the Weil form of F_delta(s) = zeta(s - delta) zeta(s + delta) on a window, with each of the three parts
+(pole, Gamma, primes) tilted separately. delta real (zeros moved OFF the line to 1/2 +- d) or imaginary (delta = i eps: zeros
+moved ALONG the line). Kernel = zeta's kernel times 2 cosh(delta u); at delta = 0 the form is exactly 2 x zeta's.
+Built on implementation B (wb.py.txt): the single-frequency function Phi is evaluated at the complex frequencies w +- i delta.
+   Phi_tot(w) = Phi_0(w + i delta) + Phi_0(w - i delta)      (arch and atoms)
+   pole kernel 2cosh(u/2) 2cosh(delta u) = sum over a in {1/2 + delta, 1/2 - delta} of 2cosh(a u):
+        even block  + sum_a 2 C_a C_a^T,  odd block  - sum_a 2 S_a S_a^T,  C_a = <basis, cosh(a x)>, S_a = <basis, sinh(a x)>.
+"""
+import math, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+I = mp.mpc(0, 1)
+
+def phi_arch_c(om, L):
+    """Phi_arch at a complex frequency om (analytic continuation of wb.phi_arch)."""
+    om = mp.mpmathify(om)
+    z = mp.mpf(1) / 4 - I * om / 2
+    val = -mp.log(mp.pi) / 2 + mp.digamma(z) / 2
+    dval = -I / 4 * mp.polygamma(1, z)
+    M = int(mp.mp.dps * 2.3026 / (4 * L)) + 14
+    for m in range(M):
+        c = (2 * m + mp.mpf(1) / 2) - I * om
+        e = mp.exp(-2 * L * c)
+        val += e / c
+        dval += I * e * (2 * L / c + 1 / c ** 2)
+    return val, dval
+
+def phi_atom_c(om, x):
+    lx = mp.log(x)
+    v = -mp.exp(I * om * lx) / mp.sqrt(x)
+    return v, I * lx * v
+
+def tot(fun, w, delta):
+    a = fun(w + I * delta); b = fun(w - I * delta)
+    return a[0] + b[0], a[1] + b[1]
+
+def arch_blocks(L, N, lat, delta):
+    L = mp.mpf(L); w = wb.freqs(L, N, lat)
+    vals = [tot(lambda om: phi_arch_c(om, L), x, delta) for x in w]
+    return wb.blocks(L, N, lat, [v[0] for v in vals], [v[1] for v in vals])
+
+def atom_blocks(L, N, lat, x, delta):
+    L = mp.mpf(L); w = wb.freqs(L, N, lat)
+    vals = [tot(lambda om: phi_atom_c(om, mp.mpf(x)), om_, delta) for om_ in w]
+    return wb.blocks(L, N, lat, [v[0] for v in vals], [v[1] for v in vals])
+
+def pole_blocks(L, N, lat, delta):
+    L = mp.mpf(L); w = wb.freqs(L, N, lat); n = len(w)
+    J = lambda zz: 2 * mp.sinh(zz * L) / zz
+    E = mp.matrix(n, n); O = mp.matrix(n, n)
+    for a in (mp.mpf(1) / 2 + delta, mp.mpf(1) / 2 - delta):
+        C = []; S = []
+        for om in w:
+            nrm = mp.sqrt(2 * L) if om == 0 else mp.sqrt(L)
+            jp, jm = J(a + I * om), J(a - I * om)
+            C.append((jp + jm) / 2 / nrm); S.append((jp - jm) / (2 * I) / nrm)
+        for j in range(n):
+            for k in range(n):
+                E[j, k] += 2 * C[j] * C[k]; O[j, k] -= 2 * S[j] * S[k]
+    E = E.apply(mp.re); O = O.apply(mp.re)          # the two values of a are conjugate (or real): the sum is real
+    if lat == 'int': O = O[1:, 1:]
+    return E, O
+
+def form(L, N, lat, d_pole, d_gam, d_pr, atoms=None):
+    """blocks (even, odd) of pole(d_pole) + arch(d_gam) - primes(d_pr); each d real or imaginary (mp.mpc(0, eps))."""
+    M = wb.add(arch_blocks(L, N, lat, d_gam), pole_blocks(L, N, lat, d_pole))
+    at = atoms if atoms is not None else wb.mangoldt(math.exp(2 * float(L)))
+    for x, c in at.items():
+        if math.log(float(x)) < 2 * float(L) - 1e-12:
+            M = wb.add(M, atom_blocks(L, N, lat, x, d_pr), c)
+    return M
+
+def low(M):
+    return [min(mp.eigsy(M[b], eigvals_only=True)) for b in (0, 1)]

@@ -63,3 +63,68 @@ B1 lead (open): what must a bridge mirror positivity -> shift inequality say, wh
 - An answer that restates the idea instead of writing the object (B4, B5): ask again for the formula.
 - An answer to B6 that changes the claim silently: ask which sentence of idea 21 is now withdrawn.
 - "It is true for Beurling too" without a line number: ask for the line.
+
+## Turn 2 (2026-11-11; board B4-B70 read in full; I posted B71-B80; a container restart cut the turn after B78)
+
+### What turn 1's questions produced (my reading of the board, for my own memory; not rulings)
+- B4 -> B17, B60 (S1-mirror): mirror positivity gives only an ORDERING of the blocks, N(f_o) <= N(f_e); RH needs
+  the two-sided bound |H_W| <= T_W (T_W = Weil form on the half window). S1-curv B31(a) and S1-parity B25 write the
+  same algebra (I checked the factor conventions 8<phi,cosh>^2 / 4c^2 / E_+,E_0 agree; no conflict there).
+- B5 -> B18: one-prime system passes every hypothesis of idea 21 and fails from L in (0.54, 0.56), odd block first.
+  S1-parity B43 reproduced. "The integers" split into POSITIONS / COMPLETENESS / WEIGHTS (B50).
+- B6 -> B16, B12, B23: L(chi)L(chi-bar) mod 5 has c(4) = -2 log 2, min eig -3.89; mirror test is about local roots,
+  not zeros; claim sentence 2 of idea 21 DROPPED by its seat. n = 4 dial: one negative square from the factor at 2.
+- B7 -> B29, B27: W-curv-3 withdrawn as worded; "one reflection, two test spaces"; exactly one positive point in
+  the window L = 1. B8 -> B30: integrated open-path term is a Hankel-type form with a moving mirror; cosine 0.92
+  with the D5 form (seat's blind prediction missed).
+- B9 -> B51: end pair not special; "maximally non-local" WITHDRAWN; nothing in the cubic seat uses the integers.
+- B10 -> B25: neither block follows from the other; m = 0 Gamma square cancels half the pole; no step uses integers.
+- B11 -> B12: at zeta the hypothesis list IS "F is zeta"; new input "nothing proved".
+- Then: B15 obstruction F_d = zeta(s-d)zeta(s+d); idea 21 killed (B69); barrier B11 written.
+- New unproved statement everything in B58 reduces to: FACT 2, the folded ground states of both parity blocks are
+  one-signed on (0, L]. S1-cubic asked the control question about it (B67). Not asked by me.
+
+### What I asked in turn 2, and why
+| post | to | question (short) | why |
+|---|---|---|---|
+| B71 | lead (re B69) | "Not about the integers at all; it is the size of the local roots" against one-prime and Beurling rows (roots of modulus 1, fail at 0.56 / 0.40). Full list of necessary items, one control per item; are two items the same in two languages? | Lead (B69) and S1-mirror (B50, B45) gave different answers to "what was missing". |
+| B72 | S1-mirror (re B45) | Does "one wrong-sign square / one pole" separate from "roots of modulus 1"? Candidate control G_d = zeta(s) L(s-d,chi_4) L(s+d,chi_4). | On F_d both items fail together; nobody has a control that splits them. |
+| B73 | S1-parity (re B59) | Before the F_d table: blind L_d as d -> 0; tilt pole / Gamma / primes one at a time at d = 0.1. | Barrier B11 says only the prime part knows the centre; the kernel has three tilted parts. |
+| B74 | SP-reflection | Which condition on c itself is equivalent to "representing measure on |chi(p)| = 1"; smallest finite test separating d = 0.1 from d = 0 at p = 2. | Priority (2): d = 0 stated on the prime side. |
+| B75 | SP-operator (re B60) | Is the doubling step |H_W| <= T_W a named object; a theorem reading it off the kernel; which hypothesis fails for F_d. | B60 is the surviving exact reformulation; needs a specialist. |
+| B76 | S1-parity | Nominations for Lean: B25, B32, B56, B58; which step of B32 is infinite-dimensional; is B58 Fact 3 an equality or a cap + computed match. | Coordinator's item (3). |
+| B77 | S1-curv | Nominations: F1-F4; list every hypothesis that could fail on some window. | Same; the checker already found one unstated hypothesis (lambda_1 > 0). |
+| B78 | S1-mirror | Nomination: Theorem 2 of PROOF_mirror_criterion.md; Step 2's own bracket about the exponent; can Corollary 3 be stated prime by prime, finite-dimensional. | Same. |
+| B79 | SP-reflection (re B25) | Needs SP-operator's toolkit: reconstruction when the mirror form has exactly one wrong-sign square (Pontryagin kappa = 1?); what changes for F_d; what corresponds to |H_W| <= T_W. | Cross-specialist (resume instruction, priority 3). |
+| B80 | SP-operator | Needs SP-reflection's toolkit: the operators T_m k_a = k_(ma) of the mirror space; what kind of operator is T_p for zeta and for F_d; is d = 0 an operator identity and which identity on c; do the T_m extend to the window. | Cross-specialist; also priority (2). |
+
+### Self-check
+- 10 posts this turn (brief said 5 to 8; the resume message added the two cross-specialist questions).
+- B72 proposes a control "to test, not asserted". B73's last sentence quotes barrier B11. B80 asks whether d = 0
+  "is an operator identity"; I did NOT state the identity I suspect. Keep it that way.
+- I did not ask S1-cubic for nominations (coordinator: its first turn was unfinished). It has PROVED items
+  B51(b), B62 (block curve (1+3 theta)/(2+2 theta)), B63 (one-field form): ask next turn.
+
+### Waiting for
+lead B71; S1-mirror B72, B78 (may leave the board); S1-parity B73, B76 (+ its F_d table, B59); S1-curv B77;
+SP-reflection B74, B79; SP-operator B75, B80. New seats to watch: K-atlas (pairings of failures), FORMAL (gaps).
+Others' open questions I am watching: lead B70 (kink at d = 0), S1-cubic B65, B66, B67 (FACT 2 on controls).
+
+### Reserve for turn 3
+1. THE SIEVE (idea 9) after B58 Fact 3: feasible interval of a weight = mu sqrt(n)/(2g). So the sieve measures
+   mu(L). Lead's B69 calls the sieve the one recorded statement forcing positions + completeness + weights at once.
+   Ask (lead or S1-parity): for a control just inside its own threshold (F_d before its first failing window; zeta
+   with a wrong weight within the allowed 1e-5), are the OTHER weights pinned as sharply around the wrong values?
+   If yes, what does the sieve say that singles out the true ones?
+2. FACT 2 (one-signed folded ground states): once B67's controls are in, ask whether it is a restatement
+   (does it fail for F_d / Beurling exactly when positivity fails, or earlier, or never?).
+3. If B74 and B80 come back with different "prime-side statements of d = 0", put them side by side and ask each
+   specialist to translate the other's.
+4. If B73 shows one tilt alone already fails at a small window: ask what that hybrid violates (it is not an
+   L-function): which identity links the three parts at d = 0?
+5. S1-cubic nominations (see self-check). Also B62: the two-halves constant 0.8364 vs 5/6: does F_d or the
+   one-prime system sit on the same mean-field curve? (S1-cubic asked S1-curv B66; watch.)
+6. Lead's B12(2) "a Hilbert space on which multiplication by each integer is self-adjoint ... a structure in
+   search of a theorem": B80 now asks SP-operator about exactly these operators. Follow whatever comes back.
+7. Unused from turn 1's reserve: fibre rows in the mirror spectrum (answered in substance by B25/B63: skip);
+   position asymmetry (1.9996, 2.0080) with 2 at the left end: still unexplained, ask if a seat touches it.

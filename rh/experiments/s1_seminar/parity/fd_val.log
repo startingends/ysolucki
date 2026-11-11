@@ -1,0 +1,8 @@
+(1) int lattice L=0.75 N=10: max |fd(0) - 2 x B| even 0.0 odd 0.0
+(1) half lattice L=0.75 N=10: max |fd(0) - 2 x B| even 0.0 odd 0.0
+(2) even test function f = w1 cos(w0 x) + w0 cos(w1 x) on [-1,1]; prime side (fd) vs zero side
+  delta = 0            prime side 5.9227937963782e-6 ; zero side 5.92279379637821e-6 ; rel diff 1.09e-15 ; control (only primes tilted) 5.9227938e-6   (1s)
+  delta = 0.1 (real)   prime side 3.14924229328531e-6 ; zero side 3.14924229328533e-6 ; rel diff 3.45e-15 ; control (only primes tilted) -0.057448137   (2s)
+  delta = 0.25 (real)  prime side -1.15202362909351e-5 ; zero side -1.15202362909351e-5 ; rel diff 3.02e-15 ; control (only primes tilted) -0.36025908   (3s)
+  delta = 0.3 i        prime side 3.05820205984908e-5 ; zero side 3.05820205984907e-5 ; rel diff 1.05e-15 ; control (only primes tilted) 0.51387946   (4s)
+  delta = 2 i          prime side 0.00048063556503931 ; zero side 0.00048063556503931 ; rel diff 2.87e-17 ; control (only primes tilted) 17.915   (5s)
