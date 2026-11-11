@@ -650,3 +650,42 @@ a Rankin–Selberg square), that one is the lead to follow. Scored when the thre
   for the class-number-2 CM data (d = −20), G(·, a) at a = 2, 4, 8 near the impostor's off-line zero: if uniformity
   fails there, it fails at a rate a computation can see, and the rate is the invariant that separates ω from i√5.
   Not started; will be assigned once round 2 is in.
+
+**N49. One formula behind the quasi-RH exponent, its barrier, and Bagchi's theorem** (lead, 2026-11-11, after
+SP-operator's round 2; labels on each line; novelty NOT searched).
+- SP-OPERATOR, ROUND 2 (`rh/specialists/operator/OBJECT_PHI.md`, last section). (1) PROVED: |Φ|² on the line
+  determines Φ (real-analytic), so "not a function of |Φ|" must read "not a weakly continuous functional of the
+  spectral measure". (2) PROVED: the cyclicity angle of the Green function at z satisfies −log cos α(z) = Dfc(z):
+  outer = minimum phase = cyclic, one object derived three ways. (3) Dfc is only UPPER semicontinuous under weak
+  limits (Szegő–Kolmogorov–Krein): defect can appear in a limit, never disappear. (4) PROVED: Dfc is additive over
+  products and every finite Euler product has Dfc = 0: multiplicativity is the only lever; the impostor is a sum.
+  So the wall has a DIRECTION: RH_K = "no logarithmic mass escapes as P → ∞ in the Euler product". That is the
+  Balazard–Saias–Yor identity seen as a Fatou gap (BSY: RH ⟺ ∫ log|ζ(½+it)| dt/(¼+t²) = 0).
+- THE AMPLIFIER FORMULA (lead; elementary). In the quasi-RH argument, if a family of H twists of length-D Möbius
+  sums has a full mean square of diagonal size H·D (provable only when H ≳ D, by Poisson/large sieve) and contains
+  H^δ members within o(√D·...) of the untwisted sum, then |A₁|² ≲ H·D/H^δ, so A₁ ≪ D^(1 − δ/2 + ε) at H ≈ D:
+  **zero-free half-plane Re s > 1 − δ/2.** δ = 1/6 gives 11/12 (their exponent before the bootstrap).
+- WHY THE RUMOURED 3/4 (lead; HEURISTIC barrier, unproved). A "copy" is a member whose twist is trivial on all n
+  except at a few primes: an imprimitive character induced from the trivial one. (a) In power-residue families of
+  order m (indexed by u, conductor ≈ u) the copies are the m-th powers: δ = 1/m ≤ 1/2 (m ≥ 2). (b) In the family of
+  ALL Dirichlet characters to moduli q ≤ Q (size H ≈ Q²) the copies are the principal characters, one per modulus:
+  δ = 1/2 again. (c) If copies had positive density (δ = 1) they would form a kernel of index O(1), the family would
+  have only O(H^(1−δ)) distinct members, and its mean square could no longer be proved diagonal unconditionally
+  (the large sieve needs ≳ D DISTINCT members): the argument becomes circular. So amplification by algebraic copies
+  is capped at δ = ½, exponent 3/4, unless a family of a new kind exists. Consistent with the one unsourced remark
+  ("a barrier at 3/4"); the papers state no barrier.
+- THE SAME FORMULA AT δ = 1 IS BAGCHI'S THEOREM (Bagchi 1981, recalled, unread: RH ⟺ ζ is strongly recurrent,
+  i.e. for every compact K in ½ < σ < 1 and ε > 0, the set of τ with sup_K |ζ(s+iτ) − ζ(s)| < ε has positive lower
+  density). In the t-family A(τ) = Σ μ(n) n^(−iτ) W(n/D) the full mean square IS diagonal unconditionally
+  (Montgomery–Vaughan mean value theorem, ∫₀^H |A(τ)|² dτ ≈ (H + D)·D), so the only missing input is a
+  POSITIVE-PROPORTION set of approximate copies: exactly strong recurrence. Exact copies never occur in t (n^(−iτ) = 1
+  for all n ≤ D needs τ log p ∈ 2πℤ for all p ≤ D); approximate ones have density about ε^(π(D)) by Kronecker.
+- WHAT THIS SAYS (lead). The quasi-RH proof is a DISCRETE, ALGEBRAIC substitute for Bagchi recurrence: it replaces
+  "ζ approximately recurs along t" (≡ RH) by "μ exactly recurs in a family of algebraic twists" (provable, but at
+  square-root density at most). Rule 13 (c) for the wall "copies have at most square-root density": the object that
+  would make it trivial is **a family of twists of μ, with ≳ D distinct members and an unconditional diagonal mean
+  square, in which a POSITIVE PROPORTION of members are near-copies of the untwisted sum.** Characters cannot be it
+  (argument (c)). Candidates of a new kind to think about: twists that are not characters (dilations n ↦ μ(n)·f(n/k)?
+  automorphic coefficients whose families contain the constant term with positive spectral weight? approximate
+  copies coming from a group action with a spectral gap, where "near-copy" is quantitative mixing rather than
+  exact triviality). NONE examined yet. This is the structural question I now hold.
