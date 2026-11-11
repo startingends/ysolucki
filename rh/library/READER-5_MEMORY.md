@@ -34,3 +34,4 @@ INDEX.md, README.md, READER-1..4 memory files: nobody has read Bombieri-Garrett,
   Space E^0 = L^2 closure of pseudo-Eisenstein series (cusp forms removed, constants kept); theta_d in
   E^{-1/2-eps} (sec 3.6; intro says E^{-3/4-eps}); delta^nc generic in E^{-1-eps} only.
   NEXT: write digest rh/library/2002.07929.md, then Garrett's notes.
+- 2026-11-11: paper 1 DONE: digest 2002.07929.md, INDEX row appended. Starting paper 2 (Garrett notes, UMN pages).
