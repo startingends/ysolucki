@@ -225,3 +225,27 @@ T105 [open] Bridge plank 8 (the span): the lower comparison Q_L >= kappa D_L on 
   T99 [known] Archimedean positivity on the window with no prime (Connes-Consani)
   T82 [checked] Window positivity with one prime: the Weil form is strictly positive on every window
     T7 [known] Weil's explicit formula in the project's normalisation (and the notation used by late
+T107 [checked] Copy barrier, Theorem 1 over a number field, with the corrected constant
+  T106 [formal] Copy barrier, Theorem 1 over Q: a general-coefficient large sieve pays for every cop
+T113 [checked] Copy barrier, Theorem 3 (corrected, with the verifier's optimality step): amplificati
+  T108 [checked] Copy barrier, Corollary 1: a copy amplifier fed by a general-coefficient mean squar
+    T106 [formal] Copy barrier, Theorem 1 over Q: a general-coefficient large sieve pays for every c
+  T111 [checked] Copy barrier, Theorem 2 (corrected): in a homomorphic family of Hecke characters, c
+    T110 [formal] Kernel lemma and copy count over N: if every exponent of n is a multiple of an ord
+      T109 [formal] Squarefull count: #{n <= X squarefull} <= 3 sqrt(X), and <= zeta(3/2) sqrt(X)
+  T112 [formal] Amplifier arithmetic: with at most 3 sqrt(H) copies, the amplifier never beats D^(3/
+T114 [formal] Orthogonality of Dirichlet characters as a mean value (finite core L5)
+T117 [proved] Bounded-height equivalence: no zeros in Re s > sigma iff the mollified mean square at 
+  T115 [open] Bounded powers of zeta right of a zero-free half-plane
+  T116 [known] Bettin-Gonek: a mollified mean square of polynomial size excludes zeros right of 1/2 
+T118 [open] Nyman-Beurling, bounded version (notebook N53 (a)): RH iff the Moebius approximants are 
+  T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the i
+T119 [checked] A one-sided bound for psi with a slowly growing factor implies RH (notebook N63, corr
+  T8 [known] Classical facts about the nontrivial zeros (strip, symmetry, counting, lowest ordinate)
+T121 [checked] Buchstab recursion for the Nyman-Beurling tail, and the box identity
+  T120 [checked] Nyman-Beurling window identity: on the divisor-closed window the Moebius vector is 
+    T12 [known] Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the
+T124 [proved] Exact identity: e^(2 Dfc(omega)) - 1 is a Nyman-Beurling distance for zeta_K
+  T123 [proved] Szego-Krein characterisation of the defect: lambda_T(z) decreases to (9/32 pi^2) ht(
+    T122 [proved] Defect function on the modular surface (Jensen / Balazard-Saias-Yor for Eisenstein
+T125 [proved] Rankin-Selberg identity of the cubic theta function, with matching Gamma factors

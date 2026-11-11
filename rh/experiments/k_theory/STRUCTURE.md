@@ -1,9 +1,9 @@
 # STRUCTURE of the theory document (K-theory, 2026-11-11; revised after the round-2 judgement and the readers' addenda)
 
-Source of truth: `rh/THEORY.md` (105 entries). Commands run: `records.py theory check` (0 errors), `tree`
-(saved as `tree_2026-11-11.txt` in this folder), `frontier`. Counts: **4 formal, 46 checked, 12 known** (62 established),
-**19 proved**, **22 open**, **2 refuted**. Sections (a) to (e) were written at 81 entries; "Revision 2" (98 entries) and
-"Revision 3" (105 entries; the bridge, idea #27, is now the project's main line) at the end take precedence. Labels below: everything is a statement about the record, not new mathematics.
+Source of truth: `rh/THEORY.md` (125 entries). Commands run: `records.py theory check` (0 errors), `tree`
+(saved as `tree_2026-11-11.txt` in this folder), `frontier`. Counts: **9 formal, 53 checked, 13 known** (75 established),
+**24 proved**, **24 open**, **2 refuted**. Sections (a) to (e) were written at 81 entries; Revisions 2, 3 and 4 at the end
+take precedence (Revision 4: 125 entries). Labels below: everything is a statement about the record, not new mathematics.
 
 Nothing in the established part is a case of RH. It consists of (i) dictionaries (what a signature or a null vector
 means), (ii) finite linear algebra about certificates and chains, (iii) statements that are conditional on RH,
@@ -271,3 +271,48 @@ T47 and T46 remain the next ones on route #9.
 the numerical check the bridge demands. Then the finite model of T102/T105 once defined. Still pending from before:
 the eigenvalue bridge (spectral theorem) that would let T32, T50, T27 be read with "eigenvalues", T34 from T32 +
 T33, and confirmation of T33's corrected wording.
+
+## Revision 4 (fifth batch: the copy barrier, the bounded-height equivalence, the short-family items, ideas #28-#34)
+
+**A second cluster now exists, on the analytic side of the short-family wall (idea #34).** It is joined to the Weil-form
+part of the document only through T12 (Nyman-Beurling) and T8:
+
+    T106 Thm 1 over Q (FORMAL)  ->  T107 Thm 1 over K (checked, corrected)      T109 squarefull count (FORMAL)
+    T106 -> T108 Corollary 1 (checked)                                            T109 -> T110 kernel lemma + count over N (FORMAL)
+                                                                                  T110 -> T111 Thm 2 corrected (checked)
+    T108, T111, T112 amplifier arithmetic (FORMAL)  ->  T113 Thm 3 corrected: copy amplification stops at 3/4 - eps0/4 (checked)
+    T114 character orthogonality (FORMAL; island)
+    T115 bounded powers of zeta (OPEN, cited from memory) + T116 Bettin-Gonek Thm 1 (known) -> T117 bounded-height
+         equivalence (proved; becomes checked once T115 is read in a text)
+    T12 -> T118 bounded Nyman-Beurling (OPEN, sketch), T120 window identity (checked) -> T121 Buchstab recursion (checked)
+    T8 -> T119 one-sided psi bound implies RH (checked; Landau)
+    T122 defect function (proved) -> T123 Szego-Krein limit (proved) -> T124 e^(2 Dfc) - 1 = NB distance for zeta_K (proved)
+    T125 Rankin-Selberg identity of the cubic theta (proved; island)
+
+The copy barrier (T106-T113) is the most solidly established new block: four of its entries are formal (over Q / N),
+the rest checked by an independent verifier who also corrected Theorem 1 over number fields (refuted as written:
+Q(sqrt -163), D = 41) and supplied Theorem 3's optimality step. It is a barrier for one class of arguments (the copy
+amplifier of the October 2026 quasi-RH papers), not a statement about zeros.
+
+**T33** is corrected (fourth batch) and the author has accepted it (B198); B28(1) on the append-only board carries the
+same even-block error and is to be read with "lambda_1 > 0".
+
+**Ideas linked:** #28 -> T84, T85, T86, T46; #29 -> T88, T89, T90; #30 -> T47, T87, T17 (nearest entries; its own
+conjectures V1-V4 are not entered); #31 -> T122, T123, T124, T125; #32 -> T106, T107, T108, T113; #33 -> NO entry
+(SP-modular's family (1 -+ K_w)/w, NOTES D12, has not been entered); #34 -> T12, T13, T20, T21, T106, T108-T121, T123,
+T124.
+
+**Frontier now (19):** T13, T14, T15, T17, T24, T25, T40, T42, T46, T47, T48, T62, T78, T80, T81, T101, T103, T115, T118.
+**Islands (24):** the 22 of Revision 3 plus T114, T125.
+
+**First open links:** #27 (bridge, main line) -> T101; #34 (short-family wall) -> T115 (bookkeeping: a textbook lemma to
+be read; it upgrades T117), then T118 (the bounded Nyman-Beurling equivalence: its direction RH => bounded approximants
+has no argument in the record); #31 -> nothing open is stated (T122-T124 are proved, unchecked; the specialist's rate
+conjectures are not entered); #8 -> T80; #9 -> T47, then T46.
+
+**Top open lemmas, revised:** (1) T101 with T102 (bridge); (2) T80 (four first-failure entries); (3) T115 (one
+textbook lemma; cheapest upgrade in the document). Independent checks most worth having: T122-T124 and T125 (one seat
+each, several cited-from-memory inputs), T76/T77, T85.
+
+**Formalise first, revised:** the copy-barrier cores are done (T106, T109, T110, T112, T114). Next on live routes: T100 (a),
+T120 (i) and T121 (finite Moebius identities: easy), then T117's Perron step (hard: complex analysis).

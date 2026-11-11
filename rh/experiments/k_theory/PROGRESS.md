@@ -144,3 +144,24 @@ Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+
       sum_N N^-1/2 log N |psi(v + log N)|, which N41 does not state: added as a hypothesis. OK.
   The numerical check of (a) to 12 digits that the bridge demands was NOT run by me.
 - Final check: 105 entries, 0 errors; 22 open, 19 proved, 46 checked, 4 formal, 12 known, 2 refuted.
+
+### Fifth batch (batch10_copy_transport.py.txt): copy barrier, T33 follow-up, short-family items, ideas #28-#34
+- Read: rh/specialists/sieve/COPY_BARRIER.md (whole), its verifier's VERDICT.md (whole), rh/formal/MEMORY.md and PROGRESS.md files 28-32 and
+  the 04:58 build; NOTEBOOK N53, N62, N63, N65-N68; sieve/TRANSPORT.md 1, 4; modular/TRANSPORT.md 0, 4; operator/SHORT_FAMILY.md 1, 2, 5;
+  operator/S2_B4.md (a)-(c); reflection/OBJECT_PHI.md 4, Round 2, Round 3 (R3.0-R3.2); modular/OBJECT_PHI.md Round 2 R1; Bettin-Gonek digest;
+  board B198; ideas #27-#34.
+- Copy barrier entered in the CORRECTED form: T106 (Thm 1 over Q, formal), T107 (over K with kappa_K, checked; the file's version refuted
+  as written by V-COPY: Q(sqrt -163), D = 41), T108 (Cor. 1, checked), T109/T110/T112/T114 (L1, L2, L4, L5: formal, statements written in
+  the Lean form, over N/Q), T111 (Thm 2 corrected, checked), T113 (Thm 3 corrected with the verifier's optimality step, checked).
+  L3 is merged into T106 (it is the proof of Theorem 1).
+- My own checks this batch: (a) T117 (=>) Perron step: M_N log N = (1/2 pi i) int N^w dw/(w^2 zeta(s+w)) = sum mu(k) k^-s log(N/k); shift to
+  Re w = sigma - 1/2 + delta, no pole crossed (1/zeta analytic for Re > sigma, w^-2 pole at 0 not crossed). OK given T115.
+  (b) T119 Landau argument: int_1^inf (x + C sqrt x log^2 x - psi(x)) x^(-s-1) dx = 1/(s-1) + 2C/(s-1/2)^3 + zeta'(s)/(s zeta(s)) + entire
+  for Re s > 1 (using int_1^inf psi(x) x^(-s-1) dx = -zeta'/zeta(s)/s and int_1^inf x^(1/2-s-1) log^2 x dx = 2/(s-1/2)^3); non-negative
+  integrand => abscissa is a real singularity (Landau); the pole at 1 cancels; right of 1/2 the only possible real singularities are real
+  zeros of zeta in (1/2, 1): none (T8). So zeta'/zeta holomorphic in Re s > 1/2: RH. OK.
+  (c) T120 window identity: substitution y = 1/x and sum_{d|m} mu(d) = [m = 1]; reran (i) for N = 6, k < 500. OK.
+  (d) T121 Buchstab: d = p d' with p = P+(d); reran 25 cases exactly (scratchpad kt/buch.py): 0 mismatches.
+  (e) T113 optimality step (Cauchy-Schwarz for weighted averages) and T107's count of multiples: re-read.
+- T33: the author accepted (B198); note appended; B28(1) recorded as carrying the same error.
+- Final check: 125 entries, 0 errors; 24 open, 24 proved, 53 checked, 9 formal, 13 known, 2 refuted.

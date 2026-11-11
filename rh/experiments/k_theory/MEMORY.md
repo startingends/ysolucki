@@ -1,10 +1,14 @@
 # K-theory MEMORY (rewritten at the end of session 1, 2026-11-11, after the round-2 judgement was ingested). Read this first.
 
 ## State of rh/THEORY.md
-105 entries, `records.py theory check` clean. 4 formal (T27, T32, T50, T70), 46 checked, 12 known, 19 proved, 22 open, 2 refuted.
+125 entries, `records.py theory check` clean. 9 formal (T27, T32, T50, T70, T106, T109, T110, T112, T114), 53 checked, 13 known,
+24 proved, 24 open, 2 refuted.
 MAIN LINE since the fourth batch: the bridge (rh/BRIDGE.md, idea #27): T99 (known base case), T100 (plank 7, checked by me),
 T101 (plank 5, open: FIRST OPEN LINK), T102 (plank 6, D_L), T103 (7b/7c heuristic), T104 (8a), T105 (plank 8, the span).
-How they were entered: batch files batch1..batch6 in this folder, run through `enter.py.txt`, and the stand-alone batch7_judge_readers.py.txt batch8_formal_foothold_seminar.py.txt and batch9_verdict_formal_bridge.py.txt (every write goes through
+FIFTH BATCH: T106-T114 copy barrier (Thms 1-3 corrected; L1-L5 formal over Q / N); T115-T121 short-family wall (bounded-height
+equivalence T117, Bettin-Gonek T116, open lemma T115 cited from memory, bounded NB T118 open, Landau T119, window identity T120,
+Buchstab T121); T122-T124 SP-reflection's defect function, Szego-Krein limit, NB-distance identity; T125 SP-modular's Rankin-Selberg.
+How they were entered: batch files batch1..batch6 in this folder, run through `enter.py.txt`, and the stand-alone batch7_judge_readers.py.txt batch8_formal_foothold_seminar.py.txt, batch9_verdict_formal_bridge.py.txt and batch10_copy_transport.py.txt (every write goes through
 `tools/records.py theory`; keys -> T numbers in keys.json; do NOT rerun old batches; for new entries append keys to PLAN in
 enter.py.txt and write a new batch file, or call records.py directly). The structure is in STRUCTURE.md; the tree in tree_2026-11-11.txt.
 Map: T1-T6 seeds; T7-T19 literature; T20-T24 round 1; T25 notebook N2 repaired; T26-T34 parity and inertia; T35-T42 first failure (#8);
@@ -69,6 +73,9 @@ T94-T97 SP-operator P1, P4, P5, P6; T98 dial coefficients (idea #26).
 - Conventions I used: textbook theorems of linear algebra and analysis (Sylvester, Perron-Frobenius, Courant-Fischer, Weyl, Jensen,
   Paley-Wiener, Gauss's digamma integral, the Mellin transform of the fractional part) are background, not entries; number-theoretic and
   operator-theoretic inputs specific to zeta are entries and are `known` only if a text was fetched and quoted.
-- First open links (STRUCTURE.md, Revision 3): #27 MAIN LINE -> T101; #8 -> T80 (then T40/T41; no lemma using arithmetic is stated); #9 -> T47 (certification), then T46;
+- Ideas #28-#34 linked (STRUCTURE.md Revision 4); #33 has NO entry (SP-modular NOTES D12 not entered).
+- Specialists' items entered as `proved` and NOT independently checked: T122, T123, T124, T125 (each rests on theorems cited from
+  memory: inner-outer factorisation, Szego-Kolmogorov-Krein, Beurling's closure theorem, Zagier's renormalisation). T117 waits only on T115.
+- First open links (STRUCTURE.md, Revision 4): #34 -> T115, then T118; #27 MAIN LINE -> T101; #8 -> T80 (then T40/T41; no lemma using arithmetic is stated); #9 -> T47 (certification), then T46;
   #21 killed -> T6 refuted; #10 parked -> T62 (and the open T81, T89). Ideas #22-#26 are linked in `routes` (#22: T29-T31; #23: T32, T50,
   T61, T81; #24: T51, T53, T55, T65; #25: T56, T62; #26: T18, T98).
