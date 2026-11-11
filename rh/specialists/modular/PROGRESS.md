@@ -233,3 +233,6 @@ frequency h^2 (opposite to N76's dilation hn): no theta residue, post-theta twis
 ## (new session) LOCAL_PARAMETERS.md written (H-2 task). Construction only, no numerics. Read CORE.md, HUNCHES part H.
 Finding: rho -> Ind(|.|^(rho-1/2)) -> Sym^k multiplies r with fixed half-width, but unitary <=> beta = 0 already (GL_2(R) dual): empty.
 Candidates have at most two of {automorphic+Satake, unitary at the parameter, parameter controlled by a zero}. Q 5, Toward RH 1.
+## (session 2 of the object) TRIANGLE.md written. Construction only, no numerics. Read CORE.md, N83-N85.
+Finding: P_rho = |det|^(i gamma) x Ind(|.|^beta,|.|^-beta) has A + B_1 + C (L(1/2,P_rho) = zeta(rho)zeta(1-conj rho)); corrects N83.
+Theorem 1: character constituent => RS pole at 1 + 2k beta, so uniform B_k <=> beta = 0; missing ingredient = decay at the cusp. Q 6, RH 1.

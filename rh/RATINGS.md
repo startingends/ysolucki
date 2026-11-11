@@ -14,6 +14,8 @@ Out of 10 each; a breakthrough is 9–10 on both. Lead's honest ratings, 2026-11
 | H-2 table + triangle N83 | amplifiers act on local parameters; candidates have at most 2 of {Hecke, unitary, zero-controlled} | 5 | 1 | known in spirit (Hilbert–Pólya with Hecke); the counterexample is empty |
 | H-1 local discriminant N85 | refuted as a criterion; exact kernel formula K_D = mean of dual Dirichlet polynomials at zeros | 6 | 2 | the Euler product never acts pair by pair |
 | Triangle, operator side N86 | barrier lemma (forced sign counts, never locates); scaling flow = boost without a fixed bound; Lemma 2 | 5 | 1 | classical in substance; no candidate |
+| Triangle, modular side + convergence N87 | P_ρ realises the triangle at k = 1; the missing ingredient is cuspidality = a fixed bound; density of the log p | 6 | 1 | tautological dictionary; known in spirit (Hilbert–Pólya, F₁) |
+| Torus / line N88 | Euler product on T^∞, functional equation on the Kronecker line | 4 | 1 | known (Bohr, Bagchi); reduces to #34 |
 | **Ceiling now** | | 6 | **2** | no statement uses the Euler product in the bulk |
 
 What a 3 on "Toward RH" would be: a PROVED statement about individual zeros below the band edge that is true for ζ,

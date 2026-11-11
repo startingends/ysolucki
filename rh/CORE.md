@@ -31,8 +31,10 @@ constant of (Q, D) is the bottom of a Gram matrix of D-kernels at the zeros, whi
 **6. In function fields the average-to-pointwise converter is amplification by products.** Deligne/Weil: on C^k
 the deviations of zeros ADD while the a-priori bound (point counting, i.e. the Euler product plus positivity) stays
 one unit from the centre, so a weak bound for all k is the exact bound. Langlands' symmetric-power argument does
-the same for Ramanujan over ℚ. For ζ over ℚ there is no operation under which a zero's deviation grows (no constant
-field extension, no Spec ℤ × Spec ℤ).
+the same for Ramanujan over ℚ. Over ℚ the amplifier exists (the scaling flow; Sym^k of the Eisenstein
+representation at a zero) but its bound moves with it: what is missing is a FIXED bound, i.e. decay at the cusp /
+a Hecke-invariant fixed window. Over ℚ the log p generate a dense subgroup of ℝ, so no window is Hecke-invariant;
+over F_q(t) they lie in the lattice (log q)ℤ (N86–N87).
 
 **THE OPEN TENSION.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's
