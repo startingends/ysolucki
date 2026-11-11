@@ -49,6 +49,10 @@ Known framing (N92): all of this is the norm map C_ℚ → ℝ₊* having a cont
 F_q(t) the degree map goes to ℤ. The function-field proof's content is a Stepanov/Riemann–Roch BOUND, whose
 ℚ-analogue is RH itself.
 
+Classification of every use of the Euler product (N98): linear ones are blind, insufficient, or the full problem;
+nonlinear statistical ones are twist-blind; pretentious ones reach only the edge; structural ones need a cusp
+form at a zero. Wanted: a use that is pointwise, in the bulk, and not through automorphic Hilbert spaces.
+
 **THE OPEN TENSION, in general.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's
 deviation grow while an Euler-product bound stays fixed, and over ℚ no such operation is known. A hunch worth

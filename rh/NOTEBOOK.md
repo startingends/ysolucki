@@ -1747,3 +1747,19 @@ dual lower bounds, not certified; all three of the seat's predictions hit).
   1.3e-6: no sign. All runs stopped.
 - So (Detect) fails at L = 1.72 (κ_P ≥ +0.0356, floats) and is undetermined beyond. N96's "probably detected" is
   withdrawn. H-4 is closed as a shadow (N95, H14); it stays on record as a criterion of unknown validity.
+
+**N98. The nonlinear uses of the Euler product, mapped (lead, construction by thought; classical facts, packaging the
+lead's).** H13–H14 closed every LINEAR use. The nonlinear ones on record or in the literature:
+- Quadratic in Λ, statistical: prime pair correlations Σ Λ(n)Λ(n + h) ↔ zero pair correlation F(α) for α > 1
+  (Goldston–Montgomery), i.e. beyond Montgomery's line, in the bulk. But statistics are density statements and the
+  impostor family is expected to share them (Bombieri–Hejhal, conditional, from memory): twist-blind like N93.
+- Multiplicative, "pretentious" (Halász, Granville–Soundararajan): uses multiplicativity in an essentially nonlinear
+  way (f(p) determines f), but its conclusions are repulsion near n^(it), i.e. zero-free regions at the EDGE
+  (Re s near 1); square-root cancellation is far beyond it.
+- Structural (Hecke algebra, Rankin–Selberg, functoriality): the triangle of N83/N87; needs cuspidality at a zero,
+  which nothing supplies.
+- **Classification, then.** Linear: blind (μ), insufficient (support of Λ), or the full problem (values of Λ).
+  Nonlinear statistical: twist-blind. Nonlinear multiplicative: edge only. Structural: needs an object nobody can
+  build. The gap is therefore precisely named: a use of the Euler product that is pointwise (not statistical), in
+  the bulk (not the edge), and not through a Hilbert space of automorphic forms. No such use is known; it is what
+  "Toward RH ≥ 3" requires. Ratings: Quality 4 (a classification, not a theorem), Toward RH 1.
