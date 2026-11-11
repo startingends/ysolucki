@@ -236,3 +236,6 @@ Candidates have at most two of {automorphic+Satake, unitary at the parameter, pa
 ## (session 2 of the object) TRIANGLE.md written. Construction only, no numerics. Read CORE.md, N83-N85.
 Finding: P_rho = |det|^(i gamma) x Ind(|.|^beta,|.|^-beta) has A + B_1 + C (L(1/2,P_rho) = zeta(rho)zeta(1-conj rho)); corrects N83.
 Theorem 1: character constituent => RS pole at 1 + 2k beta, so uniform B_k <=> beta = 0; missing ingredient = decay at the cusp. Q 6, RH 1.
+## (session 3 of the object) DISCRETE_ORBIT.md written. Construction only, no numerics. Read N87, N88.
+Findings: T_p-equivariant cutoffs are (log p)-periodic, so no equivariant truncation even with a lattice (also false over F_q(t);
+there the bound is Harder's compact support). A cusp over Q forces a continuous archimedean height. Zeta has no lattice-frequency factorisation.

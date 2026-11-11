@@ -32,11 +32,14 @@ constant of (Q, D) is the bottom of a Gram matrix of D-kernels at the zeros, whi
 the deviations of zeros ADD while the a-priori bound (point counting, i.e. the Euler product plus positivity) stays
 one unit from the centre, so a weak bound for all k is the exact bound. Langlands' symmetric-power argument does
 the same for Ramanujan over ℚ. Over ℚ the amplifier exists (the scaling flow; Sym^k of the Eisenstein
-representation at a zero) but its bound moves with it: what is missing is a FIXED bound, i.e. decay at the cusp /
-a Hecke-invariant fixed window. Over ℚ the log p generate a dense subgroup of ℝ, so no window is Hecke-invariant;
-over F_q(t) they lie in the lattice (log q)ℤ (N86–N87).
+representation at a zero) but its bound moves with it: what is missing is a FIXED bound, i.e. decay at the cusp
+(cuspidality). Over F_q(t) it comes from Harder's compact support, which needs a cusp with no archimedean
+direction; over ℚ every cusp has the continuous height ℝ₊ (N86–N89).
 
-**THE OPEN TENSION.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
+**THE OPEN TENSION, located (N89): the infinite place plays both parts.** The archimedean term is the only
+positive term in Weil's form, and the archimedean height is the only obstruction to a fixed bound.
+
+**THE OPEN TENSION, in general.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's
 deviation grow while an Euler-product bound stays fixed, and over ℚ no such operation is known. A hunch worth
 building either supplies that operation, or a pair-local positivity (tight at collisions) that the Euler product

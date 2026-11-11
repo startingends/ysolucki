@@ -1547,3 +1547,28 @@ Bagchi, Hedenmalm–Lindqvist–Seip; recorded for the framing).
   iff Σ_{p≤x} p^(−it) has square-root cancellation, i.e. wall #34 again (Bagchi's strong-recurrence equivalent is
   the known form). No exit; it explains WHY the two ingredients never meet: they live on different spaces, and the
   only bridge between them (equidistribution of the line) is the Möbius wall.
+
+**N89. The fixed bound is missing at the INFINITE place, not because the log p are dense; N87 corrected** (lead, after
+SP-modular session 3, `rh/specialists/modular/DISCRETE_ORBIT.md`; construction; several facts from memory).
+- Proved: in S = {∞, p} no T_p-equivariant truncation exists. At the cusp T_p acts on the S-height h = y·p^n as a
+  difference operator of step log p; a cutoff commuting with it is periodic in log h and cannot vanish high in the
+  cusp (a lattice gives periodic multipliers, not cutoffs). Off-line, E(·, ρ) has no cuspidal part except on the
+  lattice γ ∈ (π/log p)ℤ; two primes leave only γ = 0.
+- **Correction to N87.** Over F_q(t) the truncation is not Hecke-invariant either; the fixed bound there is Harder's
+  compact support of cusp forms (from memory), which needs a cusp with NO archimedean direction. Over ℚ a cusp means
+  a ℚ-split torus, which is ℝ-split, so the height group always contains ℝ₊ (proved). The lead's "dense subgroup"
+  reason was wrong: one prime with a lattice already fails, because of the continuous archimedean height. The
+  lead's prediction for S = {∞, p} is half broken: the zeros stay visible there (the quotient is SL₂(ℤ)\H, the
+  scattering factor is the full ξ(2s−1)/ξ(2s)); the half about Sym^k at p seeing only the p-factor holds.
+- Proved no-go: a Dirichlet series whose frequencies lie in a group keeps them there under products and quotients;
+  ζ's frequencies log n generate a dense group, so ζ is not built from zetas whose periodic orbits lie in a lattice.
+  Candidates: definite quaternion graphs (discrete, positive, zeros invisible), Selberg zeta of SL₂(ℤ) (zeros
+  visible at ρ/2, lengths dense, positivity does not reach), Connes–Consani site (each prime's orbit a lattice, each
+  alone without zeros). Ratings (seat): Quality 6, Toward RH 1.
+- **Lead's synthesis: the infinite place plays both parts.** In Weil's form the archimedean term is the ONLY positive
+  term (CORE 1: soft positivity is archimedean), and the archimedean height is the ONLY obstruction to the fixed bound
+  that turns the amplifier into a proof (this entry). So the open tension of CORE is now located at one place, ∞:
+  the positivity has to come from ∞ and ∞ is what prevents it from being uniform. The object that would make the wall
+  trivial: an "infinite place without a continuous direction" (Haran's real prime as a non-archimedean-like place,
+  Deninger's foliation, Connes–Moscovici's prolate operator, all known programmes). A reader goes to them for
+  knowledge only: does any of them actually construct a cusp, or a window, at ∞ with a fixed bound?
