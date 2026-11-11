@@ -1,6 +1,6 @@
 # MEMORY of SP-operator
 
-Rewritten at the end of session 4 (2026-11-11; one container restart mid-session, nothing lost). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
+Rewritten at the end of session 5 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
 6, 7 of bridge 1 (rh/BRIDGE.md, idea #27, owner's rule 12). Session 3: the structural mode (owner's rule 13,
 rh/HUNCHES.md part F): one object, Phi(s) = E*(omega, s), expressed in my toolkit: OBJECT_PHI.md.
 A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDEAS_LOCAL.md.
@@ -19,6 +19,27 @@ A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDE
 - Sources under rh/library/src/: 2606.09096, 1606.05726 (both read in full), basor-chen-0202062 (read in
   full), kaltenbaeck-woracek-1998 (pp. 1-6 of 37 read), luger-ou-2202.13246 (sec. 3.2 read),
   1204.1827 and 2511.23257 (downloaded; only the abstract and theorem list of the latter read).
+
+## SESSION 5 (round 3 on Phi, with SP-reflection): OBJECT_PHI.md section "Round 3" (124 lines)
+Read: NOTEBOOK N49-N50; reflection/OBJECT_PHI.md Round 2 (lambda_T(z) = Szego-Krein extremal problem on the orbit, ratio of
+Wiener-Hopf determinants, limit (9/(32 pi^2)) ht^-1 e^(2 Dfc)). Abstracts read: DIK 0905.0443, 1206.1292, Fahs 1909.07362,
+Claeys-Its-Krasovsky 1004.3696.
+- R3.1 stated: strong Szego / Borodin-Okounkov on the line (Basor-Chen, read); one FH zero (Basor-Ehrhardt eq. 12-13);
+  finitely many FH singularities on the circle (DIK; Fahs: uniform in locations for FIXED m; nothing for growing m);
+  CIK: a singularity reaching the contour (Painleve V crossover) = local model of an off-line zero.
+- R3.2 lambda_T = Schur complement of M_T (compact positive, no Fredholm determinant: only ratios are defined) =
+  1/K_T(t0,t0) of the Krein-system de Branges space, t0 = i/2 (s = 1). Normalised symbol |zeta_K|^2/|zeta(1+2it)|^2: a double
+  FH zero at every on-line zero; smooth part not in H^(1/2) (Mertens divergence). Rate HEURISTIC C/T; Krein coefficient has
+  kicks at r = (1/2) log N(a) (lane A's A4 in the right object).
+- R3.3 SHARP ANSWER: REFORMULATION. The limit is forced unconditionally by Krein-Szego (2 pi exp P[log w]); RH_K is the
+  value of that Poisson integral (BSY for zeta_K); every FH/strong-Szego refinement is a functional of (singular set, smooth
+  part) through norms on the line, where an off-line quartet is a smooth bump whose Poisson extension (by reflection) IS the
+  factor e^(2 Dfc). A bridge needs the hypothesis "e^(V/2) zero-free analytic in 0 < Im t < 1/2" = RH_K. Exit (H7): compute the
+  limit from the ORBIT side, not examined.
+- R3.4 off-line zero visible in the determinant (not in the limit of lambda_T) as an FH factor switching off at T ~ 1/delta.
+- R3.5 fake first i sqrt5: all theorems apply verbatim. Structural difference: omega's symbol is formally a product of local
+  almost-periodic symbols on frequency lattices Z log p, pairwise disjoint (unique factorisation), so Szego-Widom constants
+  factor over primes with NO cross terms; at i sqrt5 the symbol is |sum of two products|^2. Exchange of limits T, P = RH again.
 
 ## SESSION 4 (round 2 on Phi): OBJECT_PHI.md section "Round 2" (102 lines)
 Read: rh/specialists/modular/OBJECT_PHI.md and reflection/OBJECT_PHI.md whole, HUNCHES F4-F5 + H9, NOTEBOOK N43-N46.

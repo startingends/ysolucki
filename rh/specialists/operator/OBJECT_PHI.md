@@ -297,3 +297,128 @@ for h = 2 an off-line zero of L_K(s, psi) would make one character component of 
    RISK: in my toolkit the natural candidate is convergence of the matrix Krein functions of growing Heegner sets
    (orders of conductor f, all f), whose form factors are the Euler factors times L_K; I have not shown that any
    such convergence holds, and N46's completeness argument (SP-modular's risk) suggests the limit space is {0}.
+
+## Round 3 (session 5): lambda_T as a Wiener-Hopf / Fisher-Hartwig problem; bridge or reformulation?
+Read for this section: rh/NOTEBOOK.md N49-N50; rh/specialists/reflection/OBJECT_PHI.md "Round 2" (R0-R5). Sources: Basor-Chen
+math/0202062 (read in full, session 1); Basor-Ehrhardt math/0502039 (machine summary of 100k of 147k characters, session 1);
+ABSTRACTS ONLY, read this session: Deift-Its-Krasovsky arXiv 0905.0443 (Annals 2011), Fahs arXiv 1909.07362, Deift-Its-
+Krasovsky arXiv 1206.1292, Claeys-Its-Krasovsky arXiv 1004.3696 (Duke 2011). Everything else in this section is from memory.
+
+### R3.1 The asymptotics as they are known (exact statements; hypotheses included)
+(a) STRONG SZEGO, line (KNOWN, read: Basor-Chen (1.3) and its proof). K in L^1(R), int |x||K(x)| dx finite, F = K^ bounded,
+    1 - F bounded away from 0 with index 0, 1 - F = phi_+ phi_- (Wiener-Hopf factors analytic in the upper / lower half-planes,
+    = 1 at infinity). Then, EXACTLY for every alpha > 0,
+       det(I - K_[0,alpha]) = Z e^(c alpha) det(I - L_[alpha,inf)),   c = (1/2pi) int log(1 - F),   Z = exp int_0^inf x (log(1-F))^_x (log(1-F))^_(-x) dx,
+    L = a product of two Hankel operators of the phase phi_-/phi_+ supported BEYOND the window; det(I - L) = 1 + O(tail of the phase).
+    The identity fails when the factorisation fails (their final remark: the sine kernel, symbol with a zero on an interval).
+(b) ONE FISHER-HARTWIG ZERO, line (KNOWN, read via the machine summary of Basor-Ehrhardt, eq. (12)-(13)): for the symbol
+    (x^2/(x^2+1))^beta (a zero |x|^(2 beta) at x = 0 on a background tending to 1):
+       det W_(2R) ~ e^(-2 beta R) R^(beta^2) G(1+beta)^2 / G(1+2 beta),   G = Barnes function.
+    For beta = 1 (a DOUBLE zero, our case): ~ e^(-2R) R . G(2)^2/G(3) = e^(-2R) R.
+(c) FINITELY MANY SINGULARITIES, circle (KNOWN, abstracts of DIK 0905.0443, 1206.1292 read; formula from memory). Symbol
+    f = e^V prod_j |z - z_j|^(2 alpha_j) (jumps beta_j = 0 here), m fixed, z_j distinct and fixed, V smooth (DIK 1206.1292 relaxes the
+    smoothness and gives an error estimate): D_n(f) = exp(n V_0 + sum_(k>=1) k V_k V_(-k)) prod_j |b_+(z_j)|^(-2 alpha_j)
+    . n^(sum alpha_j^2) . prod_(j<k) |z_j - z_k|^(-2 alpha_j alpha_k) . prod_j G(1+alpha_j)^2/G(1+2 alpha_j) . (1 + o(1)), b_+ = exp sum_(k>=1) V_k z^k.
+    UNIFORMITY (abstract of Fahs 1909.07362, read): uniform in the LOCATIONS of the singularities, merging included, for ANY FIXED
+    number m. No theorem I know allows m to grow with n, let alone infinitely many singularities in the symbol.
+(d) A SINGULARITY APPROACHING THE CONTOUR (KNOWN, abstract of Claeys-Its-Krasovsky 1004.3696 read): a family of symbols regular
+    for t > 0 (strong Szego applies) with a Fisher-Hartwig singularity at t = 0; as t -> 0 the transition between the two kinds of
+    asymptotics is described by a Painleve V transcendent. This is exactly the local model of an OFF-LINE zero: see R3.4.
+(e) PREDICTION ERROR / CHRISTOFFEL FUNCTION (KNOWN, from memory: Krein 1945; Dym-McKean ch. 4; continuous analogue of Szego's
+    first theorem; also SP-reflection's R2 (D2)): for a measure w dt on the line with int log w dt/(1+t^2) > -inf and t0 in the
+    upper half-plane, the minimum of the truncated form over [0,T] with the normalisation phi^(t0) = 1 decreases to
+    4 pi Im t0 |O_w(t0)|^2 = 4 pi Im t0 exp(P_t0[log w]) (P = Poisson extension). Only the Szego condition is needed; no rate.
+
+### R3.2 Translation of lambda_T (PROVED unless marked)
+- THE OPERATOR. M_T = the truncated convolution on L^2[0,T] with kernel W_z(u - v); its symbol is the density
+  w_z(t) = (1/4pi)|E(z,1/2+it)|^2/|lambda+2|^2 (a.c. part; the cusp atoms do not enter the limit, R3.1 (e)). w_z decays like
+  e^(-pi|t|) times powers (Gamma factors), so M_T is POSITIVE AND COMPACT (W_z continuous): det M_T is not defined in the Fredholm
+  sense and R3.1 (a)-(c) do not apply to M_T as it stands. The well-defined objects are ratios.
+- THE RATIO. With c = (e^(-u/2)) on [0,T], i.e. c = evaluation of phi^ at t0 = i/2 (s = 1):
+      lambda_T = 1/<c, M_T^(-1) c> = - det M_T / det [[M_T, c],[c^T, 0]]   (Schur complement; for any finite section),
+  and 1/lambda_T = K_T(t0, t0), the reproducing kernel at t0 of the de Branges space H(E_T) of the Krein system with spectral
+  measure w_z dt (my PROOFS.md P1 mechanism; here the measure is positive, so no RH is needed for the chain). In Krein's
+  notation 1/lambda_T = int_0^T |P(r, t0)|^2 dr with P the continuous orthonormal "polynomials".
+- THE NORMALISED SYMBOL. Dividing by the explicit outer factor of the Gamma functions and of |lambda+2|^2 leaves
+  w~(t) = c |zeta_K(1/2+it)|^2 / |zeta(1+2it)|^2: a symbol with a DOUBLE zero (alpha_j = 1, beta_j = 0) at every on-line zero of
+  zeta_K, unbounded on average (mean of |zeta_K|^2 grows like log^2 t, from memory), so not of the form 1 + L^1 either.
+  Its smooth part V = log w~ - sum_j log|t - gamma_j|^2 is not in the strong Szego class H^(1/2): PROVED from the Dirichlet series
+  of log zeta_K for Re s > 1 by the formal computation sum_n log n . Lambda_K(n)^2/(n log^2 n) ~ sum_p log p/p = inf (Mertens).
+  The divergence is the multiplicative shadow of the infinitely many Fisher-Hartwig factors (each log|t - gamma|^2 has infinite
+  H^(1/2) norm). HEURISTIC link only.
+- PREDICTED LEADING BEHAVIOUR under RH_K. lambda_T decreases to lambda_inf = target = (9/(32 pi^2)) ht(omega)^(-1) (SP-reflection's
+  R2, proved given R3.1 (e)). RATE, HEURISTIC (two steps, both by analogy with finitely many singularities):
+  (i) a single double zero at gamma gives Krein coefficients a(r) ~ -e^(2 i gamma r)/r (from memory: Verblunsky coefficients of
+      |z - e^(i theta)|^(2 alpha) decay like alpha e^(-i(n+1) theta)/n), hence |P(r, t0)|^2 ~ C/r^2 and lambda_T/lambda_inf - 1 ~ C/T;
+  (ii) all zeros: a(r) ~ -(1/r) sum_gamma kappa_gamma e^(2 i gamma r), and by the explicit formula the sum over zeros is, as a
+      distribution in r, minus the prime-ideal atoms at 2r = log N(a) plus a smooth part: the Krein coefficient of this chain has
+      KICKS at r = (1/2) log N(a) (lane A's A4, idea #8 log, recovered in the right object). Then
+          lambda_T/lambda_inf - 1 ~ C/T,   C = sum_gamma |kappa_gamma|^2 c(gamma) + (oscillating pair terms sum_(gamma != gamma') e^(2i(gamma - gamma')T)),
+      with the diagonal sum convergent (density (1/pi) log t, weights ~ 1/gamma^2) and the pair terms governed by pair correlation.
+      CONJECTURE: this agrees with SP-reflection's blind C/T (R4 there); the constant C is a Montgomery-type quantity.
+
+### R3.3 The question with room: can a Fisher-Hartwig asymptotic force the limit? SHARP ANSWER: NO; it is a reformulation.
+PROPOSITION (PROVED from R3.1 (e) and Jensen; three points).
+ (1) THE LIMIT IS ALREADY FORCED, unconditionally, by Krein's theorem, for zeta_K and for every impostor alike:
+        lim lambda_T(z) = 2 pi exp(P_t0[log w_z]),   t0 = i/2.
+     No Fisher-Hartwig theorem is needed for it, and none can change it.
+ (2) What RH_K asserts is the VALUE of that Poisson integral: P_t0[log w_omega] = log target, i.e. the Balazard-Saias-Yor identity
+     for zeta_K (SP-reflection's D1). The factor e^(2 Dfc) is the Jensen gap between the Poisson integral of log|G| on the line and
+     log|G(t0)|^2, a POINT VALUE of the analytic continuation (here the residue 3/pi and ht).
+ (3) Every refinement (strong Szego, Fisher-Hartwig, uniform in locations, Painleve transitions) is a statement about the RATE and
+     the constants, and is a functional of the pair (S, V): S = the singular set on the line, V = the smooth part, through V's
+     Fourier coefficients and its Poisson extension. An off-line quartet rho = 1/2 +- delta + i gamma (delta > 0) is NOT in S; it
+     enters V as the real-analytic, positive term 2 log((t - gamma)^2 + delta^2) (t-variable zeros of Phi(1/2+it) at gamma -+ i delta),
+     whose Poisson extension is computed by REFLECTION (P_t0 log|t - a| = log|t0 - conj a| for Im a > 0): that reflection is exactly
+     the Blaschke factor, i.e. exactly e^(2 Dfc). Hence any theorem whose hypotheses are conditions on (S, V) ON THE LINE
+     (smoothness, decay, H^(1/2), density and separation of S, number of singularities) holds verbatim with and without the quartet,
+     and its conclusion contains the quartet as the factor. The factor is invisible to every asymptotic of determinants of the symbol,
+     not because the symbol does not contain it (by Round 2 R2.0 it does), but because those theorems read V only through norms on
+     the line, where an off-line zero is indistinguishable from a smooth bump.
+ What would make it a bridge, exactly: a hypothesis in the class that is NOT a norm condition on the line, namely "e^(V/2) extends
+ zero-free and analytic to the strip 0 < Im t < 1/2" (the t-image of Re s > 1/2). That hypothesis is RH_K. So the Fisher-Hartwig
+ route, by itself, is a reformulation (BSY in determinant form), not a bridge.
+ COROLLARY (the exit, rule H7): the determinant has a SECOND exact representation, the orbit side (W_z from the distances of the
+ orbit of z; at omega one shifted convolution eps(m) r_K(m) r_K(m+3), N50). A bridge would be a computation of the limit of
+ lambda_T from the orbit side that does not pass through the symbol. Not examined; I do not know whether it is easier.
+
+### R3.4 Where an off-line zero DOES show up in determinant asymptotics (PROVED as a mapping; the asymptotics KNOWN, read: abstract)
+The local model of an off-line pair at distance delta from the line is Claeys-Its-Krasovsky's family: a symbol regular at positive
+distance whose singularity reaches the contour as t -> 0. Translated (my mapping, HEURISTIC in the normalisations): at resolution T
+with T delta << 1 the quartet acts like a merged Fisher-Hartwig zero of order 4 at gamma (alpha = 2, factor T^(alpha^2) = T^4), for
+T delta >> 1 like a smooth factor (T^0), with a Painleve V crossover at T ~ 1/delta; an ON-line pair at separation s goes instead from
+T^4 (merged, T s << 1) to T^1 . T^1 (two alpha = 1 factors, T s >> 1) and never to T^0. So
+the determinant (not lambda_T, whose limit ignores powers of T) "sees" an off-line zero as a Fisher-Hartwig factor that SWITCHES
+OFF at T ~ 1/delta, against an on-line double zero whose factor stays on. This is the determinant form of the seminar's visibility law
+(a window sees an offset delta only after a length ~ 1/delta). It decides nothing: to use it one must know S, i.e. the zeros.
+
+### R3.5 Fake first: z = i sqrt5 (PROVED; same theorems)
+Symbol w_(i sqrt5) = (1/4pi)|E(i sqrt5, 1/2+it)|^2/|lambda+2|^2: Fisher-Hartwig double zeros at the on-line zeros, cT + o(T)
+off-line zeros in every strip (N50: Voronin, Lee) entering V as smooth bumps. Krein: lim lambda_T = target(i sqrt5) e^(2 Dfc(i sqrt5)),
+with Dfc(i sqrt5) = sum log|rho/(1-rho)|, terms ~ delta/gamma^2 for rho = 1/2 + delta + i gamma: convergent although there are cT
+off-line zeros up to height T, so Dfc(i sqrt5) is finite and > 0. Every statement of R3.1-R3.4 applies verbatim; the hypotheses distinguish nothing. What can differ at omega for a structural reason:
+ (a) THE ORBIT KERNEL (N50, SP-reflection R3): at omega W_omega comes from ONE shifted convolution of ONE multiplicative function
+     (r_K = 6 (1 * chi_-3)); at i sqrt5 from FOUR, with cross terms between the two class-group characters.
+ (b) THE SYMBOL FACTORS PRIME BY PRIME (PROVED for finite products; HEURISTIC for the limit). Write formally
+     w~ = prod_p w_p, w_p(t) = |L_p(1/2 + it)|^2 the local factors of zeta_K / zeta(2s): almost periodic symbols with frequencies in
+     Z log p. For almost periodic symbols the Szego-Widom constant is the quadratic form sum_(x > 0) x (log a)^_x (log a)^_(-x)
+     over the frequency set (Bohr mean in place of the integral; from memory: Boettcher-Karlovich-Spitkovsky). The frequency sets
+     Z log p are pairwise disjoint except 0 (unique factorisation: log p / log q irrational), so ALL CROSS TERMS VANISH and the
+     constant of a finite product is the product of the local constants, each explicit:
+         log E(w_p) = sum over frequencies x in Z_(>0) log p of x |c_x|^2 (explicit; e.g. one local root 1 at a prime ideal of norm p:
+         c_(k log p) = p^(-k/2)/k, giving -(log p) log(1 - 1/p); split, inert primes and the zeta(1+2it) denominator are similar).
+     The product over p diverges like sum log p/p (Mertens): R3.2's "not in H^(1/2)". At i sqrt5 the symbol is |Pi_1 + Pi_2|^2 for two
+     Euler products and log of it has no prime-by-prime decomposition: cross terms between primes do not vanish. So in determinant
+     language omega's symbol is a (non-convergent) product of independent local symbols with explicit Wiener-Hopf factors
+     (1 - N(p)^(-s))^(-1), outer: if the limits T -> inf and P -> inf could be exchanged, Dfc(omega) = sum of local Jensen gaps = 0.
+     That exchange is the whole problem (F5, Round 2 R2.1 (2)); this is the Bohr lift (N46 (ii)) in Toeplitz form.
+ (c) THE MINIMISER (SP-reflection R3): at omega, under RH_K, its transform is 1/O = a Mobius Dirichlet series of Z[omega]; at i sqrt5
+     no multiplicative candidate exists.
+
+### R3.6 Summary for the bridge question (one line each)
+- Limit of lambda_T: known unconditionally (Krein-Szego) as exp of a Poisson integral of log w; FH theory refines rates only.
+- RH_K = value of that integral = BSY for zeta_K; the factor e^(2 Dfc) is invisible to every theorem whose hypotheses are norms on the line.
+- Hence: REFORMULATION, unless a second exact representation (the orbit side) computes the limit independently (not examined).
+- Off-line zeros are visible in the DETERMINANT (not in lambda_T's limit) as Fisher-Hartwig factors switching off at T ~ 1/delta (CIK).
+- Structural difference at omega, in this language: the symbol is formally a product of local symbols on disjoint frequency lattices,
+  so Szego-Widom constants factor over primes with no cross terms; at i sqrt5 they do not. RISK: the exchange of limits is RH again.
