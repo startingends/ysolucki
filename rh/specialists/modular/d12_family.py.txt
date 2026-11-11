@@ -1,0 +1,21 @@
+# the family (1 - I_w/(2L))/w on f = e_0 = (2L)^(-1/2) 1_(-L,L), for several windows; atoms n <= e^(2L)
+import sys, math, mpmath as mp
+mp.mp.dps = 20
+exec(open('d12_prime_check.py.txt').read().split("for w in")[0].replace("L = mp.mpf('0.5')", ""))
+def qw(n, w):
+    r, m, p = mp.mpf(n)**w, n, 2
+    while p*p <= m:
+        if m % p == 0:
+            r *= (1 - mp.mpf(p)**(-2*w))
+            while m % p == 0: m //= p
+        p += 1
+    if m > 1: r *= (1 - mp.mpf(m)**(-2*w))
+    return r
+L = mp.mpf(sys.argv[1])
+for w in [mp.mpf(x) for x in sys.argv[2:]]:
+    I = mp.mpf(0); n = 1
+    while mp.log(n) < 2*L:
+        P, _ = Phi(2*L - mp.log(n), w)
+        I += qw(n, w)/mp.sqrt(n)*P
+        n += 1
+    print("L =", mp.nstr(L, 4), " w =", mp.nstr(w, 3), " atoms n <=", n-1, "  (1 - I/2L)/w =", mp.nstr((1 - I/(2*L))/w, 9))

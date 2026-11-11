@@ -98,10 +98,17 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 State at 2026-11-11, about 02:10 UTC.
 - **Bridge 1 (idea #27): built and ended** (see the bridge section above and `rh/BRIDGE.md`). All its planks have
   reports in; nothing of it is still running.
-- **READER-4 (running):** the October 2026 quasi-Riemann-hypothesis papers (OpenAI; zero-free half-plane 7/8,
-  shorter route 11/12), whole, with the proof skeleton and the inputs per step. The owner pointed to it (A21).
-  A second-hand summary of the mechanism is in notebook N42. NEXT: when the digest lands, decide whether bridge 2
-  can be laid on its input (Möbius function through a family with an amplifier; cubic Gauss sums / Kubota theta).
+- **MODE (owner's rule 13, A23): abstract, risk, structure; NO new measurement jobs.** `rh/HUNCHES.md` part F is the
+  working document: the structural question (where is a zero a THING: a pole of the Eisenstein series at ρ/2, the
+  wrong parameter; a NODE at the CM point ω of the Eisenstein family at the right parameter s), the wall table
+  ("what object would make this wall trivial?"), and one concrete object given to three specialists at once:
+  **Φ(s) = E*(ω, s) = completed Dedekind zeta of ℚ(√−3)**. SP-operator (session 3), SP-reflection (session 2) and
+  SP-modular each write `OBJECT_PHI.md` in their folder WITHOUT reading the others. NEXT: when all three are in,
+  lay them side by side (that comparison is the test), and only then decide on bridge 2.
+- **READER-4: done.** Quasi-RH papers: `rh/library/openai-qrh-11-12.md` (whole), `openai-qrh-7-8.md` (45%).
+- **Measurements already running when rule 13 arrived:** S1-parity on the growth of the windowed Möbius inverse
+  (Hunch 1 plank zero); the foothold seat's damped pencil is in (dμ/dε ≈ 0.10 at ε = 0, the ladder dissolves at once,
+  κ_min barely moves). No more of these.
 - **SP-modular (running, session 1):** three questions from the lead; its toolkit (Eisenstein series, metaplectic
   forms, Rankin–Selberg) is the one the quasi-RH mechanism belongs to. NEXT: give it N42 and the digest.
 - **Seminar S1: CLOSED** (218 posts). Closing summary: `rh/experiments/s1_seminar/socrates/CLOSING.md` (questions in

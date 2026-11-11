@@ -157,3 +157,8 @@ window functions, RH would follow from the half-shift theorem; nothing computed 
 T = 2: 0.520872, 1.351103, 1.755641, 9.627125. First two routes agree to 10 digits; the zero sum is lower by 0.0053 in
 every row (its tail beyond gamma_399 = 670, estimated 0.0054). All positive, as a norm must be; the zero gamma_1 shows as
 a peak of height 8 = 4 x (1/2)/(1/4) at 2t = gamma_1: a zero seen from the line Re w = 1.
+
+## 01:59 (clock) PREDICTION (P9), before computing: the family on e_0 at L = 0.75 and L = 1.0
+Atoms n <= e^(2L): n <= 4 and n <= 7; q_w(n) = n^w prod_{p|n}(1 - p^(-2w)).
+PREDICTION: (i) at w = 0.01 the value is within 0.5% of lane A's q_00 (pole included); (ii) the curve is monotone
+decreasing in w on [0.01, 0.5] as at L = 0.5; (iii) the w = 1/2 end is within 20% of q_00 at both windows.
