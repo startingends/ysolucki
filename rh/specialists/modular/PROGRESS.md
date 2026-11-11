@@ -230,3 +230,6 @@ I4 2.2e-14, I5 3.1e-14. HIT (all five).
 statements; Dunn-Radziwill 2109.07463 sec. 2, 5.1, Prop typeI, sec. "Improved cubic large sieve"; Dunn 2403.13151 sec. 4.
 Finding: (H_cub) in A2's shape follows from Heath-Brown's cubic large sieve (frequency shift = cubic character of h); family sign is
 frequency h^2 (opposite to N76's dilation hn): no theta residue, post-theta twist non-trivial cubic (HEURISTIC, R1). CUBIC_ABSORB 3(c) corrected.
+## (new session) LOCAL_PARAMETERS.md written (H-2 task). Construction only, no numerics. Read CORE.md, HUNCHES part H.
+Finding: rho -> Ind(|.|^(rho-1/2)) -> Sym^k multiplies r with fixed half-width, but unitary <=> beta = 0 already (GL_2(R) dual): empty.
+Candidates have at most two of {automorphic+Satake, unitary at the parameter, parameter controlled by a zero}. Q 5, Toward RH 1.

@@ -1425,3 +1425,26 @@ collision** (lead, after SP-operator session 2, `rh/specialists/operator/TWO_ZER
   Poisson summation, and the whole-space constant is interpolation at the zeros. Sent to a reader to check against
   the literature rather than asserting it from memory.
 - Prediction scores this round: lead N80 (both missed), SP-operator (2 hit, 2 partial, 3 missed), V-TZ (see verdict).
+
+**N83. H-2 result: amplification is cheap; unitarity at a zero is what is missing** (lead, after SP-modular,
+`rh/specialists/modular/LOCAL_PARAMETERS.md`; construction only, several facts from memory).
+- The table of H-2 stands row by row; the GL_n / cover rows share one reason (every constant term is L(z)/L(1+z),
+  so a denominator zero sits at Re z = β − ½ < 0, outside the L²-residue region).
+- The lead's thesis "no operation on global zeros amplifies" is false as worded: ρ ↦ Π_ρ = Ind(|·|^(ρ−½)) (the
+  Eisenstein series E(·, ρ)) and then Sym^k Π_ρ (isobaric on GL_{k+1}) multiplies the exponent β by k with the
+  unitary bound fixed at ½. But the counterexample is EMPTY: Langlands' argument needs unitarity at k = 1, and for
+  GL₂(ℝ) with γ ≠ 0 unitary ⇔ tempered ⇔ β = 0, so the input is the conclusion. Also "ρ is a zero" is a global
+  condition (a toric period of E(·, ρ) vanishes, Hecke), which Sym^k does not carry (heuristic for k ≥ 2).
+- **The triangle.** Three properties: (A) automorphic with Hecke data at the primes, (B) unitary at the parameter,
+  (C) parameter controlled by a zero of ζ. Every candidate examined has at most two: Eisenstein at ρ, incl.
+  E*(ω, s): A + C. Pseudo-Laplacians (Colin de Verdière, Bombieri–Garrett): B + C (if they have eigenvalues at
+  all), and Hecke-equivariance kills them. Residual spectrum, Kazhdan–Patterson and the October sextic theta: A + B
+  (they encode poles of ζ, or Gauss sums, never zeros). Residue at the scattering pole ρ/2: A only.
+- The object that would make the wall trivial (SP-modular's words): a Hilbert space in which a zero of ζ is a
+  spectral parameter, Hecke operators still act, and Sym^k stays in the family. Ratings: Quality 5, Toward RH 1.
+- Lead's reading. The triangle is the sharpest form of the target so far, and it turns H-2 into ONE structural
+  question for the next construction: is there a REASON (a theorem) that A + B + C cannot coexist, or only an absence
+  of examples? If A + B force the parameter to be an automorphic spectral parameter of the usual L², then C fails
+  because zeros of ζ are not Maass parameters, and any Hilbert–Pólya space must break A in a controlled way (Connes'
+  adele class space keeps a weaker A: the action of the idele class group). The precise question: what is the
+  weakest form of A that still lets Sym^k act? That is where the triangle might have a gap.

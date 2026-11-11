@@ -11,6 +11,7 @@ Out of 10 each; a breakthrough is 9–10 on both. Lead's honest ratings, 2026-11
 | Two-zero model N81 | κ = Gram eigenvalue of D-kernels at zeros; vanishes linearly at collisions (in model) | 4 | 2 | model-only; global; (S) killed; framework close to de Branges/Lagarias |
 | Wall #34, eight languages | one wall reached by eight routes | 5 | 1 | understanding, no exit |
 | Rule H11 | no uniform margin; tight along colliding pairs | 4 | 2 | heuristic link to Rodgers–Tao, not proved |
+| H-2 table + triangle N83 | amplifiers act on local parameters; candidates have at most 2 of {Hecke, unitary, zero-controlled} | 5 | 1 | known in spirit (Hilbert–Pólya with Hecke); the counterexample is empty |
 | **Ceiling now** | | 6 | **2** | no statement uses the Euler product in the bulk |
 
 What a 3 on "Toward RH" would be: a PROVED statement about individual zeros below the band edge that is true for ζ,
