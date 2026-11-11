@@ -120,6 +120,28 @@ Möbius-inverted variable, f = Zψ, ψ = Z⁻¹f.
 - WHAT WOULD KILL IT: the impostor's G is indistinguishable from zeta's on all computable windows (then the
   resonance is as invisible here as in the form), or the doubling identity relates G(2L) to G(L)² only.
 
+**Hunch 1, plank zero: OUTCOME** (S1-parity, `rh/experiments/s1_seminar/parity/HUNCH1.md`; floats, one implementation;
+predictions written first, most hit).
+- G must be measured on a fixed FREQUENCY BAND (the L² norm is provably blind to signs: it equals the norm with |μ|).
+  On |t| ≤ 100 zeta's G grows LINEARLY (1.95 → 9.18 from L = 1 to 6), peaked at its first zero; the impostor grows at
+  rate 1.85 per unit L (= e^0.617) and crosses zeta between L = 2 and 2.5; F_d's rate is visible only from L ≈ 4–5.
+- **What the Möbius side sees that the Weil form did not:** from L = 1 (sums of length 7) the frequency at which
+  the impostor's Möbius operator is LARGEST is already the height of its off-line zero (86.00, 85.78, …, 85.70).
+  The Weil-form ladder was regular 0.01 before failure (bridge 1, planks 10, 12). On this side the off-line zero
+  shows in the SHAPE at once, in the size only later.
+- **Doubling: exact block identity** M_{2L} = [[M_L, 0], [H_μ R, M_L]] with H_μ the mirror of the Möbius measure
+  about the midpoint (checked to 1e-15; probably Vaughan's identity at cut-off √D, unsearched). Best inequality:
+  G(2L) ≤ G(L) + (e^(2L) − 1)·G(L)². QUADRATIC: the hunch's own kill line for its strong form.
+- **The decisive structural fact:** F_d has an Euler product, a functional equation and its own summation
+  formula, and still G(2L) ≈ G(L)². So **no doubling law can come from the functional equation alone; it must use
+  local roots of modulus one** (barrier B11). The one-prime system satisfies every doubling law: for this hunch it
+  is not a fake (its zeta has no zeros). My line "no functional equation, so no doubling law" was wrong.
+- What remains of the hunch, stated exactly: split the integer-comb mirror H₁ into its pole part (the e^(2L)) and
+  its Poisson-dual part, and find cancellation between them after Möbius inversion on both sides, down to a bound
+  linear in G(L). That is type-II information (bilinear sums of μ), which is exactly what the quasi-RH proof
+  obtains from the cubic theta function. So Hunch 1 and Hunch 2 have met: the missing step of the first is the
+  input of the second.
+
 ### Hunch 2. Positivity because it is a norm: the Weil form over ℚ(√−3) as a period of the cubic theta function
 - THE OBSERVATION. Every proof of a Riemann hypothesis in geometry gets its positivity from a quantity that is
   non-negative because it is a degree, a dimension or a norm (notebook N38). Over ℚ we have never had such an

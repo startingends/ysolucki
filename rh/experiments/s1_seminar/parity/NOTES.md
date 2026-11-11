@@ -329,3 +329,10 @@ Foothold second route (fh_*.py.txt, logs): see section V below (written when the
  Open / promised: (i) FORMAL may take the finite Perron step (B194). (ii) the verifier track has PROOF_Uprime.md. (iii) foothold seat should
  recheck its quoted float Rayleigh-Ritz values (B196). (iv) Plank 4 is done at the lead's bases; the bridge's kill test must use plank 6's D_L
  (inf over companions), see B204. (v) if asked: H1 on F_d (B210); impostor cone test for (C); hull of weights in foothold Theorem B (scan killed).
+
+## AFTER THE SEMINAR: plank zero of Hunch 1 (lead's assignment, 2026-11-11). Everything is in HUNCH1.md (predictions first, results, proofs).
+ Scripts h1.py.txt (table | identity | longrange), h1b.py.txt; logs h1_table.log, h1_identity.log, h1_longrange.log, h1b.log.
+ Headlines: L^2 norm of Z_L^-1 is blind to zeros (= |mu|-operator norm, PROVED). 'K window modes' is not a fixed class. In the band |t| <= 100:
+ zeta linear (slope 1.45 = 2/(sqrt3 |zeta'(rho_1)|)), impostor exponential at t = 85.7 from L = 1 (below zeta until L = 2, above from 2.5), F_d
+ visible from L = 4-5; one-prime bounded (not a fake here). Exact doubling identity M_2l = [[M_l,0],[H_mu R, M_l]], H_mu = -M H_1 M^# (Vaughan at
+ sqrt D): quadratic bound only; F_d shows the functional equation alone cannot give a polynomial doubling law.

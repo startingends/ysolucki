@@ -99,3 +99,10 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - claim: COMPUTED (fh_check_A.log, plank4 refinement logs). Every eigenvalue-based number of the project at L >= 0.75 carries this uncertainty; ratios to the same-basis eigenvalue are more stable than the eigenvalues.
 - log:
+
+## #14 · Moebius-side doubling identity: M_2l = [[M_l,0],[H_mu R,M_l]], H_mu = -M_l H_1 M_l^# (mirror operator of the Moebius measure = Moebius x integer comb x Moebius)
+- status: open
+- source: S1-parity
+- date: 2026-11-11
+- claim: PROVED, checked to 1e-15; it is Vaughan's identity at cut-offs sqrt D. Gives only G(2L) <= G(L) + e^(2L) G(L)^2. A polynomial doubling law needs cancellation between the pole part and the Poisson-dual part of the comb after Moebius inversion; F_d shows the functional equation alone cannot supply it. Also: frequency-resolved size s_L(t) of the cut Moebius operator locates the impostor's off-line zero (t = 85.7) from L = 1 and shows rate 0.62 from L = 3, in floats.
+- log:

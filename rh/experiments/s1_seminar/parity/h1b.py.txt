@@ -1,0 +1,44 @@
+"""S1-parity, Hunch 1 plank zero, part 2: frequency-resolved size of the cut Moebius operator.
+s_L(t) = |M_l e_t| / |e_t| for the pure frequency e_t(v) = e^(itv) on the window [0, l], l = 2L:
+   s_L(t)^2 = (1/l) int_0^l |sum_{m <= e^v} c(m) m^(-1/2-it)|^2 dv   (exact: the partial sum is constant between integers).
+G_T(L) := max over |t| <= T of s_L(t): a lower bound for the norm on any class containing the frequencies up to T."""
+import sys, math, time, importlib.util, importlib.machinery
+import numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+h1 = None
+src = open("/home/user/ysolucki/rh/experiments/s1_seminar/parity/h1.py.txt").read().split('if sys.argv[1] == "table":')[0]
+exec(src)
+Ls = (0.5, 1.0, 1.5, 1.72, 2.0, 2.5, 3.0, 3.5, 4.0, 5.0, 6.0)
+X = int(math.exp(2 * max(Ls))) + 1; S = systems(X)
+ts = np.arange(0, 100.0001, 0.02)
+n = np.arange(1, X + 1, dtype=float); ln = np.log(n)
+for name in ("zeta", "impostor", "F_d (d=1/4)", "zeta^2 (d=0)", "one-prime"):
+    c = S[name][1:]
+    out = {T: [] for T in (4, 10, 100)}; arg = []
+    for L in Ls:
+        l = 2 * L; y = int(math.floor(math.exp(l) + 1e-12))
+        w = np.diff(np.concatenate([ln[:y], [l]]))                       # lengths of the v-intervals on which the partial sum is constant
+        # partial sums for all t at once, in chunks
+        s2 = np.zeros(len(ts))
+        ch = max(1, int(3e6 / y))
+        for a in range(0, len(ts), ch):
+            tt = ts[a:a + ch]
+            ph = (c[:y] * n[:y] ** -0.5)[None, :] * np.exp(-1j * np.outer(tt, ln[:y]))
+            D = np.cumsum(ph, axis=1)
+            s2[a:a + ch] = (np.abs(D) ** 2 * w[None, :]).sum(axis=1) / l
+        s = np.sqrt(s2)
+        for T in out: out[T].append(s[ts <= T].max())
+        arg.append(ts[np.argmax(s)])
+    for T in (4, 10, 100):
+        print(" %-13s G_T(L), T = %-3d: " % (name, T) + " ; ".join("L=%.2f: %.3f" % (L, v) for L, v in zip(Ls, out[T])), flush=True)
+    print(" %-13s frequency of the maximum over [0, 100]: " % name + " ; ".join("L=%.2f: t=%.2f" % (L, a) for L, a in zip(Ls, arg)), flush=True)
+    if name == "impostor":
+        g0 = 85.6993484854
+        row = []
+        for L in Ls:
+            l = 2 * L; y = int(math.floor(math.exp(l) + 1e-12)); w = np.diff(np.concatenate([ln[:y], [l]]))
+            D = np.cumsum(c[:y] * n[:y] ** -0.5 * np.exp(-1j * g0 * ln[:y]))
+            row.append("L=%.2f: %.3f" % (L, math.sqrt((np.abs(D) ** 2 * w).sum() / l)))
+        print(" impostor      s_L(t) at t = 85.699 exactly: " + " ; ".join(row), flush=True)
