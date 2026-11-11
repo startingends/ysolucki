@@ -81,6 +81,13 @@ def report(tag, coef, fam, TpH, TmH):
           % (Ep ** 2, T / Ep ** 2, G1 / Ep ** 2, {n: round(v / Ep ** 2, 5) for n, v in Hp.items()}, E0 ** 2 / Ep ** 2, max(neg, 0) / pos))
 for name, Zex, EBb, OBb in (("zeta atoms", Zb, EB, OB), ("NO atoms", A0, EB0, OB0)):
     print("=== %s ===" % name)
+    # float pencil of H against T (T = half-window form, positive definite): the whole spectrum of R = T^-1 H, both families
+    for fam, TpH, TmH in (("cos", np.array(Zex[0].tolist(), dtype=float) / 2, Xc.T @ OBb @ Xc / 2), ("sin", Xs.T @ EBb @ Xs / 2, np.array(Zex[1].tolist(), dtype=float) / 2)):
+        Tm = (TpH + TmH) / 2; Hm = (TpH - TmH) / 2
+        try:
+            ev = sla.eigh(Hm, Tm, eigvals_only=True)
+            print("   R = T^-1 H, %s family (double precision): min %.6f  max %.6f ; five largest %s ; lowest eig of T/|phi|^2-Gram not shown" % (fam, ev[0], ev[-1], np.round(ev[-5:], 4).tolist()))
+        except Exception as e: print("   R spectrum failed (%s):" % fam, e)
     # (i) cosine family
     Bap = tomp(Xc.T @ OBb @ Xc / 2); Aex = Zex[0] / 2
     try:

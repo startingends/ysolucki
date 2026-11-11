@@ -1,0 +1,18 @@
+L = 0.500, window atoms [2] ; half window (0, L]: atoms with log n < L: []
+=== zeta atoms ===
+   R = T^-1 H, cos family (double precision): min -0.999997  max 0.996896 ; five largest [0.1953, 0.2219, 0.2739, 0.3951, 0.9969] ; lowest eig of T/|phi|^2-Gram not shown
+   R = T^-1 H, sin family (double precision): min -0.901953  max 0.996816 ; five largest [0.1945, 0.221, 0.2726, 0.3929, 0.9968] ; lowest eig of T/|phi|^2-Gram not shown
+ (i) cosine family: 1 + lam_min = 3.1278e-6 ; lowest five lam + 1: ['3.13e-6', '0.146', '0.688', '0.761', '0.795'] ; #(lam < -0.99) = 1 of 41 ; lam_max = 0.9969
+   even saturator: |phi|^2 = 1.646 ; T = 0.500001, H = -0.499999, H/T = -0.999996872 ; H from pieces = -0.510786 (difference -1.08e-02)
+      in units of E_+^2 = 0.59769:  Q(phi) = T = 0.83656 ; sum_{m>=1} E_m^2 = 1.82021 ; H_primes = {2: 0.03439} ; E_0^2 = 0.75501 ; smaller lobe / larger lobe of phi = 0
+ (ii) sine family: 1 - lam_max = 0.0031837 ; top five 1 - lam: ['0.00318', '0.607', '0.727', '0.779', '0.805'] ; #(lam > 0.99) = 1 of 40 ; lam_max = 0.9968163 ; lam_min = -0.90195
+   odd saturator: |phi|^2 = 7.405 ; T = 0.500797, H = 0.499203, H/T = 0.996816299 ; H from pieces = 0.499203 (difference 1.51e-07)
+      in units of E_+^2 = 3.5852:  Q(phi) = T = 0.13969 ; sum_{m>=1} E_m^2 = 0.53391 ; H_primes = {2: 0.32685} ; E_0^2 = 0.63038 ; smaller lobe / larger lobe of phi = -0
+=== NO atoms ===
+   R = T^-1 H, cos family (double precision): min -1.090393  max 9.090981 ; five largest [0.0, 0.0, 0.0002, 0.0281, 9.091] ; lowest eig of T/|phi|^2-Gram not shown
+   R = T^-1 H, sin family (double precision): min -0.950906  max 8.718250 ; five largest [0.0, 0.0, 0.0, 0.0, 8.7182] ; lowest eig of T/|phi|^2-Gram not shown
+ (i) failed: matrix is not positive-definite
+ (ii) sine family: 1 - lam_max = -7.7182 ; top five 1 - lam: ['-7.72', '1.0', '1.0', '1.0', '1.0'] ; #(lam > 0.99) = 1 of 40 ; lam_max = 8.7182498 ; lam_min = -0.95091
+   odd saturator: |phi|^2 = 2.826 ; T = 0.102899, H = 0.897101, H/T = 8.718249839 ; H from pieces = 0.0114226 (difference -8.86e-01)
+      in units of E_+^2 = 1.631:  Q(phi) = T = 0.06309 ; sum_{m>=1} E_m^2 = 0.44996 ; H_primes = {2: 0.54304} ; E_0^2 = 0.59632 ; smaller lobe / larger lobe of phi = -0
+time 7.5 s

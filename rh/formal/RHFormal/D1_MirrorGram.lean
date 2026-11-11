@@ -113,9 +113,11 @@ theorem mirror_form_eq_sum_squares (S : Finset ℕ) (hS : ∀ a ∈ S, 2 ≤ a) 
     · rw [ite_eq_right h1, ite_eq_right h2, ite_eq_right (fun h => h1 h.1)]
       ring
   have hR := Finset.sum_congr (rfl : P = P) rhs
-  rw [hR, Finset.sum_comm]
+  rw [hR]
+  symm
+  rw [Finset.sum_comm (s := P) (t := S)]
   refine Finset.sum_congr rfl fun a ha => ?_
-  rw [Finset.sum_comm]
+  rw [Finset.sum_comm (s := P) (t := S)]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [key a ha b, Finset.mul_sum, Finset.sum_div]
 
