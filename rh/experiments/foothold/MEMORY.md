@@ -1,4 +1,4 @@
-# FH seat MEMORY (rewritten at the end of session 5, 2026-11-11)
+# FH seat MEMORY (rewritten at the end of session 6, 2026-11-11)
 
 ## What exists (all in rh/experiments/foothold/ unless said)
 - PROGRESS.md: running log with predictions, commands, reading record, walls W-FH1, W-FH2.
@@ -52,6 +52,11 @@
   1.65 on the impostor's off-line quartet at 85.70 (needs Legendre degree >= about 90 L to be seen). chi5 control flat-ish (0.399 -> 0.325). Zeta 1.25: 0.2046 on the pair 111.03/111.88 (predicted). So kappa_min of zeta is
   expected -> 0 along Lehmer pairs (HEURISTIC). Summary table: PROGRESS 25.
   LESSON: memcap 1 GB: assemble D in chunks (done). Logs pencil_dh_*_N*.log, pencil_ctl_chi5_*.log.
+- SESSION 6 (REVERSE plank R2): REVERSE_R2.md. PROVED (elementary, O(1/c)): h0_inf - S(c) = deg + p - N(c) with
+  c = 2 pi e^(2L)/q, h0_inf = (1/2) parity trace of P_1 Phat_c = c/2pi +- Si(2c)/4pi, deg = cL/pi, p = pole; 7/8 = 1 - 1/8.
+  COMPUTED: residuals < 0.0022 at 9 windows (zeta, chi5, impostor); near-null counts of the window form = prolate class
+  counts exactly (zeta even n>=4, chi5 even n>=0, impostor odd n>=1). h1 := S has no sign => RR inequality fails.
+  Script reverse_r2.py.txt (A: identity; B <kind> <L> <NB> <prec>: counts), logs reverse_r2_A.log, reverse_r2_B.log.
 - Answers given to the coordinator: (1) Connes-Consani Thm 1 does not give plank 8 on the no-prime window as it
   stands (different comparison form, codimension-2 subspace, non-certified numerics); certificate recipe in
   PROGRESS 16 A. (3) The FH-1 certificate run on Q - kappa D does NOT escape the cost explosion (PROGRESS 17).

@@ -544,3 +544,7 @@ third value 0.37 -> 0.20, identity of that vector not checked); control predicti
 (0.325 = -19%). Zeta 1.25 prediction: HIT.
 Not done: certification; second implementation; the identity of the third pencil vector at 1.6; impostor degree beyond
 172 at 1.65 (value still falling with the degree); a law kappa(normalised gap).
+
+## Session 6 (2026-11-11): REVERSE plank R2
+Everything is in REVERSE_R2.md (predictions first, definitions, a proved asymptotic identity, numbers at nine windows,
+the paragraph on the square, ratings). Scripts reverse_r2.py.txt; logs reverse_r2_A.log, reverse_r2_B.log.

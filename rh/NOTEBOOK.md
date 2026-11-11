@@ -1939,3 +1939,19 @@ c + Σ λ_min(A_i), attained at the tensor product of bottom vectors. `T129_Coll
 family k(t), k± = k(c ± √u): det Gram(k₊, k₋) = 4‖k(c)‖²·J·u + u²R(u), trace = 2‖k(c)‖² + u·T(u), R, T polynomials;
 with session 3's bounds this brackets κ₂. Not formal: T140's divisor-box identity; T129 for analytic families and the
 continuation u = −β²; λ_min is the Rayleigh minimum (spectral theorem not typed). Quality step only.
+
+**N111. REVERSE plank R2: the archimedean Riemann–Roch is a prolate count, exactly, and gives no sign** (lead, after
+FH, `rh/experiments/foothold/REVERSE_R2.md`; predictions first).
+- With c = 2πe^(2L)/q: h⁰_∞ = half the parity-ε trace of the time–band limiting operator = c/2π ± Si(2c)/4π;
+  deg = cL/π (Weyl count of the window circle); g = N(c) (zeros up to c); h¹ = S(c) (the prime-local term); K of
+  degree 2g − 2. PROVED (elementary, error O(1/c)): h⁰_∞ − S(c) = deg + p − g (p = 1 for the pole of ζ). The
+  Riemann–von Mangoldt constant splits 7/8 = +1 − 1/8 (+1 the pole: the two removed prolates n = 0, 2; −1/8 the
+  reflection trace; an odd Γ-factor flips it). Main terms already in Connes–Consani 2106.01715 Prop 4.2; constants,
+  error, parity and conductor rules are the addition.
+- COMPUTED: residual < 0.0022 at nine windows (ζ, χ₅, impostor); near-null counts of the actual window Weil form EQUAL
+  the prolate class counts exactly at thresholds 1e-6 and 1e-3 in all six cases (ζ even n ≥ 4, χ₅ even n ≥ 0,
+  impostor odd n ≥ 1): bridge 1's ladder IS the archimedean h⁰. The impostor satisfies the identity (same ∞ data).
+- Consequence, as REVERSE.md predicted: ∞ sits in the exact, positive main term; the inequality h⁰ ≥ deg + 1 − g fails
+  whenever S(c) < 0, which happens at all three zeta windows. So the sign must come from L4–L5 (effectivity and
+  positive degree), where the Euler product has to act. Ratings (seat): Quality 3, Toward RH 1; lead: the plank
+  confirms the predicted SPLIT (∞ exact and universal; sign elsewhere), which is information for R1 and R4.
