@@ -167,3 +167,16 @@ two negative squares (plank 9: one per parity block) and m = 30 constraints (n �
 (Q2) L = 2.0 (if affordable): the cone detects it, κ_P^{DH}(2.0) < 0. Probability 0.5.
 Kill/revive line: detection at some L ≤ 2.0 with hiding at 1.72 ⇒ (Detect) "eventually true" for this case, lag recorded.
 Degree check: κ_min at two degrees (principal submatrices) must agree to 2 digits.
+
+### 7.1 Outcome at L = 1.8 (COMPUTED; logs two_zero/pd_dh_1p8_N165.log, pd_dh_1p8_N180.log, pds_*.log; not certified)
+Dump: QDmp_dh_9_5_180.pkl (degree < 180 ≥ 90L, 380 bits, 2 min). Degree check: κ_min = −0.30421 (degree < 165) and
+−0.30433 (< 180); second value −0.29912 / two negative squares as on record. m = 28 constraints (n ≤ 36, 5 ∤ n).
+Best dual lower bounds on κ_P^{DH}(1.8): −0.2522 (165), −0.2331 (180), still rising slowly with the optimiser's scale;
+soft-min continuation gave −0.281, and its near-primal H has Tr(AH) = −0.287 with relative constraint residual 1e-4 (not a
+certificate, since |W_s| ~ 1e35). Sanity check of the method at 1.72: soft-min reaches +0.0356 (earlier +0.0335).
+**Reading (provisional): at L = 1.8 the fake weights no longer hide the quartet as far as the optimiser can reach** (gain
++0.07 against a negativity of 0.30, versus +0.08 against 0.048 at 1.72). This points to (Detect) becoming true between
+L = 1.72 and 1.8 for the impostor (lag ≤ 0.08 in L after the first failure), but the dual is not proved converged and no
+primal certificate exists, so κ_P(1.8) < 0 is NOT established. Prediction Q1 (still hidden at 1.8): MISSED as far as computed.
+L = 2.0: dump done (QDmp_dh_2_1_200.pkl, 43 constraints, 4.4 min); the wide-scale dual runs (degrees 185, 200) were started
+(logs two_zero/pdw_dh_2p0_*.log; 1.8 wide-scale in pdw_dh_1p8_*.log) and had not reported when this was written.

@@ -1725,3 +1725,16 @@ dual lower bounds, not certified; all three of the seat's predictions hit).
   Λ(p^k) = log p, and imposing the values is the Weil form itself. Read with H13: linear in μ is blind; linear in the
   support of Λ is blind; linear in the values of Λ is the full problem. The ingredient the impostor lacks has to be
   used with its exact values, and no linear device on the record lightens that.
+
+**N96. H-4 at L = 1.8: the impostor's quartet is probably no longer hidden, NOT established** (lead, after SP-operator,
+`PRIME_SAMPLING.md` §7–7.1; interim, runs still going).
+- Impostor at L = 1.8: κ_min = −0.3042 (degree 165) / −0.3043 (180); two negative squares; 28 constraints. Best dual
+  value so far ≈ −0.25 (still creeping up with the search scale; the weight matrices reach |W_s| ~ 1e35, badly
+  conditioned). A dual value is only a LOWER bound for κ_P: a negative number does not prove detection, and there is no
+  primal certificate (an explicit h ∈ C_P with negative form). At L = 1.72 the same method gained +0.08 and hid the
+  quartet (re-checked: +0.0356). Seat's prediction (still hidden, p = 0.55) missed as far as computed.
+- If it holds: the cone detects this quartet within about 0.08 in L of the first failure, so (Detect) is "eventually
+  true" here, with a lag. That would keep H-4 alive as a CRITERION (RH ⇔ W_∞ + poles ≥ 0 on every C_P, if (Detect)
+  holds with a lag in general) but not as a route: by N95 positivity on C_P is exactly as hard as the zero statement.
+  Toward RH stays 1–2. L = 2.0 runs (43 constraints) are pending.
+- Needed to settle: a primal certificate at L = 1.8 (the minimiser of the constrained form), not a better dual.

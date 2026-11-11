@@ -1,0 +1,7 @@
+kind dh, L = 9/5, NB = 165, constraints n = [2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 36] (m = 28); built 30s
+ kappa_min = -0.304211 (second -0.299119); |W_s| up to 1.12e+35; gradient at c = 0 (v^T W_s v / |W_s|): ['6.6e-03', '6.6e-03', '6.6e-03', '6.5e-03', '6.5e-03', '6.5e-03', '6.5e-03', '6.4e-03', '6.3e-03', '6.3e-03', '6.2e-03', '6.1e-03', '6.0e-03', '5.9e-03', '5.8e-03', '5.5e-03', '5.4e-03', '5.2e-03', '5.0e-03', '4.6e-03', '4.4e-03', '4.1e-03', '3.8e-03', '3.1e-03', '2.7e-03', '2.3e-03', '1.8e-03', '6.2e-04']
+  after scale 1e-06: best sup -0.28750530; at that c the two lowest eigenvalues are -0.28750530, -0.28577536; |c_s|*|W_s| max 3.33e+01
+  after scale 1e-04: best sup -0.27891587; at that c the two lowest eigenvalues are -0.27891587, -0.27840736; |c_s|*|W_s| max 3.69e+02
+  after scale 1e-03: best sup -0.25754708; at that c the two lowest eigenvalues are -0.25754708, -0.25540968; |c_s|*|W_s| max 4.16e+04
+  after scale 1e-02: best sup -0.25215595; at that c the two lowest eigenvalues are -0.25215595, -0.25211650; |c_s|*|W_s| max 2.29e+05
+ => kappa_P(L) >= -0.25215595  (kappa_min = -0.30421061; gain 5.21e-02)  total 61s

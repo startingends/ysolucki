@@ -1,0 +1,6 @@
+kind dh, L = 43/25, NB = 172, constraints n = [2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31] (m = 24); built 31s
+ kappa_min = -0.047964 (second 0.010797); |W_s| up to 1.93e+29; gradient at c = 0 (v^T W_s v / |W_s|): ['4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.5e-02', '4.4e-02', '4.4e-02', '4.4e-02', '4.2e-02', '4.1e-02', '3.8e-02', '3.4e-02', '9.5e-03']
+  scale 1e-03: lambda_min = -0.002078 (lowest four ['-0.00208', '0.00854', '0.13759', '0.13782']); best lower bound so far -0.002078; near-primal H: Tr(A H) = -0.022726, max |Tr(W_s H)|/|W_s| = 9.4e-03; |t| max 1.06e+02
+  scale 1e-02: lambda_min = 0.027911 (lowest four ['0.02791', '0.02816', '0.13758', '0.13782']); best lower bound so far 0.027911; near-primal H: Tr(A H) = 0.020632, max |Tr(W_s H)|/|W_s| = 3.5e-04; |t| max 3.81e+02
+  scale 1e-01: lambda_min = 0.035627 (lowest four ['0.03563', '0.03600', '0.11206', '0.12654']); best lower bound so far 0.035627; near-primal H: Tr(A H) = 0.032929, max |Tr(W_s H)|/|W_s| = 9.2e-05; |t| max 1.52e+02
+ => kappa_P(L) >= 0.035627 (kappa_min -0.047964)

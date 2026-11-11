@@ -1,0 +1,73 @@
+"""soft-min continuation variant of prime_dual.py.txt (same set-up)."""
+"""PRIME_SAMPLING section 5 (dual): kappa_P(L) = sup_c lambda_min(A + sum_s c_s W_s), A = Li Q Li^T, W_s = Li B_s Li^T,
+B_s = gamma_sym(log s) (the Legendre matrix of g -> (g*g~)(s), exactly the prime-atom matrix of pencil_dh.py.txt).
+Weak duality: every c gives a LOWER bound kappa_P >= lambda_min(A + sum c W); c = 0 gives kappa_min. B_s and the products are
+computed in arb (python-flint) at the dump precision, then rounded entrywise to float for the eigenvalue evaluations."""
+import sys, pickle, math, time
+import numpy as np, mpmath as mp, flint
+from flint import arb, arb_mat
+from fractions import Fraction as Fr
+from scipy.optimize import minimize
+t0 = time.time()
+d = pickle.load(open(sys.argv[1], 'rb')); NB = int(sys.argv[2]) if len(sys.argv) > 2 else d['NB']; prec = d['prec']; flint.ctx.prec = prec; mp.mp.prec = prec - 40
+LQ = Fr(d['L']); L = arb(LQ.numerator) / arb(LQ.denominator)
+def gl(n, a, b):
+    out = []
+    for k in range(n):
+        x, w = arb.legendre_p_root(n, k, weight=True); out.append(((a + b) / 2 + (b - a) / 2 * x, (b - a) / 2 * w))
+    return out
+NORM = [((2 * arb(j) + 1) / (2 * L)).sqrt() for j in range(NB)]
+def phis(u):
+    t = u / L; P = [arb(1), t]
+    for n in range(1, NB - 1): P.append(((2 * n + 1) * t * P[n] - n * P[n - 1]) / (n + 1))
+    return [NORM[j] * P[j] for j in range(NB)]
+def gamma_sym(x, nin):
+    nodes = gl(nin, x - L, L)
+    A_ = arb_mat(nin, NB, [v for u, w in nodes for v in phis(u)]); B_ = arb_mat(nin, NB, [w * v for u, w in nodes for v in phis(u - x)])
+    G = A_.transpose() * B_; return (G + G.transpose()) * (arb(1) / 2)
+Qm = mp.matrix(NB, NB); Dm = mp.matrix(NB, NB)
+for i in range(NB):
+    for j in range(NB):
+        Qm[i, j] = (mp.mpf(d['Q'][i][j]) + mp.mpf(d['Q'][j][i])) / 2; Dm[i, j] = (mp.mpf(d['D'][i][j]) + mp.mpf(d['D'][j][i])) / 2
+Lim = mp.inverse(mp.cholesky(Dm))
+dig = int(prec * 0.29)
+Li = arb_mat(NB, NB, [arb(mp.nstr(Lim[i, j], dig)) for i in range(NB) for j in range(NB)])
+Qa = arb_mat(NB, NB, [arb(mp.nstr(Qm[i, j], dig)) for i in range(NB) for j in range(NB)])
+tofl = lambda M: np.array([[float(M[i, j].mid()) for j in range(NB)] for i in range(NB)])
+A = tofl(Li * Qa * Li.transpose()); A = (A + A.T) / 2
+X2 = math.exp(2 * float(LQ))
+def isprimepow(n):
+    for p in range(2, n + 1):
+        if n % p == 0:
+            while n % p == 0: n //= p
+            return n == 1
+S = [n for n in range(2, int(math.floor(X2 - 1e-12)) + 1) if (isprimepow(n) if d['KIND'] == 'zeta' else n % 5 != 0)]
+W = []
+for n in S:
+    B = gamma_sym(arb(n).log(), NB + 2); Wn = tofl(Li * B * Li.transpose()); W.append((Wn + Wn.T) / 2)
+print(f"kind {d['KIND']}, L = {d['L']}, NB = {NB}, constraints n = {S} (m = {len(S)}); built {time.time()-t0:.0f}s", flush=True)
+nrm = np.array([np.abs(np.linalg.eigvalsh(Wn)).max() for Wn in W])
+ev, V = np.linalg.eigh(A); v = V[:, 0]
+b = np.array([v @ Wn @ v for Wn in W])
+print(f" kappa_min = {ev[0]:.6f} (second {ev[1]:.6f}); |W_s| up to {nrm.max():.2e}; gradient at c = 0 (v^T W_s v / |W_s|): {[f'{x:.1e}' for x in b / nrm]}", flush=True)
+
+# soft-min continuation: f_mu(c) = -mu log sum exp(-lambda_i(c)/mu) <= lambda_min(c) <= kappa_P (weak duality)
+def soft(t, scale, mu, k=40):
+    Mx = A + sum(ti * scale / ni * Wn for ti, ni, Wn in zip(t, nrm, W)); e, U = np.linalg.eigh((Mx + Mx.T) / 2)
+    e, U = e[:k], U[:, :k]; z = -(e - e[0]) / mu; p = np.exp(z); Z = p.sum(); p /= Z
+    val = e[0] - mu * np.log(Z)
+    gr = np.array([scale / ni * np.sum(p * np.einsum('ij,ij->j', U, Wn @ U)) for ni, Wn in zip(nrm, W)])
+    return -val, -gr, e, U, p
+best_lb = ev[0]; t = np.zeros(len(S))
+for scale in (1e-3, 1e-2, 1e-1):
+    for mu in (0.05, 0.02, 0.01, 0.005, 0.002, 0.001):
+        r = minimize(lambda x: soft(x, scale, mu)[:2], t, jac=True, method='L-BFGS-B', options={'maxiter': 800})
+        t = r.x; _, _, e, U, p = soft(t, scale, mu)
+        best_lb = max(best_lb, e[0])
+    # near-primal H = sum p_i u_i u_i^T from the soft-min weights: constraint residuals and value
+    res = [abs(np.sum(p * np.einsum('ij,ij->j', U, Wn @ U))) for Wn in W]
+    rel = max(r_ / ni for r_, ni in zip(res, nrm)); valH = np.sum(p * e) - sum(ti * scale / ni * np.sum(p * np.einsum('ij,ij->j', U, Wn @ U)) for ti, ni, Wn in zip(t, nrm, W))
+    print(f"  scale {scale:.0e}: lambda_min = {e[0]:.6f} (lowest four {[f'{x:.5f}' for x in e[:4]]}); best lower bound so far {best_lb:.6f}; "
+          f"near-primal H: Tr(A H) = {valH:.6f}, max |Tr(W_s H)|/|W_s| = {rel:.1e}; |t| max {np.abs(t).max():.2e}", flush=True)
+t = t * 0
+print(f" => kappa_P(L) >= {best_lb:.6f} (kappa_min {ev[0]:.6f})")

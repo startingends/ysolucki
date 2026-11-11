@@ -338,3 +338,6 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
   0.204627 (0.204610): constraints cost ~nothing. Impostor L = 1.72: kappa_min -0.048 but kappa_P >= +0.0335 with 24 fake
   weights: (Detect) FAILS for the impostor at its first failing window. Not run: impostor L >= 1.8 (the decisive test).
 - Ratings Quality 6, Toward RH 1. Verdict: C_P is a shadow (keeps support of Lambda, forgets its values).
+
+- Session 6b: impostor L = 1.8: kappa_min -0.304 (stable 165/180), best dual bound -0.233: fake weights no longer hide it as far
+  as computed (not certified, dual not converged). L = 2.0 dumped; wide-scale runs pdw_*.log pending.
