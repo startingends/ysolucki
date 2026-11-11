@@ -1851,3 +1851,16 @@ inverses stay on a submonoid; log 2, log 3 in no common lattice cℤ, so ζ is n
 T129 pair-Gram core (`T129_PairGram.lean`: det Gram(p+m, p−m) = 4 det Gram(p, m); bounds det/tr ≤ λ_min ≤
 det·tr/(tr² − 2det)). Not formal as worded: the r-factor induction, the divisor-box identity, generalised
 frequencies, the u-expansions. The keeper updates THEORY statuses.
+
+**N105. Bagchi's recurrence is the density-to-pointwise converter, and it is circular in the same place** (lead;
+known: Bagchi 1981, Voronin; packaging the lead's).
+- Amplifier: vertical shifts τ (the Kronecker flow on the torus of N88). If ζ were strongly recurrent near an
+  off-line zero ρ₀ (ζ(s + iτ) ≈ ζ(s) on a disc around ρ₀ for a positive-density set of τ), Rouché would give ≫ T
+  off-line zeros up to T. Fixed bound: Selberg's density estimate N(½ + δ, T) = o(T), PROVED (via |μ| ≤ 1, N100). So
+  recurrence + density ⇒ RH, and Bagchi: strong recurrence ⇔ RH.
+- Where it is circular: universality approximates only NONVANISHING targets (the random Euler product has no zeros
+  in σ > ½ a.s., N88), so recurrence near a zero has density zero unless there is no such zero. The amplifier exists
+  and the fixed bound exists; the missing step is recurrence at zero-containing configurations, which is RH.
+- This is the first converter on the record whose FIXED BOUND IS PROVED (a density estimate). What fails is the
+  amplifier's reach, not the bound: the mirror image of N86–N87 (amplifier fine, bound missing). Quality 5,
+  Toward RH 1.
