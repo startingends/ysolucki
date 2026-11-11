@@ -1155,3 +1155,20 @@ unverified; novelty of Thms 2–3 not searched).
   approximate copies (G5, tested negative at small scale); non-character families.
 - This is the first BARRIER THEOREM of the project for a class of methods. Sent to an independent verifier and the
   finite cores L1–L5 to the formal seat.
+
+**N70. The copy barrier, independently verified with corrections** (lead, after
+`rh/specialists/sieve/verifier/VERDICT.md`).
+- Thm 1: verified over ℚ (with the better constant (1 − η)²); REFUTED as written over number fields (counterexample
+  ℚ(√−163), D = 41); corrected with a field constant κ_K. Thm 2: verified with corrections (the local condition is on
+  O_p^*; "copy" must mean trivial as a Hecke character, which the verifier tied to the §0 definition via
+  Pólya–Vinogradov up to conductor D^(2−ε); bound ≤ (ζ(3/2)/ζ(3))√X). Thm 3: verified with corrections, and the
+  verifier SUPPLIED the missing optimality step (uniform weights on copies are Cauchy–Schwarz-optimal; smaller H only
+  helps), so "at best ≈ 3/4" holds within the chain, for mean squares over the full family with uniform/smooth weights.
+- Numerics (exact, predictions first, all hit): quadratic family copies are exactly the squares; all Dirichlet
+  characters mod q ≤ Q give C/|F|^(1/2) → π/√3 = 1.8138.
+- Literature: Thm 1 is in print for the quadratic family (Goldmakher–Louvel Remark 4, after Heath-Brown 1995); a
+  "barrier at 3/4" is asserted in public (Tao, orally, as reported; a forum post) with no written argument found;
+  Thms 2–3 were not found in print (shallow search: "not found", not "new").
+- STATUS: the project's first verified barrier theorem for a class of methods. It limits one method; it says nothing
+  about RH. Its exits (weighted or thinned families, approximate copies, the bootstrap, the short regime) are the only
+  places that method could still go.
