@@ -1,0 +1,30 @@
+# sanity checks for OBJECT_PHI.md (formulas only): E*(omega,s) = 3 (sqrt3/(2 pi))^s Gamma(s) zeta_K(s) = (sqrt3/2) xi(s) Lambda(s,chi_-3);
+# and the two Epstein zeta functions of discriminant -20 as sum / difference of two Euler products.
+import mpmath as mp
+mp.mp.dps = 20
+s = mp.mpf('2.5')
+def Estar(z, s, M=400):
+    x, y = mp.re(z), mp.im(z)
+    tot = mp.mpf(0)
+    for m in range(-M, M+1):
+        for n in range(-M, M+1):
+            if m == 0 and n == 0: continue
+            tot += ((m*x + n)**2 + (m*y)**2)**(-s)
+    return mp.pi**(-s)*mp.gamma(s)*y**s*tot/2
+L = lambda chi, q: (lambda s: mp.dirichlet(s, chi))
+chi3 = [0, 1, -1]; chi4 = [0, 1, 0, -1]; chi5 = [0, 1, -1, -1, 1]
+chi20 = [mp.kronecker(-20, n) if hasattr(mp, 'kronecker') else None for n in range(20)]
+def kron20(n):
+    # chi_{-20}(n) = chi_{-4}(n) chi_5(n)
+    return chi4[n % 4]*chi5[n % 5]
+chi20 = [kron20(n) for n in range(20)]
+xi = lambda w: mp.pi**(-w/2)*mp.gamma(w/2)*mp.zeta(w)
+om = mp.mpc(-0.5, mp.sqrt(3)/2)
+zK = mp.zeta(s)*mp.dirichlet(s, chi3)
+print("E*(omega,s) lattice sum :", mp.nstr(Estar(om, s), 10))
+print("3 (sqrt3/2pi)^s Gamma zeta_K :", mp.nstr(3*(mp.sqrt(3)/(2*mp.pi))**s*mp.gamma(s)*zK, 10))
+print("(sqrt3/2) xi(s) Lambda(s,chi_-3):", mp.nstr(mp.sqrt(3)/2*xi(s)*(3/mp.pi)**((s+1)/2)*mp.gamma((s+1)/2)*mp.dirichlet(s, chi3), 10))
+c = mp.mpf(5)**(s/2)*mp.pi**(-s)*mp.gamma(s)/2
+A = mp.zeta(s)*mp.dirichlet(s, chi20); B = mp.dirichlet(s, chi4)*mp.dirichlet(s, chi5)
+print("E*(i sqrt5, s) :", mp.nstr(Estar(mp.mpc(0, mp.sqrt(5)), s), 10), "  c (zeta L(chi_-20) + L(chi_-4) L(chi_5)) :", mp.nstr(c*(A + B), 10))
+print("E*((-1+i sqrt5)/2, s) :", mp.nstr(Estar(mp.mpc(-0.5, mp.sqrt(5)/2), s), 10), "  c (zeta L(chi_-20) - L(chi_-4) L(chi_5)) :", mp.nstr(c*(A - B), 10))

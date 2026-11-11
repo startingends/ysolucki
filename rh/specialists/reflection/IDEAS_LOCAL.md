@@ -64,3 +64,18 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - novelty: One query pre-existing on the board (S1-mirror) found nothing on reflection positivity with the explicit formula; I ran none of my own on this.
 - evidence: KNOWN statements read (LIBRARY.md L17-L21). PROVED: prime coupling on the lattice of rationals satisfies the FSS hypothesis for coordinate mirrors (NOTES N6.3).
 - log:
+
+## #5 · Defect function on the modular surface: A(z) = Poisson mean of log|E(z,1/2+it)| = log(3/pi) - (1/2) log ht(z) + Dfc(z), Dfc >= 0, zero exactly at RH points
+- status: open
+- source: SP-reflection session 2 (task: the object Phi = E*(omega,s), HUNCHES F3); Balazard-Saias-Yor applied to the Eisenstein family; session-1 exchange with SP-operator on the Szego condition (B150)
+- date: 2026-11-11
+- tags: B3,B1,object-phi,risk
+- plain english: Every point z of the modular surface has a 'spectrum': how strongly it is felt at each frequency t of the continuous spectrum. Take the logarithm of that strength and average it over t with a bell-shaped weight. For every point this average is at least a fixed number (it depends only on the area of the surface and on how high the point sits), and the excess over that number is a sum of positive penalties, one for each zero of the point's zeta function lying off the critical line. So the excess is a non-negative function on the surface, and it is zero exactly at the points whose zeta function obeys the Riemann hypothesis. Example: at z = i the average was computed as -0.04609 and the fixed number is log(3/pi) = -0.04612: no visible excess, as expected for the Gaussian integers. RH for the field of omega says omega is one of the zeros of this excess function.
+- wall: B3 (no slack): turns 'positivity is exact' into 'equality case of Jensen for a free positive measure'; does not remove it. Hits B1 at once: a proof must use what is special at omega.
+- new input: The FAMILY in z: one non-negative function on the modular surface instead of one function of s; the height term; the constant 1/vol = the atom of the spectral measure at eigenvalue 0. At a single point it is BSY (a reformulation).
+- claim: A(z) = log(3/pi) - (1/2) log ht(z) + sum over zeros rho of E(z,.) with Re rho > 1/2 of log|rho/(1-rho)|. RH for zeta_K (class number one) <=> Dfc(z_K) = 0.
+- prediction: Stated before computing: A(omega) = log(sqrt2 3^(3/4)/pi) = 0.0258 and A(i) = log(3/pi) = -0.0461. Computed as above. TO STATE NEXT (blind): Dfc at a class number 2 CM point, from tabulated off-line zeros of its Epstein zeta function.
+- smallest: Regularity of A on the surface and a formula for its Laplacian in z; or a proof that Dfc vanishes to infinite order at any RH point.
+- novelty: Two web searches 2026-11-11 (queries in OBJECT_PHI.md section 5): BSY and variants found; no Epstein/Eisenstein version found; Lagarias-Suzuki math/0412039 found and NOT read. Status: not found in two queries.
+- evidence: PROVED given the inner-outer factorisation (OBJECT_PHI.md section 4); constant checked exactly at omega through L(1,chi_-3), zeta(2) and the BSY value; COMPUTED crude: A(i) = -0.04609 vs -0.04612; A(omega) = 0.0252..0.0287 vs 0.0258.
+- log:

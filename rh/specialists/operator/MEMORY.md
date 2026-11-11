@@ -1,7 +1,8 @@
 # MEMORY of SP-operator
 
-Rewritten at the end of session 2 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
-6, 7 of bridge 1 (rh/BRIDGE.md, idea #27, owner's rule 12: one main line built in planks).
+Rewritten at the end of session 3 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
+6, 7 of bridge 1 (rh/BRIDGE.md, idea #27, owner's rule 12). Session 3: the structural mode (owner's rule 13,
+rh/HUNCHES.md part F): one object, Phi(s) = E*(omega, s), expressed in my toolkit: OBJECT_PHI.md.
 A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDEAS_LOCAL.md.
 
 ## Files of this seat
@@ -11,12 +12,47 @@ A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDE
   P3 multiplier duality; P4 Poisson splitting, Weyl function, class N_1; P5 Suzuki's dial; P6 derivative of the
   parity determinants; P7 odd block on the no-prime window has a simple positive ground state.
 - IDEAS_LOCAL.md: 9 entries (SP-operator/#1..#9; #7-#9 are the bridge planks).
-- PROOF_bridge.md and bridge/ (session 2). ladder.py.txt + ladder.log (one small computation).
+- PROOF_bridge.md and bridge/ (session 2).
+- OBJECT_PHI.md (session 3). ladder.py.txt + ladder.log (one small computation).
 - board_drafts/: texts of my board posts (p1..p12).
 - Library notes written for the project: rh/library/suzuki-2606.09096.md, rh/library/suzuki-1606.05726.md.
 - Sources under rh/library/src/: 2606.09096, 1606.05726 (both read in full), basor-chen-0202062 (read in
   full), kaltenbaeck-woracek-1998 (pp. 1-6 of 37 read), luger-ou-2202.13246 (sec. 3.2 read),
   1204.1827 and 2511.23257 (downloaded; only the abstract and theorem list of the latter read).
+
+## SESSION 3 (structural mode): Phi(s) = E*(omega,s) = 3 (sqrt3/2pi)^s Gamma(s) zeta_K(s), K = Q(sqrt-3)
+File: OBJECT_PHI.md (196 lines; written BEFORE reading the other seats' answers; no source opened, no
+numerics; every KNOWN there is from memory unless marked read). What it says:
+- Point interaction at omega: extensions Delta_alpha, Krein function Q = regularised Green function at omega,
+  Nevanlinna unconditionally. Phi is the FORM FACTOR: Im Q on the cut = |Phi(1/2+it)|^2/(4t|Lambda(1+2it)|^2).
+  Q(s) - Q(1-s) = Phi(s)^2/((1-2s)Lambda(2s)Lambda(2-2s)): zeros of Phi = points where the two sheets of the
+  Krein function agree. Each zero ON the line is an embedded eigenvalue of exactly one extension
+  Delta_{alpha(gamma)}, alpha(gamma) = Q(1/4+gamma^2) (Aronszajn-Donoghue); zeros off the line are eigenvalues only
+  of non-self-adjoint extensions. Phi^2 = Wronskian of the structure functions of two extensions.
+- de Branges: (a) string of the point: spectral measure with density |Phi|^2/|xi(1+2it)|^2 + cusp atoms; its
+  Fourier transform is the orbit sum over Gamma.omega (pre-trace formula): windows + positivity for free, but
+  Phi is in the density. (b) cusp space H(E_0), E_0 = xi(1-2iz) (HB unconditionally): eps = F_omega/E_0;
+  RH_K <=> e^{-i tau z} eps outer (tau = log(2/sqrt3)) <=> Green function at omega cyclic for the outgoing
+  semigroup (Beurling). (c) Suzuki's dial for zeta_K; unverifiable hypothesis = Theta_d inner for d <= 1/2;
+  trivialising object = a Lax-Phillips system with scattering coefficient xi_K(s-d)/xi_K(s+d), d < 1/2;
+  arithmetic cusps give d = 1/2 only (modular surface for Q, Bianchi orbifold for K). Second form: zeros are
+  real for free for Krein functions and separating constant terms, never for form factors.
+- IMPOSTOR: everything holds verbatim for E*(w,s) at a class-number-2 CM point (zeros off the line). What
+  omega has is complex multiplication (Hecke correspondences fixing it), not its stabiliser of order 3.
+- Colin de Verdiere: fails for the point because (i) capacity zero (pseudo-Laplacian = Delta), (ii) a point
+  does not separate. Repairs: smaller form domain -> equation Q(l1) = Q(l2) at two ROOTS, not two SHEETS;
+  order-3 character of PSL_2(Z) -> vanishing at omega automatic but cusp closed, spectrum = cusp forms;
+  geodesic -> real quadratic zeta as form factor, not eigenvalues; Bianchi orbifold -> zeta_K in the cusp at
+  arguments s, s-1 (d = 1/2).
+- RISK taken: energy-dependent coupling alpha(lambda) = S = (Q(s)+Q(1-s))/2; its pencil spectrum is exactly the
+  zero set of Phi; fails because S has non-real poles at lambda = (rho/2)(1-rho/2) (edge resonances), so -S is
+  in no class N_kappa. To decide: is S minus its resonance part Nevanlinna (a statement about central
+  L-values |u_j(omega)|^2 and the Hilbert transform of the density)? does the class-number-2 point fail at a
+  different place? do the Hecke correspondences at omega act usefully on the deficiency space?
+- NOT CHECKED in OBJECT_PHI.md: the normalisation of G_s - G_{1-s}; whether zM(z) is exactly N_1; the Bianchi
+  constant-term zero statement (labelled CONJECTURE); every from-memory citation.
+- NEXT (session 4): read the other seats' answers on Phi (SP-modular, SP-reflection) and compare; the lead
+  asked for that order.
 
 ## SESSION 2 (bridge 1): what I built, in one place
 Files: PROOF_bridge.md (theorems 5.1, 7.1, propositions 5.2, 5.3, 6.1, numerics, novelty), bridge/PREDICTION.md

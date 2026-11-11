@@ -78,3 +78,11 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - plain english: The 'least leak' of a window function is a perfectly good positive quantity, but it is a tame one: it never exceeds a fixed multiple of the size of the function, whereas the Weil energy grows without bound on fast oscillations. So the two cannot be comparable from above. And one of the two pole conditions (g vanishing at 0) cannot be felt by an L^2 leak at all. Example: wiggle g near 0 on a set of tiny length: the leak changes by almost nothing, g(0) changes by anything.
 - claim: PROVED (PROOF_bridge.md Prop 6.1). HEURISTIC proposal: D_tail(f) = inf over admissible companions of |T|^2 or <T, A T>; then plank 8 compares two forms of the same order on the tail.
 - log:
+
+## #10 · Zeros of zeta_K as the spectrum of an energy-dependent point interaction at omega with coupling S = (Q(s)+Q(1-s))/2; fails through the edge resonances
+- status: open
+- source: SP-operator
+- date: 2026-11-11
+- plain english: Put a point-like scatterer at the special point omega of the modular surface. Each zero on the line is then a true bound state, but each for its own strength of the scatterer. Letting the strength depend on the energy in the one way the symmetry s <-> 1-s dictates makes the bound states exactly the zeros, all of them. The catch: that strength function has complex poles at the surface's own resonances (zeros of zeta(2s)), so the operator is not self-adjoint. Example: the first resonance is at s = rho_1/2 = 0.25 + 7.07i.
+- claim: PROVED: pencil spectrum = zero set of Phi; -S is in no class N_kappa (infinitely many non-real poles). RISK / open: whether S minus its resonance part is Nevanlinna. The whole picture also holds for a class-number-2 CM point (impostor). OBJECT_PHI.md sec. 4.
+- log:

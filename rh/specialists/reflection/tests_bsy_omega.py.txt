@@ -1,0 +1,20 @@
+# Sanity check of OBJECT_PHI.md section 4 at z = omega (and z = i):
+#   A(z) = (1/2pi) int log|E(z,1/2+it)| dt/(1/4+t^2)  should equal  log(3/pi) - (1/2) log ht(z)  if no zeros off the line.
+# E(omega,s) = 3 (sqrt3/2)^s zeta(s) L(s,chi_-3)/zeta(2s);  E(i,s) = 2 zeta(s) L(s,chi_-4)/zeta(2s).
+# Method: midpoint rule in the variable theta, t = (1/2) tan(theta) (Poisson measure = dtheta/pi), N points; crude (log
+# singularities at zeros are integrable); double precision via mpmath (dps 15). Expect 2-3 digits.
+from mpmath import mp, mpf, zeta, dirichlet, log, pi, tan, sqrt, mpc
+import math
+mp.dps = 15
+def A(E, N):
+    tot = 0.0
+    for k in range(N):
+        th = (k + 0.5) * math.pi / (2 * N)          # theta in (0, pi/2), even integrand
+        t = 0.5 * math.tan(th)
+        tot += float(log(abs(E(mpc(0.5, t)))))
+    return tot / N                                   # (2/pi) * (pi/2N) * sum
+Ew = lambda s: 3 * (sqrt(3) / 2) ** s * zeta(s) * dirichlet(s, [0, 1, -1]) / zeta(2 * s)
+Ei = lambda s: 2 * zeta(s) * dirichlet(s, [0, 1, 0, -1]) / zeta(2 * s)
+for N in (500, 2000):
+    print("N", N, " A(omega) =", round(A(Ew, N), 5), " predicted", round(math.log(3 / math.pi) - 0.5 * math.log(math.sqrt(3) / 2), 5),
+          "| A(i) =", round(A(Ei, N), 5), " predicted", round(math.log(3 / math.pi), 5))
