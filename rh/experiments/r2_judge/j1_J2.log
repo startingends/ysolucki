@@ -5,3 +5,7 @@ J2 N=30 x=2.0075 best m=0.509559 max lowest eig=0.0002579
 J2 N=30 x=2.0080 best m=0.510189 max lowest eig=4.744e-5
 J2 N=30 x=2.0085 best m=0.510368 max lowest eig=-0.000286
 J2 N=30 x=2.0100 best m=0.510911 max lowest eig=-0.001284
+J2 N=60 x=1.9996 best m=0.48855 max lowest eig=4.152e-7
+J2 N=60 x=2.0000 best m=0.489535 max lowest eig=1.498e-5
+J2 N=60 x=2.0075 best m=0.509559 max lowest eig=0.0002578
+J2 N=60 x=2.0080 best m=0.510052 max lowest eig=9.988e-6

@@ -1,0 +1,91 @@
+import numpy as np, math
+rng = np.random.default_rng(20261110)
+# ---- J7 Theorem F on random symmetric H (mixed signs), a > 0, s = Ha > 0
+def theta_tensor(H, a, c4=0.25):
+    m = len(a); s = H @ a; pi = a * s; K = H * a[None, :] / s[:, None]; K2 = K @ K
+    br = lambda g, f, h: np.sum(pi * g * f * h)
+    E = [np.eye(m)[i] / a[i] for i in range(m)]
+    T = np.zeros((m, m, m))
+    for i in range(m):
+        for j in range(m):
+            for k in range(m):
+                g, f, h = E[i], E[j], E[k]
+                T[i, j, k] = 0.5 * (br(g, K @ f, K @ h) + br(f, K @ g, K @ h) + br(h, K @ g, K @ f)) - 0.25 * (br(K2 @ g, f, h) + br(g, K2 @ f, h) + br(g, f, K2 @ h)) + c4 * br(g, f, h)
+    return T
+def F5(H, a):
+    m = len(a); s = H @ a; HDH = H @ np.diag(a / s) @ H; T = np.zeros((m, m, m))
+    for i in range(m):
+        for j in range(m):
+            for k in range(m):
+                if len({i, j, k}) == 3:
+                    T[i, j, k] = 0.5 * (H[i, j] * H[i, k] / s[i] + H[i, j] * H[j, k] / s[j] + H[i, k] * H[j, k] / s[k])
+                elif i == j == k:
+                    T[i, i, i] = 1.5 * H[i, i] ** 2 / s[i] - 0.75 * HDH[i, i] / a[i] + s[i] / (4 * a[i] ** 2)
+                else:
+                    r = i if (i == j or i == k) else j           # repeated index
+                    o = [x for x in (i, j, k) if x != r][0]
+                    T[i, j, k] = H[r, r] * H[r, o] / s[r] + H[r, o] ** 2 / (2 * s[o]) - HDH[r, o] / (4 * a[r])
+    return T
+def gamma2_slices(H, a):
+    """slice k from the definition: T_k = l_k l_k^T/s_k - s_k * A^{-1} (Gamma_2 - Gamma)_k A^{-1}, Gamma's by definition with L = K - I"""
+    m = len(a); s = H @ a; K = H * a[None, :] / s[:, None]; Lg = K - np.eye(m); Ai = np.diag(1 / a)
+    def Gam(k):   # matrix of f -> Gamma(f)(k) = (1/2)[L(f^2)(k) - 2 f_k (Lf)_k]
+        G = 0.5 * np.diag(Lg[k]); G[k, :] -= 0.5 * Lg[k]; G[:, k] -= 0.5 * Lg[k]; return G
+    Gs = [Gam(k) for k in range(m)]
+    out = np.zeros((m, m, m))
+    for k in range(m):
+        G2 = 0.5 * sum(Lg[k, y] * Gs[y] for y in range(m)) - 0.5 * (Gs[k] @ Lg + Lg.T @ Gs[k])
+        out[:, :, k] = np.outer(H[:, k], H[:, k]) / s[k] - s[k] * Ai @ (G2 - Gs[k]) @ Ai
+    return out
+worst = [0, 0, 0, 0]; ctrl = []
+for trial in range(40):
+    m = 7
+    while True:
+        H = rng.normal(size=(m, m)); H = (H + H.T) / 2; a = rng.uniform(0.3, 2, m)
+        if (H @ a > 0.05).all(): break
+    T1 = theta_tensor(H, a); T2 = F5(H, a); T3 = gamma2_slices(H, a)
+    worst[0] = max(worst[0], np.abs(T1 - T2).max()); worst[1] = max(worst[1], np.abs(T1 - T3).max())
+    worst[2] = max(worst[2], np.abs(np.einsum('ijk,k->ij', T1, a) - H).max())
+    worst[3] = max(worst[3], np.abs(T1 - T1.transpose(1, 0, 2)).max(), np.abs(T1 - T1.transpose(0, 2, 1)).max())
+    ctrl.append(np.abs(np.einsum('ijk,k->ij', theta_tensor(H, a, 0.3), a) - H).max())
+print("J7 40 random mixed-sign H, m=7: |def - F5|=%.1e  |def - Gamma_2 def|=%.1e  |T.a-H|=%.1e  asym=%.1e ; control c4=0.3: |T.a-H| min %.3f max %.3f" % (*worst, min(ctrl), max(ctrl)))
+# ---- J8 Lemma C
+def cone(H, a):
+    l = H @ a; s = a @ l
+    return (np.einsum('ij,k->ijk', H, l) + np.einsum('ik,j->ijk', H, l) + np.einsum('jk,i->ijk', H, l) - (2 / s) * np.einsum('i,j,k->ijk', l, l, l)) / s
+cnt = {"lpos": [0, 0], "lneg": [0, 0]}
+while cnt["lpos"][0] < 300 or cnt["lneg"][0] < 300:
+    m = 6; X = rng.normal(size=(m, m)); v = rng.normal(size=m); v /= np.linalg.norm(v)
+    Pm = np.eye(m) - np.outer(v, v); H = rng.uniform(0.5, 3) * np.outer(v, v) - Pm @ (X @ X.T) @ Pm * rng.uniform(0.1, 1)   # exactly one positive eigenvalue
+    a = rng.normal(size=m); l = H @ a; s = a @ l
+    if s <= 1e-3: continue
+    key = "lpos" if (l >= 0).all() else "lneg"
+    if cnt[key][0] >= 300: continue
+    T = cone(H, a); bad = max(int((np.linalg.eigvalsh(T[:, :, k]) > 1e-9).sum()) for k in range(m)) > 1
+    assert np.abs(np.einsum('ijk,k->ij', T, a) - H).max() < 1e-9
+    cnt[key][0] += 1; cnt[key][1] += bad
+print("J8 cone certificate: l>=0: %d instances, %d with a slice having 2 positive eigenvalues ; some l_k<0: %d instances, %d violations" % (cnt["lpos"][0], cnt["lpos"][1], cnt["lneg"][0], cnt["lneg"][1]))
+# ---- J9 CD(rho, n) on the resampling chain (uniform, m points): best rho with Gamma_2 >= rho Gamma + (1/n)(Lf)^2 at every site
+import scipy.linalg as sl
+def cd(m, n):
+    K = np.ones((m, m)) / m; Lg = K - np.eye(m)
+    def Gam(k):
+        G = 0.5 * np.diag(Lg[k]); G[k, :] -= 0.5 * Lg[k]; G[:, k] -= 0.5 * Lg[k]; return G
+    Gs = [Gam(k) for k in range(m)]; k = 0
+    G2 = 0.5 * sum(Lg[k, y] * Gs[y] for y in range(m)) - 0.5 * (Gs[k] @ Lg + Lg.T @ Gs[k])
+    A = G2 - np.outer(Lg[k], Lg[k]) / n; idx = list(range(1, m))
+    return sl.eigh(A[np.ix_(idx, idx)], Gs[k][np.ix_(idx, idx)], eigvals_only=True)[0]
+for m, n in ((40, 5), (40, 8), (40, 20), (200, 5), (40, 1e12), (5, 1e12), (10, 1e12)):
+    print("J9 m=%d n=%g: best rho computed %.6f ; formula 1/2-2/n+(1+2/n)/m = %.6f ; seat's (n-4)/(2(n-1)) after Lichnerowicz factor n/(n-1): computed %.5f vs %.5f" % (
+        m, n, cd(m, n), 0.5 - 2 / n + (1 + 2 / n) / m, cd(m, n) * n / (n - 1), (n - 4) / (2 * (n - 1))))
+# ---- Lemma A and Lemma B random checks
+bad = 0
+for _ in range(1000):
+    n = rng.integers(2, 7); N = rng.normal(size=(n, n)); N = (N + N.T) / 2; p = rng.normal(size=n); q = rng.normal(size=n)
+    Nt = np.zeros((n + 2, n + 2)); Nt[:n, :n] = N; Nt[:n, n] = Nt[n, :n] = p; Nt[:n, n + 1] = Nt[n + 1, :n] = q; Nt[n, n + 1] = Nt[n + 1, n] = 1
+    Q = np.outer(p, q) + np.outer(q, p) - N
+    bad += int((np.linalg.eigvalsh(Nt) > 1e-10).sum() != 1 + (np.linalg.eigvalsh(Q) < -1e-10).sum())
+print("Lemma A: 1000 random (N,p,q): %d violations of #pos(Ntilde) = 1 + #neg(Q)" % bad)
+# toy counterexample to Theorem A as stated
+N = np.array([[-10., 1.], [1., -10.]]); c = np.array([1., 1.])
+print("Theorem A toy: N_even = %.1f (0 positive eigenvalues), inequality N <= 2cc^T on even vectors holds trivially; 2 c^T N^-1 c - 1 = %.4f < 0" % ((np.array([1, 1]) @ N @ np.array([1, 1])) / 2, 2 * c @ np.linalg.solve(N, c) - 1))

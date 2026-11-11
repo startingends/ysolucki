@@ -31,3 +31,28 @@ Mm = [Lambda(ab)/sqrt(ab)] (mirror, opposite sides).
     a nearly symmetric spectrum (min ~ -max within 15%) because each atom acts as a partial reflection x -> log n - x.
 (3) on the box-basis lowest eigenvector of the EVEN Weil block (M = 40, 80, 160), Hankel form of the atoms: sign NEGATIVE (the even block needs N(f_e) small, D5 says N(f_e) = 2(T+H)),
     magnitude between -0.5 and -0.01 per unit ||phi||^2. On the odd ground state: POSITIVE.
+
+### RESULT B35 (t1_b35.log, 23:57:42): Hankel min eig drifts -1.123, -1.211, -1.440, -1.567, -1.629 (M=40..640): my drift prediction MISS (too small);
+prime part max 1.628..1.675, so min -> about -1.68 (HEURISTIC). Sign of atom Hankel form on the box even ground state: POSITIVE (+0.90..+0.77): MISS (predicted negative); odd: positive HIT.
+
+## STATE AT END OF TURN 1 (board read up to B53)
+My posts: B26 (claim A,B,C,E), B27 (claim D in full + corrected mismatch), B28 (reply to checker, 6 points conceded, numbers defended),
+B29 (answer B7), B30 (answer B8), B31 (answer B3), B39 (result: comb / Model B), B40 (question -> S1-mirror), B41 (question -> S1-parity),
+B42 (question -> S1-cubic), B53 (answer B35).
+Open questions I asked: B40 (mirror at y = log r: is [Lambda(ab/r^2) r/sqrt(ab)] PSD on a,b>r? a third test space between atoms and L^2?),
+B41 (what is t_e in Krein-Langer terms; behaviour at first failure; lambda_1>0 needed?), B42 (pi-summed version of the cubic certificate; intermediate condition).
+No unanswered question addressed to me at 23:59.
+
+New exact statements this turn (S1_ADDITIONS.md): F1 margins = 1/(t_e-1), 1/(1+t_o); F2 integrated open path = Hankel in the jumps, kernel 1_{W^c};
+F3 parity differences (mirror form inside ||Lh||^2 via anticommutator with lambda_1 - T); F4 two-sided squeeze T+4s^2 <= H <= 4c^2-T.
+Corrections conceded to the checker: saturation wording, centre->1/2, deficit-in-edge wording, per-site index (killed), reflection wording, lambda_1>0.
+
+What others established that touches my material (do not re-derive):
+- S1-parity B24: [w(log ab)+Lambda(ab)/sqrt(ab)] 2..60 positive DEFINITE (8.4e-251 at 400 digits). B25: block difference = 4[E_+^2 - sum_{m>=1} E_m^2 - prime Hankel].
+- S1-mirror B15: real tilts zeta(s-d)zeta(s+d) pass all mirror hypotheses, zeros off line. B16: mirror test = real local roots, not zeros. B18: one-prime system fails from L~0.55.
+  B19/B47: shift inequality pins weights to 1e-5..1e-13 in both directions; mirror-preserving increase breaks first. B45: mirror-positive L^2 class = bumps narrower than ~e^{-2L} (the horizon). B46: Model B.
+- S1-cubic B52: odd block entries K(|x-y|) - K(x+y); sign fact lost at prime atoms. B51: nothing in cubic seat uses integers.
+
+Things I could do next turn if asked: (a) prove or refute Op >= 0 (try M=80,160 and random kernels); (b) Cl single negative direction: what function is it (near-linear odd f?) and stability;
+(c) the limit of the Hankel min eigenvalue (-1.68?) by the reflection-operator picture; (d) t_e(L) as a function of L across windows; (e) the mirror at y = log r matrices (B40(1)) myself.
+Files: S1_ADDITIONS.md (statements + proofs + corrections), t1_*.py.txt / t1_*.log, rerun_*.log, s1lib.py.txt, IDEAS_LOCAL.md (S1-curv/#1-#4).

@@ -1,0 +1,36 @@
+"""S1-parity, answer to board B41: exact inertia formulas (Schur complement / Haynsworth), random test + zeta windows.
+  kappa_+(N_e) = kappa_-(Q_e) + [t_e > 1],  N_e = 2cc^T - Q_e,  t_e = 2 c^T Q_e^-1 c
+  kappa_+(N_o) = kappa_-(Q_o) - [t_o < -1], N_o = -2ss^T - Q_o, t_o = 2 s^T Q_o^-1 s"""
+import numpy as np, importlib.util, importlib.machinery, mpmath as mp
+rng = np.random.default_rng(1); bad = 0; cases = 0; seen = set()
+for trial in range(20000):
+    n = rng.integers(2, 7); k = rng.integers(0, n + 1)
+    X = rng.normal(size=(n, n)); d = np.concatenate([-rng.uniform(.1, 3, k), rng.uniform(.1, 3, n - k)])
+    Q = X @ np.diag(d) @ X.T; c = rng.normal(size=n) * rng.uniform(.1, 3)
+    kq = int(np.sum(np.linalg.eigvalsh(Q) < 0)); t = 2 * c @ np.linalg.solve(Q, c)
+    if abs(t - 1) < 1e-6 or abs(t + 1) < 1e-6: continue
+    pe = int(np.sum(np.linalg.eigvalsh(2 * np.outer(c, c) - Q) > 0)); po = int(np.sum(np.linalg.eigvalsh(-2 * np.outer(c, c) - Q) > 0))
+    cases += 1; seen.add((kq, t > 1, t < -1))
+    if pe != kq + (t > 1) or po != kq - (t < -1): bad += 1
+print("random symmetric Q (indefinite allowed), %d cases, %d (kappa, t>1, t<-1) patterns: failures of the two formulas = %d" % (cases, len(seen), bad))
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+mp.mp.dps = 60
+import math
+print("zeta windows, integer lattice N=30: t_e, t_o, #pos(N_e), #pos(N_o), lowest eig of Q even/odd")
+for L in (0.05, 0.10, 0.12, 0.20, 0.50, 1.00):
+    lam = {x: c for x, c in wb.mangoldt(math.exp(2 * L)).items() if math.log(x) < 2 * L}
+    A = wb.arch_blocks(L, 30, 'int'); P = wb.pole_blocks(L, 30, 'int')
+    Nn = (-A[0], -A[1])
+    for x, c in lam.items():
+        U = wb.atom_blocks(L, 30, 'int', x); Nn = (Nn[0] - c * U[0], Nn[1] - c * U[1])      # N = primes - arch ; U carries the minus sign
+    Q = (P[0] - Nn[0], P[1] - Nn[1])
+    # pole vectors: P_even = 2 c c^T, P_odd = -2 s s^T
+    n0 = P[0].rows; cvec = mp.matrix([mp.sqrt(P[0][i, i] / 2) * (1 if P[0][0, i] >= 0 else -1) for i in range(n0)])
+    n1 = P[1].rows; svec = mp.matrix([mp.sqrt(-P[1][i, i] / 2) * (1 if P[1][0, i] <= 0 else -1) for i in range(n1)])
+    te = 2 * (cvec.T * mp.lu_solve(Q[0], cvec))[0]; to = 2 * (svec.T * mp.lu_solve(Q[1], svec))[0]
+    pe = sum(1 for e in mp.eigsy(Nn[0], eigvals_only=True) if e > 0); po = sum(1 for e in mp.eigsy(Nn[1], eigvals_only=True) if e > 0)
+    print("  L=%.2f: t_e = %s ; t_o = %s ; #pos(N_e) = %d ; #pos(N_o) = %d ; lowest Q: %s / %s" % (L, mp.nstr(te, 8), mp.nstr(to, 8), pe, po,
+          mp.nstr(min(mp.eigsy(Q[0], eigvals_only=True)), 4), mp.nstr(min(mp.eigsy(Q[1], eigvals_only=True)), 4)))

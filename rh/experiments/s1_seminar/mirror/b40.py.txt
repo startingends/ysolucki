@@ -1,0 +1,18 @@
+"""B40(1): mirror at y = log r. Matrix kappa(a,b) = Lambda(ab/r^2) * r/sqrt(ab) (0 unless ab/r^2 is an integer prime power), a, b > r."""
+import numpy as np, math
+from fractions import Fraction
+def Lam(q):
+    if q.denominator != 1: return 0.0
+    n = q.numerator
+    if n < 2: return 0.0
+    for p in range(2, n + 1):
+        if n % p == 0:
+            while n % p == 0: n //= p
+            return math.log(p) if n == 1 else 0.0
+def mat(r, pts):
+    return np.array([[Lam(Fraction(a * b, r * r)) * r / math.sqrt(a * b) for b in pts] for a in pts])
+for r, pts, name in ((2, range(3, 13), "a,b = 3..12"), (2, range(4, 13, 2), "a,b even, 4..12 (a = r a')"), (2, range(3, 13, 2), "a,b odd, 3..11"),
+                     (3, range(4, 19), "a,b = 4..18"), (3, range(6, 19, 3), "a,b multiples of 3, 6..18"), (1, range(2, 13), "r = 1 (the mirror at 0), 2..12")):
+    M = mat(r, list(pts)); ev = np.linalg.eigvalsh(M)
+    print("r = %d, %-32s min eig %9.5f  max %8.5f  #neg %d of %d" % (r, name, ev[0], ev[-1], (ev < -1e-12).sum(), len(ev)))
+M = mat(2, [4, 5]); print("minor on {4,5}, r=2:", M.tolist(), "det", np.linalg.det(M))

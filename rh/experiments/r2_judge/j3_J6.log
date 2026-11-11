@@ -3,3 +3,4 @@ J6 beurling M=40: sites with index 1: 32 of 40 ; histogram {1: 32, 2: 8}
 J6 zeta M=80: sites with index 1: 50 of 80 ; histogram {1: 50, 2: 26, 3: 2, 4: 2}
 J6 beurling M=80: sites with index 1: 24 of 80 ; histogram {1: 24, 2: 52, 3: 2, 4: 2}
 J6 zeta M=160: sites with index 1: 4 of 160 ; histogram {1: 4, 2: 116, 3: 34, 4: 4, 5: 2}
+J6 beurling M=160: sites with index 1: 0 of 160 ; histogram {2: 124, 3: 32, 4: 2, 5: 2}

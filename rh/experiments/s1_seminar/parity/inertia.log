@@ -1,0 +1,8 @@
+random symmetric Q (indefinite allowed), 20000 cases, 19 (kappa, t>1, t<-1) patterns: failures of the two formulas = 0
+zeta windows, integer lattice N=30: t_e, t_o, #pos(N_e), #pos(N_o), lowest eig of Q even/odd
+  L=0.05: t_e = 0.19821046 ; t_o = 1.9029058e-5 ; #pos(N_e) = 0 ; #pos(N_o) = 0 ; lowest Q: 0.9827 / 2.03
+  L=0.10: t_e = 0.84199156 ; t_o = 0.00022775217 ; #pos(N_e) = 0 ; #pos(N_o) = 0 ; lowest Q: 0.4572 / 1.336
+  L=0.12: t_e = 1.3450148 ; t_o = 0.00045335162 ; #pos(N_e) = 1 ; #pos(N_o) = 0 ; lowest Q: 0.3416 / 1.154
+  L=0.20: t_e = 7.8282808 ; t_o = 0.0037005625 ; #pos(N_e) = 1 ; #pos(N_o) = 0 ; lowest Q: 0.09501 / 0.6403
+  L=0.50: t_e = 1315994.1 ; t_o = 93.356456 ; #pos(N_e) = 1 ; #pos(N_o) = 0 ; lowest Q: 9.636e-7 / 0.0002205
+  L=1.00: t_e = 1.1478676e+29 ; t_o = 9.7434128e+23 ; #pos(N_e) = 1 ; #pos(N_o) = 0 ; lowest Q: 1.28e-29 / 3.292e-26

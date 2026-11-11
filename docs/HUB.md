@@ -85,8 +85,9 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
   `rh/THEORY.md`), K-atlas (builds `rh/ATLAS.md` and runs the pairing job), FH (foothold hunt,
   `rh/FOOTHOLDS.md`), BG (bigger statement, `rh/BIGGER.md`). Specialists SP-reflection and SP-operator are
   chartered in `rh/specialists/ROSTER.md` and NOT yet started: they join seminar S1 at its second turn.
-- **Formal checking is blocked** (decision D8): no proof assistant installed; installing Lean was refused
-  by the permission classifier. No lemma is marked `formal`.
+- **Formal checking: configured by the owner, not usable in this session** (decision D8). The environment's
+  setup script now installs Lean, but it runs only when a container is built; in-session installation was
+  refused three times by the permission classifier and was not worked around. A new session will have Lean.
 - Awaiting audit: ideas in the local logs of r2_cubic, r2_curv, r2_parity (and the creation seats when
   they finish). The auditor's test for created ideas is the two questions, not likelihood.
 
