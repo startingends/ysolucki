@@ -1,0 +1,29 @@
+L = 3/4, NB = 80, nh = 40, prec = 400; prime powers [2, 3, 4]; check: max |pole by quadrature - rank-two pole| = 7.28e-119; built 6s
+D built 6s (x nodes 540, xi nodes 188)
+ ladder of D (8 lowest): ['3.757e-15', '3.038e-12', '1.211e-9', '3.093e-7', '5.005e-5', '0.003786', '0.1045', '0.5309']
+eps = 0: lowest eigenvalue of Q_eps = 3.69607e-15; kappa_min = 0.326506, second 0.327935, kappa_max = 3.177
+   8 lowest eigenvalues of Q_eps: ['3.696e-15', '3.406e-12', '1.172e-9', '2.511e-7', '4.363e-5', '0.003692', '0.089', '0.5832']
+   first-order lift c_r = q_r^T Q'(0) q_r for the 6 lowest rungs: ['0.1002', '0.1213', '0.1612', '0.2485', '0.44166', '0.69841']  ratio c_1/mu(0) = 2.711e+13
+   minimiser: D(v)/|v|^2 = 2.534e-12, Q_eps(v)/|v|^2 = 8.273e-13; norm share on the 7 eigenvectors of Q_eps below 0.1: 1.0; energy share there: 0.108; top energy rungs (rung, share, eigenvalue): [(21, '0.305', '1.69'), (12, '0.116', '1.03'), (17, '0.114', '1.53'), (13, '0.0505', '1.31')]
+eps = 1/1048576: lowest eigenvalue of Q_eps = 9.20709e-8; kappa_min = 0.327829, second 0.340832, kappa_max = 2.5433e+7
+   8 lowest eigenvalues of Q_eps: ['9.207e-8', '1.112e-7', '1.582e-7', '4.926e-7', '4.405e-5', '0.003693', '0.089', '0.5832']
+   minimiser: D(v)/|v|^2 = 0.06549, Q_eps(v)/|v|^2 = 0.02147; norm share on the 7 eigenvectors of Q_eps below 0.1: 0.9855; energy share there: 0.0381; top energy rungs (rung, share, eigenvalue): [(21, '0.359', '1.69'), (17, '0.156', '1.53'), (12, '0.113', '1.03'), (13, '0.0592', '1.31')]
+eps = 1/1024: lowest eigenvalue of Q_eps = 9.32561e-5; kappa_min = 0.327871, second 0.342072, kappa_max = 2.6043e+10
+   8 lowest eigenvalues of Q_eps: ['9.326e-5', '0.0001052', '0.0001312', '0.0002458', '0.0005048', '0.004384', '0.08979', '0.584']
+   minimiser: D(v)/|v|^2 = 2.099, Q_eps(v)/|v|^2 = 0.6883; norm share on the 7 eigenvectors of Q_eps below 0.1: 0.5351; energy share there: 0.037; top energy rungs (rung, share, eigenvalue): [(21, '0.359', '1.69'), (17, '0.158', '1.53'), (12, '0.111', '1.03'), (13, '0.0599', '1.31')]
+eps = 1/16: lowest eigenvalue of Q_eps = 0.0059481; kappa_min = 0.324096, second 0.342904, kappa_max = 1.6666e+12
+   8 lowest eigenvalues of Q_eps: ['0.005948', '0.006534', '0.008025', '0.0116', '0.02676', '0.05059', '0.1399', '0.6302']
+   minimiser: D(v)/|v|^2 = 3.478, Q_eps(v)/|v|^2 = 1.127; norm share on the 6 eigenvectors of Q_eps below 0.1: 0.1306; energy share there: 0.00114; top energy rungs (rung, share, eigenvalue): [(19, '0.338', '1.65'), (17, '0.211', '1.52'), (12, '0.0929', '1.04'), (13, '0.0927', '1.34')]
+eps = 1/8: lowest eigenvalue of Q_eps = 0.0118873; kappa_min = 0.318139, second 0.340348, kappa_max = 3.333e+12
+   8 lowest eigenvalues of Q_eps: ['0.01189', '0.01302', '0.01587', '0.02257', '0.04953', '0.09489', '0.1905', '0.6727']
+   minimiser: D(v)/|v|^2 = 3.785, Q_eps(v)/|v|^2 = 1.204; norm share on the 6 eigenvectors of Q_eps below 0.1: 0.1096; energy share there: 0.00194; top energy rungs (rung, share, eigenvalue): [(19, '0.342', '1.62'), (17, '0.255', '1.51'), (13, '0.1', '1.36'), (11, '0.0634', '1.06')]
+eps = 1/4: lowest eigenvalue of Q_eps = 0.0237504; kappa_min = 0.305836, second 0.333591, kappa_max = 6.6643e+12
+   8 lowest eigenvalues of Q_eps: ['0.02375', '0.02595', '0.03131', '0.04391', '0.08935', '0.1752', '0.2854', '0.7446']
+   minimiser: D(v)/|v|^2 = 4.002, Q_eps(v)/|v|^2 = 1.224; norm share on the 5 eigenvectors of Q_eps below 0.1: 0.09231; energy share there: 0.00359; top energy rungs (rung, share, eigenvalue): [(15, '0.333', '1.48'), (19, '0.213', '1.58'), (13, '0.162', '1.39'), (12, '0.0811', '1.15')]
+eps = 3/8: lowest eigenvalue of Q_eps = 0.0355982; kappa_min = 0.294205, second 0.326024, kappa_max = 9.9928e+12
+   8 lowest eigenvalues of Q_eps: ['0.0356', '0.03883', '0.04652', '0.06459', '0.1248', '0.2457', '0.3704', '0.7995']
+   minimiser: D(v)/|v|^2 = 4.117, Q_eps(v)/|v|^2 = 1.211; norm share on the 4 eigenvectors of Q_eps below 0.1: 0.05962; energy share there: 0.00289; top energy rungs (rung, share, eigenvalue): [(13, '0.459', '1.41'), (12, '0.135', '1.2'), (14, '0.122', '1.47'), (16, '0.0903', '1.54')]
+eps = 1/2: lowest eigenvalue of Q_eps = 0.047432; kappa_min = 0.283516, second 0.318378, kappa_max = 1.3317e+13
+   8 lowest eigenvalues of Q_eps: ['0.04743', '0.05167', '0.06157', '0.0847', '0.1572', '0.3076', '0.4458', '0.8385']
+   minimiser: D(v)/|v|^2 = 4.202, Q_eps(v)/|v|^2 = 1.191; norm share on the 4 eigenvectors of Q_eps below 0.1: 0.04758; energy share there: 0.00312; top energy rungs (rung, share, eigenvalue): [(13, '0.512', '1.39'), (11, '0.258', '1.24'), (8, '0.0532', '0.839'), (9, '0.0415', '1.05')]
+total 166s

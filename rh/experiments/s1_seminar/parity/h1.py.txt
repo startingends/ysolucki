@@ -1,0 +1,142 @@
+"""S1-parity, plank zero of Hunch 1 (rh/HUNCHES.md): size of the cut Moebius-type operator M_l = Z_l^-1 on a window.
+(C_l f)(v) = sum_{log m <= v} c(m) m^-1/2 f(v - log m), v in [0, l], l = 2L.  Floats (numpy); definitions in HUNCH1.md section 0.
+usage: python3 h1.py.txt table | identity | longrange"""
+import sys, math, time
+import numpy as np
+t0 = time.time()
+KAP = (math.sqrt(10 - 2 * math.sqrt(5)) - 2) / (math.sqrt(5) - 1)
+def dinv(a, X):
+    """Dirichlet inverse b of a (a[1] = 1), arrays indexed 0..X"""
+    b = np.zeros(X + 1); b[1] = 1.0
+    for d in range(1, X + 1):
+        if b[d] == 0: continue
+        # b[n] -= a[n/d] b[d] for n = d*k, k >= 2
+        ks = np.arange(2, X // d + 1)
+        if len(ks): b[d * ks] -= a[ks] * b[d]
+    return b
+def dconv(f, g, X):
+    h = np.zeros(X + 1)
+    for d in range(1, X + 1):
+        if f[d] == 0: continue
+        ks = np.arange(1, X // d + 1); h[d * ks] += f[d] * g[ks]
+    return h
+def systems(X, d=0.25):
+    n = np.arange(X + 1, dtype=float)
+    one = np.ones(X + 1); one[0] = 0
+    mu = dinv(one, X)
+    adh = np.array([0.0] + [(0.0, 1.0, KAP, -KAP, -1.0)[k % 5] for k in range(1, X + 1)])
+    bdh = dinv(adh, X)
+    with np.errstate(divide='ignore'):
+        up = np.where(n > 0, mu * n ** d, 0.0); dn = np.where(n > 0, mu * np.where(n > 0, n, 1.0) ** (-d), 0.0)
+    fd = dconv(up, dn, X); f0 = dconv(mu, mu, X)
+    op = np.zeros(X + 1); op[1] = 1.0
+    if X >= 2: op[2] = -1.0
+    return {"zeta": mu, "impostor": bdh, "F_d (d=1/4)": fd, "zeta^2 (d=0)": f0, "one-prime": op}
+
+def grid_norm(c, l, n=6000, absolute=False, iters=400):
+    """operator norm of C_l on L^2[0,l] in a grid of n cells with shifts rounded to the grid (power iteration on C^T C)."""
+    h = l / n; X = int(math.floor(math.exp(l) + 1e-12))
+    terms = [(int(round(math.log(m) / h)), (abs(c[m]) if absolute else c[m]) / math.sqrt(m)) for m in range(1, X + 1) if c[m] != 0]
+    def ap(f):
+        g = np.zeros(n)
+        for k, w in terms:
+            if k < n: g[k:] += w * f[:n - k]
+        return g
+    def apT(g):
+        f = np.zeros(n)
+        for k, w in terms:
+            if k < n: f[:n - k] += w * g[k:]
+        return f
+    rng = np.random.default_rng(0); f = rng.normal(size=n); f /= np.linalg.norm(f); val = 0
+    for _ in range(iters):
+        g = ap(f); f = apT(g); nv = np.linalg.norm(f)
+        if nv == 0: return 0.0
+        f /= nv; val = math.sqrt(nv)
+    return val
+def GK(c, l, K, n=8000):
+    """sup |C_l f|/|f| over trigonometric polynomials of degree <= K/2 on [0, l]; exact pointwise evaluation, midpoint quadrature."""
+    h = l / n; v = (np.arange(n) + 0.5) * h; X = int(math.floor(math.exp(l) + 1e-12))
+    ks = np.arange(-(K // 2), K // 2 + 1); om = 2 * np.pi * ks / l
+    Mf = np.zeros((n, len(ks)), dtype=complex)
+    for m in range(1, X + 1):
+        if c[m] == 0: continue
+        lm = math.log(m); mask = (v >= lm)[:, None]
+        Mf += (c[m] / math.sqrt(m)) * mask * np.exp(1j * np.outer(v - lm, om))
+    Gm = (Mf.conj().T @ Mf) * h / l                      # modes e^{i om v}/sqrt(l) are orthonormal
+    return math.sqrt(max(np.linalg.eigvalsh(Gm)))
+
+if sys.argv[1] == "table":
+    Ls = (0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0)
+    S = systems(60)
+    print("TRIVIAL BOUND S(L) = sum_{m <= e^2L} |c(m)| m^-1/2, and G_a lower bound from a grid (signed operator, frequencies below ~pi n / l), and the norm of the operator with |c| (grid, n = 6000; n = 3000 in brackets)")
+    for name, c in S.items():
+        row = []
+        for L in Ls:
+            l = 2 * L; X = int(math.floor(math.exp(l) + 1e-12)); Sv = sum(abs(c[m]) / math.sqrt(m) for m in range(1, X + 1))
+            row.append("L=%.2f: S=%.3f signed=%.3f |c|-norm=%.4f (%.4f)" % (L, Sv, grid_norm(c, l), grid_norm(c, l, absolute=True), grid_norm(c, l, n=3000, absolute=True)))
+        print(" %-13s " % name + " ; ".join(row) + "   (%.0fs)" % (time.time() - t0), flush=True)
+    print("SMOOTH CLASS G_K(L) (K + 1 Fourier modes on the window; n = 8000 quadrature cells)")
+    for K in (8, 16, 32):
+        for name, c in S.items():
+            print(" K=%-2d %-13s " % (K, name) + " ; ".join("L=%.2f: %.4f" % (L, GK(c, 2 * L, K)) for L in Ls) + "   (%.0fs)" % (time.time() - t0), flush=True)
+
+elif sys.argv[1] == "identity":
+    # exact pointwise check of H_mu = - M_l H_1 M_l^#  and of the block form of M_2l, on a smooth test function (no grid)
+    l = 2.0; X = int(math.exp(2 * l)); S = systems(X); mu = S["zeta"]
+    g = lambda y: math.exp(-3 * (y - 0.7) ** 2) * math.cos(5 * y) + 0.3 * y
+    def M(f):  return lambda v: sum(mu[m] / math.sqrt(m) * f(v - math.log(m)) for m in range(1, int(math.exp(v) + 1e-12) + 1) if mu[m] != 0)
+    def Msharp(f): return lambda y: sum(mu[m] / math.sqrt(m) * f(y + math.log(m)) for m in range(1, int(math.exp(l - y) + 1e-12) + 1) if mu[m] != 0)
+    def H(c, f): return lambda x: sum(c[m] / math.sqrt(m) * f(math.log(m) - x) for m in range(1, X + 1) if c[m] != 0 and 0 < math.log(m) - x <= l)
+    one = np.ones(X + 1)
+    lhs = H(mu, g); rhs = M(H(one, Msharp(g)))
+    print("identity H_mu g = - M_l H_1 M_l^# g on [0, l], l = %g, at x = 0.1, 0.5, 0.9, 1.3, 1.7, 1.95:" % l)
+    for x in (0.1, 0.5, 0.9, 1.3, 1.7, 1.95):
+        print("   x=%.2f: H_mu g = %+.12f ; -M H_1 M# g = %+.12f ; difference %.1e" % (x, lhs(x), -rhs(x), abs(lhs(x) + rhs(x))))
+    # block form: (M_2l f)(l + x) = (M_l f_2)(x) + (H_mu R f_1)(x)
+    f = lambda v: math.sin(2.3 * v) + 0.2 * v * v
+    M2 = lambda v: sum(mu[m] / math.sqrt(m) * f(v - math.log(m)) for m in range(1, int(math.exp(v) + 1e-12) + 1) if mu[m] != 0)
+    f2 = lambda x: f(l + x); Rf1 = lambda y: f(l - y)
+    for x in (0.2, 1.0, 1.9):
+        a = M2(l + x); b = M(f2)(x) + H(mu, Rf1)(x)
+        print("   block form at v = l + %.1f: M_2l f = %+.12f ; M_l f_2 + H_mu R f_1 = %+.12f ; difference %.1e" % (x, a, b, abs(a - b)))
+    print("norms on L^2[0, l] (grid 4000; |c| versions are exact norms by the Kronecker argument):")
+    for L in (0.25, 0.5, 0.75, 1.0):
+        l = 2 * L; n = 4000; h = l / n; X2 = int(math.exp(2 * l) + 1e-12)
+        def hnorm(c, absolute):
+            terms = [(math.log(m), (abs(c[m]) if absolute else c[m]) / math.sqrt(m)) for m in range(2, X2 + 1) if c[m] != 0]
+            A = np.zeros((n, n))                 # (H g)(x_i) = sum_m w_m g(log m - x_i): entry at column j ~ (log m - x_i)/h
+            xi = (np.arange(n) + 0.5) * h
+            for lm, w in terms:
+                j = np.rint((lm - xi) / h - 0.5).astype(int); ok = (j >= 0) & (j < n)
+                A[np.arange(n)[ok], j[ok]] += w
+            return np.linalg.norm(A, 2)
+        S2 = systems(X2); mu2 = S2["zeta"]; one2 = np.ones(X2 + 1)
+        Gl = grid_norm(mu2, l, absolute=True); G2l = grid_norm(mu2, 2 * l, absolute=True)
+        print("   L=%.2f (l=%.1f): G_a(L) = %.4f ; G_a(2L) = %.4f ; |H_mu(l)| = %.4f ; |H_1(l)| = %.4f (e^l - 1 = %.4f) ; G + |H_mu| = %.4f ; G + |H_1| G^2 = %.3f" % (
+              L, l, Gl, G2l, hnorm(mu2, True), hnorm(one2, True), math.exp(l) - 1, Gl + hnorm(mu2, True), Gl + hnorm(one2, True) * Gl ** 2), flush=True)
+
+elif sys.argv[1] == "longrange":
+    X = 3000000; S = systems(X)
+    n = np.arange(1, X + 1, dtype=float); ln = np.log(n)
+    import mpmath as mp
+    mp.mp.dps = 30
+    kap = (mp.sqrt(10 - 2 * mp.sqrt(5)) - 2) / (mp.sqrt(5) - 1)
+    fdh = lambda s: mp.power(5, -s) * (mp.zeta(s, mp.mpf(1) / 5) + kap * mp.zeta(s, mp.mpf(2) / 5) - kap * mp.zeta(s, mp.mpf(3) / 5) - mp.zeta(s, mp.mpf(4) / 5))
+    rho0 = mp.findroot(fdh, mp.mpc('0.808517', '85.699348')); fp = mp.diff(fdh, rho0)
+    print("impostor: off-line zero rho_0 = %s ; |f'(rho_0)| = %s ; 1/f(1/2) = %s ; zeta: 1/zeta(1/2) = %s" % (mp.nstr(rho0, 12), mp.nstr(abs(fp), 6), mp.nstr(1 / fdh(mp.mpf(1) / 2), 6), mp.nstr(1 / mp.zeta(0.5), 6)))
+    beta = float(mp.re(rho0)) - 0.5; g0 = float(mp.im(rho0)); afp = float(abs(fp))
+    ys = [int(round(math.exp(2 * L))) for L in (0.5, 1.0, 1.5, 1.71, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.45)]
+    for name in ("zeta", "impostor", "F_d (d=1/4)", "zeta^2 (d=0)"):
+        c = S[name][1:]
+        for tlab, ts in (("t = 0", [0.0]), ("max over |t| <= 10 (the range of a smooth class)", list(np.linspace(-10, 10, 201))), ("t = 85.699 (height of the impostor's off-line zero)", [g0])):
+            best = np.zeros(len(ys)); run = np.zeros(len(ys))
+            for t in ts:
+                ps = np.cumsum(c * n ** -0.5 * np.exp(-1j * t * ln))
+                a = np.abs(ps)
+                best = np.maximum(best, np.array([a[y - 1] for y in ys]))
+                runmax = np.maximum.accumulate(a); run = np.maximum(run, np.array([runmax[y - 1] for y in ys]))
+            print(" %-13s %-52s running max of |sum_{m<=y} c(m) m^(-1/2-it)|: " % (name, tlab) + " ; ".join("L=%.2f: %.3g" % (0.5 * math.log(y), r) for y, r in zip(ys, run)) + "   (%.0fs)" % (time.time() - t0), flush=True)
+    print(" impostor, predicted resonance amplitude y^beta / (|rho_0 - 1/2 - it| |f'(rho_0)|), beta = %.4f:" % beta)
+    for tlab, t in (("t = 0", 0.0), ("t = 10", 10.0), ("t = 85.699", g0)):
+        dist = abs(complex(beta, g0 - t))
+        print("   %-10s " % tlab + " ; ".join("L=%.2f: %.3g" % (0.5 * math.log(y), y ** beta / (dist * afp)) for y in ys))

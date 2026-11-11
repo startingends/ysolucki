@@ -1,0 +1,22 @@
+# sanity check of NOTES D3 / board B212 (a): the right side of Maass-Selberg on the unitary axis must be >= 0 for T >= 1,
+# and the two expressions (via phi'/phi and via the sum over zeros) must agree.
+import mpmath as mp
+mp.mp.dps = 20
+xi = lambda w: mp.pi**(-w/2)*mp.gamma(w/2)*mp.zeta(w)
+phi = lambda s: xi(2*s-1)/xi(2*s)
+dlogxi = lambda w: -mp.log(mp.pi)/2 + mp.digamma(w/2)/2 + mp.zeta(w, derivative=1)/mp.zeta(w)
+gam = [mp.im(mp.zetazero(k)) for k in range(1, 400)]
+def zsum(t):
+    # 4 sum_rho (1-beta)/((1-beta)^2 + (2t-gamma)^2), zeros on the line, both signs; tail estimated crudely
+    s = mp.mpf(0)
+    for g in gam:
+        for gg in (g, -g): s += mp.mpf(1)/2/(mp.mpf(1)/4 + (2*t-gg)**2)
+    return 4*s
+for T in [mp.mpf(1), mp.mpf(2)]:
+    for t in [mp.mpf('0.3'), mp.mpf(1), mp.mpf(5), mp.mpf('7.0673623')]:
+        s = mp.mpc(0.5, t)
+        dphi = mp.diff(lambda u: mp.log(phi(mp.mpc(0.5, u))), t)/1j      # (phi'/phi)(1/2+it)
+        rhs1 = 2*mp.log(T) - mp.re(dphi) + mp.im(mp.conj(phi(s))*T**(2j*t))/t
+        rhs2 = 2*mp.log(T) + 4*mp.re(dlogxi(1 + 2j*t)) + mp.im(mp.conj(phi(s))*T**(2j*t))/t
+        rhs3 = 2*mp.log(T) + zsum(t) - 4/(1 + 4*t*t) + mp.im(mp.conj(phi(s))*T**(2j*t))/t
+        print("T =", T, " t =", mp.nstr(t, 8), " |phi| =", mp.nstr(abs(phi(s)), 12), " norm^2: via phi'/phi", mp.nstr(rhs1, 10), " via xi'/xi", mp.nstr(rhs2, 10), " via 399 zeros", mp.nstr(rhs3, 8))

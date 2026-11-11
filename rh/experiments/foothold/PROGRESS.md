@@ -372,3 +372,41 @@ PREDICTION:
      become a cluster of size eps x (0.05..2), no longer geometrically spaced. The minimiser of the pencil sits in the
      bulk (energy on eigenvalues of size 0.1-2) for every eps >= 1/16.
  Would surprise me: kappa_min decreasing with eps, or mu(eps) staying below 1e-4 at eps = 1/16.
+
+### 22. Outcome: damped pencil (Q_eps, D_L) at L = 0.5 and 0.75  (COMPUTED, multiprecision, ONE implementation)
+Script pencil_eps.py.txt (pencil_mp.py.txt with the kernel damped exactly, pole included; at eps = 0 the pole by
+quadrature agrees with the rank-two pole to 4e-88 / 7e-119, and the eps = 0 rows reproduce section 20).
+Commands: `python3 tools/memcap.py 1 python3 pencil_eps.py.txt 1/2 36 40 300 0,1/1024,1/16,1/8,1/4,3/8,1/2` (14 s, log
+pencil_eps_0p5.log); `flock ... memcap.py 2 python3 pencil_eps.py.txt 3/4 80 40 400 0,1/1048576,1/1024,1/16,1/8,1/4,3/8,1/2`
+(166 s, log pencil_eps_0p75.log). Degree < 36 and < 80; no second degree was run for eps > 0.
+| eps | mu(eps) L = 0.5 | kappa_min L = 0.5 | mu(eps) L = 0.75 | kappa_min L = 0.75 |
+|---|---|---|---|---|
+| 0 | 9.382e-7 | 0.330703 | 3.696e-15 | 0.326506 |
+| 2^-20 | | | 9.207e-8 | 0.327829 |
+| 1/1024 | 1.012e-4 | 0.331987 | 9.326e-5 | 0.327871 |
+| 1/16 | 6.335e-3 | 0.332507 | 5.948e-3 | 0.324096 |
+| 1/8 | 1.258e-2 | 0.330073 | 1.189e-2 | 0.318139 |
+| 1/4 | 2.495e-2 | 0.324504 | 2.375e-2 | 0.305836 |
+| 3/8 | 3.726e-2 | 0.319027 | 3.560e-2 | 0.294205 |
+| 1/2 | 4.953e-2 | 0.313877 | 4.743e-2 | 0.283516 |
+(1) FIRST-ORDER LIFT. c_r = q_r^T Q'(0) q_r on the six lowest rungs: L = 0.5: 0.1027, 0.1348, 0.2237, 0.3067, 0.2232,
+    0.0139; L = 0.75: 0.1002, 0.1213, 0.1612, 0.2485, 0.4417, 0.6984. So d mu/d eps at 0 is 0.10 at both windows, and
+    c_1/mu(0) = 1.1e5 (L = 0.5), 2.7e13 (L = 0.75). mu(eps) is linear in eps over the whole range to within 5%:
+    mu(eps) = 0.099 eps (L = 0.5), 0.095 eps (L = 0.75). PREDICTION (1): HIT (c in range at both windows, at the lower
+    edge at 0.75). HEURISTIC reading: (1/pi) sum_gamma int |V|^2/(gamma - t)^2 dt for a transform concentrated near
+    frequency 0 is 4 sum_{gamma > 0} gamma^-2 = 0.092.
+(2) kappa_min IS NOT MONOTONE in eps: it rises by about 0.0015 for very small eps (maximum near eps = 1/16 at L = 0.5,
+    near 1/1024 at L = 0.75), then falls: -5% (L = 0.5) and -13% (L = 0.75) at eps = 1/2. PREDICTION (2): MISSED on both
+    counts (I predicted non-decreasing and a rise to 0.35-0.6). Reason for the miss: the minimiser was a bulk
+    direction already at eps = 0 (energy on Q-eigenvalues 0.9-1.7; section 20), so making the ladder expensive
+    changes nothing for it. For every eps the energy share of the minimiser on eigenvalues below 0.1 is under 4%
+    (11% at L = 0.75, eps = 0).  kappa_max explodes as it must: about c_1 eps / (lowest eigenvalue of D) = 81, 5.1e3,
+    4.1e4 at L = 0.5 and 2.5e7 ... 1.3e13 at L = 0.75.
+(3) THE LADDER DISSOLVES RUNG BY RUNG, at eps of the size q_r/c_r, i.e. immediately for the bottom rungs. L = 0.75,
+    eight lowest eigenvalues: eps = 0: 3.7e-15, 3.4e-12, 1.2e-9, 2.5e-7, 4.4e-5, 3.7e-3, 0.089, 0.58;
+    eps = 2^-20: 9.2e-8, 1.1e-7, 1.6e-7, 4.9e-7, 4.4e-5, 3.7e-3, 0.089, 0.58 (rungs 1-3 already merged);
+    eps = 1/1024: 9.3e-5, 1.05e-4, 1.3e-4, 2.5e-4, 5.0e-4, 4.4e-3, 0.090, 0.58;
+    eps = 1/16: 5.9e-3, 6.5e-3, 8.0e-3, 1.2e-2, 2.7e-2, 5.1e-2, 0.14, 0.63 (a cluster at c_r eps, no geometric spacing).
+    At L = 0.5: eps = 1/16: 6.3e-3, 8.6e-3, 3.2e-2, 0.38. PREDICTION (3): HIT; the precise statement is stronger than
+    I predicted: no threshold in eps, each rung is gone once eps exceeds about 10 times its eigenvalue.
+Consistency with the two ends: at eps = 3/8 and 1/2 everything is positive, with bottoms 0.036-0.050.

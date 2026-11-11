@@ -148,3 +148,56 @@ Rebuild planks 3b and 8 at ε = 3/8, where positivity is a theorem: the whole-sp
 then a quantity that is provably positive at ε = 3/8 and measured ≈ 0.30 at ε = 0. How it moves between the two is
 a curve nobody has, and its derivative in ε at 3/8 is a statement about the worst possible zeros.
 PLANK ZERO: κ_min(L, ε) at L = 0.5, 0.75 for ε = 0, 1/8, 1/4, 3/8 with the foothold seat's pencil.
+
+
+## F. The structural mode (owner, A23). Lead's thinking, 2026-11-11. RISKY; labelled as such.
+
+### F1. The structural question: in what setting do the zeros have an exact formula?
+Not "an equivalent of RH", but a setting in which a zero is a THING: an object you can hold, with a formula.
+Three such settings are on record in mathematics, and each makes its own Riemann hypothesis trivial or provable:
+- zeros as eigenvalues of Frobenius (curves): positivity is a degree or a dimension; for Fermat curves the
+  eigenvalues ARE Jacobi sums and RH is the identity |Gauss sum|² = p;
+- zeros as eigenvalues of a Laplacian (Selberg): self-adjointness;
+- p-adic zeros as eigenvalues of an operator on an Iwasawa module (the main conjecture, proved through Gauss sums
+  and Stickelberger's factorisation).
+For ζ itself the settings where a zero is a thing are of a weaker kind, and I had never lined them up:
+ (i) a zero ρ of ξ(2s) is a POLE of the Eisenstein series, with residue an explicit Laplace eigenfunction E_ρ of
+     eigenvalue (ρ/2)(1 − ρ/2). The exact norm identity for it (Maass–Selberg at a zero; I re-derived it:
+     (1 − Re ρ)·∫_{truncated domain}|E*(z, ρ/2)|² = |ξ(ρ−1)|²·T^(1−Re ρ)) proves Re ρ < 1 and nothing more. It is the
+     classical proof of non-vanishing on the edge. The spectral parameter is ρ/2, the wrong one: self-adjointness
+     pins ρ/2 to a line, which is the edge of the strip, not its centre.
+ (ii) **a zero ρ of ζ_K(s), K imaginary quadratic of class number one, is a NODE: the Eisenstein eigenfunction
+     E*(·, s) has eigenvalue s(1 − s), the right parameter, and its value at the CM point z_K is ξ_K(s)** (Hecke:
+     the Eisenstein series at a CM point is the Epstein zeta function of the norm form). So for K = ℚ(√−3), z_K = ω:
+     RH for ζ·L(χ₋₃) ⟺ every member of the Eisenstein family that vanishes at the single point ω has a REAL
+     Laplace eigenvalue. On the critical line this is a known picture: |ξ_K(½+it)|²/|ξ(1+2it)|² is the spectral
+     density of the point-evaluation functional at ω in the continuous spectrum, so the zeros on the line are
+     exactly where that density vanishes.
+ (iii) the Möbius function of the SAME field is a cube of coefficients of an automorphic form on its cubic cover
+     (the quasi-RH input).
+THE RISK I AM TAKING: (ii) and (iii) are two exact formulas at the same point ω of the same surface for the same
+field, one for the zeros and one for the Möbius function, and nobody in our record (nor, as far as the digests
+show, in the papers read) has put them in one sentence. The hunch is that they are two faces of ONE object: the
+orbit of the point ω under the cubic cover (the place where the cubic theta function's coefficients are generated
+is the stabiliser structure of ω, the units of ℤ[ω]), and that the quasi-RH theorem is a statement about how well
+the point-evaluation at ω can be approximated inside the continuous spectrum. If so, the wall "the spectral
+parameter is on the wrong line" (i) is replaced by "a period vanishes" (ii), and positivity is to be looked for as
+the positivity of a spectral density, which is free. LIKELY WRONG in detail; the first test is not a computation
+but whether three toolkits describe the same object (F3).
+
+### F2. Walls, and the object that would make each trivial
+| wall | what would make it trivial | does such an object exist anywhere? |
+|---|---|---|
+| B3, no slack (positivity is exact) | the form is a NORM: W = T*T with T written without the zeros | function fields (Rosati); for ζ: the candidates are a spectral density (F1 (ii)) or a period squared |
+| WJ2, accuracy e^(−4π e^(2L)) | an exact identity on the near-null space | found: bridge plank 5 (window form = Weil form of the tail). It made the ladder trivial; it does not reach the bulk |
+| B1 / plank 9, the impostor shares everything | an object the impostor cannot have | a Möbius function; a Gauss-sum identity; a CM point (the impostor is not a period of anything) |
+| B11, the twist ζ(s−d)ζ(s+d) | unitarity of a representation (the twist is the complementary series, where a norm exists only for |d| < ½ and degenerates) | exists: this is the Eisenstein series at parameter ½+d; the "trivialising object" is the unitary dual of SL₂ |
+| W1, look-alikes converge only given RH | an operator, not a sequence of functions: self-adjointness instead of a limit | pseudo-Laplacians (Colin de Verdière) give exactly the look-alike theorems; what is missing is the one whose boundary condition is "vanish at ω" |
+| W2 / Montgomery's line, the bulk | prime correlations as an exact sum, not an estimate | the Gauss-sum side: correlations of μ become shifted convolutions of theta coefficients, which automorphic forms compute exactly |
+| "the right parameter" (new, from F1 (i)) | an eigenvalue problem whose parameter is ρ and not ρ/2 | F1 (ii): evaluate at a CM point instead of taking the constant term |
+
+### F3. One object, three toolkits (running)
+THE OBJECT: Φ(s) := E*(ω, s), the completed Eisenstein series of SL₂(ℤ) at the point ω = e^(2πi/3); equivalently
+the completed Dedekind zeta function of ℚ(√−3), ξ(s)·L*(s, χ₋₃); equivalently the form factor of the point ω in the
+continuous spectrum of the modular Laplacian. SP-modular, SP-operator and SP-reflection each express Φ, and the
+statement "Φ(s) = 0 only on Re s = ½", in their own toolkit, without reading each other first; then they compare.

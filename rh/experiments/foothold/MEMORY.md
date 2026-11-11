@@ -1,4 +1,4 @@
-# FH seat MEMORY (rewritten at the end of session 3, 2026-11-11)
+# FH seat MEMORY (rewritten at the end of session 4, 2026-11-11)
 
 ## What exists (all in rh/experiments/foothold/ unless said)
 - PROGRESS.md: running log with predictions, commands, reading record, walls W-FH1, W-FH2.
@@ -40,6 +40,10 @@
   orders at L = 1. Minimiser = ladder/bulk mixture, half of D(v) is a cross term (measured at 0.85 only).
   kappa_max unbounded in the degree. My session-2 statement "minimiser is a small-leak combination" was an
   artefact of L^2 normalisation: corrected in PROGRESS 20. Logs pencil_mp_*.log.
+- SESSION 4: pencil_eps.py.txt <L> <NB> <nh> <prec> <eps list>: damped form Q_eps (kernel x e^(-eps|x|), pole damped
+  exactly) against the same D_L. d mu/d eps at 0 = 0.10 at L = 0.5 and 0.75 (c_1/mu(0) = 1.1e5, 2.7e13); mu(eps) about
+  0.095-0.099 eps up to eps = 1/2; kappa_min not monotone (0.331 -> 0.3325 -> 0.314 at L = 0.5; 0.3265 -> 0.3279 ->
+  0.2835 at L = 0.75); ladder dissolves rung by rung at eps about q_r/c_r. PROGRESS 21-22, logs pencil_eps_*.log.
 - Answers given to the coordinator: (1) Connes-Consani Thm 1 does not give plank 8 on the no-prime window as it
   stands (different comparison form, codimension-2 subspace, non-certified numerics); certificate recipe in
   PROGRESS 16 A. (3) The FH-1 certificate run on Q - kappa D does NOT escape the cost explosion (PROGRESS 17).

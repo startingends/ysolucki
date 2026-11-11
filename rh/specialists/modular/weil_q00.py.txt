@@ -1,0 +1,11 @@
+# matrix element q_00 of the project's Weil form (zeta) at L = 0.5, from lane A's builder, with and without the pole term
+import sys
+src = open('/home/user/ysolucki/rh/experiments/r1_A/weil.py.txt').read()
+ns = {}
+exec(compile(src.split("def even_block")[0], 'weil', 'exec'), ns)
+import flint
+flint.ctx.prec = 200
+for L in ['0.5']:
+    q, w = ns['build'](L, 0, kind='zeta', pole=True)
+    q2, w2 = ns['build'](L, 0, kind='zeta', pole=False)
+    print("L =", L, " q_00 with pole =", q[0][0].str(15), "  without pole =", q2[0][0].str(15))

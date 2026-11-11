@@ -66,6 +66,14 @@ A field may honestly read "FAILS RULE: …"; such ideas cannot be `alive`.
     that fails) before the next plank is laid; a failed confirmation moves or abandons the bridge, and says so.
     The record of the current bridge is `rh/BRIDGE.md`.
 
+13. **Be abstract and take risks; fewer measurements.** (owner, 2026-11-11) "Your ideas are rediscoveries and your
+    hunches are recombinations ... you need to not just regurgitate a safe and likely wrong answer, but take risks
+    and be brilliant." Three working rules: (a) fewer measurements; more time on ONE structural question, such as
+    "in what setting does our hard object have an exact formula?"; (b) give two specialists the SAME concrete object
+    and require each to express it in its own toolkit; (c) ask of each wall "what kind of object would make this
+    trivial?" and then look for that object, rather than estimating around the wall. Honesty rules are unchanged:
+    a risky idea is labelled risky, and a wrong one is recorded as wrong.
+
 ### The deeper version
 - *What a top professional would do that wasn't asked:* keep a barrier list and test every idea against known
   counterexamples before investing in it; build the numerical laboratory first; demand that each route says

@@ -93,7 +93,8 @@ Consequences (each PROVED from statements read):
     four zeros with real part 1.259 .. 1.458, 15 <= Im s <= 30, at y = 0.5, and none found at y = 1.1.
 (c) By D4, 1 + (compressed Hankel operator of phi) is the Gram operator of pseudo-Eisenstein series supported above
     height T; ||K[t]|| < 1 at w = 1/2 (Suzuki Prop. 4.4) is the unitarity of the scattering operator.
-    IDENTIFICATION (HEURISTIC until the normalisations x <-> 2 log y, the Blaschke factor and Suzuki's G are matched):
+    IDENTIFICATION (kernel shape and atoms now matched from the digest's formula, see D12 (a); the constant and the
+    treatment of the pole, his Blaschke factor against my subtraction of the pole square, are NOT matched: HEURISTIC there):
     Suzuki's K^{1/2,1}[t] = the off-diagonal part of the constant-term operator on pseudo-Eisenstein series supported in
     y > e^(-t/2)-ish, with atoms q(n) n^(-1/2) = phi_E(n)/n; his Hamiltonian gamma_{1/2}(t) = (det(1+K)/det(1-K))^2 is
     then an unconditional function determined by totients.
@@ -300,6 +301,12 @@ the pole.
     theta_w = arg xi_S(1/2 + w - ix), and sin^2(theta_w(x))/w -> pi sum over ON-LINE zeros of delta(x - gamma).
     So: THE EVEN WEIL BLOCK ON [-L, L] IS THE w-DERIVATIVE AT w = 0 OF SUZUKI'S 1 - K_w[L] ON EVEN FUNCTIONS, AND THE ODD
     BLOCK THAT OF 1 + K_w[L] ON ODD FUNCTIONS: first-order splitting of the kernels of 1 -+ R.
+(c') COMPUTED (PROGRESS P7, P8). Unitary side, Gaussian f: ratio to the zero sum 1.040 at w = 0.01, deviation linear
+    in w. PRIME side, f = e_0 = constant on [-0.5, 0.5], with Suzuki's arithmetic kernel (atoms n = 1, 2; gamma part and
+    pole factor by a contour integral): (1 - I_w/2L)/w = 0.080795, 0.081452, 0.082455, 0.083851, 0.085687, 0.086786,
+    0.087508, 0.087759 at w = 0.5, 0.4, 0.3, 0.2, 0.1, 0.05, 0.02, 0.01, tending linearly to 0.088015; lane A's builder
+    gives q_00 = 0.0880146104737 (pole included; -1.954 without the pole). So (c) holds on the prime side on this
+    vector, with the pole bookkeeping, to 3e-5.
 (d) Reading. On each window the forms (1 -+ K_w)/w, 0 < w <= 1/2, join the half-shift (w = 1/2: compression of the
     scattering involution of the modular surface; the + sign is a norm) to the project's two parity blocks (w -> 0).
     The unitary-side version is >= 0 for every w with no hypothesis; the arithmetic (Dirichlet series) version equals it

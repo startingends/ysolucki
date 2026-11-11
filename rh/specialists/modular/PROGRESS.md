@@ -129,3 +129,31 @@ D12 (c) stands. My predicted sizes (15% at w = 0.1, 3% at w = 0.01) MISSED (39% 
 ## 01:44 (clock) THE BOARD WAS CLOSED by the moderator (B218) while I was posting. Not posted: two questions (to
 SP-operator, SP-reflection), my line for B158, a caveat to my own B214 (4), a note on plank 9 of the bridge. All in
 posts/UNPOSTED.md.
+
+## 01:56 (clock) PREDICTION (P8), before computing: PRIME-side check of NOTES D12 (c) on one function
+f = (2L)^(-1/2) on (-L, L), L = 0.5 (the basis function e_0 of rh/experiments/r1_A/weil.py.txt). With Suzuki's arithmetic
+kernel K_w(u) = sum_n q_w(n) n^(-1/2) calG_w(u - log n), calG_w the causal inverse transform of
+gamma_S(s-w)/gamma_S(s+w), gamma_S(s) = s(s-1) pi^(-s/2) Gamma(s/2):   <f,(1 - K_w[L]) f> = 1 - I_w/(2L),
+I_w = Phi_w(2L) + q_w(2) 2^(-1/2) Phi_w(2L - log 2),  Phi_w(a) = (1/2 pi i) int_(c) [gamma_S(s-w)/gamma_S(s+w)] e^((s-1/2)a) (s-1/2)^(-2) ds.
+PREDICTION: (1 - I_w/(2L))/w tends, linearly in w, to the matrix element q_00 (pole included) that the project's builder
+gives for zeta at L = 0.5; agreement within 5% at w = 0.01. If it tends to q_00 WITHOUT the pole term, my bookkeeping of
+the factor s(s-1) in D12 is wrong.
+
+## Result of P8 (d12_prime_check.log, weil_q00.py.txt; mpmath 20 digits; lane A's builder with Arb, 200 bits)
+PRIME-side check of D12 (c) on f = e_0 (constant on the window), L = 0.5; atoms n = 1, 2 only.
+   w                 0.5       0.4       0.3       0.2       0.1       0.05      0.02      0.01
+   (1 - I_w/2L)/w    0.080795  0.081452  0.082455  0.083851  0.085687  0.086786  0.087508  0.087759
+Lane A's builder: q_00 = 0.0880146104737 WITH the pole term, -1.954000833 without it.
+HIT: the family tends linearly to q_00 with the pole (0.087759 + 0.0256 x 0.01 = 0.088015); 0.3% off at w = 0.01.
+So on this vector the project's Weil form is the w -> 0 end of Suzuki's (1 - K_w[L])/w, pole bookkeeping included, and
+its w = 1/2 end (the half-shift, positive by a theorem) is 0.0808: the whole family moves by 8% on this vector.
+CAUTION written at once: on the Gaussian of P7 (not supported in a window) the same normalised quantity INCREASES
+with w; so there is no monotonicity in w in general. If (1 - K_w[L])/w were monotone decreasing in w as a FORM on even
+window functions, RH would follow from the half-shift theorem; nothing computed here supports that beyond one vector.
+
+## Maass-Selberg on the unitary axis (maass_selberg_check.log; mpmath 20 digits, 44 s). No prediction (sanity check).
+2 log T - phi'/phi(1/2+it) + Im(conj(phi) T^(2it))/t computed three ways (phi'/phi numerically; 4 Re xi'/xi(1+2it); sum over
+399 zeros of each sign): T = 1: 0.047919 (t = 0.3), 0.146463 (t = 1), 0.313098 (t = 5), 8.021814 (t = gamma_1/2 = 7.0674);
+T = 2: 0.520872, 1.351103, 1.755641, 9.627125. First two routes agree to 10 digits; the zero sum is lower by 0.0053 in
+every row (its tail beyond gamma_399 = 670, estimated 0.0054). All positive, as a norm must be; the zero gamma_1 shows as
+a peak of height 8 = 4 x (1/2)/(1/4) at 2t = gamma_1: a zero seen from the line Re w = 1.

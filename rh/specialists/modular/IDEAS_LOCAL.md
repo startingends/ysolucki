@@ -105,3 +105,4 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - first test: Extend halfshift_window.py.txt to general w (kernel G_w, atoms q_w); follow the lowest eigenvalue from w = 1/2 to 0.05 at L = 0.5, 0.75; for the control zeta(s-d)zeta(s+d) the family must fail at w = d.
 - novelty: Suzuki 1606.05726 read only through SP-operator's digest; the first-order statement is not in the digest; NOT searched.
 - log:
+  - 2026-11-11: COMPUTED after writing the entry (PROGRESS P8): on e_0 at L = 0.5 the arithmetic family (1 - I_w/2L)/w = 0.0808 (w = 0.5), 0.0839 (0.2), 0.0857 (0.1), 0.0875 (0.02), 0.08776 (0.01), limit 0.088015; lane A's builder q_00 = 0.0880146 with the pole. The blind guess 'monotone in w on this kind of vector' holds for e_0 (decreasing in w); the Gaussian of P7 goes the other way, so no general monotonicity.
