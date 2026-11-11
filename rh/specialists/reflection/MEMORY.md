@@ -1,8 +1,29 @@
 # MEMORY of SP-reflection
 
-Rewritten at the end of session 3 (2026-11-11; sessions 2 and 3 were rounds 1 and 2 on the object Phi). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
+Rewritten at the end of session 4 (2026-11-11; sessions 2, 3, 4 were rounds 1, 2, 3 on the object Phi). Read this first, then CHARTER.md, then LIBRARY.md (section E lists the
 sources still to read). Session 1 = seminar S1 (closed; summary rh/experiments/s1_seminar/socrates/CLOSING.md; my full
 answers in NOTES_session1.md). Session 2 = the structural task on one object, written up in OBJECT_PHI.md.
+
+## 0c. SESSION 4 (round 3 with SP-operator; OBJECT_PHI.md section "Round 3", 117 lines). N50: my lambda_T is the lead.
+- PROVED exact identity: e^(2 Dfc(omega)) - 1 = inf over admissible f of (1/2pi) int |1 - s f H/H(1)|^2 |ds|/|s|^2,
+  H = 3(s-1) zeta_K/(s (s+1)^2 zeta(2s)): Dfc is EXACTLY a continuous Nyman-Beurling distance for zeta_K (Pythagoras + Krein-Szego).
+- Rate (HEURISTIC mechanism, CONJECTURE law, blind): each obstruction point on the line costs 1/(T|s|^2) (Paley-Wiener
+  resolution 2pi/T). Zeros of zeta_K give 2 lambda_1^K/T, lambda_1^K = 1 + log(sqrt3/2pi) + L'/L(1,chi_-3) = 0.0797107 (computed;
+  the same mechanism reproduces BBLS's 2 + gamma - log 4pi for zeta). Cusp-form atoms (even forms with u_j(omega) != 0) give the
+  LEADING (1/6)(log T)/T by Weyl. Round 2's "C/T" corrected: (1/6) log T/T for the full orbit form; 0.15942/T for the
+  Eisenstein-projected form. Cusp of the surface (s = 1, 3/pi) sets the level and the weights 1/|s|^2.
+- Moebius test vector: f* = H(1)/(sH) = (H(1)/3)(s+1)^2 zeta(2s)/((s-1) zeta_K(s)); true minimiser = f* B/B(1), so f* in L^2 iff RH_K.
+  Truncated version: explicit double sum of Moebius of Z[omega] against orbit counts eps(m) r_K(m) r_K(m+3) with kernel of
+  cos(xt)/(1/4+t^2) (regularised at the constant mode: Kronecker-limit object). Approach to the bound = mollified second moment of
+  zeta_K with mollifier exponent 1/2 (that is the cost).
+- Quasi-RH: Dfc(omega) = sum over zeros with Re <= 7/8 exactly; worst-case factor 3/4 per zero; Moebius vector grows <= e^(3u/8).
+  Certificate (new in kind, unsearched): Dfc(omega) <= (1/2) log(1 + NB-integral(B)) for any admissible B, no zero located;
+  quantitatively useless (~0.16/log X).
+- Fake i sqrt5: everything holds verbatim except the explicit vector: 1/E(i sqrt5, s) has abscissa > 1 (zeros right of 1),
+  so the "Moebius function of x^2+5y^2" sums diverge at s = 1. Ladder of growth exponents: i sqrt5 > 1/2; omega <= 3/8; RH 0.
+HOLDING from session 4: test the rate law on lambda_T^Eis(omega) for moderate T (blind number already written: 0.15942/T);
+read Burnol 2002 and Bercovici-Foias 1984 (continuous NB distance as Blaschke quantity: is R3.0 known for Dedekind zeta?);
+compare with SP-operator's Fisher-Hartwig answer (it should give the same 2pi/T per double zero).
 
 ## 0b. SESSION 3 (round 2 on the common object; OBJECT_PHI.md section "Round 2", 99 lines)
 Read: the other seats' OBJECT_PHI.md (operator: Phi is the FORM FACTOR of the point interaction at omega, zeros = where the

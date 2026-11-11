@@ -273,4 +273,119 @@ in print (to be searched); (c) from SP-operator: is the Szego-Krein limit of D2 
 (B150, the Lax-Phillips form), so that the three toolkits have the same limit, and does Krein's theory give a rate.
 
 ## Round 3 (session 4, 2026-11-11): the rate, the Moebius test vector, the fake at i sqrt5
-(SKELETON written first against restarts; filled below.)
+Read for this section: openai-qrh-11-12.md sections 3 and 8 (again), HUNCHES A' (7/8 paper). SP-operator's Fisher-Hartwig
+side not read. Formula checks: tests_round3.py.txt (+ .log). Notation as in Round 2; s on Re s = 1/2 written s = 1/2 + i tau.
+   H(s) := G_omega(s)/(s+1)^2 = 3 (s-1) zeta_K(s) / (s (s+1)^2 zeta(2s))    (the (sqrt3/2)^s of E cancels against ht^-s),
+   w = (ht/4pi)|H|^2 is the a.c. density of g_omega,   bound := (ht/2)|H(1)|^2 = (9/32 pi^2)/ht.
+
+**R3.0 The exact defect identity (PROVED, Pythagoras; no RH).** For every admissible f (Laplace transform of phi on [0,T],
+f(1) = 1) the a.c. part of the form satisfies, with k_1 the Cauchy kernel at s = 1 (2 pi k_1(s) = 1/s):
+      (ht/4pi) int |f H|^2 dtau  -  bound  =  bound * (1/2pi) int_{Re s=1/2} |1 - s f(s) H(s)/H(1)|^2 |ds|/|s|^2 ,
+because fH - H(1)/s is orthogonal to k_1 in H^2 (its value at 1 is 0). The singular part adds sum_j (mu_j/2)(|f(1/2+it_j)|^2 +
+|f(1/2-it_j)|^2), mu_j = |u_j(omega)|^2/(9/4+t_j^2)^2. With Round 2 (D2) and Beurling's theorem (closure of {fH} = B_H H^2):
+      e^(2 Dfc(omega)) - 1 = inf over admissible f of (1/2pi) int |1 - s f H/H(1)|^2 |ds|/|s|^2      (PROVED given Krein-Szego).
+So Dfc is EXACTLY a Nyman-Beurling distance for zeta_K (target 1/s, multiplier (s-1)/((s+1)^2 zeta(2s)), continuous dilations).
+KNOWN in type for zeta: the continuous Nyman-Beurling distance is a Blaschke quantity (Bercovici-Foias 1984, Burnol 2002; from
+memory, unread); the unconstrained version gives 1 - e^(-2 Dfc).
+
+**R3.1 The rate (task (1)).** Mechanism (HEURISTIC; the local step is a PROVED Paley-Wiener fact). Functions with spectrum in [0,T]
+resolve points only to 2pi/T: min{int |h|^2 : spectrum of h in [0,T], h(x0) = 1} = 1/K(x0,x0) = 2pi/T (PW reproducing kernel
+of type T/2). Every point of the line where the target 1/s cannot be met costs about |target|^2 2pi/T. Two kinds of such points:
+ (Z) a zero rho of zeta_K ON the line: fH vanishes there (order m), the target is H(1)/rho. Cost in the normalised defect:
+     m^2/(T |rho|^2). This reproduces exactly the constant of the Baez-Duarte-Balazard-Landreau-Saias conjecture for zeta (sum m^2/|rho|^2 =
+     2 lambda_1 = 2 + gamma - log 4pi = 0.046191, COMPUTED as a check), and Burnol's unconditional lower bound
+     liminf (log N) d_N^2 >= sum m^2/|rho|^2 (KNOWLEDGE E5) is its rigorous half for zeta. For zeta_K: sum over zeros of zeta
+     and L(chi_-3) of 1/|rho|^2 = 2 lambda_1^K, lambda_1^K = 1 + log(sqrt3/2pi) + L'/L(1,chi_-3) = 0.0797107 (COMPUTED,
+     30 digits; equals lambda_1(zeta) + lambda_1(L(chi_-3)) = 0.0230957 + 0.0566150).
+ (S) an atom of the singular part (a Maass cusp form u_j with u_j(omega) != 0, at s = 1/2 +- i t_j): for T large it is cheaper
+     to make f vanish there than to pay mu_j |f|^2 (the payment is O(1), the kill costs O(1/T)); the kill costs 1/(T|s_j|^2),
+     the SAME as a simple zero, independent of the size of u_j(omega). Odd forms vanish at omega (omega lies on Re z = -1/2,
+     fixed by z -> -1 - conj z); even forms with L(1/2,u_j) L(1/2,u_j x chi_-3) != 0 do not (Waldspurger/Zhang, from memory).
+     Atoms are separable while their spacing 12/t exceeds 2pi/T, i.e. for t_j up to about 2T; by Weyl's law for even forms
+     (N_even(X) ~ X^2/24, from memory) sum_{t_j <= cT} 2/(1/4 + t_j^2) = (1/6) log T + O(1).
+CONJECTURE (blind; replaces the C/T of Round 2 R4, which was wrong for the full orbit form):
+   full orbit form (D2):     lambda_T(omega)/bound - 1 = ((1/6) log T + C_S + 2 lambda_1^K + o(1))/T        under RH_K,
+   Eisenstein part only:     lambda_T^Eis(omega)/bound - 1 = (2 lambda_1^K + o(1))/T = (0.15942 + o(1))/T     under RH_K and simple zeros,
+   and without RH_K both tend to e^(2 Dfc(omega)) - 1 > 0. (Eisenstein part = g_omega projected onto the continuous spectrum.)
+WHICH PART COMES FROM WHERE. From the CUSP of the surface (the constraint int phi e^(-u/2) = 1, i.e. evaluation at s = 1, and the
+atom 3/pi there): the level bound = (9/32pi^2)/ht and the weight 1/|s|^2 = |2 pi k_1|^2 that every obstruction point carries.
+From the WINDOW: the factor 1/T. From the ZEROS on the line: 2 lambda_1^K, a constant, second order. From the CUSP FORMS (the
+discrete spectrum, not the zeros): the leading (1/6) log T. In the orbit counts eps(m) r_K(m) r_K(m+3) the zeros and the cusp
+forms are mixed (pre-trace formula); the Eisenstein projection separates them but is no longer an orbit sum (one must
+subtract sum_j |u_j(omega)|^2 cos(u t_j)/(9/4+t_j^2)^2, i.e. central L-values by Waldspurger).
+
+**R3.2 The Moebius test vector (task (2)).** Under RH_K the minimiser is f* = H(1)/(s H(s)) (then sfH/H(1) = 1 and the defect
+vanishes). PROVED in general: the true Szego minimiser is f*_true = f* B_H(s)/B_H(1); so f* is admissible (square integrable)
+iff B_H = 1 iff RH_K. Explicitly, with nu = mu_K * 1_{(n), n in N} (Dirichlet coefficients of zeta(2s)/zeta_K(s) on ideals),
+      f*(s) = (H(1)/3) (s+1)^2 zeta(2s)/((s-1) zeta_K(s)),   phi*(u) = (H(1)/3) (3/2 + d/du)^2 [ e^(u/2) M_nu(e^u) 1_{u>=0} ] (distributional d/du),
+      M_nu(x) := sum_{N(a) <= x} nu(a)/N(a)   (-> 0 as x -> inf: Landau's prime ideal theorem; KNOWN).
+TRUNCATED VECTOR (no RH needed). Take beta(a) = nu(a) w(log N(a)/T) with a smooth cutoff w (w = 1 near 0, 0 beyond 1),
+corrected so that B(1) = sum beta(a)/N(a) = 0, B(s) := sum beta(a) N(a)^-s, smoothed in u at scale eta (multiply by
+hhat(eta(s-1)), hhat(0) = 1; needed because delta_omega is not in H^-1). Then f_B = c (s+1)^2 B(s) hhat/(s-1) is admissible,
+supported in [0, T + O(eta)], and by R3.0 (PROVED):
+   lambda(f_B)/bound - 1 = (1/2pi) int |1 - R_B(s)|^2 |ds|/|s|^2 + (atoms),   R_B = zeta_K(s) B(s) hhat / (zeta(2s) [Res zeta_K * B'(1)/zeta(2)]).
+THE DOUBLE SUM. Expanding the form spectrally and applying the pre-trace formula (PROVED modulo the regularisation named):
+   lambda(f_B) = |c|^2 sum_{a,b} beta(a) beta(b) (N(a) N(b))^(-1/2) K_omega( log N(a) - log N(b) ),
+   K_omega(x) = sum_{m >= 0} eps(m) r_K(m) r_K(m+3) k_x( arccosh(1 + 2m/3) )  -  (constant mode),
+k_x = point-pair kernel of h(t) = cos(xt) |hhat(eta(s-1))|^2/(1/4 + t^2), s = 1/2 + it, (the 1/(s-1) of f_B becomes Delta^-1). The orbit sum and the
+constant mode both diverge logarithmically (Delta^-1 at lambda = 0); their difference is the regularised automorphic Green
+function at s = 1, whose value is a Kronecker-limit-formula object (from memory). For the unregularised wave part:
+k_x^(wave)(r) = (1/(2 sqrt2 pi)) d/dx (cosh x - cosh r)_+^(-1/2) (Selberg-transform inversion of cos(xt); derived here, not
+checked numerically), so only m with 1 + 2m/3 <= cosh(log(N(a)/N(b))) enter: Moebius of Z[omega] at a, b against the number
+of representations at hyperbolic distance below |log(N(a)/N(b))|.
+WHAT IS NEEDED FOR RATE r(T): the bracket equals 1 + (main terms) - 2 Re(...) and must be bound * (1 + r(T)); i.e. an ASYMPTOTIC
+for the double sum with relative error r(T) = O((log T)/T). Equivalently (direct form): int |1 - zeta_K B/zeta(2s)|^2 |ds|/|s|^2
+= O(r(T)), a mean value of the mollified zeta_K over ALL t with weight 1/t^2, with a mollifier of length X = e^T. The range
+|t| <~ X^2 needs mollifier length ~ t^(1/2), beyond the mollifier ranges known for degree-two L-functions (from memory). So the
+needed input is a twisted second moment of zeta_K on the critical line of mollifier length exponent 1/2: this is why Nyman-Beurling
+is equivalent to RH and not easier, and it is exactly where the cost sits here.
+
+**R3.3 What the quasi-RH theorem gives (task (2), second half).**
+- EXACT unconditional reduction (PROVED from the 7/8 theorem as reported, digest A'): Dfc(omega) = sum over zeros rho of zeta_K with
+  1/2 < Re rho <= 7/8 of log|rho/(1-rho)| (equality, not inequality: there are no others), and each term is at most
+  (1/2) log[((7/8)^2 + gamma^2)/((1/8)^2 + gamma^2)] ~ 3/(8 gamma^2), against 1/(2 gamma^2) from the trivial region Re rho < 1:
+  the zero-free half-plane improves the worst case per zero by the factor (2 theta - 1) = 3/4, no more.
+- Combined with verification of RH_K up to height H0 (zeta to 3e12; L(chi_-3) to a much lower height, Platt, from memory) and a
+  zero-density estimate of Selberg type N(sigma,T) << T^(1 - (sigma-1/2)/4) log T (from memory): Dfc(omega) << 1/H0, with H0 set
+  by L(chi_-3). The 7/8 enters only as the upper limit of the sigma-integral; the bound is dominated by zeros barely off the line.
+- On my quantity directly: their estimates are of the right SHAPE (Moebius of Z[omega] paired against a lattice, Poisson
+  summation in the lattice, mean squares over a family) and the wrong STRENGTH and PLACE: upper bounds with D^eps losses for
+  sums at abscissa ~ 1 (they prove A_1(D) << D^(11/12+eps), then 7/8), whereas R3.2 needs an asymptotic with o(1) relative error on
+  Re s = 1/2. Their theorem says, in this language, only: the explicit Moebius vector grows at most like e^((3/8+eps)u)
+  (M_K(x) << x^(-1/8+eps)); RH_K says it is square integrable. PROVED equivalence of the two scales: zero-free in Re s > theta
+  <=> phi*(u) << e^((theta - 1/2 + eps)u) in mean (the usual Moebius-sum/zero-free-region equivalence, KNOWN).
+- A NEW KIND OF UNCONDITIONAL UPPER BOUND, and its size. PROVED: for every admissible B,
+      Dfc(omega) <= (1/2) log( 1 + (1/2pi) int |1 - R_B|^2 |ds|/|s|^2 )        (Eisenstein version: no cusp-form atoms),
+  a CERTIFICATE: one integral of zeta_K on the critical line (tail |t| > Y bounded rigorously by the convexity bound against the
+  weight 1/t^2) bounds the total Blaschke mass of zeta_K, all heights at once, without locating or counting a single zero and
+  without any zero-density theorem. Its size (CONJECTURE R3.1): at best about 2 lambda_1^K/T = 0.16/log X for mollifier length X.
+  To match the verification bound 1/H0 ~ 1e-8 needs log X ~ 1e7: useless quantitatively, and it can never certify Dfc = 0. It
+  is new in kind only (not searched); I do not see how the quasi-RH bounds could evaluate it.
+
+**R3.4 Fake first at i sqrt5 (task (3)).** Same definitions; ht = sqrt5; G = ((s-1)/s) E(i sqrt5, s) 5^(-s/2),
+E*(i sqrt5, s) = c(s)[zeta L(chi_-20) + L(chi_-4) L(chi_5)] (SP-modular). Where each step stops:
+- R3.0, D2 and the certificate of R3.3 hold verbatim (they use nothing arithmetic). Their limit is bound(i sqrt5) e^(2 Dfc(i sqrt5))
+  > bound: the Epstein zeta function of x^2 + 5y^2 has infinitely many zeros with Re s > 1 (Davenport-Heilbronn 1936, from memory),
+  so Dfc(i sqrt5) contains terms of size at least (1/2) log(1 + 1/gamma^2), at heights whose number grows linearly.
+- The orbit form: congruence-restricted r_Q(m) r_Q(m+20), r_Q = 1*chi_-20 + chi_-4*chi_5 (Round 2): four shifted convolutions.
+  In R3.1 nothing changes in the mechanism (zeros on the line and cusp forms still cost 1/(T|s|^2)); what changes is that the
+  limit is not the bound.
+- THE FIRST STEP THE FAKE CANNOT TAKE (PROVED): the explicit test vector. f*(s) = H(1)/(sH(s)) requires 1/E(i sqrt5, s), whose
+  Dirichlet series (the "Moebius function of the form x^2 + 5y^2", the Dirichlet inverse of r_Q/2) has abscissa of convergence
+  >= sup Re rho > 1, because E(i sqrt5, .) has zeros right of 1. So M_Q(x) = sum_{n <= x} mu_Q(n)/n does not converge, phi* grows
+  like e^((sigma_max - 1/2)u) with sigma_max > 1, and even the truncation-plus-renormalisation of R3.2 has no limit at s = 1.
+  At omega the same step is the prime ideal theorem (M_K(x) -> 0, i.e. no zeros of zeta_K on Re s >= 1), a theorem; at i sqrt5 it
+  fails for a reason that is itself a theorem. And mu_Q is not multiplicative (inverse of a sum of two Euler products).
+- So the ladder of growth exponents of the explicit minimiser, theta - 1/2 with theta = sup Re rho, reads: i sqrt5: > 1/2
+  (inadmissible at s = 1); omega, unconditionally: <= 3/8 (quasi-RH); omega under RH_K: 0. The fake is excluded at the rung
+  "PNT"; the 7/8 theorem moves omega down to 3/8; RH is the bottom rung.
+
+**R3.5 Summary.** (i) Dfc(omega) is exactly the Nyman-Beurling distance of zeta_K (R3.0). (ii) Rate under RH: (1/6)(log T)/T in the
+full orbit form, from the CUSP FORMS (Weyl), with the zeros of zeta_K only in the second-order constant 2 lambda_1^K = 0.15942;
+the cusp of the surface (s = 1) sets the level and the weights. (iii) The Moebius vector of Z[omega] gives an explicit double
+sum against the orbit counts; its approach to the bound is a mollified second moment of zeta_K with mollifier exponent 1/2.
+(iv) The quasi-RH theorem gives the reduction to zeros with Re <= 7/8 (factor 3/4 per zero) and the growth bound e^(3u/8) for the
+Moebius vector; a certificate-type unconditional upper bound on Dfc exists but is quantitatively useless. (v) At i sqrt5 the
+explicit vector does not exist, because of zeros with Re s > 1.
+RISK (one line): the rate law of R3.1 is a clean blind prediction that a computation of lambda_T^Eis(omega) on moderate T could
+test, and the coefficient 2 lambda_1^K = 0.15942 would come out differently at i sqrt5 (no limit at the bound).
