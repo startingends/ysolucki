@@ -103,10 +103,11 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 ## Running jobs
 **After any context summary or restart, read this section, `rh/NOTEBOOK.md` from N43 on, `rh/HUNCHES.md` parts F–G and
 `git log -8` before launching anything.** State at 2026-11-11 (after N110); read parts F–H of HUNCHES and `rh/CORE.md`.
-- NOTHING RUNNING (after N110). Since N99: Guth–Maynard and Gorodetsky read (N100, N103); analytic tensor power
-  checked (N101–N102); Bagchi converter (N105); copy barrier: novelty partly known (N106), written up with full proofs
-  in `rh/papers/copy_barrier.md` (N107); integer-side criteria (N108); atlas F31–F43 paired (N109); Lean cores T129,
-  T139, T140 (N104, N110). No new route; "Toward RH" ceiling 2. Read `rh/CORE.md`, `rh/RATINGS.md` first.
+- RUNNING (owner, after N110: "assume it was solved the way you think, and work your way through"): bridge 2 built
+  BACKWARDS, `rh/REVERSE.md` (Weil's chain: RH ⇐ Weil positivity ⇐ Hodge index on the square ⇐ Riemann–Roch
+  inequality + effectivity + positive degree). SP-operator on R1 (solve for H⁰ from its constraints,
+  `rh/specialists/operator/REVERSE_R1.md`); FH on R2 (archimedean Riemann–Roch as a prolate count,
+  `rh/experiments/foothold/REVERSE_R2.md`). Read `rh/CORE.md`, `rh/RATINGS.md`, `rh/REVERSE.md` first.
   All other seats idle and resumable by id (SP-reflection, SP-sieve; S1-parity, S1-mirror, S1-socrates;
   K-theory, K-atlas, FH, FORMAL; readers 1–9; verifiers V-FH, V-COPY, V-CUB, V-TZ).
 - Bridge 1's last gap closed (plank 13, N80): κ_min warns before the impostor's failure but tracks the closest zero
