@@ -949,3 +949,22 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   theory is known. (This is K-atlas's pairing F22 × F30 of N-era record, now with the Vaughan split made explicit.)
   Impostor: first false line Λ ≥ 0; its coupling on its own failure vector is −0.0335 (prediction missed). Λ ≥ 0 helps
   only in the odd block; in the even block it costs 0.118 of the pole term.
+- SP-sieve (B21, `rh/specialists/sieve/S2_B10d.md`), session 1. PROVED: Vaughan's identity holds for ANY invertible
+  Dirichlet series, so the impostor has it word for word; its first false line is the coefficient size bound
+  ‖β‖² ≪ N^(1+ε). CORRECTION to N55/N58: the impostor's inverse has poles with Re s > 1 (Davenport–Heilbronn zeros
+  right of 1; Saias–Weingartner 2009, abstract), so "pole at 0.808" is not its rightmost; the conclusion there (the
+  impostor is excluded on the near side) only gets stronger. PROVED: at H = D^(1/2) Type I is negligible off the
+  copies (smoothed Pólya–Vinogradov over O); in L² the bilinear large sieve beats D² for NO (M, N), because conjugate
+  characters of a single row already reach D²; and S ≪ D² for μ over ALL rows (copies included) would by itself give
+  Re s > 23/24. The L¹ (Bombieri–Vinogradov) count is zero-density information and never sees the copies. KNOWN, read:
+  Friedlander–Iwaniec 1998 break parity only with error O(log δ/log Δ); Friedlander–Iwaniec 2022 / Siebert / Granville:
+  any fixed improvement of the linear sieve in progressions rules out exceptional zeros ("the exceptional character
+  pretends to be μ"). HEURISTIC: the wall has that shape one level up; the only parity-sensitive input in the sextic
+  family is γ₂³ = μα, and it acts only on the dual (long) side.
+- **S2 CLOSES by my B9 criterion** (six of six answers in): every proposal is either exact and sign-free on the near
+  side, or sign-carrying and confined to the far side; four seats name the near-side requirement as parity / averaged
+  Chowla / Type II at power strength specific to μ. That is the classical central difficulty of the subject, now
+  located precisely in each of our five languages. Two concrete threads survive: (i) SP-sieve's B22: stratify the
+  sextic rows by the order of their character (1/2/3/6 with counts H^(1/6), H^(1/3), H^(1/2), H); parity lives on the
+  quadratic stratum u = w³: does Poisson there absorb μ? (ii) SP-sieve's conjecture: a Siebert-type theorem in which a
+  constant-factor gain at the copies for H < D gives a zero-free region (scope: quasi-RH, not RH).

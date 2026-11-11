@@ -10,7 +10,9 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - source: SP-sieve
 - date: 2026-11-11
 - plain english: Bombieri-Vinogradov-type averaging can tell you that MOST of the twisted Moebius sums in a family are small, but it can never tell you that one particular sum (the untwisted one) is small. Example: in the sextic family with 22 rows of conductor about D^(1/2), the Vaughan method shows the rows of conductor near D^(1/5) average D^(4/5) instead of D, yet the row u = 1 and its copies u = p^6 stay exactly as large as the untwisted sum.
+- wall: Short-family wall (N53-N58): shows the Vaughan/BV route stops at the copies for a proved reason (extremal vectors).
 - claim: PROVED in sieve/S2_B10d.md sec 2: L2 Type II bound never below D^2 at any (M,N); L1 Type II total D^(7/6) at H = D^(1/2) (per-row D^(2/3)), = D for H <= D^(1/5); copies excluded
+- novelty: Searched 2026-11-11: 'Bombieri-Vinogradov type theorem power residue symbols Mobius large sieve sparse family Type II Vaughan'; 'large sieve sixth order residue symbols Mobius ... zero-free region' (summaries only: nothing combining sparse residue-symbol families with Vaughan). Statement is standard in type (large values / zero density); the copy-multiplicity point is in N49/N56 in other words.
 - log:
 
 ## #2 · Siebert-Granville shape of the wall: a fixed improvement of a sharp general inequality, at an arithmetic sequence, excludes zeros
