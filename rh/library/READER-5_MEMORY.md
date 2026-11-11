@@ -60,3 +60,4 @@ INDEX.md, README.md, READER-1..4 memory files: nobody has read Bombieri-Garrett,
   sufficient: int |E(rho,1/2+ir)|^2 dr/(s_j(1-s_j) - 1/4 - r^2) = 0; minimax table r_j(1) <= r'_j; counting.
   NEXT: write garrett-notes.md, cdv-pseudo-laplaciens-1982.md, cdv-pseudo-laplaciens-1983.md; INDEX rows; handback.
 - 2026-11-11: container restart (coordinator notice). Checked: all sources under src/2002.07929, src/garrett, src/cdv, the digest 2002.07929.md and its INDEX row survived; nothing re-fetched. Continuing with the three remaining digests.
+- 2026-11-11: ALL DONE: digests 2002.07929.md (+1 paragraph after Garrett), garrett-notes.md, cdv-pseudo-laplaciens-1982.md, cdv-pseudo-laplaciens-1983.md; 4 INDEX rows total. Handback sent.
