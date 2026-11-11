@@ -315,3 +315,41 @@ CONSEQUENCE: nothing downstream breaks that I can see (T34 (A1) already carries 
   positive eigenvalue"). The fix is one clause: in T33 replace "the corresponding margin is strictly positive" by
   "the odd margin lies in (0, 1]; the even margin is non-zero, and positive iff t_e > 1 (iff N_e has a positive
   direction)". Posted on the board as a QUESTION to S1-curv (author of F1); to be raised as an objection if it stands.
+
+### FILE 18 DONE: `RHFormal/T44_InteriorUnderGap.lean`  (T44, the DEDUCTION only; live route #9)
+INFORMAL: assume RH, fix L; for every atomic D = sum_j d_j (delta_{u_j} + delta_{-u_j}) with 2 sum |d_j| <= lambda_L:
+  Q(f) + sum_j d_j (g_f(u_j) + g_f(-u_j)) >= 0 on Dom_L.
+LEAN (namespace RHFormal.T44; E a real inner product space): `atom_bound`: ‖U f‖ ≤ ‖f‖ → |d * (⟪f, U f⟫ + ⟪U f, f⟫)| ≤ 2 |d| ‖f‖^2;
+  `perturbed_nonneg`: (∀ j f, ‖U j f‖ ≤ ‖f‖) → (∀ f, lam * ‖f‖^2 ≤ Q f) → 2 * ∑ j ∈ s, |d j| ≤ lam →
+     0 ≤ Q f + ∑ j ∈ s, d j * (⟪f, U j f⟫ + ⟪U j f, f⟫).
+DIFFERENCES: the two analytic inputs are HYPOTHESES: (1) Q f >= lam ‖f‖^2 (under RH with lam = lambda_L > 0: T10, T36,
+  not formalisable soon); (2) g_f(u) = <f, S_u f> with S_u norm non-increasing. So T44 itself stays conditional on
+  T36/T10; what is formal is that nothing else is needed. GAP: none.
+
+### FILE 19 DONE: `RHFormal/T35_MonotoneGroundState.lean`  (T35, the one line; live route #8)
+INFORMAL: lambda_a = inf{Q(v)/||v||^2 : v in Dom_a, v != 0} is non-increasing in a.
+LEAN (namespace RHFormal.T35): `sInf_antitone`: D increasing in a, F bounded below on each F '' D b, D a non-empty,
+  a ≤ b → sInf (F '' D b) ≤ sInf (F '' D a).
+DIFFERENCES: the nestedness Dom_a ⊆ Dom_b and the lower bound of the form are hypotheses (T10, `known`). GAP: none.
+
+### FILE 20 DONE: `RHFormal/T75_TwoSidedMirrorBound.lean`  (T75 in FINITE form; depends on file 7)
+INFORMAL: [N(f) <= 2<f,c>^2 for all even f] <=> [H(phi) <= 4c^2 - T(phi) for all phi]; [N(f) <= -2<f,s>^2 for all odd f]
+  <=> [H(phi) >= 4s^2 + T(phi) for all phi].
+LEAN (namespace RHFormal.T75; setting of file 7; `shiftForm K φ = ∑ φ_i φ_j K(i,j)`, `mirrorForm K φ = ∑ φ_i φ_j K(i,-j)`):
+  `quad_even_eq`: N(f_e) = 2 (T + H); `quad_odd_eq`: N(f_o) = 2 (T - H); `pair_even`: <f_e, C> = 2 ∑ φ_i C(i) for even C;
+  `pair_odd`: <f_o, S> = 2 ∑ φ_i S(i) for odd S; `even_block_iff`, `odd_block_iff`: the two equivalences, for each φ.
+DIFFERENCES: finite (matrix) form only, stated vector by vector; the continuum statement (L^2(0, L], integrals, atoms) is
+  not formalised. GAP: none.
+
+### FILE 21 DONE: `RHFormal/T63_GroundStateTransform.lean`  (T63; Theorem A (A0) of PROOF_bochner_parity.md)
+INFORMAL: N symmetric, N_xy >= 0 off the diagonal, irreducible, u > 0 the Perron vector, N u = lambda_1 u:
+  <uh, N uh> = lambda_1 ||h||_pi^2 - E(h), E(h) = (1/2) sum_{x != y} N_xy u_x u_y (h_x - h_y)^2; consequently N has at most
+  one positive eigenvalue iff E(h) >= lambda_1 ||h||_pi^2 for all h of pi-mean zero.
+LEAN (namespace RHFormal.T63; N : Matrix W W ℝ symmetric, hu : ∀ x, ∑ y, N x y * u y = lam * u x):
+  `ground_state_sum`, `ground_state_identity`: toBilin' N (u*h) (u*h) = lam * ∑ x, u x^2 * h x^2 - dirichlet N u h;
+  `atMostOnePos_iff_poincare` (u > 0, lam > 0): AtMostOnePos (toBilin' N) ↔
+     ∀ h, ∑ x, u x^2 * h x = 0 → lam * ∑ x, u x^2 * h x^2 ≤ dirichlet N u h.
+DIFFERENCES: MORE general: the identity uses only symmetry and N u = lam u (any eigenpair, no signs, no irreducibility,
+  no normalisation); the equivalence needs only u > 0 and lam > 0 in addition. "At most one positive eigenvalue" is
+  `AtMostOnePos`. E is the sum over all pairs (the diagonal pairs contribute 0). The clause about the spectral gap of the
+  jump process is not formalised. GAP: none.

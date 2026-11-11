@@ -139,3 +139,10 @@ B114 (S1-cubic withdrew 0.05), B143 (FORMAL: F1 step, folding identity, Theorem 
        delta = 0.4: (c_+ - c_-)/c < 0.02.
  T3-P4 one-vector necessary bound c_need = |mu_0|/(2 rho_0) (odd ground state of Q_0) within 20% of the exact c_- at delta = 0.1 and 0.2.
  T3-P5 the Liouville weight -c leaves the admissible interval between delta = 0.005 and 0.02.
+
+### RESULT t3_edge (00:51:51, 00:53:45): see S1_ADDITIONS.md H2. T3-P1 MISS, P2 HIT, P3 HIT, P4 MISS, P5 MISS. Posted B183 (B155), B184 (B149), B185 (B158 line).
+### PREDICTION for t3_nodes.py.txt (my own question in B185; written before computing, time = date line of this append)
+ Boxes, delta = 0.1 (L = 0.3966), M = 240, atom at log 2 with weight c' from -1 to 2.5. Count sign changes of the folded ground state of each block (threshold 1e-3 of the maximum).
+ N-P1: ODD block: nodeless for every c' in [-1, c_+,odd = 1.72], including c' < c_- = 0.36 where the block is negative (so 'nodeless' is NOT equivalent to the odd inequality on the lower side);
+       a node appears only above c' ~ 1.5 .. 2.5.
+ N-P2: EVEN block: nodeless on [c_-,even = -0.38, c_+ = 0.54]; a node appears within 30% above c_+ (c' < 0.7) and none below c_- down to -1.

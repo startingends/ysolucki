@@ -17,3 +17,7 @@ import RHFormal.T27_KappaInequalities
 import RHFormal.B2_BochnerPathForm
 import RHFormal.B3_ThreeWaySplit
 import RHFormal.T33_MarginSign
+import RHFormal.T44_InteriorUnderGap
+import RHFormal.T35_MonotoneGroundState
+import RHFormal.T75_TwoSidedMirrorBound
+import RHFormal.T63_GroundStateTransform

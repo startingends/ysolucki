@@ -150,3 +150,46 @@ COMPUTED (`t2_half.py.txt`, `t2_half.log`; formula checked to 4e-16; L 1_S = -si
 bulk terms +1.357, mirror-crossing term -0.519 (M = 40); +1.353, -0.521 (M = 160). j ranges over 2.08 .. 3.07 of a total jump rate 5.87 (M = 40).
 B3 parts summed over the half window, on the minimiser: S 0.528, H 0.279, O 0.032; their even-odd cross parts: S +0.119, H +0.144, O -0.105; constants with a part removed: S+H 0.514, S+O 0.427.
 Blind prediction (0.84 +- 0.03, 0.83 +- 0.03, mixed parity): HIT.
+
+# Turn 3 (2026-11-11): the first-prime window (answer to the moderator's B155)
+
+Window: (1/2) log 2 < L < (1/2) log 3 (0.34657 < L < 0.54931). l := log 2, delta := 2L - l in (0, log(3/2)), c := log 2/sqrt 2 = 0.490129.
+Strips S+ := [l - L, L], S- := -S+, each of width delta, disjoint (l - L > 0). Q_0 := pole + Gamma form (no atom) on [-L, L]; zeta's form is Q = Q_0 - P,
+<f, P f> := c * 2 g(l), g(u) = int f(x) f(x-u) dx. Theorem E: Q_0(f) = pole(f) - c_inf |f|^2 + E_w(f), E_w(f) = (1/2) int int_{W x W} w(|x-y|)(f(x)-f(y))^2 + int_W kappa_L f^2.
+
+## H1 (PROVED) Edge-strip lemma
+(a) kappa_L(x) = Wbar(L - x) + Wbar(L + x),  Wbar(t) := int_t^inf w(u) du = artanh(e^(-t/2)) + arctan(e^(-t/2)) = (1/2) log(4/t) + pi/4 + O(t).
+    Proof: w(u) = sum_m e^(-(2m+1/2)u), so Wbar(t) = sum_m q^(4m+1)/(2m + 1/2) with q = e^(-t/2), and sum_m q^(4m+1)/(4m+1) = (1/2)(artanh q + arctan q).
+    On S+ (resp. S-): kappa_L >= Wbar(delta) + Wbar(2L) (Wbar is decreasing; L - x <= delta, L + x <= 2L).
+(b) P = c x (the swap of the two strips by translation through l): (P f)(x) = c f(x - l) on S+, c f(x + l) on S-, 0 elsewhere. Its spectrum is {+c, -c, 0}:
+    -c 1_{S+ u S-} <= P <= c 1_{S+ u S-} as forms, with equality on f(x - l) = +-f(x). (AM-GM: 2|f(x) f(x-l)| <= f(x)^2 + f(x-l)^2.)
+    Folded: for f even / odd with phi = f on (0, L]:  <f, P f> = +-2c int_{S+} phi(x) phi(l - x) dx = +-2c <phi, R phi>_{S+}, R = reflection of the strip about its midpoint l/2
+    (for odd f, f(x - l) = -f(l - x), and x -> l - x maps S+ to itself). So the prime 2 is a potential of height 2c that is attractive on the locally symmetric part of an
+    even function and on the locally antisymmetric part of an odd function, and repulsive on the other parts.
+(c) Hence |<f, P f>| <= c int_{strips} f^2 <= theta(L) int kappa_L f^2 <= theta(L) E_w(f),  theta(L) := c/(Wbar(delta) + Wbar(2L)) in (0, 0.1627), theta -> 0 like 2c/log(1/delta),
+    and  Q >= Q_0 - c 1_{strips}  >=  pole - c_inf |f|^2 + (1 - theta) E_w.
+(d) Crude closing: if Q_0 >= mu_0 |f|^2 on [-L, L] then Q >= 0 as soon as mu_0 (Wbar(delta) + Wbar(2L) - c) >= c (c_inf + [2|sinh(x/2)|^2 in the odd block]).
+    With the computed mu_0 = 1.1e-3 (even block) this needs Wbar(delta) >= 2394, delta <= 1e-2078: true and useless.
+None of (a)-(d) uses the sign or the size of the weight beyond |weight| <= c, nor that the atom sits at an integer: it holds for the Liouville weight -c and for a Beurling atom near its own edge.
+COMPUTED checks (`t3_checks.log`): closed form of Wbar against quadrature to 12 digits at t = 0.005, 0.05, 0.405, 1, 3; box spectrum of P/c = [-1.000, 1.000] (M = 240, delta >= 0.05).
+
+## H2 (COMPUTED, boxes; `t3_edge.py.txt`, logs `t3_edge_240.log`, `t3_edge_240b.log`, `t3_edge_conv.log`; lowest eigenvalues in boxes are UPPER bounds for the window)
+delta | L | Q_0 even, odd | zeta even, odd | crude form Q_0 - c 1_strips even, odd | admissible weight of an atom at log 2 [c_-, c_+]   (M = 240; M = 480 where given)
+0.005 | 0.3491 | 0.00134, +0.0659 | 1.3e-3, 0.0678 | +0.00132, +0.0636 | [-3.22, 3.52]
+0.010 | 0.3516 | 0.00128, +0.0585 | 1.2e-3, 0.0628 | +0.00122, +0.0524 | [-2.01, 2.40]   (M = 480: 0.00122, 0.0583; crude 0.00115, 0.0521; [-1.96, 2.31])
+0.020 | 0.3566 | 0.00121, +0.0437 | 1.0e-3, 0.0541 | +0.00101, +0.0270 | [-0.979, 1.495]
+0.030 | 0.3616 | (M = 480) 0.00110, +0.0289 | 8.3e-4, 0.0465 | +0.00073, -0.0022 | [-0.479, 1.066]
+0.050 | 0.3716 | 0.00116, +0.0004 | 6.5e-4, 0.0350 | +0.00022, -0.0672 | [-0.0045, 0.744]
+0.100 | 0.3966 | 0.00088, -0.0685 | 3.1e-4, 0.0167 | -0.0034, -0.245 | [0.361, 0.539]   (M = 480: [0.363, 0.529])
+0.200 | 0.4466 | -0.0062, -0.197 | 1.3e-4, 0.0031 | -0.036, -0.539 | [0.4772, 0.4976]
+0.300 | 0.4966 | -0.030, -0.314 | (box floor 1.3e-4), 6.1e-4 | -0.129, -0.742 | [0.4883, 0.4934]
+0.400 | 0.5466 | -0.071, -0.424 | (box floor), 4.3e-4 | -0.277, -0.893 | [0.4890, 0.4909]
+The even end c_+ is set by the even block, the lower end c_- by the odd block, at every delta (as in S1-mirror's B48). Numbers at the 1e-4 level are box-limited.
+Strip mass of the Q_0 ground states: odd 0.4%, 1.0%, 2.7%, 4.8%, 10%, 26%, 60%, 83%, 94%; even 0.004%, 0.01%, 0.03%, 0.06%, 0.13%, 0.5%, 3.3%, 12%, 29% (delta = 0.005 .. 0.4).
+One-vector necessary bound for the weight from the odd ground state psi_0 of Q_0 (Q(psi_0) >= 0): weight >= |mu_0|/(2<psi_0, R psi_0>) = 0.281, 0.347, 0.388, 0.451 at delta = 0.1 .. 0.4,
+against the exact lower ends 0.361, 0.477, 0.488, 0.489: the ground state of Q_0 is NOT the extremal vector.
+Reading: the crude route (H1(c) + positivity of the ARCHIMEDEAN form Q_0 - c 1_strips) closes numerically for delta <= 0.029, i.e. L <= 0.361, with margins 1.2e-3 (even) and 0.05 (odd) at delta = 0.01;
+it fails in the odd block from delta = 0.03. A statement that a control violates begins later: weight -c excluded from delta = 0.03, weight 0 (no atom) from delta = 0.051 (L = 0.372).
+Predictions (NOTES.md 00:51:18): T3-P1 MISS (I said the crude form is negative already at delta = 0.005 with the even block binding; it is positive up to 0.029 and the odd block binds);
+T3-P2 HIT for zeta, sign change of the odd block of Q_0 at delta = 0.051 (I said 0.04 to 0.06); T3-P3 HIT at delta = 0.005 and 0.1, and at 0.4 ((c_+ - c_-)/c = 0.004 < 0.02);
+T3-P4 MISS (22% and 27% off, I said within 20%); T3-P5 MISS (the weight -c leaves between 0.02 and 0.05, I said 0.005 to 0.02).

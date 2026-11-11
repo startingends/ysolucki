@@ -1,0 +1,2 @@
+L=1/2, polynomials of degree < 28, even: no atom: bottom -0.0323519539 ; true atom (y = log 2, m = log 2/sqrt 2): bottom 9.41663e-7   (1s)
+L=1/2, polynomials of degree < 28, odd: no atom: bottom -0.322228345 ; true atom (y = log 2, m = log 2/sqrt 2): bottom 0.00019573   (2s)

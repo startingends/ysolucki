@@ -1,0 +1,15 @@
+TRUE form  L=0.5        N=  20  lowest even 1.004596e-06  lowest odd 2.300608e-04   t=0s
+TRUE form  L=0.5        N=  40  lowest even 9.499634e-07  lowest odd 2.148297e-04   t=0s
+TRUE form  L=0.5        N=  80  lowest even 9.374374e-07  lowest odd 2.052063e-04   t=0s
+TRUE form  L=0.5        N= 160  lowest even 9.343974e-07  lowest odd 1.997083e-04   t=0s
+TRUE form  L=0.5        N= 320  lowest even 9.335689e-07  lowest odd 1.967773e-04   t=2s
+TRUE form  L=(1/2)log3  N=  20  lowest even 6.619332e-08  lowest odd 1.814129e-05   t=2s
+TRUE form  L=(1/2)log3  N=  40  lowest even 5.757397e-08  lowest odd 1.707721e-05   t=2s
+TRUE form  L=(1/2)log3  N=  80  lowest even 5.579154e-08  lowest odd 1.615027e-05   t=2s
+TRUE form  L=(1/2)log3  N= 160  lowest even 5.543257e-08  lowest odd 1.558046e-05   t=2s
+TRUE form  L=(1/2)log3  N= 320  lowest even 5.535135e-08  lowest odd 1.526197e-05   t=4s
+NO ATOM    L=0.5        N=  20  lowest even -0.03220849  lowest odd -0.31331639   t=4s
+NO ATOM    L=0.5        N=  40  lowest even -0.03229888  lowest odd -0.31754637   t=4s
+NO ATOM    L=0.5        N=  80  lowest even -0.03233451  lowest odd -0.31981126   t=4s
+NO ATOM    L=0.5        N= 160  lowest even -0.03234827  lowest odd -0.32099658   t=4s
+NO ATOM    L=0.5        N= 320  lowest even -0.03235360  lowest odd -0.32160819   t=6s

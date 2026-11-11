@@ -417,3 +417,11 @@ the analogue would be: a family of non-negative integers or dimensions d(f), att
 exact second-difference law coming from the additive structure of ℤ, equal to the Weil form. In the record the only
 quantities that are counts are the negative-square indices (Theorem 4) and the sieve weights (non-negative sums over
 integers, which lose a factor 2 to parity). Nobody in the record has looked for the recursion. Worth a creation seat.
+
+**N39. What a one-signed solution buys: a pointwise bracket (posted B-claim re B181).** PROVED given hypothesis (F)
+(f = N_e⁻¹c ≥ 0, S1-cubic's candidate, computed true for zeta, false for three controls): for every test φ with
+⟨φ,c⟩ > 0, inf_x R_φ ≤ t₀ ≤ sup_x R_φ, R_φ = Nφ/(c⟨φ,c⟩), t₀ the critical pole strength (zeta has t = 2). So with
+(F), positivity of the even block is equivalent to one function φ with W∗φ ≥ 0 pointwise on the window: a linear,
+one-vector certificate in place of a semidefinite statement. Equally rigid (needle of width μ₁/μ₂ around the ground
+state), so no way round WJ2; what changes is the kind of statement. With φ = 1 the constant 5.3722 of the archimedean
+term cancels exactly against 2ζ′/ζ(½) and what is left is −4Σ sin(γL)/γ. Not searched.

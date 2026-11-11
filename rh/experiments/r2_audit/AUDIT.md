@@ -219,9 +219,10 @@ questions that are now sharp enough to compute.
 
 ## Left open
 
-- `tools/hubcheck.py`: 0 errors; 53 ideas still awaiting audit, none in this audit's scope: `s1_seminar` (curv 6,
-  parity 11, cubic 12, mirror 4), `specialists` (operator 6, reflection 4), `k_atlas` 7, `foothold` 3. Every one of
-  the eight round-2 logs is at 0 awaiting.
+- `tools/hubcheck.py`: 0 errors; 56 ideas still awaiting audit at the last run (53 a few minutes earlier: the
+  running seats keep writing), none in this audit's scope: `s1_seminar` (curv, parity, cubic, mirror),
+  `specialists` (operator, reflection), `k_atlas`, `foothold`. Every one of the eight round-2 logs is at 0 awaiting.
+- `python3 -m pytest tests -q`: 34 passed (run once at the end; nothing under `tools/` or `tests/` was touched).
 
 ## How it was done (reproducible, do not re-run)
 
