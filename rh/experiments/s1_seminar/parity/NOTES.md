@@ -315,3 +315,17 @@ Foothold second route (fh_*.py.txt, logs): see section V below (written when the
  mass): weight at 4 doubled. BOTH fail: weight at 4 flipped (zeta's odd ground state has energy -1.157e-7 there), one-prime .60 (-1.41e-4),
  Beurling L=1 (-0.058). Impostor 1.8: (N) fails, (C) untested. So 'exactly one' is false on 3 rows.
  Shares at L=1 (N=40): T_W .0569 + Gamma .4304 + primes .5127; prime 2: 97.6% of the prime term, 3: 2.4%; E_0^2/E_+^2 = .591; centre of mass .246.
+ Shares, continued (b188_shares.log): L=1.25 (N=50): .0495 + .4127 + .5378, E_0^2/E_+^2 .583, centre of mass .251; L=1.5 (N=70): .0451 + .4009 + .5540,
+ .578, .254; prime shares at 1.5: 2: .954, 3: .0461, 4: 2.5e-4, 5: 2.5e-6, 7: 1.5e-11, ..., 19: 1.3e-64 (margin ~1e-83). Posted B207.
+
+### Y. Impostor's bottom rung at its zeros (b148.py.txt, b148_L172.log, b148_L170.log; posted B209)
+ Own DH builder N=100, dps 120: lowest even eigenvalue +1.118282e-28 (L=1.70), -7.910853e-30 (L=1.72): equal to K-atlas / lane A.
+ L=1.72: on-line energy 8.669e-29 (122 ordinates < 200), off-line zero 85.699: psihat = -2.82e-16 + 4.87e-15 i (phase .518 pi), contribution
+ -9.461e-29; sum below 200: -8.26e-30 vs eigenvalue -7.91e-30. L=1.70: on-line 9.271e-29; off-line -1.315e-29, -2.0e-30; sum 7.74e-29 vs 1.118e-28.
+ Prop 5(c) confirmed on a real case (one quartet cancels the on-line energy; phase within .02 pi of i).
+
+### Z. End of turn 3. Board posts: B194, B195, B196, B203, B204, B207, B209, B210. Files new this turn: PROOF_Uprime.md, fh_*.py.txt, plank4.py.txt,
+ b188.py.txt, b148.py.txt (+ logs). No question addressed to me is open.
+ Open / promised: (i) FORMAL may take the finite Perron step (B194). (ii) the verifier track has PROOF_Uprime.md. (iii) foothold seat should
+ recheck its quoted float Rayleigh-Ritz values (B196). (iv) Plank 4 is done at the lead's bases; the bridge's kill test must use plank 6's D_L
+ (inf over companions), see B204. (v) if asked: H1 on F_d (B210); impostor cone test for (C); hull of weights in foothold Theorem B (scan killed).

@@ -20,6 +20,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - kill line: The lowest eigenvalue of 1 + K on (-l, inf) decays faster than any exponential in l (then the half-shift model has the same degenerate margin as the Weil form and calibrates nothing).
 - novelty: NOT SEARCHED beyond: Lagarias-Suzuki (read in part) and Suzuki's digest; Lax-Phillips / Pavlov-Faddeev unread. The identification is surely known to Suzuki and Lagarias; not found stated in what I read.
 - log:
+  - 2026-11-11: COMPUTED (halfshift_window*.log): first prediction (exponential margin) MISSED; margin collapses faster than exponential (0.415, 0.179, 0.0167, 1.2e-4, <= 1.9e-6 at l = 0.25 .. 1.25). So the half-shift form has the same degenerate margin as the Weil form. What survives: it is a POSITIVE CONTROL (positivity is a theorem) showing pinning of weights, missing-atom failure, one wrong-sign pole square and even-block-weakest. The kill line as I wrote it is met for 'the half-shift has room'; the instrument use stands.
 
 ## #2 · Two involutions on the log line: the mirror R (parity blocks) and the scattering involution S = R o phi (automorphy); Zagier's form is the Weil form on S-even functions
 - status: open

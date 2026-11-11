@@ -1,0 +1,18 @@
+# second run: remove the pole square (3/pi)|e^{-v/2}><e^{-v/2}| from K, so that K_c = compression of the unitary involution S;
+# lowest eigenvalues of 1 + K (Gram form, pole included), 1 + K_c and 1 - K_c on L^2(-l, l)
+import sys, math
+import numpy as np
+exec(open('halfshift_window.py.txt').read().split('def run')[0])
+def run2(l, M):
+    B = blocks(l, M)
+    K = sum((totient(c)/c)*B[c] for c in B)
+    h = 2*l/M
+    a = -l + h*np.arange(M); b = a + h
+    e = (2*(np.exp(-a/2) - np.exp(-b/2)))/math.sqrt(h)        # <chi_i/sqrt h, e^{-v/2}>, exact
+    Kc = K - (3/math.pi)*np.outer(e, e)
+    I = np.eye(M)
+    return np.linalg.eigvalsh(I + K)[0], np.linalg.eigvalsh(I + Kc)[[0, -1]], np.linalg.eigvalsh(I - Kc)[[0, -1]]
+for l in [float(x) for x in sys.argv[2:]]:
+    for M in [int(x) for x in sys.argv[1].split(',')]:
+        g, p, m = run2(l, M)
+        print("l = %.3f M = %4d  mu(1+K) = %.4e   1+K_c: [%.4e, %.5f]   1-K_c: [%.4e, %.5f]" % (l, M, g, p[0], p[1], m[0], m[1]))

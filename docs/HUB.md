@@ -94,32 +94,23 @@ Verified 2026-11-10: web search works and arXiv full text can be fetched (partly
 Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` section 7.
 
 ## Running jobs
-**After any context summary or restart, read this section and `git log -5` before launching anything.**
-State at 2026-11-11, about 00:40 UTC (journal J4 has what the last hours produced).
-- **Seminar S1** (board `rh/board/s1.md`, about 140 messages): turn 2 done for S1-mirror, S1-curv, S1-cubic;
-  S1-parity and the specialists SP-reflection, SP-operator still posting. The moderator S1-socrates was woken
-  to open **turn 3** with the owner's rule 6 as its aim: name ONE small statement, not in the papers read, that
-  a control would violate, and prove it or find the step that breaks. Next: when the moderator hands back,
-  wake the seats it questioned.
-- **Standing seats:** K-atlas (running), K-theory (80 lemmas; woken to ingest the judge's verdicts and the
-  readers' corrections), FH (foothold hunt, running), BG (bigger statement, running), FORMAL (Lean; five
-  project files check file by file; a full `lake build` is requested before anything is marked `formal`).
-- **Specialists:** SP-reflection and SP-operator finished their first sessions (files in `rh/specialists/`).
-  SP-modular started (session 1, three questions from the lead; joins turn 3). SP-chodge not started.
-- **Failure atlas:** 25 entries, 300 pairs examined (4 yes, all reformulations; 6 maybe). Keeper sent back in to
-  add the judge's, the specialists' and the lead's new material and to look for a pair where one failure's
-  missing sign or factor is exactly what another supplies.
-- **Readers:** four seats ran (two by mistake; double readings agree). Three finished. READER-1 is reading
-  X. Zhu, arXiv 2608.24827 next. Queue: end of `rh/library/README.md`.
-- **Verification track of round 2: finished.** `rh/experiments/r2_judge/JUDGEMENT.md`. Nothing reached L2/L3.
-- **Audit:** R2-AUD is auditing the 65 round-2 local ideas (`rh/experiments/r2_audit/`). The seminar's and
-  specialists' logs (about 30 entries) are audited after S1 closes.
-- **Creation run 1: DID NOT RUN.** Its three seats were refused by the model's safeguard at the first step
-  (reason code `reasoning_extraction`), every attempt; BG is silent too. Not worked around: open decision D10
-  records it; the relaunch proposal is withdrawn and those seats stay off.
-- **Foothold seat finished:** two computer-assisted theorems (FH-1 certified positivity for L ≤ ½ log 3; FH-2 a
-  certified box for the first atom), now with verifier V-FH. Seminar turn 3 has a third small proved statement
-  (first-prime lemma, S1-mirror and S1-parity independently).
+**After any context summary or restart, read this section, `rh/BRIDGE.md` and `git log -8` before launching anything.**
+State at 2026-11-11, about 02:10 UTC.
+- **Bridge 1 (idea #27): built and ended** (see the bridge section above and `rh/BRIDGE.md`). All its planks have
+  reports in; nothing of it is still running.
+- **READER-4 (running):** the October 2026 quasi-Riemann-hypothesis papers (OpenAI; zero-free half-plane 7/8,
+  shorter route 11/12), whole, with the proof skeleton and the inputs per step. The owner pointed to it (A21).
+  A second-hand summary of the mechanism is in notebook N42. NEXT: when the digest lands, decide whether bridge 2
+  can be laid on its input (Möbius function through a family with an amplifier; cubic Gauss sums / Kubota theta).
+- **SP-modular (running, session 1):** three questions from the lead; its toolkit (Eisenstein series, metaplectic
+  forms, Rankin–Selberg) is the one the quasi-RH mechanism belongs to. NEXT: give it N42 and the digest.
+- **Seminar S1** (board `rh/board/s1.md`, about 210 posts): all seats have handed back turn 3. NEXT: ask the
+  moderator for a closing summary, close the board, copy what matters to the journal.
+- **Finished and recorded:** K-theory (105 entries, 4 formal, 46 checked), FORMAL (26 files, full build),
+  K-atlas (30 failures, 435 pairs), FH (FH-1, FH-2 checked; FH-3 the whole-space pencil), V-FH, readers 1–3,
+  SP-operator and SP-reflection, the round-2 audit.
+- **Awaiting audit:** about 80 ideas in local logs (seminar, specialists, atlas, foothold, bigger). After S1 closes.
+- **Creation seats: off** (refused by the model's safeguard; decisions D10, A19). BG finished one session.
 - Load: every numerical job runs under `tools/memcap.py 1`; one Lean process at a time.
 
 ## Scheduled routines

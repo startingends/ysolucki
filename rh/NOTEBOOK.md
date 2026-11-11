@@ -470,3 +470,31 @@ the lowest local frequency 2π e^(2L) over 2π. COMPUTED: this predicts 61–91%
 rungs at three windows. (d) The obstruction to turning (c) into a proof is exact: the null space of ψ ↦ W(T_ψ)
 (tails of functions living below the window). Only the least-leak representative can satisfy a lower bound, and on
 it the cross terms between dilates are what is not controlled.
+
+**N42. The October 2026 quasi-RH proof: what its mechanism is, second-hand** (lead, 2026-11-11, from a web-fetch
+summary of an exposition and a result page; the papers themselves are being read whole by READER-4; every statement
+here is "as reported", unchecked).
+- CLAIM: no zeros of ζ (and of Dirichlet and some Hecke L-functions) in Re s > 7/8; a shorter proof gives 11/12.
+- SHAPE: it is an attack on 1/L, not on positivity. A power saving for smoothed Möbius sums
+  A₁(D) = Σ μ(n)ν(n)W(N(n)/D) ≪ D^(θ+ε) over the Eisenstein integers gives a zero-free half-plane Re s > θ
+  (a zero ρ would force the Mellin transform of every weight W to vanish at ρ).
+- NEW INPUT, three parts: (i) nobody can bound ONE Möbius sum, so it is embedded in a family of sextic-residue
+  twists A_u(D) = Σ μ(n)ν(n)(u/n)₆W(·); (ii) AMPLIFIER BY COPIES: for u = p⁶ the twist is trivial except where
+  p | n, so the untwisted sum reappears about Y = H^(1/6) times inside the family, and |A₁|² ≲ (mean square of the
+  family)/Y; (iii) the mean square Σ_u|A_u|² ≪ D^(2+θ+ε) is proved by Poisson summation and an identity that
+  REPLACES μ(n) BY CUBIC GAUSS SUMS, which are Fourier coefficients of Kubota's cubic theta function (an
+  automorphic form on a metaplectic cover), plus the quadratic large sieve and a cube-removal recursion.
+  Exponent: (2 − 1/6)/2 = 11/12. The field ℚ(√−3) is used because it has the cube roots of unity.
+- USES: Möbius function (the Euler product, through 1/L), complete multiplicativity and reciprocity of the residue
+  symbols, an automorphic summation formula. DOES NOT USE (as reported): the functional equation in the zero-free
+  step, or any positivity beyond a non-negative weight.
+- AGAINST OUR RECORD. (a) It is exactly the kind of input bridge 1 said the next bridge needs: something the
+  impostor lacks (a Möbius function), used through a family. (b) If correct it makes one of our statements
+  unconditional: the damping threshold of N35 satisfies ε*(L) ≤ 3/8 for every window, i.e. the Weil kernel times
+  e^(−3|u|/8) is positive definite. (c) In the Möbius-inverted coordinates of N41 the window form is written with
+  Z and the companion is ψ = Z⁻¹f, a Möbius sum of f; a power saving for smooth Möbius sums is a bound on Z⁻¹ on
+  windows, which is what the constant of the whole-space comparison (0.30–0.33 on L ≤ 1) depends on.
+  (d) MY INFERENCE, not from the sources: with k-th power twists the same arithmetic gives (2 − 1/k)/2, i.e. 3/4 for
+  quadratic twists; a rumoured "barrier at 3/4" is quoted in one source. Quadratic Gauss sums have no theta-function
+  summation formula of the needed kind, which may be why the cubic family is used. To be checked against the papers.
+- CAUTION (owner): solving the quasi version is not solving RH; this is read for what kind of input works.

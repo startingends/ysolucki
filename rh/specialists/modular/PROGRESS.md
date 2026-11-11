@@ -8,7 +8,7 @@ ATLAS F17/F20/F22, ideas 12/13, board B13-B17, B69, B71, B81, B111-B113, B117, B
 B147-B150, B158, B160, B161, B163-B165, B168, B172; library INDEX; digests brs-fourier-interpolation.md and
 suzuki-1606.05726.md in full.
 
-## 00:53-01:25 sources read (details in LIBRARY.md)
+## 00:53 onward: sources read (details in LIBRARY.md); times in this file are from `date -u` where marked (clock)
 Zagier 1981 (whole paper, OCR text); Lagarias-Suzuki math/0412039 (abstract, sec. 1, Thm 2.1, sec. 3 start, sec. 5);
 Conrey-Ghosh math/9204217 (sec. 1-2, start of 3); Blomer-Brumley 1003.0559 (introduction); arXiv 1809.07605
 (Maass-Selberg lemma); Long 0707.3315 (Berger's theorem); 2011.07796 (theta-power eigenform lemma); BRS source
@@ -42,7 +42,7 @@ Wed Nov 11 01:08:01 UTC 2026
   mpmath, 30 digits, not interval-certified; "none found" is not a proof of absence (the theorem for y >= 1 is
   Hejhal / Lagarias-Suzuki).
 
-## 01:37 PREDICTION (P4), before computing: two-route check of the norm identity for pseudo-Eisenstein series
+## 01:16 (clock) PREDICTION (P4), before computing: two-route check of the norm identity for pseudo-Eisenstein series
 Identity derived by unfolding (NOTES D2): for psi(y) = y^(1/2) f(log y), f real, smooth, compactly supported,
   ||E_psi||^2 = int f^2 dv + sum_{c>=1} (phi(c)/c) int int f(v) f(v') kappa(-(v+v') - 2 log c) dv dv',
   kappa(w) = (1 - e^(-w))^(-1/2) for w > 0, 0 otherwise   [GEOMETRIC ROUTE: totients, finitely many c]
@@ -57,19 +57,19 @@ HIT: geometric route 0.286868370825262 (int f^2 = 0.0998145906; c = 1: 0.1592678
 c = 3: 5.469e-6 x phi(3)/3), spectral route 0.286868351034754 (residue 0.1697934702, continuous 0.1170748809, t cut at 60
 where the density is 6.9e-10). Difference 2.0e-8, ratio 1.00000007. The constants phi(c)/c, kappa, 3/pi, 1/(4 pi) stand.
 
-## 01:27 An exact identity found by hand while preparing Q3 (PREDICTION P5 before the machine check)
+## 01:25 (clock) An exact identity found by hand while preparing Q3 (PREDICTION P5 before the machine check)
 With a_n(m) = r_n(m)/(2n): multiplicativity at the first coprime pair (2,3) is a polynomial identity in n:
-   2n r_n(6) - r_n(2) r_n(3) = (8/45) n^3 (n-1)(n-2)(n-4)(n-8)        [hand computation, 01:27]
+   2n r_n(6) - r_n(2) r_n(3) = (8/45) n^3 (n-1)(n-2)(n-4)(n-8)        [hand computation]
 so a_n(2) a_n(3) = a_n(6) exactly for n in {1, 2, 4, 8}. PREDICTION: the exact-rational script confirms the identity
 at 12 rational values of n, and the analogous defect at the pair (2,5), 2n r_n(10) - r_n(2) r_n(5), also vanishes at
 n = 1, 2, 4, 8 (if it did not, n = 4 or 8 would fail to be multiplicative: contradiction with Jacobi's formulas).
 
-## 01:40 PREDICTION (P6) for the half-shift window instrument (idea SP-modular/#1), before computing
+## 01:36 (clock) PREDICTION (P6) for the half-shift window instrument (idea SP-modular/#1), before computing
 Object: G_l = 1 + K on L^2(-l, l) (v = log y; functions supported between heights e^(-l) and e^l), K the Hankel operator
 of NOTES D4 (atoms phi(c)/c at -2 log c, kernel kappa). G_l is a Gram operator (norm of a pseudo-Eisenstein series), so
 its lowest eigenvalue mu(l) is > 0 (strictly, by the zero count of NOTES D7 (c)).
-First prediction (written in the idea log at 01:35): mu(l) decays only exponentially in l, about e^(-l/2), because the
-spectral side is absolutely continuous. SECOND THOUGHT before computing (01:40): the near-null vectors are functions
+First prediction (written in the idea log a few minutes earlier): mu(l) decays only exponentially in l, about e^(-l/2), because the
+spectral side is absolutely continuous. SECOND THOUGHT before computing: the near-null vectors are functions
 supported in (-l, l) that are almost odd under the scattering involution; their obstruction is the discrete set of
 resonances rho/2 (same zero count as Suzuki's strictness argument), so the margin could collapse faster than any
 exponential, as for the Weil window. I now give 65% to FASTER than exponential (log mu(l) convex downward, |log mu| growing
@@ -80,3 +80,27 @@ log 2 and 1.5 (the atom enters at 2l = 2 log 2).
 Method: piecewise-constant Galerkin on M cells, exact cell integrals (second differences of the second antiderivative
 of kappa, closed form with a dilogarithm), double precision, M = 200, 400, 800 to see convergence. Rayleigh-Ritz gives
 UPPER bounds for mu(l).
+
+## Result of P6 (halfshift_window.log, halfshift_window2.log; numpy double precision, Galerkin upper bounds, 1 minute)
+Lowest eigenvalue on L^2(-l, l) (M = 1600 cells; "<=" where the value still falls with M):
+   l      1 + K (Gram form)   1 + K_c (pole removed)   1 - K_c        top of 1 + K_c
+   0.25   0.42403             0.41510                  0.35596        1.64404
+   0.50   0.18452             0.17892                  0.25188        1.74812
+   0.75   0.016764            0.016666                 0.13433        1.86567
+   1.00   1.16e-4             1.16e-4                  6.74e-3        1.99326
+   1.25   <= 1.9e-6           <= 1.9e-6                <= 1.1e-5      1.99999
+- First prediction (exponential decay): MISS. Second thought (faster than exponential): HIT in shape; no law fitted.
+- NOT predicted: 1 - K (pole included) is NEGATIVE already at l = 0.25 (-0.066): the pole of phi at s = 1 is a rank-one
+  square (3/pi)|<f, e^(-v/2)>|^2 that has the right sign for 1 + K and the wrong sign for 1 - K. With the pole removed
+  (K_c = compression of the unitary involution S) both 1 + K_c and 1 - K_c are positive and ||K_c|| < 1 (top < 2), as
+  Suzuki's Prop. 4.4 says after his Blaschke factor. Same anatomy as the board's "one wrong-sign square = the pole" (B25).
+- The EVEN combination 1 + K_c has the smaller margin from l = 0.5 on (the board's B112: the even block fails first).
+- Missing denominator: with the weight of c = 2 set to 0 the form is negative at l = 0.75 (-2.3e-4), -0.157 at l = 1:
+  HIT (the atom enters at l = log 2 = 0.693).
+- Pinning of the weight at c = 2 (true value 1/2; eta = change): l = 0.75: eta in [-0.495, +2.55]; l = 1: [-8.0e-4, +0.221];
+  l = 1.25: [-3.4e-5, +1.5e-3] (M = 800, lower ends not converged); l = 1.5: [-1.4e-5, +5.3e-5] (not converged).
+READING. This is an UNCONDITIONALLY positive form (a norm; for K_c: unitarity of the scattering phase, i.e. the functional
+equation alone) which shows every window phenomenon the seminar measured on the Weil form: collapse of the margin,
+pinning of the arithmetic weights as their atoms enter, failure right after a missing atom enters, one wrong-sign pole
+square, the even block weakest. It is a POSITIVE CONTROL: the first control in the record on the positive side.
+What it calibrates: none of those phenomena, by itself, is evidence about RH.

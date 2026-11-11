@@ -77,10 +77,25 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - claim: PROVED by gluing Theorem U (RH case) with Theorem 4 Step 4 and |M f|_2 <= 2|f|_2 (not-RH case). Covers a removed prime, a changed weight, finitely many moved primes. Gives no window. Novelty UNSEARCHED.
 - log:
+  - 2026-11-11: Turn 3: PROOF_Uprime.md written; compared with Johns Prop. 3.2(b) and Thm 2.9(b): overlapping, not new in substance; withdrawn as a candidate for the seminar's one statement (B195).
 
 ## #11 · Odd block of pole + Gamma (and of zeta for L <= (1/2) log 2) is a Perron operator: simple, strictly one-signed ground state
 - status: open
 - source: S1-parity
 - date: 2026-11-11
 - claim: PROVED (NOTES.md Q): Beurling-Deny + method of images; breaks exactly at the mirror part of a positive atom. Possible use: Barta lower bounds on no-atom windows (not done).
+- log:
+
+## #12 · Plank-3 ratio kappa_K must tend to 0 with fixed companions: the cut Poisson map has a kernel (g supported in |y| < 1/lambda)
+- status: open
+- source: S1-parity
+- date: 2026-11-11
+- claim: PROVED in two lines (B204); COMPUTED kappa_K at L=0.75, N=80, K=1..8: even 1.30..0.293, odd 1.53..0.268. The comparison form that can have a positive constant is the least leak over all companions (plank 6).
+- log:
+
+## #13 · Trigonometric bases overestimate the bottom of the window form by 3% (L=0.5) to 30%+ (L=1); polynomial and trig routes agree on form values to 1e-30
+- status: open
+- source: S1-parity
+- date: 2026-11-11
+- claim: COMPUTED (fh_check_A.log, plank4 refinement logs). Every eigenvalue-based number of the project at L >= 0.75 carries this uncertainty; ratios to the same-basis eigenvalue are more stable than the eigenvalues.
 - log:
