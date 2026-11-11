@@ -1,0 +1,1 @@
+resampling m=40 gap=1.0000: |S|=1: rho_S=0.52500 formula 0.52439 ; |S|=2: rho_S=0.54762 formula 0.54762 ; |S|=10: rho_S=0.70000 formula 0.70000 ; |S|=20: rho_S=0.83333 formula 0.83333 ; |S|=40: rho_S=1.00000 formula 1.00000

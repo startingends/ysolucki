@@ -1,0 +1,26 @@
+import sys, math, numpy as np, importlib.util, importlib.machinery
+P = "/home/user/ysolucki/rh/experiments/r2_judge/j3.py.txt"
+src = open(P).read().split('which = sys.argv[1]')[0]
+exec(src)
+M = 40; N, p, q_ = jb.boxN(1.0, M); ev, lam1, u, q, Lg = chain(N); Gs, G2 = gam_mats(q, Lg)
+k = lambda a: N[0, abs(a)]; U = lambda x: u[x] if 0 <= x < M else 0.0; E = lambda j: np.eye(M)[j]
+for x in (20, 0):
+    Hh = np.zeros((M, M)); O = np.zeros((M, M))
+    for a in range(-M, M + 1):
+        if a == 0 or not (0 <= x + a < M): continue
+        for b in range(-M, M + 1):
+            if b == 0: continue
+            inb = 0 <= x + b < M; inab = 0 <= x + a + b < M
+            if inb:
+                A_ = E(x + a) - E(x); B_ = E(x + b) - E(x)
+                Hab = (U(x + a) * U(x + b) - U(x) * U(x + a + b)) / U(x) ** 2
+                Hh += 0.5 * k(a) * k(b) * Hab * 0.5 * (np.outer(A_, B_) + np.outer(B_, A_))
+            elif inab:
+                v1 = E(x + a + b) - E(x + a); v2 = E(x + a + b) - E(x)
+                O += 0.5 * k(a) * k(b) * U(x + a + b) / U(x) * (np.outer(v1, v1) - 0.5 * np.outer(v2, v2))
+    eh = np.linalg.eigvalsh(Hh); eo = np.linalg.eigvalsh(O)
+    print("site %d full-matrix eigenvalues: Hessian piece min %.4f max %.4f ; open-path piece min %.4f max %.4f" % (x, eh[0], eh[-1], eo[0], eo[-1]))
+# total jump rate and delta-function ratio
+for M in (20, 40, 80, 160):
+    N, p, q_ = jb.boxN(1.0, M); ev = np.linalg.eigvalsh(N)
+    print("M=%d lambda_1=%.6f total rate lambda_1 - N_ii = %.4f ; even margin via box: mu1(Q)=%.4e" % (M, ev[-1], ev[-1] - N[0, 0], np.linalg.eigvalsh(np.outer(p, q_) + np.outer(q_, p) - N)[0]))
