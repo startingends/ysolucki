@@ -725,3 +725,31 @@ SP-operator's round 2; labels on each line; novelty NOT searched).
   If the rate is controlled by the singularities alone (which are on the line by definition), the limit cannot carry an
   extra e^(2Dfc). That is the first bridge-2 hunch with a sign-sensitive, loss-free object. Assigned to SP-operator
   (who has read Basor–Chen and Basor–Ehrhardt) and SP-reflection (who built λ_T).
+
+**N51. SP-modular's round 2, one correction to its next test, and a prediction about round 3 before it lands**
+(lead, 2026-11-11).
+- SP-MODULAR, ROUND 2 (`rh/specialists/modular/OBJECT_PHI.md`, last section). Exact up to one constant, with the Gamma
+  factors matching (checked to 15 digits, using Patterson's Thm 8.1 as quoted by Dunn–Radziwiłł):
+  Λ_K^(3)(2s)·RS(|θ₃|²)(s) = C·3^(−s)(1 + 3^(1−2s))(1 − 3^(−s))·Λ_K(s)Λ_K(3s − 1). A positive kernel k_θ whose
+  transform carries every zero ρ of ζ_K TWICE, at ρ and at (ρ + 1)/3 (the dilation s ↦ 3s − 1 fixes ½ and divides
+  the displacement by 3). No such object exists at i√5 (proved for twisted-multiplicative coefficients; it separates
+  the FIELD, not the point: ℚ(i) has no cubic theta either). Also proved: the cusp-form part of the resolvent depends
+  only on s(1 − s) and cancels from every two-sheet comparison, so Waldspurger's factorisation (where ω and i√5
+  differ) is invisible to the zeros. Its proposed next test is log-concavity of k_θ(e^u).
+- CORRECTION TO THAT TEST (lead; Schoenberg 1951, recalled): a Pólya frequency kernel of infinite order (log-concavity
+  is its order-2 shadow) has a two-sided Laplace transform equal to 1/Ψ with Ψ in the Laguerre–Pólya class, i.e. a
+  transform with NO zeros at all. So log-concavity points the wrong way: it is a property of kernels whose
+  transforms are zero-free, and Λ_K has zeros. The right class of sufficient conditions for "the Fourier transform of
+  a positive even kernel has only real zeros" is Pólya's (1926–27: kernels of the form e^(−a cosh u) and their
+  "universal factors") and de Bruijn's (1950: kernels whose logarithm's derivative satisfies a monotonicity); the
+  ξ-kernel Φ itself is the test case where these conditions are known to fail to be verifiable. Sent to SP-modular.
+- PREDICTION FOR ROUND 3, written before SP-operator and SP-reflection answer: the limit of SP-reflection's λ_T is a
+  Szegő–Kolmogorov infimum under one interior constraint; Szegő's infimum depends only on the OUTER part of the
+  symbol, i.e. on |Φ| on the line, and the comparison is with the actual value at the constraint point (the atom
+  3/π). That is the Balazard–Saias–Yor identity; the rate question is the Báez-Duarte–Balazard–Landreau–Saias
+  conjecture for ζ_K (Nyman–Beurling distance d_N² ~ C/log N, with T ≈ log N), and Burnol's unconditional LOWER
+  bound for d_N is the Fisher–Hartwig contribution of the zeros on the line. So I expect the answer to question (3):
+  "the inner factor is invisible to every asymptotic of determinants of the symbol; an unconditional rate of
+  convergence is RH itself (Nyman–Beurling)": a reformulation, not a bridge. If either seat finds a mechanism by which
+  the ARITHMETIC of the orbit counts (one shifted convolution at ω versus four at i√5) enters the rate and not only the
+  symbol, my prediction fails and that is the lead.
