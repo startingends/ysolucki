@@ -1977,3 +1977,28 @@ ALL the arithmetic into a single effectivity step** (lead, after SP-operator ses
   E + C2 ⇒ contradiction ⇒ Weil positivity. E must FAIL for the impostor at L = 1.8 (it has a degree-zero failure),
   and the coefficient-sign difference is the only place it can fail. That is plank R4, now sharp enough to compute
   (a linear-programming feasibility test) and to attack (why positive coefficients would make E true).
+
+**N113. REVERSE plank R4: the Euler-product step of Weil's architecture is PROVED over ℚ on effective classes; what
+is missing is the step that produces effective classes, and the ladder is not the principal divisors** (lead, after
+SP-operator session 8, `rh/specialists/operator/REVERSE_R4.md`; LP not certified).
+- Prop R4.1 (proved): E as stated (principal = degree-zero ladder P_ε, about 2e^(2L) dimensions, 7–11 vectors at
+  ε = 1e-6) is EXACTLY Weil positivity on degree zero (g + p ≥ 0 of degree zero forces g = −p). All content is in the
+  mechanism.
+- **Mechanism (b), PROVED: for g ≥ 0, D·D(g) ≥ −W_∞(g∗g̃), because Λ ≥ 0 makes the prime side nonnegative on
+  nonnegative g.** The impostor breaks it through its negative coefficients. This is a pointwise use of the Euler
+  product with NO oscillation problem (N84), valid exactly on EFFECTIVE classes: the ℚ-analogue of "points are
+  counted positively" (L5) exists and is elementary.
+- LP: impostor's degree-zero negative direction: E infeasible (−0.172) but E′ (whole ladder) feasible (+0.018);
+  controls infeasible; zeta's positive-degree test directions effective as they stand. The impostor's failing
+  direction has 97% of its L² norm in the ladder (Q/‖g‖² ≈ 1e-16): near-principal in L², visible only in the Möbius
+  (D) geometry, where nothing is near-null. So K3's principal divisors cannot be the ladder in either norm.
+  Seat's score 3 hits, 2 misses; ratings Quality 5, Toward RH 1.
+- **Lead: the frontier moves.** In Weil's architecture over ℚ, the Euler-product step (L5 on effective classes) is
+  available and proved; the archimedean Riemann–Roch is an exact identity (R2); what is missing is L3–L4: a statement
+  that a degree-zero class with D·D of the wrong sign has an EFFECTIVE representative modulo the PRINCIPAL divisors,
+  and the principal divisors themselves. Candidate for the principal divisors (to test, R5): the numerically trivial
+  classes, i.e. test functions whose Mellin transform vanishes at every zero and pole; the natural family is the
+  dilation sums Σ_n h(nx) − (pole term), whose Mellin transform is ζ(s)ĥ(s): the Nyman–Beurling space (T118, T120).
+  Then E reads: "a wrong-sign class plus a Nyman–Beurling function can be made nonnegative", which ties Weil's
+  Hodge-index architecture to Nyman–Beurling approximation through effectivity. Possibly known in spirit (Burnol,
+  Báez-Duarte); to be checked.

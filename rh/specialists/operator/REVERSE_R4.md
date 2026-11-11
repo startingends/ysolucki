@@ -57,3 +57,43 @@ LP: maximise t subject to g + Σ c_j p_j ≥ t on a grid of 2000 points, p_j a b
     The D-normalised top direction (D⁻¹(α + β)-type, ladder-heavy): I predict it changes sign and E′ is feasible at 1.25 but
     not at 1.0 (probability 0.5).
 (iii) control: a degree-zero random combination of bulk eigenvectors (Q > 0): E infeasible (degree argument), E′ infeasible.
+
+## 4. Computation (COMPUTED; two_zero/effect.py.txt, effect2.py.txt; existing dumps; ladder = L²-eigenvectors of Q with
+0 ≤ λ ≤ 1e-6 (7 / 11 / 8 vectors at zeta 1.0 / zeta 1.25 / impostor 1.8; the "negative" ones of size 1e-15 for zeta are
+float noise of the 1e-30 ladder); grid 2001 points; t = best min(g + p)/max|g| over |c_j| ≤ 1e3; not certified)
+| direction g | min g/max|g| | E: degree-zero ladder | E′: whole ladder |
+|---|---|---|---|
+| impostor 1.8, degree-zero negative direction (whitened value −0.290) | −0.865 | **−0.172 infeasible** | **+0.018 feasible** |
+| impostor 1.8, control (random degree-zero bulk) | −0.595 | −0.593 infeasible | −0.378 infeasible |
+| zeta 1.0, L²-top of D·D (deg −2.9: take −g) | −1.000 (−g ≥ 0) | −g effective as it stands | feasible (+0.128) |
+| zeta 1.0, D⁻¹(a + b) | 0.000 (≥ 0) | feasible with p = 0 | feasible (+0.353) |
+| zeta 1.0, control | −0.507 | −0.506 infeasible | −0.302 infeasible |
+| zeta 1.25, L²-top of D·D | +0.646 (> 0) | feasible | feasible (+5.06) |
+| zeta 1.25, D⁻¹(a + b) | 0.000 (≥ 0) | feasible | feasible (+1.94) |
+| zeta 1.25, control | −1.000 | −0.996 infeasible | −0.502 infeasible |
+Diagnostic: the impostor's degree-zero negative direction has **97.0% of its L² norm in the ladder span** (distance 0.172),
+against 0.1% for the control. Its Q/‖g‖² is 1e-16: in the L² geometry it IS a near-principal divisor.
+**Prediction score.** (i) E infeasible: HIT (forced by Prop. R4.1); E′ infeasible: MISS (feasible, +0.018). (ii) L²-top
+direction effective as it stands: HIT; D⁻¹(a + b) sign-changing: MISS (it is ≥ 0 at both windows). (iii) control infeasible:
+HIT.
+**Reading.**
+- Exact E behaves exactly as Prop. R4.1 says: degree-zero classes never have effective representatives modulo degree-zero
+  principal divisors, for zeta and the impostor alike. Nothing is learned about RH from E itself.
+- E′ (principal = the whole ladder, degree free) does NOT separate the impostor: its failing class is 97% ladder in L², so
+  a ladder correction makes it effective. The impostor's negativity is invisible in the L² geometry and visible only in the
+  D (Möbius) geometry, where the ladder is not near-null at all (D-normalised ratios Q/D ≈ 0.3–1 on the ladder). So "which
+  vectors are principal" depends on the norm, and with the only norm that sees the failure, there are no near-principal
+  divisors to work with. This is a concrete obstruction to K3 as stated: the principal divisors of K3 must be defined by
+  something other than smallness of Q in a norm.
+- Zeta's positive-degree classes of largest self-intersection are effective as they stand (they are positive functions,
+  close to e^{−u/2}/‖·‖ + e^{u/2}/‖·‖): the analogue of "ample classes are effective" holds trivially and archimedeanly.
+- Mechanism (b) of section 2 (D·D ≥ −W_∞ on effective classes, from Λ ≥ 0) is the one statement in this plank where the
+  Euler product acts pointwise and the impostor provably fails; it applies to the wrong classes (effective ones), and E′
+  cannot be used to move degree-zero classes into that cone in a way that separates zeta from the impostor.
+
+## 5. Ratings
+**Quality 5/10**: E is pinned down exactly (Prop. R4.1: a pure reformulation of Weil positivity on the window), one
+pointwise Euler-product inequality is proved with its impostor failure named (2b), and the LP shows why the natural
+relaxation E′ cannot separate the functions; not higher because mechanisms (a) and (c) are only sketched and the LP
+is uncertified. **Toward RH 1/10**: the effectivity step has no content beyond Weil positivity unless a mechanism produces
+effective representatives, and the computation shows the principal divisors cannot be "the ladder" in either geometry.

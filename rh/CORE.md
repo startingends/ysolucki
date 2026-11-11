@@ -57,6 +57,10 @@ N100); pretentious ones reach only the edge; structural ones need a cusp
 form at a zero. Wanted: a use that is pointwise, in the bulk, and not through automorphic Hilbert spaces; size bounds such as
 |μ| ≤ 1 cannot give it (bounded coefficients can have large values; Guth–Maynard).
 
+Reverse-engineered (N111–N113, `rh/REVERSE.md`): in Weil's architecture over ℚ the Euler-product step is PROVED
+on effective classes (g ≥ 0 ⇒ the prime side is ≥ 0), and the archimedean Riemann–Roch is an exact identity;
+what is missing is the step that PRODUCES effective representatives, and the right principal divisors.
+
 **THE OPEN TENSION, in general.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's
 deviation grow while an Euler-product bound stays fixed, and over ℚ no such operation is known. A hunch worth

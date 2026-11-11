@@ -355,3 +355,13 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
   L = 1, 1.25; impostor nu_+ = nu_-(Q) = 0, 1, 2 at 1.70, 1.72, 1.8. Degree-zero min Q/D: zeta 0.2980, 0.2046; impostor
   1.72: +0.031 (its first failure is NOT degree zero), 1.8: -0.290.
 - Ratings Quality 5, Toward RH 1.
+
+## SESSION 8 (R4: effectivity E in K3): REVERSE_R4.md
+- Prop R4.1 PROVED: E (degree-zero class with D.D>0 + degree-zero near-principal p >= 0) is EQUIVALENT to Weil positivity on
+  degree zero (g + p >= 0 with a(g+p) = 0 forces g = -p). Pure reformulation; content only in a mechanism.
+- Mechanism (b) PROVED: for g >= 0, D.D(g) >= -W_inf(g*g~) (prime side >= 0 by Lambda >= 0); fails for the impostor by
+  sum_{c_n<0}|c_n| n^{-1/2} h(log n). Pointwise Euler product, but on effective classes only.
+- LP (effect.py.txt): E infeasible for impostor 1.8 deg-0 negative direction (-0.172) and controls; E' (whole ladder, degree free)
+  FEASIBLE for it (+0.018) because that direction is 97% ladder in L2 (Q/|g|^2 = 1e-16): the impostor's failure is
+  near-principal in L2 and visible only in the D geometry. Zeta positive-degree top directions are >= 0 as they stand.
+- Ratings Quality 5, Toward RH 1.
