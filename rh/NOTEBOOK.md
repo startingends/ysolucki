@@ -2088,3 +2088,24 @@ temperament** (lead, 2026-11-11).
   e^(x/2) of N119 is that leak). RH says every resonance fades at exactly the same rate. Bet A in music: close the
   open end (make the cusp, i.e. ∞, a discrete "string") without retuning any resonance. Recorded as the target; no
   construction yet.
+
+**N121. Test of Bet A's minimal form: an Euler product with nonnegative integer prime counts + exact functional
+equation + rationality does NOT force RH; geometry is what does** (lead, `rh/experiments/music/virtual_curves.py.txt`,
+exact integer arithmetic).
+- "Virtual curves": Z(T) = P(T)/((1 − T)(1 − qT)) with P a palindromic integer polynomial (exact functional equation
+  T ↦ 1/(qT)), required to have an Euler product Π (1 − T^d)^(−a_d) with every a_d a NONNEGATIVE INTEGER (checked for
+  all d ≤ 120), and to VIOLATE RH (a reciprocal root with √q < |α| < q). Found: genus 1, 86 (e.g. q = 5, a = ±5,
+  |α| = 3.618, 1.382 against √5 = 2.236; q = 7, a = ±6); genus 2, 25 845 (e.g. q = 3, (a₁, a₂) = (−4, 7), |α| = 2.56 against
+  √3 = 1.73). So in the function-field shadow, the analogue of "Selberg class" axioms (Euler product with positive
+  integer local data + functional equation + rationality) admits RH-violating members in abundance. What singles out
+  the real curves is geometry (Hasse–Weil: |a| ≤ 2√q comes from Hodge index, not from counting). Known in substance
+  (Hasse's bound is not a consequence of point-count positivity), recorded as a computed test.
+- Consequence for Bet A: a q → 1 deformation must carry GEOMETRY at every stage, not just an Euler product and a
+  functional equation; tempering (N120) carries neither.
+- New question the test raises (lead): over ℚ the archimedean Γ-factor makes the functional equation RIGID (Hamburger:
+  a Dirichlet series with ζ's functional equation is cζ; Kaczorowski–Perelli: degree < 2 is classified), whereas over
+  F_q a palindromic P is cheap and the families are large. So ∞ may be a source of rigidity that function fields lack,
+  i.e. the archimedean place is not only the obstacle (N89–N90) but possibly the substitute for geometry. The musical
+  form: ζ's tuning is critical (no slack, H11) and any detuning of the prime weights that keeps them ≥ 0 should create
+  an unstable mode somewhere (consistent with B170). Test sent: perturb the prime weights at p = 2, 3, 5 and measure
+  the window at which positivity first fails, as a function of the size of the detuning.
