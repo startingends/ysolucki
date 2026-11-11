@@ -753,3 +753,24 @@ SP-operator's round 2; labels on each line; novelty NOT searched).
   convergence is RH itself (Nyman–Beurling)": a reformulation, not a bridge. If either seat finds a mechanism by which
   the ARITHMETIC of the orbit counts (one shifted convolution at ω versus four at i√5) enters the rate and not only the
   symbol, my prediction fails and that is the lead.
+
+**N52. Round 3 (SP-operator): N51's prediction HIT; the one exit left is the orbit side** (lead, 2026-11-11).
+- SP-operator, round 3 (`rh/specialists/operator/OBJECT_PHI.md`, last section): λ_T = 1/K_T(i/2, i/2), the
+  reproducing kernel at s = 1 of the de Branges space of the Krein system with spectral measure w_ω dt; Krein–Szegő
+  forces the limit unconditionally, for every impostor alike; RH_K is the value of a Poisson integral of log w
+  (Balazard–Saias–Yor for ζ_K). The factor e^(2Dfc) is invisible to every Fisher–Hartwig / strong-Szegő theorem,
+  because those read the symbol through norms on the line, where an off-line quartet is a smooth positive bump. No
+  Fisher–Hartwig theorem exists for a growing number of singularities, and this symbol is outside the strong-Szegő
+  class anyway (Mertens divergence). REFORMULATION, as predicted. Two things in it are worth keeping:
+  (a) off-line zeros ARE visible in the determinant at finite T (Claeys–Its–Krasovsky crossover: a quartet acts as
+      a merged order-4 singularity for T ≪ 1/δ and switches off for T ≫ 1/δ): the seminar's visibility law in
+      determinant form;
+  (b) at ω the symbol is formally a product of local almost-periodic symbols on frequency lattices ℤ·log p, pairwise
+      disjoint by unique factorisation, so the Szegő–Widom constants factor over primes with no cross terms (proved
+      for finite products); at i√5 there is no such factorisation. Exchanging T → ∞ and P → ∞ is RH again.
+- THE EXIT (rule H7, named by the seat): compute lim λ_T from the ORBIT side, without the symbol. There the object
+  is λ_T(ω) evaluated at the explicit Möbius test vector: a double sum of μ_K(a)μ_K(b) against the lattice counts
+  ε(m) r_K(m) r_K(m + 3) of x² + xy + y², i.e. a BILINEAR Möbius correlation over ℤ[ω] (type II information). That is
+  exactly the kind of sum the quasi-RH tools bound (twisted Möbius sums over ℤ[ω] in families). SP-reflection's
+  round 3 item (2) asks for this double sum and for what the 7/8 theorem gives for it. That is the next plank, and
+  the first point in this whole line where the October 2026 input could enter OUR object.
