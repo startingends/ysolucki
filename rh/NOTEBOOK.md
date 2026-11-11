@@ -1864,3 +1864,10 @@ known: Bagchi 1981, Voronin; packaging the lead's).
 - This is the first converter on the record whose FIXED BOUND IS PROVED (a density estimate). What fails is the
   amplifier's reach, not the bound: the mirror image of N86–N87 (amplifier fine, bound missing). Quality 5,
   Toward RH 1.
+- Lead, follow-up (construction, no run): can the two halves be glued, i.e. an amplifier that multiplies the NUMBER
+  of off-line zeros (for which the proved density bound is the fixed bound)? Candidates: vertical shifts (Bagchi,
+  circular); base change (one zero of ζ is a zero of every ζ_K, so a FAMILY density bound over {ζ_K} would be
+  contradicted), but family density theorems come from orthogonality over the family, which cannot see a COMMON
+  factor (ζ is the principal member; the bounds are for the new parts L(s, χ_D)); twists by n^(it) are shifts.
+  So the number-multiplying amplifiers either need RH or land on a common factor that averaging cannot see.
+  Recorded as one more face of the obstruction; no new object.
