@@ -2056,3 +2056,8 @@ f̂(ρ)·conj f̂(ρ̄), not f̂(ρ)·conj f̂(1 − ρ̄): conjugation and refl
 proves only Re s = 1. Boundary divisors are torsion (Manin–Drinfeld): Hodge index gives equalities where ζ lives.
 Narrowed specification: a positivity whose involution IS the functional-equation reflection. Guess B to be tested
 against N3. Details: `rh/GUESSES.md`.
+
+**N119. Guess B reduced to a kernel; N3 corrected: the "+1" is the twist e^(x/2), and every reflection-positive
+structure known is a norm with the zeros as a KERNEL, not as spectrum** (SP-operator, `GUESS_B.md`). Half-density
+conjugation IS the reflection; axis-σ structures are J₀-positivity of e^((σ−½)x)W. RH ⇔ |H_W| ≤ T_W on the half-window
+(reflection is a contraction). Specification now: positivity of Weil's form itself with the zeros as spectral support.

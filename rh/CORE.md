@@ -62,10 +62,10 @@ on effective classes (g ≥ 0 ⇒ the prime side is ≥ 0), and the archimedean 
 what is missing is the step that PRODUCES effective representatives, and the right principal divisors; on finite
 windows there are none (N114), so the missing link needs a global square.
 
-Narrowing N3 (N118): every positive structure found (L² of Eisenstein series, Néron–Tate heights, Λ ≥ 0 on
-effective classes) uses complex conjugation or coefficient positivity as its involution; Weil needs the functional-
-equation reflection ρ ↦ 1 − ρ̄. Conjugation and reflection differ by the +1 in ξ(2s − 1)/ξ(2s), which is why such
-positivity stops at Re s = 1.
+Narrowing N3 (N118, corrected N119): positivity from L² of Eisenstein series is positivity of Weil's distribution
+TWISTED by e^(x/2) (axis Re s = 1), which is why it stops at Re s = 1; every positive structure whose involution is
+the functional-equation reflection (half-density L², Witt adjunction, Sonin, symmetrised D) is a NORM in which the
+zeros appear only as a kernel. Needed: positivity of Weil's form itself with the zeros as its spectral support.
 
 **THE OPEN TENSION, in general.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's

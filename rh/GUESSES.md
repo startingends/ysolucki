@@ -105,3 +105,28 @@ a specific family of arithmetic divisors. The risk is that A1 is impossible for 
   involution (Rosati = functional equation, MISSING_SPACE §2, which survives in this form), not complex conjugation of
   a unitary structure. Every positive structure found in this session (L² of Eisenstein series, Néron–Tate heights,
   Λ ≥ 0 on effective classes) uses conjugation or positivity of coefficients; none uses the reflection.
+
+## Outcome of Guess B and a correction to N3 (SP-operator, `rh/specialists/operator/GUESS_B.md`; N119)
+- **N3 corrected.** In the half-density normalisation the unitary conjugation of the scaling action,
+  J₀f(u) = conj f(−u), IS the functional-equation reflection s ↦ 1 − s̄; the window form is Q(f) = W(f ∗ J₀f)
+  (Q invariant under u ↦ −u to 1.5e-119; D is not, relative asymmetry 0.58). Structures on the axis Re s = σ have
+  involution J_σ = S⁻¹J₀S with S = e^(−(σ−½)u) (proved); S is a character, so J_σ-positivity of W is J₀-positivity of
+  e^((σ−½)x)·W. The +1 of N3 is exactly the twist of Weil's distribution by e^(x/2) (bounded on each window, not
+  uniformly in L). So the Eisenstein positivity of N118 is positivity of the TWISTED distribution (axis σ = 1).
+- Positive structures whose involution is the reflection exist in abundance (half-density L² of the scaling action;
+  the Witt adjunction F_n* = V_n in ℓ²(ℕ, m⁻¹), proved; the symmetrised D; Sonin spaces with Fourier as the
+  archimedean reflection (m)). **In every one the positivity is a NORM and the zeros are not points of its spectral
+  measure: they appear only as a KERNEL (Witt: kernel of Σ F_n; Nyman–Beurling; co-Poisson), as pinning (D), or not at
+  all.** Restated N3: what is needed is positivity of Weil's form ITSELF, with the zeros as its spectral support.
+- Guess B: not killed by N3, but the functional-equation operator (adelic Fourier, 𝔉U_λ𝔉⁻¹ = U_{1/λ}) and ∞ are not
+  part of the Witt structure, and the zeros enter only as the kernel of Σ F_n: the window wall of R5 again. Quality 2.
+- Reflection positivity: RH is NOT Osterwalder–Schrader positivity of the scaling flow (atoms at log n are excluded by
+  Källén–Lehmann / Widder; SP-reflection, S1). Restated: RH ⇔ the reflection is a CONTRACTION of the W-Hilbert space
+  on the half-window, |H_W| ≤ T_W (Hankel part bounded by Toeplitz part). Ratings (seat): Quality 6, Toward RH 1.
+
+## Where the guesses stand (after A, B, C)
+All three Arakelov / Witt / modular guesses are dead or reduced to a kernel. The specification is now: **a positive
+form equal to Weil's form, with the reflection as involution, whose spectral support is the set of zeros.** Every
+known positive structure on the scaling action has the zeros as a kernel or not at all. Stated this way the hole is
+Hilbert–Pólya with the functional equation as the adjoint, and the session's mapping has returned to it from every
+direction.

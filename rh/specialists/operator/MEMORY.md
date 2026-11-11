@@ -374,3 +374,13 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
 - COMPUTED (effect3.py.txt; zeta L = 1.8 dumped): impostor's degree-zero failing class is near-principal for ITS dilation sums
   (g + p = 0) and within 0.2% for ZETA's; E' feasible even for random controls. Near-principal classes with D.D/D ~ +0.29:
   intersection form not continuous w.r.t. "principal". Ratings Quality 6, Toward RH 1.
+
+## SESSION (Guess B under N3): GUESS_B.md
+- In half densities the scaling action's unitary conjugation J0 f(u) = conj f(-u) IS the FE reflection s -> 1 - conj s; J_sigma =
+  S^{-1} J0 S with S = e^{-(sigma-1/2)u} (a character, so a convolution automorphism): the +1 of N3 = twist of W by e^{x/2}.
+- COMPUTED: Q exactly R-invariant (1.5e-119), D not (0.58 relative asymmetry; time cut vs band cut).
+- Witt adjunction F_n* = V_n exactly in l2(N, m^{-1}) (axis 1/2). Guess B passes N3's letter, fails its intent: positivity is a
+  norm, zeros only as kernel of sum F_n; the FE operator (adelic Fourier) is not part of Witt; no archimedean place.
+- N3 sharpened: need positivity of Weil's form itself with zeros as spectral support. RH is not OS reflection positivity
+  (atoms; Kallen-Lehmann); in OS language it is "theta is a contraction of the W-Hilbert space on the half-window".
+- Ratings Quality 6, Toward RH 1.
