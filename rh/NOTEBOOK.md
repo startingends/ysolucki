@@ -1572,3 +1572,34 @@ SP-modular session 3, `rh/specialists/modular/DISCRETE_ORBIT.md`; construction; 
   trivial: an "infinite place without a continuous direction" (Haran's real prime as a non-archimedean-like place,
   Deninger's foliation, Connes–Moscovici's prolate operator, all known programmes). A reader goes to them for
   knowledge only: does any of them actually construct a cusp, or a window, at ∞ with a fixed bound?
+
+**N90. Nobody has a cusp at ∞ without a continuous direction; and why: one chain from the functional equation to
+the moving bound** (lead, after READER-10: `rh/library/haran-1508.04636.md`, `deninger-0709.2801.md`,
+`harder-compact-support.md`; knowledge only).
+- Reader's answer: NO in all three. Haran treats the real prime as a genuine place, but his bundles live on the usual
+  adelic double coset, so the continuous height is still there (line bundles: ℝ_{>0}); no reduction theory, no
+  bound. Deninger: the infinite place is the fixed points of the flow; his positivity (Re ρ = α/2) holds only for
+  compact spaces WITHOUT fixed points, i.e. without an infinite place; the archimedean term is explicitly missing.
+  Harder (second-hand, three expositions): cusp forms of level K are supported in a fixed set, compact modulo the
+  centre; the mechanism is that deep in the cusp a function EQUALS its constant term, which needs a discrete cusp.
+  N89's side claim "truncation is not Hecke-invariant over F_q(t)" is in none of the texts (unverified).
+- **Lead's chain (construction by thought; links marked).**
+  (1) The functional equation of ζ is Poisson summation for ℚ ⊂ 𝔸 (Tate), which needs ℚ DISCRETE in 𝔸; ℚ is dense in
+  𝔸_f, so discreteness needs the archimedean factor ℝ (standard). Over F_q(t) discreteness comes from the finite
+  constant field instead, with every place non-archimedean.
+  (2) At p the unramified vector 1_{ℤ_p} is compactly supported and equal to its own Fourier transform; that is
+  why a p-adic Whittaker function vanishes EXACTLY deep in the cusp (the character integral over ℤ_p is 0 beyond a
+  height), which is Harder's "equals its constant term". At ∞ no function is compactly supported on both sides
+  (uncertainty principle); the best is the Gaussian, so the Whittaker function e^(−2πy) only DECAYS (standard).
+  (3) Bridge 1's near-null ladder is the same uncertainty principle seen from the other side: the prolate defects
+  1 − χ_n measure how far a window function is from being band-limited (BRIDGE 1–5). HEURISTIC link: the moving bound
+  of N86–N87 is (2) for the amplifier.
+  So: **functional equation ⇒ an archimedean place ⇒ the uncertainty principle ⇒ (soft positivity AND no fixed
+  bound).** Both parts that ∞ plays in N89 are one fact, the uncertainty principle at ∞, and the functional equation
+  is what forces ∞ to be there. Quality 5 (clean, links (1)–(2) standard, (3) heuristic), Toward RH 1; known in spirit
+  (Tate, Connes–Moscovici's prolate operator, F₁).
+- What it says a proof must do: either (a) a fixed bound that survives an uncertainty principle (only an
+  APPROXIMATE vanishing deep in the cusp, controlled well enough: the archimedean defect decays like e^(−2πy) while
+  the amplifier's boost grows like a power of the height; whether a decaying defect can replace exact vanishing in
+  Harder's argument is a precise question), or (b) deform ℚ together with ∞ (the q → 1 picture), keeping the
+  functional equation at every stage, then pass to the limit by Hurwitz. (a) is the one the project can attack.

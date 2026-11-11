@@ -39,6 +39,11 @@ direction; over ℚ every cusp has the continuous height ℝ₊ (N86–N89).
 **THE OPEN TENSION, located (N89): the infinite place plays both parts.** The archimedean term is the only
 positive term in Weil's form, and the archimedean height is the only obstruction to a fixed bound.
 
+Why (N90): the functional equation is Poisson summation for ℚ ⊂ 𝔸, which needs the archimedean place; at ∞
+the uncertainty principle holds (no function compact on both sides), while at p the unit 1_{ℤ_p} is self-dual and
+compact. The uncertainty principle gives the soft positivity (prolate ladder) and forbids exact vanishing deep
+in the cusp (Harder's fixed bound). One fact, both parts.
+
 **THE OPEN TENSION, in general.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's
 deviation grow while an Euler-product bound stays fixed, and over ℚ no such operation is known. A hunch worth
