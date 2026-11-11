@@ -302,3 +302,14 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
 - REFUTED: impostor L = 1.72 quartet W = +0.43 while kappa_min = -0.048 (SEP fails). Euler product not active pair-locally.
 - Ratings Quality 6, Toward RH 2. Open problem: pair-local quantity with Lambda times a weight of forced sign.
 - Scripts two_zero/wk.py.txt, kformula.py.txt, kcross.py.txt; matrices rh/data/operator_two_zero/.
+
+## SESSION 4 (one-object seat, the triangle of N83 in operator form; 2026-11-11): TRIANGLE.md
+- Lemma 1 (PROVED, classical in substance: dlVP/Landau/H10): h = h0 (|x|<log2) + h1 >= 0: |H1(t)| <= m = int h1; every zero's
+  h1-term <= 2^-(1/2-beta) P1 < P1 (pole term of h1); pair-locality with contrast eta forces m >= (eta - s log2)/(2 + s log2),
+  P1 >= sqrt2 m. Forced-sign criteria count zeros, never locate one.
+- (H_L, D, Q) Pontryagin, nu_- <= 2 per quartet, nondecreasing (impostor: 0 at 1.70, 1 at 1.72, 2 at 1.8).
+- Krein isometries from Hecke/GL1 = scaling flow T_a only; T_a boosts each quartet's hyperbolic plane (rapidity a*beta),
+  unitary on line = amplifier in operator form. Fails: (F1) leaves the window (compression nilpotent; no Krein multiplier on
+  fixed PW_L), (F2) Paley-Wiener bound grows at the same rate, (F3) tensor powers keep Lambda>=0 but pole distance k/2 scales too.
+- Lemma 2: D-power-bounded Krein isometry cannot boost. Needed object = fixed-window, D-power-bounded Krein boost = vertex (B).
+- Ratings Quality 5, Toward RH 1.

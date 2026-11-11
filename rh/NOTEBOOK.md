@@ -1488,3 +1488,27 @@ exact formula** (lead, after SP-operator session 3, `rh/specialists/operator/LOC
   says the missing positivity cannot come from the coefficients. It has to come from a structure (a Hilbert space
   with the Hecke action, or geometry), which is exactly the triangle of N83. Both remaining lines now point at the
   same question; it goes to two specialists at once (rule 13(b)).
+
+**N86. The operator side of the triangle: the scaling flow is the amplifier, and it has no fixed bound** (lead, after
+SP-operator session 4, `rh/specialists/operator/TRIANGLE.md`; construction, no new computation).
+- Barrier lemma (PROVED; classical in substance: de la Vallée Poussin, Landau, H10). For h = h₀ + h₁ with h₀ on
+  |x| < log 2 and h₁ ≥ 0: every zero's arithmetic term is at most 2^(−(½−β))·P₁ < P₁ (P₁ = the pole term carried by
+  h₁), on or off the line; separating two zeros at gap s with contrast η forces m = ∫h₁ ≥ (η − s log 2)/(2 + s log 2)
+  and P₁ ≥ √2·m. **Forced-sign criteria count zeros and never locate one.** N84/N85 are now a lemma.
+- Krein structure. (H_L, D, Q) is a Pontryagin space; each off-line quartet adds at most 2 negative squares and the
+  count does not decrease with L (impostor: 0 at L = 1.70, 1 at 1.72, 2 at 1.8). The only Krein isometries coming from
+  the Dirichlet-series structure are the translations T_a (the scaling flow), for zeta and impostor alike: unitary on
+  on-line zeros, a BOOST of rapidity aβ on each quartet. So the amplifier exists in operator form.
+- It fails three ways: compressed to a fixed window it is nilpotent (no nontrivial multiplier is a Krein isometry of
+  a fixed window); its Paley–Wiener bound grows like e^(kaβ), exactly the boost; tensor powers keep Λ ≥ 0 but the
+  pole recedes (k/2) as fast as the deviation grows (kβ). Lemma 2 (PROVED): a Krein isometry power-bounded in D
+  cannot boost a quartet. Ratings (seat): Quality 5, Toward RH 1.
+- **The object, now in operator language:** a Krein isometry of a FIXED window space, power-bounded in D for an
+  arithmetic reason (a family of Euler products absolutely convergent at a fixed abscissa), boosting every off-line
+  quartet. Vertex (B) of the triangle = that bound.
+- **The seat's named gap, and why it matters (lead).** Everything in GL₁ acts by multipliers (functions of s), and
+  multipliers cannot be both window-preserving and boosting. The gap is an operator that MOVES EVALUATIONS BETWEEN
+  POINTS. On GL₂ that is exactly what a Hecke operator is (T_p f(z) = Σ f((az + b)/d), a correspondence), and in
+  function fields the Frobenius that proves RH is a correspondence on C × C, not a multiplier. So the operator seat,
+  from its own side, arrived at the modular seat's vertex (A) as the place where (B) could come from. Waiting for the
+  modular seat's TRIANGLE.md to compare.
