@@ -859,3 +859,24 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   **TARGET: an exact identity, specific to μ (or to μ·Gauss sum over ℤ[ω]), valid in the regime family ≈ sum length,
   that separates μ from the cluster-smooth (copy) directions.** The one candidate in sight: a Kuznetsov formula on the
   cubic cover (READER-7 reading). Nothing else proposed by any seat survived the fake test.
+
+**N57. The short-family wall is a CONVEXITY barrier at a self-dual point; the known way through such barriers**
+(lead, 2026-11-11; HUNCH, labels per line).
+- From SP-modular (SHORT_FAMILY.md, items 1, 5): Poisson in u maps the family of size H to a dual family of size about
+  D²/H, and theta automorphy maps it back; at H = D both are self-dual and give "only a convexity-type bound". So the
+  borderline H ≈ D, where SP-operator's window identity puts ALL of the Nyman–Beurling energy (N56), is a self-dual
+  point of an exact involution, and the trivial bound there is the convexity bound of a family.
+- Breaking convexity at a self-dual point is a solved KIND of problem elsewhere: subconvexity for L-functions in the
+  conductor aspect (Duke–Friedlander–Iwaniec; Conrey–Iwaniec; Michel–Venkatesh) works by (i) an amplifier, (ii) an
+  exact spectral formula (Kuznetsov / Petersson) for the amplified family, (iii) a non-trivial bound for the
+  arithmetic side (Weil's bound for Kloosterman sums, or its cubic analogue). Our situation has (i) (sixth-power copies),
+  would need (ii) on the cubic cover (READER-7), and (iii) would be a bound for cubic-Kloosterman-type sums (known in
+  some ranges: Livné–Patterson, Heath-Brown; recalled).
+- HUNCH (risky): run the DFI architecture for the sextic Möbius family at H = D on the cubic cover. A power saving at the
+  self-dual point would give, by N49/N55's arithmetic, an exponent below 11/12 by the short route and possibly below
+  7/8 with the bootstrap; it would NOT give RH (that needs the bound at H = D^η for every η > 0, i.e. far from the
+  self-dual point, where no involution helps). Honest scope: an improvement of the quasi-RH theorem, if it works at
+  all. The owner's caution "solving the quasi is not solving RH" applies; it is recorded as the only concrete route
+  any seat has found through the wall, and as a way to learn what the wall is made of.
+- FAKE FIRST: the impostor has no metaplectic theta (no Gauss-sum identity for its Dirichlet inverse), so step (ii)
+  has no analogue for it: passes.
