@@ -183,3 +183,25 @@ L = 2.0: dump done (QDmp_dh_2_1_200.pkl, 43 constraints, 4.4 min); the wide-scal
 Later progress lines (wide-scale runs, still running when last read): L = 1.8, degree 165 reproduces −0.2522 at scale 1e-2;
 L = 2.0, degree 185: κ_min = −0.3067 (second −0.3056), |W_s| up to 1.5e51, gradient at c = 0 only 1e-7 (normalised), i.e. the
 minimiser is nearly orthogonal to the constraint directions; dual optimisation pending.
+
+### 7.2 Primal attempt at L = 1.8, and L = 2.0 (COMPUTED; two_zero/cert_primal.py.txt, cert_primal2.py.txt; not certified)
+Primal SDP: H ⪰ εI on the span of the k lowest pencil eigenvectors (g-space vectors V_g = Li^T u_j), small matrices exact
+in arb, solved with cvxpy (Clarabel/SCS), then the residuals corrected exactly and PSD re-checked.
+| k | ε | solver result for min Tr(QH)/Tr(DH) on C_P | after correcting residuals |
+|---|---|---|---|
+| 12 | 1e-5 | infeasible | — |
+| 20 | 1e-5 | +0.2885 (SCS, inaccurate) | +0.2750, PSD fails (min eig −4e-2) |
+| 40 | 1e-7 | +0.1376 | +0.1376, PSD fails by 1.2e-4 |
+| 80 | 1e-6 | +0.1377 | +0.1381, PSD fails by 6.9e-4 |
+| 180 (whole space) | 1e-6 | **−0.0598** (SCS, optimal_inaccurate) | exact check ran out of memory |
+| 180 | 1e-4, 1e-3 | infeasible | — |
+**Reading.** On the 80 lowest directions the constrained minimum is +0.138, which is exactly the value of the impostor's
+ON-LINE pair at 40.4: the constraints push H off the two negative directions entirely. Only the full space (k = 180) gives a
+negative value (−0.060), and only from an inaccurate solve. With a PSD margin of 1e-4 the full-space problem is infeasible,
+so the feasible set has no interior at that margin. A margin-based certificate is therefore impossible here, and the
+negative value cannot be confirmed. **No primal certificate exists for κ_P(1.8) < 0.** Bracket: the dual lower bound is
+−0.233 and the upper bounds (not certified) are +0.138 (k ≤ 80) and −0.060 (k = 180, inaccurate). The interim reading of 7.1
+("detected at 1.8") is WITHDRAWN as unproven: sign undetermined.
+L = 2.0 (degree < 185): κ_min = −0.3067, and the dual gains only 1.3e-6 (bound −0.30666, gradient at c = 0 is 1e-7): the
+optimiser cannot move, again not a sign. Runs stopped. **This line (H-4) is closed with (Detect) for the impostor
+undetermined beyond L = 1.72**, where it provably-up-to-float FAILS (κ_P ≥ +0.0356).

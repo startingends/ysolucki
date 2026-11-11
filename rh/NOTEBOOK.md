@@ -1738,3 +1738,12 @@ dual lower bounds, not certified; all three of the seat's predictions hit).
   holds with a lag in general) but not as a route: by N95 positivity on C_P is exactly as hard as the zero statement.
   Toward RH stays 1–2. L = 2.0 runs (43 constraints) are pending.
 - Needed to settle: a primal certificate at L = 1.8 (the minimiser of the constrained form), not a better dual.
+
+**N97. N96 withdrawn: no certificate either way at L = 1.8; H-4 closed** (lead, after SP-operator, `PRIME_SAMPLING.md` §7.2).
+- In the lowest 80 eigendirections the constrained minimum is +0.138 (the impostor's on-line pair): the constraints
+  steer h off both negative directions. On the whole space an inaccurate conic solve gives −0.060, but demanding a PSD
+  margin of 1e-4 or 1e-3 is infeasible, so no margin certificate exists, and the exact check ran out of memory.
+  κ_P(1.8) ∈ [−0.233 (dual), ≈ +0.14 (uncertified upper)]: sign undetermined. L = 2.0: κ_min = −0.3067, dual moves
+  1.3e-6: no sign. All runs stopped.
+- So (Detect) fails at L = 1.72 (κ_P ≥ +0.0356, floats) and is undetermined beyond. N96's "probably detected" is
+  withdrawn. H-4 is closed as a shadow (N95, H14); it stays on record as a criterion of unknown validity.

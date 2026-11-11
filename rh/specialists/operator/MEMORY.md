@@ -341,3 +341,6 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
 
 - Session 6b: impostor L = 1.8: kappa_min -0.304 (stable 165/180), best dual bound -0.233: fake weights no longer hide it as far
   as computed (not certified, dual not converged). L = 2.0 dumped; wide-scale runs pdw_*.log pending.
+- Session 6c: primal SDP at 1.8: +0.138 on k <= 80 eigvecs (constraints avoid the negative directions); k = 180 SCS-inaccurate
+  -0.060, infeasible with PSD margin 1e-4: NO certificate. kappa_P(1.8) in [-0.233, ~0.14], sign undetermined; N96 interim
+  'detected' withdrawn. L = 2.0: dual stuck at -0.3067. H-4 closed.

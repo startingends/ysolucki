@@ -37,7 +37,7 @@ Bf = [f(B) for B in Bt]; sc = [np.abs(B).max() for B in Bf]; Bn = [(B + B.T) / 2
 H = cp.Variable((K, K), symmetric=True)
 cons = [H >> EPS * np.eye(K), cp.trace(Df @ H) == 1] + [cp.trace(B @ H) == 0 for B in Bn]
 prob = cp.Problem(cp.Minimize(cp.trace(Qf @ H)), cons)
-for solver in ('CLARABEL', 'SCS'):
+for solver in (('CLARABEL', 'SCS') if K <= 30 else ('SCS',)):
     try:
         prob.solve(solver=solver, **({'max_iters': 200000, 'eps': 1e-10} if solver == 'SCS' else {})); print(' solver', solver, prob.status); break
     except Exception as e:
