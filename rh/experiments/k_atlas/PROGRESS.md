@@ -169,3 +169,14 @@ origin as L grows (E_0^2/E_+^2 = 0.64 -> 0.58), so it never 'sees' primes beyond
       not just above the first, so the anti-maximum principle is not literally applicable (recorded under F8 x F30).
   (e) The signature swap of F26 (N: slices PSD, contraction Lorentzian; W: slices one positive square, contraction PSD) is a
       sign mismatch that NO entry supplies: the only swap theorem on record (Widder / Kallen-Lehmann, F27) has the other sign.
+
+## Batch N80-N108 (coordinator's request; CORE.md and NOTEBOOK N80-N108 read)
+- Entries F31-F43 added (entries4.py.txt): (S), H-1, triangle / P_rho / scaling flow, S = {inf, p}, approximate Harder,
+  H-3, Levinson theta, H-4, hybrid FE, analytic tensor power, Bagchi converter, base-change amplifiers, Robin/Nicolas.
+- 468 new pairs recorded (pairs_d.py.txt, pairs_run_d.py.txt): 466 no, 2 maybe; 45 with their own reasoning, 423 kind-level.
+  Atlas: 43 entries, 903 of 903 pairs. Board s1 is closed: nothing posted. No numerics run for this batch.
+- maybe F39 x F41: off-line zero -> large value of the Dirichlet polynomial S_X (no zero to avoid, so recurrence is
+  unconditional) -> mean-value count; fails by recurrence density exp(-c X/log X) against slack X^(-2 beta) (Turan route).
+- maybe F21 x F38: B170's fixed-perturbation argument forces fake hiding weights to be unbounded in l^1 across windows.
+- The lead's glue (F33 amplifier + F41 bound) examined: does not compose, the amplifier multiplies exponents
+  (Satake parameters k beta, boosts), the bound counts zeros; base change keeps A+B+C (from memory) but stays Eisenstein.

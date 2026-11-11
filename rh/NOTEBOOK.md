@@ -1915,3 +1915,20 @@ successors).
   enough to contradict it. No contradiction found. Quality 4, Toward RH 1.
 - N98's classification gains a row: integer-side pointwise criteria: exact Euler product, slack only on restricted
   classes, none at the extremal integers.
+
+**N109. Atlas pairing of F31–F43: two maybes, both blocked** (lead, after K-atlas; 43 entries, all 903 pairs
+recorded, check clean; K-atlas/#9, #10; scripts `rh/experiments/k_atlas/`).
+- #9 Hybrid FE (N99) × Bagchi (N105): transport the off-line zero into a LARGE VALUE of the prime polynomial S_X
+  (|S_X| ≥ X^(δ+β)/log X near its height); a polynomial has no zero to avoid, so recurrence holds unconditionally
+  (Kronecker, Turán power sums). Glued: recurrence measure ≥ T·r(X) against the mean-value cap T·X^(−2β).
+  Obstruction: unconditional recurrence for π(X) independent phases has r(X) ≈ exp(−cX/log X), exponentially small
+  against polynomial slack (the classical Turán route). Lead's addition: even the random model's large-deviation
+  frequency is exp(−X^(2β)), and the zero's large value sits only near its own height, so no recurrence at the needed
+  rate is expected whether or not the zero exists.
+- #10 Missing-prime result (S1-parity, B170: a fixed ℓ¹-bounded perturbation of the prime weights cannot keep the
+  form ≥ 0 on every window) × H-4: fake weights hiding a quartet on every window must have sup_L Σ|c_s(L)| = ∞. That
+  would make (Detect) eventually true whenever the dual optimum can be taken with weights bounded relative to Λ.
+  Obstruction: weights are re-optimised per window over a growing set (already 1e35 at L = 1.8). Even if closed, it
+  validates H-4 as a CRITERION only (positivity on C_P is as hard as RH, N95).
+- The lead's own gluing (triangle amplifier + Bagchi) does not compose: one multiplies exponents, the other counts
+  zeros. Ratings: Quality 4, Toward RH 1.

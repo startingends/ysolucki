@@ -12,6 +12,12 @@
   S1-parity; UNANSWERED when I stopped). CHECK THE BOARD FIRST.
 - Local idea log: K-atlas/#1-#8 (awaiting audit).
 
+## CHECKPOINT 3 (batch N80-N108)
+- 43 entries: F31-F43 added by entries4.py.txt (do NOT re-run). Pairs of the new entries: pairs_d.py.txt + pairs_run_d.py.txt
+  (safe to re-run). Board s1 is CLOSED; nothing posted for this batch.
+- Result: 903 of 903 pairs; new maybes F39 x F41 (Turan/Kronecker glue, fails by exp(-cX/log X)) and F21 x F38
+  (hiding weights must be unbounded in l^1); idea log K-atlas/#9, #10. Rewrite the header block of this file next session.
+
 ## The seven maybe pairs
 F2xF22, F3xF22 (two halves / pencil; proved parts on the board: B97), F9xF22 (visibility = tilt threshold; answered B184:
 c(L) = sum over zeros of c_gamma; table c_gamma not computed), F12xF13 (= main idea #15), F12xF21 (missing-prime law;

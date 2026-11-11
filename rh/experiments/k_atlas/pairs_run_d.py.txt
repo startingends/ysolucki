@@ -1,0 +1,19 @@
+# K-atlas: record the pairs of part D (new entries F31-F43); skips pairs already recorded; defaults from D
+import subprocess, sys
+sys.path.insert(0, "/home/user/ysolucki/tools")
+import records
+ns = {}
+exec(open("/home/user/ysolucki/rh/experiments/k_atlas/pairs_d.py.txt").read(), ns)
+S, D = ns["S"], ns["D"]
+for new in range(31, 44):
+    for old in range(1, new):
+        S.setdefault((old, new), ("no", D[new].format(o=old)))
+path = "/home/user/ysolucki/rh/ATLAS.md"
+done = {(a, b) for a, b, _, _ in records.pairs(records.read(path))}
+k = 0
+for key in sorted(S):
+    if key in done: continue
+    v, t = S[key]
+    subprocess.run(["python3", "/home/user/ysolucki/tools/records.py", "atlas", "pair", "F%d" % key[0], "F%d" % key[1], v, t], check=True)
+    k += 1
+print("recorded", k, {v: sum(1 for x in S.values() if x[0] == v) for v in ("no", "maybe", "yes")}, "specific", len([1 for x in S.values() if not x[1].startswith("No contact in kind")]))

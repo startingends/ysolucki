@@ -99,3 +99,17 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - evidence: (auditor R3-AUD) COMPUTED shares of E_+^2 on zeta's odd extremal vector (S1-parity B207, 120-230 digits): L = 1.0: half window 0.057 + Gamma squares 0.430 + prime mirror 0.513; L = 1.5: 0.045 + 0.401 + 0.554; prime 2 carries 0.954 of the prime share at L = 1.5. Seminar S1 closing (rh/experiments/s1_seminar/socrates/CLOSING.md, item B158): S1-mirror's 'odd-block Perron + first-prime inequality' was the one statement offered with controls that violate it; its author: 'it selects nothing'. Notebook N59 (S2): the same split reappears as Vaughan's identity at sqrt(D).
 - log:
   - 2026-11-11: promoted to main #28 by R3-AUD
+
+## #9 · Atlas F39 x F41 (maybe): transport the off-line zero into a large value of S_X, where recurrence is free (Turan/Kronecker), then count with the mean value theorem
+- status: open
+- source: K-atlas
+- date: 2026-11-11
+- claim: beta > 0 => |S_X| >= X^(delta+beta)/(C log X) on measure >= T r(X) in [T,2T]; mean value bounds it by (T+X) X^(-2 beta) log^2 X; contradiction iff r(X) >> X^(-2 beta). Obstruction: every unconditional recurrence for pi(X) independent frequencies has r(X) = exp(-c X/log X). Classical Turan route; recorded as the precise gap.
+- log:
+
+## #10 · Atlas F21 x F38 (maybe): fake weights hiding an off-line quartet on every window must be unbounded in l^1 (B170 argument)
+- status: open
+- source: K-atlas
+- date: 2026-11-11
+- claim: If c(L) restores W_inf + poles >= 0 on [-L, L] for every L then sup_L sum|c_s(L)| = infinity. Obstruction: hiding weights are re-optimised per window over a growing set; dual weights already 1e35 at L = 1.8 (N96). Detection criterion, RH-equivalent for zeta.
+- log:
