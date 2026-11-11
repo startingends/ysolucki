@@ -102,12 +102,13 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 
 ## Running jobs
 **After any context summary or restart, read this section, `rh/NOTEBOOK.md` from N43 on, `rh/HUNCHES.md` parts F–G and
-`git log -8` before launching anything.** State at 2026-11-11 (after N80).
-- RUNNING (construction rounds, rules 14–15): SP-operator session 3 = the one-object seat on H-1, the local Weil
-  discriminant (`rh/specialists/operator/LOCAL_DISCRIMINANT.md`); SP-modular on H-2, local parameters
-  (`rh/specialists/modular/LOCAL_PARAMETERS.md`). Read `rh/CORE.md` and `rh/RATINGS.md` before anything else.
-  All other seats idle and resumable by id (SP-reflection, SP-modular, SP-sieve; S1-parity, S1-mirror, S1-socrates;
-  K-theory, K-atlas, FH, FORMAL; readers 1–9; verifiers V-FH, V-COPY, V-CUB).
+`git log -8` before launching anything.** State at 2026-11-11 (after N85); read parts F–H of HUNCHES and `rh/CORE.md`.
+- RUNNING (construction, rules 14–15): the TRIANGLE of N83 (Hecke / unitary / zero-controlled) given to two seats
+  at once in their own toolkits: SP-modular (`rh/specialists/modular/TRIANGLE.md`) and SP-operator
+  (`rh/specialists/operator/TRIANGLE.md`, plus the N85 barrier made precise). H-1 closed (N85). Read `rh/CORE.md`
+  and `rh/RATINGS.md` before anything else.
+  All other seats idle and resumable by id (SP-reflection, SP-sieve; S1-parity, S1-mirror, S1-socrates;
+  K-theory, K-atlas, FH, FORMAL; readers 1–9; verifiers V-FH, V-COPY, V-CUB, V-TZ).
 - Bridge 1's last gap closed (plank 13, N80): κ_min warns before the impostor's failure but tracks the closest zero
   pair for zeta too; rule H11 (no uniform margin; statements must be tight along Lehmer pairs).
 - Since 02:15 (structural mode): the wall named and reached by eight routes (#34; N49–N79); seminars S2 and S3 closed;
