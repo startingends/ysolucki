@@ -31,3 +31,9 @@ INDEX.md (55 lines): no digest on cubic Gauss sums, metaplectic forms, Kuznetsov
   Spectral input = ONLY Kubota-Patterson cubic theta (residual spectrum) automorphy -> level-aspect Voronoi; NO Kuznetsov,
   no cusp forms, no spectral large sieve. Prop 8.3: Poisson in family var a -> dual k-sum length B^2/A; off-diagonal
   bounded via GRH axiom -> error B^{2+2eta}: no gain when A<B. Sections 6,7,9-12, appendix: NOT read.
+- Dunn 2403.13151 (218,440 ch TeX v5): READ sec 1 (intro, Thm 1.1, Cor 1.2, Lemma 1.3, Thm 1.4, Prop 1.5, sketch), sec 2.3,
+  sec 3 (Kubota char, cubic Shimura lift: on Gamma_2 theta at tau=4/3 is the only non-cuspidal eigenform, all cusp
+  forms tempered-in-parameter Re tau=1; cubic Kloosterman sums Lemmas 3.1-3.3), sec 4 (HB cubic sieve variant).
+  NOT read: sec 5-12 (circle method, Voronoi for cusp forms, Type I/II proofs). No Kuznetsov, no spectral large sieve.
+- Next: search Lokvenec-Guleska thesis (Utrecht 2004) = likely the actual source of "Kuznetsov with multiplier over Q(omega)";
+  search spectral large sieve on metaplectic cover; try Livne-Patterson open copy once more.
