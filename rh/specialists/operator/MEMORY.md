@@ -334,4 +334,7 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
 - Forced frequency e^{2L}/(2L) is a factor ~4 pi L BELOW the band edge = inside the bulk (N94 said "soft regime": wrong
   regime). There A = sum over zeros exactly, so A >= 0 on C_P is as hard as the zero statement.
 - Small L: A >= 0 on C_P(L) is a theorem wherever the full Weil form is (2L <= log 2; foothold one-prime windows).
-- Computation: prime_dual.py.txt (dual lower bounds via arb W_s = Li B_s Li^T); results in section 5.1.
+- COMPUTED (prime_dual.py.txt, dual lower bounds): zeta kappa_P(1.0) >= 0.298196 (kappa_min 0.297833), kappa_P(1.25) >=
+  0.204627 (0.204610): constraints cost ~nothing. Impostor L = 1.72: kappa_min -0.048 but kappa_P >= +0.0335 with 24 fake
+  weights: (Detect) FAILS for the impostor at its first failing window. Not run: impostor L >= 1.8 (the decisive test).
+- Ratings Quality 6, Toward RH 1. Verdict: C_P is a shadow (keeps support of Lambda, forgets its values).

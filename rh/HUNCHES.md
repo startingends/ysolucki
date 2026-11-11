@@ -394,4 +394,5 @@ from the centre to the line of absolute convergence (for ζ, r = β/(½) = 2β; 
   in Λ-coordinates.
 
 ### H-4. The prime-sampling cone: see NOTEBOOK N94 (built to target; assigned to SP-operator).
-
+- **H14 (lead, from N95).** The support of Λ alone does not decide positivity (fake weights on the prime powers can
+  restore it); the values log p are needed, and imposing them is the full Weil form. H-4 closed as a shadow.

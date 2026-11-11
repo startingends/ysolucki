@@ -1,2 +1,4 @@
 kind zeta, L = 5/4, NB = 200, constraints n = [2, 3, 4, 5, 7, 8, 9, 11] (m = 8); built 55s
  kappa_min = 0.204610 (second 0.205410); |W_s| up to 1.30e+53; gradient at c = 0 (v^T W_s v / |W_s|): ['2.7e-07', '2.1e-07', '1.1e-07', '-4.4e-08', '-6.0e-07', '-1.0e-06', '-1.6e-06', '-2.9e-06']
+  after scale 1e-06: best sup 0.20461433; at that c the two lowest eigenvalues are 0.20461433, 0.20542348; |c_s|*|W_s| max 2.87e+00
+  after scale 1e-04: best sup 0.20462687; at that c the two lowest eigenvalues are 0.20462687, 0.20462721; |c_s|*|W_s| max 1.94e+03

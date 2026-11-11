@@ -111,3 +111,50 @@ Quantity: κ_P(L) via Prop. 2.1's dual, maximised over c, restricted to the span
 (P3) impostor L = 1.72 (24 constraints, n ≤ 31, 5 ∤ n, κ_min = −0.048 with ONE negative direction): the negative direction
      does NOT survive: κ_P^{DH}(1.72) > 0 (probability 0.65), i.e. (Detect) fails for the impostor at its first failing
      window, as section 2's contest predicts when |λ_−| is small.
+
+### 5.1 Outcomes (COMPUTED 2026-11-11; two_zero/prime_dual.py.txt; logs two_zero/pd_*.log; one implementation, Legendre
+degree < NB truncation as in the foothold runs, arb for B_s and the whitening products, float eigenvalues; NOT certified)
+Method. A first attempt (prime_cone.py.txt: explicit feasible H = vvᵀ + X by LP) failed: the whitened constraint forms
+W_s = Li B_s Li^T have eigenvalues spanning 1e23–1e53 (the deep ladder rungs, whose L² norm is huge relative to D), and the
+dictionary LP was infeasible. The dual of Prop. 2.1 is well posed instead: for EVERY c, κ_P(L) ≥ λ_min(A + Σ c_s W_s)
+(weak duality: for feasible H, Tr AH = Tr(A + ΣcW)H). So each evaluation is a lower bound; the sup over c is κ_P (strong
+duality, if the optimiser converged). Optimised by Nelder–Mead/BFGS over c at four scales; runs stopped after the scales
+listed (later scales could only raise the bounds).
+| case | κ_min (c = 0) | best lower bound on κ_P found | gain |
+|---|---|---|---|
+| zeta L = 1.0 (m = 5: n = 2, 3, 4, 5, 7) | 0.297833 | **0.298196** (two lowest eigenvalues merged at 0.2981963) | +3.6e-4 |
+| zeta L = 1.25 (m = 8) | 0.204610 | **0.204627** (two lowest merged) | +1.7e-5 |
+| impostor L = 1.72 (m = 24: n ≤ 31, 5 ∤ n) | **−0.047964** | **+0.033508** | +0.081 |
+**Prediction score.** (P1) κ_P(1.0) ∈ [0.298, 0.33]: HIT (at the bottom: 0.2982). (P2) κ_P(1.25) ∈ [0.205, 0.26]: HIT
+marginally (0.20463 lies inside only at the fourth decimal; the gain is 1.7e-5). (P3) impostor's negative direction does
+not survive, κ_P^{DH}(1.72) > 0: HIT, and firmly: the lower bound +0.0335 is rigorous up to float rounding.
+
+**Reading.**
+(a) For zeta, restricting to C_P changes the comparison constant by 0.1% (L = 1) and 0.01% (L = 1.25): the prime-sampling
+constraints cost the minimiser almost nothing. In the D-geometry the cone C_P is as rich as the whole window space; the
+"forced high frequencies" do not raise A/D in any visible way (consistent with section 3: they sit in the bulk, where A is
+the zero sum).
+(b) **For the impostor, (Detect) FAILS at its first failing window.** At L = 1.72 its full Weil form has one negative direction
+(κ_min = −0.048), but with 24 FAKE weights on its support set, its archimedean form W_∞^{DH} + Σ c B is positive definite on
+the window (λ_min ≥ +0.0335). So every h ∈ C^{DH}(1.72) has Z_DH(h) = W_∞^{DH}(h) ≥ 0.0335·D(h) > 0, although the impostor has an
+off-line quartet: its own cone does not see its off-line zero. The off-line zero at first failure is detected only THROUGH
+THE VALUES of the weights, which C_P throws away. This is the exact failure mode Prop. 2.1(ii) names, realised.
+(c) Consequence for zeta (HEURISTIC, the argument is the same): if ζ had an off-line quartet, at its first failing windows
+fake prime-power weights would very likely restore positivity too, so C_P could only detect it at larger L, if ever. The
+impostor's support set is much denser than the primes ((4/5)e^x against e^x/x), so it has MORE freedom; that cuts against
+zeta's detection only weakly. Whether (Detect) holds for zeta at large L is the rigidity question of section 2, unchanged.
+Not done: the impostor at L = 1.8 and beyond (no dumped matrices), where its negativity is larger and fake weights might no
+longer suffice; that is the one test that would show whether (Detect) holds at all for a function with off-line zeros.
+
+## 6. Verdict and ratings
+- C_P is a SHADOW. By conic duality it is Weil positivity with the prime WEIGHTS freed and only their SUPPORT kept; the
+  sampling it imposes forces frequencies into the bulk (a factor ≈ 4πL below the band edge, not into the soft regime),
+  where A is the zero sum itself; and on the one function with off-line zeros the cone fails to detect them at the first
+  failing window, because 24 fake weights restore positivity. The Euler product enters linearly as a support, but the
+  support alone does not carry the information that decides positivity there; the values of Λ do.
+- Corrections to N94: the pole term is indefinite (2ab), not positive; "soft regime" should read "bulk".
+**Quality 6/10**: a proved duality that turns (Detect) into an exact fake-weights statement, a short correction of two errors
+in the hunch, and a computed, rigorous-up-to-float counterexample to (Detect) for the impostor at its first failing window;
+not higher because nothing is certified and the decisive larger-L test was not run. **Toward RH 1/10**: the object's best
+case (Detect for zeta at large L) is a rigidity statement for the archimedean distribution with no handle, and the impostor
+shows the support of Λ alone does not decide positivity; not lower because the duality makes the question exact.

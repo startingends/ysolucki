@@ -1704,3 +1704,24 @@ SP-operator session 5, `rh/specialists/operator/LOCAL_DISCRIMINANT.md` §7).
 - Risks, named: (Detect) may fail (the cone may be too thin where the off-line zero lives); the pole term
   2∫h(x)cosh(x/2)dx weights the window's edge by e^L and may dominate; the density argument may give frequencies a
   factor L below the band edge, i.e. exactly in the soft regime. Ratings now (unbuilt): Quality 3, Toward RH 3.
+
+**N95. H-4 is a shadow: the support of Λ alone does not decide positivity; its values do** (lead, after SP-operator
+session 6, `rh/specialists/operator/PRIME_SAMPLING.md`; sections 1–4 written before any run; one implementation,
+dual lower bounds, not certified; all three of the seat's predictions hit).
+- Corrections to N94: the pole term on h = g∗g̃ is 2ab (a = ∫g e^(−u/2), b = ∫g e^(u/2)), of signature (1, 1), not
+  positive; the forced frequency e^(2L)/(2L) sits about 4πL below the band edge, inside the bulk, and on C_P the
+  archimedean + pole term equals the zero sum exactly, so positivity there is as hard as the zero statement.
+- Duality (PROVED, Prop. 2.1): κ_P(L) = sup over ALL real weights c on the prime powers ≤ e^(2L) of
+  λ_min(W_∞ + poles + Σ c_s B_s; D). So C_P remembers only WHERE Λ lives and forgets its values; (Detect) at window L
+  holds exactly when no fake weights on the prime powers restore positivity. C_P-positivity holds wherever the full
+  form is positive (PROVED), so it cannot fail at small L.
+- Computed: zeta κ_min 0.297833 / κ_P ≥ 0.298196 (L = 1), 0.204610 / 0.204627 (L = 1.25): the constraints cost zeta
+  almost nothing. The impostor at L = 1.72: κ_min = −0.048 but κ_P ≥ +0.0335: 24 fake weights make its archimedean
+  form positive on the window, so its off-line quartet is INVISIBLE to the cone. (Detect) fails there. The impostor
+  at L ≥ 1.8 was not run (no matrices dumped). Collisions: C_P-positivity is blind to them.
+- Known? Positivity for support avoiding all prime powers is known (Yoshida; Connes–Consani, support in
+  (−log 2, log 2)); the vanishing variant is not known to the seat (no search). Ratings (seat): Quality 6, Toward RH 1.
+- **Rule H14.** The Euler product as a SUPPORT condition on Λ is not enough: positivity depends on the VALUES
+  Λ(p^k) = log p, and imposing the values is the Weil form itself. Read with H13: linear in μ is blind; linear in the
+  support of Λ is blind; linear in the values of Λ is the full problem. The ingredient the impostor lacks has to be
+  used with its exact values, and no linear device on the record lightens that.
