@@ -252,10 +252,12 @@ Idea #9 (bootstrap), claim by claim.
   Our e10 statement "the Gamma factor and the pole alone require a first prime, and require it at 2" is
   the window form of that observation; neither is certified.
 - **Idea #9's "new input", the prime-free dual inequality** ("if g is positive-definite and g(log n) ≥ 0 at
-  every integer then A(g) ≥ 0"): the paper's Theorem 2.7 is the proved version with the cone "F ≥ 0 on ℝ,
-  F̂ ≥ 0 on all of [ξ_2, ∞)" (smaller cone than ours, since ours asks positivity only at the integers; so
-  ours is formally the stronger inequality; under RH both hold). Already known in the paper's form; our
-  form with integer positions only is not stated there. Part II's README claims the equivalence of RH with
+  every integer then A(g) ≥ 0"): the paper's Theorem 2.7 is the corresponding claimed theorem for
+  the cone "F ≥ 0 on ℝ, F̂ ≥ 0 on all of [ξ_2, ∞)", F analytic in a strip, and its equivalence is with the
+  existence of an admissible pair, not with RH. Our form (theory T48) differs twice: it tests only
+  F = |f̂|² with f compactly supported (a smaller class), and asks g = F̂ ≥ 0 only at the logarithms of
+  integers (a weaker hypothesis, hence more test functions of that shape). Neither statement formally
+  contains the other; under RH both hold. T48 as worded is not in the paper. Part II's README claims the equivalence of RH with
   the inequality on the classical cone 𝒞_OPS (unverified).
 - **"Existence of a feasible point is itself equivalent to RH once uniqueness is known"** (idea #9, wall
   field): this is Theorem 2.9(c) exactly: (U) ⇒ [RH ⇔ (E)].
@@ -268,9 +270,9 @@ Idea #9 (bootstrap), claim by claim.
   "ladder" are of a different kind from ζ's.
 - **"zeta is rigid because conductor 1 is the smallest conductor at which any solution exists" (log,
   HEURISTIC).** In the paper's setting this is: (S) ∧ (E) ⇔ q_min = 1, with Theorem 2.12 (criticality ⇔
-  atomicity) as the proved link between "edge of feasibility" and rigidity; unconditional part:
-  1 − 8.98·10^{-1060} ≤ q_min < 1.017182. So the heuristic is the paper's Theorem A(b) + Theorem C; our
-  record should cite them rather than call it our reading.
+  atomicity) as the paper's link between "edge of feasibility" and rigidity; unconditional part:
+  1 − 8.98·10^{-1060} ≤ q_min < 1.017182. So what the log calls our reading is, in the
+  paper's linear setting, its Theorem A(b) together with Theorem C (both claimed, unverified).
 - **The conductor-5 case: not in the paper.** Our control is the conductor-5 **odd** archimedean term
   (Γ_ℝ(s+1), no pole; L(χ_5) and the Davenport–Heilbronn function). The paper and N3 treat only data with
   one simple pole: ζ with a conductor parameter, ℚ(√5) (Γ_ℝ², q = 5), ℚ(√−3), ℚ(i), and five further types
@@ -309,6 +311,30 @@ Idea #9 (bootstrap), claim by claim.
   an instance of atlas F1's "approximants with a property by construction" only in the loose sense that
   the limit J → ∞ is where the paper's Theorem D is open.
 
+Addendum to part 5 (the theory and atlas files grew during this session; entries T7–T79 and F4–F25 were
+read only at the end, and only those named here):
+- **T17** (status open, "statement as paraphrased … not exact"). The exact statements are in part 2:
+  (a) is Theorem 2.7 with Prop. 2.10; (b) is Theorems 3.6, 3.8, 3.11 and Prop. 3.5; (c) is Prop. 5.10 +
+  Prop. 2.10: one certified pair at q = e^{0.02}, hence q_min < 1.017182 and pairs for all q ≥ q_min.
+- **T43 / atlas F21 (Theorem U: under RH no summable atomic perturbation of the prime side keeps the form
+  non-negative on ℝ)**, recorded as "presumed folklore; overlaps claims of the Johns preprint". The
+  overlapping statement is Johns's **Proposition 3.2(b)**: for a difference Δ = (Δμ, Δν) of solutions with
+  the paper's growth bounds and Δν carried by [ξ_2, ∞): "If 0 ∉ Z, Δμ ≥ 0 off Z and (Δν)_- is a finite
+  measure, then Δ = 0", applied "under RH, with Z = Z_ζ". Differences: Johns needs the gap (Δν beyond
+  log 2) and only the negative part of Δν finite (its positive part may be any measure, diffuse included);
+  T43 needs no gap and atoms anywhere, but the whole of D summable and atomic. So, for atoms at positions
+  ≥ log 2, T43 is a special case of Prop. 3.2(b), once positivity of the quadratic form on C_c^∞ is
+  translated into "the zero side is a positive measure" (that translation is this seat's, by Bochner's
+  theorem; it is not in the paper and was not written out); for atoms below log 2, T43 is not covered.
+  T43's remark that "atomic", "no atom at 0" and "summable" are each essential has its counterpart in
+  Johns's Proposition 3.3 (Poisson-summation examples with infinite mass, one of them with 0 in the
+  exceptional set). Like T43, Prop. 3.2 uses RH and nothing arithmetic.
+- **T44** (on one window the feasible set has interior), **T47** (the L = 1 intervals): no counterpart in
+  the paper, which has no window. **T48**: see the corrected item above.
+- **F21 "needs"** quotes "kappa* >= 0 in Johns's preprint (claims, UNVERIFIED: existence for conductor
+  q >= 1.0172)": exact form as under T17; and κ* ≥ 0 gives existence of a pair, from which RH follows only
+  with uniqueness (Conjecture U; Part II's claim).
+
 ## 6. Reliability
 
 - Unreviewed; machine-written by its own statement. README: "The mathematics, the proofs, the numerical
@@ -329,5 +355,5 @@ Idea #9 (bootstrap), claim by claim.
   a planar Cohn–Elkies certificate) and says it uses neither for its results.
 - Part II (claimed proofs of U and S) is in the same state: AI-produced, not human-checked, existence of
   its magic function an axiom in its Lean spine.
-- Statements of ours that rest on this paper should be labelled CLAIMED (unverified) until a human-checked
-  or independently reproduced version exists.
+- Status of everything taken from this paper: claimed, unverified (no human check, no independent
+  reproduction by us).

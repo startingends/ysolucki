@@ -1,0 +1,14 @@
+zeta L=1.6 N=120 even: eig of smallest modulus 2.88849e-117 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = -3.32e-16 / 1 ; largest mode k=1 (freq 1.96) share 0.400
+zeta L=1.6 N=120 odd: eig of smallest modulus 6.10716e-113 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = -6.41e-16 / 1 ; largest mode k=2 (freq 3.93) share 0.347
+dh L=0.5 N=60 even: eig of smallest modulus 0.299226 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 0.375 / 1 ; largest mode k=0 (freq 0.00) share 0.972
+dh L=0.5 N=60 odd: eig of smallest modulus 1.44178 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 0.00134 / 1 ; largest mode k=1 (freq 6.28) share 0.958
+dh L=1 N=80 even: eig of smallest modulus 3.44762e-5 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 0.0114 / 1 ; largest mode k=0 (freq 0.00) share 0.757
+dh L=1 N=80 odd: eig of smallest modulus 0.0127725 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 0.00049 / 1 ; largest mode k=1 (freq 3.14) share 0.874
+dh L=1.6 N=100 even: eig of smallest modulus 5.24650e-23 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 3.23e-11 / 1 ; largest mode k=0 (freq 0.00) share 0.500
+dh L=1.6 N=100 odd: eig of smallest modulus 4.04485e-19 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 1.08e-09 / 1 ; largest mode k=1 (freq 1.96) share 0.782
+dh L=1.7 N=100 even: eig of smallest modulus 1.11828e-28 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 5.33e-14 / 1 ; largest mode k=1 (freq 1.85) share 0.483
+dh L=1.7 N=100 odd: eig of smallest modulus 7.01445e-25 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 1.83e-12 / 1 ; largest mode k=1 (freq 1.85) share 0.717
+dh L=1.72 N=100 even: eig of smallest modulus -7.91085e-30 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 4.49e-15 / 1 ; largest mode k=1 (freq 1.83) share 0.485
+dh L=1.72 N=100 odd: eig of smallest modulus 2.24001e-26 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 8.62e-13 / 1 ; largest mode k=1 (freq 1.83) share 0.704
+dh L=1.74 N=100 even: eig of smallest modulus 1.54547e-30 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 8.46e-15 / 1 ; largest mode k=1 (freq 1.81) share 0.487
+dh L=1.74 N=100 odd: eig of smallest modulus -2.08437e-26 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = -4.2e-11 / 1 ; largest mode k=1 (freq 1.81) share 0.691

@@ -1,0 +1,38 @@
+zeros ['14.1347251417', '21.0220396388', '25.0108575801', '30.4248761259'] 0s
+L=0.50 N=30 half (1s)
+  (i) zeta                           (even, odd) = (0, 0) ; lowest two even 1.037e-6 0.02006 ; odd 0.0001985 0.3646
+      zeta minus pairs 1,2 (PSD?)    (even, odd) = (0, 0) ; lowest two even 3.083e-11 6.396e-7 ; odd 5.654e-9 3.367e-5
+  (ii) control b=0 (double pair)     (even, odd) = (0, 0) ; lowest two even 9.358e-9 0.0001602 ; odd 1.929e-6 0.007944
+  (iii) one quartet b=0.3            (even, odd) = (1, 1) ; lowest two even -0.00124 1.067e-6 ; odd -0.0006704 0.001728
+  (v) one quartet, multiplicity 3    (even, odd) = (1, 1) ; lowest two even -0.004657 9.797e-7 ; odd -0.01314 0.0002705
+  (iv) two quartets b=0.3            (even, odd) = (2, 1) ; lowest two even -0.003072 -1.8e-8 ; odd -0.008173 2.948e-5
+      one quartet b=0.05             (even, odd) = (1, 1) ; lowest two even -2.66e-7 0.0001241 ; odd -2.2e-6 0.007759
+      one quartet b=0.45             (even, odd) = (1, 1) ; lowest two even -0.003283 9.911e-7 ; odd -0.008037 0.0003294
+L=0.75 N=30 half (3s)
+  (i) zeta                           (even, odd) = (0, 0) ; lowest two even 4.406e-15 1.298e-9 ; odd 4.324e-12 3.052e-7
+      zeta minus pairs 1,2 (PSD?)    (even, odd) = (0, 0) ; lowest two even 1.423e-21 2.945e-16 ; odd 1.019e-18 5.186e-14
+  (ii) control b=0 (double pair)     (even, odd) = (0, 0) ; lowest two even 2.758e-18 7.136e-13 ; odd 1.818e-15 2.096e-10
+  (iii) one quartet b=0.3            (even, odd) = (1, 1) ; lowest two even -0.04038 3.701e-15 ; odd -0.03744 3.418e-12
+  (v) one quartet, multiplicity 3    (even, odd) = (1, 1) ; lowest two even -0.1221 3.701e-15 ; odd -0.1219 3.418e-12
+  (iv) two quartets b=0.3            (even, odd) = (2, 2) ; lowest two even -0.04504 -0.01355 ; odd -0.04648 -0.01407
+      one quartet b=0.05             (even, odd) = (1, 1) ; lowest two even -0.0009407 3.705e-15 ; odd -0.0006226 3.424e-12
+      one quartet b=0.45             (even, odd) = (1, 1) ; lowest two even -0.09235 3.695e-15 ; odd -0.0906 3.411e-12
+L=1.00 N=40 half (6s)
+  (i) zeta                           (even, odd) = (0, 0) ; lowest two even 8.081e-30 3.343e-23 ; odd 2.22e-26 3.117e-20
+      zeta minus pairs 1,2 (PSD?)    (even, odd) = (0, 0) ; lowest two even 4.691e-38 8.936e-32 ; odd 9.321e-35 5.538e-29
+  (ii) control b=0 (double pair)     (even, odd) = (0, 0) ; lowest two even 6.724e-34 1.532e-27 ; odd 1.501e-30 1.232e-24
+  (iii) one quartet b=0.3            (even, odd) = (1, 1) ; lowest two even -0.09514 6.762e-30 ; odd -0.1101 1.753e-26
+  (v) one quartet, multiplicity 3    (even, odd) = (1, 1) ; lowest two even -0.311 6.762e-30 ; odd -0.3338 1.753e-26
+  (iv) two quartets b=0.3            (even, odd) = (2, 2) ; lowest two even -0.1101 -0.08663 ; odd -0.1199 -0.08657
+      one quartet b=0.05             (even, odd) = (1, 1) ; lowest two even -0.002352 6.77e-30 ; odd -0.002748 1.756e-26
+      one quartet b=0.45             (even, odd) = (1, 1) ; lowest two even -0.2329 6.751e-30 ; odd -0.255 1.75e-26
+L=1.25 N=56 half (12s)
+  (i) zeta                           (even, odd) = (0, 0) ; lowest two even 1.509e-54 4.077e-47 ; odd 1.094e-50 1.101e-43
+      zeta minus pairs 1,2 (PSD?)    (even, odd) = (0, 0) ; lowest two even 2.561e-64 2.771e-57 ; odd 1.217e-60 4.394e-54
+  (ii) control b=0 (double pair)     (even, odd) = (0, 0) ; lowest two even 1.82e-59 3.146e-52 ; odd 1.028e-55 6.72e-49
+  (iii) one quartet b=0.3            (even, odd) = (1, 1) ; lowest two even -0.2296 1.262e-54 ; odd -0.2047 8.667e-51
+  (v) one quartet, multiplicity 3    (even, odd) = (1, 1) ; lowest two even -0.6966 1.262e-54 ; odd -0.6351 8.667e-51
+  (iv) two quartets b=0.3            (even, odd) = (2, 2) ; lowest two even -0.2349 -0.2086 ; odd -0.2185 -0.1848
+      one quartet b=0.05             (even, odd) = (1, 1) ; lowest two even -0.005993 1.263e-54 ; odd -0.005222 8.682e-51
+      one quartet b=0.45             (even, odd) = (1, 1) ; lowest two even -0.539 1.26e-54 ; odd -0.4874 8.649e-51
+total 20s

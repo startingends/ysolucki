@@ -18,7 +18,7 @@ mono ff_l2 ff_thm nulleq nullprops endreg simple hadamard
 unique interior caps gspos box dual
 thmE fibre trickle cone rigid lemE becubic meanfield pair blocktrickle onefield poisson ntsig certrule
 gst bochner resample calib blockbe openpath f3
-d1 d3 d4 totalpd pardiff squeeze mirror2 euler gaplemma""".split()
+d1 d3 d4 totalpd pardiff squeeze mirror2 euler gaplemma tilt zeroside""".split()
 planned = {k: f"T{7 + i}" for i, k in enumerate(PLAN)}
 planned.update(weil="T1", cont="T2", symm_bad="T3", sign="T4", blocks="T5", bridge="T6")
 done = json.load(open(KEYS)) if os.path.exists(KEYS) else {}

@@ -6,3 +6,4 @@ L=0.70: mu(0) even 9.54e-13 odd 5.695e-10 ; c even 0.0001822 odd 0.002986 ; d_c 
 L=0.75: mu(0) even 9.197e-15 odd 7.453e-12 ; c even 0.0001463 odd 0.002454 ; d_c even 7.929e-6 odd 5.511e-5   (11s)
 L=0.80: mu(0) even 3.864e-17 odd 3.526e-14 ; c even 0.0001222 odd 0.002059 ; d_c even 5.624e-7 odd 4.138e-6   (14s)
 L=0.90: mu(0) even 1.061e-22 odd 1.928e-19 ; c even 8.917e-5 odd 0.001543 ; d_c even 1.091e-9 odd 1.118e-8   (18s)
+L=1.00: mu(0) even 1.65e-29 odd 4.456e-26 ; c even 6.948e-5 odd 0.001229 ; d_c even 4.873e-13 odd 6.022e-12   (23s)

@@ -1,0 +1,23 @@
+zeros ['14.1347251417', '21.0220396388', '25.0108575801', '30.4248761259'] 0s
+L=0.50 N=30 half  (pole block check 0.0)
+  zeta                           kappa_+(N) (even, odd) = (1, 0) ; kappa_-(Q) = (0, 0) ; c^T Q^-1 c = 6.106e+5 ; s^T Q^-1 s = 52.05 ; identity holds
+  control b=0                    kappa_+(N) (even, odd) = (1, 0) ; kappa_-(Q) = (0, 0) ; c^T Q^-1 c = 5.91e+7 ; s^T Q^-1 s = 3501.0 ; identity holds
+  one quartet b=0.3              kappa_+(N) (even, odd) = (2, 1) ; kappa_-(Q) = (1, 1) ; c^T Q^-1 c = 5.809e+5 ; s^T Q^-1 s = 8.702 ; identity holds
+  two quartets b=0.3             kappa_+(N) (even, odd) = (2, 1) ; kappa_-(Q) = (2, 1) ; c^T Q^-1 c = -3.33e+7 ; s^T Q^-1 s = 305.8 ; identity holds
+  Beurling 2 -> 2.1              kappa_+(N) (even, odd) = (2, 1) ; kappa_-(Q) = (1, 1) ; c^T Q^-1 c = 13.24 ; s^T Q^-1 s = -0.1573 ; identity holds
+L=0.75 N=30 half  (pole block check 0.0)
+  zeta                           kappa_+(N) (even, odd) = (1, 0) ; kappa_-(Q) = (0, 0) ; c^T Q^-1 c = 1.59e+14 ; s^T Q^-1 s = 3.221e+9 ; identity holds
+  control b=0                    kappa_+(N) (even, odd) = (1, 0) ; kappa_-(Q) = (0, 0) ; c^T Q^-1 c = 2.24e+17 ; s^T Q^-1 s = 5.222e+12 ; identity holds
+  one quartet b=0.3              kappa_+(N) (even, odd) = (2, 1) ; kappa_-(Q) = (1, 1) ; c^T Q^-1 c = 1.842e+14 ; s^T Q^-1 s = 3.714e+9 ; identity holds
+  two quartets b=0.3             kappa_+(N) (even, odd) = (3, 2) ; kappa_-(Q) = (2, 2) ; c^T Q^-1 c = 1.896e+14 ; s^T Q^-1 s = 3.799e+9 ; identity holds
+L=1.00 N=40 half  (pole block check 0.0)
+  zeta                           kappa_+(N) (even, odd) = (1, 0) ; kappa_-(Q) = (0, 0) ; c^T Q^-1 c = 9.092e+28 ; s^T Q^-1 s = 7.225e+23 ; identity holds
+  control b=0                    kappa_+(N) (even, odd) = (1, 0) ; kappa_-(Q) = (0, 0) ; c^T Q^-1 c = 9.732e+32 ; s^T Q^-1 s = 7.487e+27 ; identity holds
+  one quartet b=0.3              kappa_+(N) (even, odd) = (2, 1) ; kappa_-(Q) = (1, 1) ; c^T Q^-1 c = 1.06e+29 ; s^T Q^-1 s = 8.427e+23 ; identity holds
+  two quartets b=0.3             kappa_+(N) (even, odd) = (3, 2) ; kappa_-(Q) = (2, 2) ; c^T Q^-1 c = 1.099e+29 ; s^T Q^-1 s = 8.74e+23 ; identity holds
+  Beurling 2 -> 2.1              kappa_+(N) (even, odd) = (3, 2) ; kappa_-(Q) = (2, 2) ; c^T Q^-1 c = 47.53 ; s^T Q^-1 s = 2.192 ; identity holds
+L=1.25 N=56 half  (pole block check 0.0)
+  zeta                           kappa_+(N) (even, odd) = (1, 0) ; kappa_-(Q) = (0, 0) ; c^T Q^-1 c = 4.997e+53 ; s^T Q^-1 s = 1.58e+48 ; identity holds
+  control b=0                    kappa_+(N) (even, odd) = (1, 0) ; kappa_-(Q) = (0, 0) ; c^T Q^-1 c = 3.711e+58 ; s^T Q^-1 s = 1.199e+53 ; identity holds
+  one quartet b=0.3              kappa_+(N) (even, odd) = (2, 1) ; kappa_-(Q) = (1, 1) ; c^T Q^-1 c = 5.841e+53 ; s^T Q^-1 s = 1.847e+48 ; identity holds
+  two quartets b=0.3             kappa_+(N) (even, odd) = (3, 2) ; kappa_-(Q) = (2, 2) ; c^T Q^-1 c = 6.067e+53 ; s^T Q^-1 s = 1.918e+48 ; identity holds

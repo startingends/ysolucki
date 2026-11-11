@@ -1,0 +1,6 @@
+zeta L=1 N=60 even: eig of smallest modulus 7.29740e-30 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 9.02e-15 / 1 ; largest mode k=1 (freq 3.14) share 0.485
+zeta L=1 N=60 odd: eig of smallest modulus 1.80280e-26 ; sign changes on (0,L) = 0 ; min/max of f over max|f| = 2.59e-13 / 1 ; largest mode k=2 (freq 6.28) share 0.475
+
+real	0m0.159s
+user	0m0.145s
+sys	0m0.012s

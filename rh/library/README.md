@@ -35,7 +35,7 @@ insight on what is known.
 | Connes, Consani, Moscovici, "Zeta zeros and prolate wave operators", arXiv 2310.18423 | semilocal operators | abstract only |
 | Yoshida, "On calculations of zeros of various L-functions" / the 1992 paper on Weil positivity for small support | the unconditional range of window positivity (foothold hunt) | not found yet |
 | Bombieri, "Remarks on Weil's quadratic functional in the theory of prime numbers, I" | lowest eigenvalue, continuity claim | unread |
-| Burnol, "The explicit formula and a propagator", arXiv math/9809119, and his papers on Sonine spaces | the archimedean part solved exactly (notebook N19) | search summary only |
+| Burnol, "The explicit formula and a propagator", arXiv math/9809119, and his papers on Sonine spaces | READ WHOLE (burnol-explicit-formula-propagator.md): every local term is minus (log|x| plus its Fourier conjugate) at 1; NO positivity, no Sonine spaces, no exact archimedean solution. Notebook N19's recollection concerns other Burnol papers (2000–2004), unread | read whole |
 | Johns, "Positive solutions of Weil's explicit formula for ζ(s)" (GitHub nic410/zeta-positive-solutions; unreviewed, machine-written) | overlaps idea #9: existence, uniqueness, conductor threshold | sections 1 to 3 read |
 | Perfekt, Pushnitski, "On Helson matrices: moment problems, non-negativity, boundedness, and finite rank" | the mirror criterion of idea #21 is their Theorem 3.3 | sections 1 to 3 read by S1-mirror |
 | Bondarenko, Radchenko, Seip, "Fourier interpolation with zeros of zeta and L-functions", arXiv 2005.02996 | used in Johns's uniqueness theorem | unread |

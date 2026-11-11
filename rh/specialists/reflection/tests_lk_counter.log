@@ -1,0 +1,10 @@
+t=0.1 n=3: min eig 0.00127139
+t=0.1 n=6: min eig 5.96735e-7
+t=0.25 n=3: min eig 0.00202474
+t=0.25 n=6: min eig 9.59504e-7
+t=0.5 n=3: min eig 0.000265651
+t=0.5 n=6: min eig 9.42592e-9
+t=0.6 n=3: min eig -0.112694
+t=0.6 n=6: min eig -4.56076
+t=1.0 n=3: min eig -2.18601
+t=1.0 n=6: min eig -90.175

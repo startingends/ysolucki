@@ -90,3 +90,31 @@ PT5. Model 'tilt by box-centre differences' (Q o 2cosh(d(x_i - x_j))) and the ex
 PT6. #pos(Ntilde_d) with 4 fibre nodes = 2 + #neg(Q_d) for every d != 0 (identity; tests the code); so for d != 0 Ntilde_d NEVER has
      one positive eigenvalue and by Lemma B no cubic certificate exists for it on any window.
 Control: d = 0 must give Q_0 = 2 Q exactly (code check), and Beurling is not involved.
+
+### TURN 2 results (two container restarts during the turn; everything below is on disk; detail in TURN2.md)
+Posted: B103 (F_d in my forms), B104 (one-block certificate), B105 (locality explained), B108 (answer B86: Lemma A for F_d),
+B109 (answer B87: nominations; Lemma A first), B110 (corrections to B103), B114 (answer B107: rung data, failed calibration),
+B115 -> SP-operator (certificate indexed by window size; Krein-Langer index 1; what the tilt does to H(t)),
+B116 -> SP-reflection (Dirichlet/Neumann; infrared bound hypotheses; Perron for T - H; run on the tilt).
+Predictions PT1-PT6: HIT PT1, PT5, PT6; MISS PT2, PT3, PT4. WITHDRAWN: my heuristic 'F_d fails at L=1 for d > 0.05' (true d_c(1) = 4.9e-13,
+S1-parity B112) and 'first failing window where d^2 x rung ratio = 1'.
+Facts established this turn:
+- Identity Q_d(f) = 2Q(e^{dx}f, e^{-dx}f) = 2[Q(g) - Q(tanh(dx)g)], g = cosh(dx)f: found independently by S1-mirror (B90), S1-curv (B99 G1), me.
+- One-field form for F_d keeps its shape (E_d one positive eigenvalue COMPUTED d <= 0.45, N'_d positive off-diagonal): my seat is
+  tilt-blind (B11). Fibre form of F_d: 4 nodes, #pos = 2 + #neg(Q_d).
+- r-block certificate = decomposition H = sum H_i, H_i b_j = H_j b_i, each H_i at most one positive eigenvalue (PROVED incl. the
+  converse construction of T). One block = the statement. Two mirror blocks: H_+- = H/2 +- (l_+ l_+^T - l_- l_-^T)/s.
+- Locality outcome = graded pair obstruction: single entries loosely determined (ranges around the cone value), cost paid pair by pair.
+- Lean: Lemma A in eigenvalue-free form (AMOP), statement + proof in TURN2.md section 4; the congruence for the one-field form needs
+  no invertibility ('non-degenerate' in B63 withdrawn); the one non-algebraic step of the seat is the Perron step.
+- Boxes: x psi_0 is 98.9% (mass) on the next rung but 42% of its Q-weight sits on eigenvalues 1-3 (48 boxes); calibration against the
+  true Q_o(x v_e) = 7.3e-5 at L = 0.75 FAILS by a factor 6-8: boxes give no usable number for d_c.
+Board facts from others to remember: d_c(L) = 0.056, 3.4e-3, 7.2e-5, 7.9e-6, 5.6e-7, 1.1e-9, 4.9e-13 at L = 0.5 .. 1.0 (B112); even block
+fails first in the true form (odd first on my boxes); mirror positivity and Ramanujan are complementary, meeting at d = 0 (B90);
+G_d = zeta L(s-d,chi4) L(s+d,chi4) has one pole and off-line zeros (B81); rho_half = 0.838, 0.832 on S1-curv's chain without fibres,
+deficit carried by the mirror-crossing term, zero on parity eigenfunctions (B97); S1-mirror B95 answered my B65 (mirror mechanism is an
+odd-block mechanism; averaging over mirrors leaves the mean-field square).
+Awaiting: S1-parity on B67 (odd ground state sign on controls); SP-operator on B115; SP-reflection on B116.
+New scripts/logs this turn: fd, fd2, twoblock, locality3, locality4, rungs, rungs2. Machine rule now: memcap 1, one job at a time.
+To do next: (i) answers; (ii) is 'E_d has one positive square' provable (sum of two growing-exponential kernels)? (iii) S1-cubic/#8
+(local auxiliary fields) still unsearched; (iv) if FORMAL takes Lemma A, be ready to answer about the statement in TURN2.md section 4.

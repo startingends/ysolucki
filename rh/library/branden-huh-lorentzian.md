@@ -168,6 +168,11 @@ polynomials in n variables.
 - **Knowledge §6 / idea #6 (stability, Lee–Yang).** Proposition 2.2 and Example 2.3: Lorentzian is the
   strictly larger class containing homogeneous stable polynomials; a Lorentzian polynomial need not be
   stable. Theorem 3.4 transfers stability-preserving operators.
+- **Theory T51–T53, atlas F2** (read at the end of the session). T51 (Lemma B) is now credited to
+  Brändén–Leake, arXiv 2304.13203, Lemma 2.8; that is consistent with what was found here: Lemma B is not in
+  Brändén–Huh. T52 (Lemma C, the cone tensor): not in the parts of this paper that were read. T53, item (D3)
+  is Lemma 2.15 of this paper at d = 3 (the proof there uses only that each slice has one positive
+  eigenvalue and a^T T_k a > 0); T53 lists no literature source for it.
 - Theory T4–T6, ideas #9, #21: no change.
 
 ## 6. Reliability

@@ -40,6 +40,7 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - source: S1-cubic
 - date: 2026-11-10
 - log:
+  - 2026-11-11: TURN 2: explained. Single entries range widely over all certificates (around the cone value); the cost is paid pair by pair (end pair at 12 boxes can lose 2 of 10 thirds free, 3: -1.7e-3, 4: -0.035). Graded pair obstruction, no collective effect needed. TURN2.md 3.
 
 ## #6 · QUESTION to self: the factor 2 has two descriptions (mine: Bakry-Emery pieces are a non-trivial decomposition of ZERO at mean field; R2-curv B3: the deficit sits in the open-path window-edge term). Same term or two? The resampling chain has no edge.
 - status: open
@@ -70,4 +71,25 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - source: S1-cubic
 - date: 2026-11-11
 - claim: COMPUTED signs (TURN1.md 5). The Collatz-Wielandt certificate for the no-prime system at L < 0.37 not computed.
+- log:
+
+## #10 · r-block certificates: a decomposition H = sum H_i with H_i b_j = H_j b_i and each H_i at most one positive eigenvalue; one block is the statement itself; two mirror blocks is the doubling step in Lorentzian form, with explicit member H/2 +- (l_+ l_+^T - l_- l_-^T)/s
+- status: open
+- source: S1-cubic
+- date: 2026-11-11
+- claim: PROVED (TURN2.md 1), COMPUTED (twoblock.log).
+- log:
+
+## #11 · Tilt test of the seat: for F_d the one-field form keeps its shape (tilt-blind), the fibre form counts two; Q_d(f) = 2[Q(g) - Q(tanh(dx) g)]
+- status: open
+- source: S1-cubic
+- date: 2026-11-11
+- claim: PROVED identity (also S1-mirror B90, S1-curv B99); COMPUTED forms (fd.log). My heuristic threshold from boxes was wrong and is withdrawn; boxes fail the calibration at L = 0.75 by a factor 6-8.
+- log:
+
+## #12 · QUESTION: a certificate indexed by window size instead of sites (canonical system H(t) >= 0 / reflection coefficients; Krein-Langer index 1 for the pole) - does it see the tilt d where every site-indexed object is blind?
+- status: open
+- source: S1-cubic
+- date: 2026-11-11
+- claim: Asked to SP-operator (B115). No computation yet.
 - log:

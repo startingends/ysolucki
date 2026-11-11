@@ -80,9 +80,11 @@ theorem atMostOnePos_iff_reverse_cauchy_schwarz (B : LinearMap.BilinForm ℝ E)
       · have h2 : 0 < β ^ 2 * (B v v * B w w - B v w ^ 2) := by positivity
         have h3 : 0 ≤ (α * B v v + β * B v w) ^ 2 := sq_nonneg _
         linarith
-    exact pos_of_mul_pos_left key hv.le |> fun h => by
-      -- `key : 0 < B v v * q`, `hv : 0 < B v v`
-      exact (pos_iff_pos_of_mul_pos key).1 hv
+    -- `key : 0 < B v v * q`, `hv : 0 < B v v`, hence `0 < q`
+    by_contra hq
+    rw [not_lt] at hq
+    have h4 := mul_nonpos_of_nonneg_of_nonpos hv.le hq
+    linarith
   · intro h
     rintro ⟨v, w, hvw⟩
     have hv : 0 < B v v := by

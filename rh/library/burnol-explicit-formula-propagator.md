@@ -117,8 +117,8 @@ remarks. Nothing is proved about positivity.
   input ... probably noted somewhere"). The fact is visible in the form of the local terms recalled here: at
   EVERY place the local term is, away from u = 1, integration of F(1/u) against the positive measure
   d^x u/|1 - u| (Weil 1952; Haran 1990; this paper). After Weil's shift by 1/2 this is the kernel
-  |u|^(1/2)/|1 - u|: at the real place (1/2)(1/|1-rho| + 1/(1+rho)) rho^(1/2), which is our
-  e^(u/2)/(2 sinh u) plus its mirror term, and at p the atoms (log p) p^(-k/2). So the sign fact of T4 is a
+  |u|^(1/2)/|1 - u|: at the real place (1/2)(1/|1-rho| + 1/(1+rho)) rho^(1/2), which for rho = e^u > 1 is
+  exactly our e^(u/2)/(2 sinh u), and at p the atoms (log p) p^(-k/2). So the sign fact of T4 is a
   direct reading of Weil's local terms and is at least implicit in the literature since 1952; the paper does
   not single it out or use it. What the paper adds is that the positive kernel is the same expression at all
   places, namely the Fourier transform of -log|x|_nu.
@@ -156,10 +156,9 @@ remarks. Nothing is proved about positivity.
   on the same subject. No theorem-proof structure: the derivation is given in running text, with the
   analytic estimates for the contour integral delegated to Weil's 1952 paper ("For the necessary analytical
   estimates to discard the horizontal contributions, see [2]").
-- The constants of the section on F(-log|x|) were read but not recomputed by this reader. One internal check:
-  the real-place constant tau = log(2 pi) + gamma_e is consistent, after the change of convention (shift by
-  1/2 and the measure du/(2|u|)), with the constant log(4 pi) + gamma of Bombieri's form quoted in
-  arXiv 2106.01715 only up to how the regularisation at u = 1 is split; this was not verified in detail.
+- The constants of the section on F(-log|x|) were read but not recomputed by this reader, and were not
+  reconciled with the constant log(4 pi) + gamma of Bombieri's form of the archimedean term quoted in
+  arXiv 2106.01715 and 2006.13771 (the two forms regularise the singularity at u = 1 differently).
 - The position-space action is given "skipping a few calculational steps"; the identification with
   Zabrodin's tree model is asserted "at least for K_nu = Q_p" by citation.
 - The last two sections are explicitly speculative.

@@ -7,9 +7,9 @@ under `rh/data/papers/` (gitignored), and this file. No commits, no pushes. Dige
 ## Reading list and state (session of 2026-11-11)
 | # | paper | state | text location | how obtained |
 |---|---|---|---|---|
-| 1 | Johns, "Positive solutions of Weil's explicit formula for zeta(s)" (+ note on other Gamma factors) | READING | `rh/data/papers/johns/` | curl from raw.githubusercontent.com/nic410/zeta-positive-solutions/main/paper/sections/<file>.tex (9 section files, main.tex, macros.tex, README.md); note = supplementary/notes/critical-conductors/main.tex. Byte-identical to the clone under `rh/library/src/johns/repo/`. |
-| 2 | Perfekt, Pushnitski, Helson matrices | not started | | |
-| 3 | Bondarenko, Radchenko, Seip, arXiv 2005.02996 | not started | TeX already at `rh/library/src/2005.02996/brs.tex` (fetched by another seat) | |
+| 1 | Johns, "Positive solutions ..." (+ note on other Gamma factors) | DONE (digest johns-2026-part1.md) | `rh/data/papers/johns/` | curl from raw.githubusercontent.com/nic410/zeta-positive-solutions/main/paper/sections/<file>.tex (9 section files, main.tex, macros.tex, README.md); note = supplementary/notes/critical-conductors/main.tex. Byte-identical to the clone under `rh/library/src/johns/repo/`. |
+| 2 | Perfekt, Pushnitski, Helson matrices | DONE (digest 1611.03772.md) | | |
+| 3 | Bondarenko, Radchenko, Seip, arXiv 2005.02996 | PARTLY (sections 1-3; digest 2005.02996.md) | TeX already at `rh/library/src/2005.02996/brs.tex` (fetched by another seat) | |
 | 4 | Rodgers, Tao, arXiv 1801.05914 | not started | TeX already at `rh/library/src/1801.05914/fmp-template.tex` | |
 | 5 | Braenden, Huh, arXiv 1902.03719 | not started | TeX already at `rh/library/src/1902.03719/lorentzian.tex` | |
 | 6 | Guo Chen, Zenodo (May 2026) | not started | | |
@@ -38,3 +38,18 @@ claude.md (all), rh/library/INDEX.md, rh/library/README.md, docs/KNOWLEDGE.md (a
   what the paper cites (Berezanskii 1968 monograph); the a,b >= 2 variant is not in the paper.
 - R-read-2 has meanwhile written `brs-fourier-interpolation.md` and `rodgers-tao-newman.md` (my papers 3 and 4).
   My digests of those go under `2005.02996.md` and `1801.05914.md` (independent second readings).
+- 2026-11-11, paper 3 PARTLY done, session out of room. BRS arXiv 2005.02996 v3: TeX at
+  `rh/data/papers/2005.02996/brs.tex` (curl -L https://arxiv.org/e-print/2005.02996, gzip of a single .tex).
+  READ lines 88-1254 (sections 1-3, 74 157 chars). UNREAD lines 1255-2711 (sections 4-7, 86 807 chars).
+  Partial digest `rh/library/2005.02996.md`, index row marked "partly". Running notes:
+  `rh/data/papers/2005.02996/NOTES_reader2.md`.
+  NEXT SESSION: resume at line 1255 of brs.tex (read in chunks of <= 350 lines: 710 lines exceeded the tool's
+  limit), then rewrite the digest and the index row. In sections 4-7 look for: section 4.4 (values of the
+  Riemann-Weil functional on the basis; Johns claims two slips there), line 1362 (strengthening of Knopp's
+  abundance principle; bears on THEORY T18 / idea #13), section 5.3 (other Dirichlet series).
+- NOT STARTED: paper 4 Rodgers-Tao 1801.05914 (TeX already at rh/library/src/1801.05914/fmp-template.tex, 136k;
+  R-read-2 has a note `rodgers-tao-newman.md`), paper 5 Braenden-Huh 1902.03719 (TeX at
+  rh/library/src/1902.03719/lorentzian.tex, 270k), paper 6 Guo Chen Zenodo May 2026 (not searched yet).
+- Lesson: budget about 60k tokens of reading per 160k-character TeX paper; write the digest before starting
+  the next paper; one session held two full papers (Johns 300k chars with companions, Perfekt-Pushnitski 106k)
+  plus half of a third.

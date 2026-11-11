@@ -1,0 +1,49 @@
+# SP-reflection session 1.
+# (A) B80(a): spectrum of T_2 (k_a -> k_{2a}) on span{k_2,k_4,k_8,k_16} of the mirror space, c(2^k) = log2*(2^{kd}+2^{-kd}) (F_d),
+#     and c(2^k) = log 2 (zeta). Generalised eigenvalues of (G1, G0), G0 = [c(2^{i+j})], G1 = [c(2^{i+j+1})], on the range of G0.
+# (B) B83(3): Helson (here: local Hankel, i,j >= 0) positivity of the coefficients of F^t.
+#     zeta^t at p: a_t(k) = (t)_k / k!.  F_d^t at p=2: coefficients of (1-a z)^-t (1-z/a)^-t, a = 2^d.
+import numpy as np, math
+from mpmath import mp, mpf, binomial, matrix, eigsy, rf, factorial, log, cosh
+mp.dps = 60
+
+def gen_eigs(c, n=4):
+    G0 = np.array([[c(i + j) for j in range(1, n + 1)] for i in range(1, n + 1)], dtype=float)
+    G1 = np.array([[c(i + j + 1) for j in range(1, n + 1)] for i in range(1, n + 1)], dtype=float)
+    w, V = np.linalg.eigh(G0)
+    keep = w > 1e-10 * w.max()
+    P = V[:, keep] / np.sqrt(w[keep])
+    return keep.sum(), np.linalg.eigvalsh(P.T @ G1 @ P)
+
+L2 = math.log(2)
+print("(A) T_2 on span{k_2,k_4,k_8,k_16}:")
+r, e = gen_eigs(lambda k: L2)
+print("  zeta (d=0, single root 1): dim", r, "spectrum", e)
+for d in (0.1, 0.01):
+    r, e = gen_eigs(lambda k: L2 * (2**(k * d) + 2**(-k * d)))
+    print(f"  F_d d={d}: dim", r, "spectrum", e, " expected", sorted([2**-d, 2**d]))
+r, e = gen_eigs(lambda k: 2 * L2)
+print("  F_0 = zeta^2: dim", r, "spectrum", e)
+
+print("(B) local Hankel matrix [a_t(i+j)], i,j=0..n, of the coefficients of F^t: smallest eigenvalue (60 digits)")
+def minimal(coef, n):
+    M = matrix(n + 1, n + 1)
+    for i in range(n + 1):
+        for j in range(n + 1):
+            M[i, j] = coef(i + j)
+    return eigsy(M, eigvals_only=True)[0]
+
+for t in (0.25, 0.5, 1.0, 1.01, 1.5, 2.0):
+    coef = lambda k, t=t: rf(mpf(t), k) / factorial(k)
+    print(f"  zeta^t, t={t}: n=3: {mp.nstr(minimal(coef,3),6)}   n=6: {mp.nstr(minimal(coef,6),6)}")
+
+def fd_coef(t, d, K):
+    a = mpf(2) ** d
+    A = [rf(mpf(t), k) / factorial(k) * a**k for k in range(K + 1)]
+    B = [rf(mpf(t), k) / factorial(k) * a**(-k) for k in range(K + 1)]
+    return [sum(A[i] * B[k - i] for i in range(k + 1)) for k in range(K + 1)]
+
+for d in (0.1,):
+    for t in (0.25, 0.5, 0.51, 0.6, 1.0):
+        cf = fd_coef(t, d, 14)
+        print(f"  F_d^t at p=2, d={d}, t={t}: n=3: {mp.nstr(minimal(lambda k: cf[k],3),6)}   n=6: {mp.nstr(minimal(lambda k: cf[k],6),6)}")

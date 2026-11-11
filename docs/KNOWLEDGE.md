@@ -38,8 +38,12 @@ an entry gets a ✔ only after someone has checked it against the paper or repro
 - Almost all zeros within any fixed distance of the line (Bohr–Landau 1914); Selberg's central limit theorem.
 - Function fields: RH for curves (Weil 1948), varieties (Deligne 1974); elementary proof (Stepanov 1969,
   Bombieri 1973). Weil's proof = Frobenius correspondence + Castelnuovo/Hodge-index positivity on C × C.
-- Weil positivity for test functions of small support (Yoshida 1992), and at the archimedean place via the
-  prolate operator (Connes–Consani 2021; Connes–Consani–Moscovici 2022).
+- Weil positivity for test functions of small support (Yoshida 1992), i.e. on the window before the prime 2
+  enters (λ² ≤ 2). Connes–Consani arXiv 2006.13771 (Thm 1 / 6.11) sharpens it on the same window with a lower
+  bound by a trace on Sonin's space, using prolate functions; the proof is computer-assisted, not
+  interval-certified. CORRECTED 2026-11-11 after the papers were read whole: 2106.01715 and 2310.18423 contain
+  NO positivity theorem (the first has uncertified numerics up to λ² = 11). Nothing is proved for any window
+  containing a prime. The "2022" citation (Connes–Moscovici, PNAS) is a spectral match and was not read.
 - Local statistics agree with GUE (Montgomery 1973 pair correlation for restricted test functions;
   Rudnick–Sarnak 1996 n-level; Odlyzko numerics).
 
@@ -139,7 +143,7 @@ Each entry: what was searched, what was read, what it says. "Read" means fetched
 |---|---|---|---|
 | 2026-11-10 | M. Suzuki, "Weil's quadratic form via the screw function", arXiv 2606.09096 v3 | first ~40k of 164k characters verbatim, most of the rest by machine summary, last ~24k unread | ✔ The Weil form on (−a, a) is a genuine operator (Friedrichs extension), Thm 1.1. ✔ Its lowest eigenvalue λ_a is continuous in a, Thm 1.3, unconditional. ✔ For small a: λ_a > 0, simple, even ground state, λ_a = log(1/a) + const + O(a), Thm 1.4. ✔ "The failure of RH is equivalent to the existence of some a > 0 for which λ_a < 0" (attributed to Yoshida). No monotonicity in a, no derivative formula, no first-failure argument, no control without Euler product found in the part read. |
 | 2026-11-10 | Kim, Hong, Kim, Choi, Jang, Kim, "A Numerical Realization of Suzuki's Weil-Quadratic-Form Operator…", arXiv 2607.24830 v3 (math.GM) | first ~40k of 80k verbatim, rest by summary | Numerical only; says of itself that it "does not prove RH nor advance toward its proof". Reports λ_1(a) > 0 with faster-than-exponential decay, measured only for a ≤ 0.6 (log-slope from about −20 to −56 on [0.2, 0.5]); values beyond are extrapolations and partly discretisation artefacts. Treat its numbers as unverified. |
-| 2026-11-10 | A. Connes, W. van Suijlekom, "Quadratic Forms, Real Zeros and Echoes of the Spectral Action", arXiv 2511.23257 v1 | first ~40k of 118k verbatim, rest by summary | ✔ If the form of a real even distribution on a window has a simple isolated lowest eigenvalue with even eigenfunction, the eigenfunction's Fourier transform has only real zeros. General theorem about such forms; the paper does not state what is missing for RH. No derivative in the window size, no control example found. |
+| 2026-11-10 | A. Connes, W. van Suijlekom, "Quadratic Forms, Real Zeros and Echoes of the Spectral Action", arXiv 2511.23257 v1 | read whole twice (rh/library/2511.23257.md and connes-vansuijlekom-real-zeros.md); hypotheses of Thm 6.1: real distribution on [0, L], lowest spectral value a simple isolated eigenvalue IN THE WHOLE SPACE with even eigenfunction | ✔ If the form of a real even distribution on a window has a simple isolated lowest eigenvalue with even eigenfunction, the eigenfunction's Fourier transform has only real zeros. General theorem about such forms; the paper does not state what is missing for RH. No derivative in the window size, no control example found. |
 
 | 2026-11-10 | N. Johns, "Positive solutions of Weil's explicit formula for ζ(s)", github.com/nic410/zeta-positive-solutions (preprint Oct 2026; AI-produced; README: "No human mathematician has yet checked the proofs line by line") | README and sections 1–3 read via fetch (reported in paraphrase); sections 4–6, appendices, companion notes, Part II unread | Claims (UNVERIFIED): "admissible pairs" = positive measure on the zero side + positive measure on the prime side (any positions beyond log 2) solving the explicit formula with ζ's Gamma factor and pole; existence ⟺ a prime-free, zero-free inequality κ* ≥ 0 (conic LP duality); uniqueness theorems under restrictions on the zero-side support; with conductor q as a parameter, existence unconditionally for q ≥ 1.0172 and certified κ* ≤ 1.43·10⁻¹⁰⁶⁰. Overlaps the core of idea #9. No finite-window emergence experiment, no Davenport–Heilbronn control found in what was read. |
 | 2026-11-10 | M. Suzuki, "Hamiltonians arising from L-functions in the Selberg class", arXiv 1606.05726 (J. Funct. Anal. 2021); "A canonical system of differential equations arising from the Riemann zeta-function", arXiv 1204.1827 | search-result summaries only; papers not fetched | An equivalent condition for GRH in terms of canonical systems (a Hamiltonian must exist for all values of a parameter), via an inverse problem. So "RH ⟺ the window family is a Krein/canonical system with no singularity" is KNOWN in substance (notebook N19; lane A idea A4 overlaps). |
@@ -147,6 +151,9 @@ Each entry: what was searched, what was read, what it says. "Read" means fetched
 Searched and NOT found (2026-11-10, one query): Burnol's work on Sonine spaces / Painlevé for the archimedean
 part; recalled from memory only, unverified.
 
+Read whole since (digests in `rh/library/`, see its INDEX): Connes–Consani 2106.01715 and 2006.13771,
+Connes–Consani–Moscovici 2310.18423, Burnol math/9809119, Suzuki 2606.09096, Perfekt–Pushnitski 1611.03772,
+Johns Part I + N3, Bondarenko–Radchenko–Seip 2005.02996, Rodgers–Tao.
 Not yet read (needed for idea #8): Yoshida 1992; Bombieri's "Remarks on Weil's quadratic functional";
-Connes–Consani arXiv 2106.01715; the logarithmic-Laplacian literature (Chen–Weth and later) for
+the logarithmic-Laplacian literature (Chen–Weth and later) for
 Hadamard-type domain-variation formulas.

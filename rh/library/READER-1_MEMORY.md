@@ -25,11 +25,21 @@ only (owner rule 10): what a paper establishes and where it stops; never a recom
 |---|---|---|---|
 | 1 | Suzuki, screw function, arXiv 2606.09096 v3 | DONE, whole (132,445 / 132,445) | `2606.09096.md` |
 | 2 | Connes, van Suijlekom, arXiv 2511.23257 v1 | DONE, whole (98,854 / 98,854) | `2511.23257.md` |
-| 3 | Connes, Consani, arXiv 2106.01715; then CCM arXiv 2310.18423 | 2106.01715 in progress | |
-| 4 | Suzuki, Hamiltonians, arXiv 1606.05726 | not started | |
+| 3a | Connes, Consani, arXiv 2106.01715 v1 | DONE, whole (147,007 / 147,007; figures not opened) | `2106.01715.md` |
+| 3b | Connes, Consani, Moscovici, arXiv 2310.18423 v2 | DONE, whole (99,326 / 99,326) | `2310.18423.md` |
+| 4 | Suzuki, Hamiltonians, arXiv 1606.05726 | **IN PROGRESS by READER-1 (started 2026-11-11 after the coordinator's overlap notice; no other reader has it: checked R-read-1_PROGRESS.md, R-read-2_PROGRESS.md, READER-2_MEMORY.md, INDEX.md)** | |
 | 5 | Yoshida 1992 (full reference: "On Hermitian forms attached to zeta functions", Adv. Stud. Pure Math. 21, 281-325) | not started; search whether a full text exists | |
 
 ## Record read before starting
 rh/library/INDEX.md, README.md; claude.md "Reading"; docs/KNOWLEDGE.md (all); docs/IDEAS.md titles and novelty
 fields, #2, #8, #11, #20 in full; rh/KEY_LEMMA_SHAPE.md S4; rh/experiments/r2_parity/PROOF_first_failure.md
 section 0-2 and refuter/PROGRESS.md proof check; rh/specialists/operator/MEMORY.md.
+
+## Coordinator notice (2026-11-11, during paper 3b)
+Two reader seats were started on overlapping lists by mistake. Rule from now: before starting a paper, read
+INDEX.md, R-read-1_PROGRESS.md, R-read-2_PROGRESS.md; skip what another reader finished or is in the middle of;
+write the paper being started into this file first. State at the notice: my digests for 2511.23257, 2106.01715
+and 2310.18423 were already written (independent second notes next to R-read-1's). Not taken by anyone:
+Suzuki 1606.05726 (mine, in progress), Yoshida 1992 (mine, next). Not mine and not to be started without
+checking: Bondarenko-Radchenko-Seip sections 4-7, Guo Chen (Zenodo), Zhu arXiv 2608.24827, Suzuki 1204.1827,
+Bombieri 2001/2003, Connes-Consani-Moscovici arXiv 2511.22755 ("Zeta spectral triples").

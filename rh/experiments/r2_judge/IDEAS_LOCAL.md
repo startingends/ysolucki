@@ -78,3 +78,18 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - source: R2-judge
 - date: 2026-11-11
 - log:
+
+## #12 · Exact inertia relation between N = pole - Q and Q per parity block: kappa_+(N_even) = kappa_-(Q_even) + [c^T Q_e^-1 c > 1/2], kappa_+(N_odd) = kappa_-(Q_odd) - [s^T Q_o^-1 s < -1/2]
+- status: open
+- source: R2-judge
+- date: 2026-11-11
+- plain english: The count of growing directions of primes-minus-Gamma equals the count of negative directions of the Weil form plus one or minus one, and two explicit numbers decide which. Example: zeta's form on the window of half-width 1 with one quartet of zeros moved off the line at height 17.6 has 1 + 1 negative directions and its N has 2 + 1 = 3 growing directions, not 1.
+- claim: PROVED (Haynsworth, two lines, finite-dimensional invertible blocks); COMPUTED: holds in 36 rows (zeta, surgery with one and two quartets, Beurling), j18_int.log, j18_half.log. Refines seat parity's Prop. 3(b); contains seat curv's Theorem A as the case kappa_-(Q) = 0
+- log:
+
+## #13 · Surgery on zeta's own form (remove real pairs, add quartets; rank-4 change in closed form on the prime-side matrix) is a cheap exact control: one quartet at 17.578 + 0.3i is seen as (1,1) negative squares already at L = 0.5
+- status: open
+- source: R2-judge
+- date: 2026-11-11
+- claim: COMPUTED j17_int.log, j17_half.log: never more negative squares per block than quartets; zeta minus two real pairs stays positive definite (4.8e-38 at L = 1)
+- log:

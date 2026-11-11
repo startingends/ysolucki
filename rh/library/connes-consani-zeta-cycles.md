@@ -152,8 +152,8 @@ through figures and tables, with no error analysis.
     +1 (their psi_m, m even, i.e. PS_0, PS_4, PS_8, ...), odd block <-> -1 (PS_2, PS_6, ...), and the condition
     phi(0) = 0 imposed by combining with PS_0 (even) or PS_2 (odd), which removes one function from each
     family. (Their index m is half of ours: their psi_m = PS_{2m,0}.) Their count "sigma^- has one less small
-    eigenvalue" agrees with ours. So that paragraph should be marked "known: Connes-Consani 2106.01715,
-    section 3 (construction and graphical comparison; no proof)".
+    eigenvalue" agrees with ours. So the content of that paragraph is known: Connes-Consani 2106.01715,
+    section 3 (construction and graphical comparison; no proof).
   - Our QUANTITATIVE law, mu_even(L) = kappa(L)(1 - chi_4(2 pi e^(2L))) with kappa in [2.1, 6.8], mu_odd
     against 1 - chi_6, and the ladder against 1 - chi_{4j}: **not in the paper**. The paper states only an
     "exponential behavior" of the smallest eigenvalue in mu (figures) and one number.

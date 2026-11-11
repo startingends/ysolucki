@@ -130,6 +130,12 @@ of Λ, the zeroes of H_t will be spaced like an arithmetic progression on averag
 - **Idea #12 log (judge's two-parameter picture, "Λ(1) = 0 iff RH (given Rodgers–Tao)")**: consistent with
   Theorem 1. The generalised statement for other members would need the "generalized Newman conjecture"
   (Stopple; Dobner), which this paper only mentions.
+- **Theory T22 / atlas F14** (read at the end of the session). T22's note says that the zeros of H_t obey
+  the ODE "is NOT part of the lemma (it is COMPUTED … and recalled from the literature)". The citation is
+  now exact for real simple zeros: Csordas–Smith–Varga 1994, Lemma 2.4, restated here as Theorem 11 for
+  Λ < t ≤ 0 with a principal-value sum. This paper contains no statement on the motion of non-real zeros
+  and nothing on Y = Σ y_k² (T22's identity is not in it). F14's "supplies" value dz_1/dt = −0.5796306 was
+  not compared with the paper's normalisation x = 2γ.
 - Ideas #9, #10, #21, theory T1–T6, atlas F1–F3: no change. (Atlas F1 lists "heat-flowed H_t" among
   approximants with real zeros by construction: in this paper's terms, H_t has only real zeros for t ≥ Λ,
   and passing to t = 0 is the statement Λ ≤ 0.)

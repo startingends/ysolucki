@@ -153,7 +153,7 @@ evaluations that are not interval-certified (see part 6).
   - Connes-Consani's own theorem is the SAME range (no primes), strengthened to
     W_infty(g * g*) >= Tr(theta(g) S theta(g)*) under ghat(i/2) = ghat(0) = 0 (Theorem 1), and it is
     computer-assisted. The phrase "at the archimedean place" in our entry is right; "via the prolate
-    operator" should read "via the prolate functions of bandwidth 2 pi and Sonin's space". The prolate
+    operator" is imprecise: the paper uses the prolate functions of bandwidth 2 pi and Sonin's space. The prolate
     differential OPERATOR is used only as the commuting operator of Slepian-Pollak; the prolate-operator
     spectral results are the other paper (2310.18423).
   - So in the papers read by this seat the proved range of window positivity is: mu <= 2 (no prime). Nothing

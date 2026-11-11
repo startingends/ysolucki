@@ -2,7 +2,7 @@
 
 Written 2026-11-11. Two sessions: the first (23:51 to 00:08 UTC) did the recomputations J1 to J15 and stopped before
 writing this file; the second re-read all six PROOF files line by line, redid every displayed computation by hand,
-spot-checked the first session's logs, ran J16, and wrote this file. Commands, predictions and logs: `PROGRESS.md`.
+spot-checked the first session's logs, ran J16, J17, J18, and wrote this file. Commands, predictions and logs: `PROGRESS.md`.
 
 Scope (owner, 2026-11-10): proofs and numbers only. I do not rank ideas and I do not say whether any approach is
 likely to work. The idea verdicts of the "curv" checker are not used; only what it found about proofs and numbers.
@@ -44,11 +44,11 @@ Levels: the project ladder (L2 = conditional lemma "if X then RH", fully proved;
 |---|---|---|---|
 | Parity lemma (Lemmas 1, 2) | proved, trivial | none | P(f) = 2 Re(F_+ conj F_-), F_+- = <f_e,c> +- <f_o,s>. |
 | Proposition 3 (RH => kappa_+(N_L) <= 1; kappa_-(Q_e) <= kappa_+(N_e); kappa_-(Q_o) <= kappa_+(N_o) + 1) | proved | none | One unwritten step: kappa_-(Q) <= kappa_-(Q_e) + kappa_-(Q_o) (standard: take maximal negative subspaces in each block and intersect a larger negative subspace with their Q-orthogonal complement). (a) is a consequence of RH; (b) is linear algebra. |
-| Theorem 4 (exact negative index: kappa_-(Q_L) <= nu, <= nu/2 per parity block; attained for all large L; sup = nu) | proved; total count known in substance; per-block count not found | none yet | Every step redone: q_z = (|u+v|^2 - |u-v|^2)/2; q_{z'} = q_z on even and on odd functions; sinc bounds; (3c) |M| <= 2e^{-K} outside Near(a) (uses K >= t, |Im gamma| < 1/2); (3d) cos^2(tz) = e^{-2ita}e^{2tb}/4 + r with |r| <= 3/4, progression step pi/|a| < 1, bound -> -infinity; Step 4 all four cases of the Gram matrix, C_i != 0, ||H|| bounded independently of (t_i, K_i); odd block with phi'. No use of RH or of the Euler product. Toy check on the zero side alone (J13: two quartets among 40 real ordinates; never more than (2,2); (1,1) for one quartet; multiplicity invisible; (0,0) on the line; my first run undercounted because of my own threshold). Novelty: the total count, with the word "distinct" and the same hyperbolic-pair argument, is printed as "Theorem 1 (global signature)" in an unrefereed account of an agent research run hosted by Anthropic (section 6), which also reports, after fetching it, that Bombieri 2000 already has the upper-bound half for large truncations. Nobody in this project has opened Bombieri 2000 or Yoshida 1992. So: not new as a whole. The per-block count was not found in what I read (no mention of parity in that document's text). L3 is not earned while the primary sources are unread. |
+| Theorem 4 (exact negative index: kappa_-(Q_L) <= nu, <= nu/2 per parity block; attained for all large L; sup = nu) | proved; total count known in substance; per-block count not found | none yet | Every step redone: q_z = (|u+v|^2 - |u-v|^2)/2; q_{z'} = q_z on even and on odd functions; sinc bounds; (3c) |M| <= 2e^{-K} outside Near(a) (uses K >= t, |Im gamma| < 1/2); (3d) cos^2(tz) = e^{-2ita}e^{2tb}/4 + r with |r| <= 3/4, progression step pi/|a| < 1, bound -> -infinity; Step 4 all four cases of the Gram matrix, C_i != 0, ||H|| bounded independently of (t_i, K_i); odd block with phi'. No use of RH or of the Euler product. Kill test on zeta's own form with surgery (J17, section 2.14): one quartet gives (1,1), two give (2,2), never more, multiplicity invisible, on-line control (0,0). Toy check on the zero side alone (J13: two quartets among 40 real ordinates; never more than (2,2); (1,1) for one quartet; multiplicity invisible; (0,0) on the line; my first run undercounted because of my own threshold). Novelty: the total count, with the word "distinct" and the same hyperbolic-pair argument, is printed as "Theorem 1 (global signature)" in an unrefereed account of an agent research run hosted by Anthropic (section 6), which also reports, after fetching it, that Bombieri 2000 already has the upper-bound half for large truncations. Nobody in this project has opened Bombieri 2000 or Yoshida 1992. So: not new as a whole. The per-block count was not found in what I read (no mention of parity in that document's text). L3 is not earned while the primary sources are unread. |
 | Corollary C1, k = 0, 1, 2, 3 ("at most one negative square on every window" is equivalent to RH) | proved | none yet (L2 on content; the brief's standard for L2 asks for three refuters, one ran; and the count behind it is known in substance) | Follows from Theorem 4 and the fact that nu is even (no zeros on the real segment (0, 1)). It is an equivalence, not a reduction, as the seat says. |
 | Corollaries C1 last line and C4 (one parity block suffices) | proved, known | none | Yoshida 1992, Prop. 1, as reported on p. 2 of Suzuki arXiv 2606.09096v3, which I read: "Q_W(v) >= 0 for all non-zero odd v implies RH, while a similar condition for all non-zero even functions implies RH except for possible real zeros". The seat reported it as not found. |
 | Corollary C2, first half (kappa_+(N_L) <= 1 on every window => at most one off-line quartet) | proved | none (the conclusion is not RH) | Prop. 3(c) plus C1. |
-| Corollary C2, second half and wall WP1 ("cannot be improved by linear algebra") | gap: PROOF_parity_index.md section 5, C2, the sentence "the second cannot be improved by linear algebra alone, because ..." | none | Only consistency of the inequalities of Prop. 3(b) with one quartet is shown. No configuration with one quartet and kappa_+(N) = 1 is exhibited; the file says so two lines later. The summary's "PROVED" covers the implication only. Label for the second half: open. |
+| Corollary C2, second half and wall WP1 ("cannot be improved by linear algebra") | gap: PROOF_parity_index.md section 5, C2, the sentence "the second cannot be improved by linear algebra alone, because ..." | none | Only consistency of the inequalities of Prop. 3(b) with one quartet is shown. No configuration with one quartet and kappa_+(N) = 1 is exhibited; the file says so two lines later. The summary's "PROVED" covers the implication only. Label for the second half: open. New evidence (section 2.14, J18): on surgery configurations of zeta with one quartet, N has three positive eigenvalues, not one. |
 | Corollary C3 (WJ13's "one negative square per block per quartet") | proved | none | It is Theorem 4 for L >= L_0. Upgrades a HEURISTIC of round 1. |
 | First-failure template: Lemma 1 (lambda(L) non-increasing), Lemma 2, Theorem 3 | proved given the cited theorems; known in substance | none | Jensen count O(r) against Selberg's c T log T (distinct zeros: yes, sign changes); (B) => (C) by continuity from both sides; (D) => (A). Points: Lemma 2(i) "lambda(L) > 0 strictly" also needs attainment of the infimum (it is in Theorem 3's list of inputs, not in the lemma). Monotonicity needs no assumption: Suzuki's Corollary 1.2 (read) says lambda_a is the infimum of the Rayleigh quotient over C_c^infinity(-a, a). The existence half of the template is in Suzuki's paper: p. 2 and the paragraph after Theorem 1.3 ("if RH is false, then Q_W^a must be degenerate for some value of a by continuity of lambda_a"; RH <=> non-degeneracy for every a is attributed to Yoshida 1992, Theorem 2). An equivalent form of "RH is false": no level. |
 | Proposition 5 (a) to (d) (null vector: real, even or odd; support hull [-L_0, L_0]; exact type; energy identity) | proved given S1 and the domain facts | none | (a), (b) by translation, (c) including conj(psihat(conj z)) = +-psihat(z) and the equality of the two quartet contributions. (e), (f) are declared not proved. |
@@ -63,6 +63,7 @@ Levels: the project ladder (L2 = conditional lemma "if X then RH", fully proved;
 | (curv checker) sum-rule margin 2c^T N_e^-1 c - 1 = det(Q_e)/|det N_e| = (mu_1(Q_e)/lambda_1) x P, P >= 1 | proved, known (matrix determinant lemma: det(2cc^T - N_e) = det(-N_e)(1 - 2c^T N_e^-1 c), and det(-N_e) < 0 when N_e has one positive eigenvalue; interlacing). J10: 5.592234356886e-4 against 5.592234356884e-4. | none |
 | (curv checker) on integers >= 2 both [Lambda(ab)/sqrt(ab)] and [w(log ab)] are positive semidefinite | proved, trivial (D1; w(log ab) = sum_m (ab)^-(2m+1/2)) | none |
 | (parity checker) under RH, Q_L + D >= 0 whenever 2 sum|d_j| <= lambda(L) | proved (one line, given attainment of lambda(L)) | none |
+| (judge, J18) on a finite-dimensional subspace with invertible blocks: kappa_+(N_even) = kappa_-(Q_even) + [c^T Q_e^-1 c > 1/2] and kappa_+(N_odd) = kappa_-(Q_odd) - [s^T Q_o^-1 s < -1/2], N = pole - Q | proved, elementary (Haynsworth on [[Q_e, c],[c^T, 1/2]] and [[Q_o, s],[s^T, -1/2]]; it contains curv's Theorem A as the case kappa_-(Q) = 0 and sharpens parity's Prop. 3(b)); COMPUTED in 36 rows | none |
 
 Nothing in round 2 has earned L2 or L3. Nearest: Corollary C1 (k = 1) on content, and the per-block part of Theorem 4,
 both waiting on the primary sources (Bombieri 2000, Yoshida 1992) and, for L2, on the brief's three-refuter standard.
@@ -123,6 +124,29 @@ window, up to arithmetic), positive at 0.370 in every basis tried up to N = 200 
 2.12 **Theorem A.** Checker right (1.2 above).
 
 2.13 **"One parity block suffices: not found" (parity).** Found: Yoshida 1992 Prop. 1 via Suzuki p. 2. Checker right.
+
+2.14 **Theorem 4's kill line, and C2's second half ("the signature of N cannot see one quartet").** New computation
+(J17, J18; implementation B for zeta's prime-side form, 110 digits, int and half lattices, N = 30, 30, 40, 56 at
+L = 0.5, 0.75, 1.0, 1.25). Surgery is exact and of finite rank: remove the real pairs +-gamma_1, +-gamma_2 and add the
+quartet +-a +- ib with a = 17.578, using the closed-form transforms of the basis functions. Check of the
+normalisation: zeta minus the two pairs stays positive definite (lowest eigenvalue 3.1e-11, 1.4e-21, 4.8e-38, 1.5e-64).
+
+| configuration | negative squares of Q (even, odd) at L = 0.5, 0.75, 1.0, 1.25 | positive eigenvalues of N = pole - Q (even, odd) |
+|---|---|---|
+| zeta | (0,0) at every L | (1,0) at every L |
+| control: the two pairs merged on the line (b = 0) | (0,0) at every L | (1,0) at every L |
+| one quartet, b = 0.3 | (1,1) at every L; lowest eigenvalues -1.2e-3, -0.040, -0.097, -0.230 (even). Same counts for b = 0.05, b = 0.45 and for weight 3 on the quartet | (2,1) at every L: three in total (computed for b = 0.3 only) |
+| two quartets (also gamma_3, gamma_4 -> 27.718 + 0.3i) | (2,1), (2,2), (2,2), (2,2) | (2,1), (3,2), (3,2), (3,2) |
+| Beurling control (2 -> 2.1), L = 0.5 and 1.0 | (1,1) and (2,2) | (2,1) and (3,2) |
+
+Facts: (a) the per-block count never exceeds the number of quartets and reaches it by L = 0.75; Theorem 4's kill line
+is not met (this tests the theorem together with RH for the untouched zeros). (b) The round-1 kill line "a one-quartet
+configuration keeps N at exactly one positive eigenvalue" is not met: N has three. (c) The exact relation is the
+identity in 1.4: kappa_+(N) = kappa_-(Q) + [c^T Q_e^-1 c > 1/2] - [s^T Q_o^-1 s < -1/2]. A one-quartet configuration
+has kappa_+(N) = 1 exactly when c^T Q_e^-1 c <= 1/2 and s^T Q_o^-1 s < -1/2 together; in the computed surgery rows
+c^T Q_e^-1 c lies between 5.8e5 and 7e53. (d) The Beurling counts 3 and 5 reported by all three seats are 1 + kappa_-(Q).
+Limits: finite subspaces, one implementation of the base form, a surgery configuration is not a system with a
+non-negative prime side; whether C2's second arrow can be reversed in general stays open.
 
 ---------------------------------------------------------------------------------------------------------------
 ## 3. Numbers
@@ -213,7 +237,11 @@ Implementations: (L) lead's Arb builder r1_A/weil.py.txt; (B) seat parity's wb.p
 10. Round 1, WJ13: "each quartet costs one negative square per block" is now PROVED for L >= L_0 (Theorem 4), and each
    block inequality alone is equivalent to RH (Yoshida 1992 Prop. 1). Round-1 next step 4 asked for the count "via
    Krein-Langer extension"; it is not needed.
-11. Round 1 / idea #20 context: the count "negative squares = distinct off-line zeros" is not new; it is printed in at
+11. Round 1, WJ13 and its kill lines: the linear-algebra relation between the signature of N and that of Q is not only
+   the inequality "kappa_-(Q) <= kappa_+(N) + 1": it is an identity with two indicator terms (1.4, 2.14). On surgery
+   configurations of zeta with one quartet, N has three positive eigenvalues, so the statement "one positive direction of N
+   allows one off-line quartet" describes what the inequality permits, not what was observed in any computed case.
+12. Round 1 / idea #20 context: the count "negative squares = distinct off-line zeros" is not new; it is printed in at
    least one unrefereed document, which credits Bombieri 2000 with the upper-bound half. KNOWLEDGE lists Yoshida 1992
    and Bombieri's paper as "not yet read"; they still are.
 
@@ -237,11 +265,12 @@ Hard evidence of order exists only where a git commit separates prediction from 
   eigenvalue -0.434 at the Beurling base).
 - **checkers**: each reports writing its expectations before its runs; two of the three (cubic, curv) note that their
   first typed clock times were estimates or ran ahead of the system clock, and corrected them in their files.
-- **mine**: 16 predictions, all written before computing (J12 to J16 with times from the system clock; J16's time
-  written by a command). 14 clean hits; J13 missed at first run because of my own threshold and hit on the corrected
-  rerun; J15 hit on the values and missed on which site is worst. Most were reproductions of values on which seat and
+- **mine**: 18 predictions, all written before computing (J12 to J18 with times from the system clock; J16 to J18
+  with the time written by a command). 14 clean hits; J13 missed at first run because of my own threshold and hit on
+  the corrected rerun; J15 hit on the values and missed on which site is worst; J17 hit except my guess at L = 0.5
+  (I guessed the quartet would not be seen there; it is); J18 hit except one row (two quartets at L = 0.5). Most were reproductions of values on which seat and
   checker already agreed, so they carry little information; the ones that settled something are J1, J2, J3, J4, J5,
-  J6, J9, J15, J16.
+  J6, J9, J15, J16, J17, J18.
 - Predictions made after the fact: none proved. Three curv rows and all of parity's and most of cubic's cannot be
   shown to have come first.
 
@@ -281,7 +310,7 @@ is cited on the checker's reading).
 - SDP results of seat cubic: reproduced by its checker only.
 - Ollivier and Dobrushin numbers, impostor and dial fractions: reproduced by the curv checker only.
 - Exact-calibration rank and overlap; cubic's chain-degree 3, "all but T_iii" mode, L = 2 rows: checked by nobody.
-- Theorem 4's kill test on a surgery configuration built from zeta's own zeros (one quartet moved off the line) was
-  not run; J13 is a toy with 40 real ordinates.
+- J17 and J18 use one implementation of zeta's form (B) and one position of the quartet (plus one second quartet);
+  no scan over heights, and no window above L = 1.25.
 - The domain facts behind PROOF_first_failure (the seat's assumption CORE) were checked by the parity checker against
   about 15% of Suzuki's text; I re-read only the lines listed in section 6.

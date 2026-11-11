@@ -1,0 +1,51 @@
+"""S1-parity, answer to board B102 (S1-curv). Normalisation: Q0 = form of F_0 = 2 x zeta's Weil form Q.
+(1) Q0_o(x v_e) and Q0_e(x v_o) by a route that never builds F_d: the ZERO side. For real f, Q(x f) = sum over zeros |d/dgamma fhat(gamma)|^2
+    (RH for the 5000 zeros used; (x f)^ = -i fhat'). v_e, v_o = ground states of zeta's blocks (implementation B, integer lattice).
+(2),(3) exact first-failure tilt d* of each block of F_d on the window (bisection on the sign of the lowest eigenvalue), against the
+    first-order value d_c = sqrt(mu(0)/c); nu = 1/d*^2.
+usage: python3 b102.py.txt L N dps"""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+fd = load("fd", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/fd.py.txt"); wb = fd.wb
+L = float(sys.argv[1]); N = int(sys.argv[2]); dps = int(sys.argv[3]); mp.mp.dps = dps; t0 = time.time(); ns = lambda x, k=7: mp.nstr(x, k)
+Lm = mp.mpf(L)
+Q0 = fd.form(L, N, 'int', 0, 0, 0); ws = wb.freqs(Lm, N, 'int')
+sys.path.insert(0, "/home/user/ysolucki/tools"); import rhlib
+zs = [mp.mpf(g) for g in rhlib.zeros(5000)]
+gs = {}
+for b, nm in ((0, 'even'), (1, 'odd')):
+    ev, V = mp.eigsy(Q0[b]); i = min(range(len(ev)), key=lambda j: ev[j]); gs[b] = (ev[i], [V[k, i] for k in range(V.rows)])
+mp.mp.dps = 30
+def dC(w, r, sgn):
+    """d/dr of [ sin((w-r)L)/(w-r) + sgn sin((w+r)L)/(w+r) ]  (sgn = +1: int cos cos ; sgn = -1: int sin sin)"""
+    a, b = w - r, w + r
+    t1 = (mp.sin(a * Lm) - a * Lm * mp.cos(a * Lm)) / a ** 2
+    t2 = (b * Lm * mp.cos(b * Lm) - mp.sin(b * Lm)) / b ** 2
+    return t1 + sgn * t2
+x2 = {}
+for b, nm, other in ((0, 'even', 'odd'), (1, 'odd', 'even')):
+    mu, v = gs[b]; fr = ws if b == 0 else ws[1:]
+    co = [mp.mpf(v[k]) / (mp.sqrt(2 * Lm) if fr[k] == 0 else mp.sqrt(Lm)) for k in range(len(fr))]
+    sgn = 1 if b == 0 else -1
+    S = mp.fsum(mp.fsum(co[k] * dC(fr[k], g, sgn) for k in range(len(fr))) ** 2 for g in zs)
+    S5 = mp.fsum(mp.fsum(co[k] * dC(fr[k], g, sgn) for k in range(len(fr))) ** 2 for g in zs[:2500])
+    val = 2 * 2 * S          # both signs of gamma, and Q0 = 2Q
+    print("(1) L=%g: Q0_%s(x v_%s) from 5000 zeros = %s   (2500 zeros: %s) ; mu_%s(0) = %s   (%.0fs)" % (L, other, nm, ns(val, 8), ns(4 * S5, 8), nm, ns(mu, 6), time.time() - t0), flush=True)
+    x2[b] = val
+mp.mp.dps = dps
+for b, nm in ((0, 'even'), (1, 'odd')):
+    mu = gs[b][0]
+    d1 = mp.sqrt(mu) * mp.mpf('1e-3')
+    e1 = min(mp.eigsy(fd.form(L, N, 'int', d1, d1, d1)[b], eigvals_only=True)); c = (mu - e1) / d1 ** 2
+    dc = mp.sqrt(mu / c)
+    lo, hi = dc * mp.mpf('0.5'), dc * mp.mpf('1.5')
+    for _ in range(34):
+        mid = (lo + hi) / 2
+        if min(mp.eigsy(fd.form(L, N, 'int', mid, mid, mid)[b], eigvals_only=True)) < 0: hi = mid
+        else: lo = mid
+    ds = (lo + hi) / 2
+    print("(2) L=%g %s block: measured slope c = %s (zero-side value above: %s, ratio %s) ; first-order d_c = %s ; EXACT d* = %s ; d*/d_c = %s ; nu = 1/d*^2 = %s ; nu x mu(0) = %s   (%.0fs)" % (
+          L, nm, ns(c, 8), ns(x2[b], 8), ns(x2[b] / c, 8), ns(dc, 8), ns(ds, 8), ns(ds / dc, 8), ns(1 / ds ** 2, 6), ns(mu / ds ** 2, 6), time.time() - t0), flush=True)

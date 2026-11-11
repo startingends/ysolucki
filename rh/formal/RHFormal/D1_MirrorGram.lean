@@ -23,6 +23,8 @@ Main results:
 * `RHFormal.D1.mirror_form_eq_sum_squares` : the identity for an arbitrary finite support `S ⊆ {a ≥ 2}`;
 * `RHFormal.D1.mirror_form_eq_sum_primes` : the identity in the shape of the informal statement
   (support in `[2, N]`, sum over primes `p ≤ N`, inner sum over `k = 1..N` of `φ(p^k) p^(-k/2)`);
+* `RHFormal.D1.mirror_form_eq_sum_squares_unweighted` : the same without the weights `1/√a`
+  (the wording nominated on the board, B82);
 * `RHFormal.D1.mirror_form_nonneg` : the form is `≥ 0`.
 -/
 
@@ -126,6 +128,31 @@ theorem mirror_form_nonneg (S : Finset ℕ) (hS : ∀ a ∈ S, 2 ≤ a) (φ : �
     0 ≤ ∑ a ∈ S, ∑ b ∈ S, φ a * φ b * Λ (a * b) / Real.sqrt ((a : ℝ) * (b : ℝ)) := by
   rw [mirror_form_eq_sum_squares S hS φ]
   exact Finset.sum_nonneg fun p _ => mul_nonneg (Real.log_natCast_nonneg p) (sq_nonneg _)
+
+open scoped Classical in
+/-- **Theorem D1 without the weights `1/√a`** (the wording nominated by S1-mirror, board s1, B82):
+for a finite set `S` of integers `≥ 2` and real `φ`,
+`∑_{a,b ∈ S} φ(a) φ(b) Λ(ab) = ∑_p log p (∑_{a ∈ S, a a power of p} φ(a))^2`. -/
+theorem mirror_form_eq_sum_squares_unweighted (S : Finset ℕ) (hS : ∀ a ∈ S, 2 ≤ a) (φ : ℕ → ℝ) :
+    ∑ a ∈ S, ∑ b ∈ S, φ a * φ b * Λ (a * b)
+      = ∑ p ∈ S.biUnion Nat.primeFactors,
+          Real.log p * (∑ a ∈ S with ∃ k : ℕ, a = p ^ k, φ a) ^ 2 := by
+  have hpos : ∀ a ∈ S, 0 < Real.sqrt (a : ℝ) := by
+    intro a ha
+    have h2 := hS a ha
+    exact Real.sqrt_pos.2 (Nat.cast_pos.2 (by omega))
+  refine Eq.trans ?_
+    (Eq.trans (mirror_form_eq_sum_squares S hS (fun a => φ a * Real.sqrt a)) ?_)
+  · refine Finset.sum_congr rfl fun a ha => Finset.sum_congr rfl fun b hb => ?_
+    have h1 := hpos a ha
+    have h2 := hpos b hb
+    rw [Real.sqrt_mul (Nat.cast_nonneg a)]
+    field_simp
+  · refine Finset.sum_congr rfl fun p _ => ?_
+    congr 2
+    refine Finset.sum_congr rfl fun a ha => ?_
+    have h1 := hpos a (Finset.mem_filter.1 ha).1
+    field_simp
 
 open scoped Classical in
 /-- Re-indexing of the inner sum: for `p ≥ 2` and `φ` vanishing above `N`, the sum of `φ(a)/√a` over

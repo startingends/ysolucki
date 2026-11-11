@@ -150,6 +150,11 @@ All results are unconditional: no hypothesis on the location or simplicity of ze
 - **Ideas #16/#18 (horizon).** The paper quotes Kulikov's joint density bound for the two node sets and
   observes that zeros and log-integers saturate it. Our horizon statements were not compared with it here
   (different normalisation; not worked out by this seat).
+- **Theory T18 / atlas F20** (read at the end of the session): T18 is recorded as "open … Cited from memory
+  plus one search snippet". Its formula 1 + [k/4], k = n/2, is Proposition 3.1 of this paper for the
+  character ε = +, real k ≥ 0, with the reference Berndt–Knopp Thm 6.3 and a short proof (every form is
+  θ^{2k}J_ε p(1/J) with a degree bound). The passage from modular forms for Γ_θ to Dirichlet series with the
+  functional equation is the Hecke/Bochner correspondence stated in the Remark after Proposition 4.1.
 - Theory T1–T6, atlas F1–F3: no change.
 
 ## 6. Reliability

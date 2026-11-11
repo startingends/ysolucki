@@ -33,3 +33,6 @@ L=1.25 N=56 int (13s)
   (iii) one quartet b=0.3            (even, odd) = (1, 1) ; lowest two even -0.2299 1.052e-54 ; odd -0.203 7.602e-51
   (v) one quartet, multiplicity 3    (even, odd) = (1, 1) ; lowest two even -0.6974 1.052e-54 ; odd -0.627 7.602e-51
   (iv) two quartets b=0.3            (even, odd) = (2, 2) ; lowest two even -0.2352 -0.2088 ; odd -0.2182 -0.1815
+      one quartet b=0.05             (even, odd) = (1, 1) ; lowest two even -0.005981 1.053e-54 ; odd -0.005221 7.615e-51
+      one quartet b=0.45             (even, odd) = (1, 1) ; lowest two even -0.5397 1.05e-54 ; odd -0.4816 7.586e-51
+total 22s

@@ -135,9 +135,11 @@ interval of length L ([0, L], or [-L/2, L/2] after translation); the Fourier tra
   minimiser reproduces the impostor's on-line zeros ... so that phenomenon does not see the Euler product"):
   the REALITY of those zeros is what Theorem 6.1 gives, for any real distribution, with no arithmetic
   hypothesis, whenever the lowest eigenvalue is simple, isolated, with even eigenfunction. So "all zeros of
-  fhat_min real" for zeta at L = 1 and for the impostor at L = 1.6 are instances of the theorem (our runs
-  report the simple even ground state in those cases); that the theorem cannot distinguish zeta from the
-  impostor is visible in its hypotheses. The paper does NOT contain: any computation of such zeros for zeta,
+  fhat_min real" for zeta at L = 1 is an instance of the theorem (r1_A reports a simple, even ground state
+  there). For the impostor at L = 1.6 it is an instance provided the even-block minimiser used in that run is
+  the simple lowest eigenvector of the whole form; r1_A records the even block's lowest eigenvalue (5.2e-23)
+  but not the odd block's at that L. That the theorem cannot distinguish zeta from the impostor is visible in
+  its hypotheses. The paper does NOT contain: any computation of such zeros for zeta,
   any statement that they approximate zeta zeros, the height (about 4 pi e^(2L)) up to which they do, or the
   impostor experiment. Those parts of our record are not in this paper. (Whether they are in Connes,
   arXiv 2602.04022, or Connes-Consani-Moscovici, arXiv 2511.22755, both named in our record, was not checked:

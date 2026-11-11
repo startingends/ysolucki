@@ -1,0 +1,77 @@
+moments done 0s; H_0 = [0.459846326506324814671712177650 +/- 8.61e-32], radius of H_0 3.8e-37
+matrices done 1s; max radius of AA entries 3.8e-37
+L = 1/2, NB = 28, prec = 600
+float check, atom at y=0.693147, m=0.490129, parity 0: lowest eigenvalue 9.056667e-07;  no atom: -3.235195e-02
+float check, atom at y=0.693147, m=0.490129, parity 1: lowest eigenvalue 1.960090e-04;  no atom: -3.222283e-01
+background, parity 0: A(v)/||v||^2 = [-0.0323519539485215 +/- 2.28e-17]  certified negative: True
+background, parity 1: A(v)/||v||^2 = [-0.322228344654863 +/- 2.04e-16]  certified negative: True
+   certified infeasible: y in [0.000000, 0.010000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.010000, 0.030000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.030000, 0.050000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.050000, 0.070000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.070000, 0.090000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.090000, 0.110000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.110000, 0.130000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.130000, 0.150000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.150000, 0.170000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.170000, 0.190000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.190000, 0.210000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.210000, 0.230000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.230000, 0.250000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.250000, 0.270000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.270000, 0.290000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.290000, 0.310000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.310000, 0.330000]  (m* ~ 0.0000)  t=1s
+   certified infeasible: y in [0.330000, 0.350000]  (m* ~ 0.2729)  t=1s
+   certified infeasible: y in [0.350000, 0.370000]  (m* ~ 0.3176)  t=1s
+   certified infeasible: y in [0.370000, 0.390000]  (m* ~ 0.3081)  t=1s
+   certified infeasible: y in [0.390000, 0.410000]  (m* ~ 0.3024)  t=1s
+   certified infeasible: y in [0.410000, 0.430000]  (m* ~ 0.2998)  t=1s
+   certified infeasible: y in [0.430000, 0.450000]  (m* ~ 0.2995)  t=1s
+   certified infeasible: y in [0.450000, 0.470000]  (m* ~ 0.3005)  t=1s
+   certified infeasible: y in [0.470000, 0.490000]  (m* ~ 0.3011)  t=1s
+   certified infeasible: y in [0.490000, 0.510000]  (m* ~ 0.2995)  t=1s
+   certified infeasible: y in [0.510000, 0.530000]  (m* ~ 0.2960)  t=1s
+   certified infeasible: y in [0.530000, 0.550000]  (m* ~ 0.2937)  t=1s
+   certified infeasible: y in [0.550000, 0.570000]  (m* ~ 0.2946)  t=1s
+   certified infeasible: y in [0.570000, 0.590000]  (m* ~ 0.2994)  t=1s
+   certified infeasible: y in [0.590000, 0.610000]  (m* ~ 0.3091)  t=1s
+   certified infeasible: y in [0.610000, 0.630000]  (m* ~ 0.3251)  t=1s
+   certified infeasible: y in [0.630000, 0.650000]  (m* ~ 0.3491)  t=1s
+   certified infeasible: y in [0.650000, 0.670000]  (m* ~ 0.3842)  t=1s
+   certified infeasible: y in [0.670000, 0.680000]  (m* ~ 0.4216)  t=1s
+   certified infeasible: y in [0.680000, 0.690000]  (m* ~ 0.4546)  t=1s
+   certified infeasible: y in [0.690000, 0.691250]  (m* ~ 0.4777)  t=1s
+   certified infeasible: y in [0.691250, 0.691875]  (m* ~ 0.4820)  t=1s
+   certified infeasible: y in [0.691875, 0.692187]  (m* ~ 0.4842)  t=1s
+   certified infeasible: y in [0.692187, 0.692500]  (m* ~ 0.4857)  t=1s
+   certified infeasible: y in [0.692500, 0.692656]  (m* ~ 0.4868)  t=1s
+   certified infeasible: y in [0.692656, 0.692813]  (m* ~ 0.4876)  t=1s
+   certified infeasible: y in [0.692813, 0.692852]  (m* ~ 0.4880)  t=2s
+   certified infeasible: y in [0.692852, 0.692891]  (m* ~ 0.4882)  t=2s
+   certified infeasible: y in [0.692891, 0.692910]  (m* ~ 0.4884)  t=2s
+   certified infeasible: y in [0.692910, 0.692930]  (m* ~ 0.4885)  t=2s
+   certified infeasible: y in [0.692930, 0.692939]  (m* ~ 0.4885)  t=2s
+LEFT sweep: every y in (0, 70957/102400] = (0, 0.6929395] is infeasible for every m >= 0  (47 intervals); exp = 1.999585
+   certified infeasible: y in [0.990000, 1.000000]  (m* ~ 4.7771)  t=2s
+   certified infeasible: y in [0.970000, 0.990000]  (m* ~ 2.5762)  t=2s
+   certified infeasible: y in [0.950000, 0.970000]  (m* ~ 1.8483)  t=2s
+   certified infeasible: y in [0.930000, 0.950000]  (m* ~ 1.4764)  t=2s
+   certified infeasible: y in [0.910000, 0.930000]  (m* ~ 1.2391)  t=2s
+   certified infeasible: y in [0.890000, 0.910000]  (m* ~ 1.0710)  t=2s
+   certified infeasible: y in [0.870000, 0.890000]  (m* ~ 0.9439)  t=2s
+   certified infeasible: y in [0.850000, 0.870000]  (m* ~ 0.8463)  t=2s
+   certified infeasible: y in [0.830000, 0.850000]  (m* ~ 0.7685)  t=2s
+   certified infeasible: y in [0.810000, 0.830000]  (m* ~ 0.7059)  t=2s
+   certified infeasible: y in [0.790000, 0.810000]  (m* ~ 0.6548)  t=2s
+   certified infeasible: y in [0.770000, 0.790000]  (m* ~ 0.6132)  t=2s
+   certified infeasible: y in [0.750000, 0.770000]  (m* ~ 0.5791)  t=2s
+   certified infeasible: y in [0.730000, 0.750000]  (m* ~ 0.5516)  t=2s
+   certified infeasible: y in [0.710000, 0.730000]  (m* ~ 0.5295)  t=2s
+   certified infeasible: y in [0.700000, 0.710000]  (m* ~ 0.5161)  t=2s
+   certified infeasible: y in [0.697500, 0.700000]  (m* ~ 0.5113)  t=2s
+   certified infeasible: y in [0.697187, 0.697500]  (m* ~ 0.5103)  t=2s
+   certified infeasible: y in [0.697168, 0.697187]  (m* ~ 0.5101)  t=2s
+RIGHT sweep: every y in [7139/10240, 1) = [0.6971680, 1) is infeasible for every m >= 0  (19 intervals); exp = 2.008058
+RESIDUAL y-interval (0.6929395, 0.6971680): every feasible weight m lies in [[0.4885585899 +/- 4.65e-11], [0.5103665777 +/- 4.49e-11]]   (true: m = log2/sqrt2 = 0.4901291, y = log 2 = 0.6931472)
+total time 7s

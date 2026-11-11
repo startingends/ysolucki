@@ -1,0 +1,17 @@
+"""S1-cubic, board B107(b): where the Q-weight of x psi_0 sits, by rung, on boxes (zeta, L = 1)."""
+import math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+for n in (24, 48):
+    L = 1.0; Nb, p, q = box.boxN(L, n); Q0 = np.outer(p, q) + np.outer(q, p) - Nb
+    w, V = np.linalg.eigh(Q0); xc = np.array([-L + (i + 0.5) * 2 * L / n for i in range(n)])
+    xv = xc * V[:, 0]; ov = (V.T @ xv) ** 2; Qx = float(w @ ov)
+    print("n=%d: mu_0 = %.3e ; |x psi_0|^2 = %.4f ; Q(x psi_0) = %.4e" % (n, w[0], xv @ xv, Qx))
+    odd = [k for k in range(n) if ov[k] > 1e-20]
+    print("   rung k: eigenvalue, share of |x psi_0|^2, share of Q(x psi_0)")
+    for k in odd[:8]: print("   k=%2d  mu=%.3e  mass %.5f  Q-share %.4f" % (k, w[k], ov[k] / (xv @ xv), w[k] * ov[k] / Qx))
+    for lo, hi in ((0, 0.1), (0.1, 1), (1, 3), (3, 1e9)):
+        sel = [k for k in range(n) if lo <= w[k] < hi]
+        print("   eigenvalues in [%.1f, %.1g): %d rungs, mass %.5f, Q-share %.4f" % (lo, hi, len(sel), sum(ov[k] for k in sel) / (xv @ xv), sum(w[k] * ov[k] for k in sel) / Qx))

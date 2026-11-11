@@ -1,0 +1,29 @@
+# SP-reflection, answer to B101 (3): two-exponential kernel k(u) = e^(a u) - c e^(-b u) on (0, L].
+# H = mirror form (kernel k(x+y)), T = shift form (kernel k(|x-y|)), both on L^2(0,L] (Gauss-Legendre, M nodes).
+# C* = least constant with |H| <= T + C |phi|^2  = max( lam_max(H - T), lam_max(-H - T) ).
+# Also printed: lam_min(T) (the shift form alone), and the same after a one-sided tilt (a,b) -> (a+d, b-d).
+import numpy as np
+def forms(a, b, c, L=1.0, M=200):
+    x, w = np.polynomial.legendre.leggauss(M)
+    x = 0.5 * L * (x + 1); w = 0.5 * L * w
+    s = np.sqrt(w)
+    k = lambda u: np.exp(a * u) - c * np.exp(-b * u)
+    X, Y = np.meshgrid(x, x, indexing='ij')
+    H = s[:, None] * k(X + Y) * s[None, :]
+    T = s[:, None] * k(np.abs(X - Y)) * s[None, :]
+    return H, T
+def cstar(a, b, c, L=1.0):
+    H, T = forms(a, b, c, L)
+    e1 = np.linalg.eigvalsh(H - T)[-1]; e2 = np.linalg.eigvalsh(-H - T)[-1]
+    return max(e1, e2), e1, e2, np.linalg.eigvalsh(T)[0], np.linalg.eigvalsh(T)[-1]
+print("a     b     c    L    C*        lam_max(H-T) lam_max(-H-T) lam_min(T)  lam_max(T)")
+for (a, b, c, L) in [(0.5, 2.5, 1, 1), (0.5, 2.5, 0, 1), (0.5, 2.5, 2, 1), (0.5, 2.5, 5, 1),
+                     (0.3, 2.5, 1, 1), (0.7, 2.5, 1, 1), (0.5, 2.3, 1, 1), (0.5, 2.7, 1, 1),
+                     (0.6, 2.4, 1, 1), (0.4, 2.6, 1, 1), (0.7, 2.3, 1, 1), (0.3, 2.7, 1, 1),
+                     (0.5, 2.5, 1, 0.5), (0.5, 2.5, 1, 2)]:
+    C, e1, e2, tmin, tmax = cstar(a, b, c, L)
+    print(f"{a:.1f}   {b:.1f}   {c:<4} {L:<4} {C:+.6f}  {e1:+.6f}    {e2:+.6f}     {tmin:+.6f}  {tmax:+.6f}")
+# convergence check
+for M in (100, 200, 400):
+    H, T = forms(0.5, 2.5, 1, 1.0, M)
+    print("M", M, "C*", max(np.linalg.eigvalsh(H - T)[-1], np.linalg.eigvalsh(-H - T)[-1]))

@@ -142,3 +142,42 @@ J17 (written 00:27:16 UTC by the system clock, command-written, before computing
    uncertain, my guess (0, 0). (iv) two quartets (also gamma_3, gamma_4 -> a' = 27.718, b = 0.3): never 3 in a block;
    (2, 2) at L = 1.0 and 1.25. (v) one quartet with multiplicity 3 (weight 3 on the quartet terms): same counts as (iii).
    Note: "never more than the number of quartets" tests Theorem 4 only together with RH for the untouched zeros of zeta.
+
+J17 result (j17_int.log, 22 s; written 00:29:04 UTC). Sanity: zeta's lowest eigenvalues 8.249e-30 (even), 2.228e-26 (odd) at L = 1 as in J12;
+   "zeta minus the pairs 1, 2" stays positive definite (lowest 3.1e-11, 1.4e-21, 4.8e-38, 1.5e-64 at L = 0.5..1.25), which checks the
+   normalisation of the removed terms. (i) zeta (0,0) HIT. (ii) control b = 0: (0,0) at every L HIT.
+   (iii) one quartet b = 0.3: (1,1) at L = 0.5, 0.75, 1.0, 1.25, never 2 in a block. HIT on "never 2" and on L >= 0.75; MISS on my
+   guess (0,0) at L = 0.5: it is already (1,1) there (lowest -1.24e-3 even, -5.4e-4 odd). Lowest eigenvalues -0.040/-0.037,
+   -0.097/-0.110, -0.230/-0.203 at L = 0.75, 1.0, 1.25; the second eigenvalue stays positive (4.0e-15, 6.9e-30, 1.05e-54).
+   (iv) two quartets: (2,1) at L = 0.5, (2,2) at L = 0.75, 1.0, 1.25; never 3. HIT. (v) multiplicity 3: (1,1) at every L. HIT.
+   Extra rows (not predicted): b = 0.05 and b = 0.45 give (1,1) at every L.
+   So Theorem 4's kill line is not met on surgery configurations of zeta: the per-block count never exceeds the number of
+   quartets and reaches it by L = 0.75 (one implementation of the base form, B; int lattice; half lattice running).
+
+J18 (written 00:29:04 UTC by the system clock, command-written, before computing). Round-1 judge's second kill line and seat parity's
+   C2 second half: does a one-quartet configuration keep N = pole - Q at ONE positive eigenvalue?
+   Hand derivation first (Haynsworth on [[Q_e, c],[c^T, 1/2]] and [[Q_o, s],[s^T, -1/2]], blocks invertible):
+       kappa_+(N_even) = kappa_-(Q_even) + [ c^T Q_e^-1 c > 1/2 ],     kappa_+(N_odd) = kappa_-(Q_odd) - [ s^T Q_o^-1 s < -1/2 ].
+   Predict for the same configurations as J17 (int lattice): c^T Q_e^-1 c is huge and positive (> 1e3) and s^T Q_o^-1 s > 0 in
+   every case, because the tiny positive eigenvalues dominate the inverse. Hence positive eigenvalues of N per block:
+   zeta (1, 0); control b = 0 (1, 0); one quartet (2, 1), i.e. THREE in total at every L from 0.5; two quartets (3, 1) at L = 0.5
+   and (3, 2) from L = 0.75; and the identity holds in every row. If instead the one-quartet row shows (1, 0), the
+   signature of N cannot see a single quartet in this family.
+
+J17 half lattice (j17_half.log): identical counts in every row ((1,1) one quartet at every L; (2,1) then (2,2) two quartets; controls (0,0)).
+
+J18 result (j18_int.log, j18_half.log; written 00:30:44 UTC). The identity holds in all 36 rows (18 per lattice).
+   One quartet: kappa_+(N) = (2, 1), THREE positive eigenvalues, at L = 0.5, 0.75, 1.0, 1.25, both lattices. HIT.
+   zeta and control b = 0: (1, 0). HIT. Two quartets: (3, 2) at L = 0.75, 1.0, 1.25. HIT.
+   Two quartets at L = 0.5: predicted (3, 1), measured (2, 1). MISS. Reason: there c^T Q_e^-1 c = -2.7e7 (int), -3.3e7 (half):
+   the second negative eigenvalue of Q_e is tiny (-2.2e-8) and dominates the inverse with the wrong sign. So my blanket
+   prediction "c^T Q^-1 c is huge and positive in every case" was wrong in exactly that row.
+   Beurling control (2 -> 2.1), not predicted: kappa_-(Q) = (1,1) and kappa_+(N) = (2,1) at L = 0.5 (c^T Q^-1 c = 14.0,
+   s^T Q^-1 s = -0.158); (2,2) and (3,2) at L = 1 (48.1, 2.19). So the Beurling counts 3 and 5 of all three seats are 1 + kappa_-(Q).
+   Reading (facts only): the round-1 kill line "a one-quartet configuration keeps N at exactly one positive eigenvalue" is
+   not met in this family; N has three. By the identity, a one-quartet configuration has kappa_+(N) = 1 exactly when
+   c^T Q_e^-1 c <= 1/2 and s^T Q_o^-1 s < -1/2 hold together; in every computed surgery row the first number is between
+   5.8e5 and 7e53.
+Final score of this seat: 18 predictions written before computing. Clean hits 14 (J1 to J12, J14, J16);
+   J13 missed at first run (my threshold) and hit on the rerun; J15 hit on values, missed on the location of the worst site;
+   J17 hit except my guess at L = 0.5; J18 hit except one row (two quartets at L = 0.5).

@@ -53,16 +53,17 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - checked by: R2-parity-ref (rh/experiments/r2_parity/refuter/PROGRESS.md, section 'PROOF CHECK'): 'Lemma 1, Lemma 2: correct. Trivial (two lines each)'
 
 ## T6 · Bridge: mirror positivity implies the block inequalities
-- statement: OPEN, and not yet a precise statement: for the kernel of T4 (mirror-positive on the integers, completely monotone Gamma part) the block inequalities of T5 hold on every window. Must fail for a Beurling system.
-- status: open
-- depends: T4, T5
-- source: idea #21
+- statement: (The bridge of idea #21, as a general implication; rewritten 2026-11-11 from the seed's wording, which was marked 'not yet a precise statement'.) Let F be a Dirichlet series with a functional equation s -> 1-s, an Euler product, non-negative log-derivative coefficients c(n) supported on the true integers, a mirror-positive coefficient matrix [c(ab)], a, b >= 2, and a completely monotone archimedean kernel. Then the Weil form of F is >= 0 on every window (the two block inequalities of T5 hold for F with its own pole term). The statement was required to fail for a Beurling system.
+- status: refuted
+- depends: T5, T70, T71
+- source: lead (idea #21: 'mirror positivity implies shift positivity', Kallen-Lehmann with one time per prime)
 - routes: #21
+- note: REFUTED (S1-mirror, board B15; accepted by the lead, B69: idea #21 killed, barrier B11 added). Counterexample F_d(s) = zeta(s-d) zeta(s+d), 0 < d < 1/2: its whole Weil kernel is zeta's times 2cosh(du): prime weights Lambda(n) n^{-1/2} 2cosh(d log n) >= 0 on the true integers, Euler product with real positive local roots p^{+-d} (mirror positive by T70 / T77), Gamma kernel 2cosh(du) w(u) = sum of exponentials with rates 2m + 1/2 +- d > 0 (completely monotone), functional equation s -> 1-s; yet its zeros rho +- d are off the centre line unconditionally, and its form is negative on the window L = 0.75 for every d > 7.9e-6 (T79; two implementations). The hypotheses are closed under multiplying the kernel by real exponentials e^{du}, the conclusion only under e^{itu}. Adding 'exactly one wrong-sign square in the mirror form' does not save it: G_d = zeta(s) L(s-d,chi_4) L(s+d,chi_4) passes that too (board B81). What the family violates is the size normalisation of the local roots (|root| = 1). The literal reading of the seed's wording, with F = zeta only, is RH itself and is not what is refuted. Other mirror-positive systems whose window form fails: one-prime system (from L = 0.56), Liouville twist, any change of a weight beyond 1e-5..1e-13 (board B18, B19, B47). | 2026-11-11 -> refuted: counterexample zeta(s-d) zeta(s+d): all hypotheses hold, zeros off the centre line, window form negative at L = 0.75 for d > 7.9e-6
 
 ## T7 · Weil's explicit formula in the project's normalisation (and the notation used by later entries)
 - statement: NOTATION. L > 0; D_L = C_c^inf((-L,L)), complex valued, D = C_c^inf(R); for f, h in D: g(u) = int f(x) conj(h(x-u)) dx; fhat(z) = int f(x) e^{izx} dx; w(u) = e^{u/2}/(2 sinh u) for u > 0. Arithmetic side: P(f,h) = int g(u) 2 cosh(u/2) du [pole]; A(f,h) = -log(pi) g(0) + int_0^inf [ g(0) e^{-2u}/u - w(u) (g(u) + g(-u)) ] du [archimedean]; Pi(f,h) = sum_{n>=2} Lambda(n) n^{-1/2} (g(log n) + g(-log n)) [primes]; N = Pi - A; Q = P - N = P + A - Pi; q(f) means q(f,f); subscript L = restriction to D_L; f_e, f_o = even and odd parts; c(x) = cosh(x/2), s(x) = sinh(x/2), <f,c> = int f c. Zero side: Qz(f,h) = sum over the zeros rho = 1/2 + i gamma of zeta in the strip 0 < Re s < 1 (gamma complex, multiplicity m_gamma) of m_gamma fhat(gamma) conj(hhat(conj gamma)). STATEMENT: Qz(f,h) = Q(f,h) for all f, h in D.
 - status: known
-- source: M. Suzuki, 'Weil's quadratic form via the screw function', arXiv 2606.09096 v3, section 1.1 (the five terms of W(f): int f(x)(e^{x/2}+e^{-x/2})dx - sum Lambda(n) n^{-1/2} f(log n) - sum Lambda(n) n^{-1/2} f(-log n) - (log 4pi + C_0) f(0) - int_0^inf {f(x)+f(-x)-2e^{-x/2}f(0)} e^{x/2}dx/(e^x-e^{-x}); Q_W(v1,v2) = W(v1 * v2~)) and eq. (3.1) ('the Weil explicit formula yields' Q_W(v1,v2) = sum_gamma m_gamma v1^(gamma) conj(v2^(conj gamma))). Text read by K-theory 2026-11-11 (HTML, through a quoting fetch: pieces of at most 125 characters); the same paper was read in part by the lead, R2-parity-ref (PDF pp. 2, 4-5, 11-14) and R2-judge. Original: Weil 1952 (not read).
+- source: M. Suzuki, 'Weil's quadratic form via the screw function', arXiv 2606.09096 v3, section 1.1 (the five terms of W(f): int f(x)(e^{x/2}+e^{-x/2})dx - sum Lambda(n) n^{-1/2} f(log n) - sum Lambda(n) n^{-1/2} f(-log n) - (log 4pi + C_0) f(0) - int_0^inf {f(x)+f(-x)-2e^{-x/2}f(0)} e^{x/2}dx/(e^x-e^{-x}); Q_W(v1,v2) = W(v1 * v2~)) and eq. (3.1) ('the Weil explicit formula yields' Q_W(v1,v2) = sum_gamma m_gamma v1^(gamma) conj(v2^(conj gamma)), Fourier transform fhat(z) = int f(x) e^{izx} dx). Read IN FULL by READER-1 (rh/library/2606.09096.md, which records the same W and (3.1)); read by K-theory 2026-11-11 through a quoting fetch of the HTML; read in part by the lead, R2-parity-ref and R2-judge. Original: Weil 1952 (not read).
 - routes: #2, #8, #9, #10, #11, #21
 - note: Normalisation matched by hand by K-theory (k_theory/PROGRESS.md Finding 2): Suzuki's constant term equals the project's because int_0^inf (1/sinh u - e^{-2u}/u) du = -psi(1/2) = C_0 + 2 log 2, so -(log 4pi + C_0) + C_0 + log 4 = -log pi. COMPUTED on record: prime side = zero side to 1e-15 (lane A), again by R2-parity (v1.log), two builders agree to 5e-60 (R2-parity-ref), box matrix against 20000 zeros to 6e-7 (R2-cubic-ref). Caveats: read through a quoting model, not the PDF; Suzuki states (3.1) on his form domain and cites his [14] for it. | 2026-11-11 -> known: definition of W and the zero-side formula quoted from a text that was read; normalisation matched by hand; four numerical validations
 
@@ -82,10 +83,10 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - note: The distinct-point form (needed by T36) follows from the quoted sentence: sign changes of Z(t) are distinct points, and a positive proportion of N(T) is >= c T log T by T8 (iii). Secondary source (the introduction of a 2013 paper); Selberg's paper itself was not read. | 2026-11-11 -> known: quoted from a fetched text; the distinct-zero form is what the quoted sentence says
 
 ## T10 · Operator realisation of the window form: closed, bounded below, discrete spectrum, infimum over smooth functions
-- statement: Notation of T7. For each a > 0 let Q_W^a be the restriction of the Weil form Q (= Qz) to its form domain Dom_a = {v in L^2(-a,a) : |Q(v)| < infinity} (v extended by zero). Then: (1) Q_W^a is bounded below and lower semicontinuous (closed); (2) the associated self-adjoint operator A_a is the Friedrichs extension of the symmetric operator defined on C_c^inf(-a,a); (3) the spectrum of A_a is bounded below and discrete, so lambda_a := inf{Q(v)/||v||^2 : v in Dom_a, v != 0} is an eigenvalue (attained); (4) lambda_a equals the infimum of the same quotient over C_c^inf(-a,a); (5) because Q_W^a is the restriction of one form, Dom_a is contained in Dom_b for a < b, a translate by c of v in Dom_a lies in Dom_{a+|c|} with the same value of Q, and the zero-side formula Q(v1,v2) = sum_gamma m_gamma v1^(gamma) conj(v2^(conj gamma)) holds on Dom_a.
+- statement: Notation of T7. For each a > 0 let Q_W^a be the restriction of the Weil form Q to its form domain Dom_a = {v in L^2(-a,a) : |Q(v)| < infinity} (v extended by zero). Then: (1) Q_W^a is bounded below and lower semicontinuous (closed); (2) the associated self-adjoint operator A_a is the Friedrichs extension of the symmetric operator defined on C_c^inf(-a,a); (3) the spectrum of A_a is bounded below and discrete, so lambda_a := inf{Q(v)/||v||^2 : v in Dom_a, v != 0} is an eigenvalue (attained); (4) lambda_a equals the infimum of the same quotient over C_c^inf(-a,a), and every minimiser lies in the closure of C_c^inf(-a,a) in the form norm; (5) because Q_W^a is the restriction of one form, Dom_a is contained in Dom_b for a < b, and the translate by c of v in Dom_a lies in Dom_{a+|c|} with the same value of Q.
 - status: known
 - depends: T7
-- source: M. Suzuki, 'Weil's quadratic form via the screw function', arXiv 2606.09096 v3: Thm 1.1 (Friedrichs extension), Cor 1.2 (infimum over C_c^inf), section 1 quoting Connes-Consani ('lower bounded and lower semicontinuous', their Prop 2.1) and Connes-Consani-Moscovici Thm 3.6 ('the spectrum of the self-adjoint operator A_a is bounded below and discrete'), eq. (3.1). Read by R2-parity-ref (PDF pp. 2, 4-5, 11-14: the domain and item (5)), R2-judge (Thm 1.1, Cor 1.2, p. 14), K-theory 2026-11-11 (quoting fetch: Thm 1.1, Cor 1.2, the two citations). The Connes-Consani(-Moscovici) papers themselves were not read.
+- source: M. Suzuki, 'Weil's quadratic form via the screw function', arXiv 2606.09096 v3: Thm 1.1 (A_a is the Friedrichs extension), Cor 1.2 (infimum over C_c^inf); the operator, its discrete spectrum and ground state are Connes-Consani-Moscovici's (arXiv 2511.22755, Thm 3.6, Cor 3.7) and closedness and the lower bound are Connes-Consani Prop 2.1, both as quoted by Suzuki. Read IN FULL by READER-1 (rh/library/2606.09096.md: 'items (1) to (4) are as in the paper'); read in part by R2-parity-ref, R2-judge, the lead and K-theory. The Connes-Consani(-Moscovici) papers were read by the reader seats (rh/library), not by K-theory.
 - routes: #2, #8, #9
 - note: This replaces the assumption 'CORE' of PROOF_first_failure.md: R2-parity-ref checked it against the PDF. NOT stated by Suzuki and not used: 'Dom_a = {int log(2+|r|)|vhat|^2 < infinity}' (he proves only an inclusion, p. 13-14). | 2026-11-11 -> known: statements quoted from the paper by three readers
 
@@ -94,7 +95,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - status: known
 - source: A. Connes, W. van Suijlekom, 'Quadratic Forms, Real Zeros and Echoes of the Spectral Action', arXiv 2511.23257 v1; quoted from the text by the lead (KNOWLEDGE section 7: first 40k of 118k characters verbatim)
 - routes: #2, #20
-- note: Statement as recorded in KNOWLEDGE section 7 (the exact hypotheses on the distribution are in the paper, not in the project's files). | 2026-11-11 -> known: quoted from the text (KNOWLEDGE section 7)
+- note: Exact hypotheses, from READER-1's digest of the whole paper (rh/library/2511.23257.md, Theorem 6.1): the distribution is given on [0, 2a] and the form is built from it; the form must be lower bounded with the trigonometric polynomials of period 2a as a core; 'simple' means simple in all of L^2; 'isolated' is a hypothesis; the sign of the eigenvalue is irrelevant; no arithmetic hypothesis. For the Weil window, lower-boundedness, the core and isolation are supplied by T10; what remains to be assumed is 'simple, with even eigenfunction'.
 
 ## T12 · Equivalence (Nyman-Beurling, Baez-Duarte): RH iff chi lies in the closed span of the integer dilates
 - statement: Let rho(x) = x - [x], chi = indicator of (0,1), e_k(x) = rho(1/(kx)) in L^2(0,infinity). RH holds iff chi belongs to the closed linear span of {e_k : k = 1, 2, 3, ...}; equivalently d_N := dist(chi, span{e_k : k <= N}) -> 0.
@@ -137,21 +138,21 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - status: open
 - source: N. Johns, 'Positive solutions of Weil's explicit formula for zeta(s)', github.com/nic410/zeta-positive-solutions (preprint, October 2026)
 - routes: #9
-- note: UNVERIFIED: AI-produced preprint whose README says no human has checked the proofs; the lead read the README and sections 1-3 in paraphrase only. Nothing in the project may rest on it. The project's own proved statements in this area are T43 and T44.
+- note: UNVERIFIED: AI-produced preprint whose README says no human has checked the proofs. The exact statements are now in rh/library/johns-2026-part1.md and johns-positive-solutions.md (digests by the reader seats, whole paper); the statement above is still the lead's paraphrase from KNOWLEDGE section 7 and should be replaced by the theorem numbers from the digest. Reading a proof is not checking it: nothing in the project may rest on it. The project's own proved statements in this area are T43 and T44.
 
 ## T18 · Hecke's dimension count: the functional equation of the theta dial has a unique solution for 0 < n < 8
 - statement: For real 0 < n < 8 the space of Dirichlet series with the functional equation of Z_n(s) = sum r_n(m) m^-s (r_n = coefficients of theta^n; Hecke signature (2, n/2, 1)) is one-dimensional (dimension formula 1 + [k/4] with k = n/2).
 - status: open
-- source: Hecke; Berndt's dimension formula as seen in a search snippet of arXiv 2007.13844 (round-1 judge, JUDGEMENT.md sections 5.3 and 7)
+- source: Hecke; Berndt-Knopp, 'Hecke's theory of modular forms and Dirichlet series', Thm 6.3. Quotable source for the modular-form count (READER-2, rh/library/2005.02996.md): Bondarenko-Radchenko-Seip, arXiv 2005.02996 v3, Prop. 3.1: dim M_k(Gamma_theta, +) = floor((k+4)/4) = 1 + [k/4] for real weight k >= 0 (floor((k+2)/4) for the sign -), cited there to Berndt-Knopp. First used in the project by the round-1 judge from memory plus a search snippet of arXiv 2007.13844
 - routes: #9, #12, #13
-- note: Cited from memory plus one search snippet, unverified ('Not read' in the judge's own words). It is the basis of the statement 'uniqueness of the solution of the functional equation does not force RH' (idea #13).
+- note: OPEN. The modular-form dimension count now has a quotable source (see source; READER-2 read sections 1-3 of Bondarenko-Radchenko-Seip, sections 4-7 unread). NOT verified: the translation from modular forms for the theta group to 'Dirichlet series with the functional equation of Z_n' (Hecke correspondence), which is what idea #13 uses ('uniqueness of the solution of the functional equation does not force RH'); the paper's passage on Knopp's abundance principle for Dirichlet series with functional equations is in the unread part.
 
 ## T19 · Moment criterion for multiplicative Hankel (Helson) matrices indexed by a, b >= 1
-- statement: Let alpha(n) = O(n^a) for some a. The matrix [alpha(nm)], n, m >= 1, is non-negative iff alpha(n) = int t^kappa dmu(t) (n = p^kappa in multi-index notation, t = (t_p)_p in R^infinity) for a positive measure mu on R^infinity; mu is unique. Without a growth condition the statement is false already in two variables.
+- statement: Let alpha(n) = O(n^a) for some finite a > 0 and M(alpha) := [alpha(nm)], n, m >= 1. (i) M(alpha) >= 0 iff there is a measure mu >= 0 on R^infinity with t^kappa in L^1(mu) for all multi-indices kappa and alpha(n) = int t^kappa dmu(t) for n = p^kappa; mu is then unique. (ii) M(alpha) >= 0 and M(alpha(p .)) >= 0 for all primes p iff there is such a measure supported on [0, infinity)^infinity. Without a growth condition (i) is false already in two variables.
 - status: known
-- source: Perfekt and Pushnitski, 'On Helson matrices: moment problems, non-negativity, boundedness, and finite rank', Proc. London Math. Soc. 116 (2018), arXiv 1611.03772, Theorem 3.3 (credited there to Berezansky-Kondratiev, Berg-Christensen-Ressel, Samoilenko); sections 1 to 3 read in full text by S1-mirror (s1_seminar/mirror/PROOF_mirror_criterion.md, Theorem 1 and 'Novelty')
+- source: Perfekt and Pushnitski, 'On Helson matrices: moment problems, non-negativity, boundedness, and finite rank', Proc. London Math. Soc. 116 (2018), arXiv 1611.03772 v2, Theorem 3.3, which the paper calls 'a combination of results existing in the literature' and cites to Ju. M. Berezanskii's 1968 monograph, Berg-Christensen-Ressel 1984 and Samoilenko 1991; the paper gives only a sketch of proof. Read in full by READER-2 (rh/library/1611.03772.md); sections 1 to 3 by S1-mirror
 - routes: #21
-- note: The matrix that idea #21 needs is indexed by a, b >= 2 (for Lambda the matrix on a, b >= 1 is not >= 0, T70); that variant is T76. | 2026-11-11 -> known: theorem quoted from a paper whose sections 1-3 were read in full
+- note: Corrected 2026-11-11 after READER-2's digest of the whole paper (rh/library/1611.03772.md, checked by K-theory): credit (Berezanskii 1968, Berg-Christensen-Ressel 1984, Samoilenko 1991, not 'Berezansky-Kondratiev'), part (ii) added, and the fact that the paper only sketches the proof and calls the result essentially known. The matrix that idea #21 needs is indexed by a, b >= 2 (for Lambda the matrix on a, b >= 1 is not >= 0, T70); that variant is NOT in the paper: it is the project's own T76 (proved by one seat, not independently checked).
 
 ## T20 · Missing-prime floor: the prime-filtered Nyman-Beurling distance D_S is positive when S omits a prime
 - statement: Let rho(x) = x - [x], e_k(x) = rho(1/(kx)), chi = indicator of (0,1), all in L^2(0,infinity). For a set S of primes let <S> be the set of integers k >= 1 all of whose prime factors lie in S, and D_S := dist(chi, closed span{e_k : k in <S>}). If there is an integer q >= 3 coprime to every prime of S (this holds whenever S omits a prime), then D_S^2 >= m(q) > 0, where m(q) is the minimum over real (lam, u, v) of lam^2 + int_1^2 (u - lam y)^2 dy/y^2 + int_{q-1}^{q} (v - lam y)^2 dy/y^2 + int_q^{q+1} (v + u - 1 - lam y)^2 dy/y^2.
@@ -195,7 +196,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - source: R1-A (lattice case), R1-A critic (off-lattice)
 - routes: #2, #9
 - proof: rh/experiments/r1_A/critic/PROGRESS.md, section '21:55 A5 off-lattice check' (statement and numerics only)
-- note: NOT PROVED IN WRITING: the critic says 'derived by hand (3 lines)' but the derivation is not in the file. COMPUTED: both sides agree to 1e-30 at three (L, w, w') for zeta with the explicit H. Judge: 'proved off the lattice, generic to every truncated convolution form; a tool'. To become `proved` the three lines must be written, with the exact constant.
+- note: NOT PROVED IN WRITING for the off-lattice case: the critic says 'derived by hand (3 lines)' but the derivation is not in the file. COMPUTED: both sides agree to 1e-30 at three (L, w, w') for zeta with the explicit H. The LATTICE case is in the literature: Connes-van Suijlekom arXiv 2511.23257, Proposition 4.1 (and 4.2 for the converse), per READER-1's digest (rh/library/2511.23257.md); the off-lattice identity is not in that paper. To become `proved` the three lines must be written, with the exact constant.
 
 ## T25 · Symmetrisation lemma (Hermite-Biehler form), repaired statement
 - statement: Let A(s) = sum_{n<=N} c_n n^-s with real c_n, c_1 != 0, and no zeros in Re s > 1/2; let w >= (1/2) log N and f(z) = e^{iwz} A(1/2 + iz) + e^{-iwz} A(1/2 - iz) (so f(t) = 2 Re[e^{iwt} A(1/2 + it)] for real t). If f is not identically zero, all zeros of f are real.
@@ -270,7 +271,7 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - proof: rh/experiments/k_theory/PROGRESS.md, section 'Written out by me: exact inertia relation' (the seat's files, s1_seminar/parity/NOTES.md section H and board B56, state the result and name the method, Schur complement / Haynsworth, without the steps)
 - source: S1-parity (board B56); derivation written out by K-theory
 - routes: #10
-- note: NOT independently checked: K-theory wrote the three-line derivation, so K-theory cannot be its checker. COMPUTED by the seat: 0 failures in 20000 random indefinite cases (inertia.py.txt); zeta windows: t_e = 0.198, 0.842, 1.345, 7.83, 1.3e6, 1.15e29 at L = 0.05, 0.10, 0.12, 0.20, 0.5, 1. Finite linear algebra: a good formalisation target. It sharpens T27 and contains T34.
+- note: The seat has since written the proof of the EVEN half on the board (post B92: one polynomial identity B(x,y) = (x + y Q^-1 c)^T Q (x + y Q^-1 c) + (1 - t) y^2/2 = x^T (Q - 2cc^T) x + (y + 2 c^T x)^2/2, then Sylvester); K-theory checked that identity both ways. The ODD half is written out only by K-theory (k_theory/PROGRESS.md), so the entry as a whole stays 'proved': it needs a checker other than K-theory, or the formal seat (S1-parity nominated it for Lean, B92). COMPUTED by the seat: 0 failures in 20000 random indefinite cases (inertia.py.txt); zeta windows: t_e = 0.198, 0.842, 1.345, 7.83, 1.3e6, 1.15e29 at L = 0.05, 0.10, 0.12, 0.20, 0.5, 1. It sharpens T27 and contains T34.
 
 ## T33 · The two sum-rule margins are the pole vector seen through the inverse Weil block
 - statement: FINITE SETTING. V a finite-dimensional real inner-product space with an orthogonal involution J (V = V_e + V_o); Q a real symmetric J-invariant form on V with blocks Q_e, Q_o; c in V_e, s in V_o; N_e := 2cc^T - Q_e, N_o := -2ss^T - Q_o (so Q = 2cc^T - 2ss^T - N). If Q_e is invertible and t_e := 2 c^T Q_e^{-1} c != 1, then N_e is invertible and 2 c^T N_e^{-1} c - 1 = 1/(t_e - 1). If Q_o is invertible and t_o := 2 s^T Q_o^{-1} s != -1, then N_o is invertible and 1 - 2 s^T (-N_o)^{-1} s = 1/(1 + t_o). In particular, when a Weil block is positive definite the corresponding margin is strictly positive: the sum rules are never exactly saturated on such a window.
@@ -302,42 +303,42 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 
 ## T36 · No null vector under RH; in general a non-positive vector must see an off-line zero
 - statement: Notation of T7, T10, Z as in T29. Let f in Dom_L, f != 0. Then fhat does not vanish at all real gamma, so Q^+(f) := sum over real gamma of m_gamma |fhat(gamma)|^2 > 0. Consequently: (i) if RH holds, Q(f) > 0 for every f != 0 in Dom_L, and lambda_L > 0 for every L; (ii) in general, Q(f) <= 0 forces sum_{z in Z} m_z Re[ fhat(z) conj(fhat(conj z)) ] < 0.
-- status: checked
-- depends: T8, T9, T10
+- status: proved
+- depends: T8, T9, T10, T80
 - proof: rh/experiments/r2_parity/PROOF_first_failure.md, Lemma 2 (Jensen's formula: fhat has O(r) zeros in |z| <= r, against >> r log r distinct real ordinates)
 - source: R2-parity
 - routes: #8, #9
-- note: The two points the checker asks for are now separate established entries: distinct zeros = T9, attainment and the zero-side formula on Dom_L = T10. The proof file's label 'PROVED' should read 'PROVED given T9 and T10' (conceded on board B57). | 2026-11-11 -> checked: checker's verdict: correct once the two cited facts are supplied; both are established entries
+- note: DOWNGRADED 2026-11-11 from checked to proved. The seat's checker (R2-parity-ref) passed the Jensen/Selberg argument line by line, with two cited inputs: distinct on-line zeros (T9, established) and, for part (i) and (ii), the zero-side formula on the form domain Dom_L. READER-1's reading of the whole paper shows the paper does not state that formula on Dom_L (only without a class, used on H_0^1): it is now the open entry T80, so this entry cannot be `checked`. What is unaffected: for f in C_c^inf(-L,L) both parts hold as proved (T7). Under RH part (i) needs only an inequality that follows from Fatou's lemma (K-theory's remark in T80, not a written proof). The proof file's label 'PROVED' should read 'PROVED given T9, T10 and T80' (the seat conceded the first two on board B57).
 - checked by: R2-parity-ref (rh/experiments/r2_parity/refuter/PROGRESS.md, section 'PROOF CHECK'): 'the Jensen/Selberg argument is correct, with one unstated point: Selberg's count must be of DISTINCT zeros (it is ...). Part (i) also needs attainment of the infimum and the zero-side formula on the form domain'
 
 ## T37 · Equivalence (first-failure template): RH is false iff there is a first window with a null vector
 - statement: Notation of T10 (lambda_L, Dom_L). The following are equivalent: (A) RH is false; (B) lambda_L < 0 for some L; (C) there is L_0 > 0 with lambda_L > 0 for 0 < L < L_0 and lambda_{L_0} = 0, and then Q >= 0 on Dom_{L_0} and Q(psi) = 0 for some psi != 0 in Dom_{L_0}; (D) for some L there is psi != 0 in Dom_L with Q >= 0 on Dom_L and Q(psi) = 0. Moreover {L : lambda_L = 0} is a closed interval [L_0, L_1] (empty exactly when RH holds), with lambda > 0 to its left and lambda < 0 to its right.
-- status: checked
+- status: proved
 - depends: T2, T10, T29, T35, T36
 - proof: rh/experiments/r2_parity/PROOF_first_failure.md, Theorem 3
 - source: R2-parity. KNOWN in substance: Suzuki arXiv 2606.09096 p. 5 (after Thm 1.3) and Yoshida 1992 Theorem 2 ('RH <=> non-degeneracy of Q_W^a for every a'); the seat adds the interval structure and (D) at any L
 - routes: #8
-- note: An EQUIVALENT form of 'RH is false' (owner rule 2: not a result). Nothing in it uses the Euler product: for the Davenport-Heilbronn form psi exists (L_0 in (1.70, 1.72]). Its use: the key lemma of idea #8, 'no psi as in (D) exists', has the equality-case shape. | 2026-11-11 -> checked: checker's verdict: correct given the cited theorems, which are established entries
+- note: DOWNGRADED 2026-11-11 from checked to proved: (D) => (A) uses T36 (i), which rests on the open T80. (A) => (B) (T29 with T10 (4)), (B) => (C) (T2, T35, T10) and the interval structure are unaffected and were checked by R2-parity-ref. An EQUIVALENT form of 'RH is false' (owner rule 2: not a result); KNOWN in substance (Suzuki p. 5; Yoshida 1992 Theorem 2: non-degeneracy for every a <=> RH; per READER-1 the sentence 'RH fails iff lambda_a < 0 for some a' is Suzuki's own step). Nothing in it uses the Euler product: for the Davenport-Heilbronn form psi exists (L_0 in (1.70, 1.72]). Its use: the key lemma of idea #8, 'no psi as in (D) exists', has the equality-case shape.
 - checked by: R2-parity-ref (rh/experiments/r2_parity/refuter/PROGRESS.md, section 'PROOF CHECK'): 'Theorem 3, section 4, Prop. 5 (a)-(d): correct given S1, S3, S4, CORE'; CORE checked against the PDF by the same checker
 
 ## T38 · The equation of a null vector of a non-negative window form (all terms)
-- statement: Notation of T7, T10. Let Q >= 0 on Dom_L and Q(psi) = 0, psi in Dom_L extended by 0 outside [-L, L]. Then Q(psi, h) = 0 for every h in Dom_L, i.e. for |x| < L, in the sense of distributions: e^{x/2} int psi(y) e^{-y/2} dy + e^{-x/2} int psi(y) e^{y/2} dy - (log pi) psi(x) + int_0^inf ( psi(x) e^{-2u}/u - w(u) [psi(x-u) + psi(x+u)] ) du - sum_{2 <= n < e^{2L}} Lambda(n) n^{-1/2} [psi(x - log n) + psi(x + log n)] = 0. Equivalently the distribution x -> sum_gamma m_gamma psihat(gamma) e^{-i gamma x} vanishes on (-L, L).
+- statement: Notation of T7, T10. Let Q >= 0 on Dom_L and Q(psi) = 0, psi in Dom_L extended by 0 outside [-L, L]. Then Q(psi, h) = 0 for every h in Dom_L, i.e. for |x| < L, in the sense of distributions: e^{x/2} int psi(y) e^{-y/2} dy + e^{-x/2} int psi(y) e^{y/2} dy - (log pi) psi(x) + int_0^inf ( psi(x) e^{-2u}/u - w(u) [psi(x-u) + psi(x+u)] ) du - sum_{2 <= n < e^{2L}} Lambda(n) n^{-1/2} [psi(x - log n) + psi(x + log n)] = 0. (Given T80, equivalently: the distribution x -> sum_gamma m_gamma psihat(gamma) e^{-i gamma x} vanishes on (-L, L).)
 - status: checked
 - depends: T7, T10
 - proof: rh/experiments/r2_parity/PROOF_first_failure.md, section 4
 - source: R2-parity
 - routes: #8
 - checked by: R2-parity-ref (rh/experiments/r2_parity/refuter/PROGRESS.md, section 'PROOF CHECK'): 'Theorem 3, section 4, Prop. 5 (a)-(d): correct given S1, S3, S4, CORE'
-- note: 2026-11-11 -> checked: checker's verdict: correct
+- note: The kernel equation (first display) uses only Cauchy-Schwarz for a non-negative form and the arithmetic side; it stays checked. The zero-side reading in the last parenthesis needs the open T80 (statement edited 2026-11-11 to say so).
 
 ## T39 · Properties of a null vector at the first failure: reality, parity, full support, transform
 - statement: Notation of T37 (C). Let psi != 0 in Dom_{L_0} with Q(psi) = 0 at the first failure L_0. (a) Re psi, Im psi and the even and odd parts of psi are each null vectors or zero; so there is a real null vector that is even or odd. (b) The convex hull of supp psi is exactly [-L_0, L_0]. (c) psihat is entire of exponential type exactly L_0 in both half-planes, bounded on R, with O(r) zeros in |z| <= r, and sum over real gamma of m_gamma |psihat(gamma)|^2 = -2 sum_{z in Z} m_z Re[psihat(z) conj(psihat(conj z))] > 0; for a real null vector of parity +-1 the right side is -+2 sum_{z in Z} m_z Re[psihat(z)^2]. (d) The null space of Q on Dom_{L_0} is finite dimensional.
-- status: checked
-- depends: T37, T36, T38, T10
+- status: proved
+- depends: T37, T36, T38, T10, T80
 - proof: rh/experiments/r2_parity/PROOF_first_failure.md, Proposition 5 (a)-(d)
 - source: R2-parity
 - routes: #8
-- note: Conditional on RH being false (or read for the Davenport-Heilbronn form, where the null vector exists). Uses no arithmetic. | 2026-11-11 -> checked: checker's verdict: correct
+- note: DOWNGRADED 2026-11-11 from checked to proved: part (c) evaluates the zero-side formula at psi (open T80) and the entry rests on T36 and T37. Parts (a), (b), (d) do not use T80 and were checked by R2-parity-ref. Conditional on RH being false (or read for the Davenport-Heilbronn form, where the null vector exists). Uses no arithmetic.
 - checked by: R2-parity-ref (rh/experiments/r2_parity/refuter/PROGRESS.md, section 'PROOF CHECK'): 'Prop. 5 (a)-(d): correct given S1, S3, S4, CORE'
 
 ## T40 · End-point regularity of a first-failure null vector
@@ -376,12 +377,12 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 
 ## T44 · Under RH the feasible set of weights on a single window has non-empty interior
 - statement: Notation of T10. Assume RH and fix L > 0. For every real atomic measure D = sum_j d_j (delta_{u_j} + delta_{-u_j}), u_j > 0, with 2 sum_j |d_j| <= lambda_L: Q(f) + sum_j d_j (g_f(u_j) + g_f(-u_j)) >= 0 for every f in Dom_L. (lambda_L > 0 by T36.) So on one window the conclusion of T43 fails for every L.
-- status: checked
+- status: proved
 - depends: T36, T10
 - proof: rh/experiments/r2_parity/refuter/PROGRESS.md, PROOF CHECK of PROOF_uniqueness.md ('One-line proof: |D(f*f~)| <= 2 sum|d_j| ||f||^2 and lambda(L) > 0 is attained')
 - source: R2-parity-ref (the checker); accepted by the seat (board B57)
 - routes: #9
-- note: This is why idea #9 needs a RATE: the window-L feasible set shrinks with lambda_L (about 8e-30 at L = 1) but is never a point. The discretised feasible intervals computed by three implementations are outer bounds. | 2026-11-11 -> checked: one-line proof re-derived
+- note: DOWNGRADED 2026-11-11 from checked to proved: the one-line proof (checked by K-theory, C4) uses lambda_L > 0 under RH, i.e. T36 (i), which rests on the open T80. This is why idea #9 needs a RATE: the window-L feasible set shrinks with lambda_L (about 8e-30 at L = 1) but is never a point. The discretised feasible intervals computed by three implementations are outer bounds.
 - checked by: K-theory (one line, check C4 in rh/experiments/k_theory/PROGRESS.md); the proof is by the seat's checker, not by the seat
 
 ## T45 · First-order caps on the change of one weight (trial-vector bound)
@@ -414,6 +415,336 @@ dependency is not established. **Any lemma a live route depends on must reach `f
 - source: lead (notebook N14 step 5; idea #9, field 'new input')
 - routes: #9
 - note: OPEN. RH implies it in one line (Q = P + A - Pi >= 0 by T1 and Pi(f) >= 0 under the hypothesis). Whether it is provable outright, and whether it implies RH, is not known in the project; the Johns preprint claims an equivalence of this type by LP duality (T17, unverified). It mentions neither primes nor zeros.
+
+## T49 · The archimedean term is a constant minus the Dirichlet form of a Levy measure
+- statement: Notation of T7. For real f in L^2(R) with compact support and of bounded variation: -A(f) = c_inf ||f||^2 - int_0^inf w(u) int_R |f(x+u) - f(x)|^2 dx du, with c_inf = log(pi) - psi(1/4) = gamma + pi/2 + log(8 pi) = 5.3721834... (psi the digamma function, gamma Euler's constant). Hence N = c_inf ||f||^2 + (prime shifts) - (Dirichlet form of the measure w(|u|) du).
+- status: checked
+- proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem E
+- source: R2-curv; classical in substance (Levy-Khintchine form of Re psi(1/4 + i xi/2)); a Zenodo record found by the checker (search summary only) states it
+- routes: #10, #11
+- note: Uses Gauss's integral for the digamma function (textbook; not entered). COMPUTED: box diagonal from both sides agrees to 12 digits. | 2026-11-11 -> checked: checker's verdict: correct
+- checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING' and 'FINAL VERDICTS'): 'E: correct (checked Gauss integral, t = 2u substitution, psi(1/4) value)'
+
+## T50 · Fibre classes: both block inequalities are one signature statement about the bordered form Ntilde
+- statement: Let V be a real vector space of finite dimension with inner product <.,.>, N a symmetric bilinear form on V, p, q in V, and Q(f) := 2<f,p><f,q> - N(f,f). Let Ntilde be the symmetric form on V + R F1 + R F2 with Ntilde(f,g) = N(f,g), Ntilde(f,F1) = <f,p>, Ntilde(f,F2) = <f,q>, Ntilde(F1,F1) = Ntilde(F2,F2) = 0, Ntilde(F1,F2) = 1. Then (number of positive eigenvalues of Ntilde) = 1 + (number of negative eigenvalues of Q) and (number of zero eigenvalues of Ntilde) = (number of zero eigenvalues of Q). In particular Q >= 0 on V iff Ntilde has exactly one positive eigenvalue. (Application: V a subspace of L^2[-L,L], N = primes - arch, p, q the projections of e^{x/2}, e^{-x/2}; then Q is the Weil form.)
+- status: checked
+- proof: rh/experiments/r2_cubic/PROOF_trickle.md, Lemma A
+- source: R2-cubic; it is the Hodge index theorem on a product of two curves in linear-algebra form (Haynsworth inertia additivity)
+- routes: #10
+- note: Finite linear algebra (Sylvester's law of inertia): first choice for formalisation. Uses nothing about zeta. Its infinite-dimensional and per-parity form combined with the exact index is T61. | 2026-11-11 -> checked: checker's verdict: every line checks | FORMAL STATUS (2026-11-11 00:33 UTC, from rh/formal/PROGRESS.md): RHFormal/LemmaA_FibreClasses.lean checks as a single file: formal for 'Q >= 0 on V <=> Ntilde has no positive definite plane' on ANY real vector space (no finite dimension needed); NOT formal: the two counting equalities (Sylvester's law of inertia), which are what T61 uses. Status stays as it is until the formal seat's MEMORY.md lists the file as formal and the full `lake -d rh/formal build` has succeeded (no build product for this file existed when K-theory looked; K-theory did not run Lean, because the formal seat allows one Lean process at a time).
+- checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Lemma A: correct, known. Every line checks'; COMPUTED: 2000 random (N,p,q), 0 violations
+
+## T51 · Trickle-down with negative diagonal: Lorentzian slices imply a Lorentzian contraction (Lemma B)
+- statement: SETTING B. T a real symmetric 3-tensor on R^m (T_ijk invariant under all permutations), a in R^m with all a_k > 0, T_k := (T_ijk)_{i,j} the k-th slice, H := sum_k a_k T_k, l_k := H e_k, s := H a with all s_k > 0, D := diag(a_k/s_k). Assume (B1) H_ij >= 0 for i != j and H is irreducible; (B3) every slice T_k has at most one positive eigenvalue. Then H has exactly one positive eigenvalue and H <= H D H (i.e. H D H - H is positive semidefinite). No sign condition on the entries of T is used, and the diagonal of H may have any sign. Moreover, given T.a = H and s > 0, (B3) is equivalent to T_k <= l_k l_k^T / s_k for all k.
+- status: checked
+- proof: rh/experiments/r2_cubic/PROOF_trickle.md, Lemma B (Steps 1-5) and Remark 1
+- source: R2-cubic. KNOWN: Braenden-Leake, 'Lorentzian polynomials on cones', arXiv 2304.13203 v2, Lemma 2.8 with d = 3 (credited there to Cordero-Erausquin-Klartag-Merigot-Santambrogio 2019); pp. 6-9 read by R2-cubic-ref, p. 8 by R2-judge
+- routes: #10
+- note: The only use of a sign is Perron-Frobenius in Step 5. Without irreducibility the conclusion fails. Finite linear algebra plus Perron-Frobenius: formalisable (mathlib has Perron-Frobenius only in part; medium). | 2026-11-11 -> checked: checker's verdict: correct; also in the literature that was read | FORMAL STATUS (2026-11-11 00:33 UTC, from rh/formal/PROGRESS.md): only Step 2 (reverse Cauchy-Schwarz) is in Lean (RHFormal/OnePositiveDirection.lean, with 'at most one positive eigenvalue' defined as 'no positive definite plane'; the equivalence with the eigenvalue count is not formalised). Steps 3-5 (Perron-Frobenius) are not.
+- checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Lemma B: correct, KNOWN. Identical in hypotheses and proof to Braenden-Leake Lemma 2.8, case d = 3'
+
+## T52 · The cone certificate: bare existence of a cubic certificate is equivalent to the conclusion (vacuity)
+- statement: Let H be a real symmetric m x m matrix with exactly one positive eigenvalue and a a vector with l := H a >= 0 entrywise and s := a^T H a > 0. Then T_ijk := [ H_ij l_k + H_ik l_j + H_jk l_i - (2/s) l_i l_j l_k ] / s is a symmetric 3-tensor with sum_k a_k T_ijk = H_ij whose slices all have at most one positive eigenvalue. COROLLARY: if H has non-negative off-diagonal entries and is irreducible and a > 0 with H a > 0, then [H has exactly one positive eigenvalue] <=> [there is a symmetric T with T.a = H whose slices all have at most one positive eigenvalue]. So for the windowed Weil form 'a cubic certificate for Ntilde exists' is equivalent to 'the Weil form is >= 0 on that subspace', for zeta and for any system with non-negative couplings.
+- status: checked
+- depends: T51
+- proof: rh/experiments/r2_cubic/PROOF_trickle.md, Lemma C and its Corollary
+- source: R2-cubic
+- routes: #10
+- note: This is what parked idea #10: searching for a certificate could never have told anything. Not found in what the checker read; elementary. | 2026-11-11 -> checked: checker's verdict: every line checks | FORMAL STATUS (2026-11-11 00:33 UTC, from rh/formal/PROGRESS.md): RHFormal/LemmaC_ConeTensor.lean checks as a single file: symmetry, contraction T.a = H, the slice decomposition and 'each slice has no positive definite plane', under 'H has at most one positive direction' (slightly stronger than the written statement); the Lean proof of the slice statement avoids Weyl's inequality. The corollary (vacuity) also needs T51, which is not formalised. Status stays as it is until the formal seat's MEMORY.md lists the file as formal and the full `lake -d rh/formal build` has succeeded (no build product for this file existed when K-theory looked; K-theory did not run Lean, because the formal seat allows one Lean process at a time).
+- checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Lemma C + vacuity corollary: correct. Every line checks (contraction, slice decomposition, Weyl). Hypothesis l >= 0 is really used'; R2-judge J8 (0 violations of 300 with l >= 0)
+
+## T53 · Rigidity: null directions of H are lineality directions of every certificate (Lemma D)
+- statement: SETTING B. T a real symmetric 3-tensor on R^m (T_ijk invariant under all permutations), a in R^m with all a_k > 0, T_k := (T_ijk)_{i,j} the k-th slice, H := sum_k a_k T_k, l_k := H e_k, s := H a with all s_k > 0, D := diag(a_k/s_k). Assume every slice has at most one positive eigenvalue and put P_k := l_k l_k^T / s_k - T_k (positive semidefinite). Then (D1) sum_k a_k P_k = H D H - H; (D2) (H D H - H) a = 0 and P_k a = 0 for all k; (D3) for every v: sum_k a_k v^T P_k v = v^T (H D H - H) v, and if H v = 0 then P_k v = 0 and T_k v = 0 for every k; (D4) if H = Ntilde of T50, Q f = mu f with |f| = 1, and vt := (f, -<f,q>, -<f,p>), then H vt = (-mu f, 0, 0) and for every k: 0 <= vt^T P_k vt <= (mu + mu^2 f^T D f)/a_k and vt^T T_k vt = mu^2 f_k^2/s_k - vt^T P_k vt (f_k := 0 at the two fibre indices).
+- status: checked
+- depends: T51, T50
+- proof: rh/experiments/r2_cubic/PROOF_trickle.md, Lemma D
+- source: R2-cubic
+- routes: #10
+- note: Checker's precision, accepted by the seat (board B38, B64): D4 bounds the QUADRATIC value; the vector T_k vt is controlled only at the sqrt(mu) scale; the 'Meaning' paragraph about the continuum ladder is an extrapolation, not part of the lemma. | 2026-11-11 -> checked: checker's verdict: correct
+- checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Lemma D (D1-D4), Lemma E: correct'
+
+## T54 · Every coupled pair needs a third scale at a critical window (Lemma E)
+- statement: SETTING B. T a real symmetric 3-tensor on R^m (T_ijk invariant under all permutations), a in R^m with all a_k > 0, T_k := (T_ijk)_{i,j} the k-th slice, H := sum_k a_k T_k, l_k := H e_k, s := H a with all s_k > 0, D := diag(a_k/s_k). Assume every slice has at most one positive eigenvalue. For every pair (i, j) the vector t_ij := (T_ijk)_k satisfies t_ij . a = H_ij and t_ij . v = 0 for every v in ker H. Consequently, if H = Ntilde of T50 has a null vector vt = (f, -<f,q>, -<f,p>) with <f,p> = <f,q> != 0 and a has equal fibre weights, then no pair (i, j) of non-fibre indices with N_ij != 0 can have T_ijk = 0 for all non-fibre k.
+- status: checked
+- depends: T53
+- proof: rh/experiments/r2_cubic/PROOF_trickle.md, Lemma E
+- source: R2-cubic
+- routes: #10
+- checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Lemma D (D1-D4), Lemma E: correct'
+- note: 2026-11-11 -> checked: checker's verdict: correct
+
+## T55 · The Bakry-Emery cubic: the one certificate candidate with a formula, and it is the curvature condition (Theorem F)
+- statement: Let H be real symmetric m x m, a in R^m with a_i > 0 and s := H a > 0 entrywise; A = diag(a), S = diag(s), K := S^{-1} H A (K 1 = 1), pi_i := a_i s_i, [u,v,w] := sum_i pi_i u_i v_i w_i, <u,v> := sum_i pi_i u_i v_i, L := K - I, Gamma(f) = (1/2)[L(f^2) - 2 f Lf], Gamma_2(f) = (1/2)[L Gamma(f) - 2 Gamma(f, Lf)]. Define Theta(g,f,h) := (1/2)([g,Kf,Kh] + [f,Kg,Kh] + [h,Kg,Kf]) - (1/4)([K^2 g,f,h] + [g,K^2 f,h] + [g,f,K^2 h]) + (1/4)[g,f,h]. Then (F1) Theta is symmetric and Theta(1,f,h) = <f, K h>; (F2) Theta(g,f,f) = <g, (Kf)^2> - <g, Gamma_2(f) - Gamma(f)>; (F3) T_ijk := Theta(e_i/a_i, e_j/a_j, e_k/a_k) is symmetric, sum_k a_k T_ijk = H_ij, and its k-th slice is l_k l_k^T/s_k - s_k x [the quadratic form x -> (Gamma_2 - Gamma)(A^{-1}x)(k)]; (F4) every slice of T has at most one positive eigenvalue iff Gamma_2(f)(k) >= Gamma(f)(k) for all f and all k (Bakry-Emery CD(1, infinity)); (F5) for distinct i, j, k: T_ijk = (1/2)[H_ij H_ik/s_i + H_ij H_jk/s_j + H_ik H_jk/s_k] (formulas for T_iik, T_iii in the proof file).
+- status: checked
+- depends: T51
+- proof: rh/experiments/r2_cubic/PROOF_BE_cubic.md, section 1 (Theorem F)
+- source: R2-cubic
+- routes: #10, #11
+- note: No sign condition on H is used. Idea #10's certificate and idea #11's curvature are one object for this canonical cubic; by T65 it cannot certify a zero-margin statement. Not found in two searches by the checker. | 2026-11-11 -> checked: checker's verdict: recomputed by hand
+- checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Theorem F (F1-F5): correct. Recomputed F1, F2 (all four collected lines), F3, F5 (all three entry types) by hand'; COMPUTED: three constructions agree to 6e-15 (checker), 2e-14 (R2-judge J7)
+
+## T56 · At mean field the certificate is unique, and a one-parameter family of local cubics is exact there
+- statement: Notation of T55, with pi normalised to total mass 1 and <g> := sum_i pi_i g_i. (U) If H has rank one (K = projection on constants), the only symmetric T with T.a = H whose slices all have at most one positive eigenvalue is given by Theta(g,f,h) = <g><f><h>. (V) With sigma_1 := sym[Kg,f,h], sigma_2 := sym[K^2 g,f,h], sigma_11 := sym[Kg,Kf,h] (three terms each) and sigma_111 := [Kg,Kf,Kh], for every real t the form Theta_t := t(sigma_1 - sigma_2) + (1/2 - t) sigma_11 + (3t - 1/2) sigma_111 is symmetric, satisfies Theta_t(1,f,h) = <f,Kh> for every chain, and equals <g><f><h> when K is the projection on constants.
+- status: checked
+- depends: T53, T55
+- proof: rh/experiments/r2_cubic/PROOF_BE_cubic.md, section 3 (U), (V)
+- source: R2-cubic
+- routes: #10
+- note: COMPUTED (seat; checker on a 0.001 grid; R2-judge J4): no t makes the slices Lorentzian for zeta (best worst-case -0.0184 at t = 0.014, L = 1, 12 boxes) nor for the Beurling control (-0.0239). The seat's 'best t = 0.05' was a grid artefact (conceded, board B64). | 2026-11-11 -> checked: checker's verdict: correct with the normalisation stated
+- checked by: R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): 'Sec. 3 (U), (V): correct. Normalisation: formulas with <g> = mean need total mass of pi equal to 1'
+
+## T57 · Pair obstruction: a coupled pair whose third indices are restricted forces a rank-two lower bound on HDH - H
+- statement: SETTING B. T a real symmetric 3-tensor on R^m (T_ijk invariant under all permutations), a in R^m with all a_k > 0, T_k := (T_ijk)_{i,j} the k-th slice, H := sum_k a_k T_k, l_k := H e_k, s := H a with all s_k > 0, D := diag(a_k/s_k). Assume every slice has at most one positive eigenvalue. Let i != j with H_ij != 0, let B be a set of indices containing i and j with T_ijk = 0 for all k in B, and w := sum_{k not in B} T_ijk e_k. Then a . w = H_ij and H D H - H >= (a_i/s_i) v_i v_i^T + (a_j/s_j) v_j v_j^T, where v_i := l_i - (s_i/H_ij) w and v_j := l_j - (s_j/H_ij) w.
+- status: checked
+- depends: T53
+- proof: rh/experiments/s1_seminar/cubic/TURN1.md, section 3 (b), statement (E')
+- source: S1-cubic
+- routes: #10
+- note: With B = all non-fibre indices this is a one-parameter convex test with no SDP solver. COMPUTED by the seat: it fails for every pair of boxes in every case tried (zeta and the Beurling control alike). At a critical window it reduces to T54. The seat withdrew 'certificates are maximally non-local' (board B51, B64). | 2026-11-11 -> checked: six-line proof re-derived
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C6)
+
+## T58 · Block trickle-down: Lemma B with slices replaced by block contractions
+- statement: SETTING B. T a real symmetric 3-tensor on R^m (T_ijk invariant under all permutations), a in R^m with all a_k > 0, T_k := (T_ijk)_{i,j} the k-th slice, H := sum_k a_k T_k, l_k := H e_k, s := H a with all s_k > 0, D := diag(a_k/s_k). Let S_1, ..., S_r be a partition of the indices, b_i := the restriction of a to S_i, H_i := sum_{k in S_i} a_k T_k, sigma_i := b_i . s. Assume each H_i has at most one positive eigenvalue, H has non-negative off-diagonal entries, and the r x r matrix Hhat := (b_i^T H b_j) is irreducible and non-degenerate. Then H has exactly one positive eigenvalue. (r = m is T51; r = 1 is the conclusion itself.)
+- status: checked
+- depends: T51
+- proof: rh/experiments/s1_seminar/cubic/TURN1.md, section 6 ('Tensor version')
+- source: S1-cubic
+- routes: #10
+- note: As an existence statement every intermediate block condition is again equivalent to the conclusion, because the cone tensor of T52 satisfies all of them (seat, board B62). | 2026-11-11 -> checked: proof re-derived line by line
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C7)
+
+## T59 · One fibre field: pole minus the slowest Gamma exponential is the kernel e^{|x-y|/2}, and a doubled matrix with non-negative off-diagonal carries the signature
+- statement: Notation of T7. (1) Kernel identity: e^{x/2} e^{-y/2} + e^{-x/2} e^{y/2} - e^{-|x-y|/2} = e^{|x-y|/2} =: E(x,y). (2) On any finite-dimensional subspace V of L^2[-L,L] the compression of E has at most one positive eigenvalue, and exactly one if <v, E v> > 0 for some v in V (e.g. any non-negative v != 0, since E > 0 pointwise). (3) Let W0 be the form of the kernel e^{-|x-y|/2} (the m = 0 term of w) and N' := N - W0 on V. If the compression of E to V is non-degenerate with exactly one positive eigenvalue, then (number of positive eigenvalues of the block matrix [[N', E],[E, E]]) = 1 + (number of negative eigenvalues of Q on V).
+- status: checked
+- proof: rh/experiments/s1_seminar/cubic/TURN1.md, section 7
+- source: S1-cubic (answer to board B49)
+- routes: #10
+- note: Hypothesis made explicit by K-theory: non-degeneracy of the compression of E to V. It is proved for the integral operator on L^2 ((-d^2/dx^2 + 1/4) E = -delta) and COMPUTED on boxes (eigenvalues 2.894, -5.9e-4, ...), not proved for an arbitrary subspace. In the box basis all off-diagonal entries of the doubled matrix are >= 0 (COMPUTED). | 2026-11-11 -> checked: three-line proof re-derived; one hypothesis added
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C8)
+
+## T60 · Per-prime Poisson decomposition of the Weil form
+- statement: Notation of T7 and T49. For real f in L^2 supported in [-L, L] (of bounded variation), with C(u) := int f(x+u) f(x) dx, theta(X) := sum_{p <= X} log p, E_w(f) := int_0^inf w(u) int |f(x+u) - f(x)|^2 dx du, and for each prime p: q_p(f) := sum_{k in Z} p^{-|k|/2} C(k log p). Then Q(f) = 2<f,e^{x/2}><f,e^{-x/2}> + E_w(f) + (theta(e^{2L}) - c_inf) ||f||^2 - sum_{p <= e^{2L}} (log p) q_p(f), and with r = p^{-1/2}: (1-r)/(1+r) ||f||^2 <= q_p(f) <= (1+r)/(1-r) ||f||^2.
+- status: checked
+- depends: T49
+- proof: rh/experiments/s1_seminar/cubic/TURN1.md, section 2
+- source: S1-cubic
+- routes: #10, #21
+- note: Window positivity is thus an UPPER bound for sum_p (log p) q_p; each q_p is a positive form entering with a minus sign. COMPUTED: on the lowest eigenvector (24 boxes, L = 1) q_p = 1.964, 1.317, 1.030, 1.000 for p = 2, 3, 5, 7. | 2026-11-11 -> checked: bookkeeping proof re-derived
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C9)
+
+## T61 · The signature of the fibre-extended form counts the off-line zeros exactly, per parity block
+- statement: Notation of T7, T29. For each L let Ntilde_L be the form of T50 on V = D_L with N = Pi - A, p = e^{x/2}, q = e^{-x/2} (pairing <f,p> = int f p). Then kappa_+(Ntilde_L) = 1 + kappa_-(Q_L) for every L, and sup_L kappa_+(Ntilde_L) = 1 + nu. The reflection x -> -x swaps F1 and F2; on the even block D_{L,even} + R(F1+F2): kappa_+ = 1 + kappa_-(Q_{L,even}); on the odd block D_{L,odd} + R(F1-F2): kappa_+ = kappa_-(Q_{L,odd}). Hence RH <=> the odd block of Ntilde_L is <= 0 for every L <=> the even block of Ntilde_L has exactly one positive square for every L; each off-line quartet adds exactly one positive square to each block for L large.
+- status: checked
+- depends: T50, T29, T30, T7
+- proof: rh/experiments/s1_seminar/parity/NOTES.md, section E (board B32)
+- source: S1-parity, combining R2-cubic's Lemma A with R2-parity's Theorem 4
+- routes: #10
+- note: Closes the bookkeeping wall WP1: the signature of N undercounts (one quartet can be invisible to it, T31), the signature of Ntilde is exact. Still a dictionary: holds for any system with the same kind of explicit formula. | 2026-11-11 -> checked: proof re-derived; the algebraic part of Lemma A holds for kappa counts in infinite dimension
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C10)
+
+## T62 · A structured cubic certificate given by a rule (the wall of idea #10)
+- statement: (Target; NOT yet a precise statement.) There is a rule L -> c_abc(L), not using the spectrum of the window form, such that on every window the cubic sum_{a,b,c <= d} c_abc sym[K^a g, K^b f, K^c h] (K as in T55 for H = Ntilde and a = its Perron vector) contracts to Ntilde and has slices with at most one positive eigenvalue; and no such rule exists for a Beurling system on windows where its form is negative.
+- status: open
+- depends: T4, T50, T51, T52, T55
+- source: S1-cubic (board B38, 'WALL, exact statement'); lead (idea #10, notebook N25, N28)
+- routes: #10
+- note: OPEN and not precise. What is established around it: existence without structure is vacuous (T52); the canonical degree-1 cubic fails by a factor 2 (T55, T65); COMPUTED: certificates of chain-degree 2 exist for zeta with margins 1.2e-3 .. 2.6e-4 and equally for random Lorentzian matrices, with no formula for the coefficients; nothing in the cubic seat's lemmas uses the integers or the Euler product (board B51). Idea #10 is parked on this.
+
+## T63 · Ground-state transform: the form of N is lambda_1 minus a Dirichlet form, and 'one positive direction' is a spectral gap
+- statement: CHAIN SETTING. W a finite set, N a real symmetric matrix on W with N_xy >= 0 for x != y, irreducible; lambda_1 its top eigenvalue, u > 0 the normalised eigenvector (Perron-Frobenius), pi = u^2; q_xy = N_xy u_y/u_x (x != y), L f(x) = sum_y q_xy (f_y - f_x), E(h) = (1/2) sum_{x != y} N_xy u_x u_y (h_x - h_y)^2, Gamma(f)(x) = (1/2) sum_y q_xy (f_y - f_x)^2, Gamma_2(f) = (1/2) L Gamma(f) - Gamma(f, Lf). Then for every vector h: <uh, N uh> = lambda_1 ||h||_pi^2 - E(h) (uh the pointwise product). Consequently N has at most one positive eigenvalue iff E(h) >= lambda_1 ||h||_pi^2 for all h with pi-mean zero, i.e. iff the reversible jump process with rates q_xy has spectral gap >= lambda_1.
+- status: checked
+- proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem A (A0); the corollary is rh/NOTEBOOK.md entry N29 step 3 ('PROVED (algebra)')
+- source: lead (N29); R2-curv (Theorem A)
+- routes: #11
+- note: A reformulation (owner rule 2). The process picture is also in an unrefereed 2026 preprint (notebook N32). | 2026-11-11 -> checked: checker's verdict: (A0) correct; corollary is one line
+- checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING' and 'FINAL VERDICTS'): 'A: (A0), first lines of (A1), (A2): correct'; the one-line corollary (Courant-Fischer: f orthogonal to u iff h = f/u has pi-mean zero) checked by K-theory
+
+## T64 · Bochner formula for the transformed prime jump process (Theorem B)
+- statement: CHAIN SETTING. W a finite set, N a real symmetric matrix on W with N_xy >= 0 for x != y, irreducible; lambda_1 its top eigenvalue, u > 0 the normalised eigenvector (Perron-Frobenius), pi = u^2; q_xy = N_xy u_y/u_x (x != y), L f(x) = sum_y q_xy (f_y - f_x), E(h) = (1/2) sum_{x != y} N_xy u_x u_y (h_x - h_y)^2, Gamma(f)(x) = (1/2) sum_y q_xy (f_y - f_x)^2, Gamma_2(f) = (1/2) L Gamma(f) - Gamma(f, Lf). (B1) If N has constant diagonal N_xx = d, then sum_y q_xy = lambda_1 - d for every x. (B2) For any chain with constant total rate: Gamma_2(f)(x) = (1/2)(Lf(x))^2 + (1/2) sum_{y,z} q_xy q_yz [ (f_z - f_y)^2 - (1/2)(f_z - f_x)^2 ]. (B3) If W is a subset of a lattice or of R and N_xy = k(y-x) for x != y with k even >= 0, with u := 0 outside W, rho_ab(x) := u(x+a+b)/u(x), H_ab(x) := [u(x+a)u(x+b) - u(x)u(x+a+b)]/u(x)^2, then Gamma_2(f)(x) = S + Hs + O where S = (1/4) sum_{a,b: x+a, x+b, x+a+b in W} k(a)k(b) rho_ab(x) (f(x+a+b) - f(x+a) - f(x+b) + f(x))^2, Hs = (1/2) sum_{a,b: x+a, x+b in W} k(a)k(b) H_ab(x) (f(x+a) - f(x))(f(x+b) - f(x)), O = (1/2) sum_{a,b: x+a, x+a+b in W, x+b not in W} k(a)k(b) rho_ab(x) [ (f(x+a+b) - f(x+a))^2 - (1/2)(f(x+a+b) - f(x))^2 ].
+- status: checked
+- proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem B (B1)-(B3)
+- source: R2-curv
+- routes: #11
+- note: The seat's INTERPRETATION 'the curvature deficit sits in the edge terms' was refuted by its checker (removing the open-path term lowers the Gamma-normalised constant) and conceded (board B28). The identity stands. | 2026-11-11 -> checked: checker's verdict: re-derived by hand
+- checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING' and 'FINAL VERDICTS'): 'B: (B1) correct. (B2) re-derived by hand: correct. (B3) re-derived: correct'; COMPUTED: S + Hs + O = Gamma_2 to 3e-14 (seat, checker, R2-judge J5)
+
+## T65 · The resampling chain: Bakry-Emery loses exactly a factor two at mean field (Theorem C)
+- statement: Let pi be a probability vector on a finite set with all pi_x > 0, lam > 0, and the chain q_xy = lam pi_y (self-jumps allowed), L f = lam (pi f - f), whose spectral gap is lam; Var = variance under pi. (C1) Gamma_2(f)(x) = lam^2 [ (1/4)(f(x) - pi f)^2 + (3/4) Var f ] and Gamma(f)(x) = (lam/2)[ Var f + (f(x) - pi f)^2 ]. (C2) The largest rho with Gamma_2 >= rho Gamma pointwise for all f is exactly (lam/2)(1 + 2 min_x pi_x) (uniform pi on m points, lam = 1: 1/2 + 1/m). (C3) Gamma_2(f) - lam Gamma(f) = (lam/4) L[(f - pi f)^2] pointwise. (C4) For ANY reversible chain: if for some rho and some map f -> F_f one has Gamma_2(f) >= rho Gamma(f) + L F_f pointwise for all f, then the spectral gap is >= rho.
+- status: checked
+- proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem C; the uniform case also in rh/experiments/r2_cubic/PROOF_BE_cubic.md, section 2
+- source: R2-curv, R2-cubic. (C1), (C2) KNOWN: Schmuckenschlaeger 1998 (MSRI Publ. 34, pp. 189-197; p. 189 and the start of section 2 read by R2-curv-ref); (C4) is the standard integrated Bakry-Emery criterion
+- routes: #10, #11
+- note: This is why idea #11 was killed: pointwise curvature is capped near half the gap, and RH (in the reading of T63) has zero margin. COMPUTED: zeta at L = 1 gives 0.59, 0.53, 0.48 (12, 24, 48 boxes) and the Beurling control the same to 2%. A Lean file C1_ResamplingGamma2.lean is in progress in rh/formal (not imported, not yet formal). | 2026-11-11 -> checked: both checkers re-derived it | FORMAL STATUS (2026-11-11 00:33 UTC, from rh/formal/PROGRESS.md): RHFormal/C1_ResamplingGamma2.lean checks as a single file: (C1) and (C3) with no difference (they hold for any real pi with sum 1); (C2) as two halves at a fixed site (the bound with constant (lam/2)(1 + 2 pi_x), and equality for f = delta_x), not as one statement about an infimum; 'the gap is lam' and (C4) are NOT formalised. So at best this entry becomes formal in part. Status stays as it is until the formal seat's MEMORY.md lists the file as formal and the full `lake -d rh/formal build` has succeeded (no build product for this file existed when K-theory looked; K-theory did not run Lean, because the formal seat allows one Lean process at a time).
+- checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING' and 'FINAL VERDICTS'): 'C: (C1)-(C4) re-derived: correct'; R2-cubic-ref (rh/experiments/r2_cubic/refuter/PROGRESS.md, section 3 'Proof verdicts'): resampling constant 1/2 + 1/m 'PROVED in two lines'
+
+## T66 · An exact calibration exists if and only if the gap is at least rho (converse of C4)
+- statement: For a reversible irreducible chain on a finite set with generator L and stationary law pi, and rho real: [spectral gap >= rho] <=> [there is a family C_x of quadratic forms (one per site) such that Gamma_2(f)(x) - rho Gamma(f)(x) - sum_y L_xy C_y(f) >= 0 for all f and all x].
+- status: checked
+- depends: T65
+- proof: rh/experiments/r2_curv/refuter/PROGRESS.md, 'FINAL VERDICTS' (converse, two lines); '=>' of the right side is (C4) of T65
+- source: R2-curv (claim W-curv-2, without proof); R2-curv-ref (proof of the converse)
+- routes: #11
+- note: So a calibrated curvature condition is, as an existence statement, again equivalent to the conclusion (same vacuity as T52). | 2026-11-11 -> checked: two-line proof re-derived
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C11)
+
+## T67 · Block-averaged Bakry-Emery: the 'factor two' is the small-block end of an exact curve
+- statement: For a reversible chain on a finite set with stationary law pi and a partition of the sites into blocks S, let rho_S := sup{rho : sum_{k in S} pi_k (Gamma_2 - rho Gamma)(f)(k) >= 0 for all f} and rho* := min_S rho_S. Then (1) spectral gap >= rho*; with one block rho* equals the gap. (2) For the resampling chain of T65 with lam = 1, a block S with at least two sites and pi(S) = theta has rho_S = (1 + 3 theta)/(2 + 2 theta) exactly (1/2 as theta -> 0, 5/6 at theta = 1/2, 1 at theta = 1).
+- status: checked
+- depends: T65
+- proof: rh/experiments/s1_seminar/cubic/TURN1.md, section 6
+- source: S1-cubic (answer to board B42)
+- routes: #10, #11
+- note: COMPUTED by the seat: the Weil chain follows the mean-field curve within 0.01 to 0.04 (sites 0.48, two mirror halves 0.84, one block 1.0000 at 48 boxes); the Beurling control is separated only by the single block (0.93). | 2026-11-11 -> checked: proof re-derived
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C12)
+
+## T68 · The integrated open-path term of the Bochner formula is a Hankel-type form in the two jumps
+- statement: Notation of T64 (B3). Put g_y(a) := k(a) u(y+a) (f(y+a) - f(y)) for y, y+a in W, a != 0. Then (i) ||Lf||_pi^2 = sum_x pi_x Gamma_2(f)(x) = sum_y sum_{a,b} g_y(a) g_y(b); (ii) sum_x pi_x O_x(f) = (1/2) sum_y sum_{a,b : y+a+b not in W} g_y(a) g_y(b); (iii) sum_x pi_x (S_x + Hs_x)(f) = sum_y sum_{a,b : y+a+b in W} g_y(a) g_y(b) + (1/2) sum_y sum_{a,b : y+a+b not in W} g_y(a) g_y(b).
+- status: proved
+- depends: T64
+- proof: rh/experiments/s1_seminar/curv/S1_ADDITIONS.md, F2
+- source: S1-curv (answer to board B8)
+- routes: #11, #21
+- note: NOT independently checked (no verifier file covers the seminar's additions; K-theory did not check this one). COMPUTED by the seat: (ii) to 3.9e-16, (iii) to 2.1e-15 for zeta and the Beurling control.
+
+## T69 · Parity differences of the integrated Bochner quantities contain the mirror form
+- statement: CHAIN SETTING. W a finite set, N a real symmetric matrix on W with N_xy >= 0 for x != y, irreducible; lambda_1 its top eigenvalue, u > 0 the normalised eigenvector (Perron-Frobenius), pi = u^2; q_xy = N_xy u_y/u_x (x != y), L f(x) = sum_y q_xy (f_y - f_x), E(h) = (1/2) sum_{x != y} N_xy u_x u_y (h_x - h_y)^2, Gamma(f)(x) = (1/2) sum_y q_xy (f_y - f_x)^2, Gamma_2(f) = (1/2) L Gamma(f) - Gamma(f, Lf). Assume W is symmetric under x -> -x with N invariant, so u is even. For eta on the positive half of W let h_+, h_- be its even and odd extensions and phi := u eta; T := the compression of N to the positive half, Hk := the Hankel operator (Hk phi)(x) = sum_{y>0} N-kernel(x+y) phi(y), so that N f_+- = (T +- Hk) phi on the positive half for f_+- = u h_+-. Then (i) E(h_-) - E(h_+) = 4 <phi, Hk phi>; (ii) ||L h_-||_pi^2 - ||L h_+||_pi^2 = 4 <phi, ((lambda_1 - T) Hk + Hk (lambda_1 - T)) phi>.
+- status: checked
+- depends: T63
+- proof: rh/experiments/s1_seminar/curv/S1_ADDITIONS.md, F3
+- source: S1-curv
+- routes: #11, #21
+- note: COMPUTED by the seat: (i) to 2e-16, (ii) to 1.8e-15. | 2026-11-11 -> checked: proof re-derived
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C13)
+
+## T70 · Mirror Gram identity: the von Mangoldt function on products of integers >= 2 is a sum of squares, one per prime (D1)
+- statement: For every finitely supported real function phi on the integers a >= 2: sum_{a,b >= 2} phi(a) phi(b) Lambda(ab)/sqrt(ab) = sum over primes p of (log p) ( sum_{k >= 1} phi(p^k) p^{-k/2} )^2 >= 0. Equivalently the matrix [Lambda(ab)/sqrt(ab)], a, b >= 2, is the direct sum over p of (log p) v_p v_p^T with v_p(p^k) = p^{-k/2}; its section a, b <= A has rank pi(A).
+- status: checked
+- proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem D (D1)
+- source: R2-curv; restated by the lead as the basis of idea #21. Not found in the searches of R2-curv, R2-curv-ref and S1-mirror (Helson-matrix literature read in part); two lines, probably folklore
+- routes: #21
+- note: Uses the Euler product only through 'Lambda(ab) != 0 with a, b >= 2 forces a = p^i, b = p^j'. With a = 1 allowed the matrix is NOT positive semidefinite (D2: the minor on {1, 2} has determinant -(log 2)^2/2; COMPUTED -2.60 on 1..60). FORMAL STATUS (2026-11-11 00:33 UTC, from rh/formal/PROGRESS.md): RHFormal/D1_MirrorGram.lean is written, imported from RHFormal.lean, and 'checks with no error and no warning' as a single file; the seat reports no difference in content from this statement (general finite support; mathlib's von Mangoldt function) and no gap in the written proof. Status stays as it is until the formal seat's MEMORY.md lists the file as formal and the full `lake -d rh/formal build` has succeeded (no build product for this file existed when K-theory looked; K-theory did not run Lean, because the formal seat allows one Lean process at a time).
+- checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING': 'D: (D1)-(D5) correct'); COMPUTED: rank 17 on 2..60, smallest eigenvalue -7e-17 (seat), reproduced by the checker
+
+## T71 · The Gamma kernel is completely monotone, hence mirror (Hankel) positive on the half line (D3)
+- statement: For u > 0: w(u) := e^{u/2}/(2 sinh u) = sum_{m >= 0} e^{-(2m+1/2)u}. Consequently for every real phi in L^2 with compact support in (0, infinity): int int phi(x) phi(y) w(x+y) dx dy = sum_{m >= 0} ( int phi(x) e^{-(2m+1/2)x} dx )^2 >= 0.
+- status: checked
+- proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem D (D3); the formula is rh/NOTEBOOK.md N29 step 6
+- source: lead (N29); R2-curv. The matrix version [w(log ab)] lies in a known class (Helson matrices induced by measures, arXiv 2407.04124, abstract/summary only)
+- routes: #11, #21
+- note: The rates 2m + 1/2 are the trivial zeros (s = -2m) seen from the centre line. | 2026-11-11 -> checked: checker's verdict: correct
+- checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING': 'D: (D1)-(D5) correct')
+
+## T72 · The prime atoms are not mirror positive on L^2 functions (D4)
+- statement: Let mu = sum_{n >= 2} Lambda(n) n^{-1/2} delta_{log n} and H_mu(phi) := int int phi(x) phi(y) dmu(x+y) for phi on (0, infinity). For a prime p, 0 < x_0 < log p with 2 x_0 != log p and x_0 generic, and b an even L^2-normalised bump of width eps: phi := (b(. - x_0) - b(. - (log p - x_0)))/sqrt 2 has H_mu(phi) = -(log p)/sqrt p + O(eps). So H_mu is indefinite on L^2(0, L] as soon as e^L > 2.
+- status: checked
+- proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem D (D4)
+- source: R2-curv
+- routes: #21
+- note: 'x_0 generic' is the proof file's wording (it excludes finitely many coincidences x + y = log n). Together with T70: one reflection, two test spaces (atoms at log-integers against L^2 of the window), which meet only in 0 (S1-curv, board B29, replacing the withdrawn wording 'primes reflect coordinatewise'). | 2026-11-11 -> checked: checker's verdict: correct
+- checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING': 'D: (D1)-(D5) correct'); COMPUTED: 9 of 20 box eigenvalues negative at L = 1 (seat, checker, R2-judge J14)
+
+## T73 · On the integers >= 2 the whole kernel (Gamma part plus primes) is mirror positive definite
+- statement: For every A >= 2 the real symmetric matrix [ w(log ab) + Lambda(ab)/sqrt(ab) ]_{2 <= a, b <= A}, w(u) = sum_{m>=0} e^{-(2m+1/2)u}, is positive definite.
+- status: checked
+- depends: T70, T71
+- proof: rh/board/s1.md, post B24 (one line) on top of T70 and T71
+- source: R2-curv-ref (prediction R9, computed); S1-parity (B24: definiteness and the reason)
+- routes: #21
+- note: COMPUTED: smallest eigenvalue +8.3652e-251 on 2..60 at 400 digits (S1-parity); -2.1e-16 in double precision (checker). At rational points it fails: the 2 x 2 matrix at 3/2, 4/3 has eigenvalue -0.475. The same two lines hold for a Beurling system on its own lattice (S1-curv, B29): the statement does not see the integers. | 2026-11-11 -> checked: one-line proof re-derived (generalised Vandermonde)
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C14)
+
+## T74 · The even and odd blocks differ by four times the mirror form: one positive square (the pole) minus the trivial zeros and the prime powers
+- statement: Notation of T7. Let phi be real in L^2(0, L], f_e(x) := phi(|x|), f_o(x) := sgn(x) phi(|x|). For an even kernel k put T_k(phi) := int int_{x,y>0} phi(x) phi(y) k(x-y) and H_k(phi) := int int_{x,y>0} phi(x) phi(y) k(x+y); then q(f_e) = 2[T_k + H_k](phi) and q(f_o) = 2[T_k - H_k](phi) for the form q of k. In particular N(f_e) - N(f_o) = 4 H_K(phi), K = w + prime atoms (D5), and with E_+ := int phi(x) e^{x/2} dx, E_m := int phi(x) e^{-(2m+1/2)x} dx: Q(f_e) - Q(f_o) = 4 [ E_+^2 - sum_{m >= 1} E_m^2 - sum_{n <= e^{2L}} Lambda(n) n^{-1/2} int phi(x) phi(log n - x) dx ]. (The m = 0 square of the Gamma kernel cancels the e^{-x/2} half of the pole.)
+- status: checked
+- proof: rh/experiments/r2_curv/PROOF_bochner_parity.md, Theorem D (D5); rh/experiments/s1_seminar/parity/NOTES.md, section D (board B25)
+- source: R2-curv (D5); S1-parity (B25); the same algebra independently by S1-mirror (B13, B17) and S1-curv (F4)
+- routes: #21
+- note: COMPUTED: right side against direct quadrature of the definition to 5e-31, 6e-31, 1e-30 (L = 0.3, 0.38, 1; S1-parity); S1-mirror's doubling computation agrees to 3e-7 (board B94). On the zero side the bracket is sum_gamma phihat(gamma)^2 (board B60, by T7). Fibre form of the same identity: S1-cubic TURN1.md (M1). | 2026-11-11 -> checked: checker's verdict for D5; B25 re-derived
+- checked by: R2-curv-ref (rh/experiments/r2_curv/refuter/PROGRESS.md, '23:45 PROOF READING': 'D: (D1)-(D5) correct') for D5; K-theory (rh/experiments/k_theory/PROGRESS.md, check C15) for the identity of B25
+
+## T75 · Equivalence: the two block inequalities are a two-sided bound of the mirror form by the half-window shift form
+- statement: Notation of T7, T74. For real phi in L^2(0, L] let T(phi) := T_K(phi) (the half-window shift form of N, diagonal terms included: N(f_e) + N(f_o) = 4 T(phi)), H(phi) := H_K(phi), c := int phi cosh(x/2), s := int phi sinh(x/2). Then [N(f) <= 2<f,c>^2 for all even f in L^2(-L,L)] <=> [H(phi) <= 4c^2 - T(phi) for all phi], and [N(f) <= -2<f,s>^2 for all odd f] <=> [H(phi) >= 4s^2 + T(phi) for all phi]. Hence window positivity <=> T(phi) + 4s^2 <= H(phi) <= 4c^2 - T(phi) for all phi on (0, L].
+- status: checked
+- depends: T74, T5
+- proof: rh/experiments/s1_seminar/curv/S1_ADDITIONS.md, F4
+- source: S1-curv (F4); S1-mirror (board B17, B60: on the zero side, positivity on [-L,L] <=> |sum_gamma phihat(gamma)^2| <= sum_gamma phihat(gamma) phihat(-gamma))
+- routes: #21
+- note: A reformulation (owner rule 2). What it shows: a SIGN for the mirror form gives neither side; mirror positivity (T70, T71) only orders the blocks, N(f_o) <= N(f_e), on its own test class. The prime powers in [e^L, e^{2L}) enter the window form only through H (board B58 FACT 1, B60). | 2026-11-11 -> checked: one-line proof re-derived
+- checked by: K-theory (rh/experiments/k_theory/PROGRESS.md, check C16)
+
+## T76 · Mirror criterion on a, b >= 2: non-negative multiplicative Hankel matrices are mixtures of real completely multiplicative functions plus a free term at products of two primes
+- statement: Let c be a real function on the integers with |c(n)| <= C n^{2a} for composite n (some C, a >= 0). Let X := prod_p [-p^{2a}, p^{2a}], a point chi of X being the completely multiplicative function with those values at the primes. Equivalent: (a) every finite section of [c(ab)], a, b >= 2, is positive semidefinite; (b) there are a positive Borel measure sigma on X minus {0} with int chi(n)^2 dsigma < infinity for every n >= 2, and a positive semidefinite matrix [w(p,q)] indexed by primes, such that c(n) = int chi(n) dsigma for composite n with at least three prime factors (with multiplicity), and c(pq) = int chi(pq) dsigma + w(p,q) for primes p, q (p = q allowed). The pair (sigma, w) is unique; sigma may have infinite mass.
+- status: proved
+- proof: rh/experiments/s1_seminar/mirror/PROOF_mirror_criterion.md, Theorem 2
+- source: S1-mirror (project's own). The a, b >= 1 version is in the literature (T19); the a, b >= 2 variant is NOT in Perfekt-Pushnitski (READER-2, whole paper) and was not found elsewhere by the seat; probably folklore
+- routes: #21
+- note: NOT independently checked (longer than a page: Hilbert space, commuting self-adjoint operators T_m, joint spectral theorem, division by chi(p)^2, the point 0). Points a checker should look at: the bound ||T_m v|| <= m^{2a} ||v|| (the seat's text has an exponent slip it flags itself, corrected here in the definition of X), the cited step Berg-Christensen-Ressel 4.1.12 ('from memory'), and sigma-finiteness in Step 4. Consequence: the mirror matrix never sees c(1) or c(p).
+
+## T77 · Mirror positivity of an Euler product is exactly: all local roots real with positive multiplicity
+- statement: Suppose c vanishes off prime powers and for each prime p: c(p^k) = (log p) sum_{j=1..r_p} m_j alpha_j^k for k >= 2, with distinct non-zero complex alpha_j and non-zero complex m_j (local factor prod_j (1 - alpha_j p^{-s})^{-m_j}), c real. Then [c(ab)], a, b >= 2, is the direct sum over p of the Hankel matrices [c(p^{i+j})], i, j >= 1, and it is positive semidefinite iff for every p all alpha_j are real and all m_j > 0. The number of negative eigenvalues of the p-block (size >= r_p) is (number of real roots with m_j < 0) + (number of conjugate pairs of non-real roots).
+- status: proved
+- proof: rh/experiments/s1_seminar/mirror/PROOF_mirror_criterion.md, Corollary 3
+- source: S1-mirror; the lead's idea #21, field 'new input' (2)
+- routes: #21
+- note: NOT independently checked as a proof (direct, by Lagrange interpolation; does not use T76). Its consequences were confirmed by a second route (S1-parity, board B22, B23, exact rationals and 60 digits): zeta, L(chi_4), zeta(2s) pass; L(chi)L(chi-bar) mod 5 fails (c(4) = -2 log 2, min eig -3.89) although GRH is expected; zeta(s)zeta(s-1) and zeta(s-d)zeta(s+d) pass with zeros off the centre line; theta dial n = 4 = 8(1 - 4^{1-s}) zeta(s) zeta(s-1) (Jacobi, from memory; coefficients checked to 1e-59) has exactly one negative square, from the factor at 2 (proved independently by S1-mirror B16 and S1-parity). So the mirror test detects real local roots; it is neither necessary nor sufficient for zeros on the centre line.
+
+## T78 · Conditional gap lemma of lane A (not a reduction)
+- statement: (Sketch.) Let mu_1(L) < mu_2(L) be the two lowest eigenvalues of the window form on [-L, L] and theta_L explicit even trial vectors with theta_L^ -> Xi locally uniformly in |Im z| < 1/2 + delta, R the Rayleigh quotient. If along a sequence L -> infinity (R(theta_L) - mu_1(L))/(mu_2(L) - mu_1(L)) = o(e^{-(1+2 delta)L}/L), then RH.
+- status: open
+- depends: T11
+- source: R1-A (rh/experiments/r1_A/PROGRESS.md, 'Conditional lemma (sketch, to be written out; HEURISTIC until then)')
+- routes: #20
+- note: OPEN: sketch only (Davis-Kahan, then T11 and Hurwitz). Round-1 critic and judge: NOT a reduction: the hypothesis forces mu_2 >= R(theta_L) >= 0 on a sequence, i.e. at most one negative square, which already implies RH by T30 (1). Idea #20 is killed; kept so that nobody re-proposes it.
+
+## T79 · Tilt identity: the Weil form of zeta(s-d) zeta(s+d) is zeta's bilinear form at e^{dx} f and e^{-dx} f
+- statement: Notation of T7. For 0 < d < 1/2 let F_d(s) := zeta(s-d) zeta(s+d); its zeros in the strip are rho +- d, i.e. 1/2 + i(gamma -+ i d), and its zero-side form is Qz_d(f) := sum_gamma m_gamma [ fhat(gamma - id) conj(fhat(conj(gamma - id))) + fhat(gamma + id) conj(fhat(conj(gamma + id))) ]. Then for every f in D: Qz_d(f) = Qz(e^{dx} f, e^{-dx} f) + Qz(e^{-dx} f, e^{dx} f); for real f this is 2 Q(e^{dx} f, e^{-dx} f) = 2 Q(cosh(dx) f) - 2 Q(sinh(dx) f), and it is the form whose kernel is zeta's Weil kernel multiplied by 2 cosh(du) (pole 2cosh(u/2) 2cosh(du), prime weights Lambda(n) n^{-1/2} 2cosh(d log n), Gamma kernel w(u) 2cosh(du), the g(0) terms doubled). Hence on a window where Q_L >= 0: Qz_d >= 0 on D_L <=> Q(tanh(dx) g) <= Q(g) for all real g in D_L.
+- status: checked
+- depends: T7
+- proof: rh/board/s1.md, posts B90 (S1-mirror), B103 (S1-cubic); rh/experiments/s1_seminar/curv/S1_ADDITIONS.md G1 (S1-curv)
+- source: S1-mirror, S1-cubic, S1-curv (three seats, same two lines)
+- routes: #21
+- note: COMPUTED by two independent implementations validated against the zero side to 1e-15 (S1-mirror B90, S1-parity B91; they agree to 6 digits): at L = 0.75 the lowest eigenvalues are 9.1965e-15 - 1.46289e-4 d^2 (even) and 7.4532e-12 - 2.45385e-3 d^2 (odd); negative for d > 7.9e-6 (even), 5.5e-5 (odd); at d = 0.1: -3.7e-3 / -2.3e-3; for an imaginary tilt (zeros moved along the line) positive at every value tried. This is the counterexample that refutes T6. | 2026-11-11 -> checked: two-line identity re-derived
+- checked by: K-theory (two lines: the correlation of (e^{dx} f, e^{-dx} f) is e^{du} g_f(u); on the zero side (e^{dx} f)^(gamma) = fhat(gamma - i d)); three seats derived it independently
+
+## T80 · The zero-side formula on the whole form domain of the window form
+- statement: Notation of T7, T10. For every v1, v2 in Dom_a (the form domain of Q_W^a, equal to the closure of C_c^inf(-a,a) in the form norm because A_a is the Friedrichs extension): the sum over the zeros sum_gamma m_gamma v1^(gamma) conj(v2^(conj gamma)) converges (zeros grouped symmetrically) and equals Q(v1, v2).
+- status: open
+- depends: T7, T10
+- source: needed by rh/experiments/r2_parity/PROOF_first_failure.md (assumption 'CORE'); raised by READER-1's full reading of M. Suzuki, 'Weil's quadratic form via the screw function', arXiv 2606.09096 v3 (rh/library/2606.09096.md, part 6 last item and part 7)
+- routes: #8, #9
+- note: OPEN (gap in a cited input, found 2026-11-11). On C_c^inf it is T7. The paper writes (3.1) 'without a stated class of functions; it is used for v in H_0^1(-a,a) against the exponentials e_n, where both transforms are O(1/|z|)' (READER-1, whole text); R2-parity-ref's reading of 15% of the PDF had taken (3.1) to hold on the form domain. Not written anywhere in the project: a proof by closure (the paper proves Dom_a is contained in H^log = {int (1 + log^+|z|)|vhat|^2 < infinity}; one needs a sampling bound sum_gamma |vhat(gamma)|^2 <= C ||v||^2_{H^log} for functions supported in (-a,a)). Remark by K-theory, not a written proof: under RH the inequality Q(f) >= sum over real gamma of m_gamma |fhat(gamma)|^2 on Dom_a follows from Fatou's lemma along a form-norm approximating sequence in C_c^inf, and that inequality is all that T36 (i) uses.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
