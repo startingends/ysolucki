@@ -1,0 +1,14 @@
+max err cosh formula 1.6825651982799172e-11  max |Na-Nb-20| 0
+genus formula r_Q(n) = [1*chi_-20 + chi_-4*chi_5](n), n<200 coprime to 10: failures 0
+ m  #gamma  r_Q(m) r_Q(m+20)  product
+  0      2      1      2       2
+  1      4      2      8      16
+  4      4      2      4       8
+  9      4      6      4      24
+ 16      6      2      6      12
+ 21      8      8      4      32
+ 25      8      2      6      12
+ 29      4      4      6      24
+ 36     12      6      4      24
+ 41      8      4      4      16
+ 49     12      6      8      48

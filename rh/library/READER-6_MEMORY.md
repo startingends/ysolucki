@@ -31,5 +31,12 @@ at src/sp_modular_lagarias_suzuki/paper.tex. I read it whole myself.
   Steuding Math. Ann. 2005; Reznikov dir.pdf on u.math.biu.ac.il (connection reset twice).
 - COMPUTED (scratchpad dc.py.txt, mpmath 50 digits): zero of y -> E*(iy,1/2) is y = 4 pi e^-gamma (1 - 4.196e-20);
   so Betermin et al.'s Conjecture 1.1 (Delta_c* = e^gamma/4pi exactly) is false at the 20th digit.
-- NEXT: write digests math0412039.md, 1204.6297.md, 2110.09368.md, 1601.01724.md, ki-cras-2006.md, 1008.0995.md,
-  2411.18492.md (partial), 2001.01981.md (partial); INDEX rows; report.
+- Container restarted mid-session (coordinator); all sources under src/ and the scratchpad survived; nothing re-fetched.
+- DONE: digests math0412039.md, 1204.6297.md, 2110.09368.md, 1601.01724.md, ki-cras-2006.md, 1008.0995.md,
+  2411.18492.md (partial), 2001.01981.md (partial); 8 INDEX rows appended.
+- de Bruijn-Newman + Epstein/Eisenstein: 3 web queries, plus grep of the Newman-Wu survey source (src/1901.06596,
+  "Constants of de Bruijn-Newman type...") for Epstein/Eisenstein: no hits. Laplace-in-z as a flow on zeros: nothing found.
+- Unread but identified: Lamzouri 1907.06387 (Epstein zeros right of the line, h>=2), Lee 1811.01613 (near the line),
+  Stromberggson-Sodergren 1305.1333 (random lattices, large dimension), Travenec-Samaj 1909.07112 (hypercubic),
+  Zhou 1410.8312 (downloaded, unread), Rodriguez Villegas-Zagier (CM values of derivatives of Eisenstein series).
+- Report sent to lead (SubagentHandback).

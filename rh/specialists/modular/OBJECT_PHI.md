@@ -220,3 +220,6 @@ coefficients of theta_3), to make 2(c) exact with its Gamma factors; (2) whether
 9. The set of points where the family vanishes only on the line: expected to be the 13 rational CM points.
 10. Risk taken: a Hecke-equivariant point interaction. It fails for an exact reason: the Hecke algebra is two-sided,
     its multipliers cos(t log q) are complete, the constrained space is {0}. A point has no direction; a geodesic has.
+
+## Round 2 (session 2, 2026-11-11): a non-linear invariant at omega; the Rankin-Selberg identity made exact
+(stub written first, to survive a restart; content follows)

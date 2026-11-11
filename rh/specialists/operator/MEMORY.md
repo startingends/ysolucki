@@ -1,6 +1,6 @@
 # MEMORY of SP-operator
 
-Rewritten at the end of session 3 (2026-11-11). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
+Rewritten at the end of session 4 (2026-11-11; one container restart mid-session, nothing lost). Session 1: seminar S1 (first-session duties). Session 2: planks 5,
 6, 7 of bridge 1 (rh/BRIDGE.md, idea #27, owner's rule 12). Session 3: the structural mode (owner's rule 13,
 rh/HUNCHES.md part F): one object, Phi(s) = E*(omega, s), expressed in my toolkit: OBJECT_PHI.md.
 A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDEAS_LOCAL.md.
@@ -19,6 +19,26 @@ A session starts by reading this file, CHARTER.md, LIBRARY.md, PROOFS.md and IDE
 - Sources under rh/library/src/: 2606.09096, 1606.05726 (both read in full), basor-chen-0202062 (read in
   full), kaltenbaeck-woracek-1998 (pp. 1-6 of 37 read), luger-ou-2202.13246 (sec. 3.2 read),
   1204.1827 and 2511.23257 (downloaded; only the abstract and theorem list of the latter read).
+
+## SESSION 4 (round 2 on Phi): OBJECT_PHI.md section "Round 2" (102 lines)
+Read: rh/specialists/modular/OBJECT_PHI.md and reflection/OBJECT_PHI.md whole, HUNCHES F4-F5 + H9, NOTEBOOK N43-N46.
+- R2.0 PROVED: |Phi| on the line determines Phi (real-analytic, Phi^2 = |Phi|^2 continues); so condition (2) must
+  be read as "not weakly continuous in the spectral measure rho_omega". Laguerre-Polya is closed under locally
+  uniform convergence (Hurwitz), not under weak convergence of |F|^2 dt; the Euler product converges in neither.
+- R2.1 The cyclicity angle of the Green function: cos^2 alpha(z) = |B_z(1)|^2, -log cos alpha = Dfc(z) =
+  sum_{Re rho > 1/2} log|rho/(1-rho)|: EXACTLY SP-reflection's defect (third derivation of one object). Non-linear
+  (Jensen gap), weakly UPPER semicontinuous (defect can appear in limits, never disappear: F5's wall with its
+  direction), each off-line zero adds a quantised log|rho/(1-rho)| ~ (2beta-1)/(2gamma^2). Separates omega from
+  i sqrt5 only through zero location.
+- R2.2 Structural lever: Dfc additive on products, free on sums; finite Euler products have Dfc = 0; Phi is a
+  product (xi . Lambda(chi_-3)), E*(i sqrt5) is a sum of two products.
+- R2.3 NEW: matrix Krein function of the Heegner set, Q_D(lambda)_{AB} = G_lambda(z_A, z_B); sheet difference
+  v v^T/(1-2s), character components Euler products; for D = -20 the off-diagonal entry r_D = G^reg(z1,z1) -
+  G^reg(z2,z2) is canonical (regularisation cancels) and is the Davenport-Heilbronn cross term; linear in the
+  matrix measure, so it cannot see the phase (CONJECTURE: no information on off-line zeros). Impostor zeros =
+  zeros of a projection <e_1, v> of a vector whose components are Euler products.
+- R2.4 judgement (RISK): no number in my toolkit separates omega from i sqrt5 structurally except through
+  multiplicativity; needed: a topology where partial Euler products converge AND Dfc is lower semicontinuous.
 
 ## SESSION 3 (structural mode): Phi(s) = E*(omega,s) = 3 (sqrt3/2pi)^s Gamma(s) zeta_K(s), K = Q(sqrt-3)
 File: OBJECT_PHI.md (196 lines; written BEFORE reading the other seats' answers; no source opened, no

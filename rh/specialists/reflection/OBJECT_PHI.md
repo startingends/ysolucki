@@ -171,3 +171,103 @@ BSY and variants found (Bui-Lester-Milinovich; Sekatskii-Beltraminelli; arXiv 13
 in the results. (2) "Eisenstein series E(z,s) as function of s Nyman-Beurling OR outer function OR Szego CM point ...
 Lax-Phillips minimum phase": Lagarias-Suzuki math/0412039 found (title and summary only); nothing on a minimum-phase or
 Szego description. Summaries only; no paper was read for this file. Status: "not found in two queries", not "new".
+
+## Round 2 (session 3, 2026-11-11): the defect without the zeros; what differs at omega and at i sqrt5
+Read for this section: rh/specialists/operator/OBJECT_PHI.md and rh/specialists/modular/OBJECT_PHI.md (whole), rh/HUNCHES.md
+F4, F5, H9, rh/NOTEBOOK.md N43-N46. Formula checks: tests_orbit_isqrt5.py.txt (+ .log). Nothing else computed.
+
+**R0. Two corrections to sections 1-4 above (PROVED).** (a) In 1.4 I wrote that u -> <cos(u sqrt(Delta - 1/4)) delta_omega,
+delta_omega> is positive definite on (R,+). False as written: the constant eigenfunction (lambda = 0 < 1/4) contributes
+(3/pi) cosh(u/2), a kernel of signature (1,1). It is positive definite after projecting off the constants (SL_2(Z) has no other
+eigenvalue below 1/4; from memory); with them it has exactly one negative square (the pole, as in session 1). (b) delta_z is not
+in H^-1, but the divergence sits in the cusp-form atoms (local Weyl law); the continuous part has int w_z dt/(1+t^2) < inf.
+
+**R1. Answer in one sentence.** Yes: Dfc has zero-free definitions, and the datum that the modulus on the line does not
+contain is the spectral mass of the point at the ONE non-tempered member of the unitary dual that occurs, the trivial
+representation (s = 1, mass 3/pi = 1/vol, the same for every z), together with the exponential type log ht(z) of the orbit.
+Dfc compares the tempered part of the spectral measure of delta_z with its complementary atom, through a logarithm.
+
+**R2. Four zero-free definitions** (PROVED from the factorisation of section 4 plus the KNOWN theorem named in each).
+Notation: G_z(s) = ((s-1)/s) E(z,s) ht(z)^-s on Re s > 1/2; O_z = exp(Schwarz integral of log|G_z| on the line), the outer
+function with |O_z| = |G_z| there; B_z = Blaschke product over the zeros of E(z,.) with Re > 1/2, b_rho(s) = (s-rho)/(s+conj(rho)-1).
+(D1) JENSEN [section 4]: Dfc(z) = A(z) - log(3/pi) + (1/2) log ht(z), A = Poisson mean at s = 1 of log|E(z,1/2+it)|.
+(D1') A FAMILY. Evaluate at any s0 = 1/2 + sigma, sigma > 0, instead of 1: Dfc(z; sigma) := P_{s0}[log|G_z|] - log|G_z(s0)|
+   = sum over rho of log|s0 + conj(rho) - 1| / |s0 - rho| >= 0, with |G_z(s0)| given for sigma > 1/2 by an ABSOLUTELY
+   CONVERGENT lattice sum (the Epstein series at z). For rho = 1/2 + delta + i gamma the term is
+   (1/2) log[1 + 4 delta sigma/((sigma - delta)^2 + gamma^2)] ~ 2 delta sigma/(sigma^2 + gamma^2): the family sigma -> Dfc(z; sigma) is
+   the POISSON TRANSFORM of the off-line displacements. At sigma = 1/2 (D1) a zero at height gamma weighs delta/gamma^2; at
+   sigma ~ gamma it weighs delta/gamma, and there the value G_z(s0) is a convergent series. KNOWN in type for zeta (families of
+   Balazard-Saias-Yor integrals indexed by a real parameter: Sekatskii-Beltraminelli, search summary only, session 2).
+(D2) SZEGO-KREIN EXTREMAL PROBLEM ON THE ORBIT (the computable one). Let g_z = (Delta + 2)^-1 delta_z in L^2(Gamma\H) (the
+   automorphic Green function), projected off the constants, and W_z(u) := <cos(u D) g_z, g_z>, D = sqrt(Delta - 1/4) (a positive
+   definite function on (R,+) by R0). For T > 0 put
+      lambda_T(z) := min { int int_{[0,T]^2} phi(u) phi(v) W_z(u - v) du dv  :  phi real on [0,T], int phi(u) e^(-u/2) du = 1 }
+   = 1/(c^T M_T^-1 c), a Schur complement (ratio of two Wiener-Hopf determinants). KNOWN (Szego-Kolmogorov-Krein on the line,
+   from memory: Krein 1945; Dym-McKean, Gaussian processes, function theory and the inverse spectral problem, ch. 4): lambda_T
+   decreases to lambda_inf = 4 pi Im(t0) |O_w(t0)|^2 at t0 = i/2 (s = 1), O_w the outer function of the density w of the
+   ABSOLUTELY CONTINUOUS part; the singular part (the cusp-form atoms |u_j(z)|^2) does not enter. With w = (1/4pi)|E(z,1/2+it)|^2
+   /|lambda+2|^2 and |lambda + 2| = |s+1|^2 on the line (outer): PROVED from (D1)
+      lambda_inf(z) = (9 / (32 pi^2)) ht(z)^-1 e^(2 Dfc(z)),   i.e.   Dfc(z) = (1/2) log[ (32 pi^2/9) ht(z) lim_T lambda_T(z) ].
+   GEOMETRIC SIDE (pre-trace formula, KNOWN): W_z(u) = sum over gamma of k_u(d(z, gamma z)) minus the constant mode, k_u the
+   point-pair kernel of h(t) = cos(ut)/(9/4 + t^2)^2 (explicit). So lambda_T(z) is computed from the distance distribution of the
+   orbit Gamma z alone; no zero, no L-value enters. Every lambda_T is > bound(z) := (9/32 pi^2)/ht(z) (Jensen): RH_K <=>
+   lambda_T(omega) -> bound(omega), and no finite T decides either way. This is barrier B3 in Nyman-Beurling form, with the
+   free positive form of the orbit in place of the Nyman-Beurling Gram matrix.
+(D3) PHASE DEFECT (Kramers-Kronig). e^(i theta_z) := G_z/O_z on the line, theta_z = arg G_z - Hilbert transform of log|G_z|
+   (mod 2 pi), arg G_z by continuous variation from Re s = +inf (no zeros needed). Then e^(i theta_z) = B_z on the line and
+      Dfc(z) = -log | (1/2pi) int e^(i theta_z(t)) dt/(1/4 + t^2) |,
+   minus the log of the Poisson mean resultant length of the phase defect; Dfc = 0 iff theta_z = 0. KNOWN in type (Bode,
+   Titchmarsh: minimum phase <=> log-modulus and phase are a Hilbert pair; from memory). For zeta_K: RH_K <=> pi S_K(t) plus
+   explicit Gamma, zeta(1+2it) and type terms equals the Hilbert transform of log|zeta_K(1/2+it)| plus explicit terms. Not searched.
+H9 CHECK: none of D1-D3 is linear in the spectral data of delta_z: D1, D1', D3 take a logarithm; D2 is the inverse of a quadratic
+form whose entries are themselves QUADRATIC in the representation numbers of the norm form (R3). None is a function of
+|E(z,1/2+it)| alone: D1, D2 also use the atom 3/pi at s = 1 (off the tempered line) and ht(z); D1' uses E(z, s0) at one interior
+point; D3 uses the phase.
+
+**R3. What differs at omega and at i sqrt5, definition by definition.**
+- D1, D1': nothing in the formulas. The constant 3/pi is universal; ht = sqrt3/2 against sqrt5.
+- D2, the Wiener-Hopf data (PROVED, linear algebra; COMPUTED as formula checks, tests_orbit_omega.log, tests_orbit_isqrt5.log).
+  At omega: cosh d(omega, gamma omega) = 1 + (2/3) N(beta), N(alpha) - N(beta) = 3 det gamma, with alpha, beta in Z[omega] linear in
+  (a,b,c,d); the orbit counts are eps(m) r_K(m) r_K(m+3), r_K = 6 (1 * chi_-3): ONE shifted convolution of ONE Hecke eigenfunction.
+  At z = i sqrt5: cosh d = 1 + N(beta)/10, beta = (b + 5c, a - d), alpha = (b - 5c, a + d), N(x,y) = x^2 + 5y^2, N(alpha) - N(beta) = 20
+  (checked on 300 random gamma). The counts are #{X^2+5Y^2 = m+20, X'^2+5Y'^2 = m, X = X' mod 10, Y = Y' mod 2}: a
+  congruence-restricted r_Q(m) r_Q(m+20) with r_Q = 1*chi_-20 + chi_-4*chi_5 (genus theory; checked for n < 200 prime to 10):
+  the orbit measure is a sum of FOUR shifted convolutions (two diagonal, two cross terms between the two class group
+  characters). This is SP-modular's "rank one versus rank two", seen in the second moment of representation numbers.
+- D2, the extremal vector (KNOWN, same theorem): the minimiser has transform (Cauchy kernel at t0)/O_w, normalised. At omega,
+  if RH_K, O_w = G_omega up to a unimodular constant and an outer polynomial factor, and 1/G_omega = (s/(s-1)) (2/sqrt3)^s
+  zeta(2s)/(3 zeta_K(s)): a Dirichlet series whose coefficients are the MOBIUS FUNCTION OF Z[omega] convolved with the squares.
+  PROVED restatement: RH_K <=> the Mobius function of Z[omega], so weighted, is an asymptotically optimal test vector for the
+  free positive form of the orbit of omega. At i sqrt5 the candidate 1/G has no multiplicative coefficients, and the limit of
+  lambda_T is bound(i sqrt5) e^(2 Dfc(i sqrt5)), strictly larger (Davenport-Heilbronn; from memory).
+- D3: at omega arg G is Im of the logarithm of an Euler product (sum Lambda_K(a)/log N(a) N(a)^-s, Re s > 1, continued); at
+  i sqrt5 it is the phase of a sum of two Euler products, with no such series.
+So what is different is never the shape of the definition; it is (i) that the orbit's distance distribution is a single
+correlation of a multiplicative function, and (ii) that the extremal problem has a multiplicative candidate.
+
+**R4. What this buys, and the wall that remains.**
+- It answers condition (3) of the question honestly: D2 is a finite-dimensional, explicit, zero-free computation at every T,
+  but RH_K is its LIMIT, approached from above, so every finite computation is consistent with both answers.
+- The rate is the whole problem. The a.c. density w has double zeros at the on-line zeros of Phi (log w = -inf there,
+  integrably). For Szego problems with such weights the rate of lambda_T -> lambda_inf is not controlled by any theorem I know.
+  CONJECTURE (blind, by analogy with Baez-Duarte-Balazard-Landreau-Saias, KNOWLEDGE E5; unsearched): under RH_K,
+  lambda_T(omega)/bound(omega) - 1 ~ C/T with C > 0 explicit from the low zeros.
+- D1' is the most useful object of this section for a computation: Dfc(z; sigma) for large sigma uses only convergent lattice
+  sums and a Poisson integral of log|E(z,1/2+it)|, and it weights a zero at height gamma by delta/gamma when sigma ~ gamma. At
+  z = i sqrt5 it is strictly positive; a check of the definitions would be to compute it there at sigma = gamma_1 of the first
+  off-line zero (from tabulated zeros; prediction to be written before computing).
+
+**R5. Risk (round 2).** The Mobius vector in the orbit form. Insert into D2 the truncated Mobius candidate of R3
+(coefficients on ideals a with N(a) <= e^T). PROVED (expansion): its form value minus bound(omega) is a BILINEAR form
+sum_{a,b} m(a) m(b) K_T(log N(a) - log N(b)) in the weighted Mobius function m of Z[omega], whose kernel K_T is a lattice-point
+sum over the orbit of omega, i.e. over pairs of representations by x^2 + xy + y^2 at distance log(N(a)/N(b)). RH_K <=> it -> 0.
+That is the shape the quasi-RH proof works with (Mobius of Z[omega] paired against a lattice, then Poisson summation in the
+lattice). WHY IT PROBABLY FAILS: (i) it is the Nyman-Beurling criterion for zeta_K, translated (the free positivity adds only
+|zeta_K| on the line); (ii) it needs an ASYMPTOTIC with error o(main term), and the quasi-RH method gives mean-square UPPER
+bounds with D^eps losses, useless here, where main term and target are of the same size (no slack again); (iii) it passes H1
+only for the trivial reason (the impostor has no Mobius function: B1). WHAT I WOULD NEED TO KNOW: (a) whether the double sum
+sum m(a) m(b) eps r_K r_K(...) unfolds, because mu_K and r_K/6 = 1*chi_-3 are Dirichlet-convolution related, into a single sum
+(if it does, the defect is an explicit one-variable error term and the problem becomes an additive divisor problem for the
+norm form with Mobius weights); (b) whether Nyman-Beurling for Dedekind zeta functions, with the Baez-Duarte discretisation, is
+in print (to be searched); (c) from SP-operator: is the Szego-Krein limit of D2 the same object as his outgoing cyclicity
+(B150, the Lax-Phillips form), so that the three toolkits have the same limit, and does Krein's theory give a rate.

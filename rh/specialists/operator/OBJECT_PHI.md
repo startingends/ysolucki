@@ -216,7 +216,7 @@ CLOSED under locally uniform convergence in C (Hurwitz); they are NOT closed und
 Setting (PROVED from round 1, (2b)). In the variable s with Re s > 1/2 put G_z(s) := ((s-1)/s) E(z,s) ht(z)^(-s),
 ht(z) = max Im(gamma z) (SP-reflection's normalisation): analytic and of bounded type in Re s > 1/2, no singular
 inner factor, tending to a non-zero constant as s -> +inf. In the Hardy space of that half-plane let
-C_z := closed span of {n^(-s) G_z(s) : n real >= 1} (multiplication by n^(-s) = translation by log n into the cusp,
+C_z := closed span of {n^(-s) G_z(s)/(s+1)^2 : n real >= 1} (the factor puts it in H^2 and changes no inner factor) (multiplication by n^(-s) = translation by log n into the cusp,
 the outgoing semigroup). Beurling (KNOWN): C_z = B_z H^2, B_z the Blaschke product over the zeros of E(z,.) with
 Re rho > 1/2. Define the ANGLE NUMBER at the point w = 1 (s-variable):
     alpha(z) := angle between the reproducing kernel k_1 and C_z,   cos^2 alpha(z) = |B_z(1)|^2.
@@ -233,7 +233,7 @@ Its three properties, as asked:
      "outerness is lost in limits" written as a semicontinuity theorem, with its direction.
  (3) EXACTLY DEFINABLE AND COMPUTABLE: SP-reflection computed it to about 1e-3 at omega (one implementation).
 What an off-line zero of zeta_K does to it (PROVED): each zero rho = beta + i gamma, beta > 1/2, adds exactly
-log|rho/(1-rho)| = (1/2) log[(beta^2+gamma^2)/((1-beta)^2+gamma^2)] ~ (2 beta - 1)/(beta^2 + gamma^2) for large gamma:
+log|rho/(1-rho)| = (1/2) log[(beta^2+gamma^2)/((1-beta)^2+gamma^2)] ~ (2 beta - 1)/(2 gamma^2) for large gamma:
 a QUANTISED jump, the same formula at every point z. The impostor z_1 = i sqrt5 has Dfc(z_1) > 0 by the same formula
 (its zeros off the line, KNOWN). So the number separates omega from i sqrt5, but ONLY through the location of the
 zeros: nothing in my toolkit computes Dfc without knowing whether there are zeros. That is the exact reason it
@@ -257,27 +257,28 @@ a MATRIX NEVANLINNA function (KNOWN: resolvent between distribution vectors, Kre
 singular perturbations, from memory). It is QUADRATIC in the deltas and contains OFF-DIAGONAL data, so it is not a
 function of the spectral measure of any single point. Selberg's identity entrywise (normalisation as in (1b)):
     Q_D(s) - Q_D(1-s) = v(s) v(s)^T / (1-2s),   v(s)_A = E(z_A, s);
-in the character basis v^_psi(s) = sum_A psi(A) E(z_A, s) = c_D(s) L_K(s, psi)/zeta(2s) (SP-modular (1b)): one EULER
+in the character basis v^_psi(s) = sum_A psi(A) E(z_A, s) = c_D(s) L_K(s, psi)/xi*(2s), xi*(2s) = pi^-s Gamma(s) zeta(2s) (SP-modular (1b)): one EULER
 PRODUCT per character. Consequences:
  (a) h = 1 (omega): Q_D is my scalar Q; the sheet difference is the square of ONE Euler product.
  (b) h = 2 (D = -20): in the character basis the off-diagonal entry is, by symmetry of G,
         Q_{1,psi}(lambda) = G^reg_lambda(z_1, z_1) - G^reg_lambda(z_2, z_2),
-     whose sheet difference is c^2 L_K(s,1) L_K(s,psi)/((1-2s) zeta(2s) zeta(2-2s)) and whose spectral measure is the
+     whose sheet difference is c^2 L_K(s,1) L_K(s,psi)/((1-2s) xi*(2s) xi*(2-2s)) and whose spectral measure is the
      SIGNED measure with density c Re(L_K(1/2+it,1) conj L_K(1/2+it,psi))/|xi(1+2it)|^2 and atoms |u_j(z_1)|^2 - |u_j(z_2)|^2.
      It is the generating function of the Davenport-Heilbronn cross term, and it is EXACTLY what the impostor
      carries and omega does not: the single-point Krein function at z_1 is (Q_{11} + Q_{psi psi} + 2 Q_{1,psi})/4 in
      the character basis; at omega there is no off-diagonal entry because there is no second point.
  (c) The rank-one structure is the operator form of SP-modular's "Hecke module of rank one": the torus orbit is a
      single deficiency direction exactly when h = 1.
-THE NUMBER from it, and its status. N(D) := the Nevanlinna (Herglotz) index of the off-diagonal part, i.e. whether
-the 2 x 2 function lambda -> Q_D(lambda) remains Nevanlinna after the off-diagonal entry is multiplied by -1 (the
-two choices of sign correspond to the two orderings of the characters). It is 0 for h = 1 by definition and its
-value at D = -20 is an exactly definable, computable property of two regularised Green functions at the two
-points (orbit sums, no zeros needed). CONJECTURE (not derived, would need computing): it is not structurally
-linked to the off-line zeros of E(z_1, .); the off-line zeros of the impostor are zeros of the LINEAR functional
-<e_1, v(s)> while v(s) itself has (under GRH for K) only on-line zeros. So the matrix picture LOCATES the impostor
-(an entry, not an eigen-entry) and shows that its zeros are of a different kind from those of an Euler product
-(zeros of a projection of a non-zero vector versus zeros of the whole vector), but it does not decide the second.
+THE NUMBER from it, and its status. r_D(lambda) := Q_{1,psi}(lambda) = G^reg_lambda(z_1,z_1) - G^reg_lambda(z_2,z_2),
+lambda < 0. PROVED: it does not depend on the regularisation (both points have trivial stabiliser, so the same
+logarithm is subtracted at both), so it is canonical; it is computable from the two orbit sums (pre-trace formula,
+no zeros); r_{-3} := 0 (no second point). It is the one number in this picture that the impostor has and omega
+lacks for a structural reason (a second point of the torus orbit). But by R2.0 it is LINEAR in the matrix spectral
+measure, hence weakly continuous, and it cannot see the phase: its sheet difference vanishes at the zeros of
+zeta_K and of L_K(s, psi) alike, on or off the line. CONJECTURE: r_D carries no information on the off-line zeros of
+E(z_1, .). What the matrix picture does give: the impostor's off-line zeros are zeros of the LINEAR functional
+<e_1, v(s)> of a vector v(s) whose character components are Euler products (with, under GRH for K, only on-line
+zeros): zeros of a projection, not of the vector. That is the operator form of "a sum is not a product".
 What an off-line zero of zeta_K would do here (PROVED): at rho it makes the WHOLE sheet difference vanish for h = 1;
 for h = 2 an off-line zero of L_K(s, psi) would make one character component of v vanish, leaving rank one.
 
