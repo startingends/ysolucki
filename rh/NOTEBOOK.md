@@ -425,3 +425,34 @@ integers, which lose a factor 2 to parity). Nobody in the record has looked for 
 one-vector certificate in place of a semidefinite statement. Equally rigid (needle of width μ₁/μ₂ around the ground
 state), so no way round WJ2; what changes is the kind of statement. With φ = 1 the constant 5.3722 of the archimedean
 term cancels exactly against 2ζ′/ζ(½) and what is left is −4Σ sin(γL)/γ. Not searched.
+
+**N40. Why the tiny eigenvalues are positive, and the comparison form of idea #27** (lead, 2026-11-11;
+experiment `rh/experiments/e27_relative/`). Labels on each line.
+- SETTING. λ = e^L. For g even on ℝ with g(0) = 0 = ĝ(0), put ℰ(g)(x) = x^(1/2) Σ_{n≥1} g(nx). Its Mellin transform is
+  ζ(s)·(Mg)(s), so the Weil form pairs ℰ(g) to zero with everything (KNOWN: Connes–Consani 2106.01715 §3; needs g
+  regular enough; the two conditions at 0 are what removes the pole).
+- IDENTITY (HEURISTIC until a seat checks the convergence): if g is supported in [−λ, λ], then ℰ(g) vanishes for
+  x > λ, its restriction f to the window [1/λ, λ] is a window function, and
+      Q_L(f) = W(T),   T = ℰ(g) restricted to x < 1/λ = x^(−1/2) Σ_{m≥1} (B⊥ĝ)(m/x),
+  where B⊥ĝ is the part of ĝ OUTSIDE the band [−λ, λ]. So the window form of f is the Weil form of a tail that is
+  built only from the out-of-band part of ĝ. In the log variable T = (ψ ∗ Σ_m m^(−1/2) δ_{log m}) cut to u < −L,
+  with ψ(v) = e^(−v/2)(B⊥ĝ)(e^(−v)): a chirp whose local frequency is at least 2π e^(2L).
+- DEFINITION. D_L(f) = inf ‖B⊥ĝ‖² over all such g with ℰ(g) = f on the window (g is free on (0, 1/λ)): the least
+  energy that must leak out of the band. It is ≥ 0 for free and its near-null directions are the prolate functions.
+  Idea #27's claim: Q_L ≥ κ(L) D_L with κ(L) bounded below.
+- WHY IT MIGHT HAVE ROOM (HEURISTIC). On a high-frequency, short function the Weil form is positive for classical
+  reasons: the archimedean term contributes about (1/2π) log(frequency) per unit of energy and the primes only see
+  the autocorrelation at lags log n, which is small for a chirp. So W(T) ≥ c‖T‖² is plausible UNCONDITIONALLY on the
+  tails of the near-null directions. What is not clear is the passage from ‖T‖ to ‖B⊥ĝ‖ and the directions that are
+  not near-null.
+- COMPUTED (one implementation, lane A's builder in a Fourier basis, truncated; predictions written first, two of
+  eight missed): (1) the merged ladder of small eigenvalues follows 1 − χ_n for n = 4, 6, 8, 10, 12 (even block
+  n ≡ 0 mod 4, odd block n ≡ 2 mod 4) with ratios 2.7, 1.9, 1.3, 1.1, 0.9 at L = 0.5 and 4.7, 3.1, 2.1, 1.45, 1.65 at
+  L = 0.75; (2) the explicit vector ℰ(h_n − (h_n(0)/h_b(0)) h_b) cut to the window has Rayleigh quotient 1.10 to
+  1.41 times the true eigenvalue of its rung at L = 0.5, 0.75, 1.0 (eigenvalues from 1e-6 down to 1e-29) and overlap
+  deficiency 7.5e-6, 4.2e-7, 7.2e-8 with the true ground state; (3) form-level ratio κ_K on the span of the first K
+  explicit vectors per parity at L = 0.5: 0.99, 0.60, 0.36, 0.35 (even), 1.00, 0.60, 0.30, 0.22 (odd): it does not
+  collapse, but it drifts down with K, and I do not know its limit.
+- NOT NEW: the mechanism (1) is the heuristic of Connes–Consani 2106.01715 §3 and the archimedean theorem of
+  2006.13771 has this shape. Possibly new: the numbers in (2), (3), the definition of D_L as a form on the whole
+  window space, and the identity read as "window form = Weil form of the leak". Not searched beyond the digests.

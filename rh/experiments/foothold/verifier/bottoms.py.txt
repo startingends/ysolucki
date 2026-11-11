@@ -1,0 +1,16 @@
+"""V-FH: two-sided float estimates of the bottom of the TRUE form (atom exactly at log 2) at L = 1/2 and 27/50.
+Upper bounds: my polynomial code (NB = 28/32/44) and the Fourier builder (N = 320).  The author's 'Rayleigh-Ritz at the
+true atom' numbers (9.0567e-7; 6.447e-8) were computed at y = 0.693147, not log 2: reproduced here at that y."""
+import time
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+mp.mp.dps = 34; flint.ctx.prec = 160
+t0 = time.time()
+y2 = mp.log(2); m2 = mp.log(2) / mp.sqrt(2); yq = mp.mpf(693147) / 10**6
+for Lname, L, La, NBs in (("1/2", mp.mpf(1) / 2, arb(1) / 2, (28, 44)), ("27/50", mp.mpf(27) / 50, arb(27) / 50, (32, 44))):
+    for NB in NBs:
+        Pb = Poly(L, NB)
+        print(f"L={Lname} poly NB={NB}: at y=log 2: even {mp.nstr(Pb.lows(y2, m2)[0], 8)} odd {mp.nstr(Pb.lows(y2, m2)[1], 8)} | at y=0.693147: even {mp.nstr(Pb.lows(yq, m2)[0], 8)} odd {mp.nstr(Pb.lows(yq, m2)[1], 8)}  t={time.time()-t0:.0f}s", flush=True)
+    for N in (160, 320):
+        q = weil.build(La, N, kind='zeta', pole=True, primes=True, arch=True)[0]
+        e, o = lows(fblocks(q, N))
+        print(f"L={Lname} Fourier N={N}: even {e:.6e} odd {o:.6e}", flush=True)

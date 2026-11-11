@@ -153,3 +153,20 @@ B114 (S1-cubic withdrew 0.05), B143 (FORMAL: F1 step, folding identity, Theorem 
 ### PREDICTION for t3_band.py.txt (written before computing; time = date line of this append)
  Nodal band [n_-, n_+] := weights for which BOTH folded ground states are nodeless. I predict: it contains the admissible interval [c_-, c_+] at delta = 0.1, 0.2, 0.3, 0.4;
  n_- within 5% of c_- at all four; (n_+ - c_+)/c > 0.5 at delta = 0.1 and < 0.05 at delta = 0.3 and 0.4. M = 480 changes n_-, n_+ by less than 3% at delta = 0.3.
+
+### RESULT t3_band.log (M = 240; 01:07): both-nodeless band vs admissible interval
+ delta 0.1: even nodeless on [0.356, 1.157], odd nodeless below 0.903; admissible [0.361, 0.539].   delta 0.2: [0.4773, 0.7146], below 0.5997; admissible [0.4772, 0.4976].
+ delta 0.3: [0.4887, 0.5447], below 0.512; admissible [0.4883, 0.4934].   delta 0.4: even band narrower than my grid step (missed), odd below 0.4922; admissible [0.4890, 0.4909].
+ Prediction 'band contains the admissible interval': HIT at 0.2, 0.3 on the upper side; on the lower side n_- = c_- to 3-4 digits (0.4773/0.4772, 0.4887/0.4883): HIT ('within 5%'), and far closer than I expected.
+ (n_+ - c_+)/c: 0.74 at 0.1 (HIT > 0.5); 0.038 at 0.3 (HIT < 0.05).
+ The edge thresholds have the minimum of the ground state at the LAST box (x = L - d/2); the upper even threshold has it at the centre x = 0.
+
+### IDEA (S1-curv/#7) DERIVATIVE LEMMA, found from the coincidence n_- = c_-.  Translation invariance: for v, g supported in the closed window, v(+-L) = 0, Q(v', g) = -Q(v, g').
+ So if Q v = mu v (eigenfunction), v(+-L) = 0 and v' is in the form domain, then v' is an eigenfunction with the SAME eigenvalue and the opposite parity.
+ => at the weight where the even ground state loses its edge value, v_e' (odd, one sign on (0, L]) is the odd ground state: the two ground levels cross. Since mu_e ~ 0 that weight is ~ c_-.
+ => at the weight where the odd ground state loses its edge value, psi_o' (even, one node) is the SECOND even eigenfunction: mu_o^(1) = mu_e^(2).
+### PREDICTION for t3_cross.py.txt (written before computing; time = date line of this append)
+ Boxes M = 240, delta = 0.1, 0.2, 0.3: t_x1 := weight with mu_e^(1) = mu_o^(1); t_x2 := weight with mu_o^(1) = mu_e^(2).
+ I predict |t_x1 - n_-| < 0.003 and |t_x2 - n_+odd| < 0.01 at all three delta (n_- = 0.356, 0.4773, 0.4887; n_+odd = 0.903, 0.5997, 0.512),
+ and that t_x1 is CLOSER to n_- than c_- is, at delta = 0.1 (where they differ by 0.005).
+ If t_x2 is off by more than 0.05 the lemma's second consequence is wrong (or the odd ground state's derivative is not in the domain).

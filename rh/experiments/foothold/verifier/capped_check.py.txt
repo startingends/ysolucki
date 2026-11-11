@@ -1,0 +1,80 @@
+"""V-FH: independent recomputation of the capped matrix M of PROOF_window_prime2.md (section 3) and of the tail constants.
+My route: mpmath, 30 digits; my own Gauss-Legendre nodes (panels of length 1/2, 24 nodes); spherical Bessel functions by
+mp.besselj(n + 1/2) (NOT the 0F1 formula of cert.py.txt); digamma by mp.digamma.  Then (a) lowest eigenvalue of the
+28 + 28 blocks, (b) a sample of entries I_jk against acb.integral as called in cert.py.txt, (c) tau, pi_tail, eps12, eps22.
+usage: capped_check.py.txt"""
+import sys, time
+exec(open('/home/user/ysolucki/rh/experiments/foothold/verifier/vlib.py.txt').read())
+mp.mp.dps = 30
+t0 = time.time()
+L = mp.log(3) / 2; R = 40; NMAX = 56; beta0 = mp.mpf(87) / 100
+u = mp.log(2); m = mp.log(2) / mp.sqrt(2)
+a = lambda r: mp.re(mp.digamma(mp.mpc(0.25, r / 2))) - mp.log(mp.pi)
+xs, ws = Poly._gl(24)
+npan = 80
+nodes = []; wts = []
+for i in range(npan):
+    lo = mp.mpf(R) * i / npan; hi = mp.mpf(R) * (i + 1) / npan
+    for x, w in zip(xs, ws):
+        nodes.append((lo + hi) / 2 + (hi - lo) / 2 * x); wts.append((hi - lo) / 2 * w)
+sj = lambda n, z: mp.sqrt(mp.pi / (2 * z)) * mp.besselj(n + mp.mpf(1) / 2, z)
+wpsi = [w * (a(r) - 2 * m * mp.cos(r * u) - beta0) for r, w in zip(nodes, wts)]
+J = [[sj(n, r * L) for r in nodes] for n in range(NMAX)]
+print(f"nodes {len(nodes)}, Bessel table done t={time.time()-t0:.0f}s", flush=True)
+Jn = np.array([[float(x) for x in row] for row in J]); wn = np.array([float(x) for x in wpsi])
+# I_jk in double (enough for eigenvalues at 1e-8 with entries O(1)? the check below uses mp for a sample)
+I_np = (Jn * wn) @ Jn.T
+def I_mp(j, k): return mp.fsum(w * J[j][i] * J[k][i] for i, w in enumerate(wpsi))
+p = [mp.sqrt(2 * L * (2 * n + 1)) * mp.sqrt(mp.pi / (2 * (L / 2))) * mp.besseli(n + mp.mpf(1) / 2, L / 2) for n in range(NMAX)]
+# check p_n against direct quadrature of phi_n e^{x/2}
+chk = mp.quad(lambda x: mp.sqrt((2 * 5 + 1) / (2 * L)) * mp.legendre(5, x / L) * mp.exp(x / 2), [-L, 0, L])
+print("p_5 formula vs quadrature:", mp.nstr(p[5], 20), mp.nstr(chk, 20))
+for par in (0, 1):
+    idx = list(range(par, NMAX, 2)); n = len(idx)
+    M = mp.matrix(n, n)
+    for a_, j in enumerate(idx):
+        for b_, k in enumerate(idx):
+            s = 1 if ((j - k) // 2) % 2 == 0 else -1
+            M[a_, b_] = s * (2 * L / mp.pi) * mp.sqrt((2 * j + 1) * (2 * k + 1)) * (I_mp(j, k) if True else I_np[j, k]) + (2 if par == 0 else -2) * p[j] * p[k] + (beta0 if j == k else 0)
+    ev = sorted(mp.eigsy(M, eigvals_only=True))
+    print(f"parity {par}: my lowest eigenvalues of M (28 modes): {mp.nstr(ev[0], 8)}, {mp.nstr(ev[1], 6)}   [cert log: {'1.605280e-08, 9.8371e-04' if par == 0 else '5.591096e-06, 3.3755e-02'}]   t={time.time()-t0:.0f}s", flush=True)
+# (b) sample of entries against acb.integral exactly as in cert.py.txt
+flint.ctx.prec = 128
+from flint import acb
+src = open('/home/user/ysolucki/rh/experiments/foothold/cert.py.txt').read()
+ns = {'__name__': 'lib'}; exec(compile(src, 'cert', 'exec'), ns)
+La = arb(3).log() / 2; ya = arb(2).log(); ma = arb(2).log() / arb(2).sqrt(); beta = arb(87) / 100
+def integrand(j, k):
+    def f(r, analytic):
+        v = ns['a_sym'](r) - beta - 2 * ma * (r * ya).cos()
+        return v * ns['sph_j'](j, r * La) * ns['sph_j'](k, r * La)
+    return f
+tol = arb(2) ** (-88)
+worst = 0
+for (j, k) in [(0, 0), (0, 2), (2, 2), (0, 54), (26, 28), (54, 54), (1, 1), (1, 3), (1, 55), (27, 29), (55, 55), (10, 40), (11, 41), (20, 20), (33, 35)]:
+    val = acb.integral(integrand(j, k), 0, 40, rel_tol=tol, abs_tol=tol, eval_limit=10**7, depth_limit=10**4).real
+    mine = I_mp(j, k)
+    d = abs(mine - mp.mpf(val.mid().str(40, radius=False)))
+    worst = max(worst, d)
+    print(f"  I[{j:2d},{k:2d}]: acb.integral {val.str(22)}   mine {mp.nstr(mine, 22)}   |diff| {mp.nstr(d, 3)}")
+print("largest |diff| in the sample:", mp.nstr(worst, 3))
+# (c) tail constants
+def dfact(n): return mp.fprod(range(1, 2 * n + 2, 2))
+def tail(Z, N=NMAX):
+    t = (2 * N + 1) * (Z ** N / dfact(N)) ** 2; q = Z * Z / ((2 * N + 1) * (2 * N + 3)); assert q < 1
+    return t / (1 - q)
+X = R * L; W = R * (max(abs(a(0)), abs(a(R))) + 2 * m + beta0)
+tau = tail(X); pit = 2 * L * mp.cosh(L / 2) ** 2 * tail(L / 2)
+eps12 = (2 * L * W / mp.pi) * NMAX * mp.sqrt(tau) + 2 * mp.sqrt(2 * mp.sinh(L)) * mp.sqrt(pit)
+eps22 = (2 * L * W / mp.pi) * tau + 2 * pit
+print(f"W = {mp.nstr(W, 9)}  tau = {mp.nstr(tau, 9)}  pi_tail = {mp.nstr(pit, 9)}  eps12 = {mp.nstr(eps12, 9)}  eps22 = {mp.nstr(eps22, 9)}")
+# direct numerical value of the true tail sums (to see how much room the bounds have)
+true_tau = mp.fsum((2 * k + 1) * max(abs(sj(k, X)), 0) ** 2 for k in range(NMAX, NMAX + 40))
+print(f"for comparison sum_(k>=56) (2k+1) j_k(X)^2 at the endpoint X = RL: {mp.nstr(true_tau, 6)}  (bound tau {mp.nstr(tau, 6)})")
+# brute check of Lemma 4 on a grid
+bad = 0
+for n in (0, 1, 2, 5, 10, 30, 56, 80):
+    for x in [mp.mpf(i) / 7 for i in range(1, 400)]:
+        if abs(sj(n, x)) > min(1, x ** n / dfact(n)) * (1 + mp.mpf(10) ** -20): bad += 1
+print("Lemma 4 grid violations:", bad)
+print(f"total {time.time()-t0:.0f}s")
