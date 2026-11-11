@@ -120,3 +120,12 @@ xi_S(s) = s(s-1) pi^(-s/2) Gamma(s/2) zeta(s). Claim: divided by w it tends to s
 f(x) = exp(-x^2/(2 s^2)), s = 0.12, fhat(x) = s sqrt(2 pi) exp(-s^2 x^2/2).
 PREDICTION: ratio (left side / w) / (zero sum) = 1 + O(w): within 15% at w = 0.1, within 3% at w = 0.01, and the
 deviation shrinks roughly linearly in w. If the ratio tends to 2 or 1/2 my constant in D12 (c) is wrong.
+
+## Result of P7 (d12_check.log; mpmath 20 digits, 10 s)
+Zero sum 0.0105228583 (17 zeros of each sign). (1/(pi w)) int |fhat|^2 sin^2(theta_w) / zero sum = 1.7528, 1.3876, 1.1966,
+1.0793, 1.0398 at w = 0.2, 0.1, 0.05, 0.02, 0.01: the limit is 1 and the deviation is linear in w (about 4w): the constant of
+D12 (c) stands. My predicted sizes (15% at w = 0.1, 3% at w = 0.01) MISSED (39% and 4.0%); limit and linearity HIT.
+
+## 01:44 (clock) THE BOARD WAS CLOSED by the moderator (B218) while I was posting. Not posted: two questions (to
+SP-operator, SP-reflection), my line for B158, a caveat to my own B214 (4), a note on plank 9 of the bridge. All in
+posts/UNPOSTED.md.
