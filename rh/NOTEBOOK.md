@@ -1231,3 +1231,14 @@ An exit would need an orthogonality relation whose diagonal is the trivial chara
   exponent > ½, and families of unbounded order (asked of SP-modular, B16).
 - S3 so far: E1, E3, E5, E6 closed with proofs; the form-positivity answer (H10) is the one open line, pending a scaling
   check; E2 is the short-family wall itself.
+- S3, H10 line decided (SP-reflection, B17, `rh/specialists/reflection/s3/LEVEL.md`): the vector of B12 was wrong and the
+  "new consequence of the 7/8 theorem" was a packaging error, withdrawn by the seat after a re-derivation and a check
+  (predictions hit). What survives: an exact criterion with no 3/4 cap (the Möbius vector is optimal for every Y; the
+  correct threshold is 4δ/Y), known in type (Beurling 1955's L^p graded criterion: the 7/8 theorem ⟺ Nyman–Beurling
+  density in L^(8/7)(0, 1)), and equivalent at each finite level to the zero-free box it certifies. Levels of
+  distribution beyond ½ exist only for primes with well-factorable weights (Maynard 3/5, Lichtman 66/107, Pascadi 5/8).
+- **S3 CLOSES** (lead): every named exit of the copy barrier is closed with a proof (E1 bootstrap — its floor is the
+  barrier itself; E3 circular, with the exact condition on P₀; E5 higher rank — Landau's pole; E6 weights — copies stay
+  top singular directions) or is the short-family wall itself (E2), and the one cap-free route (H10's form positivity)
+  is Beurling's graded criterion, a reformulation at each level. The October architecture's limit and the place RH
+  sits relative to it are now stated precisely and checked.

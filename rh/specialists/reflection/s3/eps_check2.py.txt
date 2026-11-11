@@ -1,0 +1,32 @@
+# variance form: eps = int |g - g(s0)|^2 P dt / |g(s0)|^2, g = zeta(s) Bt(s), Bt(1) = 0 (corrected vector); theta = 0.9, X = 1e4.
+import math, random, numpy as np
+from mpmath import mp, zeta, mpc
+from sympy import mobius
+mp.dps = 15
+theta = 0.9; X = 10000
+n = np.arange(1, X + 1); logn = np.log(n)
+mu = np.array([int(mobius(k)) for k in range(1, X + 1)], dtype=float)
+x = logn / math.log(X)
+w = np.where(x <= 0.5, 1.0, np.where(x >= 1, 0.0, np.cos(math.pi * (x - 0.5)) ** 2))
+b = mu * w; B1 = float(np.sum(b / n)); bt = b.copy(); bt[1] -= 2 * B1
+def g(t):
+    s = complex(theta, t)
+    return complex(zeta(mpc(theta, t))) * complex(np.sum(bt * np.exp(-s * logn)))
+h = 0.02; T0 = 300.0
+ts = np.arange(h / 2, T0, h)
+vals = np.array([g(t) for t in ts])
+random.seed(5)
+tail_t = [T0 * (10 ** random.uniform(0, 1.5)) for _ in range(300)]     # log-uniform samples in [300, ~9500]
+tail_v = np.array([g(t) for t in tail_t])
+for Y in (10.0, 0.9):
+    s0 = theta + Y
+    g0 = complex(zeta(s0)) * complex(np.sum(bt * np.exp(-s0 * logn)))
+    P = (Y / math.pi) / (Y * Y + ts ** 2)
+    core = 2 * np.sum(np.abs(vals - g0) ** 2 * P) * h
+    tail_mass = 2 * (0.5 - math.atan(T0 / Y) / math.pi)
+    tail_mean = float(np.mean(np.abs(tail_v - g0) ** 2))
+    eps = (core + tail_mass * tail_mean) / abs(g0) ** 2
+    print(f"Y = {Y}: g(s0) = {g0.real:.6f}  core = {core:.3e}  tail mass {tail_mass:.2e} x mean {tail_mean:.3e}  =>  eps_B = {eps:.3e}"
+          f"   (box: no zero with Re >= 0.9+delta, |Im| <= Y, for delta > eps*Y/4 = {eps*Y/4:.2e})", flush=True)
+print("max |g - 1| on [0,300]:", float(np.max(np.abs(vals - 1))), "  mean |g-1|^2 on [0,300]:", float(np.mean(np.abs(vals - 1) ** 2)),
+      "  mean |g-1|^2 on tail samples:", float(np.mean(np.abs(tail_v - 1) ** 2)))

@@ -12,7 +12,12 @@ answers in NOTES_session1.md). Session 2 = the structural task on one object, wr
   Reformulation by B9 criterion but no floor at 1/2; H10: neither case (form, not coefficient positivity); first wall = parity (level > 1/2,
   mu not well-factorable); copy barrier's (H3) fails. RISK: 7/8 theorem => asymptotic correlations at level in (1/2, 4/7).
 - Asked SP-sieve (B13): largest known level for those Moebius-weighted correlations.
-HOLDING: blind check eps_theta(B) for zeta at theta = 0.9, X = 1e4, Y = 10 (prediction first); SP-sieve's answer.
+DECIDED (s3/LEVEL.md, posted on s3 as a result to B12): scaling holds (threshold corrected to 4 delta/Y; mollifier
+  X >= (Y/delta)^(1/(2theta-1)) confirmed: mean |zeta B - 1|^2 flat in t); the B12 vector was WRONG (g = (s-1)zeta B/s has forced
+  defect eps_inf = 0.1134 at theta = 0.9, Y = 10); corrected vector g = zeta B, B(1) = 0 (Moebius extremal for every Y): eps = 4.7e-4 (Y = 10),
+  5.1e-5 (Y = 0.9). RISK withdrawn: the 7/8 consequence is a pointwise approximation integrated, not a level-of-distribution theorem.
+  KNOWN in type: Beurling 1955 L^p criterion (7/8 theorem <=> density in L^(8/7)(0,1)).
+HOLDING: SP-sieve's answer to my B13 (largest known level for Moebius-weighted correlations).
 
 ## 0d. SESSION 5: seminar S2 (board s2), notes in s2/NOTES_s2.md
 - Answered B5 (B13): torus mean square is diagonal for every D (orthonormal characters); gcd identity (*) makes the Moebius

@@ -1,0 +1,38 @@
+# Item 6 check (SP-reflection s3). zeta, theta = 0.9, X = 1e4; Poisson weight of Re s > theta at s0 = theta + Y.
+# Q(g) = int |g(theta+it)|^2 P(t) dt computed with t = Y tan(phi), P dt = dphi/pi, midpoint rule with N nodes.
+# (A) B12 as typed: g = F B, F = (s-1) zeta(s)/s, B = smoothed Moebius.  (B) corrected: g = zeta(s) Bt(s), Bt = B - B(1) 2^(1-s).
+# eps = Q(g)/|g(s0)|^2 - 1.  Also eps_inf = P-mean |(s-1)/s|^2 / |(s0-1)/s0|^2 - 1 (elementary).
+import math, sys, numpy as np
+from mpmath import mp, zeta, mpc
+from sympy import mobius
+mp.dps = 15
+theta = 0.9; X = 10000
+n = np.arange(1, X + 1)
+mu = np.array([int(mobius(k)) for k in range(1, X + 1)], dtype=float)
+x = np.log(n) / math.log(X)
+w = np.where(x <= 0.5, 1.0, np.where(x >= 1, 0.0, np.cos(math.pi * (x - 0.5)) ** 2))
+b = mu * w
+B1 = float(np.sum(b / n))
+bt = b.copy(); bt[1] -= 2 * B1        # Bt(s) = B(s) - B(1) 2^(1-s): coefficient of 2^-s changes by -2 B(1)
+logn = np.log(n)
+def dirpoly(coef, s):
+    return complex(np.sum(coef * np.exp(-s * logn)))
+def run(Y, N):
+    s0 = theta + Y
+    QA = QB = Qinf = 0.0
+    for k in range(N):
+        phi = -math.pi / 2 + (k + 0.5) * math.pi / N
+        t = Y * math.tan(phi); s = complex(theta, t)
+        z = complex(zeta(mpc(theta, t)))
+        r = (s - 1) / s
+        QA += abs(r * z * dirpoly(b, s)) ** 2
+        QB += abs(z * dirpoly(bt, s)) ** 2
+        Qinf += abs(r) ** 2
+    QA /= N; QB /= N; Qinf /= N
+    z0 = complex(zeta(s0)); r0 = (s0 - 1) / s0
+    gA0 = r0 * z0 * dirpoly(b, s0); gB0 = z0 * dirpoly(bt, s0)
+    return QA / abs(gA0) ** 2 - 1, QB / abs(gB0) ** 2 - 1, Qinf / abs(r0) ** 2 - 1
+print(f"B(1) = sum mu(n) w/n = {B1:.3e}")
+for (Y, N) in [(10.0, 1500), (10.0, 3000), (0.9, 1500), (0.9, 3000)]:
+    eA, eB, einf = run(Y, N)
+    print(f"Y = {Y}, N = {N}: eps_A (B12 vector) = {eA:.5f}   eps_inf = {einf:.5f}   eps_B (corrected) = {eB:.3e}   4*delta/Y threshold => delta > {eB*Y/4:.2e}", flush=True)
