@@ -1884,3 +1884,15 @@ known: Bagchi 1981, Voronin; packaging the lead's).
   Huxley, Jutila, Bourgain. So "not found" is bounded by that scope.
 - Consequence for the ratings: the copy barrier's new content is the general kernel lemma (T110–T111) and the written
   barrier T113. Quality stays 6 (a barrier with an oral precedent), Toward RH 1.
+
+**N107. Copy barrier written up as a self-contained note** (`rh/papers/copy_barrier.md`; every proof re-derived, no
+GAP sections; Lean cores L1–L5 rebuilt, standard axioms, no sorry).
+- Corrections found while re-deriving: T108 near-copy error is 2ηD (not ηD + O(ω(r))); T107 near-copy case also
+  needs η ≤ 1/(2κ_K); the quadratic family is the Jacobi family (n/d), d odd (Heath-Brown's setting); the Dirichlet
+  near-copy count follows from Theorem 1 run backwards plus orthogonality (no Pólya–Vinogradov); E6 is only a remark.
+- Scope limits: the [1, D]-copy version of Theorem 3(a) over general K is not proved; Pólya–Vinogradov, Jacobi facts,
+  ideal counting and Kummer/Chebotarev cited from memory. Machine-checked: Theorem 1 over ℚ, the abstract kernel
+  lemma with copy count over ℕ, the amplifier arithmetic, orthogonality for q > D.
+- New (modulo a bounded search): the kernel lemma bounding copies in multiplicative local Hecke families by C·H^(1/2),
+  and a proof that the copy-amplifier chain cannot beat D^(3/4 − ε₀/4 + ε/2). Theorem 1 is Heath-Brown's (1995).
+  Rating: Quality 7, Toward RH 1. The keeper should carry the T107/T108 corrections into THEORY.

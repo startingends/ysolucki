@@ -4,7 +4,7 @@ Out of 10 each; a breakthrough is 9–10 on both. Lead's honest ratings, 2026-11
 
 | item | what it is | Quality | Toward RH | why not higher |
 |---|---|---|---|---|
-| Copy barrier T106–T114 | amplifiers capped at 3/4; copies are squarefull; formal cores in Lean; novelty PARTLY KNOWN (N106: T106 is Heath-Brown 1995; T110–T111 general lemma and T113 not found in writing) | 6 | 1 | a barrier, not a route; 3/4 asserted orally before |
+| Copy barrier T106–T114 | amplifiers capped at 3/4; copies are squarefull; formal cores in Lean; novelty PARTLY KNOWN (N106); written up with all proofs re-derived, `rh/papers/copy_barrier.md` (N107) | 7 | 1 | a barrier, not a route; 3/4 asserted orally before |
 | Bounded-height Bettin–Gonek equivalence T117 | zero-free abscissa ↔ mollifier exponent, checked | 5 | 1 | an equivalence, known mechanism |
 | N75/N78 sextic rule | only the sextic family absorbs μ and sieves sharply; cubic 0.8136 refuted | 5 | 1 | explains the October island, gives no improvement |
 | Bridge 1 (planks 1–13) | ladder = Poisson summation; band edge = Montgomery's line; κ tracks closest pairs | 5 | 1 | charted what the impostor shares; no Euler product |
