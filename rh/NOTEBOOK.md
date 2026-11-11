@@ -2036,3 +2036,9 @@ transcendental, so no zero can sit in a finite-rank integral piece on which thre
 is NOT an abelian variety, torus or finite-rank lattice object, and its positivity cannot come from a finite-rank
 polarisation. Each zero must live in an infinite-rank piece (or the space has no integral structure). Quality 6,
 Toward RH 2. Sent to SP-modular for adversarial check together with §§1–5.
+
+**N116. Check of MISSING_SPACE.md: §2's "group law" principle withdrawn (the real ingredient is an ample class plus a
+Riemann–Roch amplifier); §3's collapse withdrawn (Witt vectors and function spaces see every character); §4 and §7
+stand (§7 holds for any non-real ρ and excludes finite-rank algebraic towers, not completed or analytic objects).**
+Remaining picture: Witt vectors (group, every character, no ∞) / Connes' adele class space (zeros, scaling, no group)
+/ modular Jacobians (group, polarisation, Hodge index, Hecke spectrum not zeros). Details in MISSING_SPACE.md §8.

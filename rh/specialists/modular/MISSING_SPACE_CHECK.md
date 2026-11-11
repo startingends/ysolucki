@@ -90,6 +90,34 @@ HEURISTIC / RISK. Brief: do not soften.
  The nearest gluing would be an archimedean (Arakelov) completion of the Witt-vector picture: a Lambda-ring object with a metrised theta
  divisor at infinity. I know of no such construction (novelty not searched).
 
+## 6. Item 5: the lead's section 7 (six exponentials no-go). Verdict: CORRECT, with a slightly stronger form; excludes finite rank only
+ (6a) The proof is right (six exponentials theorem, Lang 1966 / Ramachandra 1968, FROM MEMORY: x_1, x_2 Q-independent and y_1, y_2, y_3
+     Q-independent imply one e^(x_i y_j) is transcendental). x = (1, i gamma) is Q-independent for real gamma != 0; y_j = log p_j are
+     Q-independent; e^(y_j) = p_j is algebraic, so some p_j^(i gamma) is transcendental. PROVED given the theorem.
+ (6b) Normalisation does not matter (PROVED). On the rho-component the scaling by p acts by p^(+-rho), p^(rho - 1/2) or p^(1 - rho) depending
+     on conventions (in C_Q the idele class of p has norm p^(-1), so the sign flips; harmless). Each differs from p^(i gamma) by p^(c) with
+     c in {1/2, beta + 1/2, ...}. Cleaner: apply the theorem directly with x = (1, rho - c), c rational. This is Q-independent whenever
+     rho is not real, so it holds for ANY non-real rho, on or off the line. No need for Re rho = 1/2.
+ (6c) What it excludes (PROVED): any finite-dimensional Q-bar-structure (Z-lattice, Q-form, number-field form, End tensor Q, isogenies)
+     on which three prime scalings act and which contains the rho-eigenvector, since the eigenvalues there are algebraic. With TWO
+     primes it is the four exponentials CONJECTURE (open), so "three" is sharp for current transcendence theory. With one prime nothing
+     is excluded (p^(i gamma) is algebraic for countably many gamma).
+     Also excluded: INDUCTIVE limits of finite-rank invariant lattices (a tower of Jacobians J_0(N) with the scalings preserving each
+     level), because every vector lies at a finite level.
+     NOT excluded: projective limits and completions (Tate-module-type or l^2-type objects of infinite rank with no finite invariant
+     sublattice), purely analytic H^1 (Deninger's picture), and the Arakelov part of section 4. Arakelov intersection numbers are already
+     transcendental (Green functions, the log p), and the no-go is about EIGENVALUES on integral structures, not about the values of
+     pairings. For the modular-curve candidate it confirms what section 4 found (Hecke eigenvalues a_p are algebraic, so zeros cannot be
+     Hecke eigenvalues on J_0(N)). It does not touch an Arakelov space whose archimedean part is infinite-dimensional and analytic.
+ (6d) Is it known? In spirit, yes (FROM MEMORY): Deninger stresses that the conjectural H^1 is infinite-dimensional and the "Frobenius" is a
+     flow (an R-action) whose eigenvalues are the rho themselves, with no reason to be algebraic; Manin's "absolute motives" lectures say the
+     same. I do not recall this exact six-exponentials argument in print (not searched). It matches my DISCRETE_ORBIT sec. 3 (zeta has no
+     factorisation with lattice frequencies) on the algebraic side. Function-field control: there the zeros are eigenvalues of ONE Frobenius,
+     all orbit lengths lie in (log q)Z, and the eigenvalues are algebraic Weil numbers. Consistent.
+ Consequence, sharpened: the missing space must carry the rho-eigenvectors in an infinite-rank, non-inductive (completed) object, or in
+ an analytic one, so its positivity cannot come from a finite-rank Riemann form. That is compatible with "Arakelov-type" only if the
+ archimedean part is itself infinite-dimensional.
+
 ## 5. Ratings
  Quality 6/10: two of the file's claims are corrected with explicit counterexamples (Witt vectors; C x C without the group law), and the
  closest Arakelov instance is named. Not higher: almost all literature here is FROM MEMORY (Bost-Kuehn's constant is not trusted), nothing

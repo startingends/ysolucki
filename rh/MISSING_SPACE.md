@@ -117,3 +117,28 @@ hence algebraic eigenvalues: a contradiction. So:
   finite-rank lattice have integral characteristic polynomials; the conclusion "J is not algebraic of finite rank"
   is new as far as the lead knows (not searched). Quality 6, Toward RH 2: it removes a whole class of candidates for
   the missing space and says what kind the space must be; it does not build it.
+
+## 8. Adversarial check (SP-modular, `rh/specialists/modular/MISSING_SPACE_CHECK.md`; mostly from memory) and corrections
+- **§2's design principle is WRONG as worded.** Signed combinations of Frobenius graphs are already divisors on C × C,
+  and Weil's first proof (Castelnuovo–Severi, Hodge index on C × C) handles them with no group law; correspondences
+  modulo degenerate ones = End(J), and Rosati positivity is Castelnuovo positivity in another form. In both proofs the
+  real ingredient is an AMPLE class plus a Riemann–Roch amplifier: the L3–L4 link of REVERSE.md. The group law is a
+  convenience, not the missing idea. "Rosati = functional equation" holds on the spectrum (ρ ↦ 1 − ρ), but the
+  polarisation is extra data; over ℚ, (J3) + (J5) amount to RH stated as self-adjointness.
+- **§3's collapse is WRONG as stated.** It holds only for scalar (homothety) actions. Function spaces on the idele
+  class group (scaling by translation; Connes) and the big Witt vectors with the operators F_n (Borger's F₁; Σ aₙ Fₙ
+  acts with eigenvalue Σ aₙ n^(−s) for every s) see every character. Their obstacle: they see EVERY s and single out
+  the zeros only through the kernel of Σ Fₙ (Nyman–Beurling again), and they have no archimedean place to carry a
+  polarisation. Connes' adele class space is not a group.
+- §4 correct with fix: Faltings–Hriljac positivity is Néron–Tate positivity, indexed by the Hecke spectrum; ζ enters
+  constants (Green functions, ω̂², Gillet–Soulé arithmetic Riemann–Roch). Closest instance for ζ itself: Bost–Kühn,
+  the self-intersection of the Hodge bundle on the level-1 modular curve over ℤ involves ζ′(−1)/ζ(−1): a value at ONE
+  point, not Weil's quadratic form.
+- **§7 CORRECT**, normalisation irrelevant: six exponentials with (1, ρ − c) works for any non-real ρ, on or off the
+  line. It rules out finite-rank structures with algebraic coefficients and inductive towers of them (e.g. a tower of
+  J₀(N)); it does NOT rule out completed infinite-rank objects or an analytic archimedean part, so §4's Arakelov idea
+  survives. Known in spirit (Deninger, Manin); the exact argument not recalled in print.
+- **The three-way picture that remains.** Big Witt vectors: group law and every character, no ∞. Connes' adele class
+  space: zeros and scaling, no group law. Modular Jacobians: group law, polarisation and Hodge index, but they see the
+  Hecke spectrum, not zeros. No known object has the ample class, the zeros, and ∞ at once. Ratings (seat): Quality 6,
+  Toward RH 1 ("the new ingredient turns out to be the ample class of L3–L4").
