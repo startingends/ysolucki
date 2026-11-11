@@ -325,3 +325,13 @@ an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
 - Euler product: absent; only mu * 1 = delta is used (impostor too). Linear use of mu (norms/kernels of Moebius-inverted
   objects) cannot see multiplicativity: the kernel sees M^{-1} = E (coefficients 1).
 - Ratings Quality 7, Toward RH 1. Check two_zero/ident.py.txt: Lemma A to 1e-6 relative at zeros 14.13, 21.02 (L = 0.5); off by O(1) at t = 17.5 (control).
+
+## SESSION 6 (one-object seat: H-4, the prime-sampling cone C_P): PRIME_SAMPLING.md
+- Pole term on h = g*g~ is 2ab (a = int g e^{-u/2}, b = int g e^{u/2}): INDEFINITE rank 2, not positive (corrects N94).
+- Prop 2.1 (PROVED, conic duality): kappa_P(L) = sup over ALL real weights c on prime powers <= e^{2L} of
+  lambda_min(A + sum c_s B_s; D). C_P positivity forgets the values of Lambda, keeps only its support. (Detect) <=> no fake
+  weights restore positivity at some window; (Detect) <= Rigidity of A (no fake prime-power explicit formula), open.
+- Forced frequency e^{2L}/(2L) is a factor ~4 pi L BELOW the band edge = inside the bulk (N94 said "soft regime": wrong
+  regime). There A = sum over zeros exactly, so A >= 0 on C_P is as hard as the zero statement.
+- Small L: A >= 0 on C_P(L) is a theorem wherever the full Weil form is (2L <= log 2; foothold one-prime windows).
+- Computation: prime_dual.py.txt (dual lower bounds via arb W_s = Li B_s Li^T); results in section 5.1.

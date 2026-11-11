@@ -1,0 +1,49 @@
+"""PRIME_SAMPLING section 5: upper bound for kappa_P(L) = inf over h in C_P(L) of A(h)/D(h) (= Q/D there), by an explicit
+feasible H = v v^T + X: v = minimiser of the full pencil (Q, D), X >= 0 built from extreme eigenvectors of combinations of
+the whitened constraint forms W_s = Li B_s Li^T (B_s(g) = (g*g~)(s)), chosen by an LP so that Tr(W_s H) = 0 for all s
+(prime powers for zeta; all 2 <= n <= e^{2L}, 5 not | n, for the impostor). kappa_min <= kappa_P <= Tr(A H)/Tr(H).
+Float after multiprecision whitening; the large directions of W_s are what is used."""
+import sys
+args = sys.argv[1:]
+sys.argv = ['h'] + args[:1] + ['0', 'on:1,2', '0.1']
+src = open('/home/user/ysolucki/rh/specialists/operator/two_zero/hybrid.py.txt').read().split("c = mp.mpf(sys.argv[2])")[0]
+exec(src)
+from numpy.polynomial.legendre import leggauss, legval
+from scipy.optimize import linprog
+Lfl = float(L); X2 = np.exp(2 * Lfl)
+def isprimepow(n):
+    for p in range(2, n + 1):
+        if n % p == 0:
+            while n % p == 0: n //= p
+            return n == 1
+    return False
+S = [n for n in range(2, int(np.floor(X2)) + 1) if (isprimepow(n) if d['KIND'] == 'zeta' else n % 5 != 0)]
+print(f"kind {d['KIND']}, L = {d['L']}, NB = {NB}, constraints at n = {S} (m = {len(S)})", flush=True)
+Lf = np.array([[float(Li[i, j]) for j in range(NB)] for i in range(NB)])
+xg, wg = leggauss(NB + 10)
+def phi(u):
+    t = u / Lfl; return np.array([legval(t, [0] * j + [1]) * np.sqrt((2 * j + 1) / (2 * Lfl)) for j in range(NB)])
+def Bmat(x):
+    a, b = x - Lfl, Lfl; u = (a + b) / 2 + (b - a) / 2 * xg; w = (b - a) / 2 * wg
+    P1 = phi(u); P2 = phi(u - x); G = (P1 * w) @ P2.T; return (G + G.T) / 2
+W = [Lf @ Bmat(np.log(n)) @ Lf.T for n in S]
+ev, V = np.linalg.eigh(Af); v = V[:, 0]; kmin = ev[0]
+b = np.array([v @ Ws @ v for Ws in W])
+print(f" kappa_min = {kmin:.6f}; constraint values of the minimiser b_s = v^T W_s v: max |b| = {np.abs(b).max():.3e}; scale of W_s: max |eig| = {max(np.abs(np.linalg.eigvalsh(Ws)).max() for Ws in W):.3e}", flush=True)
+rng = np.random.default_rng(1); Y = []
+for it in range(400):
+    r = rng.standard_normal(len(S)) if it >= len(S) else np.eye(len(S))[it]
+    M = sum(ri * Ws for ri, Ws in zip(r, W)); e, U = np.linalg.eigh((M + M.T) / 2)
+    for k in (0, 1, -1, -2): Y.append(U[:, k])
+Y = np.array(Y).T
+R = np.array([[y @ Ws @ y for y in Y.T] for Ws in W])          # m x J constraint values of each dictionary vector
+a = np.array([y @ Af @ y for y in Y.T])                         # their Rayleigh quotients (D-normalised)
+sc = np.abs(R).max(axis=1); Rn = R / sc[:, None]; bn = b / sc          # row scaling (constraints are homogeneous)
+res = linprog(c=a - kmin, A_eq=Rn, b_eq=-bn, bounds=(0, None), method='highs')
+if res.status != 0:
+    print(" LP infeasible/failed:", res.message)
+else:
+    w = res.x; trX = w.sum(); val = (kmin + w @ a) / (1 + trX)
+    Hres = bn + Rn @ w
+    print(f" feasible H = v v^T + X: Tr X = {trX:.3e}, Tr(A X) = {w @ a:.3e}; residual constraints max |Tr(W_s H)| = {np.abs(Hres).max():.2e} (rows scaled to max 1; |b|/row scale up to {np.abs(bn).max():.1e})")
+    print(f" => kappa_min = {kmin:.6f} <= kappa_P <= {val:.6f}", flush=True)
