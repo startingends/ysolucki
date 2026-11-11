@@ -94,3 +94,10 @@ RESULT (bg.log): formula check HIT (0.00134818794253 both routes, 12 digits). Pr
 Q_bg(f)/|f|^2 = +0.0194 at L = 0.40 (pole -0.00847, arch +0.01625, |f|^2 = 0.4): POSITIVE. The first half-integer mode is not a
 witness. Next (bg2.py.txt): odd polynomials c1 x + c3 x^3 + c5 x^5 on [-0.4, 0.4]; prediction: the best one is negative,
 between -0.12 and -0.05 per unit norm (below the periodic-basis value -0.077, since polynomials do not vanish at the edge).
+RESULT (bg2.log): prediction HIT (-0.0774 in (-0.12, -0.05)). Witness f(x) = x - 5.07 x^3 - 0.208 x^5 on [-0.4, 0.4]:
+|f|^2 = 0.0130945171, pole = -0.0002392346, arch = -0.0007741813, Q_bg(f) = -0.0010134159. Autocorrelation g < 0 on
+u in (0.2593, 0.8), min -0.0063978 at u = 0.46, g(log 2) = -0.0017172. One-vector consequence and control rows:
+ANSWER_B160.md (posted on the board as the answer to B160). NOT NEW as numerics: Connes-Consani 2106.01715 sec. 2.2, 2.4
+(digests grepped, not read): sign change of the archimedean form past log 2 and the omitted-prime-power effect for
+2, 3, 4, 5, 7. So prediction P4 (prime 5 removed) reproduced a known numerical effect; recorded in F21 and in K-atlas/#2.
+A first, over-long version of the board answer was refused by the tool (4000-character limit); nothing was posted twice.

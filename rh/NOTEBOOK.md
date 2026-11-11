@@ -385,6 +385,10 @@ For zeta, ε*(L) is negative and of the size of the lowest eigenvalue over its �
 (rule 2) until it brings an input. What it offers that the window picture did not: a scalar that interpolates between
 theorems we have (ε = ½) and RH (ε = 0), with one free monotonicity. NOT SEARCHED. A computable first test:
 ε*(L) for the impostor, F_d, G_d and the one-prime system, and ∂μ/∂ε for zeta.
+PARTLY IN PRINT (SP-operator and READER-1, Suzuki arXiv 1606.05726 read whole): Suzuki's canonical systems are
+attached to the SHIFTED functions ξ(s−ω)^ν/ξ(s+ω)^ν, ω the shift off the line; unconditionally they exist for ω > ½
+or on an unquantified initial interval. That is this plane's ε-direction for a Hankel operator, not for the window
+form. The Schur-monotone ray and the scalar ε*(L) for the window form were not found there.
 
 **N36. The multiplier cone.** More generally S_L = {even φ on (−2L, 2L): W·φ is ≥ 0 on the window}. Under RH it
 contains every positive definite φ (Schur) and is strictly bigger: on the zero side W·φ ≥ 0 says Σ_γ φ̂(t − γ) ≥ 0,

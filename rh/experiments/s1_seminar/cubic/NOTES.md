@@ -118,3 +118,31 @@ Awaiting: S1-parity on B67 (odd ground state sign on controls); SP-operator on B
 New scripts/logs this turn: fd, fd2, twoblock, locality3, locality4, rungs, rungs2. Machine rule now: memcap 1, one job at a time.
 To do next: (i) answers; (ii) is 'E_d has one positive square' provable (sum of two growing-exponential kernels)? (iii) S1-cubic/#8
 (local auxiliary fields) still unsearched; (iv) if FORMAL takes Lemma A, be ready to answer about the statement in TURN2.md section 4.
+
+## TURN 3 (started 00:48 UTC). Aim (owner rule 6): ONE statement provable now, not in papers read, violated by a control.
+Addressed to me: B156 (even ground state in my bordered matrix; sign theorem; compute t*(L)), B158 (five-part line).
+Read: B119 (parity: 'block >= 0 => folded ground state nodeless', 11 positive rows incl. the impostor; fails after failure),
+B127 (SP-operator: t-indexed certificate = de Branges chain, vacuous as existence; index 1 = N_1 class; no property seeing the tilt),
+B130 (SP-reflection: no infrared bound with the needed direction; hypotheses tilt-invariant), B140 (lead: Q_e = B + 8cc^T,
+anti-maximum principle), B144 (FORMAL: Lemma A and Lemma C machine-checked in AMOP form; Perron step not formal).
+Judge (r2_judge/JUDGEMENT.md 1.1): all proofs stand; Lemma B = Braenden-Leake 2.8; CD(rho,n) sentence wrong as written (accepted in B64).
+
+### Derived by hand before computing
+- EVEN: ground state psi of Q_e (eigenvalue mu_1) <-> phi(psi) = (psi, -<psi,q>, -<psi,p>) is the NULL vector of the bordered matrix of
+  N + mu_1; that matrix has one positive eigenvalue (Perron vector > 0), so phi(psi) is its SECOND eigenvector; psi > 0 forces both
+  fibre entries < 0. ODD: (psi, <s,psi>) is a null vector of [[N_o + mu, s],[s^T, -1]], whose top eigenvalue is 0: it is the PERRON
+  vector there (when the odd block has non-negative off-diagonal: no primes).
+- mu_1 is NOT just above the principal eigenvalue nu_1(B) = -lambda_1(N_e) (about -4.3 at L = 1): it sits just below nu_2(B).
+  So the anti-maximum principle (mu in (nu_1, nu_1 + delta)) is not obviously the right tool.
+- Fiedler's theorem (from memory, 1975): second eigenvector of an irreducible symmetric matrix with non-negative off-diagonal has
+  connected positive and negative sets; for a complete graph (all N_ij > 0) that is no information.
+
+### PREDICTIONS written BEFORE computing (00:48:19 UTC), boxes n = 48
+Q1. Identity check: second eigenvalue of bordered(N + mu_1) is 0 to 1e-10 with eigenvector phi(psi); fibre entries negative.
+Q2. t*/t_true (pole strength at which the even ground state first loses one sign, scanning t upward): zeta L = 0.5 and L = 1: > 1,
+    my guess in [1.05, 4]. Controls: weight at 4 doubled L = 0.75: < 1; Beurling L = 0.5: < 1; no primes L = 0.45 (even block still
+    positive): > 1. So 't* >= t_true exactly on the rows whose even block is >= 0' HOLDS on these five rows.
+Q3. Green kernel: the inverse of each folded block of Q is entrywise >= 0 for zeta at L = 0.5 and 1 (both blocks) and for no primes at
+    L = 0.36. (If so 'positive Green kernel' is the stronger statement behind B119.) For the even block I am less sure (pole has the wrong sign).
+Q4. Sturm pattern: the k-th eigenvector of Q on the whole window (zeta, L = 1) has exactly k sign changes for k = 0..5; NOT for all 48
+    (first violation at some k >= 6).

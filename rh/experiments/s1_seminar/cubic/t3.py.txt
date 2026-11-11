@@ -1,0 +1,58 @@
+"""S1-cubic turn 3, board B156.  Folded parity blocks of the box Weil form; even ground state in the bordered matrix;
+t*: pole strength at which the even ground state loses one sign; Green-kernel signs; Sturm sign-change counts.
+usage: t3.py.txt <n>"""
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+n = int(sys.argv[1]); h2 = n // 2
+def system(kind, L):
+    if kind == "zeta": cn = box.lam(math.exp(2 * L))
+    elif kind == "noprimes": cn = {}
+    elif kind == "beurling": cn = box.beurling(math.exp(2 * L))
+    elif kind == "oneprime": cn = {x: c for x, c in box.lam(math.exp(2 * L)).items() if abs(math.log2(x) - round(math.log2(x))) < 1e-12}
+    elif kind == "four2": cn = {x: (2 * c if abs(x - 4) < 1e-9 else c) for x, c in box.lam(math.exp(2 * L)).items()}
+    return box.boxN(L, n, cn)
+def nsign(v, tol=1e-9):
+    v = v / np.abs(v).max(); s = [x for x in v if abs(x) > tol]
+    return sum(1 for a, b in zip(s, s[1:]) if a * b < 0)
+J = np.eye(n)[::-1]
+Ue = np.array([(np.eye(n)[i] + np.eye(n)[n - 1 - i]) / math.sqrt(2) for i in range(h2, n)]).T      # folded even basis, boxes x>0
+Uo = np.array([(np.eye(n)[i] - np.eye(n)[n - 1 - i]) / math.sqrt(2) for i in range(h2, n)]).T
+for kind, L in (("zeta", 0.5), ("zeta", 1.0), ("four2", 0.75), ("zeta", 0.75), ("beurling", 0.5), ("noprimes", 0.36), ("noprimes", 0.45), ("oneprime", 0.54)):
+    N, p, q = system(kind, L); Q = np.outer(p, q) + np.outer(q, p) - N
+    Ne = Ue.T @ N @ Ue; ce = Ue.T @ (p + q) / math.sqrt(2)          # Q_e = ce ce^T - Ne  (ce = sqrt2 * cosh functional folded)
+    No = Uo.T @ N @ Uo; so = Uo.T @ (p - q) / math.sqrt(2)          # Q_o = -so so^T - No
+    Qe = np.outer(ce, ce) - Ne; Qo = -np.outer(so, so) - No
+    we, Ve = np.linalg.eigh(Qe); wo, Vo = np.linalg.eigh(Qo)
+    psi = Ve[:, 0] * np.sign(Ve[:, 0].sum()); mu1 = we[0]
+    print("%-8s L=%.2f n=%d: lowest eigenvalue even %.4e, odd %.4e ; sign changes of folded ground states: even %d, odd %d ; min/max of even ground state %.3e / %.3f" % (
+        kind, L, n, we[0], wo[0], nsign(Ve[:, 0]), nsign(Vo[:, 0]), psi.min(), psi.max()))
+    # (a) bordered matrix of N + mu_1 (full window, two fibres)
+    f = Ue @ psi; M = box.ext(N + mu1 * np.eye(n), p, q); ev, EV = np.linalg.eigh(M)
+    phi = np.r_[f, -(f @ q), -(f @ p)]
+    k0 = int(np.argmin(np.abs(ev)))
+    print("   (a) bordered(N + mu_1): top eigenvalues %.4f, %.2e, %.3e ; |M phi(psi)| = %.1e ; phi(psi) is eigenvector no. %d from the top ; fibre entries %.4f %.4f ; Perron vector min %.3e" % (
+        ev[-1], ev[-2], ev[-3], np.abs(M @ phi).max(), n + 2 - k0, phi[n], phi[n + 1], np.abs(EV[:, -1]).min()))
+    # B = -Ne: spectrum, resolvent decomposition of psi
+    B = -Ne; nu, U = np.linalg.eigh(B); u1 = U[:, 0] * np.sign(U[:, 0].sum())
+    lead = u1 * (u1 @ ce) / (mu1 - nu[0]); rest = sum(U[:, k] * (U[:, k] @ ce) / (nu[k] - mu1) for k in range(1, h2))
+    print("       B = -N_e: nu_1 = %.4f, nu_2 = %.4e ; mu_1 - nu_1 = %.4f, nu_2 - mu_1 = %.3e ; psi ~ lead - rest: |rest|/|lead| = %.4f (L2), max(rest/lead) pointwise = %.4f" % (
+        nu[0], nu[1], mu1 - nu[0], nu[1] - mu1, np.linalg.norm(rest) / np.linalg.norm(lead), (rest / lead).max()))
+    # (c) t*: ground state of B + t ce ce^T, t in units of the true strength (t = 1)
+    ts = np.r_[np.linspace(0.02, 3, 150), np.linspace(3.05, 40, 200)]
+    signs = [nsign(np.linalg.eigh(B + t * np.outer(ce, ce))[1][:, 0]) for t in ts]
+    first = next((t for t, sg in zip(ts, signs) if sg > 0), None)
+    back = [t for t, sg in zip(ts, signs) if sg == 0 and first is not None and t > first]
+    print("   (c) t*/t_true = %s (first t on the grid with a sign change; grid step 0.02 up to 3, then 0.185 up to 40)%s ; sign changes at t = 1: %d" % (
+        "%.3f" % first if first else "> 40", " ; one sign AGAIN at some larger t" if back else "", signs[int(np.argmin(np.abs(ts - 1)))]))
+    # Green kernels
+    for name, Qb in (("even", Qe), ("odd", Qo)):
+        if np.linalg.eigvalsh(Qb)[0] > 1e-9:
+            G = np.linalg.inv(Qb); print("   Green kernel %s block: min entry %.4e, max %.3e, negative entries %d of %d" % (name, G.min(), G.max(), (G < -1e-9 * G.max()).sum(), G.size))
+        else: print("   Green kernel %s block: block not positive" % name)
+    # Sturm counts on the whole window
+    wq, Vq = np.linalg.eigh(Q); cnt = [nsign(Vq[:, k]) for k in range(n)]
+    ok = next((k for k in range(n) if cnt[k] != k), n)
+    print("   Sturm: sign changes of eigenvectors 0..9 of Q: %s ; equal to k for all k < %d" % (cnt[:10], ok), flush=True)

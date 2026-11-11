@@ -77,6 +77,11 @@ State at 2026-11-11, about 00:40 UTC (journal J4 has what the last hours produce
 - **Standing seats:** K-atlas (running), K-theory (80 lemmas; woken to ingest the judge's verdicts and the
   readers' corrections), FH (foothold hunt, running), BG (bigger statement, running), FORMAL (Lean; five
   project files check file by file; a full `lake build` is requested before anything is marked `formal`).
+- **Specialists:** SP-reflection and SP-operator finished their first sessions (files in `rh/specialists/`).
+  SP-modular started (session 1, three questions from the lead; joins turn 3). SP-chodge not started.
+- **Failure atlas:** 25 entries, 300 pairs examined (4 yes, all reformulations; 6 maybe). Keeper sent back in to
+  add the judge's, the specialists' and the lead's new material and to look for a pair where one failure's
+  missing sign or factor is exactly what another supplies.
 - **Readers:** four seats ran (two by mistake; double readings agree). Three finished. READER-1 is reading
   X. Zhu, arXiv 2608.24827 next. Queue: end of `rh/library/README.md`.
 - **Verification track of round 2: finished.** `rh/experiments/r2_judge/JUDGEMENT.md`. Nothing reached L2/L3.

@@ -159,3 +159,30 @@ Open threads (for turn 3):
 - Not done: comb-profile computation offered to S1-curv (B54); doubling for L > 0.693 where the half window contains the prime 2.
 - Possible next computation: the rank-one bound form of the odd block, <e, M^-1 e> <= 1 with M = Q + Gamma squares + H_primes,
   e = e^(x/2) on (0, L]: is M positive definite on L^2(0, L] (H_primes is indefinite there), and how does <e, M^-1 e> approach 1?
+
+## Turn 3 (2026-11-11 00:47 UTC)
+Aim of the turn (owner rule 6): ONE small statement, provable now, not in the papers read, violated by a control.
+Addressed to me: B153 (first-prime lemma from a one-signed odd ground state), B158 (five-part line), B147 (K-atlas).
+Read: B120/B137 (SP-reflection: boundedness = upper half; Corollary 3 = Hermite-Jacobi 1856; Theorem 2's w not found; BCR Ch. 8 unread),
+B123 (SP-operator: Basor-Ehrhardt for T +- H; R = past/future operator; Suzuki 1606.05726: atom at log n enters at t = (1/2) log n),
+B141 (FORMAL machine-checked D1 and the real-root Corollary 3), B161/B164 (candidate A holds for every system on the no-prime window).
+
+### Theory before computing (turn 3)
+V1. Fold the odd block of the BACKGROUND (pole + Gamma, no primes) to (0, L]: Theorem E + images give
+    A_o(phi) = int V phi^2 + int int [w(|x-y|) - w(x+y)] (phi(x) - phi(y))^2 dx dy - 8 <phi, sinh(x/2)>^2,
+    V(x) = 2(kappa_L(x) - c_inf) + 4 int_0^L w(x+y) dy. Jump kernel >= 0 (w decreasing), sinh > 0: so A_o(|phi|) <= A_o(phi)
+    (first Beurling-Deny criterion) for EVERY L, not only L <= (1/2) log 2: the background has no mirror atoms at all.
+    Hence its ground state is simple and positive (irreducible: the kernel is > 0 everywhere).
+V2. First-prime lemma. If A_o has lowest eigenvalue -eps < 0, ground state psi > 0, |f| = 1, and atoms at positions u_i in [L, 2L)
+    with weights m_i (unit-weight form U_i, <psi, U_i psi> = 2 x_i^(-1/2) h_i(psi) > 0) give an odd block >= 0, then
+    sum m_i <psi, U_i psi> >= eps. One atom: m >= eps / <psi, U psi> > 0. Two lines: test on psi; h > 0 because psi > 0.
+    Any positive phi with A_o(phi) < 0 gives a bound; Perron says such a phi exists whenever A_o is not >= 0, and for atoms
+    with weights <= 0 (still a Perron operator) the lowest eigenvalue can only go DOWN: lambda <= -eps.
+V3. Not excluded by it: one-prime system, F_d. Possibly excluded: Beurling 2.1 at L = 0.40 (weight too small for its late position).
+
+### BLIND PREDICTIONS turn 3 (written 2026-11-11 00:48 UTC, before computing)
+R1. Lower bound from the background ground state for the atom at 2: m_lb / log 2 between 0.80 and 0.98 at L = 0.5,
+    between 0.40 and 0.90 at L = 0.4.
+R2. For an atom at 2.1 at L = 0.40: m_lb > log 2.1 = 0.742 (between 1.0 and 5): Beurling's first prime excluded by the lemma alone.
+R3. Background odd ground state: 0 sign changes on (0, L] for every L in 0.38 .. 1.0.
+R4. Exact lower threshold of the weight at 2 at L = 0.5 (odd block): between 0.6924 and 0.6931 (log 2 = 0.693147).

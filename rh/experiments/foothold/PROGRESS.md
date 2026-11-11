@@ -134,3 +134,42 @@ Validation of the x-space formula and of the ball matrix (validate_x.py.txt, mpm
 t(1/4 - t^2)^4, true atom): frequency side 1.17532888468e-8 / x side 1.1753288841703535145e-8 / Arb code
 1.1753288841703535145e-8 (even); 5.3447425664043e-9 / 5.344742566406390918e-9 / 5.3447425664063909180e-9 (odd).
 The x side and the Arb code agree to 20 digits; the frequency-side quadrature agrees to 9 and 12 digits.
+
+### 8. Novelty search for the forcing theorem (owner rule 5)
+(q3) WebSearch 2026-11-11: "Weil quadratic form positivity "prime 2" replaced by real variable p rigidity theorem
+interval arithmetic "sensitivity" Connes Consani certified uniqueness of prime from positivity".
+Result: only the Connes-Consani numerical section and Groskin's truncated-form paper (arXiv 2607.02828, abstract
+line only: finite-cutoff positivity certifies cutoff-free positivity; not read). No theorem pinning the prime from
+positivity found. Three queries in total this session; the honest status is "not found in what was read".
+
+### 9. Proof files written
+PROOF_window_prime2.md (Theorem A), PROOF_forcing_prime2.md (Theorem B). Both unchecked.
+
+### 10. Candidates of the brief NOT attempted this session (no claim)
+- function fields F_q(t): a window statement provable directly. Not started.
+- theta dial at n = 2; semi-local versions with finitely many primes. Not started.
+- an INNER bound for the forcing theorem (a certified open neighbourhood of (log 2, log2/sqrt2) that is feasible):
+  needs cert.py.txt run with ball-valued (y, m); not done.
+- two free atoms on (1/2) log 3 < L <= log 2. Not done.
+
+### 11. Walls, named
+- W-FH1 (cost wall of every cap certificate; Zhu Thm 1.4, re-derived here in P4): the cap needs
+  a(R) > A_L = sum_{log n < 2L} 2 Lambda(n)/sqrt n, i.e. R > 2 pi exp(A_L), A_L ~ 4 e^L; the margin to resolve is
+  about exp(-c e^{2L}). Exact statement I cannot prove: a lower bound for Q on L^2[-L, L] whose proof does not
+  resolve all frequencies up to 2 pi exp(A_L).
+- W-FH2 (rigidity is the converse direction): Theorem B says positivity => the prime; RH on the next window is
+  the statement prime => positivity. Exact statement I cannot prove: for L slightly above (1/2) log 3, the form
+  with atoms at log 2 and log 3 is >= 0 WITHOUT computing its spectrum (i.e. from the positivity on L = (1/2) log 3
+  plus a structural property of the new atom).
+What the walls suggest: (1) replace the pointwise bound on the comb in the medium band by the positive measure
+of numerically verified zeros (idea FH/#2); (2) study the one-step extension problem "window L -> window L + dL"
+as a Krein extension with a SIGN constraint on the new prime-side mass (idea FH/#3).
+
+### 12. End of session 1
+FOOTHOLDS.md has entries FH-1 and FH-2 (both proved here, unchecked) and a table of candidates without result.
+Idea log: FH/#1, #2, #3. MEMORY.md rewritten. Where the record already had pieces of this: theory T35 (= my P1),
+T26 (= P3), T45 (caps = Lemma 8 with fixed position), T47 (open target at L = 1), atlas F21 (needs a certified
+lower bound on the whole window: FH-1 supplies it for L <= (1/2) log 3; numbers at L = 0.5 reproduced and now
+certified as outer bounds).
+One discrepancy with the record to flag: atlas F21 says that with no atom "the even block stays positive";
+that refers to L near 0.37. At L = 1/2 the no-atom form is certified negative in BOTH blocks (FH-2 (iii)).

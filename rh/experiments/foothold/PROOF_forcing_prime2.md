@@ -55,8 +55,8 @@ k(x) = 2 e^{-x/2}/(1 - e^{-2x}) = e^{x/2}/sinh x = 1/x + h(x).
 (c) For 0 < eps <= 1 split the x-integral at eps. On x >= eps Fubini applies (|V|^2 is integrable and
 int_eps^inf (e^{-2x}/x + k(x)) dx < inf), giving int_eps^inf ( g_v(0) e^{-2x}/x - k(x) g_v(x) ) dx.
 The rest is rho_eps(r) = int_0^eps [ (e^{-2x} - 1)/x - h(x) cos(rx) + (1 - cos(rx))/x ] dx, and
-|rho_eps(r)| <= 2 eps + eps + int_0^{eps|r|} (1 - cos t)/t dt <= 3 + log(1 + |r|) (Lemma 6 for |h| <= 1); rho_eps(r) -> 0
-for each r as eps -> 0; (3 + log(1+|r|)) |V|^2 is integrable. By dominated convergence
+|rho_eps(r)| <= 2 eps + eps + int_0^{eps|r|} (1 - cos t)/t dt <= 4 + 2 log(1 + |r|) (Lemma 6 for |h| <= 1; (1 - cos t)/t <= min(t/2, 2/t)); rho_eps(r) -> 0
+for each r as eps -> 0; (4 + 2 log(1+|r|)) |V|^2 is integrable. By dominated convergence
 (1/2pi) int |V|^2 Re psi dr = lim_{eps->0} int_eps^inf ( g_v(0) e^{-2x}/x - k(x) g_v(x) ) dx.
 (d) The integrand equals g_v(0)(e^{-2x} - 1)/x + (g_v(0) - g_v(x))/x - h(x) g_v(x), each term bounded near 0
 (g_v Lipschitz), and g_v = 0 beyond 2L. So the limit is
