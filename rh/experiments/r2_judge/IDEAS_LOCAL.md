@@ -58,3 +58,23 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - date: 2026-11-11
 - claim: COMPUTED j13.log vs j13b.log: (0,0),(1,0),(2,2),(1,1) at threshold 1e-8 against (2,2) at every L at threshold 1e-45
 - log:
+
+## #9 · The global count kappa = number of distinct zeros with Re > 1/2 (seat parity Theorem 4, total count) is printed, with the same hyperbolic-pair proof, in an unrefereed Anthropic-hosted account of an agent run; it credits Bombieri 2000 with the upper-bound half for large truncations. Per-parity-block count not found there (no parity hits in the text)
+- status: open
+- source: R2-judge
+- date: 2026-11-11
+- claim: READ: about 150 of 5400 lines of the PDF text; primary Bombieri 2000 still not opened by anyone in the project
+- log:
+
+## #10 · Lead's e10 row L=1.25 (one positive eigenvalue, second -2.451e-47) reproduced by implementation B; in the half lattice -2.610e-47; Beurling control has 9 positive eigenvalues there
+- status: open
+- source: R2-judge
+- date: 2026-11-11
+- claim: COMPUTED j16_int.log, j16_half.log, j16_b.log
+- log:
+
+## #11 · Process: the committed snapshot 1e3f60a (22:47:54) is the only hard evidence of prediction order; it holds curv's 22:38/22:44/22:47 prediction blocks with no result sections, and cubic's P1-P7. Suggest the lead snapshot PROGRESS.md by command right after each prediction block
+- status: open
+- source: R2-judge
+- date: 2026-11-11
+- log:

@@ -13,4 +13,13 @@ papers; they recommend nothing.
 | Burnol, "The explicit formula and a propagator" | math/9809119 v2 (22 Nov 1998) | src/math9809119/explicV2.tex | 45 062 bytes |
 
 ## Reading log
-- record read first: README, KNOWLEDGE (all), THEORY, ATLAS, r1_A/PROGRESS, IDEAS #1, #2, #8, #9, #10, #16 to #21.
+- record read first: README, KNOWLEDGE (all), THEORY, ATLAS, r1_A/PROGRESS, IDEAS #1, #2, #8, #9, #10, #16 to #21,
+  NOTEBOOK N19 to N22.
+- paper 1 (2511.23257): read whole (lines 740 to 2149; preamble not read). Note:
+  `connes-vansuijlekom-real-zeros.md`. DONE.
+- paper 2 (2106.01715): read whole (lines 85 to 1544). Leftover text after `\end{document}`: unpublished
+  appendix read; old draft of 2.1 and 6.2 compared by diff, not read line by line. Note:
+  `connes-consani-zeta-cycles.md`. DONE.
+- paper 3 (2006.13771, identifier found by arXiv API search): read whole (lines 67 to 2431, plus the leftover table
+  after `\end{document}`). External data files (Dropbox) not fetched. Note:
+  `connes-consani-weil-positivity-archimedean.md`. DONE.

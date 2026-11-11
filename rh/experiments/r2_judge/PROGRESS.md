@@ -114,3 +114,19 @@ J16 (written 00:18:21 UTC by the system clock, command-written, before computing
    second -2.451e-47, third -3.773e-44 to the printed digits. 'half' lattice N = 56 (a different subspace): #pos = 1, second
    within a factor 0.7..1.4 of -2.45e-47. Control Beurling (2 -> 2.1), int lattice: between 5 and 12 positive eigenvalues,
    second eigenvalue of order +0.3..+1.
+
+J16 result (j16_int.log, j16_half.log, j16_b.log; 5 s each, 110 digits, implementation B = r2_parity/wb.py.txt, written 00:22:25 UTC):
+   int lattice N = 56: #pos = 1, largest 5.668358, second -2.4514e-47 (even block), third -3.7731e-44 (top of the odd block). HIT, digit for digit.
+   half lattice N = 56: #pos = 1, largest 5.644365, second -2.6099e-47 (factor 1.065). HIT.
+   Control Beurling (2 -> 2.1): 9 positive eigenvalues, top three 5.6334, 0.9099, 0.8679. HIT (predicted 5..12 and +0.3..+1).
+   So the lead's fourth row is reproduced by a second implementation. Final score of this seat: 16 predictions written before
+   computing, 14 clean hits, J13 missed at first run (my threshold) and hit on the rerun, J15 hit on values and missed on location.
+
+Literature, session 2 (rule 5):
+- Re-read with my own eyes in the text extracted by session 1: Braenden-Leake arXiv 2304.13203v2, Lemma 2.8 with its proof and
+  credit line (about 50 lines); Suzuki arXiv 2606.09096v3, lines on Yoshida Prop. 1 / Thm 2 / Bombieri (p. 2), Theorem 1.1,
+  the text around (1.7), Corollary 1.2, Theorem 1.3 and the paragraph after it (about 80 lines of about 2100).
+- Three web searches (one refused: weekly search limit): queries in JUDGEMENT.md section 6. Result summaries only.
+- One document opened from a search hit: "How the two-thirds argument was found: two agent runs and their literature"
+  (PDF on www-cdn.anthropic.com, hash d7f3ecf1...; its own first page says the mathematics in it is not independently verified).
+  Read about 150 of about 5400 text lines: the passages around its "Theorem 1 (global signature)" and its statements about Bombieri 2000.

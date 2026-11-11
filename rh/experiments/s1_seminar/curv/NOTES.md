@@ -76,3 +76,23 @@ Box model, L = 1, M = 40 (mu_1 of zeta's box blocks: even 1.99e-3, odd 8.1e-3; f
     gap/lambda_1 moves by < 1% for d <= 0.1; Bakry-Emery centre constant/lambda_1 moves by < 2% for d <= 0.1; Op_d >= 0 and Cl_d has one negative direction for all d <= 0.3.
  P5 the 2x2 sum-rule matrix S_d = 2 C^T N_{d,e}^{-1} C - I (C = [c_+, c_-]) has det = -(margin) at d = 0 (-5.59e-4 at M = 40) and det crosses 0 at the same d_crit as P1 (to 3 digits).
  P6 (B66) rho_half on my chain (no fibres), relative to lambda_1: M = 40: 0.84 +- 0.03, M = 160: 0.83 +- 0.03 (near 5/6); minimiser has mixed parity with even and odd parts of comparable norm.
+
+### RESULT t2_fd_40.log (L=1, M=40; run after the restart, 39 s). Checks: N_0 = 2 N_zeta exactly, c_inf(0.1) two ways 11.081023890.
+ P1 MISS (badly): kappa = 0.0011 (even), 0.0024 (odd), not (0.5, 20): the box blocks stay POSITIVE for all d <= 0.3 (even 3.981e-3 -> 3.764e-3). Smooth, even in d, no kink: HIT on shape only.
+   Reason seen afterwards: kappa = 2[Q_o(x v_e) - mu<x^2>] and in boxes x v_e is itself near-null; boxes (mu_1 = 2e-3) are far too coarse to see the tilt.
+ P2 moot (no crossing). P3 HIT: T-coefficient -0.0061, H-coefficient +0.0050 (opposite signs, |T| > |H|). P4 HIT: 1 positive eigenvalue at every d, gap/lam1 1.00336 -> 1.00324 (d=0.1),
+ BE 0.5222 -> 0.5215, Op min 0.1054 -> 0.1061, Cl one negative direction at every d. P5: det S_0 = -5.5922e-4 = -(margin) HIT; no sign change (it moves AWAY: -7.7e-4 at d = 0.3): second half MISS/moot.
+
+### Derived after seeing the table (exact, algebra): Q_d(f) = 2[Q(cosh(dx) f) - Q(sinh(dx) f)]  =>
+ F_d >= 0 on [-L, L]  <=>  Q_L(tanh(dx) g) <= Q_L(g) for all g   (multiplication by tanh(dx) is a contraction for zeta's Weil form).
+ tanh(dx) is odd: even block of F_d >= 0 <=> Q_o(tanh(dx) g) <= Q_e(g), g even; odd block <=> Q_e(tanh(dx) g) <= Q_o(g), g odd.
+ Small d: d_crit^2 = 1/nu, nu_eo = sup_{g even} Q_o(x g)/Q_e(g), nu_oe = sup_{g odd} Q_e(x g)/Q_o(g).  Lower bound nu_eo >= Q_o(x v_e)/mu_e >= (mu_o/mu_e) ||x v_e||^2.
+
+### PREDICTION for t2_nu.py.txt (boxes, L = 1, diag(x_i) as the multiplication): nu_eo(M) grows like 1/mu_e(M): nu_eo * mu_e in (0.002, 0.05) for M = 40, 80, 160, and
+ 1/sqrt(nu_eo) at M = 40 is > 0.5 (consistent with "no crossing for d <= 0.3"), falling to (0.15, 0.5) at M = 160. nu_oe < nu_eo at every M (the even block is the tight one).
+ Check: lowest eigenvalue of the contraction form Q(g) - Q(tanh(dx) g) (box-centre multiplier) has the same sign as that of Q_d and agrees with Q_d's /2/cosh^2 scale to 20%.
+
+### RESULT t2_nu.log (00:20:49): nu_eo = 6.18, 17.07, 55.5 (M = 40, 80, 160), nu_eo*mu_e = 0.0123, 0.0093, 0.0096 (HIT range); 1/sqrt(nu_eo) = 0.402, 0.242, 0.134
+ (predicted > 0.5 at M=40: MISS; (0.15,0.5) at M=160: MISS by 0.016). nu_oe = 7.91, 19.2, 55.7 >= nu_eo: prediction 'nu_oe < nu_eo' MISS (odd block slightly tighter).
+ Contraction form vs Q_d: same sign, lowest eigenvalues agree to 0.6% (d=0.1) and 6% (d=0.3, M=80: -0.0288 vs -0.0305): HIT. Box Q_d fails at d = 0.3 for M = 80 (not for M = 40).
+ Matrix identity error 1.4e-4..1.7e-3 = O(d^2 * box width) from the atoms (entrywise first order in the box width).

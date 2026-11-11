@@ -1,0 +1,40 @@
+"""S1-curv turn 2, answer to B66: half-window Bakry-Emery constant on my chain (N alone, no fibres).  usage: t2_half.py.txt L M [parts]"""
+import sys, importlib.machinery, importlib.util, numpy as np, scipy.linalg as sl
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib')
+L = float(sys.argv[1]); M = int(sys.argv[2]); parts = len(sys.argv) > 3
+kind = 'zeta'
+for kind in ('zeta', 'beurling'):
+    b = S.build(L, M, kind); ev, lam1, u, q, Lg = S.process(b['N']); pi = u * u; h = M // 2; E = np.eye(M)
+    Qt = q.sum(1)
+    def Gam(y):
+        G = 0.5 * np.diag(q[y]); G[y, :] -= 0.5 * q[y]; G[:, y] -= 0.5 * q[y]; G[y, y] += 0.5 * Qt[y]; return G
+    ind = np.zeros(M); ind[h:] = 1.0
+    wy = (ind * pi) @ q
+    SumW = np.zeros((M, M)); GS = np.zeros((M, M)); GQ = np.zeros((M, M)); Gall = np.zeros((M, M))
+    for y in range(M):
+        G = Gam(y); SumW += wy[y] * G; Gall += pi[y] * G
+        if y >= h: GS += pi[y] * G; GQ += pi[y] * Qt[y] * G
+    AS = 0.5 * (SumW - GQ - GS @ Lg - Lg.T @ GS)
+    # formula: (1/2)[L^T Pi_S L + sym(Pi_S L^2)] + boundary,  boundary = (1/4) diag(L^T(pi*l)) - (1/2)(D L + L^T D), l = L 1_S, D = diag(pi*l)
+    PiS = np.diag(ind * pi); l = Lg @ ind; D = np.diag(pi * l); L2 = Lg @ Lg
+    F = 0.5 * (Lg.T @ PiS @ Lg + 0.5 * (PiS @ L2 + L2.T @ PiS)) + 0.25 * np.diag(Lg.T @ (pi * l)) - 0.5 * (D @ Lg + Lg.T @ D)
+    J = np.eye(M)[::-1]; K = b['N'] - np.diag(np.diag(b['N'])); Hu = ((K @ J)[h:, h:]) @ u[h:]
+    Bq = np.linalg.qr(np.hstack([np.ones((M, 1)), E[:, 1:]]))[0][:, 1:]
+    w, V = sl.eigh(Bq.T @ AS @ Bq, Bq.T @ GS @ Bq); f = Bq @ V[:, 0]; f = f - pi @ f
+    fe = (f + f[::-1]) / 2; fo = (f - f[::-1]) / 2
+    wall = sl.eigh(Bq.T @ (Lg.T @ np.diag(pi) @ Lg) @ Bq, Bq.T @ Gall @ Bq, eigvals_only=True)
+    print("%s L=%g M=%d lam1=%.5f: rho_half/lam1 = %.4f (2nd %.4f) ; whole window (gap/lam1) %.4f ; formula check |A_S - F| = %.1e ; |L 1_S + sign*Hu/u| = %.1e" % (kind, L, M, lam1, w[0] / lam1, w[1] / lam1, wall[0] / lam1, np.abs(AS - F).max(), np.abs(l[h:] + Hu / u[h:]).max()))
+    R = lambda A, g: (g @ A @ g) / lam1
+    print("   minimiser: share of even part in Gamma_S: %.3f, odd %.3f, cross %.3f ; A_S: even-even %.4f odd-odd %.4f cross %.4f (units lam1 * Gamma_S(f)) ; mirror-crossing rate j = Hu/u: min %.3f max %.3f (total rate %.3f)" % (
+        fe @ GS @ fe / (f @ GS @ f), fo @ GS @ fo / (f @ GS @ f), 2 * fe @ GS @ fo / (f @ GS @ f), R(AS, fe) / (f @ GS @ f), R(AS, fo) / (f @ GS @ f), 2 * fe @ AS @ fo / lam1 / (f @ GS @ f), (Hu / u[h:]).min(), (Hu / u[h:]).max(), Qt[0]))
+    bd = 0.25 * np.diag(Lg.T @ (pi * l)) - 0.5 * (D @ Lg + Lg.T @ D); bulk = F - bd
+    print("   on the minimiser (units lam1 * Gamma_S): bulk (1/2)[|1_S Lf|^2 + <1_S f, L^2 f>] = %.4f ; boundary term (weight L 1_S = -sign * Hu/u) = %.4f" % (R(bulk, f) / (f @ GS @ f), R(bd, f) / (f @ GS @ f)))
+    if parts:
+        SS = np.zeros((M, M)); HH = np.zeros((M, M)); OO = np.zeros((M, M))
+        for x in range(h, M):
+            s_, h_, o_ = S.b3_parts(b['k'], u, x); SS += pi[x] * s_; HH += pi[x] * h_; OO += pi[x] * o_
+        g = lambda A: sl.eigh(Bq.T @ A @ Bq, Bq.T @ GS @ Bq, eigvals_only=True)[0] / lam1
+        print("   B3 split summed over the half window: |A_S - S - H - O| = %.1e ; constants: S %.4f, S+H %.4f, S+O %.4f, all %.4f ; on the minimiser: S %.4f H %.4f O %.4f" % (np.abs(AS - SS - HH - OO).max(), g(SS), g(SS + HH), g(SS + OO), g(AS), R(SS, f) / (f @ GS @ f), R(HH, f) / (f @ GS @ f), R(OO, f) / (f @ GS @ f)))
+        print("   cross (even x odd) part on the minimiser: S %.4f H %.4f O %.4f" % tuple(2 * fe @ A @ fo / lam1 / (f @ GS @ f) for A in (SS, HH, OO)))

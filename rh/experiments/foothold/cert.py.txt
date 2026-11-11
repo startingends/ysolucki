@@ -1,0 +1,137 @@
+"""CERTIFIED lower bound for the Weil form on L^2[-L, L] with atoms (m_i, y_i)  -- see PROOF_window_prime2.md.
+Every number is an Arb ball (python-flint); integrals by acb.integral (rigorous, Petras); positivity by interval LDL^T.
+usage: cert.py.txt <case> <R> <nmax> <beta0> <lam_even> <lam_odd> [prec_bits]
+  case 'log3' : L = (1/2) log 3, one atom y = log 2, m = log(2)/sqrt(2)   (the true Weil form on that window)
+  case 'half' : L = 1/2, same atom
+"""
+import sys, time, pickle, os
+import flint
+from flint import arb, acb, fmpq
+
+def setup(case):
+    if case == 'log3':
+        L = arb(3).log() / 2
+    elif case == 'half':
+        L = arb(1) / 2
+    else:
+        raise SystemExit("unknown case")
+    y = arb(2).log(); m = arb(2).log() / arb(2).sqrt()
+    return L, [(m, y)]
+
+def sph_j(n, z):
+    """spherical Bessel j_n(z) = (sqrt(pi)/2) (z/2)^n 0F1~(n + 3/2; -z^2/4), entire in z."""
+    return (arb.pi().sqrt() / 2) * (z / 2) ** n * (-(z * z) / 4).hypgeom_0f1(acb(n) + acb(3) / 2, regularized=True)
+
+def sph_i(n, x):
+    """modified spherical Bessel i_n(x) = (sqrt(pi)/2) (x/2)^n 0F1~(n + 3/2; x^2/4)."""
+    x = acb(x)
+    return ((arb.pi().sqrt() / 2) * (x / 2) ** n * ((x * x) / 4).hypgeom_0f1(acb(n) + acb(3) / 2, regularized=True)).real
+
+def a_sym(r):
+    """A(r) = (psi(1/4 + i r/2) + psi(1/4 - i r/2))/2 - log pi : holomorphic in |Im r| < 1/2, = Re psi(1/4 + ir/2) - log pi on R."""
+    r = acb(r)
+    I = acb(0, 1)
+    return ((acb(1) / 4 + I * r / 2).digamma() + (acb(1) / 4 - I * r / 2).digamma()) / 2 - arb.pi().log()
+
+def main():
+    case = sys.argv[1]; R = int(sys.argv[2]); nmax = int(sys.argv[3])
+    beta0 = fmpq(*[int(t) for t in sys.argv[4].split('/')])
+    lam = [fmpq(*[int(t) for t in sys.argv[5].split('/')]), fmpq(*[int(t) for t in sys.argv[6].split('/')])]
+    prec = int(sys.argv[7]) if len(sys.argv) > 7 else 200
+    flint.ctx.prec = prec
+    L, atoms = setup(case)
+    pi = arb.pi()
+    beta = arb(beta0)
+    A_L = sum((2 * abs(m) for m, y in atoms), arb(0))
+    aR = a_sym(arb(R)).real
+    a0 = a_sym(arb(0)).real
+    print(f"case={case} L={L.str(20)} R={R} nmax={nmax} prec={prec}")
+    print(f"a(R) = {aR.str(20)}  A_L = {A_L.str(20)}  a(R) - A_L = {(aR - A_L).str(20)}  beta0 = {beta0}")
+    assert (aR - A_L) > beta, "beta0 must be < a(R) - A_L"
+    assert beta > 0
+    # ---- finite part: entries
+    def integrand(j, k):
+        def f(r, analytic):
+            v = a_sym(r) - beta
+            for m, y in atoms:
+                v = v - 2 * m * (r * y).cos()
+            return v * sph_j(j, r * L) * sph_j(k, r * L)
+        return f
+    tol = arb(2) ** (-(prec - 40))
+    cache = f"cert_{case}_R{R}_n{nmax}_p{prec}.pkl"
+    I = {}
+    t0 = time.time()
+    maxrad = 0.0
+    for par in (0, 1):
+        idx = list(range(par, nmax, 2))
+        for a_, j in enumerate(idx):
+            for k in idx[a_:]:
+                val = acb.integral(integrand(j, k), 0, R, rel_tol=tol, abs_tol=tol, eval_limit=10**7, depth_limit=10**4)
+                assert val.real.is_finite()
+                I[(j, k)] = val.real
+                maxrad = max(maxrad, float(val.real.rad()))
+        print(f"  parity {par}: integrals done, elapsed {time.time() - t0:.0f} s, max radius so far {maxrad:.2e}", flush=True)
+    p = [(2 * L * (2 * n + 1)).sqrt() * sph_i(n, L / 2) for n in range(nmax)]
+    # ---- tail constants (PROOF section 4)
+    X = arb(R) * L
+    W = arb(R) * (arb.max(abs(a0), abs(aR)) + A_L + beta)          # >= int_0^R |Psi - beta|
+    def dfact(n):   # (2n+1)!!
+        v = arb(1)
+        for q in range(1, 2 * n + 2, 2): v *= q
+        return v
+    def tail(Z):   # >= sum_{k >= nmax} (2k+1) (Z^k/(2k+1)!!)^2
+        t = (2 * nmax + 1) * (Z ** nmax / dfact(nmax)) ** 2
+        q = Z * Z / ((2 * nmax + 1) * (2 * nmax + 3))
+        assert q < 1
+        return t / (1 - q)
+    tau = tail(X)
+    pitail = 2 * L * (L / 2).cosh() ** 2 * tail(L / 2)
+    eps12 = (2 * L * W / pi) * nmax * tau.sqrt() + 2 * (2 * L.sinh()).sqrt() * pitail.sqrt()
+    eps22 = (2 * L * W / pi) * tau + 2 * pitail
+    print(f"W <= {W.str(8)}  tau <= {tau.str(8)}  pole tail <= {pitail.str(8)}")
+    print(f"eps12 <= {eps12.str(8)}   eps22 <= {eps22.str(8)}")
+    # ---- interval LDL^T of M - lam*I on each parity block
+    ok = True
+    for par in (0, 1):
+        idx = list(range(par, nmax, 2)); n = len(idx)
+        sgn = 2 if par == 0 else -2
+        M = [[None] * n for _ in range(n)]
+        for a_, j in enumerate(idx):
+            for b_, k in enumerate(idx):
+                jj, kk = (j, k) if j <= k else (k, j)
+                s = 1 if ((j - k) // 2) % 2 == 0 else -1
+                v = s * (2 * L / pi) * (arb((2 * j + 1) * (2 * k + 1))).sqrt() * I[(jj, kk)] + sgn * p[j] * p[k]
+                if a_ == b_: v = v + beta - arb(lam[par])
+                M[a_][b_] = v
+        # LDL^T
+        D = [None] * n
+        Lm = [[arb(0)] * n for _ in range(n)]
+        good = True
+        for c in range(n):
+            d = M[c][c]
+            for t in range(c): d = d - Lm[c][t] * Lm[c][t] * D[t]
+            if not (d > 0):
+                good = False; print(f"  parity {par}: pivot {c} not certified positive: {d.str(10)}"); break
+            D[c] = d
+            for r_ in range(c + 1, n):
+                v = M[r_][c]
+                for t in range(c): v = v - Lm[r_][t] * Lm[c][t] * D[t]
+                Lm[r_][c] = v / d
+        try:
+            import numpy as np
+            ev = np.linalg.eigvalsh(np.array([[float(M[a][b].mid()) for b in range(n)] for a in range(n)]))
+            print(f"  parity {par}: (informational, float) lowest eigenvalues of midpoint(M) + lam: {ev[0] + float(lam[par].p)/float(lam[par].q):.6e}, {ev[1]:.4e}")
+        except Exception as e:
+            print("  numpy check skipped", e)
+        if good:
+            dmin = min(float(d.lower()) for d in D)
+            print(f"  parity {par} ({'even' if par == 0 else 'odd'}): M - ({lam[par]}) I certified positive definite; smallest pivot >= {dmin:.3e}")
+            lam0 = arb(lam[par])
+            bound = arb.min(lam0, beta - eps22) - eps12
+            print(f"     => Q(f) >= {bound.str(12)} ||f||^2 on this parity sector (take the lower end of the ball)")
+            assert bound > 0
+        ok = ok and good
+    print("CERTIFICATE", "HOLDS" if ok else "FAILS", f"(total time {time.time() - t0:.0f} s)")
+
+if __name__ == "__main__":
+    main()

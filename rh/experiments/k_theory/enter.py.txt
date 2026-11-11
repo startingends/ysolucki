@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+"""K-theory batch runner: python3 enter.py.txt <batch file>.   Every write goes through tools/records.py theory.
+A batch file is a python file defining ENTRIES (list of dicts). Keys -> T numbers are kept in keys.json (idempotent: a key
+already in keys.json is not added again). Placeholders @@key@@ in any text are replaced by the T number.
+Entry fields: key, name, statement, depends (list of keys), proof, source, routes, status (open/proved/checked/known/refuted),
+checked_by, note (set before the status change), why (reason given to the status command).
+An entry with 'tag' (e.g. 'T4') updates an existing seed entry instead of adding."""
+import json, os, re, subprocess, sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+REC = [sys.executable, os.path.join(ROOT, "tools", "records.py"), "theory"]
+KEYS = os.path.join(HERE, "keys.json")
+keys = json.load(open(KEYS)) if os.path.exists(KEYS) else {}
+
+
+def sub(text):
+    def r(m):
+        k = m.group(1)
+        if k not in keys:
+            sys.exit(f"unknown key {k}")
+        return keys[k]
+    return re.sub(r"@@([A-Za-z0-9_]+)@@", r, text)
+
+
+def run(*args):
+    p = subprocess.run(REC + list(args), capture_output=True, text=True)
+    if p.returncode != 0:
+        sys.exit(f"FAILED {args[:3]}: {p.stdout} {p.stderr}")
+    return p.stdout.strip()
+
+
+ns = {}
+exec(open(sys.argv[1]).read(), ns)
+for e in ns["ENTRIES"]:
+    k = e["key"]
+    deps = ", ".join(keys[d] for d in e.get("depends", []))
+    if "tag" in e:
+        tag = e["tag"]
+        keys[k] = tag
+        for f in ("statement", "proof", "source", "routes"):
+            if e.get(f):
+                run("set", tag, f, sub(e[f]))
+        if "depends" in e:
+            run("set", tag, "depends", deps if deps else "(none)")
+    elif k in keys:
+        print("skip", k, keys[k])
+        continue
+    else:
+        a = ["add", "--name", e["name"], "--statement", sub(e["statement"])]
+        if deps:
+            a += ["--depends", deps]
+        st = e.get("status", "open")
+        if e.get("proof") and st in ("proved", "checked"):
+            a += ["--proof", sub(e["proof"])]
+        for f in ("source", "routes"):
+            if e.get(f):
+                a += ["--" + f, sub(e[f])]
+        out = run(*a)
+        tag = out.split()[-1]
+        keys[k] = tag
+        if e.get("proof") and st not in ("proved", "checked"):
+            run("set", tag, "proof", sub(e["proof"]))
+            run("status", tag, st if st != "open" else "open", "see note") if False else None
+    json.dump(keys, open(KEYS, "w"), indent=0)
+    if e.get("note"):
+        run("set", tag, "note", sub(e["note"]))
+    if e.get("checked_by"):
+        run("set", tag, "checked by", sub(e["checked_by"]))
+    st = e.get("status")
+    if st and (st not in ("open", "proved") or "tag" in e or e.get("force_status")):
+        run("status", tag, st, sub(e.get("why", "see note")))
+    print(tag, st, e.get("name", k))
+print(run("check"))

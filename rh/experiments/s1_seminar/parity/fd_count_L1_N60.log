@@ -1,0 +1,6 @@
+(count) negative eigenvalues per parity block of F_d's form, L=1, integer lattice N=60, dps 120
+  d = 0     even: 0 negative (lowest 1.46e-29, least negative -, smallest positive 1.46e-29) | odd: 0 negative (lowest 3.61e-26, least negative -, smallest positive 3.61e-26)   (5s)
+  d = 0.05  even: 5 negative (lowest -0.00537, least negative -8.0e-16, smallest positive 1.0e-6) | odd: 4 negative (lowest -0.00535, least negative -1.17e-8, smallest positive 6.27e-13)   (10s)
+  d = 0.1   even: 5 negative (lowest -0.0224, least negative -5.15e-15, smallest positive 1.39e-9) | odd: 5 negative (lowest -0.0216, least negative -2.42e-13, smallest positive 0.00507)   (14s)
+  d = 0.25  even: 5 negative (lowest -0.144, least negative -1.15e-10, smallest positive 1.78e-13) | odd: 5 negative (lowest -0.138, least negative -7.13e-12, smallest positive 1.11e-6)   (19s)
+total 19s

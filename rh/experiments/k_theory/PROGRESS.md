@@ -50,3 +50,46 @@ Selberg 1942: a positive proportion of zeros on the line. DISTINCT-zero form: Mi
 p.2 read): "Selberg's method [49] shows that a positive proportion of the non-trivial zeros of the Riemann zeta-function are on the critical
 line. This is accomplished by counting sign changes of Hardy's function Z(t) and every zero detected by this method has odd multiplicity."
 Burnol arXiv math/0103058 and Baez-Duarte arXiv math/0202141: abstracts read (the exact lower bound is NOT in Burnol's abstract).
+
+### 00:14 UTC container restart; resumed. New sources read after the restart
+board B54-B69 (B70-B80 are questions only); s1_seminar/mirror/PROOF_mirror_criterion.md; s1_seminar/parity/NOTES.md sections G-N;
+s1_seminar/cubic/TURN1.md sections 5-7; r2_judge/PROGRESS.md (results J1-J15; still no JUDGEMENT.md); rh/formal (README, Smoke and
+MathlibCheck only: NO statement of the theory is machine-checked yet, and rh/formal has no MEMORY.md).
+
+### My own line-by-line checks of short proofs I did not write (each: what I verified). These are the entries marked `checked by: K-theory`.
+C1. NB off-line-zero floor (r1_B/PROGRESS.md Step 5). f = chi - sum c_k e_k is -lam/x on x > 1 (lam = sum c_k/k); Mellin transform of f at
+    0 < Re s < 1 is 1/s + zeta(s)A(s)/s (uses the classical int_0^inf {1/y} y^{s-1} dy = -zeta(s)/s, from memory, textbook); at rho0 it is 1/rho0;
+    int_0^1 f x^{rho0-1} = 1/rho0 - lam/(rho0-1); Cauchy-Schwarz with int_0^1 x^{2b-2} = 1/(2b-1); ||f||^2 = ||f||^2_(0,1) + |lam|^2;
+    min over lam of k|a - lam b|^2 + |lam|^2 is k|a|^2/(1 + k|b|^2). Bound as stated. OK.
+C2. Dissipation identity (r1_B/PROGRESS.md Step 6): y_k' = -2 sum_j (y_k - y_j)/|z_k - z_j|^2; d/dt sum y_k^2 = -4 sum_{j<k} (y_j-y_k)^2/|z_j-z_k|^2;
+    a conjugate pair contributes exactly 1. OK. (That the zeros of H_t obey this ODE is NOT part of the lemma.)
+C3. F1 (S1_ADDITIONS): Sherman-Morrison both ways. OK; needs only Q_e (Q_o) invertible and t_e != 1 (t_o != -1), not Q > 0.
+C4. Window interior under RH (checker's one line): |g(u)| <= ||f||^2, so |D(f*f~)| <= 2 sum|d_j| ||f||^2; Q_L >= lambda(L)||f||^2. OK.
+C5. First-order caps (B58 FACT 3): for real f, Q_delta(f) = Q(f) - 2 delta n^{-1/2} g_f(log n). OK.
+C6. Pair obstruction (E') (TURN1 3b): P_i e_j = (H_ij/s_i) v_i, (P_i)_jj = H_ij^2/s_i (needs i, j in B), P >= (Pe)(Pe)^T/(e^T P e), same w for P_j, a.w = H_ij. OK.
+C7. Block trickle-down (TURN1 6): H_i a = l_i, a^T H_i a = sigma_i, H <= H D' H, restriction to span(b_i) is Hhat <= Hhat C Hhat, Hhat 1 = sigma,
+    Perron vector C^{-1/2} 1, splitting x = z + x' with x'^T H x' <= 0. OK.
+C8. One-field form (TURN1 7): kernel identity e^{(x-y)/2} + e^{-(x-y)/2} - e^{-|x-y|/2} = e^{|x-y|/2}; E = P - W0 has at most one positive
+    eigenvalue and <1,E1> > 0; Haynsworth w.r.t. the block E. OK PROVIDED the compression of E to the subspace is non-degenerate
+    (proved only for the integral operator on L^2: (-d^2/dx^2 + 1/4) E = -delta; on boxes it is COMPUTED). Hypothesis added to the entry.
+C9. Per-prime Poisson decomposition (TURN1 2): primes = sum_p log p (q_p - |f|^2), arch = -c_inf|f|^2 + E_w (Theorem E), Poisson kernel bounds. OK.
+C10. Signature of Ntilde (parity NOTES E, B32): Lemma A's proof is algebraic (U = span(F1,F2) non-degenerate, U-perp carries -Q); reflection swaps
+    F1 and F2; Ntilde(F1+F2) = 2 > 0, Ntilde(F1-F2) = -2 < 0; so even block has 1 + kappa_-(Q_even), odd block kappa_-(Q_odd) positive squares. OK.
+C11. Converse of C4 (refuter of curv, FINAL VERDICTS): Dbar = sum pi_x D_x is f -> ||Lf||^2 - rho E(f); Poisson equation solvable entrywise. OK.
+C12. Block-averaged Bakry-Emery (TURN1 6): gap >= rho* by summing blocks and C4; resampling chain: (3/4 - rho/2) theta V + (1/4 - rho/2) int_S g^2,
+    int_S g^2 in [0, V], extreme V attained for |S| >= 2; rho_S = (1+3 theta)/(2+2 theta). OK (holds for any pi, by Theorem C1).
+C13. F3 (S1_ADDITIONS): u Lh = (N - lambda_1) f; N f_+- on the positive half is (T +- H) phi; difference of squares. OK.
+C14. Positive definiteness of [w(log ab) + Lambda(ab)/sqrt(ab)] (B24): Gamma part is the Gram matrix of v_m(a) = a^{-(2m+1/2)}, a generalised
+    Vandermonde system in x_a = a^-2 (distinct), so the v_m span; prime part >= 0 by D1. OK.
+C15. Parity difference identity (D5 + B25, parity NOTES D): q(f_e) = 2[T+H], q(f_o) = 2[T-H] for an even kernel; the g(0) terms of A are
+    diagonal and never enter H; H_P = E_+^2 + E_0^2; H_w = sum_{m>=0} E_m^2; H_primes = sum Lambda(n) n^{-1/2} int phi(x) phi(log n - x) dx. OK.
+C16. F4 (S1_ADDITIONS): <f_+,cosh> = 2c, <f_-,sinh> = 2s inserted in the block inequalities. OK.
+C17. Sign of the kernel (NOTEBOOK N24, seed T4): read off N = Pi - A; w(u) = e^{-u/2}/(1 - e^{-2u}) = sum_m e^{-(2m+1/2)u}. OK.
+
+### Written out by me (so NOT checkable by me): exact inertia relation (board B56, parity NOTES H name the method only)
+Finite dimension, Q_e and Q_o invertible, N_e = 2cc^T - Q_e, N_o = -2ss^T - Q_o, t_e = 2 c^T Q_e^-1 c, t_o = 2 s^T Q_o^-1 s.
+M_e := [[Q_e, sqrt2 c],[sqrt2 c^T, 1]]. Schur complement in the corner 1: In(M_e) = In(1) + In(Q_e - 2cc^T) = (1,0,0) + In(-N_e).
+Schur complement in Q_e: In(M_e) = In(Q_e) + In(1 - t_e). Count negative eigenvalues: kappa_+(N_e) = kappa_-(Q_e) + [t_e > 1]   (t_e != 1).
+M_o := [[Q_o, sqrt2 s],[sqrt2 s^T, -1]]. In(M_o) = (0,1,0) + In(Q_o + 2ss^T) = (0,1,0) + In(-N_o) = In(Q_o) + In(-1 - t_o).
+Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+(N_o) = kappa_-(Q_o) - [t_o < -1]   (t_o != -1).
+(Haynsworth's inertia additivity; both Schur complements exist because 1, -1, Q_e, Q_o are invertible.)  This needs an independent check.

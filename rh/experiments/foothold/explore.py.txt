@@ -21,7 +21,7 @@ def build(L, R, nmax, atoms, panels_per_unit=4, deg=24):
     out = {}
     for par in (0, 1):
         idx = n[par::2]
-        sg = np.array([[(-1) ** ((j - k) // 2) for k in idx] for j in idx])
+        sg = np.array([[(1 if ((int(j) - int(k)) // 2) % 2 == 0 else -1) for k in idx] for j in idx])
         M = beta * np.eye(len(idx)) + sg * G[np.ix_(idx, idx)] + (2 if par == 0 else -2) * np.outer(p[idx], p[idx])
         out[par] = M
     return beta, out

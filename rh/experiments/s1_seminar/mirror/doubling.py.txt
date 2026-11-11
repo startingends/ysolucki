@@ -1,0 +1,104 @@
+"""Doubling step: phi on (0, L], f_e / f_o its even / odd extension.  Q(f_e) = 2 (T + H)(phi),  Q(f_o) = 2 (T - H)(phi),
+T = Weil form of phi (a half-size window), H = mirror form of the Weil kernel = E_+^2 - sum_{m>=1} E_m^2 - H_primes.
+Positivity on [-L, L]  <=>  lam = H/T in [-1, 1] for all phi.
+(i)  cosine family phi = sum a_j cos(j pi x/L): T + H exact (even block, N = 40, 120 digits); T - H from the odd extension
+     (a jump at 0) expanded in NB sine modes (double precision, error ~ log NB / NB).   -> the end lam = -1.
+(ii) sine family phi = sum b_k sin(k pi x/L):   T - H exact (odd block); T + H from |sin| expanded in NB cosine modes (kink, error NB^-3). -> lam = +1.
+usage: python3 doubling.py.txt L [NB]"""
+import sys, math, time, importlib.util, importlib.machinery
+import numpy as np, scipy.linalg as sla
+P = "/home/user/ysolucki/rh/experiments/s1_seminar/mirror/lib.py.txt"
+spec = importlib.util.spec_from_file_location("lib", P, loader=importlib.machinery.SourceFileLoader("lib", P))
+lib = importlib.util.module_from_spec(spec); spec.loader.exec_module(lib)
+mp = lib.mp; weil = lib.weil; flint = lib.flint
+L = float(sys.argv[1]); NB = int(sys.argv[2]) if len(sys.argv) > 2 else 300
+N = 40; t0 = time.time()
+PR = sorted((n, math.log(p)) for n, (_, p) in weil.mangoldt_upto(int(math.exp(2 * L) + 1e-9)).items())
+print("L = %.3f, window atoms %s ; half window (0, L]: atoms with log n < L: %s" % (L, [n for n, _ in PR], [n for n, _ in PR if math.log(n) < L]))
+# ---- exact small blocks (120 digits)
+lib.setprec(120)
+A0 = lib.arch(L, N); Zb = lib.add(A0, lib.atoms(L, N, lib.lam(math.exp(2 * L))))
+# ---- big blocks in double precision
+flint.ctx.prec = 128
+def big(primes):
+    q = weil.build(L, NB, kind='zeta', pole=True, primes=primes, arch=True)[0]
+    E = weil.even_block(q, NB); O = weil.odd_block(q, NB)
+    f = lambda M: np.array([[float(M[i, j].mid()) for j in range(M.ncols())] for i in range(M.nrows())])
+    return f(E), f(O)
+EB, OB = big(True); EB0, OB0 = big(False)
+lib.setprec(120)
+# ---- change of family: X[k-1, j] = <S_k, sgn C_j> = <C_j, |S_k|>,  k = 1..NB, j = 0..NB
+def cross(nk, nj):
+    X = np.zeros((nk, nj + 1))
+    for k in range(1, nk + 1):
+        for j in range(0, nj + 1):
+            if (j + k) % 2: X[k - 1, j] = (2 / math.pi) * 2 * k / (k * k - j * j) * (1 / math.sqrt(2) if j == 0 else 1)
+    return X
+Xc = cross(NB, N)            # cosine family (j <= N)  ->  sine coefficients of the odd extension (k <= NB)
+Xs = cross(N, NB).T          # sine family (k <= N)    ->  cosine coefficients of the even extension (j <= NB)
+tomp = lambda M: mp.matrix(M.tolist())
+def pencil(Aex, Bap):
+    """generalised eigenvalues nu of Aex a = nu Bap a (Bap positive definite), ascending, with vectors"""
+    Lc = mp.cholesky(Bap); Li = mp.inverse(Lc); C = Li * Aex * Li.T; C = (C + C.T) / 2
+    ev, V = mp.eigsy(C); idx = sorted(range(len(ev)), key=lambda i: ev[i])
+    return [ev[i] for i in idx], [Li.T * V[:, i] for i in idx]
+# ---- pieces of H on the half window, by quadrature (double precision), for a function given by coefficients
+xg, wg = np.polynomial.legendre.leggauss(400)
+def phi_of(coef, fam):
+    def f(x):
+        x = np.asarray(x, float); s = np.zeros_like(x)
+        for j, c in enumerate(coef):
+            jj = j if fam == "cos" else j + 1
+            b = (np.cos if fam == "cos" else np.sin)(jj * math.pi * x / L) / math.sqrt(L)
+            if fam == "cos" and j == 0: b = np.ones_like(x) / math.sqrt(2 * L)
+            s += c * b
+        return s
+    return f
+def integ(g, lo, hi):
+    x = (hi - lo) / 2 * xg + (hi + lo) / 2
+    return float(np.sum(wg * g(x)) * (hi - lo) / 2)
+def pieces(f):
+    Ep = integ(lambda x: f(x) * np.exp(x / 2), 0, L)
+    E0 = integ(lambda x: f(x) * np.exp(-x / 2), 0, L)
+    M = 4000; x = L / 2 * xg + L / 2; fx = f(x) * wg * L / 2
+    Em = np.array([np.sum(fx * np.exp(-(2 * m + 0.5) * x)) for m in range(1, M + 1)])
+    f0 = float(f(np.array([1e-12]))[0])
+    G1 = float(np.sum(Em ** 2)) + f0 ** 2 / (4 * M)                 # tail: E_m ~ phi(0)/(2m)
+    Hp = {}
+    for n, lg in PR:
+        u = math.log(n); lo, hi = max(0.0, u - L), min(L, u)
+        Hp[n] = lg / math.sqrt(n) * integ(lambda x: f(x) * f(u - x), lo, hi) if hi > lo else 0.0
+    return Ep, E0, G1, Hp
+def report(tag, coef, fam, TpH, TmH):
+    f = phi_of([float(c) for c in coef], fam)
+    Ep, E0, G1, Hp = pieces(f)
+    T = (TpH + TmH) / 2; H = (TpH - TmH) / 2
+    Hsum = Ep ** 2 - G1 - sum(Hp.values())
+    nrm = integ(lambda x: f(x) ** 2, 0, L)
+    x = np.linspace(0, L, 2001); fx = f(x); pos = max(fx.max(), -fx.min()); neg = min(fx.max(), -fx.min())
+    print("   %s: |phi|^2 = %.4g ; T = %.6g, H = %.6g, H/T = %.9f ; H from pieces = %.6g (difference %.2e)" % (tag, nrm, T, H, H / T, Hsum, Hsum - H))
+    print("      in units of E_+^2 = %.5g:  Q(phi) = T = %.5f ; sum_{m>=1} E_m^2 = %.5f ; H_primes = %s ; E_0^2 = %.5f ; smaller lobe / larger lobe of phi = %.3g"
+          % (Ep ** 2, T / Ep ** 2, G1 / Ep ** 2, {n: round(v / Ep ** 2, 5) for n, v in Hp.items()}, E0 ** 2 / Ep ** 2, max(neg, 0) / pos))
+for name, Zex, EBb, OBb in (("zeta atoms", Zb, EB, OB), ("NO atoms", A0, EB0, OB0)):
+    print("=== %s ===" % name)
+    # (i) cosine family
+    Bap = tomp(Xc.T @ OBb @ Xc / 2); Aex = Zex[0] / 2
+    try:
+        nu, V = pencil(Aex, Bap)
+        lam = [(v - 1) / (v + 1) for v in nu]
+        print(" (i) cosine family: 1 + lam_min = %s ; lowest five lam + 1: %s ; #(lam < -0.99) = %d of %d ; lam_max = %s"
+              % (mp.nstr(2 * nu[0] / (1 + nu[0]), 5), [mp.nstr(1 + l, 3) for l in lam[:5]], sum(1 for l in lam if l < -0.99), len(lam), mp.nstr(lam[-1], 5)))
+        a = V[0]; TpH = float((a.T * Aex * a)[0]); TmH = float((a.T * Bap * a)[0])
+        report("even saturator", [a[i] for i in range(len(a))], "cos", TpH, TmH)
+    except Exception as e: print(" (i) failed:", e)
+    # (ii) sine family
+    Bex = Zex[1] / 2; Aap = tomp(Xs.T @ EBb @ Xs / 2)
+    try:
+        nu, V = pencil(Bex, Aap)                        # nu = (T - H)/(T + H)
+        lam = [(1 - v) / (1 + v) for v in nu]
+        print(" (ii) sine family: 1 - lam_max = %s ; top five 1 - lam: %s ; #(lam > 0.99) = %d of %d ; lam_max = %s ; lam_min = %s"
+              % (mp.nstr(2 * nu[0] / (1 + nu[0]), 5), [mp.nstr(1 - l, 3) for l in lam[:5]], sum(1 for l in lam if l > 0.99), len(lam), mp.nstr(lam[0], 8), mp.nstr(lam[-1], 5)))
+        b = V[0]; TmH = float((b.T * Bex * b)[0]); TpH = float((b.T * Aap * b)[0])
+        report("odd saturator", [b[i] for i in range(len(b))], "sin", TpH, TmH)
+    except Exception as e: print(" (ii) failed:", e)
+print("time %.1f s" % (time.time() - t0))

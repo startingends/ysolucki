@@ -1,0 +1,31 @@
+"""S1-cubic turn 2, the unexplained 'two-close' outcome.  Hypothesis written before running (NOTES.md): it is the single-pair
+effect in graded form: a far pair (i,j) needs a minimum number of third boxes; 'two-close r' fails when the most deprived pair
+has lost too many.  Test: ONE pair, the end pair (0, n-1); forbid its j most central third boxes (distinct triples (0,k,n-1)
+only, everything else free); slack t* as a function of j.  Compare with the number of thirds the end pair loses under two-close r.
+usage: locality3.py.txt <n>"""
+import sys, math, itertools, importlib.util, importlib.machinery, numpy as np, cvxpy as cp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+D0 = "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/"
+box = load("box", D0 + "box.py.txt")
+n = int(sys.argv[1]); L = 1.0
+sys.argv = ["x", "zeta", "1.0", str(n), "none"]
+loc = load("loc", D0 + "locality2.py.txt")
+P = loc.P
+def slack(zero):
+    r = P.run(zero, cp.SCS); return r[1], r[0]
+mid = sorted(range(1, n - 1), key=lambda k: abs(k - (n - 1) / 2))
+print("zeta L=1 n=%d ; end pair (0,%d) ; third boxes ordered from the centre: %s" % (n, n - 1, mid))
+for j in range(0, n - 1):
+    zero = [(0, k, n - 1) for k in sorted(mid[:j])]
+    t, st = slack(zero)
+    print("  end pair loses its %d most central thirds: t* = %+.4e (%s)" % (j, t, st), flush=True)
+    if t < -0.3: break
+for r in range((n - 1) // 2, 0, -1):
+    lost = [k for k in range(1, n - 1) if min(k, n - 1 - k) > r]
+    print("  two-close r=%d: end pair loses thirds %s (%d of %d)" % (r, lost, len(lost), n - 2))
+# the same number of triples removed, but spread over different pairs (one third each from the 4 farthest pairs)
+far = [(0, n - 1), (0, n - 2), (1, n - 1), (1, n - 2)]
+zero = sorted(set(tuple(sorted((i, (i + j) // 2, j))) for i, j in far))
+t, st = slack(zero); print("  control: the central third removed from each of the 4 farthest pairs %s: t* = %+.4e (%s)" % (zero, t, st))

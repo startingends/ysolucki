@@ -51,3 +51,20 @@ PREDICTION (written 2026-11-11 before any run of my code): capped form (P4), Leg
  - L = (1/2) log 3 = 0.5493: lambda_min(even) in [1e-8, 8e-8], odd in [1e-5, 1e-4];
  - control (must differ): atom moved to y = 0.75 (x = 2.117) at L = 0.5: lambda_min < -0.01 for every weight m;
    no atom at all at L = 0.5: lambda_min(odd) < 0.
+
+### 4. Float exploration of the capped form (COMPUTED, not a certificate)
+Command: `python3 tools/memcap.py 1 python3 explore.py.txt <L> <R> <nmax> [y m | none]`; log explore_a.log.
+| L | R | lambda_min even | lambda_min odd |
+|---|---|---|---|
+| 0.5 | 20 | -3.5e-3 | -3.5e-4 |  (cap too low: loss too big)
+| 0.5 | 40 | 5.79e-7 | 1.09e-4 |
+| 0.5 | 80 | 7.96e-7 | 1.62e-4 |
+| 0.5 | 160 | 8.77e-7 | 1.81e-4 |
+| (1/2) log 3 | 40 | 1.61e-8 | 5.60e-6 |
+| (1/2) log 3 | 160 | 5.22e-8 | 1.35e-5 |
+| 0.5, NO atom | 40 | -0.034 | -0.328 |
+| 0.5, atom at y = 0.75 (x = 2.117), m = 0.54 | 40 | -0.066 | -0.071 |
+Against the prediction: L = 0.5 both inside; L = (1/2) log 3 even inside, odd BELOW my range at R = 40 (5.6e-6;
+1.35e-5 at R = 160): I overestimated the odd margin. Controls negative as predicted (the capped form is only a
+lower bound, so the control numbers are indications, not proofs of negativity).
+The cap at R = 40 keeps both blocks positive at L = (1/2) log 3, so a certificate with 40 + 40 Legendre modes is in reach.
