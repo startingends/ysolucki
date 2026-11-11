@@ -2061,3 +2061,30 @@ against N3. Details: `rh/GUESSES.md`.
 structure known is a norm with the zeros as a KERNEL, not as spectrum** (SP-operator, `GUESS_B.md`). Half-density
 conjugation IS the reflection; axis-σ structures are J₀-positivity of e^((σ−½)x)W. RH ⇔ |H_W| ≤ T_W on the half-window
 (reflection is a contraction). Specification now: positivity of Weil's form itself with the zeros as spectral support.
+
+**N120. The owner's hint "think of everything as music", and Bet A ("make ∞ look like a prime") as equal
+temperament** (lead, 2026-11-11).
+- Dictionary: primes = independent strings (Euler product); integers = chords (log n = Σ log p, intervals add);
+  ζ = the instrument's response; zeros = its resonances; on the line = an undamped pure tone, off the line = a mode
+  that grows or decays; functional equation = time-reversal symmetry; the impostor = the same symmetry with coupled
+  strings. Function field = an instrument tuned to ONE fundamental (all pitches on the lattice (log q)ℤ), with FINITELY
+  many modes (2g); ℚ = strings whose pitches log p are mutually irrational: the Pythagorean comma (log 3/log 2 ∉ ℚ, the
+  circle of fifths never closes). N115's six-exponentials no-go is the comma theorem in disguise: no three primes can be
+  tuned to an algebraic lattice.
+- Equal temperament = Bet A made concrete: put every prime on the lattice q^k, q = 2^(1/N). COMPUTED (N = 12, 48; pitch
+  ranges 2^12, 2^16, 2^20): primes per tempered step / Gauss's count q^d/d = 1.020, 1.025, 1.028 (N = 12) and 0.984,
+  1.008, 0.981 (N = 48), matching (q − 1)/log q = 1.0294, 1.0073: **the prime number theorem on the tempered lattice IS
+  Gauss's formula for irreducible polynomials over F_q, with q → 1.**
+- Why tempering alone does not do it (lead's analysis): the tempered zeta Z_N(T) = Π_p (1 − T^(k_p))^(−1) has
+  "point counts" N_n ≈ (primes-with-weights in [q^n, q^(n+1)])/log q, and square-root regularity of those counts is
+  square-root regularity of primes in intervals of fixed relative length log 2/N, which is RH for ζ itself, for EACH N.
+  Tempering moves no zero; it re-tunes the strings but keeps infinitely many modes (its "genus" grows like n/log q).
+  Over F_q the finiteness of genus (Riemann–Roch) is what makes the instrument rigid. And making the tempered zeta
+  satisfy an exact functional equation forces rationality, hence finite genus, hence counts unlike the true primes.
+  Positivity of counts (an Euler product with nonnegative exponents) does not by itself force RH even for such
+  "virtual curves"; geometry (Hodge index) is what does.
+- Musical form of the hole: Lax–Phillips scattering on the modular surface makes the zeros RESONANCES of an open
+  instrument whose open end is the cusp (the continuous archimedean height of N89: energy leaks out there; the twist
+  e^(x/2) of N119 is that leak). RH says every resonance fades at exactly the same rate. Bet A in music: close the
+  open end (make the cusp, i.e. ∞, a discrete "string") without retuning any resonance. Recorded as the target; no
+  construction yet.
