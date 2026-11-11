@@ -2153,3 +2153,32 @@ around ζ's, but the pinning comes from the functional equation and does not sin
   support is {Σ k_j l_j}. With l_j = log p_j this is the prime side, and the restriction to x ↦ (p^(−ix)) is the
   Kronecker line of the torus of N88. In music: a chord of incommensurable tones whose silences all fall on the real
   axis because of a polydisc stability. A reader goes to the papers (knowledge), then the construction "Guess D".
+
+**N124. Bet A realised locally, and tested: the finite Euler model; Kurasov–Sarnak read; the half-shift** (lead;
+`rh/experiments/music/finite_euler.py.txt`; READER-14 notes `rh/library/kurasov-sarnak-2004.05678.md`,
+`olevskii-ulanovskii-2009.12810.md`, `olevskii-ulanovskii-2006.12037.md`, `lev-olevskii-1312.6884.md`).
+- Construction (music): at height t the archimedean place acts as ONE more string, of log-frequency θ′(t) =
+  ½ log(t/2π) (Riemann–Siegel's N = √(t/2π) is the pitch of ∞). With a STABLE chord of primes (a truncated Euler
+  product E_y, which has no zeros where it converges) the model F_y(s) = E_y(s) + χ(s)E_y(1 − s) satisfies the exact
+  functional equation F_y(1 − s) = χ(1 − s)F_y(s). (This is Gonek's finite-Euler-product model, m.)
+- COMPUTED at t ∈ [1000, 1030] (argument principle in the box 0.05 ≤ σ ≤ 0.95; on-line zeros by sign changes of
+  Re(e^(iθ)E_y)): y = 3, 10: 24 zeros, all on the line (ζ has ≈ 24 there); y = 30: 28 (4 off); 100: 62 (38 off); 300:
+  108 (84 off); 1000: 151 (127 off). The on-line count stays 24 throughout: **the model keeps ζ's zeros on the line
+  and, once the prime chord is loud enough, grows EXTRA zeros off it.** Threshold at t ≈ 1000: 10 < y* < 30. Runs at
+  t ≈ 10⁴ and a finer grid at 1000 are going, to see how y* scales with t (worst-case dominance predicts
+  y* ~ (log t)²; typical cancellation would allow a power of t).
+- Kurasov–Sarnak (Thm 1): for a "stable pair" (P, Q nonvanishing on the open polydisc, Q = η z^ℓ P(1/z), P(0) = Q(0) = 1)
+  and any b_j > 1, all zeros of P(b^(−s)) lie on Re s = 0 and form a positive Fourier quasicrystal of CONSTANT density
+  (Σ ℓ_j ln b_j)/2π; finitely many variables only; ζ not discussed (Guinand's example "does not give a Fourier
+  quasicrystal, even assuming RH"). Olevskii–Ulanovskii: Fourier quasicrystals with unit masses are exactly zero sets
+  of exponential polynomials with real simple zeros; their Prop. 1 rules out a positive measure with tempered-measure
+  Fourier transform and density growing like ζ's. The record's per-prime Poisson identity is KS's product case
+  P = Π(1 − z_p).
+- **Lead: why the model is not a stable pair, and the half-shift.** In KS's normalisation the Euler factor 1 − p^(−s)
+  is (1 − z_p) with z_p = p^(−s): its root sits on the torus, so the Euler product is Lee–Yang-balanced on Re s = 0
+  (the unitary characters |x|^(it) of Tate's thesis). The functional equation is balanced on Re s = ½. Shifting the
+  factor to the critical line, 1 − p^(−½) z_p, its KS-reflection is ∝ 1 − p^(½) z_p, which VANISHES inside the
+  polydisc (at |z| = p^(−½)): not a stable pair. So the Euler product's natural line (Re 0) and the functional
+  equation's line (Re ½) differ by the half-shift, and the archimedean factor χ is what carries it (the e^(x/2) twist
+  of N119, the +1 of N118, now as "stability on the torus versus symmetry about ½"). In music: the strings ring true on
+  the torus; the body (∞) moves the resonance to ½; RH asks that the body's shift keep every silence on the line.
