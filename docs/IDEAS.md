@@ -751,3 +751,4 @@ file from the top before choosing what to do next.
 - evidence: Proved pieces: Vaughan for any invertible series (SP-sieve); bilinear large sieve beats D^2 for no (M, N) at H = D^(1/2) (SP-sieve); window identity putting all Nyman-Beurling energy at the self-dual point (SP-operator); no absorption of mu on the quadratic stratum (SP-modular). Heuristic: the 3/4 cap; that the five forms are equivalent.
 - log:
   - 2026-11-11: status -> alive: a map used as a filter
+  - 2026-11-11: SIXTH FACE (notebook N62): positive-prime-side explicit-formula methods (de la Vallee Poussin's 3+4cos+cos2, Stechkin/Heath-Brown/Kadiri) see a zero at 1/2+delta only if delta > 1/2 - o(1), because the pole contributes e^(L/2) against the zero's e^(delta L); killing the pole is impossible with g >= 0, and requiring g >= 0 only at the points log n (idea #9) gains freedom only below the band edge. The classical edge-hugging of zero-free regions is the same wall.

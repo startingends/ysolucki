@@ -1008,3 +1008,22 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
 - What both say: every exact, sign-carrying structure the project has found acts either locally (one place at a time)
   or on the far side; the near side needs a GLOBAL input specific to μ. That is the parity wall of S2 again, now from
   the index-theory side. Recorded so that the next seat does not re-derive it.
+
+**N62. Why every positive-prime-side method stops at the edge of the strip, in one inequality** (lead, 2026-11-11;
+elementary; classical in spirit — de la Vallée Poussin's 3 + 4cos θ + cos 2θ ≥ 0 and the explicit-formula zero-free
+regions of Stechkin/Heath-Brown/Kadiri — but this exact bookkeeping was not found in the record).
+- The de la Vallée Poussin trick is of the kind asked for in S2's B9: NON-LINEAR (a product ζ³(σ)ζ⁴(σ+iγ)ζ(σ+2iγ)),
+  SIGN-SENSITIVE (Λ ≥ 0 and 3 + 4cos + cos2 ≥ 0), not a mean square; and the impostor fails it (Λ ≥ 0 is false).
+  Its explicit-formula version: take an even test function g on [−L, L] with g(u) ≥ 0, so that the prime side
+  Σ Λ(n) n^(−½) g(log n) is non-negative; then Σ_ρ ĝ(ρ) ≤ (pole terms) + arch(g).
+- THE BOOKKEEPING. A zero at ½ + δ + iγ contributes about e^(δL)·|ŵ| to the left; the pole contributes about
+  e^(L/2)·|ŵ| to the right. So a positive-prime-side test function can see an off-line zero only if δ > ½ − o(1),
+  i.e. only near Re s = 1. **The pole dominates, and that is the whole reason classical zero-free regions hug the edge.**
+- THE ESCAPE AND ITS LIMIT. Killing the pole needs ĝ(±i/2) = ∫ g(u)e^(±u/2)du = 0, impossible for g ≥ 0. But g need be
+  non-negative only AT the points log n (that is idea #9's positivity sieve). For a test function of bandwidth Ω, the
+  points log n with n > Ω are denser than its oscillation, so "g(log n) ≥ 0" is effectively "g ≥ 0 on (log Ω, L)":
+  the only freedom is on (0, log Ω), where the integers are sparse. That freedom ends exactly where e^(2L) ≈ Ω: the
+  BAND EDGE again (bridge 1), now from the classical side. S1-parity's S2 result is the same fact in the window
+  form: on one-signed vectors zeta can fail only by its single pole square beating non-negative terms.
+- SO the map has a sixth face: (pole dominance in positive-weight explicit formulas) = (the band edge) = (the
+  short-family wall). Recorded as a note on idea #34.
