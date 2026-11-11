@@ -498,3 +498,29 @@ here is "as reported", unchecked).
   quadratic twists; a rumoured "barrier at 3/4" is quoted in one source. Quadratic Gauss sums have no theta-function
   summation formula of the needed kind, which may be why the cubic family is used. To be checked against the papers.
 - CAUTION (owner): solving the quasi version is not solving RH; this is read for what kind of input works.
+
+**N43. The amplifier's loss, the object that would remove it, and a second sheet** (lead, 2026-11-11; structural
+mode, rule 13; RISK labels as stated).
+- WHY 1 − 1/(2m). The quasi-RH proof recovers one Möbius sum from a family of order-m twists in which the trivial
+  twist occurs on a fraction H^(1/m)/H of the rows. To reach ½ the single member would have to be a POSITIVE
+  PROPORTION of the family's mean square. No family of characters of bounded order does that (only the trivial
+  family). So the object that would make the amplifier lossless is a family, with an EXACT mean-square formula, in
+  which the member we care about carries a fixed fraction of the total.
+- SUCH A FAMILY EXISTS AT THE CM POINT (KNOWN in outline: the pretrace formula at a point). Spectrally decompose a
+  smoothed delta at ω on the modular surface:  Σ_j |u_j(ω)|² h(t_j) + (1/4π)∫ |E(ω, ½+it)|² h(t) dt = Σ_γ k(ω, γω),
+  and the right side is a count of representations by x² + xy + y² (hyperbolic distances from ω to its images).
+  The continuous part is |Φ(½+it)|²/|ξ(1+2it)|², i.e. ζ_K on the line, and it is a positive proportion of the
+  total; the identity is exact; the geometric side is arithmetic of the norm form. But it lives ON the line: it
+  sees moments, not zeros off the line. (Its known use: subconvexity at CM points. Recalled; not read.)
+- WHERE THE OFF-LINE ZEROS ARE IN THIS PICTURE (lead's derivation, unchecked). Let Q(λ) be the Krein function of the
+  point interaction at ω (regularised resolvent kernel G_λ(ω, ω)); it is Herglotz in λ = s(1 − s), so on the
+  physical sheet it has no non-real zeros. Its jump across the continuous spectrum is 2πi times the density, and the
+  density continues analytically as Φ(s)Φ(1 − s)/(ξ(2s)ξ(2 − 2s)). So a zero of ζ_K OFF the line is a point where Q
+  takes the SAME value on the physical and on the second sheet. RH for ζ_K ⟺ the two sheets of the Krein function of
+  one point interaction agree only over the spectrum. Herglotz positivity governs sheet I; nothing known governs
+  the coincidence set of the two sheets. Rule 2: this is a reformulation until the second sheet has a structure.
+- WHAT I RECALL AND MUST NOT TRUST: Bombieri and Garrett ("Designing pseudo-Laplacians", and Garrett's notes on
+  pseudo-cuspforms) built self-adjoint operators whose discrete spectrum is λ_s for zeros of E(ω, s) ON the line,
+  and showed that such an operator can carry only part of the zeros (a spacing obstruction, linked to pair
+  correlation). If that is right, it is exactly the object rule 13 asks for at this wall, already built, with the
+  exact place where it stops. Reader seat sent.
