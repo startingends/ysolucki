@@ -1896,3 +1896,22 @@ GAP sections; Lean cores L1–L5 rebuilt, standard axioms, no sorry).
 - New (modulo a bounded search): the kernel lemma bounding copies in multiplicative local Hecke families by C·H^(1/2),
   and a proof that the copy-amplifier chain cannot beat D^(3/4 − ε₀/4 + ε/2). Theorem 1 is Heath-Brown's (1995).
   Rating: Quality 7, Toward RH 1. The keeper should carry the T107/T108 corrections into THEORY.
+
+**N108. A category missing from N98: pointwise criteria on the INTEGER side (Robin, Nicolas)** (lead; known results,
+recalled, not re-read: Robin 1984, Nicolas 1983, partial results for t-free n by Choie–Lichiardopol–Moree–Solé and
+successors).
+- RH ⇔ σ(n) < e^γ n log log n for n > 5040 (Robin) ⇔ N_k/φ(N_k) > e^γ log log N_k for every primorial (Nicolas).
+  These are pointwise (one integer at a time), use the Euler product exactly and nonlinearly (σ(n)/n is a product of
+  local factors), involve no automorphic Hilbert space, and are ONE-SIDED with an exact constant. Under RH they hold
+  with slack in AMPLITUDE: the bias from prime squares (Λ(p²), the second-order Euler terms) beats the oscillation,
+  whose total amplitude Σ 1/|ρ|² ≈ 0.046 is small; an off-line zero beats the bias infinitely often (x^(β−½)).
+- Where the slack goes: Robin's inequality is PROVED for t-free n (bounded exponents), with slack 1/ζ(t) from the
+  local factors against unconditional explicit prime-number error terms; at colossally abundant n (exponents growing,
+  all small primes present) the slack shrinks to the size x^(−½), which only RH controls. The colossally abundant
+  numbers are the integer-side analogue of Lehmer pairs: extremal objects with no slack (H11).
+- Amplifier on integers (lead, by hand): multiplicativity propagates a failure at n₀ to n₀·m for m coprime with
+  σ(m)/m large; at leading order the condition is exactly borderline (k primes of size log n₀), so how many failures
+  one failure creates depends on second-order terms, and no unconditional bound on the number of failures is small
+  enough to contradict it. No contradiction found. Quality 4, Toward RH 1.
+- N98's classification gains a row: integer-side pointwise criteria: exact Euler product, slack only on restricted
+  classes, none at the extremal integers.
