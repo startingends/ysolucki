@@ -2,7 +2,7 @@
 
 Asked for by the owner (2026-11-11): dissect the quasi-RH proof as "how they found another island similar to
 ours": which hunches it went on, what each led to, how they compare with ours, how to make better ones.
-STATUS: provisional. Part A is read off a second-hand summary of an exposition (notebook N42); the papers are being
+STATUS: Part A was first read off a second-hand summary and has been checked against the reader's digests (part A′). ORIGINAL NOTE: Part A is read off a second-hand summary of an exposition (notebook N42); the papers are being
 read whole by READER-4, who has been asked for the proof's design choices from the published text. Part A will be
 corrected against that digest. Nothing here is about how the authors or their system reasoned; it is about the
 choices visible in the published argument.
@@ -17,6 +17,41 @@ choices visible in the published argument.
 | 5 | close the estimate | a recursion in which the bound at one scale feeds the next; then an extremal argument on the supremum of the real parts of zeros | 11/12, then 7/8 |
 | 6 | return to ζ | descend from the bigger field by a factorisation of its L-functions | the theorem for ζ and Dirichlet L-functions |
 Not used, as reported: the functional equation in the zero-free step; any positivity.
+
+### A′. Corrections and additions after the papers were read (READER-4, 2026-11-11)
+Paper 1 (11/12, 49 pp.) was read whole; paper 2 (7/8, 199 pp.) to 45% (overview, the framework, statements of the
+moment lemmas; not their proofs). Digests: `rh/library/openai-qrh-11-12.md`, `openai-qrh-7-8.md`, each with a section
+"Design choices of the proof". All statements of the papers are "claimed"; the reader re-derived the easy steps and
+checked one identity numerically (one printed formula is wrong by a complex conjugate; harmless in paper 1).
+Status by named sources: the 7/8 paper is reported formally verified in Lean; experts "largely agree the result is
+correct"; nothing is refereed.
+- **Row 3 of the table is right, and the order six is FORCED, not chosen for the count of copies.** Sixth-order Gauss
+  sums absorb μ and turn into cubic Gauss sums (a Gauss–Jacobi identity; at every prime the cube of the normalised
+  cubic Gauss sum is −1 times a unit, and "the −1 IS μ").
+- **The step I had not seen (their step 7): transform in the column with the row fixed, so that the sextic twist
+  becomes a QUADRATIC one**, and then use the quadratic large sieve, which is sharp, instead of the cubic or sextic
+  one, which loses. The text names the alternative it avoids. This is a design move worth a rule: *change which
+  variable carries the hard character until a sharp tool applies.*
+- **The functional equation IS used in the 7/8 paper** (in its zero detector), together with complete
+  multiplicativity, the theta automorphy and the family; it is not used in the 11/12 paper. So row "not used" holds
+  for paper 1 only.
+- **Paper 2's organising device: one probe with two exact representations** (one bounded directly, the other a sum
+  of rows in which the row u = 1 carries the signal as a residue), and an extremal argument on the supremum of the
+  real parts of zeros over the whole family, with explicit margins that vanish exactly at 7/8.
+- **Where the centre of the strip enters:** through the normalisation |μ·ν| ≤ 1 against which the mean square is
+  measured (our barrier B11 in their language).
+- **The limit of the method:** the papers state none. "A barrier at 3/4" is commentary only. The reader's own
+  inference agrees with mine: symbols of order m would give 1 − 1/(2m).
+- **For the controls** (reader's analysis): the impostor fails at their first step and at the Gauss-sum step (its
+  Dirichlet inverse is not μ times a character); ζ(s−d)ζ(s+d) is handled correctly by the method (it gives the true
+  shifted region); a Beurling system has no lattice, no reciprocity, no theta function.
+
+Two more rules from this, added to part D:
+- **H7. One object, two exact representations.** Look for a probe that can be written exactly in two ways, one
+  that can be bounded and one that contains the unknown; then the unknown is squeezed without being estimated
+  directly. (Weil's form is such an object; bridge 1's plank 5 is another instance. Their probe is a third.)
+- **H8. Move the difficulty to the variable where the sharp tool lives.** Before estimating, ask whether a
+  transformation in the other variable turns the hard structure (sextic) into one with a sharp theorem (quadratic).
 
 ## B. The bets in our own work
 | bet | what it led to | where it stopped, and the reason in one line |

@@ -112,3 +112,11 @@ n <= 4000 at S = 2.3, d = 0.2: int = 0.0663579, so 2 x int = 0.1327159 against x
 
 ## 01:45 (clock) board: posted B211 (Q1), B212-B214 (Q2), B215-B216 (Q3). Read B173-B210: the lead has opened "the bridge"
 (rh/BRIDGE.md, idea 27); plank 9 (S1-mirror B199) found that the Davenport-Heilbronn impostor has a Poisson map.
+
+## 01:51 (clock) PREDICTION (P7), before computing: unitary-side check of NOTES D12 (c)
+For even f, <f,(1 - calK_w) f> = (1/pi) int |fhat(x)|^2 sin^2(theta_w(x)) dx, theta_w(x) = arg xi_S(1/2 + w - ix),
+xi_S(s) = s(s-1) pi^(-s/2) Gamma(s/2) zeta(s). Claim: divided by w it tends to sum over all zeros gamma (both signs) of
+|fhat(gamma)|^2 as w -> 0 (assuming the zeros used are on the line: the first 17 are). Test function: Gaussian
+f(x) = exp(-x^2/(2 s^2)), s = 0.12, fhat(x) = s sqrt(2 pi) exp(-s^2 x^2/2).
+PREDICTION: ratio (left side / w) / (zero sum) = 1 + O(w): within 15% at w = 0.1, within 3% at w = 0.01, and the
+deviation shrinks roughly linearly in w. If the ratio tends to 2 or 1/2 my constant in D12 (c) is wrong.

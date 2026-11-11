@@ -350,3 +350,25 @@ trivial reason, and would need D weighted by the log of the frequency off the ba
 
 Not done: a second implementation; the off-ladder decomposition at L = 0.65, 0.75, 1.0 (added to the script after
 those runs had started); any window above 1.0; any certificate.
+
+## Session 4 (2026-11-11): the damped form Q_eps against the same D_L (Hunch 3)
+
+### 21. Definition used and PREDICTION (written before any run)
+Q_eps(v) := the Weil functional applied to e^(-eps|x|) g_v(x) (g_v = autocorrelation). In the x-space formula of
+PROOF_forcing_prime2.md, Lemma 5 (valid for any Lipschitz even test function supported in [-2L, 2L]) this is
+  Q_eps(v) = -(log 4 pi L + gamma) g(0) + int_0^{2L} (g(0) - e^(-eps x) g(x))/x dx - int_0^{2L} h(x) e^(-eps x) g(x) dx
+             + 4 int_0^{2L} cosh(x/2) e^(-eps x) g(x) dx - sum_n 2 Lambda(n) n^(-1/2-eps) g(log n),
+using pole(v) = 2 E+ E- = 4 int_0^{2L} cosh(x/2) g(x) dx. So the pole IS damped exactly (no shortcut needed); at eps = 0 the
+quadrature form of the pole is checked against the rank-two form. D_L unchanged.
+Heuristic behind the prediction: on the zero side Q_eps(v) = sum over zeros of (|V|^2 * Poisson kernel of width eps)(gamma),
+so for the ground state (V nearly vanishing at the low zeros) d mu/d eps at 0 is (1/pi) sum_gamma int |V(t)|^2/(gamma - t)^2 dt,
+a number of size 1 per unit norm, not of the size of mu.
+PREDICTION:
+ (1) mu(eps) = mu(0) + c eps (1 + o(1)) with c = v0^T Q'(0) v0 in [0.03, 0.3] at L = 0.5 and in [0.1, 2] at L = 0.75;
+     c/mu(0) of order 1e5 (L = 0.5) and 1e13-1e15 (L = 0.75). mu(1/16) in [2e-3, 2e-2] at L = 0.5.
+ (2) kappa_min(eps) is non-decreasing in eps on [0, 1/2]; it rises from 0.33 to somewhere in [0.35, 0.6] already at
+     eps = 1/16 (the ladder directions become expensive for Q and stop helping the minimiser) and is then roughly flat.
+ (3) the near-null ladder is not visible at eps >= 1/16 at either window: the eigenvalues that were 1e-15..1e-3
+     become a cluster of size eps x (0.05..2), no longer geometrically spaced. The minimiser of the pencil sits in the
+     bulk (energy on eigenvalues of size 0.1-2) for every eps >= 1/16.
+ Would surprise me: kappa_min decreasing with eps, or mu(eps) staying below 1e-4 at eps = 1/16.

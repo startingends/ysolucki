@@ -274,3 +274,44 @@ formulas for r_4 and r_8 likewise at m = 2, 3: 24, 32 and 112.)
     Eisenstein series of spectral parameter 1/2 + d": CONFIRMED (D1).
 (3) Idea 13 / F20: "Hecke operators exist only at special points of the dial" needs three levels: none for non-integer n
     (D10 (f), unread); T(p^2) only for odd n; full Euler product only for n in {1,2,4,8} (D10 (a), proved).
+
+## D12. The positive control (w = 1/2) and the project's window blocks (w -> 0) are the two ends of ONE family.
+Written after the board closed. Status: (a), (b) PROVED (algebra, from formulas in SP-operator's digest of Suzuki
+1606.05726, which I read; the paper itself I did not); (c) PROVED under RH on the zero side for nice f (sketch),
+FORMAL on the prime side (distributional limits not justified).
+Suzuki's family for zeta: Theta_w(z) = xi_S(1/2 - w - iz)/xi_S(1/2 + w - iz), xi_S(s) = s(s-1) xi(s), s = 1/2 - iz;
+|Theta_w| = 1 on the real axis for every w (functional equation); the full operator calK_w f(x) = int K_w(x+y) f(y) dy
+is "multiplication by Theta_w composed with z -> -z", a unitary involution; K_w[t] = its compression to L^2(-inf, t);
+K_w(x) = sum_n q_w(n) n^(-1/2) G_w(x - log n) on x >= 0, q_w = coefficients of zeta(s-w)/zeta(s+w), i.e.
+q_w(n) = n^w prod_{p | n} (1 - p^(-2w)) (a "Jordan totient of fractional order 2w" divided by n^w), and, from the digest's
+formula with lambda = 1/2, mu = 0: G_w(x) = 2 e^((w-1/2)x) (1 - e^(-2x))^(w-1) / Gamma(w), times the elementary factor of
+the pole.
+(a) At w = 1/2: q(n) n^(-1/2) = phi_E(n)/n and G(x) = (2/sqrt(pi)) (1 - e^(-2x))^(-1/2): my kernel kappa(w') with w' = 2x
+    (NOTES D4). So the identification of D5 (c) holds for the kernel's shape and atoms; the constant and the pole factor
+    (his Blaschke factor (s'-1)/s' against my subtraction of the pole square) are still to be matched.
+(b) At w = 0: Theta = 1, calK_0 = R (the reflection x -> -x), K_0[t] = 0 on L^2(-inf,-t) and R on L^2(-t,t). So
+    1 - K_0[t] annihilates the EVEN functions on (-t,t) and 1 + K_0[t] the ODD ones.
+(c) First order in w: Theta_w(z) = 1 - 2w (xi_S'/xi_S)(1/2 - iz) + O(w^2), and (xi_S'/xi_S)(1/2 - iz) has boundary value
+    on the real axis with real part pi sum_gamma delta(x - gamma) under RH. Hence for f supported in (-t, t):
+        f even:  <f, (1 - K_w[t]) f> = w Q_W(f) + o(w);      f odd:  <f, (1 + K_w[t]) f> = w Q_W(f) + o(w),
+    Q_W the project's Weil form on the window [-t, t] (zero side sum_gamma |fhat(gamma)|^2; on the prime side the one-sided
+    kernel "primes + arch + pole" on x + y > 0, folded by the parity of f into the Toeplitz form). Exactly, on the
+    unitary side: <f,(1 - calK_w) f> = (1/2pi) int |fhat(x)|^2 (1 - Re Theta_w(x)) dx = (1/pi) int |fhat|^2 sin^2(theta_w(x)) dx,
+    theta_w = arg xi_S(1/2 + w - ix), and sin^2(theta_w(x))/w -> pi sum over ON-LINE zeros of delta(x - gamma).
+    So: THE EVEN WEIL BLOCK ON [-L, L] IS THE w-DERIVATIVE AT w = 0 OF SUZUKI'S 1 - K_w[L] ON EVEN FUNCTIONS, AND THE ODD
+    BLOCK THAT OF 1 + K_w[L] ON ODD FUNCTIONS: first-order splitting of the kernels of 1 -+ R.
+(d) Reading. On each window the forms (1 -+ K_w)/w, 0 < w <= 1/2, join the half-shift (w = 1/2: compression of the
+    scattering involution of the modular surface; the + sign is a norm) to the project's two parity blocks (w -> 0).
+    The unitary-side version is >= 0 for every w with no hypothesis; the arithmetic (Dirichlet series) version equals it
+    iff Theta_w is inner, i.e. iff zeta has no zero with real part > 1/2 + w (Suzuki Prop. 4.3 as digested); the
+    difference is a sum of growing exponentials from the zeros to the right of 1/2 + w. This is the Hankel-side
+    homotopy from a theorem to RH on a fixed window; notebook N35's damping plane is the Toeplitz-side one. A
+    reformulation (rule 2): no new input. What it supplies: (i) the exact sense in which B213 (3) is a control FOR THE
+    SAME FORMS; (ii) the + sign (the Gram form at w = 1/2) continues to the ODD block, the - sign to the EVEN block.
+
+## D13. The dial as a control family for the bridge (offer; FROM MEMORY, nothing read)
+For real n >= 1 the functional equation of Z_n(s) = sum r_n(m) m^(-s) (s -> n/2 - s, Gamma factor pi^(-s) Gamma(s)) is
+equivalent to the summation formula sum_{m>=0} r_n(m) g(sqrt(m)) = sum_{m>=0} r_n(m) (H_n g)(sqrt(m)) for radial profiles g,
+H_n the radial Fourier transform in "dimension n": (H_n g)(r) = 2 pi r^(1-n/2) int_0^inf g(u) J_(n/2-1)(2 pi r u) u^(n/2) du.
+For n = 1 this is Poisson summation for even functions. Band-limiting for H_n has prolate functions for real order
+(Slepian 1964). To be checked against a source before any use.

@@ -107,3 +107,17 @@ Extra facts gathered:
   (Sept 25 2026), not used.
 NEXT: read web pages (rh/library/src/qrh-web/*.html) -> digest openai-qrh-7-8.md (with Design choices + status)
 -> INDEX rows -> final handback with ten-line list of design choices.
+
+## Update 5 (final state)
+- [x] rh/library/openai-qrh-11-12.md (whole paper read; sections 1-13 incl. Design choices sec 12).
+- [x] rh/library/openai-qrh-7-8.md (paper read 44.6%; sections 1-13 incl. Design choices sec 9, status sec 12).
+- [x] INDEX.md: two rows appended.
+- Web sources (rh/library/src/qrh-web, qrh-liu, qrh-github): Quanta 19 Oct 2026 read whole; Emergent Mind result
+  003 page read whole; Gomila exposition read whole (cleaned); GitHub explainer README: caveats + keyword search;
+  Liu arXiv 2610.26835 v2: abstract only (e-print saved, NOT unpacked, unread); Cureton-Thorner Hexagon
+  2610.00200 v2: abstract + reference list only. Liu's FIRST preprint [Liu26a] (8-12 Oct) not located by number.
+  Third OpenAI manuscript "Uniform exclusion of Landau-Siegel zeros" (1 Oct 2026, 9 pp.) not fetched.
+- "Barrier at 3/4": ONLY in commentary (post by @AcerFur, 6 Oct 2026, quoted on the Emergent Mind page); not in
+  either paper, not in the exposition.
+- Could not get: Lean files; privately circulating expert write-ups (unpublished per Quanta).
+- Handback sent (final report). Nothing else pending.

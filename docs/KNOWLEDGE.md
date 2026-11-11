@@ -38,6 +38,13 @@ an entry gets a ✔ only after someone has checked it against the paper or repro
 - Almost all zeros within any fixed distance of the line (Bohr–Landau 1914); Selberg's central limit theorem.
 - Function fields: RH for curves (Weil 1948), varieties (Deligne 1974); elementary proof (Stepanov 1969,
   Bombieri 1973). Weil's proof = Frobenius correspondence + Castelnuovo/Hodge-index positivity on C × C.
+- **CLAIMED, October 2026 (OpenAI, machine-produced, unrefereed; reported formally verified in Lean for the 7/8
+  statement; experts quoted as largely agreeing it is correct):** ζ and all Dirichlet L-functions have no zeros in
+  Re s > 7/8 (shorter route: 11/12). Method: smoothed Möbius sums over ℚ(√−3) in a family of sextic twists, recovery
+  of the single sum from sixth-power rows, μ converted into cubic Gauss sums = coefficients of Kubota's theta
+  function, quadratic large sieve. Digests `rh/library/openai-qrh-11-12.md`, `openai-qrh-7-8.md`; dissection
+  `rh/HUNCHES.md`. If it stands, every "no zero-free strip is known" statement in this file is superseded and the
+  damping threshold of notebook N35 is at most 3/8 on every window.
 - Weil positivity for test functions of small support (Yoshida 1992), i.e. on the window before the prime 2
   enters (λ² ≤ 2). Connes–Consani arXiv 2006.13771 (Thm 1 / 6.11) sharpens it on the same window with a lower
   bound by a trace on Sonin's space, using prolate functions; the proof is computer-assisted, not

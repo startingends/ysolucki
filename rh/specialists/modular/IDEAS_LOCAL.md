@@ -91,3 +91,17 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - tags: N38,caution
 - claim: KNOWN: Epstein zeta functions of forms of class number > 1 have coefficients that count lattice points, a functional equation, and zeros off the line (KNOWLEDGE B2). On the dial, integer n >= 3 counts and has no Euler product (PROOF_dial).
 - log:
+
+## #8 · One family joins the positive control to the Weil blocks: (1 -+ K_w[L])/w for 0 < w <= 1/2; even block = d/dw of 1 - K_w at 0, odd block = d/dw of 1 + K_w
+- status: open
+- source: SP-modular session 1, NOTES D12
+- date: 2026-11-11
+- tags: dictionary,F17,instrument
+- plain english: The provably positive form on the modular surface (shift 1/2) and the project's window form (shift 0) are not just neighbours: there is a dial w between them, on the same window, with the same kind of arithmetic atoms (at w the atom at log n has weight n^(w-1/2) times the product over primes p dividing n of (1 - p^(-2w)); at w = 1/2 that is phi(n)/n, e.g. 1/2 at n = 2; as w -> 0 it becomes w times Lambda-type weights). The window form of the project is the slope of this family at w = 0. Example of what it organises: the 'plus' form, which at w = 1/2 is the squared length of a function on the modular surface, turns into the ODD block of the Weil form; the 'minus' form turns into the EVEN block, the one that fails first for every control.
+- wall: Atlas F17 (half-shift) and barrier B3: a homotopy on a FIXED window from a theorem (w = 1/2) to RH (w -> 0); it does not remove the wall, it places both ends in one computable family.
+- new input: None (Suzuki's dial read through the window). Instrument: lowest eigenvalue of (1 -+ K_w[L])/w along w for zeta and for the ratio-controls.
+- claim: NOTES D12: (a),(b) PROVED from the digest's formulas; (c) PROVED under RH on the zero side (sketch), formal on the prime side.
+- prediction: Not yet computed. Blind guess: for zeta the lowest eigenvalue of (1 - K_w[L])/w on even functions is monotone in w on (0, 1/2] at L = 0.5.
+- first test: Extend halfshift_window.py.txt to general w (kernel G_w, atoms q_w); follow the lowest eigenvalue from w = 1/2 to 0.05 at L = 0.5, 0.75; for the control zeta(s-d)zeta(s+d) the family must fail at w = d.
+- novelty: Suzuki 1606.05726 read only through SP-operator's digest; the first-order statement is not in the digest; NOT searched.
+- log:

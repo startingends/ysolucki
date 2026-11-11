@@ -319,5 +319,12 @@ density H^(1/6) of sixth-power rows.
 ## 13. Reliability
 Unrefereed; machine-produced (author "OpenAI", no named human author in the PDF). One identity as printed is
 false by a complex conjugation (§9). The reader verified only the outer logic and the elementary identities; the
-theta transformation and the two-Poisson transfer were read, not verified. For what named experts say has been
-checked, see the press entry in `openai-qrh-7-8.md` §(status).
+theta transformation and the two-Poisson transfer were read, not verified. The exposition by J. Gomila (9 Oct
+2026) prints the conjugated form G(n) = conj(χ_n(4))γ_3(n), in agreement with the reader's check.
+Verification status by named sources (details and quotations in `openai-qrh-7-8.md` §12): Quanta, 19 Oct 2026:
+this 11/12 paper "is not yet formally verified" in Lean (the 7/8 paper is reported as formalized), it is "the
+only one of the 722 OpenAI papers ... to have been edited by a person", experts (Radziwiłł, Dunn and others)
+"largely agree that the result is correct", their write-ups "have not yet been published", and P. Sarnak "won't
+be satisfied that it's 'a Theorem' until humans check and understand all the details".
+Relation to the 7/8 paper (fact from that paper's text): its equation (17.87) is this paper's Proposition 3.1,
+and its Lemma 17.6 ("sixth-power amplification") is the step from the mean square to single rows.
