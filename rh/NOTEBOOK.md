@@ -550,3 +550,40 @@ mode, rule 13; RISK labels as stated).
   torus-invariant vector for EVERY s, not only on the unitary axis. Off the unitary axis the principal series is not
   unitary (complementary series only for real s in (0, 1)), so the norm is indefinite there. That indefinite form, on
   the non-unitary principal series of parameter s, evaluated on the torus-invariant vector, is the next object.
+
+**N45. Two specialists converge on "outer", and the modular surface becomes a two-parameter family through ζ_K**
+(lead, 2026-11-11, after SP-reflection's `rh/specialists/reflection/OBJECT_PHI.md`; written without seeing SP-operator's).
+- CONVERGENCE (rule 13 (b) working as intended). SP-operator: RH_K ⟺ the Eisenstein value at ω, as a function of the
+  spectral parameter, is OUTER (the Green function at ω is cyclic for the outgoing semigroup). SP-reflection: RH_K ⟺
+  E(ω, ·) is the minimum-phase (outer) square root of its own spectral density; "the trivialising object is a causal
+  (Lax–Phillips outgoing) structure plus cyclicity, not a positivity." Two toolkits, one statement. It is of known
+  type (Nyman–Beurling cyclicity in disguise: SP-reflection notes the spectral measure of ω is, up to an outer weight,
+  the Nyman–Beurling measure of ζ_K). What is new is where it puts the difficulty: in a PHASE, not in a sign.
+- SP-REFLECTION'S DEFECT FUNCTION (its risk, idea SP-reflection/#5; proved given inner–outer factorisation; checked
+  numerically to ~1e-3 at ω): A(z) := (1/2π)∫ log|E(z, ½+it)| dt/(¼+t²) = log(3/π) − ½ log ht(z) + Dfc(z), with
+  Dfc(z) = Σ_{Re ρ>½} log|ρ/(1−ρ)| ≥ 0 over the zeros ρ of s ↦ E(z, s). A non-negative function on the modular
+  surface that vanishes exactly at the points z whose Eisenstein family has no zero right of the line.
+- WHAT FOLLOWS (lead; elementary unless marked):
+  (1) For EVERY z, t ↦ E*(z, ½+it) is real (E*(z, s) = E*(z, 1 − s) and E*(z, s̄) = conj E*(z, s)). Simple zeros of a
+      real function persist under small real perturbation, so zeros leave the line only through COLLISIONS (double
+      zeros). The family z ↦ E*(z, ·) is a two-parameter de Bruijn–Newman family, and Δ_z E = s(1 − s)E is its "heat
+      equation".
+  (2) At the elliptic points i and ω every E(·, s) has a critical point (a Γ-invariant function's differential at a
+      fixed point of an order-2 or order-3 rotation vanishes). Near ω only Taylor terms of weight divisible by the
+      stabiliser survive; by Hecke's formula for Epstein zeta functions with harmonic polynomials (RECALLED, to be
+      read), those coefficients are the L-functions of the Grössencharacters of K of matching infinity type. So the
+      Taylor expansion of the family at ω is the generating function of the Hecke L-functions of K.
+  (3) Generic z (Epstein zeta of a transcendental form; class number > 1 at CM points) has zeros off the line
+      (Davenport–Heilbronn; Bombieri–Hejhal; recalled). So RH at a class-number-one CM point is a SIMULTANEOUS
+      RE-COLLISION of infinitely many zero pairs at one point of the surface. That is Rodgers–Tao's "RH is barely
+      true" in geometric form, and it says no monotone flow along the surface can prove it (a flow does not force
+      infinitely many collisions at once). What forces them can only be what the point has: SP-operator's sentence,
+      "complex multiplication, not the stabiliser" — other class-number-one CM points (√−2, (1+√−7)/2, …,
+      (1+√−163)/2) are not elliptic fixed points.
+  (4) CONJECTURE (Rodgers–Tao analogue, unsearched): Dfc > 0 at points arbitrarily close to ω. If true, ω is on the
+      boundary of the RH set, and the RH set near ω is a measure-zero object: the CM points.
+- THE QUESTION THIS LEAVES (for the next step): the RH set {Dfc = 0} contains (conjecturally) exactly the
+  class-number-one CM points and the cusp end of the constant-term picture (Lagarias–Suzuki: the constant term at
+  height ≥ 1 has all zeros on the line; recalled). What is the mechanism that makes a CM point of class number one
+  a re-collision point? Candidate: the Hecke algebra of the torus fixes the point, and the zeros of E(z, ·) are
+  joint data of the Laplacian AND the Hecke operators, which commute; at a generic point only the Laplacian acts.
