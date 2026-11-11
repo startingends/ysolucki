@@ -316,3 +316,9 @@ each, several cited-from-memory inputs), T76/T77, T85.
 
 **Formalise first, revised:** the copy-barrier cores are done (T106, T109, T110, T112, T114). Next on live routes: T100 (a),
 T120 (i) and T121 (finite Moebius identities: easy), then T117's Perron step (hard: complex analysis).
+
+## Revision 4a (sixth batch)
+T115 is `checked` (K-theory, line by line, LEMMA_T115.md; the +1 power is restricted to |t| >= 2 because of the pole; impostor-blind,
+the Euler product enters only on Re s > 1). T117 (bounded-height equivalence) is `checked`. Counts: 9 formal, 55 checked, 13 known,
+23 proved, 23 open, 2 refuted. Frontier: T13, T14, T15, T17, T24, T25, T40, T42, T46, T47, T48, T62, T78, T80, T81, T101, T103, T118.
+First open link for #34 is now T118 (the bounded Nyman-Beurling equivalence).

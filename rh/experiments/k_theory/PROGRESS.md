@@ -165,3 +165,16 @@ Negative eigenvalues: 1 + kappa_+(N_o) = kappa_-(Q_o) + [t_o > -1], i.e. kappa_+
   (e) T113 optimality step (Cauchy-Schwarz for weighted averages) and T107's count of multiples: re-read.
 - T33: the author accepted (B198); note appended; B28(1) recorded as carrying the same error.
 - Final check: 125 entries, 0 errors; 24 open, 24 proved, 53 checked, 9 formal, 13 known, 2 refuted.
+
+### Sixth batch: T115 checked line by line (rh/specialists/sieve/LEMMA_T115.md), T117 moved to checked
+- (0) Omega = {Re s > s0, Im s > 0} u {Re s > 1}: union of two convex sets with connected intersection, simply connected; no zero, and s = 1
+  is not in it. OK. (1) zeta = 1/(s-1) + 1 - s int {x} x^(-s-1): |zeta| <= 1/8 + 1 + 2(t+3) <= 3t for t >= 8, 1/2 <= sigma <= 3. OK.
+  log zeta(2) = 0.4977 < 0.5. OK. (2) BC: disc real parts >= s0 + d/2, heights in [t-2, t+2] since R <= 3/2; A <= log(3(t+2)) <= log 4t
+  (BC holds with any upper bound >= 0 for A); 2r/(R-r) <= 6/d, (R+r)/(R-r) <= 6/d. OK. (4) H3 radii: r1 >= 3/2 > 0; real parts on the r1
+  circle >= 1 + eta, M1 <= log zeta(1 + eta) <= log(1 + 1/eta); the r3 disc lies in Omega for t >= sigma1 + 10 and (3) applies with d = delta/2
+  at heights >= 10; r1 <= r2 < r3 iff s0 + delta/2 < sigma <= 1 + eta; a(sigma) decreasing; M1 <= M3 for large t makes the bound increasing in a;
+  a* < 1 because sigma1 - s0 - delta > sigma1 - 1 - eta (delta < 1 - s0). OK. (6) (log t)^(a*) = o(log t). OK.
+- Correction: the +1 power cannot be uniform near s = 1 (pole); entry restated with |t| >= 2 for zeta^(+1). Addition: 1/zeta bounded on the
+  compact {s0 + delta <= sigma <= 2, |t| <= 2} (holomorphic there), needed for the Perron step at all heights.
+- T117 (<=): read Bettin-Gonek digest steps 6-7; with T fixed the bound integrates to beta_0 <= sigma. Step 6 added to T116's statement.
+- Check: theory 125 entries, 0 errors; 23 open, 23 proved, 55 checked, 9 formal, 13 known, 2 refuted.

@@ -1,8 +1,9 @@
 # K-theory MEMORY (rewritten at the end of session 1, 2026-11-11, after the round-2 judgement was ingested). Read this first.
 
 ## State of rh/THEORY.md
-125 entries, `records.py theory check` clean. 9 formal (T27, T32, T50, T70, T106, T109, T110, T112, T114), 53 checked, 13 known,
-24 proved, 24 open, 2 refuted.
+125 entries, `records.py theory check` clean. 9 formal (T27, T32, T50, T70, T106, T109, T110, T112, T114), 55 checked, 13 known,
+23 proved, 23 open, 2 refuted. SIXTH BATCH: T115 checked by me (LEMMA_T115.md; +1 power restricted to |t| >= 2), T117 checked
+(both directions on established entries; step 6 of Bettin-Gonek added to T116's statement).
 MAIN LINE since the fourth batch: the bridge (rh/BRIDGE.md, idea #27): T99 (known base case), T100 (plank 7, checked by me),
 T101 (plank 5, open: FIRST OPEN LINK), T102 (plank 6, D_L), T103 (7b/7c heuristic), T104 (8a), T105 (plank 8, the span).
 FIFTH BATCH: T106-T114 copy barrier (Thms 1-3 corrected; L1-L5 formal over Q / N); T115-T121 short-family wall (bounded-height
@@ -75,7 +76,7 @@ T94-T97 SP-operator P1, P4, P5, P6; T98 dial coefficients (idea #26).
   operator-theoretic inputs specific to zeta are entries and are `known` only if a text was fetched and quoted.
 - Ideas #28-#34 linked (STRUCTURE.md Revision 4); #33 has NO entry (SP-modular NOTES D12 not entered).
 - Specialists' items entered as `proved` and NOT independently checked: T122, T123, T124, T125 (each rests on theorems cited from
-  memory: inner-outer factorisation, Szego-Kolmogorov-Krein, Beurling's closure theorem, Zagier's renormalisation). T117 waits only on T115.
-- First open links (STRUCTURE.md, Revision 4): #34 -> T115, then T118; #27 MAIN LINE -> T101; #8 -> T80 (then T40/T41; no lemma using arithmetic is stated); #9 -> T47 (certification), then T46;
+  memory: inner-outer factorisation, Szego-Kolmogorov-Krein, Beurling's closure theorem, Zagier's renormalisation). T117 is now checked.
+- First open links (STRUCTURE.md, Revision 4): #34 -> T118 (T115 and T117 are checked); #27 MAIN LINE -> T101; #8 -> T80 (then T40/T41; no lemma using arithmetic is stated); #9 -> T47 (certification), then T46;
   #21 killed -> T6 refuted; #10 parked -> T62 (and the open T81, T89). Ideas #22-#26 are linked in `routes` (#22: T29-T31; #23: T32, T50,
   T61, T81; #24: T51, T53, T55, T65; #25: T56, T62; #26: T18, T98).
