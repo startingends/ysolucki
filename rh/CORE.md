@@ -44,6 +44,10 @@ the uncertainty principle holds (no function compact on both sides), while at p 
 compact. The uncertainty principle gives the soft positivity (prolate ladder) and forbids exact vanishing deep
 in the cusp (Harder's fixed bound). One fact, both parts.
 
+Known framing (N92): all of this is the norm map C_ℚ → ℝ₊* having a continuous target (Connes 1999); over
+F_q(t) the degree map goes to ℤ. The function-field proof's content is a Stepanov/Riemann–Roch BOUND, whose
+ℚ-analogue is RH itself.
+
 **THE OPEN TENSION, in general.** The Euler product gives only averaged information and RH is pointwise with zero slack. The
 only known converter from average to pointwise is amplification, which needs an operation that makes a zero's
 deviation grow while an Euler-product bound stays fixed, and over ℚ no such operation is known. A hunch worth

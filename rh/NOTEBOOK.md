@@ -1627,3 +1627,25 @@ the moving bound** (lead, after READER-10: `rh/library/haran-1508.04636.md`, `de
   couples the primes, like the window in N88). Ratings: Quality 4, Toward RH 1.
 - Lesson recorded as rule H12: **the Euler product decouples the primes exactly; any localisation in the height t
   re-couples them.** Decoupling and localisation are the analytic face of N88 (torus versus line) and N90 (∞).
+
+**N92. Synthesis: the routes of this session converge on one known framing** (lead, 2026-11-11; for CORE).
+- N86–N91 located the missing fixed bound at ∞ (N89), traced it to the uncertainty principle forced by the
+  functional equation (N90), and found that the Euler product decouples the primes exactly while any localisation
+  in t re-couples them (N91, H12). These are four faces of one fact: **the norm map of the idele class group, C_ℚ →
+  ℝ₊*, has a CONTINUOUS target because of ∞, whereas over F_q(t) the degree map C_K → ℤ has a discrete one.** This is
+  Connes' 1999 starting point (known); the session rediscovered it from inside three toolkits.
+- What the function-field proof actually uses, read in this light: amplification there is trivial (finitely many
+  zeros, genus g: a bound N_k = q^k + O(g q^(k/2)) for all k forces max|α_i| ≤ √q by a power-sum argument with 2g
+  terms); the content is the BOUND, from Riemann–Roch (Stepanov's auxiliary function) or Hodge index. Over ℚ the
+  matching bound ψ(x) = x + O(x^(½+ε)) is RH itself, and Stepanov over ℤ reduces to the Möbius wall (N79). So the
+  "fixed bound" the triangle asks for is the Stepanov bound, and its absence over ℚ is wall #34 again.
+- Map, then (each wall reached from several directions on the record): ANALYTIC (#34, Möbius cancellation in short
+  families; the mollifier length θ in Levinson–Conrey is the place where the Euler product and the functional
+  equation already meet in the bulk, θ = 4/7 > ½, and Bettin–Gonek ties θ to zero-free regions, T116–T118);
+  SPECTRAL (the triangle, cuspidality at a zero); GEOMETRIC (∞ continuous, no Spec ℤ × Spec ℤ). They are one
+  obstruction seen three ways. Honest standing: Toward RH ≤ 2 for everything on the record.
+- Process consequence: a "different kind" of idea, in the owner's sense, cannot be another description of this
+  obstruction. It must be an object on which ∞ acts with a discrete target, or a proof of a bound of Stepanov type
+  over ℤ for a SINGLE structured family (not all of ψ), or an exact identity in the Levinson–Conrey setting that
+  removes the dependence on θ. The third is the only one with a concrete starting object on the record (T118:
+  RH ⇒ Levinson-weighted approximants bounded; the open part).
