@@ -194,3 +194,105 @@ semigroup; or: Suzuki's inner functions for zeta_K exist down to d = 0. Self-adj
 of Krein functions and of separating constant terms, never of form factors; arithmetic cusps realise only
 d = 1/2; and the whole picture is shared by Epstein zeta functions that violate RH. The object that would make
 the wall trivial is one in which Phi is a Q-function or a scattering coefficient at shift d < 1/2.
+
+## Round 2 (session 4): a non-linear object at omega, read after the other two seats, F4-F5, H9, N43-N46
+Read for this section: rh/specialists/modular/OBJECT_PHI.md and rh/specialists/reflection/OBJECT_PHI.md (whole),
+rh/HUNCHES.md F4, F5, rule H9, rh/NOTEBOOK.md N43-N46. No source opened, no numerics. Labels as above.
+
+### R2.0 First, what condition (2) can mean (PROVED; it changes the question slightly)
+Phi(1/2+it) is real-analytic and real, so |Phi(1/2+it)|^2 = Phi(1/2+it)^2 continues to the entire function
+Phi(s)^2, and the sign of Phi is fixed by Phi(1/2) (or by the residue at s = 1). So |Phi| on the line DETERMINES
+Phi, its zeros off the line included. "Not a function of |Phi| on the line" is therefore never literally true;
+the meaningful version is: NOT A WEAKLY CONTINUOUS functional of the spectral measure rho_omega (density
+|Phi|^2/|xi(1+2it)|^2 plus the cusp atoms |u_j(omega)|^2). Weakly continuous are: every positivity statement,
+the pre-trace / orbit identities, the Krein function on sheet I at a fixed lambda off the spectrum, moments,
+heat and wave traces, all Hecke-twisted versions (N46). They are LINEAR in rho_omega. The phase lives in
+functionals that need the analytic continuation of the density, i.e. are not continuous for weak limits.
+The two topologies, exactly (KNOWN): real entire functions with only real zeros (Laguerre-Polya class) are
+CLOSED under locally uniform convergence in C (Hurwitz); they are NOT closed under weak convergence of
+|F_n(1/2+it)|^2 dt on the line. The Euler product of zeta_K converges in neither topology in the strip.
+
+### R2.1 The number: the cyclicity angle of the Green function at a point z (my candidate of round 1, made a number)
+Setting (PROVED from round 1, (2b)). In the variable s with Re s > 1/2 put G_z(s) := ((s-1)/s) E(z,s) ht(z)^(-s),
+ht(z) = max Im(gamma z) (SP-reflection's normalisation): analytic and of bounded type in Re s > 1/2, no singular
+inner factor, tending to a non-zero constant as s -> +inf. In the Hardy space of that half-plane let
+C_z := closed span of {n^(-s) G_z(s) : n real >= 1} (multiplication by n^(-s) = translation by log n into the cusp,
+the outgoing semigroup). Beurling (KNOWN): C_z = B_z H^2, B_z the Blaschke product over the zeros of E(z,.) with
+Re rho > 1/2. Define the ANGLE NUMBER at the point w = 1 (s-variable):
+    alpha(z) := angle between the reproducing kernel k_1 and C_z,   cos^2 alpha(z) = |B_z(1)|^2.
+PROVED (reproducing kernel of B H^2 at w is B(w) conj B . k_w): ||P_C k_1||^2 / ||k_1||^2 = |B_z(1)|^2, hence
+    -log cos alpha(z) = sum over zeros rho of E(z,.) with Re rho > 1/2 of log|rho/(1-rho)| = Dfc(z),
+EXACTLY SP-reflection's defect function (third derivation of one object: outer = minimum phase = cyclic).
+Its three properties, as asked:
+ (1) NON-LINEAR: by Jensen, Dfc(z) = P_1[log|G_z|] - log|G_z(1)| (Poisson mean of a LOGARITHM minus the log of
+     one interior value): neither linear nor quadratic in rho_z.
+ (2) NOT WEAKLY CONTINUOUS (PROVED from a KNOWN fact): P_1[log density] is an infimum of weakly continuous
+     functionals (Szego-Kolmogorov-Krein variational formula, from memory), hence weakly UPPER semicontinuous; the
+     interior value is continuous under locally uniform convergence. So Dfc(lim) >= limsup Dfc(f_n): the defect can
+     APPEAR in a limit, never disappear. {Dfc = 0} (outer, RH) is a G_delta, not a closed set. This is F5's wall
+     "outerness is lost in limits" written as a semicontinuity theorem, with its direction.
+ (3) EXACTLY DEFINABLE AND COMPUTABLE: SP-reflection computed it to about 1e-3 at omega (one implementation).
+What an off-line zero of zeta_K does to it (PROVED): each zero rho = beta + i gamma, beta > 1/2, adds exactly
+log|rho/(1-rho)| = (1/2) log[(beta^2+gamma^2)/((1-beta)^2+gamma^2)] ~ (2 beta - 1)/(beta^2 + gamma^2) for large gamma:
+a QUANTISED jump, the same formula at every point z. The impostor z_1 = i sqrt5 has Dfc(z_1) > 0 by the same formula
+(its zeros off the line, KNOWN). So the number separates omega from i sqrt5, but ONLY through the location of the
+zeros: nothing in my toolkit computes Dfc without knowing whether there are zeros. That is the exact reason it
+cannot be the structural number asked for, as it stands.
+
+### R2.2 The one structural lever this number has: additivity on products, not on sums (PROVED, two lines)
+For f, g of bounded type with no singular inner factor: B_{fg} = B_f B_g, so Dfc(fg) = Dfc(f) + Dfc(g), and every
+finite Euler product has Dfc = 0 (each factor (1 - p^-s)^-1 is zero-free and outer in Re s > 1/2). For a sum,
+Dfc(f + g) is not controlled by Dfc(f), Dfc(g). At omega: Phi = 3 Lambda_K = (sqrt3/2) xi . Lambda(., chi_-3), a
+PRODUCT, so Dfc(omega) = Dfc(xi) + Dfc(Lambda(chi_-3)), each a degree-one Euler product. At z_1 = i sqrt5 (SP-modular's
+formula): E*(z_1, s) = c(s)[zeta L(chi_-20) + L(chi_-4) L(chi_5)], a SUM of two products, each of Dfc expected 0, with
+Dfc(sum) > 0. So the structural difference between omega and i sqrt5 IS visible to this number: it is the
+difference between a product and a sum, which is where Dfc is additive versus where it is free. What is NOT given
+by this: Dfc of the factors themselves, which is the whole problem for each factor (F5's limit question).
+
+### R2.3 A genuinely new object for the board: the matrix Krein function of the Heegner set (PROVED unless marked)
+For a discriminant D < 0 with class group Cl(D) of order h and CM points z_A, A in Cl(D), take the point
+interaction at the whole set {z_A} (deficiency indices (h,h)); its Krein function is the h x h matrix
+    Q_D(lambda)_{AB} = G_lambda(z_A, z_B)   (A != B),   regularised Green function on the diagonal,
+a MATRIX NEVANLINNA function (KNOWN: resolvent between distribution vectors, Krein's formula for finite-rank
+singular perturbations, from memory). It is QUADRATIC in the deltas and contains OFF-DIAGONAL data, so it is not a
+function of the spectral measure of any single point. Selberg's identity entrywise (normalisation as in (1b)):
+    Q_D(s) - Q_D(1-s) = v(s) v(s)^T / (1-2s),   v(s)_A = E(z_A, s);
+in the character basis v^_psi(s) = sum_A psi(A) E(z_A, s) = c_D(s) L_K(s, psi)/zeta(2s) (SP-modular (1b)): one EULER
+PRODUCT per character. Consequences:
+ (a) h = 1 (omega): Q_D is my scalar Q; the sheet difference is the square of ONE Euler product.
+ (b) h = 2 (D = -20): in the character basis the off-diagonal entry is, by symmetry of G,
+        Q_{1,psi}(lambda) = G^reg_lambda(z_1, z_1) - G^reg_lambda(z_2, z_2),
+     whose sheet difference is c^2 L_K(s,1) L_K(s,psi)/((1-2s) zeta(2s) zeta(2-2s)) and whose spectral measure is the
+     SIGNED measure with density c Re(L_K(1/2+it,1) conj L_K(1/2+it,psi))/|xi(1+2it)|^2 and atoms |u_j(z_1)|^2 - |u_j(z_2)|^2.
+     It is the generating function of the Davenport-Heilbronn cross term, and it is EXACTLY what the impostor
+     carries and omega does not: the single-point Krein function at z_1 is (Q_{11} + Q_{psi psi} + 2 Q_{1,psi})/4 in
+     the character basis; at omega there is no off-diagonal entry because there is no second point.
+ (c) The rank-one structure is the operator form of SP-modular's "Hecke module of rank one": the torus orbit is a
+     single deficiency direction exactly when h = 1.
+THE NUMBER from it, and its status. N(D) := the Nevanlinna (Herglotz) index of the off-diagonal part, i.e. whether
+the 2 x 2 function lambda -> Q_D(lambda) remains Nevanlinna after the off-diagonal entry is multiplied by -1 (the
+two choices of sign correspond to the two orderings of the characters). It is 0 for h = 1 by definition and its
+value at D = -20 is an exactly definable, computable property of two regularised Green functions at the two
+points (orbit sums, no zeros needed). CONJECTURE (not derived, would need computing): it is not structurally
+linked to the off-line zeros of E(z_1, .); the off-line zeros of the impostor are zeros of the LINEAR functional
+<e_1, v(s)> while v(s) itself has (under GRH for K) only on-line zeros. So the matrix picture LOCATES the impostor
+(an entry, not an eigen-entry) and shows that its zeros are of a different kind from those of an Euler product
+(zeros of a projection of a non-zero vector versus zeros of the whole vector), but it does not decide the second.
+What an off-line zero of zeta_K would do here (PROVED): at rho it makes the WHOLE sheet difference vanish for h = 1;
+for h = 2 an off-line zero of L_K(s, psi) would make one character component of v vanish, leaving rank one.
+
+### R2.4 Why no number in my toolkit separates omega from i sqrt5 for a structural reason that is not zero location
+(stated as exactly as I can; the parts are PROVED, the conclusion is a judgement, labelled RISK)
+ - Everything linear in the spectral data (sheet-I Krein functions, matrix ones included, pre-trace sums, Hecke
+   relations) is weakly continuous in a measure built from |Phi|^2 and |u_j|^2, and the impostor has measures of the
+   same type: such numbers differ between omega and i sqrt5, but as different arithmetic of two norm forms, not as
+   a statement about zeros (N46).
+ - Everything that sees the phase (Dfc, the cyclicity angle, Suzuki's abscissa d0(z) := sup Re rho - 1/2 over zeros of
+   E*(z,.), the first t at which det(1 +- K_d[t]) vanishes for d < d0) is a function of the zero set and is only
+   upper semicontinuous in the measures in which the Euler product could converge.
+ - The only structural lever is multiplicativity (R2.2): phase numbers are additive on products and free on sums,
+   and finite Euler products have phase number zero. To use it one needs a topology in which (i) the partial Euler
+   products of zeta_K converge and (ii) Dfc is LOWER semicontinuous (log-moduli converge in L^1(Poisson)).
+   RISK: in my toolkit the natural candidate is convergence of the matrix Krein functions of growing Heegner sets
+   (orders of conductor f, all f), whose form factors are the Euler factors times L_K; I have not shown that any
+   such convergence holds, and N46's completeness argument (SP-modular's risk) suggests the limit space is {0}.
