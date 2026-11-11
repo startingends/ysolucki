@@ -267,6 +267,11 @@ Nikolski, Hedenmalm–Lindqvist–Seip); (iii) the adelic picture, where the pro
 - **H10 (lead, from N63; CORRECTED in N68).** Landau's theorem ties every non-negative arithmetic weight on the integers
   to the pole at 1. Positivity at ½ with a CONSTANT is false (Littlewood, Ingham); with a slowly growing factor it is
   RH-equivalent, so it is not excluded but is the statement itself. A proposal must say which it uses.
+- **H11 (lead, from N80).** A positivity statement for zeta with a uniform MARGIN is expected false: the whole-space
+  constant κ_min of the window pencil is carried by the closest resolved pair of zeros (both for zeta and for the
+  impostor), and under de Bruijn–Newman an off-line quartet is a collided pair, so a margin would be "Λ < 0", against
+  Rodgers–Tao. A proposal must be TIGHT along Lehmer pairs: an equality, a monotonicity, or a margin normalised by the
+  pair gaps. Heuristic until the two-zero model (SP-operator, `rh/specialists/operator/TWO_ZERO.md`) makes it exact.
 
 ## G. Where nobody has looked: candidates after the copy principle (lead, 2026-11-11). Honest odds attached.
 The record now says (N49, N50, N60, N63, N67): amplification by copies is capped at 3/4 (copies are kernels of

@@ -102,9 +102,12 @@ Papers checked so far are listed with what was read in `docs/KNOWLEDGE.md` secti
 
 ## Running jobs
 **After any context summary or restart, read this section, `rh/NOTEBOOK.md` from N43 on, `rh/HUNCHES.md` parts F–G and
-`git log -8` before launching anything.** State at 2026-11-11 ~06:30 UTC.
-- Nothing is running. All seats idle and resumable by id (specialists SP-operator, SP-reflection, SP-modular, SP-sieve;
-  S1-parity, S1-mirror, S1-socrates; K-theory, K-atlas, FH, FORMAL; readers 1–9; verifiers V-FH, V-COPY, V-CUB).
+`git log -8` before launching anything.** State at 2026-11-11 (after N80).
+- RUNNING: SP-operator session 2, the two-zero model of κ_min (N80; output `rh/specialists/operator/TWO_ZERO.md`).
+  All other seats idle and resumable by id (SP-reflection, SP-modular, SP-sieve; S1-parity, S1-mirror, S1-socrates;
+  K-theory, K-atlas, FH, FORMAL; readers 1–9; verifiers V-FH, V-COPY, V-CUB).
+- Bridge 1's last gap closed (plank 13, N80): κ_min warns before the impostor's failure but tracks the closest zero
+  pair for zeta too; rule H11 (no uniform margin; statements must be tight along Lehmer pairs).
 - Since 02:15 (structural mode): the wall named and reached by eight routes (#34; N49–N79); seminars S2 and S3 closed;
   the copy barrier proved, verified and its cores formal (T106–T114); the October architecture's binding parameter
   found (N73) and the only candidate improvement (0.8136) refuted by an adversarial verifier (N78). Theory document:
