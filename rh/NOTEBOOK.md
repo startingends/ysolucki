@@ -456,3 +456,17 @@ experiment `rh/experiments/e27_relative/`). Labels on each line.
 - NOT NEW: the mechanism (1) is the heuristic of Connes–Consani 2106.01715 §3 and the archimedean theorem of
   2006.13771 has this shape. Possibly new: the numbers in (2), (3), the definition of D_L as a form on the whole
   window space, and the identity read as "window form = Weil form of the leak". Not searched beyond the digests.
+
+**N41. The primes disappear under Möbius inversion, and the constant is about 2L** (lead, 2026-11-11; bridge planks
+7, 7b). (a) PROVED (three lines): let f be a window function and ψ its Möbius inverse on the window, f = Zψ,
+Zψ(u) = Σ_{m ≤ e^(L−u)} m^(−1/2) ψ(u + log m). For u in the window, Σ_n Λ(n) n^(−1/2) f(u + log n)
+= Σ_N N^(−1/2) log N · ψ(u + log N) (Λ ∗ 1 = log; the shifted arguments stay above −L, so the cut is never met), and
+the prime term of the Weil form is twice ⟨f, that⟩. Hence Q_L(Zψ) = pole(Zψ) + arch(Zψ) − 2⟨Zψ, Σ_N N^(−1/2) log N ·
+ψ(· + log N)⟩: the von Mangoldt function is gone; only the integers up to e^(2L) appear. A congruence, so positivity is
+unchanged; what changes is that every object is now additive (Poisson summation applies). (b) The same on the tail:
+for T = 1_{v>L} Σ_m m^(−1/2) ψ(v + log m), primes(T) = 2⟨T, Σ_m m^(−1/2) log m · ψ(· + log m)⟩. (c) HEURISTIC:
+with orthogonal chirps, W(T) ≈ ∫|ψ|² K_L, K_L(L + a) = Σ_{m ≤ e^a}(2L + a − 2 log m)/m ≥ 2L; the 2L is the log of
+the lowest local frequency 2π e^(2L) over 2π. COMPUTED: this predicts 61–91% of the measured constant on the bottom
+rungs at three windows. (d) The obstruction to turning (c) into a proof is exact: the null space of ψ ↦ W(T_ψ)
+(tails of functions living below the window). Only the least-leak representative can satisfy a lower bound, and on
+it the cross terms between dilates are what is not controlled.

@@ -253,3 +253,32 @@ Novelty: UNSEARCHED (Theorem U itself is unsearched, presumed folklore).
  FORMAL machine-checked my nominations (B142): B56 bordered identity, B25 folding identity, Theorem 4 Step 2, Fact 1 and Fact 3; see B166 for the inertia count.
  Promised for next turn (B170): impostor null vector at L = 1.72, psihat at the off-line zero and at on-line zeros (needs lane A's zero list).
  Promised (B172): run S1-curv's doubling-step statement (C) on G_d with gd.py.txt.
+
+## TURN 3 (2026-11-11)
+Posted so far: B194 (B151/B158 closed, FORMAL nomination of the finite Perron step), B195 (PROOF_Uprime.md + exact comparison with Johns).
+Foothold second route (fh_*.py.txt, logs): see section V below (written when the jobs finish).
+
+### U. PLANK 4 of Bridge 1 (idea #27): BLIND EXPECTATIONS, written 01:18:57 UTC, before any of my plank-4 code exists.
+ I have read the lead's e27 scripts and logs (so his numbers are known to me: this is a reproduction target, not blind, except
+ where marked BLIND). My route: form matrices from implementation B (wb.py.txt); prolate functions from the Legendre/Bouwkamp
+ expansion of the differential operator (NOT Nystroem on the sinc kernel), chi_n from the finite Fourier transform eigenvalue;
+ projections of v by piecewise Gauss-Legendre between the breakpoints u = L - log k.
+ (a) at the lead's own basis (integer lattice, N = 28, 28, 34): I expect his eigenvalues to all printed digits:
+     L=.5: even 9.68788e-7, 0.0182354, 0.832128; odd 2.2226e-4, 0.381316, 0.89424.  L=.75: 4.83891e-15, 1.44721e-9, 5.13868e-5;
+     3.8537e-12, 2.86434e-7, 4.56169e-3.  L=1: 9.82998e-30, 3.95331e-23, (third not in his log); 2.65649e-26, 3.38535e-20.
+     Defects by my route: 1-chi_4 = 3.63038e-7, 1.0336e-15, 1.512e-30; 1-chi_6 = 1.18597e-4, 1.24412e-12, 5.73e-27; 1-chi_8 = 0.0137545,
+     6.88035e-10, 1.0751e-23; 1-chi_10 = 0.355684, 1.97876e-7, 1.1531e-20; 1-chi_12 = 0.9406, 3.119e-5, ~7.7e-18. Expect >= 4 digits.
+     BLIND: at N = 120 the lowest even eigenvalue is lower by 3-4% (L=.5), about 10% (L=.75), 25-35% (L=1), so every ratio
+     'eigenvalue/defect' falls by that much under refinement; the foothold seat's polynomial test shows trig bases converge slowly.
+ (b) at his N: Rayleigh/mu_1 = 1.222, 1.099 (L=.5); 1.360, 1.164 (.75); 1.380, 1.219 (1.0), overlap deficiencies 7.49e-6, 4.17e-7, 7.2e-8: expect 3 digits.
+     BLIND: under refinement (N = 60, 120) the Rayleigh quotient of the projected v GROWS (the jumps of v at u = L - log k carry
+     energy ~ J^2 log N that a truncated basis cuts off) while mu_1 falls: I expect the ratio at N = 120 between 1.3 and 2.5 (even)
+     and 1.1 and 2.0 (odd), not converging to a limit near 1; if the jumps are below sqrt(defect) x 0.1 the growth is invisible
+     and the ratio only rises by the fall of mu_1. I do not know the size of the jumps; guess J ~ sqrt(defect).
+ (c) at his N: kappa_4 = 0.347, 0.675, 1.015 (even), 0.217, 0.546, 0.907 (odd): expect 3 digits.
+     BLIND, K up to 8 at L = 0.75 (indices 4..32 even, 6..34 odd): kappa_K levels off: kappa_8 >= 0.5 kappa_4, i.e. >= 0.34 (even),
+     >= 0.27 (odd). Would surprise me: kappa_8 < 0.1.
+     BLIND, control F_d at L = 0.75 (form F_d/2, same vectors, same D): kappa_1(d) falls linearly in d^2 and changes sign near
+     d = 9.5e-6 (the explicit vector is not the ground state, so later than d_c = 7.93e-6); kappa_4(d) changes sign between
+     7.93e-6 and 9.5e-6; at d = 7e-6: kappa_4 between 0.05 and 0.4, kappa_1 between 0.7 and 1.1 (zeta: 0.675, 1.92).
+     NOTE: 'the one-prime system at L = 0.5' is IDENTICAL to zeta there (3 enters at 0.549), so it is not a control; I use F_d.

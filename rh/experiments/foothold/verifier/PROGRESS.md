@@ -105,3 +105,35 @@ My own quadrature (80 panels x 24 Gauss-Legendre nodes, mpmath 30 digits, Bessel
 of the 28 + 28 blocks 1.60528e-8 and 5.5910963e-6 (cert log: 1.605280e-08, 5.591096e-06). 15 sampled integrals I_jk agree
 with acb.integral to 5e-29. Tail constants W, tau, pi_tail, eps12, eps22 reproduced to all printed digits. Lemma 4 tested
 on a grid (n up to 80, x up to 57): no violation; the actual tail sum at X = RL is 1.7e-35 against the bound 1.2e-33.
+
+## 10. More checks (COMPUTED)
+- `boxtest54.py.txt`: L = 27/50, degree < 32, the four edges of the claimed box: -1.54e-6 (left), -6.26e-6 (right),
+  -3.55e-7 (m lower, best y), -1.49e-5 (m upper, best y); 1e-5 further out: more negative. True prime: +1.0770e-7.
+- `tail_check.py.txt`: actual head-tail coupling of the capped matrix (modes 56..119, float): 1.0e-18 (even), 2.1e-19
+  (odd), against the proof's eps12 = 1.965e-13; tail block minus beta0*I: 3.5e-36, 1.4e-37 against eps22 = 1.22e-31.
+- `misc_check.py.txt`: fmpq_poly composition and exact division behave as class Vec assumes; h in [0.3887, 0.5) on
+  (0, 1.099]; Connes-Consani section 2.3 reproduced at L = (1/2) log 3 with the weight tied to p: even bottom -1.38e-5
+  (p = 1.9999), +5.58e-8 (p = 2), -9.4e-6 (p = 2.0005); the odd block is already negative at p = 2.0001 (-5.4e-5).
+- explore.py.txt (author's float code) at R = 320: L = (1/2) log 3: 5.405e-8, 1.4345e-5; L = 0.54: 1.0239e-7, 2.407e-5;
+  L = 0.5: 9.097e-7, 1.883e-4 (lower values of the capped form, not certified).
+
+## 11. Concurrent change noticed (01:17 UTC)
+`git status` showed the author's PROOF_window_prime2.md (section 7), PROOF_forcing_prime2.md (section 4) and PROGRESS.md
+(new section 13) modified after I logged finding 7: the mislabelled numbers were replaced by mine, with attribution.
+I checked the diff: no theorem statement, lemma or script was changed. I did not touch those files.
+
+## 12. Literature (rule 5 record)
+- Zhu arXiv 2608.24827 v2: digest rh/library/2608.24827.md lines 1-220; TeX rh/data/papers/2608.24827.tex lines 150-290,
+  884-1082, 1083-1130, 1195-1292, 2440-2475 (about 520 of 2597 lines). Sections 7-16 not read.
+- Connes-Consani arXiv 2106.01715: TeX lines 157, 189, 232-250, 492-497, 518-552.
+- Johns: digest rh/library/johns-positive-solutions.md lines 1-60, 228-256 only; the paper itself not read.
+- WebSearch, three queries (texts in VERDICT.md section 6); opened the abstract pages of arXiv 2607.02828 and 2607.24830;
+  preprints.org 202610.1267 returned HTTP 403 (unread).
+Result: Theorem A's claim is contained, qualitatively, in Zhu's Corollary 6.3 (larger window, constant 8.9e-18 instead of
+1e-8); Theorem B's type of statement not found as a theorem.
+
+## 13. Verdict written
+VERDICT.md. Theorem A: verified as stated. Theorem B: verified as stated. Gaps: none. Corrections C1 (false remark,
+repaired by the author), C2 (stale log line), C3 (wording). Idea log: V-FH/#1 (a trap, not an idea).
+What I did NOT do: audit Arb/python-flint; formalise anything; rerun Zhu's certificate (files not available); prove
+feasibility of any point other than the true prime; test Theorem B's analogue for two atoms.

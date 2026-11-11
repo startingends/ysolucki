@@ -2,3 +2,11 @@ M=240 delta=0.10 L=0.3966 box width 0.0033
    mu_e1 = mu_o1 at weights [0.36656] ; even ground state edge value changes sign at [0.35597] ; odd lowest eigenvalue = 0 at [0.36117]
    mu_o1 = mu_e2 at weights [0.88472] ; odd ground state edge value changes sign at [0.90324]
    at the first crossing 0.36656: mu_e1 = 7.686e-04 ; |<v_e'/|v_e'|, odd ground state>| = 1.0000
+M=240 delta=0.20 L=0.4466 box width 0.0037
+   mu_e1 = mu_o1 at weights [0.47837] ; even ground state edge value changes sign at [0.4773] ; odd lowest eigenvalue = 0 at [0.47722 1.01658]
+   mu_o1 = mu_e2 at weights [0.59416 0.99156] ; odd ground state edge value changes sign at [0.59965]
+   at the first crossing 0.47837: mu_e1 = 2.832e-04 ; |<v_e'/|v_e'|, odd ground state>| = 1.0000
+M=240 delta=0.30 L=0.4966 box width 0.0041
+   mu_e1 = mu_o1 at weights [0.48876] ; even ground state edge value changes sign at [0.48866] ; odd lowest eigenvalue = 0 at [0.48826 0.70247]
+   mu_o1 = mu_e2 at weights [0.51029 0.68309] ; odd ground state edge value changes sign at [0.51203]
+   at the first crossing 0.48876: mu_e1 = 1.614e-04 ; |<v_e'/|v_e'|, odd ground state>| = 1.0000

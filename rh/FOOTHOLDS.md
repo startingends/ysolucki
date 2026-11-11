@@ -48,3 +48,14 @@ scripts: `rh/experiments/foothold/`.
 | function fields F_q(t): a window statement provable directly | not attempted | - |
 | theta dial at n = 2; semi-local versions with finitely many primes | not attempted | - |
 | "zeros as the cap" (idea FH/#2) | HEURISTIC | the splitting lemma written in full with explicit constants |
+
+
+## Verification (V-FH, 2026-11-11, `rh/experiments/foothold/verifier/VERDICT.md`)
+**FH-1 (Theorem A) and FH-2 (Theorem B): verified as stated** by an independent verifier: every lemma re-derived,
+certificates rerun, matrices recomputed by a second route, the covering of the complement of the box replayed in
+exact rationals (complete, not sampled). No gap. One false remark outside the theorems was found and corrected
+(two quoted "Rayleigh–Ritz bottoms" had been computed at 0.693147 instead of log 2). Trust base: Arb / python-flint;
+nothing formalised. Novelty: FH-1 is contained, with a weaker constant, in Zhu's unrefereed claim for L ≤ 0.8;
+a certified region for the position and weight of the first prime (FH-2) was not found in three searches and the
+papers read: "not found", not "new". Both are now the project's first CHECKED unconditional statements about
+windows that contain a prime. Neither is a step towards RH by itself.

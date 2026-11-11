@@ -1,1 +1,2 @@
 L=1/2 NB=28: weight interval at y = log 2: ['0.489531051', '0.490165806']
+   feasible positions in this test space: y in [0.692954482, 0.697159202], e^y in [1.9996146, 2.0080402]   (410s)

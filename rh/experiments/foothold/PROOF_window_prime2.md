@@ -169,7 +169,11 @@ certified lambda_0, as they must be.
 ## 7. What is and is not shown
 
 - The certified constants are lower bounds for the bottom of Q_R, not for the true bottom of Q. Upper bounds
-  for the true bottom (Rayleigh-Ritz, exact form, PROGRESS.md section 7): 9.06e-7 at L = 1/2, 6.45e-8 at L = 0.54.
+  for the true bottom (Rayleigh-Ritz, exact form, float): 9.42e-7 at L = 1/2, 1.08e-7 at L = 0.54 (polynomials of
+  degree < 28 / 32 at y = log 2; numbers of the verifier, rh/experiments/foothold/verifier/PROGRESS.md section 7).
+  CORRECTION 2026-11-11: an earlier version of this line quoted 9.06e-7 and 6.45e-8; those were computed at
+  y = 0.693147 (1.8e-7 below log 2), and the form is sensitive enough to the position that they are NOT values at
+  the true atom. The verifier found this. Not part of the theorem.
 - Dependence on the literature: only classical facts (digamma series, Legendre/Bessel integrals, Plancherel).
   The identification of Q with the sum over zeros is the explicit formula (known) and is not needed for the
   inequality itself.

@@ -12,3 +12,7 @@ L=0.540000 R=320.0 nmax=280 beta=2.9502 parity=even lowest eigenvalues: [1.02387
 L=0.540000 R=320.0 nmax=280 beta=2.9502 parity=odd lowest eigenvalues: [2.40733488e-05 1.23830326e-01 8.50281499e-01]
 L=0.500000 R=320.0 nmax=260 beta=2.9502 parity=even lowest eigenvalues: [9.09686879e-07 1.76379548e-02 8.29689204e-01]
 L=0.500000 R=320.0 nmax=260 beta=2.9502 parity=odd lowest eigenvalues: [1.88311022e-04 3.59432456e-01 8.92976965e-01]
+L=0.549306 R=320.0 nmax=280 beta=2.9502 parity=even lowest eigenvalues: [5.40461989e-08 1.43600574e-03 6.85523827e-01]
+L=0.549306 R=320.0 nmax=280 beta=2.9502 parity=odd lowest eigenvalues: [1.43454948e-05 7.56259534e-02 8.30818471e-01]
+L=0.549306 R=40.0 nmax=80 beta=0.8707 parity=even lowest eigenvalues: [1.60847920e-08 9.84024479e-04 6.38364905e-01]
+L=0.549306 R=40.0 nmax=80 beta=0.8707 parity=odd lowest eigenvalues: [5.60092370e-06 3.37899971e-02 7.66994950e-01]

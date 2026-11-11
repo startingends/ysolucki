@@ -1,0 +1,46 @@
+L = 0.5, NB = 28, nh = 14; lowest eigenvalues of A_hh (free part, c = 2 pi): [1.1450000e-04 8.1219300e-02 1.4506679e+00]
+ D = [h = 0]: largest parity-mixing entry 3.06e-01
+   parity 0, degree < 8: kappa_min = 0.00006  kappa_max = 1.3061   | lowest eig of D 4.649e-02, of Q 5.019e-06
+   parity 0, degree < 12: kappa_min = 0.00002  kappa_max = 1.3884   | lowest eig of D 4.577e-02, of Q 1.508e-06
+   parity 0, degree < 16: kappa_min = 0.00001  kappa_max = 1.5218   | lowest eig of D 4.548e-02, of Q 9.635e-07
+   parity 0, degree < 20: kappa_min = 0.00001  kappa_max = 1.6591   | lowest eig of D 4.531e-02, of Q 9.563e-07
+   parity 0, degree < 28: kappa_min = 0.00001  kappa_max = 1.8487   | lowest eig of D 4.514e-02, of Q 9.417e-07
+   parity 1, degree < 8: kappa_min = 0.00181  kappa_max = 0.9470   | lowest eig of D 1.671e-01, of Q 4.050e-04
+   parity 1, degree < 12: kappa_min = 0.00095  kappa_max = 1.2015   | lowest eig of D 1.609e-01, of Q 2.115e-04
+   parity 1, degree < 16: kappa_min = 0.00090  kappa_max = 1.4551   | lowest eig of D 1.601e-01, of Q 2.004e-04
+   parity 1, degree < 20: kappa_min = 0.00089  kappa_max = 1.6246   | lowest eig of D 1.597e-01, of Q 1.974e-04
+   parity 1, degree < 28: kappa_min = 0.00088  kappa_max = 1.8382   | lowest eig of D 1.593e-01, of Q 1.957e-04
+ D = [min over h]: largest parity-mixing entry 6.34e-01
+   parity 0, degree < 8: kappa_min = 0.58774  kappa_max = 2.2321   | lowest eig of D 5.696e-06, of Q 5.019e-06
+   parity 0, degree < 12: kappa_min = 0.54075  kappa_max = 2.3821   | lowest eig of D 1.973e-06, of Q 1.508e-06
+   parity 0, degree < 16: kappa_min = 0.51326  kappa_max = 2.3939   | lowest eig of D 1.491e-06, of Q 9.635e-07
+   parity 0, degree < 20: kappa_min = 0.51285  kappa_max = 2.4111   | lowest eig of D 1.476e-06, of Q 9.563e-07
+   parity 0, degree < 28: kappa_min = 0.51239  kappa_max = 2.4300   | lowest eig of D 1.442e-06, of Q 9.417e-07
+   parity 1, degree < 8: kappa_min = 0.59365  kappa_max = 2.6090   | lowest eig of D 5.725e-04, of Q 4.050e-04
+   parity 1, degree < 12: kappa_min = 0.54395  kappa_max = 2.6626   | lowest eig of D 3.081e-04, of Q 2.115e-04
+   parity 1, degree < 16: kappa_min = 0.54144  kappa_max = 2.7163   | lowest eig of D 2.976e-04, of Q 2.004e-04
+   parity 1, degree < 20: kappa_min = 0.54062  kappa_max = 2.7175   | lowest eig of D 2.947e-04, of Q 1.974e-04
+   parity 1, degree < 28: kappa_min = 0.54025  kappa_max = 2.7581   | lowest eig of D 2.897e-04, of Q 1.957e-04
+ D = [min over h with ghat(0) = 0]: largest parity-mixing entry 3.87e-01
+   parity 0, degree < 8: kappa_min = 0.50984  kappa_max = 1.3378   | lowest eig of D 5.700e-06, of Q 5.019e-06
+   parity 0, degree < 12: kappa_min = 0.47734  kappa_max = 1.6575   | lowest eig of D 1.976e-06, of Q 1.508e-06
+   parity 0, degree < 16: kappa_min = 0.44873  kappa_max = 1.7169   | lowest eig of D 1.500e-06, of Q 9.635e-07
+   parity 0, degree < 20: kappa_min = 0.44793  kappa_max = 1.8003   | lowest eig of D 1.485e-06, of Q 9.563e-07
+   parity 0, degree < 28: kappa_min = 0.44712  kappa_max = 1.9270   | lowest eig of D 1.452e-06, of Q 9.417e-07
+   parity 1, degree < 8: kappa_min = 0.45767  kappa_max = 1.5298   | lowest eig of D 5.814e-04, of Q 4.050e-04
+   parity 1, degree < 12: kappa_min = 0.44821  kappa_max = 1.5811   | lowest eig of D 3.099e-04, of Q 2.115e-04
+   parity 1, degree < 16: kappa_min = 0.44471  kappa_max = 1.6896   | lowest eig of D 3.005e-04, of Q 2.004e-04
+   parity 1, degree < 20: kappa_min = 0.44360  kappa_max = 1.7707   | lowest eig of D 2.975e-04, of Q 1.974e-04
+   parity 1, degree < 28: kappa_min = 0.44253  kappa_max = 1.9230   | lowest eig of D 2.930e-04, of Q 1.957e-04
+ FULL space, D = [min over h], degree < 12: kappa_min = 0.46732 kappa_max = 10217310553.8519;  with D symmetrised under u -> -u: kappa_min = 0.54075 kappa_max = 2.6626
+ FULL space, D = [min over h], degree < 20: kappa_min = 0.41134 kappa_max = 75165412440.9971;  with D symmetrised under u -> -u: kappa_min = 0.51285 kappa_max = 2.7175
+ FULL space, D = [min over h], degree < 28: kappa_min = 0.41068 kappa_max = 78520230005.5414;  with D symmetrised under u -> -u: kappa_min = 0.51239 kappa_max = 2.7581
+ FULL space, D = [min over h with ghat(0) = 0], degree < 12: kappa_min = 0.38200 kappa_max = 28244765.6287;  with D symmetrised under u -> -u: kappa_min = 0.44821 kappa_max = 1.6575
+ FULL space, D = [min over h with ghat(0) = 0], degree < 20: kappa_min = 0.35762 kappa_max = 49153642.8107;  with D symmetrised under u -> -u: kappa_min = 0.44360 kappa_max = 1.8003
+ FULL space, D = [min over h with ghat(0) = 0], degree < 28: kappa_min = 0.35571 kappa_max = 51465912.3821;  with D symmetrised under u -> -u: kappa_min = 0.44253 kappa_max = 1.9270
+ D = [min over h with ghat(0) = 0 and (Bg)(0) = 0]: largest parity-mixing entry 3.19e-01
+   FULL space, degree < 12: kappa_min = 0.33189 kappa_max = 1.6675;  symmetrised D: kappa_min = 0.35973 kappa_max = 1.3937;  lowest eigs of D [1.87394615e-06 3.03600516e-04 2.36903175e-02], of Q [1.50822587e-06 2.11517321e-04 1.86506599e-02]
+   FULL space, degree < 20: kappa_min = 0.33086 kappa_max = 2.0652;  symmetrised D: kappa_min = 0.35679 kappa_max = 1.6475;  lowest eigs of D [1.31733228e-06 2.65518521e-04 2.20259163e-02], of Q [9.56342584e-07 1.97440196e-04 1.82574291e-02]
+   FULL space, degree < 28: kappa_min = 0.33074 kappa_max = 2.3189;  symmetrised D: kappa_min = 0.35639 kappa_max = 1.8584;  lowest eigs of D [1.27111836e-06 2.58379579e-04 2.15321463e-02], of Q [9.41663074e-07 1.95730442e-04 1.81269039e-02]
+   parity 0 block alone, degree < 28: kappa_min = 0.35639 kappa_max = 1.8460; three lowest kappa: [0.35639213 0.48705202 0.52990105]
+   parity 1 block alone, degree < 28: kappa_min = 0.35968 kappa_max = 1.8584; three lowest kappa: [0.35967618 0.50841243 0.59612767]

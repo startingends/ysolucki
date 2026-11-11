@@ -1,0 +1,2 @@
+parity 0: spectral norm of the head-tail block (56 <= k < 120): 1.046e-18  [proof's eps12 = 1.965e-13]; norm of tail block minus beta0*I: 3.522e-36  [eps22 = 1.22e-31]
+parity 1: spectral norm of the head-tail block (56 <= k < 120): 2.092e-19  [proof's eps12 = 1.965e-13]; norm of tail block minus beta0*I: 1.387e-37  [eps22 = 1.22e-31]

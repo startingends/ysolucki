@@ -140,10 +140,12 @@ Together with section 2 (y >= 2L) this proves (ii) and (iii). (i) is Theorem A. 
   mpmath quadrature gives 1.1753288841703535145e-8 and 5.344742566406390918e-9; the Arb/rational code gives the same
   20 digits; the frequency-side definition evaluated by quadrature gives 1.17532888468e-8 and 5.3447425664043e-9
   (agreement limited by that quadrature).
-- Rayleigh-Ritz bottoms of the exact form with the true atom on polynomials: L = 1/2: 9.0567e-7 (even), 1.9601e-4 (odd).
-  They lie between the certified lower bounds of the capped form (8.77e-7, 1.81e-4 at R = 160, float) and the
-  periodic-basis upper bounds of rh/experiments/r1_A (9.34e-7, 2.00e-4): three implementations, two bases, two
-  sides of the Fourier transform.
+- Rayleigh-Ritz bottoms of the exact form on polynomials (float). CORRECTED 2026-11-11 after the verifier's finding
+  (verifier/PROGRESS.md section 7): my script evaluates them at y = 693147/10^6, which is 1.8e-7 below log 2, and gets
+  9.0567e-7 (L = 1/2) and 6.447e-8 (L = 27/50); at y = log 2 the verifier gets 9.4166e-7 and 1.07699e-7. So my numbers
+  are NOT bottoms at the true atom (the bottom moves by about 0.2 per unit of y: the position is felt at the 1e-7
+  level, which is the content of the theorem). With the corrected values: L = 1/2: capped lower value 9.097e-7
+  (R = 320, float) <= 9.3357e-7 (Fourier basis N = 320) <= 9.3661e-7 (polynomials, degree < 44).
 - The residual interval at L = 1/2 agrees with the unreviewed outer bound (1.9996, 2.0080) of seminar S1-parity.
 
 ## 5. What is and is not shown

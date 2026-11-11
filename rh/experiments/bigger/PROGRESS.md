@@ -230,3 +230,42 @@ Honest statement: log q*(r) = (1 - r) c0 holds to about 1e-6 at r = 0.5, not exa
 r = 0 and r = 1 is very slightly concave. The corner at r = 1 does not depend on this (left slope about
 1.3953, right slope minus infinity in the limit). One implementation, float64, no certification.
 The run "L = 1.5, N = 100" for r = 0.5 exceeded 10 minutes and was stopped (not needed).
+
+## 4. Proofs of the small statements used in BIGGER.md (each elementary; none checked by a second seat)
+Notation: Q_L(r, q, m) = the form r Pole + Arch + (log q) I - sum m_n B_n on functions supported in [-L, L];
+lambda_L(r, q, m) its lowest eigenvalue (the form is a genuine operator: Suzuki, theory T2).
+
+**P-a. V1 implies RH.** Assume lambda*_L(even, 1) -> 0 with maximisers m^(L) -> Lambda coordinatewise.
+Fix L0 < L. A function supported in [-L0, L0] is supported in [-L, L], and on it B_n = 0 for log n >= 2 L0,
+so lambda_L0(1, 1, m^(L) restricted to n < e^(2 L0)) >= lambda_L(1, 1, m^(L)) = lambda*_L. The left side
+depends continuously on finitely many weights; let L -> infinity: lambda_L0(1, 1, Lambda) >= 0. This holds
+for every L0, which is Weil's criterion (T1). Conversely RH gives lambda*_L >= lambda_L(1,1,Lambda) >= 0,
+i.e. q*(even, 1) <= 1; that q* is not below 1 is the uniqueness half and is not implied by RH alone.
+
+**P-b. Approach to the corner.** Let (r_k, q_k, m^(k)) be feasible on every window, r_k -> 1, q_k -> 1,
+m^(k) -> Lambda coordinatewise. On a fixed window only finitely many weights enter and the form depends
+continuously on (r, log q, m), so Q_L0(1, 1, Lambda) >= 0 for every L0: RH.
+
+**P-c. Concavity and monotonicity.** For fixed L the map (r, log q, m) -> Q_L is affine, and the lowest
+eigenvalue is a concave function of a Hermitian form; so lambda_L is jointly concave, and
+lambda*_L(r) = max_m lambda_L is concave in r. Restriction to a smaller window can only raise the lowest
+eigenvalue, and a weight that has not yet entered is free, so lambda*_L is non-increasing in L. For r = 0,
+even factor: the zero weight vector is feasible at conductor q with log q >= log pi - psi(1/4) = 5.3726,
+because there the Gamma density (1/2 pi)(log q - log pi + Re psi(1/4 + it/2)) is >= 0 for all t (Re psi is
+increasing in |t|). So lambda*_L(even, 0) >= -5.3726 for all L and the limit exists.
+
+**P-d. MH(tau, A) and zeros.** Let chi0 be primitive of conductor q0, w(x) = x e^(-x). Every term of the
+sum in MH is >= 0, and chi0 is in the family for Q >= q0, so |P_chi0(N)|^2 <= C N^(A/tau) for N = Q^tau,
+i.e. P_chi0(N) << N^eta with eta = A/(2 tau). For Re s > 1/2,
+ int_0^infinity P_chi0(N) N^(-s-1) dN = sum Lambda(n) chi0(n) n^(-1/2-s) Gamma(s+1) = -(L'/L)(1/2+s, chi0) Gamma(s+1),
+and the left side converges absolutely and is analytic for Re s > eta (P is O(N) near 0). Gamma(s+1) has no
+zeros, so L'/L(., chi0) has no pole with real part above 1/2 + eta. For zeta subtract the main term
+Gamma(3/2) N^(1/2) first. Conversely under GRH P_chi(N) << log(q + 2) uniformly in N (sum over zeros of
+Gamma(rho + 1/2) N^(rho - 1/2), absolutely convergent), which gives MH(tau, 2 + eps). The range tau <= 2:
+write |P|^2 as a character sum of length about Q^tau (after truncating the exponentially small tail) and
+apply the multiplicative large sieve, sum_{q<=Q} sum*_chi |sum_{n<=M} a_n chi(n)|^2 <= (Q^2 + M) sum |a_n|^2.
+
+**P-e. Direction of travel in d.** If K is a positive definite kernel on a window and c(x - y) is a
+continuous positive definite function with c(0) = 1, the Schur product K c is positive definite; apply to
+c = e^(-eps|x|). The same argument with K - lambda I shows the lowest eigenvalue of e^(-d|x-y|) W(x-y) is
+non-decreasing in d.

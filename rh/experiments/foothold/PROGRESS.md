@@ -173,3 +173,26 @@ lower bound on the whole window: FH-1 supplies it for L <= (1/2) log 3; numbers 
 certified as outer bounds).
 One discrepancy with the record to flag: atlas F21 says that with no atom "the even block stays positive";
 that refers to L near 0.37. At L = 1/2 the no-atom form is certified negative in BOTH blocks (FH-2 (iii)).
+
+## Session 2 (2026-11-11, later)
+
+### 13. Repair after the verifier's finding 7 (VERDICT.md not yet written when I looked; findings read from verifier/PROGRESS.md)
+FINDING (verifier, correct): the "Rayleigh-Ritz values at the true atom" in my section 7 (9.0567e-7 at L = 1/2,
+6.447e-8 at L = 27/50; and "consistent with ... 8.77e-7 <= . <= 9.06e-7") were computed at y = 693147/10^6, not at
+log 2. At y = log 2: 9.4166e-7 and 1.07699e-7 (verifier). My label was FALSE; the two theorems do not use these
+numbers. Repaired in PROOF_window_prime2.md section 7 and PROOF_forcing_prime2.md section 4. Lesson: the bottom
+moves by about 0.2 per unit of y, so a 1.8e-7 error in the position is a 4% (L = 1/2) or 40% (L = 0.54) error in
+the bottom. No other finding so far in the verifier's log (sections 1-9 read by grep for findings only).
+
+### 14. Plank 8, task (2') : the pencil (Q, D_L) on ALL polynomials of degree < 28 at L = 1/2 (float exploration)
+Why this instead of only the span of K explicit vectors: the bridge ends if kappa_K falls without bound as K grows;
+the polynomial space contains good approximations of the whole ladder AND of the bulk directions, and my exact
+ball matrix of Q on it already exists (forcing.py.txt). D_L is computed from its definition in N40:
+companion g on [1/lambda, lambda] forced by f (g(x) = x^(-1/2)[f(log x) - 2^(-1/2) f(log 2x) 1_{2x <= lambda}]),
+free even h on (0, 1/lambda), D_L(f) = min_h ||out-of-band part of (g + h)^||^2 (band [-lambda, lambda], transform
+with e^{-2 pi i x xi}), computed as a Schur complement; variant with the constraint ghat(0) = 0.
+PREDICTION (written before running, 2026-11-11): the lowest generalised eigenvalue kappa_poly of Q v = kappa D v
+on polynomials of degree < 28 is between 0.05 and 0.35 in the even block and between 0.03 and 0.22 in the odd
+block (it must be <= about the lead's kappa_4 = 0.35 / 0.22 if his D is close to the true D_L on his vectors, and I
+expect the drift with K to continue a little but not to zero, because in the bulk Q is of size 0.3-1 and D <= 3).
+It would surprise me, and wound plank 8, if kappa_poly < 0.01 or negative.

@@ -1,0 +1,6 @@
+L=0.5 even n=4: leak (computed part) 1.7988e-7 tail estimate 1.72e-9 ; kappa_pred = 1.81325 (without tail 1.74662) ; 2L = 1.0 ; mean log(xi/lambda) = see num
+L=0.5 odd n=6: leak (computed part) 5.8819e-5 tail estimate 5.09e-7 ; kappa_pred = 1.7432 (without tail 1.68243) ; 2L = 1.0 ; mean log(xi/lambda) = see num
+L=0.75 even n=4: leak (computed part) 5.1179e-16 tail estimate 5.15e-18 ; kappa_pred = 2.55123 (without tail 2.46515) ; 2L = 1.5 ; mean log(xi/lambda) = see num
+L=0.75 odd n=6: leak (computed part) 6.1632e-13 tail estimate 5.92e-15 ; kappa_pred = 2.50902 (without tail 2.42645) ; 2L = 1.5 ; mean log(xi/lambda) = see num
+L=1.0 even n=4: leak (computed part) 7.5844e-31 tail estimate 8.72e-33 ; kappa_pred = 3.2949 (without tail 3.17834) ; 2L = 2.0 ; mean log(xi/lambda) = see num
+L=1.0 odd n=6: leak (computed part) 2.8112e-27 tail estimate 3.2e-29 ; kappa_pred = 3.26871 (without tail 3.15302) ; 2L = 2.0 ; mean log(xi/lambda) = see num

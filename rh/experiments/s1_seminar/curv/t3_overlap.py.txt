@@ -1,0 +1,17 @@
+"""S1-curv turn 3: control for the derivative lemma: overlap of (even ground state)' with the odd ground state, and of (odd ground state)' with the 2nd even state, versus weight. usage: t3_overlap.py.txt M delta"""
+import sys, math, importlib.machinery, importlib.util, numpy as np
+def load(n):
+    ld = importlib.machinery.SourceFileLoader(n, n + '.py.txt'); sp = importlib.util.spec_from_loader(n, ld); m = importlib.util.module_from_spec(sp); ld.exec_module(m); return m
+S = load('s1lib'); S2 = load('s2lib')
+M = int(sys.argv[1]); dl = float(sys.argv[2]); ell = math.log(2); tri = lambda t: max(0.0, 1 - abs(t)); Be, Bo = S2.parity_bases(M); h = M // 2
+L = (ell + dl) / 2; b = S.build(L, M, 'arch'); d = b['d']
+Q0 = 2 * np.outer(b['c'], b['c']) - 2 * np.outer(b['s'], b['s']) - b['N']
+idx = np.abs(np.subtract.outer(np.arange(M), np.arange(M))); P1 = np.array([tri((ell - k * d) / d) for k in range(M)])[idx]
+def deriv(f):                      # full-window vector -> centred difference with zero outside
+    g = np.concatenate([[0.0], f, [0.0]]); return (g[2:] - g[:-2]) / (2 * d)
+print("M=%d delta=%g L=%.4f.  weight | mu_e1  mu_o1  mu_e2 | |<v_e1', v_o1>|/|v_e1'| | |<v_o1', v_e2>|/|v_o1'| | residual |Q v_e1' - mu_e1 v_e1'|/|v_e1'|" % (M, dl, L))
+for t in [float(a) for a in sys.argv[3:]]:
+    Q = Q0 - t * P1; we, Ve = np.linalg.eigh(Be.T @ Q @ Be); wo, Vo = np.linalg.eigh(Bo.T @ Q @ Bo)
+    ve1, ve2, vo1 = Be @ Ve[:, 0], Be @ Ve[:, 1], Bo @ Vo[:, 0]
+    a = deriv(ve1); bb = deriv(vo1)
+    print("%.5f | %+.3e %+.3e %+.3e | %.4f | %.4f | %.3e" % (t, we[0], wo[0], we[1], abs(a @ vo1) / np.linalg.norm(a), abs(bb @ ve2) / np.linalg.norm(bb), np.linalg.norm(Q @ a - we[0] * a) / np.linalg.norm(a)))
