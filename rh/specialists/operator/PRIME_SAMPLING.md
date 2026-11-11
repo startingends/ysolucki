@@ -180,3 +180,6 @@ L = 1.72 and 1.8 for the impostor (lag ≤ 0.08 in L after the first failure), b
 primal certificate exists, so κ_P(1.8) < 0 is NOT established. Prediction Q1 (still hidden at 1.8): MISSED as far as computed.
 L = 2.0: dump done (QDmp_dh_2_1_200.pkl, 43 constraints, 4.4 min); the wide-scale dual runs (degrees 185, 200) were started
 (logs two_zero/pdw_dh_2p0_*.log; 1.8 wide-scale in pdw_dh_1p8_*.log) and had not reported when this was written.
+Later progress lines (wide-scale runs, still running when last read): L = 1.8, degree 165 reproduces −0.2522 at scale 1e-2;
+L = 2.0, degree 185: κ_min = −0.3067 (second −0.3056), |W_s| up to 1.5e51, gradient at c = 0 only 1e-7 (normalised), i.e. the
+minimiser is nearly orthogonal to the constraint directions; dual optimisation pending.
