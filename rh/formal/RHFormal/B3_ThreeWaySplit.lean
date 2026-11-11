@@ -33,6 +33,8 @@ DIFFERENCES FROM THE INFORMAL STATEMENT:
 
 open Finset
 
+set_option linter.unusedSimpArgs false
+
 namespace RHFormal.B3
 
 open RHFormal.B2
@@ -111,9 +113,9 @@ theorem gen_shift (W A : Finset G) (hA : ∀ x ∈ W, ∀ y ∈ W, y - x ∈ A) 
   rw [sum_shift W A hA x hx (fun y => rate k u x y * (f y - f x))]
   refine Finset.sum_congr rfl fun a _ => ?_
   by_cases h : x + a ∈ W
-  · simp only [h, if_true, rate, add_sub_cancel_left]
+  · simp only [h, ite_true, rate, add_sub_cancel_left]
     ring
-  · simp only [h, if_false]
+  · simp only [h, ite_false]
 
 /-- `(L f(x))^2` as a double sum over shifts. -/
 theorem gen_sq_shift (W A : Finset G) (hA : ∀ x ∈ W, ∀ y ∈ W, y - x ∈ A) (k u f : G → ℝ) (x : G)
@@ -123,7 +125,7 @@ theorem gen_sq_shift (W A : Finset G) (hA : ∀ x ∈ W, ∀ y ∈ W, y - x ∈ 
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   simp only [lsqTerm]
   by_cases h1 : x + a ∈ W <;> by_cases h2 : x + b ∈ W <;>
-    simp only [h1, h2, and_self, and_true, and_false, if_true, if_false, mul_zero, zero_mul]
+    simp only [h1, h2, and_self, and_true, and_false, ite_true, ite_false, mul_zero, zero_mul]
   ring
 
 /-- The double sum of the path form in shift coordinates. -/
@@ -136,7 +138,7 @@ theorem path_shift (W A : Finset G) (hA : ∀ x ∈ W, ∀ y ∈ W, y - x ∈ A)
         * ((f z - f y) ^ 2 - (1 / 2) * (f z - f x) ^ 2))]
   refine Finset.sum_congr rfl fun a _ => ?_
   by_cases h1 : x + a ∈ W
-  · simp only [h1, if_true]
+  · simp only [h1, ite_true]
     rw [sum_shift W A hA (x + a) h1 (fun z => rate k u x (x + a) * rate k u (x + a) z
         * ((f z - f (x + a)) ^ 2 - (1 / 2) * (f z - f x) ^ 2))]
     refine Finset.sum_congr rfl fun b _ => ?_
@@ -144,20 +146,20 @@ theorem path_shift (W A : Finset G) (hA : ∀ x ∈ W, ∀ y ∈ W, y - x ∈ A)
     by_cases h2 : x + a + b ∈ W
     · have hu1 := hu x hx
       have hu2 := hu (x + a) h1
-      simp only [h1, h2, and_self, if_true, rate, add_sub_cancel_left]
+      simp only [h1, h2, and_self, ite_true, rate, add_sub_cancel_left]
       field_simp
-    · simp only [h1, h2, and_false, if_false]
-  · simp only [h1, if_false]
+    · simp only [h1, h2, and_false, ite_false]
+  · simp only [h1, ite_false]
     symm
     refine Finset.sum_eq_zero fun b _ => ?_
-    simp only [pathTerm, h1, false_and, if_false]
+    simp only [pathTerm, h1, false_and, ite_false]
 
 /-- Paths are closed or open. -/
 theorem pathTerm_eq (W : Finset G) (k u f : G → ℝ) (x a b : G) :
     pathTerm W k u f x a b = closedTerm W k u f x a b + openTerm W k u f x a b := by
   simp only [pathTerm, closedTerm, openTerm]
   by_cases h1 : x + a ∈ W <;> by_cases h2 : x + b ∈ W <;> by_cases h3 : x + a + b ∈ W <;>
-    simp only [h1, h2, h3, and_self, and_true, and_false, true_and, false_and, if_true, if_false,
+    simp only [h1, h2, h3, and_self, and_true, and_false, true_and, false_and, ite_true, ite_false,
       not_true_eq_false, not_false_eq_true, add_zero, zero_add]
 
 /-- Symmetrising a closed path under `a ↔ b`: the bracket becomes `(1/2) Δ^2 - A B` (twice). -/
@@ -167,7 +169,7 @@ theorem closedTerm_symm (W : Finset G) (k u f : G → ℝ) (x a b : G) :
   simp only [closedTerm, sqTerm, lsqTerm, hessTerm]
   rw [add_right_comm x b a]
   by_cases h1 : x + a ∈ W <;> by_cases h2 : x + b ∈ W <;> by_cases h3 : x + a + b ∈ W <;>
-    simp only [h1, h2, h3, and_self, and_true, and_false, true_and, false_and, if_true, if_false,
+    simp only [h1, h2, h3, and_self, and_true, and_false, true_and, false_and, ite_true, ite_false,
       add_zero, zero_add, sub_zero, mul_zero] <;>
     ring
 

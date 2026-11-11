@@ -1,0 +1,4 @@
+delta=0.300 L=0.4966 | Wbar(delta)=2.007 theta=0.1503 | P1 spectrum [-1.000, 1.000] | Q_0 low even -0.02979 odd -0.31414 (2nd odd 0.5649) | zeta low even 1.268e-04 odd 6.075e-04 | crude Q_0 - c 1_strips: even -0.12892 odd -0.74238
+      admissible weight of an atom at log 2: even block [0.4662, 0.4934], odd block [0.4883, 0.7025] => [0.48826, 0.49335] ; (c_+ - c)/c = 6.574e-03, (c - c_-)/c = 3.809e-03
+delta=0.400 L=0.5466 | Wbar(delta)=1.839 theta=0.1620 | P1 spectrum [-1.000, 1.000] | Q_0 low even -0.07098 odd -0.42413 (2nd odd 0.4676) | zeta low even 1.293e-04 odd 4.311e-04 | crude Q_0 - c 1_strips: even -0.27667 odd -0.89271
+      admissible weight of an atom at log 2: even block [0.4838, 0.4909], odd block [0.4890, 0.5357] => [0.48902, 0.49092] ; (c_+ - c)/c = 1.621e-03, (c - c_-)/c = 2.262e-03

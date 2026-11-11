@@ -87,8 +87,12 @@ State at 2026-11-11, about 00:40 UTC (journal J4 has what the last hours produce
 - **Verification track of round 2: finished.** `rh/experiments/r2_judge/JUDGEMENT.md`. Nothing reached L2/L3.
 - **Audit:** R2-AUD is auditing the 65 round-2 local ideas (`rh/experiments/r2_audit/`). The seminar's and
   specialists' logs (about 30 entries) are audited after S1 closes.
-- **Creation run 1** (run `wf_0afb126a-9cf`): restarted after the container restart; three unlaned seats, at
-  least two hours each, then the two-question screen. No result yet.
+- **Creation run 1: DID NOT RUN.** Its three seats were refused by the model's safeguard at the first step
+  (reason code `reasoning_extraction`), every attempt; BG is silent too. Not worked around: open decision D10
+  asks the owner whether to relaunch with a brief that does not ask for a diary of the seat's thinking.
+- **Foothold seat finished:** two computer-assisted theorems (FH-1 certified positivity for L ≤ ½ log 3; FH-2 a
+  certified box for the first atom), now with verifier V-FH. Seminar turn 3 has a third small proved statement
+  (first-prime lemma, S1-mirror and S1-parity independently).
 - Load: every numerical job runs under `tools/memcap.py 1`; one Lean process at a time.
 
 ## Scheduled routines

@@ -1,0 +1,59 @@
+"""S1-parity turn 3: second-route check of numbers of the foothold seat (rh/experiments/foothold/PROOF_window_prime2.md, PROOF_forcing_prime2.md)
+with implementation B (trigonometric bases, kernel side, closed-form digamma; nothing shared with the Legendre/Arb certificate).
+Rayleigh-Ritz values here are UPPER bounds for the true bottom of the form; the foothold theorems are LOWER bounds. Consistency = mine >= theirs."""
+import sys, math, time, importlib.util, importlib.machinery
+import mpmath as mp
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+wb = load("wb", "/home/user/ysolucki/rh/experiments/s1_seminar/parity/wb.py.txt")
+mp.mp.dps = 40; t0 = time.time(); ns = lambda x, k=7: mp.nstr(x, k)
+sec = sys.argv[1]
+l2 = mp.log(2)
+def form(L, N, lat, x=None, c=None):
+    M = wb.add(wb.arch_blocks(L, N, lat), wb.pole_blocks(L, N, lat))
+    if x is not None: M = wb.add(M, wb.atom_blocks(L, N, lat, x), c)
+    return M
+low = lambda M: [min(mp.eigsy(M[b], eigvals_only=True)) for b in (0, 1)]
+if sec == "A":
+    print("a(40) = Re psi(1/4 + 20 i) - log pi = %s ; 2m = sqrt(2) log 2 = %s ; difference %s   [foothold: 1.85097634318867769, 0.98025814346854719, 0.87071819972013]" % (
+          mp.nstr(mp.re(mp.digamma(mp.mpc(0.25, 20))) - mp.log(mp.pi), 18), mp.nstr(mp.sqrt(2) * l2, 18), mp.nstr(mp.re(mp.digamma(mp.mpc(0.25, 20))) - mp.log(mp.pi) - mp.sqrt(2) * l2, 15)))
+    L0 = mp.log(3) / 2
+    for name, L in (("L = 1/2", mp.mpf(1) / 2), ("L = 0.54", mp.mpf('0.54')), ("L = (1/2) log 3", L0)):
+        for lat, N in (('int', 40), ('int', 80), ('int', 120), ('half', 40), ('half', 80), ('half', 120)):
+            e = low(form(float(L), N, lat, 2, l2))
+            print("  zeta (atom 2 only) %-16s %s/%-3d lowest eigenvalue even %s odd %s   (%.0fs)" % (name, lat, N, ns(e[0]), ns(e[1]), time.time() - t0), flush=True)
+    print("  [foothold: certified LOWER bounds on L <= (1/2) log 3: 9.9998e-9 (even), 3.9999e-6 (odd); its Rayleigh-Ritz upper bounds 9.06e-7 (L = 1/2), 6.45e-8 (L = 0.54); bottom of its capped form at (1/2) log 3: 1.605e-8, 5.591e-6]")
+elif sec == "B":
+    for L in (0.5, 0.54):
+        for lat, N in (('int', 80), ('half', 80)):
+            e = low(form(L, N, lat))
+            print("  no atom, L=%.2f %s/%d: lowest eigenvalue even %s odd %s   (%.0fs)" % (L, lat, N, ns(e[0], 8), ns(e[1], 8), time.time() - t0), flush=True)
+    print("  [foothold Theorem B(iii): polynomial test vectors with Q/|v|^2 = -0.0323519 (even), -0.3222283 (odd) at L = 1/2; -0.0650680, -0.4103637 at L = 27/50]")
+    print("  feasible weight interval m (weight of the atom, form -2 m g(y)) at given position e^y: exact pencil, both blocks")
+    for L, xs in ((0.5, ('1.9997', '2', '2.004', '2.0075')), (0.54, ('1.99995', '2', '2.0005', '2.001'))):
+        for lat, N in (('int', 80), ('half', 80)):
+            Q = form(L, N, lat)
+            for xs_ in xs:
+                x = mp.mpf(xs_); U = wb.atom_blocks(L, N, lat, x)       # Q + c U, c = m sqrt(x)
+                # feasible set of c: {c : Q_b + c U_b >= 0 for b = 0, 1}; Q_b is NOT >= 0 here, so scan: find c* maximising the lowest eigenvalue, then bisect both ends
+                f = lambda c: min(min(mp.eigsy(Q[b] + c * U[b], eigvals_only=True)) for b in (0, 1))
+                lo, hi = mp.mpf('0.6'), mp.mpf('0.8'); g = (mp.sqrt(5) - 1) / 2
+                x1, x2 = hi - g * (hi - lo), lo + g * (hi - lo); f1, f2 = f(x1), f(x2)
+                for _ in range(30):
+                    if f1 < f2: lo, x1, f1 = x1, x2, f2; x2 = lo + g * (hi - lo); f2 = f(x2)
+                    else: hi, x2, f2 = x2, x1, f1; x1 = hi - g * (hi - lo); f1 = f(x1)
+                cs = (lo + hi) / 2; best = f(cs)
+                if best < 0:
+                    print("  L=%.2f %s/%d e^y=%s: INFEASIBLE for every weight (max over weight of lowest eigenvalue %s at m = %s)   (%.0fs)" % (L, lat, N, xs_, ns(best, 4), ns(cs / mp.sqrt(x)), time.time() - t0), flush=True); continue
+                ends = []
+                for sgn in (-1, 1):
+                    a, b = cs, cs + sgn * mp.mpf('0.1')
+                    for _ in range(40):
+                        mid = (a + b) / 2
+                        if f(mid) >= 0: a = mid
+                        else: b = mid
+                    ends.append(a)
+                print("  L=%.2f %s/%d e^y=%s: feasible m in [%s, %s] (best m = %s, lowest eigenvalue there %s)   (%.0fs)" % (L, lat, N, xs_, ns(ends[0] / mp.sqrt(x), 8), ns(ends[1] / mp.sqrt(x), 8),
+                      ns(cs / mp.sqrt(x), 7), ns(best, 4), time.time() - t0), flush=True)
+    print("  [foothold Theorem B(ii): L = 1/2: 1.999585 < e^y < 2.008058 and 0.488558 <= m <= 0.510367 ; L = 27/50: 1.999917 < e^y < 2.001069 and 0.489943 <= m <= 0.492420]")

@@ -1,0 +1,20 @@
+M=120  c = log2/sqrt2 = 0.49013  c_inf = 5.37218
+delta=0.010 L=0.3516 | Wbar(delta)=3.779 theta=0.0931 | P1 spectrum [-0.868, 0.868] | Q_0 low even 0.00151 odd +0.05920 (2nd odd 0.9155) | zeta low even 1.444e-03 odd 6.362e-02 | crude Q_0 - c 1_strips: even +0.00144 odd +0.05308
+      admissible weight of an atom at log 2: even block [-7.3731, 2.5636], odd block [-2.0804, 7.4200] => [-2.08037, 2.56360] ; (c_+ - c)/c = 4.230e+00, (c - c_-)/c = 5.245e+00
+      one-vector tests: odd ground state of Q_0: <psi,P1 psi> = -0.01043, strip mass 0.0106 => weight >= -5.67727 ; even ground state: <psi,P1 psi> = +0.00011, strip mass 0.0001 => weight <= 13.22275
+delta=0.030 L=0.3616 | Wbar(delta)=3.224 theta=0.1044 | P1 spectrum [-0.997, 0.997] | Q_0 low even 0.00140 odd +0.02983 (2nd odd 0.8874) | zeta low even 1.125e-03 odd 4.751e-02 | crude Q_0 - c 1_strips: even +0.00103 odd -0.00106
+      admissible weight of an atom at log 2: even block [-2.9447, 1.1638], odd block [-0.4930, 3.2305] => [-0.49298, 1.16381] ; (c_+ - c)/c = 1.374e+00, (c - c_-)/c = 2.006e+00
+      one-vector tests: odd ground state of Q_0: <psi,P1 psi> = -0.04548, strip mass 0.0478 => weight >= -0.65575 ; even ground state: <psi,P1 psi> = +0.00039, strip mass 0.0006 => weight <= 3.60119
+delta=0.100 L=0.3966 | Wbar(delta)=2.605 theta=0.1221 | P1 spectrum [-0.998, 0.998] | Q_0 low even 0.00117 odd -0.06782 (2nd odd 0.7944) | zeta low even 5.595e-04 odd 1.747e-02 | crude Q_0 - c 1_strips: even -0.00314 odd -0.24394
+      admissible weight of an atom at log 2: even block [-0.4591, 0.5682], odd block [0.3560, 1.7444] => [0.35605, 0.56820] ; (c_+ - c)/c = 1.593e-01, (c - c_-)/c = 2.736e-01
+      one-vector tests: odd ground state of Q_0: <psi,P1 psi> = -0.24404, strip mass 0.2637 => weight >= 0.27790 ; even ground state: <psi,P1 psi> = -0.00115, strip mass 0.0052 => weight <= -1.01802
+M=480  c = log2/sqrt2 = 0.49013  c_inf = 5.37218
+delta=0.010 L=0.3516 | Wbar(delta)=3.779 theta=0.0931 | P1 spectrum [-0.989, 0.989] | Q_0 low even 0.00122 odd +0.05825 (2nd odd 0.9122) | zeta low even 1.158e-03 odd 6.251e-02 | crude Q_0 - c 1_strips: even +0.00115 odd +0.05209
+      admissible weight of an atom at log 2: even block [-4.4949, 2.3135], odd block [-1.9579, 4.5272] => [-1.95793, 2.31349] ; (c_+ - c)/c = 3.720e+00, (c - c_-)/c = 4.995e+00
+      one-vector tests: odd ground state of Q_0: <psi,P1 psi> = -0.01018, strip mass 0.0105 => weight >= -5.72263 ; even ground state: <psi,P1 psi> = +0.00010, strip mass 0.0001 => weight <= 11.67408
+delta=0.030 L=0.3616 | Wbar(delta)=3.224 theta=0.1044 | P1 spectrum [-0.999, 0.999] | Q_0 low even 0.00110 odd +0.02888 (2nd odd 0.8840) | zeta low even 8.289e-04 odd 4.654e-02 | crude Q_0 - c 1_strips: even +0.00073 odd -0.00223
+      admissible weight of an atom at log 2: even block [-2.7802, 1.0663], odd block [-0.4795, 3.1083] => [-0.47948, 1.06631] ; (c_+ - c)/c = 1.176e+00, (c - c_-)/c = 1.978e+00
+      one-vector tests: odd ground state of Q_0: <psi,P1 psi> = -0.04553, strip mass 0.0481 => weight >= -0.63420 ; even ground state: <psi,P1 psi> = +0.00038, strip mass 0.0006 => weight <= 2.92539
+delta=0.100 L=0.3966 | Wbar(delta)=2.605 theta=0.1221 | P1 spectrum [-1.000, 1.000] | Q_0 low even 0.00080 odd -0.06877 (2nd odd 0.7910) | zeta low even 2.365e-04 odd 1.648e-02 | crude Q_0 - c 1_strips: even -0.00349 odd -0.24544
+      admissible weight of an atom at log 2: even block [-0.3503, 0.5289], odd block [0.3627, 1.7164] => [0.36274, 0.52894] ; (c_+ - c)/c = 7.918e-02, (c - c_-)/c = 2.599e-01
+      one-vector tests: odd ground state of Q_0: <psi,P1 psi> = -0.24427, strip mass 0.2640 => weight >= 0.28153 ; even ground state: <psi,P1 psi> = -0.00121, strip mass 0.0051 => weight <= -0.65600

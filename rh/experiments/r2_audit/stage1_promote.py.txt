@@ -203,7 +203,7 @@ P("beta", "cubic", 7, {
  idea #10 ('no certificate on the smallest discretisations, or a certificate that also exists for a Beurling system:
  kill the mechanism') and idea #11 ('curvature constant <= 0: the tool is dead'). Outcome: the constant is positive
  but 0.48 to 0.65 where 1 is needed, exactly 1/2 + 1/m on the mean-field model, and the same for the control to
- 0.004. The identity stands as a proved lemma; as a certificate the canonical cubic is dead. Unparks only with a
+ within 0.005. The identity stands as a proved lemma; as a certificate the canonical cubic is dead. Unparks only with a
  rule for the coefficients of a lossless cubic that does not use the spectrum of the window form (THEORY T62); the
  measurable form of that wall is @dstar@.""",
  "novelty": """SEARCHED 2026-11-10. Seat: 2 web queries (Bakry-Emery with trickle-down / Garland / Lorentzian / cubic;
@@ -238,8 +238,7 @@ P("dstar", "cubic", 10, {
  zeta's table on the window of half-width 1 cut into 12 boxes, rung 1 fails (it misses by 0.014) and rung 2 works,
  with a safety margin of 0.00046; with 20 boxes, where the box table has less room, the rung-2 margin drops to
  0.00026. Random tables behave the same way: rung 1 works for those with a lot of room and fails for those with
- little. RH is true with no room to spare (on this window the true room is about 2 parts in 100,000,000,000,000,
- 000,000,000). So if the conjecture is right, no fixed rung can ever certify it, and this whole family of
+ little. RH is true with no room to spare (on this window the true room is about 0.00000000000000000000002). So if the conjecture is right, no fixed rung can ever certify it, and this whole family of
  formula-built certificates is closed for good; if instead rung 2 keeps working as the room closes, there is one
  formula to look for. Either answer is about the method, not about the zeros.""",
  "wall": """FAILS RULE: it does not get past a wall, it measures one. The wall is the one that parked idea #10 and

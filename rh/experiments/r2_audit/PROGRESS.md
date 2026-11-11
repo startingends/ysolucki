@@ -28,3 +28,69 @@ Scripts: audit_lib.py.txt, stage1_promote.py.txt, stage2_merge.py.txt, stage3_sk
 files .done_stage*). Tool calls are logged below as they happen.
 
 ## Tool-call log
+- 00:49:51 P R2-parity/#1 -> main #22 (status alive)
+- 00:49:52 P R2-judge/#12 -> main #23 (status alive)
+- 00:49:52 P R2-cubic/#7 -> main #24 (status parked)
+- 00:49:52 P R2-cubic/#10 -> main #25 (status open)
+- 00:49:53 P R2-free/#1 -> main #26 (status open)
+- 00:52:03 M R2-parity/#5 -> note on main #8
+- 00:52:03 M R2-parity-ref/#4 -> note on main #8
+- 00:52:03 M R2-parity/#2 -> note on main #9
+- 00:52:03 M R2-parity/#3 -> note on main #9
+- 00:52:03 M R2-parity/#4 -> note on main #9
+- 00:52:03 M R2-parity/#6 -> note on main #9
+- 00:52:03 M R2-parity-ref/#1 -> note on main #9
+- 00:52:03 M R2-parity-ref/#2 -> note on main #9
+- 00:52:03 M R2-judge/#1 -> note on main #9
+- 00:52:03 M R2-judge/#2 -> note on main #9
+- 00:52:03 M R2-parity/#8 -> note on main #9
+- 00:52:03 M R2-parity-ref/#3 -> note on main #9
+- 00:52:03 M R2-cubic/#2 -> note on main #10
+- 00:52:03 M R2-cubic/#3 -> note on main #10
+- 00:52:03 M R2-cubic/#4 -> note on main #10
+- 00:52:03 M R2-cubic/#6 -> note on main #10
+- 00:52:03 M R2-cubic/#8 -> note on main #10
+- 00:52:04 M R2-cubic-ref/#1 -> note on main #10
+- 00:52:04 M R2-cubic-ref/#2 -> note on main #10
+- 00:52:04 M R2-cubic-ref/#3 -> note on main #10
+- 00:52:04 M R2-judge/#10 -> note on main #10
+- 00:52:04 M R2-curv/#2 -> note on main #11
+- 00:52:04 M R2-curv/#3 -> note on main #11
+- 00:52:04 M R2-curv/#5 -> note on main #11
+- 00:52:04 M R2-curv-ref/#2 -> note on main #11
+- 00:52:04 M R2-curv-ref/#5 -> note on main #11
+- 00:52:04 M R2-curv-ref/#6 -> note on main #11
+- 00:52:04 M R2-curv-ref/#9 -> note on main #11
+- 00:52:04 M R2-judge/#4 -> note on main #11
+- 00:52:04 M R2-judge/#7 -> note on main #11
+- 00:52:04 M R2-curv/#6 -> note on main #11
+- 00:52:04 M R2-curv/#7 -> note on main #11
+- 00:52:04 M R2-curv/#8 -> note on main #11
+- 00:52:04 M R2-curv-ref/#3 -> note on main #11
+- 00:52:04 M R2-curv-ref/#8 -> note on main #11
+- 00:52:04 M R2-curv-ref/#10 -> note on main #11
+- 00:52:04 M R2-curv/#4 -> note on main #21
+- 00:52:04 M R2-curv-ref/#4 -> note on main #21
+- 00:52:04 M R2-judge/#13 -> note on main #17
+- 00:52:04 M R2-cubic-ref/#5 -> note on main #2
+- 00:52:04 M R2-free/#3 -> note on main #1
+- 00:52:04 M R2-parity-ref/#5 -> note on main #22
+- 00:52:04 M R2-judge/#6 -> note on main #22
+- 00:52:04 M R2-judge/#8 -> note on main #22
+- 00:52:04 M R2-judge/#9 -> note on main #22
+- 00:52:05 M R2-cubic/#1 -> note on main #23
+- 00:52:05 M R2-curv/#1 -> note on main #23
+- 00:52:05 M R2-curv-ref/#1 -> note on main #23
+- 00:52:05 M R2-curv-ref/#7 -> note on main #23
+- 00:52:05 M R2-parity/#7 -> note on main #23
+- 00:52:05 M R2-cubic/#5 -> note on main #24
+- 00:52:05 M R2-cubic/#9 -> note on main #24
+- 00:52:05 M R2-cubic/#11 -> note on main #24
+- 00:52:05 M R2-cubic-ref/#4 -> note on main #24
+- 00:52:05 M R2-judge/#5 -> note on main #24
+- 00:52:05 M R2-free/#2 -> note on main #26
+- 00:52:05 note on main #12 (pointer to #26; no local entry closed)
+- 00:52:16 S R2-cubic/#12: a proposal that is not precise enough to compute (the owner's second test fails): 'the cub
+- 00:52:16 S R2-free/#4: killed by the seat before any computation, on a heuristic only: Hadamard infinite divisibi
+- 00:52:16 S R2-judge/#3: a process recommendation to the lead, not a mathematical idea: typed clock stamps ran ahea
+- 00:52:16 S R2-judge/#11: a process recommendation to the lead, not a mathematical idea: commit 1e3f60a is the only

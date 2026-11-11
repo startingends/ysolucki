@@ -1,0 +1,40 @@
+"""S1-cubic turn 3: the critical even vector f = N_e^{-1} c (c = folded cosh functional), t_0 = 1/(c^T N_e^{-1} c), and t* by bisection.
+usage: t3b.py.txt"""
+import sys, math, importlib.util, importlib.machinery, numpy as np
+def load(name, P):
+    spec = importlib.util.spec_from_file_location(name, P, loader=importlib.machinery.SourceFileLoader(name, P))
+    mm = importlib.util.module_from_spec(spec); spec.loader.exec_module(mm); return mm
+box = load("box", "/home/user/ysolucki/rh/experiments/s1_seminar/cubic/box.py.txt")
+def nsign(v, tol=1e-9):
+    v = v / np.abs(v).max(); s = [x for x in v if abs(x) > tol]
+    return sum(1 for a, b in zip(s, s[1:]) if a * b < 0)
+def run(kind, L, n, verbose=False):
+    if kind == "zeta": cn = box.lam(math.exp(2 * L))
+    elif kind == "noprimes": cn = {}
+    elif kind == "beurling": cn = box.beurling(math.exp(2 * L))
+    elif kind == "oneprime": cn = {x: c for x, c in box.lam(math.exp(2 * L)).items() if abs(math.log2(x) - round(math.log2(x))) < 1e-12}
+    elif kind == "four2": cn = {x: (2 * c if abs(x - 4) < 1e-9 else c) for x, c in box.lam(math.exp(2 * L)).items()}
+    elif kind == "four101": cn = {x: (1.01 * c if abs(x - 4) < 1e-9 else c) for x, c in box.lam(math.exp(2 * L)).items()}
+    N, p, q = box.boxN(L, n, cn); h2 = n // 2; I = np.eye(n)
+    Ue = np.array([(I[i] + I[n - 1 - i]) / math.sqrt(2) for i in range(h2, n)]).T
+    Ne = Ue.T @ N @ Ue; ce = Ue.T @ (p + q) / math.sqrt(2); B = -Ne
+    f = np.linalg.solve(Ne, ce); t0 = 1 / (ce @ f); f = f * np.sign(f.sum())
+    xc = np.array([(i + 0.5) * 2 * L / n for i in range(h2)]); r = f / np.cosh(xc / 2)
+    gs = lambda t: np.linalg.eigh(B + t * np.outer(ce, ce))[1][:, 0]
+    lo, hi = 0.0, None
+    for t in np.r_[np.linspace(0.05, 3, 60), np.linspace(3.2, 60, 60)]:
+        if nsign(gs(t)) > 0: hi = t; break
+        lo = t
+    if hi is not None:
+        for _ in range(30):
+            mid = (lo + hi) / 2
+            if nsign(gs(mid)) > 0: hi = mid
+            else: lo = mid
+        v = gs(hi); v = v * np.sign(v.sum()); where = int(np.argmin(v))
+    npos = int((np.linalg.eigvalsh(Ne) > 1e-10).sum()); mu = np.linalg.eigvalsh(np.outer(ce, ce) - Ne)[0]
+    print("%-8s L=%.2f n=%3d: #pos(N_e)=%d lowest eig even block %.3e ; t_0 = %.6f ; t* = %s (first negative entry at folded box %s of %d) ; f = N_e^-1 c: sign changes %d, min/max %.3e ; f/cosh: min %.4f max %.4f (all boxes), max/min without the edge box %.3f" % (
+        kind, L, n, npos, mu, t0, "%.6f" % hi if hi else ">60", where if hi else "-", h2, nsign(f), f.min() / f.max(), r.min(), r.max(), r[:-1].max() / r[:-1].min() if r[:-1].min() > 0 else float('nan')), flush=True)
+    if verbose: print("      f/cosh by box: " + " ".join("%.3f" % t for t in r) + " ; e^-L = %.4f" % math.exp(-L))
+for n in (24, 48, 96): run("zeta", 1.0, n, verbose=(n == 48))
+for kind, L in (("zeta", 0.3), ("zeta", 0.5), ("zeta", 0.75), ("oneprime", 0.54), ("noprimes", 0.36), ("noprimes", 0.45), ("four2", 0.75), ("four101", 0.75), ("beurling", 0.45), ("beurling", 0.5), ("beurling", 1.0)):
+    run(kind, L, 48)

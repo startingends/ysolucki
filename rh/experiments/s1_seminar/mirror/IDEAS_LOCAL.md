@@ -51,3 +51,19 @@ Nothing here has been reviewed. An auditor copies the important entries into `do
 - claim: PROVED: for 1 - a p^-s + p^-2s, [c(p^(i+j))] >= 0 iff |a| >= 2; roots of modulus 1 iff |a| <= 2. The tilt family is analytic in t = d^2 and the lowest window eigenvalue is linear in t through 0 with negative slope (COMPUTED, two implementations).
 - kill line: a control and a classification, not a route
 - log:
+
+## #5 · First-prime lemma: the odd background is a Perron operator on every window, so the first atom has a forced sign and a minimum weight
+- status: open
+- source: S1-mirror turn 3, answer to the moderator's B153; grows from the lead's B140, S1-parity B58/B119/B169, S1-cubic B52, K-atlas B168
+- date: 2026-11-11
+- tags: rule6,B10
+- plain english: Without any primes the 'odd half' of the energy goes negative once the window is wider than about 0.75 in total, and the function on which it is most negative is positive on the right half. A prime sitting between L and 2L acts on such a function only through its mirror image, with a definite sign. So whatever repairs the odd half must carry positive weight, at least a computable amount. Example: on the window L = 0.40 a single prime at 2 needs weight at least 0.407 (its true weight is 0.693); a prime at 2.1 would need at least 1.10 but a 'prime' at 2.1 only has weight log 2.1 = 0.742, so the system with 2 moved to 2.1 fails there.
+- wall: Not an attack on a wall: a necessary condition on one block. It is a proved statement on windows that contain a prime (journal J4: none recorded).
+- new input: The Perron ground state of the odd background as a universal positive test function for every mirror atom.
+- claim: PROVED (PROOF_first_prime.md): for every L the odd block of pole + Gamma has a simple lowest eigenvalue -eps(L) with positive folded eigenfunction psi; if eps > 0, atoms in (0, 2L) making the odd block >= 0 satisfy sum m_i x_i^(-1/2) 2(h_i - tau_i) >= eps. COMPUTED: bounds 0.407 / 0.552 for the atom at 2 at L = 0.40 / 0.50; atom at 2.1 needs 1.71 / 1.10 / 0.877 at L = 0.38 / 0.40 / 0.42.
+- prediction: R1-R4 in NOTES.md 00:48 UTC: R2, R3 hit; R1 half; R4 miss.
+- smallest: The lemma itself. Next: an upper bound on the weight from the even block, to trap position and weight of the first atom by two test functions.
+- first test: firstprime.py.txt; certify.py.txt
+- kill line: If an independent recomputation gives a bound below 0.742 for the atom at 2.1 at L = 0.40, the Beurling exclusion is wrong.
+- novelty: Checked rh/library digests 2106.01715, connes-consani-weil-positivity-archimedean, suzuki-2606.09096, yoshida-1992 (grep): numerics only there. No web search. Overlaps on the board with B168 and B169.
+- log:

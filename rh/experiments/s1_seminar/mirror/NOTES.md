@@ -186,3 +186,34 @@ R1. Lower bound from the background ground state for the atom at 2: m_lb / log 2
 R2. For an atom at 2.1 at L = 0.40: m_lb > log 2.1 = 0.742 (between 1.0 and 5): Beurling's first prime excluded by the lemma alone.
 R3. Background odd ground state: 0 sign changes on (0, L] for every L in 0.38 .. 1.0.
 R4. Exact lower threshold of the weight at 2 at L = 0.5 (odd block): between 0.6924 and 0.6931 (log 2 = 0.693147).
+
+### RESULTS of turn 3 (2026-11-11 00:48 to 01:00 UTC). New files: PROOF_first_prime.md, firstprime.py.txt (firstprime.log),
+### certify.py.txt (certify.log).
+Predictions against results:
+- R1: lemma bound for the atom at 2: 0.407 at L = 0.40 (0.59 log 2) HIT; 0.552 at L = 0.50 (0.796 log 2) MISS by a hair (range 0.80-0.98).
+- R2: atom at 2.1 at L = 0.40 needs m >= 1.097 > log 2.1 = 0.742: HIT. Also 1.71 at L = 0.38, 0.877 at 0.42; 0.740 at 0.45 (not excluded there).
+- R3: background odd ground state: 0 sign changes for L = 0.30 .. 1.00: HIT. Background EVEN ground state: one sign change from 0.38.
+- R4: exact odd threshold of the weight at 2 at L = 0.50: 0.69221 MISS (I said >= 0.6924). Both blocks: [0.6922, 0.6932] at L = 0.50,
+  [0.69304, 0.69315] at L = 0.54.
+Proved: Lemma 1 (fold; Beurling-Deny for every L), Lemma 2 (positive simple ground state; given Reed-Simon XIII.43/44, XIII.50 and
+Connes-Consani Prop. 2.1, all cited from memory), Lemma 3 (first-prime inequality, sign and lower bound, monotone statement for
+weights <= 0, an atom below e^(2 L_1)). Ball arithmetic: Rayleigh quotient -0.0012787 +- 1e-15 at L = 0.375 (truncation of the
+m-sum in the builder not enclosed).
+OVERLAP (posted B179): Lemmas 1-2 = S1-parity's B169 (same proof, posted at the same time); Lemma 3 with one vector = K-atlas's
+B168(b) (polynomial witness, bound 0.295 at L = 0.40). Mine adds: Perron ground state as test vector, all windows, Beurling row.
+Answered: B153 (B174), B158 (B175), B147 (B178). Nominated to FORMAL (B176): F-a, F-b, F-c (finite-dimensional forms).
+B147 content: mirror positive at every prime + completely monotone Gamma kernel = complementary series or boundary at every
+place, for the family F_d (unitarity range from memory); Rankin-Selberg square = Schur square of the local power sums; on the
+tilt family the j-th tensor power has kernel W (2cosh du)^j, so the window detects d from d*/sqrt(j) (first order only).
+From the specialists: Corollary 3 = Hermite-Jacobi (1856) (SP-reflection B137); T +- H splitting = Basor-Ehrhardt math/0502039
+(SP-operator B123); R = past/future operator for the screw function of zeta; atoms entering at t = (1/2) log n is in Suzuki
+1606.05726 Thm 2.1-2.2 with coefficients of zeta(s-w)/zeta(s+w), i.e. F_d as a RATIO; lower half of Ramanujan = reversed shifted
+Hankel matrix [c(p^(i+j+2)) - c(p^(i+j))] >= 0 (SP-reflection B120); zeta's chi_p is an idempotent semicharacter.
+
+Open threads (for turn 4):
+- Asked K-atlas / S1-parity to recompute eps(0.40)/<psi, U psi> for the atom at 2.1 (mine 1.0966).
+- Offered K-atlas: lowest eigenvalue of W (2cosh du)^j, j = 2, 4, 8, at L = 0.75.
+- Not done: comb profile (B54); doubling for L > 0.693; upper bound on the weight from the EVEN block as a proved statement
+  (the even block is not Perron; any even test function gives an upper bound, e.g. at (L, x) = (0.38, 1.9): m <= 0.26 < log 1.9).
+- Possible sharpening of Lemma 3: optimise the test function over the positive cone (the exact odd threshold is 0.529 at L = 0.40
+  against the first-order 0.407); and a two-sided 'position-weight' region for the first atom from one odd and one even test function.

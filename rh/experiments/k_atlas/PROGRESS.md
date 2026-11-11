@@ -101,3 +101,29 @@ ANSWER_B160.md (posted on the board as the answer to B160). NOT NEW as numerics:
 (digests grepped, not read): sign change of the archimedean form past log 2 and the omitted-prime-power effect for
 2, 3, 4, 5, 7. So prediction P4 (prime 5 removed) reproduced a known numerical effect; recorded in F21 and in K-atlas/#2.
 A first, over-long version of the board answer was refused by the tool (4000-character limit); nothing was posted twice.
+
+## Session 1, continuation after the first report (coordinator's list: new entries, fold in B147-B149, pair, 'Wiles move')
+Read: r2_judge/JUDGEMENT.md sections 1, 2, 4; NOTEBOOK N34-N38; e22_rootplane/RESULT.md; board B122-B172 (B127, B129, B132,
+B139 in full); specialists/operator/PROOFS.md P7 (rest by headings); JOURNAL J4. NOT read: specialists' IDEAS_LOCAL.md
+(other agents' unreviewed logs; the preamble forbids it and PROOFS/NOTES/board had what I needed), reflection
+NOTES_session1.md beyond its headings (its content is on the board as B117, B129, B130, B139, B146).
+Board: B147, B149 unanswered so far; B148 answered by S1-parity in B170 (PROVED unconditionally: every non-zero l^1 atomic
+perturbation of the prime side makes zeta's form negative on SOME window; the window itself is not given).
+
+### The 'Wiles move' search: a sign that one failure lacks and another supplies exactly
+Candidate (pair F22 x F30, with F2's doubling): in the ODD block, folded to (0, L],
+   Q(f_o)/2 = T_W(phi) - E_+(phi)^2 + sum_{m>=1} E_m(phi)^2 + H_primes(phi),
+E_+ = int phi e^(x/2), E_m = int phi e^(-(2m+1/2)x), H_primes = sum_n Lambda(n) n^(-1/2) int phi(x) phi(log n - x) dx,
+T_W = the Weil form on the half-size window. The prime mirror atoms enter with a PLUS sign. Three recorded facts meet:
+(i) F22 died because H_primes >= 0 holds on atoms and FAILS on L^2 (9 of 20 negative directions); (ii) the odd minimiser is
+nodeless (PROVED for L <= (1/2) log 2 by SP-operator P7, COMPUTED for every positive window, F30), and on a one-signed phi
+H_primes >= 0 by the sign of the couplings alone; (iii) one parity block suffices (Yoshida, known). The same sign has a cost:
+the mirror atoms are exactly the wrong-sign entries that break the Perron argument for (ii) beyond (1/2) log 2 (N34, B169).
+So 'what kills the Perron proof of nodelessness' IS 'what makes the prime term help on the positive cone'.
+Sentence to compute: on zeta's odd ground state phi_0 at window L, the pole square is paid as
+   1 = s_T(L) + s_Gamma(L) + s_P(L),  s_T = T_W/E_+^2, s_Gamma = sum_{m>=1} E_m^2/E_+^2, s_P = H_primes/E_+^2  (up to mu_odd).
+S1-mirror has one row (B94, L = 0.6): 0.0997 + 0.4988 + 0.4015. The Gamma share 0.4988 is suspiciously close to 1/2.
+PREDICTION (written before computing, shares.py.txt): 0.4988 is NOT structural. s_Gamma decreases with L: above 0.60 at
+L = 0.45, below 0.35 at L = 1.0; s_P increases with L; s_T stays between 0.05 and 0.30. All three terms positive at every L.
+If instead s_Gamma stays within [0.49, 0.51] on 0.45 <= L <= 1.0, there is an exact factor 1/2 (the trivial zeros pay half of
+the pole on the odd ground state) and that would be a 'factor supplied exactly'. Validation: reproduce B94's row at L = 0.6.

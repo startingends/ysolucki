@@ -119,3 +119,23 @@ What others established this turn that I should not re-derive: B90/B91 lambda(d)
 Open for next turn: answers to B100, B101, B102, my question to S1-cubic; if asked: B3 decomposition relative to the half-window block (offered in B97(3));
  two-exponential smallest case of B101(3) (I can compute it myself); prove Op >= 0 (still open); limit of Hankel min eigenvalue.
 Rule since restart: numerics as `python3 tools/memcap.py 1 python3 <script>`, small arrays, one job at a time.
+
+## Turn 3 (2026-11-11). Board read B108-B165. To answer: B155 (edge strips, first-prime window), B149 (K-atlas), B158 (one statement, five-part line).
+Read: judge JUDGEMENT.md 1.2, 2.3-2.6 (all four disputes decided for the checker; I had conceded all in B28; nothing left to dispute), journal J4, library digest 2608.24827 (Zhu),
+answers B126 (SP-operator: nu = norm of differentiation in H(E_L), Baranov/Dyakonov from memory; no kernel-side bound), B129 (SP-reflection: Neeb-Olafsson reflection positive <=> int e^{-lambda|x|} dnu,
+lambda >= 0; JNO Thm 5.8 window bridge needs + K, Weil kernel has - K), B136 (S1-parity: G1 confirmed to 8 digits on the zero side; d*(0.75) = 7.9269e-6, d*(1) = 4.873e-13; nu*mu = slope c(L), falls slowly),
+B114 (S1-cubic withdrew 0.05), B143 (FORMAL: F1 step, folding identity, Theorem C machine-checked; B3 and F2 step not yet).
+
+### Derived by hand BEFORE computing (first-prime window, (1/2) log 2 < L < (1/2) log 3, l = log 2, delta = 2L - l, c = log2/sqrt2 = 0.49013, strips S+ = [l-L, L], S- = -S+)
+ kappa_L(x) = Wbar(L-x) + Wbar(L+x), Wbar(t) = int_t^inf w = artanh(e^{-t/2}) + arctan(e^{-t/2}) ~ (1/2) log(4/t) + pi/4.
+ primes(f) = 2c int_{S+} f(x) f(x-l) dx = <f, P f>, P = c (swap S+ <-> S- by translation): spectrum {+c, -c, 0}. Folded: primes(f_even/odd) = +-2c <phi, R phi>_{S+}, R = reflection about l/2.
+ |primes(f)| <= c (mass of f^2 on strips) <= theta int kappa f^2 <= theta E_w(f), theta = c/(Wbar(delta) + Wbar(2L)).
+ Crude closing condition: Q_0 >= mu_0 and mu_0 (Wbar(delta) - c) >= c c_inf  (absurdly small delta when mu_0 ~ 1e-3).
+
+### PREDICTIONS for t3_edge.py.txt (written 00:51:18 UTC)
+ T3-P1 crude form Q_0 - c 1_strips: lowest eigenvalue NEGATIVE at every delta >= 0.005; at delta = 0.005 the even block binds with value in (-0.05, -1e-4).
+ T3-P2 zeta (atom 2 only) both blocks positive at every delta in {0.005,..,0.4}; odd block of Q_0 changes sign between delta = 0.04 and 0.06 (L = 0.367..0.377).
+ T3-P3 admissible weight interval [c_-, c_+] of an atom at log 2: delta = 0.005: c_+ in (0.6, 4), c_- in (-4, -0.6); delta = 0.1: c_- in (0.05, 0.45), c_+ in (0.5, 1.0);
+       delta = 0.4: (c_+ - c_-)/c < 0.02.
+ T3-P4 one-vector necessary bound c_need = |mu_0|/(2 rho_0) (odd ground state of Q_0) within 20% of the exact c_- at delta = 0.1 and 0.2.
+ T3-P5 the Liouville weight -c leaves the admissible interval between delta = 0.005 and 0.02.

@@ -1,0 +1,8 @@
+L = 0.38, N = 20: float lambda_min = -0.01524944 ; Rayleigh quotient of the rounded trial vector = [-0.0152494438728 +/- 8.10e-15] ; certainly negative: True ; max radius of a matrix entry 2.5e-57
+     trial vector (sine coefficients k = 1..8, x 1e6): [962399, -205477, 114385, -78304, 59007, -47042, 38930, -33085]
+L = 0.375, N = 20: float lambda_min = -0.00127872 ; Rayleigh quotient of the rounded trial vector = [-0.00127871769950 +/- 1.28e-15] ; certainly negative: True ; max radius of a matrix entry 1.9e-57
+     trial vector (sine coefficients k = 1..8, x 1e6): [962476, -205271, 114268, -78225, 58948, -46996, 38891, -33052]
+L = 0.40, N = 20: float lambda_min = -0.06963501 ; Rayleigh quotient of the rounded trial vector = [-0.0696350134173 +/- 2.05e-14] ; certainly negative: True ; max radius of a matrix entry 2.3e-57
+     trial vector (sine coefficients k = 1..8, x 1e6): [962071, -206354, 114878, -78639, 59257, -47241, 39093, -33223]
+L = 0.50, N = 20: float lambda_min = -0.31331639 ; Rayleigh quotient of the rounded trial vector = [-0.313316394280 +/- 2.75e-13] ; certainly negative: True ; max radius of a matrix entry 1.6e-57
+     trial vector (sine coefficients k = 1..8, x 1e6): [959903, -212033, 118095, -80826, 60894, -48541, 40166, -34133]

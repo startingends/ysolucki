@@ -146,3 +146,17 @@ Q3. Green kernel: the inverse of each folded block of Q is entrywise >= 0 for ze
     L = 0.36. (If so 'positive Green kernel' is the stronger statement behind B119.) For the even block I am less sure (pole has the wrong sign).
 Q4. Sturm pattern: the k-th eigenvector of Q on the whole window (zeta, L = 1) has exactly k sign changes for k = 0..5; NOT for all 48
     (first violation at some k >= 6).
+
+### Turn 3, first results (t3.log, 48 boxes) and second batch of predictions (00:50:37 UTC)
+Q1 HIT. Q2: 't* >= t_true exactly on positive rows' HIT on 8 rows (zeta 0.5/0.75/1: 1.02; one-prime 0.54: 1.02; no primes 0.36: 1.06;
+four2 0.75: 0.98; Beurling 0.5: 0.96; no primes 0.45: 0.86) but my size guess [1.05, 4] MISS: t* is within one grid step (2%) of the true strength.
+Q3: Green kernel >= 0: even block HIT on all positive rows; odd block HIT at L = 0.5, 1, one-prime 0.54, no primes 0.36 but MISS at
+zeta L = 0.75 (50 of 576 entries negative, min -1.03) although the odd ground state is nodeless there. Q4: Sturm HIT for k < 4..7 on zeta rows,
+all 48 for no primes at 0.36; fails from k = 0 on failed rows.
+Derived now: ground state of B + t c c^T is (N_e + mu(t))^{-1} c; the block is >= 0 iff t >= t_0 := 1/(c^T N_e^{-1} c); at t = t_0 the null
+vector is f := N_e^{-1} c. So 'nodeless at the moment the block becomes positive' <=> S: N_e^{-1} c has one sign (pole-strength-free).
+PNT heuristic: N applied to cosh(y/2) 1_window is about e^L cosh(x/2) (psi(y) ~ y), so f ~ e^{-L} cosh(x/2) > 0 for zeta.
+Predictions: Q5. t*/t_true for zeta L = 1 at 24 and 96 boxes stays in (1, 1.1], first sign change at the EDGE box, and t* - 1 shrinks with n.
+Q6. f/cosh(x/2) (f = N_e^{-1} c) varies by less than a factor 5 over the boxes other than the edge box, zeta L = 1, 48 boxes.
+Q7. S (no sign change of N_e^{-1} c) holds on zeta L = 0.3, 0.5, 0.75, 1.0 and one-prime 0.54, fails on four2 0.75 (implied by Q2 logic),
+and for Beurling at L = 0.45 (its even block there? unknown) I make no prediction.

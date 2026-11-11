@@ -256,3 +256,62 @@ DIFFERENCES: real forms (not hermitian); kappa >= k witnessed by a finite-dimens
 A scratch file (outside the repo) stating `even_gt` WITHOUT the +1 was rejected by Lean (type mismatch), and
 `#print axioms RHFormal.T32.even_gt` gives [propext, Classical.choice, Quot.sound] (the three standard axioms of
 Lean/mathlib; no `sorryAx`, no extra axiom).
+
+### FILE 15 DONE: `RHFormal/B2_BochnerPathForm.lean`  (Theorem B (B2) of PROOF_bochner_parity.md; part of T64)
+INFORMAL: for any chain with constant total rate,
+  Gamma_2(f)(x) = (1/2)(Lf(x))^2 + (1/2) sum_{y,z} q_xy q_yz [(f_z - f_y)^2 - (1/2)(f_z - f_x)^2].
+LEAN (namespace RHFormal.B2; W a Finset of sites in any type G, q : G → G → ℝ any real rates;
+  `genOn W q f x = ∑ y ∈ W, q x y * (f y - f x)`, `carreOn W q f g x = (1/2) * ∑ y ∈ W, q x y * ((f y - f x) * (g y - g x))`,
+  `gamma2On W q f x = (1/2) * genOn W q (carreOn W q f f) x - carreOn W q f (genOn W q f) x`):
+  `path_form`: (hR : ∀ x ∈ W, ∑ y ∈ W, q x y = R) → x ∈ W → gamma2On W q f x = (1/2) * (genOn W q f x)^2
+     + (1/2) * ∑ y ∈ W, ∑ z ∈ W, q x y * q y z * ((f z - f y)^2 - (1/2) * (f z - f x)^2).
+DIFFERENCES: none. No sign or symmetry of q is used; the total rate includes the self-jump q x x. GAP: none.
+
+### FILE 16 DONE: `RHFormal/B3_ThreeWaySplit.lean`  (Theorem B (B3); S1-curv's FIRST nomination, board B98; part of T64)
+INFORMAL (B98): W = {0..M-1}; k even, k(0) = 0; u > 0 on W; q(x,y) = k(y-x)u(y)/u(x); sum_y q(x,y) = R for all x. Then
+  Gamma_2(f)(x) = (1/4) sum_{x+a,x+b,x+a+b in W} k(a)k(b) rho (f(x+a+b)-f(x+a)-f(x+b)+f(x))^2
+   + (1/2) sum_{x+a,x+b in W} k(a)k(b) [u(x+a)u(x+b)/u(x)^2 - rho 1(x+a+b in W)] (f(x+a)-f(x))(f(x+b)-f(x))
+   + (1/2) sum_{x+a,x+a+b in W, x+b not in W} k(a)k(b) rho [(f(x+a+b)-f(x+a))^2 - (1/2)(f(x+a+b)-f(x))^2],  rho = u(x+a+b)/u(x).
+LEAN (namespace RHFormal.B3; G any additive commutative group, W A : Finset G with hA : ∀ x ∈ W, ∀ y ∈ W, y - x ∈ A,
+  `rate k u x y = k (y - x) * u y / u x`; `sqTerm`, `hessTerm`, `openTerm` = the three summands with their conditions as `if`):
+  `three_way_split`: (hu : ∀ x ∈ W, u x ≠ 0) → (hR : ∀ x ∈ W, ∑ y ∈ W, rate k u x y = R) → x ∈ W →
+     gamma2On W (rate k u) f x = (1/4) * ∑ a ∈ A, ∑ b ∈ A, sqTerm W k u f x a b
+        + (1/2) * ∑ a ∈ A, ∑ b ∈ A, hessTerm W k u f x a b + (1/2) * ∑ a ∈ A, ∑ b ∈ A, openTerm W k u f x a b.
+  Steps: `sum_shift` (re-indexing by shifts), `gen_shift`, `gen_sq_shift`, `path_shift`, `pathTerm_eq` (closed + open),
+  `closedTerm_symm` (the symmetrisation a <-> b of closed paths).
+DIFFERENCES (all in the direction of generality):
+  - W any finite subset of any abelian group, A any finite set of shifts containing W - W;
+  - u ≠ 0 on W instead of u > 0; evenness of k NOT used; k(0) = 0 NOT used, because the sums include a = 0 and b = 0
+    (with k(0) = 0 those terms vanish and the sums are the informal sums over a, b ≠ 0);
+  - the total rate includes the term y = x.
+RESULT FOR THE SEAT: the three sums are right, INCLUDING the third (open-path) sum the seat says it missed in its
+  first draft. No gap in the written derivation from (B2).
+
+### 00:52 intermediate FULL BUILD (16 files): `Build completed successfully (3157 jobs).`  no error, no `sorry`;
+the only warnings are lake's "imports ... which is designed for use with the module system; consider adding `module`"
+(one per import line, 52 of them; harmless, they concern the new module system and not the proofs).
+
+### FILE 17 DONE: `RHFormal/T33_MarginSign.lean`   *** A FALSE SENTENCE FOUND IN A `checked` ENTRY (T33) ***
+The FORMULAS of T33 / F1 are formal in file 6 (`rankOne_value`: 2 c^T N_e^-1 c - 1 = 1/(t_e - 1);
+`rankOne_value_twin`: 1 - 2 s^T (-N_o)^-1 s = 1/(1 + t_o); `rankOne_nondegenerate`).
+STATEMENT UNDER TEST (THEORY.md T33, last sentence): "In particular, when a Weil block is positive definite the
+  corresponding margin is strictly positive: the sum rules are never exactly saturated on such a window."
+  Same claim in s1_seminar/curv/S1_ADDITIONS.md F1, consequence (a): "On a window where the Weil block is strictly
+  positive both margins are STRICTLY positive resp. in (0,1)".
+WHAT LEAN PROVES:
+  - odd block: TRUE. `odd_margin_mem`: Q >= 0, Q w = s  =>  0 < 1/(1 + t_o) <= 1.
+  - even block: FALSE as worded. `even_margin_pos_iff`: 0 < 1/(t_e - 1) <=> t_e > 1.
+    `even_margin_counterexample`: V = R, Q(x,y) = xy (positive definite), c(x) = x/2, w = 1/2: t_e = 1/2, N_e = -1/2,
+    even margin 2 c^T N_e^-1 c - 1 = -2 < 0.
+    True instead: `even_margin_ne_zero` (the margin is never 0 when t_e != 1) and positivity exactly when t_e > 1,
+    i.e. (by T32 = file 12) exactly when N_e has a positive direction.
+  - This is not only abstract: the numbers recorded under T32 are t_e = 0.198 and 0.842 at L = 0.05 and 0.10, where
+    the even Weil block is positive definite; so for zeta the even margin is NEGATIVE on those windows (-1.2468 and
+    -6.2291 in the seat's own log), contradicting the sentence.
+  - The seat's file contradicts itself here: consequence (b) of the same F1 says "Even margin > 0 iff t_e > 1 iff
+    lambda_1 > 0 (given Q_e > 0). For lambda_1 < 0 (zeta: L <= 0.10) ... 1/(t_e - 1) < 0". So (b) is right, (a) is
+    wrong for the even block, and T33 copied (a).
+CONSEQUENCE: nothing downstream breaks that I can see (T34 (A1) already carries the hypothesis "N_e has at least one
+  positive eigenvalue"). The fix is one clause: in T33 replace "the corresponding margin is strictly positive" by
+  "the odd margin lies in (0, 1]; the even margin is non-zero, and positive iff t_e > 1 (iff N_e has a positive
+  direction)". Posted on the board as a QUESTION to S1-curv (author of F1); to be raised as an objection if it stands.

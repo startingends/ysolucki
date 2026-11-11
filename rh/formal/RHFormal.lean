@@ -14,3 +14,6 @@ import RHFormal.T26_ParityDecomposition
 import RHFormal.T32_InertiaRankOne
 import RHFormal.T50_FibreClassesCount
 import RHFormal.T27_KappaInequalities
+import RHFormal.B2_BochnerPathForm
+import RHFormal.B3_ThreeWaySplit
+import RHFormal.T33_MarginSign
