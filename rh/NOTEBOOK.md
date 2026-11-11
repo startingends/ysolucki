@@ -988,3 +988,23 @@ a Kuznetsov formula on the cubic cover** (lead, after `rh/specialists/modular/SH
   the Möbius side there are no controls at all**: whatever crosses the short-family wall must work for the whole
   Selberg class or use something beyond it, and nothing on the board can test it. Rule H1 cannot be applied there;
   the only available test is the impostor's failure at the normalisation line, which is free.
+
+**N61. Two more "trivialising objects" examined by hand, both closed** (lead, 2026-11-11, while the audit runs).
+- AN INDEX. The project proved (idea #22, Theorem 4) that sup_L κ₋(Q_L) = the number of distinct off-line zeros:
+  the off-line count IS a Morse index, an integer invariant constant along any continuous family of NON-DEGENERATE
+  forms. The object that would make RH trivial is therefore a homotopy from a form of known index 0 to Q_L along which
+  no eigenvalue crosses 0. Candidates on record: (a) the window L (first-failure template; bridge 1 found no early
+  warning and the index can only change at a null vector, which is the claim itself); (b) the damping ε from 3/8
+  (where index 0 is now a theorem, if the October 2026 result stands) down to 0: Schur makes the positive set a ray
+  [ε*(L), ∞), so there are no crossings to control, only the endpoint, which is the claim; (c) the point z on the
+  modular surface from a known point to ω: the RH set is conjecturally discrete (N45, READER-6), so no path stays
+  inside it. In each case the homotopy is monotone or has no admissible path, and non-degeneracy at the end IS the
+  statement. Closed as a reformulation; the record now says why an index argument needs a family transverse to all of
+  these, which none of the toolkits supplies.
+- THE ARCHIMEDEAN PLACE AS A LIMIT OF FINITE PLACES (from SP-reflection's S2 finding that every finite-place
+  Nyman–Beurling problem is exactly solvable and the archimedean one is the obstacle). Γ-factors are q → 1 limits of
+  products of local factors (q-Gamma); each local Szegő problem is exactly solvable and outer. But the archimedean
+  factor is zero-free anyway; the obstruction is the GLOBAL product over p, not the local factor at ∞. Closed.
+- What both say: every exact, sign-carrying structure the project has found acts either locally (one place at a time)
+  or on the far side; the near side needs a GLOBAL input specific to μ. That is the parity wall of S2 again, now from
+  the index-theory side. Recorded so that the next seat does not re-derive it.
