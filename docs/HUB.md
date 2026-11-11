@@ -45,6 +45,14 @@ One entry point. Goal of the workspace: **prove the Riemann Hypothesis.**
 | parked | #10 arithmetic Lorentzian geometry (round 2: a certificate exists whenever positivity holds, so it is a reformulation; the one cubic with a formula loses a factor 2) · #2 truncated Weil positivity (already in the literature) · #6 Lee–Yang in Bohr's variables (owner rule 1) |
 | killed (reason kept) | **#21 mirror positivity** (seminar S1: the bridge is false; counterexample ζ(s−d)ζ(s+d); everything assumed so far is blind to the twist n ↦ n^d: barrier B11) · #11 prime jump process / curvature (structural factor 2; blind to the Beurling control; process picture already published) · #3 Li split (pure reformulation) · #18 horizon lemma (judge's counterexample: two regimes of visibility) · #20 one-gap reduction (hypothesis already contains RH) |
 
+Round-2 audit (2026-11-11, `rh/experiments/r2_audit/AUDIT.md`): 65 agent ideas decided: 5 promoted, 56 merged,
+4 skipped. New in the main log: **#22** exact negative-index theorem (alive; a dictionary) · **#23** exact inertia
+relation between N and Q per parity block (alive) · **#24** certificate = lossless Bochner, the Bakry–Émery cubic
+(parked) · **#25** conjecture: the least degree of a polynomial certificate diverges as the margin closes (open) ·
+**#26** the dial property as infinite divisibility of the scale law of θⁿ (open; twenty minutes of unreviewed work).
+Still awaiting audit: the seminar's, specialists', atlas and foothold logs (after S1 closes).
+Lead's blind predictions since: e22 two of three missed; the bracket of N39 is predicted on the board (B186).
+
 Round-1 audit: 33 agent ideas decided: 9 promoted (#12–#20), 20 merged into existing ideas as notes,
 4 skipped (`rh/experiments/r1_audit/AUDIT.md`). `python3 tools/ideas.py check` lists 18 recorded rule failures.
 Blind predictions by the lead so far (rule 4): 13 made, 10 hit, 3 missed on size; two hits had a wrong reason.

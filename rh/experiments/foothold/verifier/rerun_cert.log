@@ -1,3 +1,17 @@
 case=log3 L=[0.54930614433405484570 +/- 2.38e-21] R=40 nmax=56 prec=128
 a(R) = [1.8509763431886776928 +/- 8.54e-21]  A_L = [0.98025814346854719171 +/- 3.91e-21]  a(R) - A_L = [0.87071819972013050108 +/- 2.44e-21]  beta0 = 87/100
   parity 0: integrals done, elapsed 99 s, max radius so far 2.51e-25
+  parity 1: integrals done, elapsed 193 s, max radius so far 2.51e-25
+W <= [288.89766 +/- 2.51e-6]  tau <= [1.2063723e-33 +/- 7.09e-42]  pole tail <= [9.8212058e-247 +/- 1.07e-256]
+eps12 <= [1.9650215e-13 +/- 2.43e-21]   eps22 <= [1.2187650e-31 +/- 3.35e-39]
+  parity 0: (informational, float) lowest eigenvalues of midpoint(M) + lam: 1.605280e-08, 9.8371e-04
+  parity 0 (even): M - (1/100000000) I certified positive definite; smallest pivot >= 3.132e-03
+     => Q(f) >= [9.99980349785e-9 +/- 2.43e-21] ||f||^2 on this parity sector (take the lower end of the ball)
+  parity 1: (informational, float) lowest eigenvalues of midpoint(M) + lam: 5.591096e-06, 3.3755e-02
+  parity 1 (odd): M - (1/250000) I certified positive definite; smallest pivot >= 1.939e-02
+     => Q(f) >= [3.99999980350e-6 +/- 2.16e-18] ||f||^2 on this parity sector (take the lower end of the ball)
+CERTIFICATE HOLDS (total time 193 s)
+
+real	3m12.993s
+user	3m11.807s
+sys	0m0.217s

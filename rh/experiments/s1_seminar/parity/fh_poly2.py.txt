@@ -1,0 +1,10 @@
+"""which rounded weight / position reproduces the foothold seat's float Rayleigh-Ritz values 9.0567e-7, 1.9601e-4 (L = 1/2) and 6.447e-8, 2.4997e-5 (L = 27/50)?"""
+import sys
+src = open("/home/user/ysolucki/rh/experiments/s1_seminar/parity/fh_poly.py.txt").read().split("y = mp.log(2); m = mp.log(2) / mp.sqrt(2)")[0]
+exec(src)
+for lab, y, m in (("exact y, exact m", mp.log(2), mp.log(2) / mp.sqrt(2)), ("exact y, m = 0.49013", mp.log(2), mp.mpf('0.49013')), ("exact y, m = 0.4901291", mp.log(2), mp.mpf('0.4901291')),
+                  ("y = 0.6931472, m = 0.4901291", mp.mpf('0.6931472'), mp.mpf('0.4901291')), ("y = 0.693147, m = 0.490129", mp.mpf('0.693147'), mp.mpf('0.490129'))):
+    out = []
+    for par in (0, 1):
+        A, G, C = mats(par, y); out.append(bottom(A - 2 * m * C, G))
+    print("L=%s NB=%d %-30s even %s odd %s" % (sys.argv[1], NB, lab, ns(out[0], 6), ns(out[1], 6)), flush=True)

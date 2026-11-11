@@ -14,11 +14,11 @@ R2-cubic	2026-11-10	creator: invent the cubic object for idea #10	session model	
 R2-curv	2026-11-10	creator: curvature of the prime jump process (idea #11)	session model	rh/experiments/r2_curv	done	finished; its proofs and numbers are on the verification track
 R2-parity	2026-11-10	creator: prove the parity lemma; reproduce the lead's numbers	session model	rh/experiments/r2_parity	done	finished; its proofs and numbers are on the verification track
 R2-free	2026-11-10	creator: free seat under rule 8	session model	rh/experiments/r2_free	cancelled	withdrawn after ~20 min when round 2 was split into tracks; partial files kept
-R2-cubic-ref	2026-11-10	verifier (proofs and numbers only) of seat cubic	session model	rh/experiments/r2_cubic/refuter	running	-
+R2-cubic-ref	2026-11-10	verifier (proofs and numbers only) of seat cubic	session model	rh/experiments/r2_cubic/refuter	finished 2026-11-11	-
 R2-curv-ref	2026-11-10	refuter of seat curv	session model	rh/experiments/r2_curv/refuter	done	finished under the old brief; only its findings on proofs and numbers are used
-R2-parity-ref	2026-11-10	verifier (proofs and numbers only) of seat parity	session model	rh/experiments/r2_parity/refuter	running	-
+R2-parity-ref	2026-11-10	verifier (proofs and numbers only) of seat parity	session model	rh/experiments/r2_parity/refuter	finished 2026-11-11	-
 R2-free-ref	2026-11-10	refuter of seat free	session model	rh/experiments/r2_free/refuter	cancelled	never started: creation seats get no refuter
-R2-judge	2026-11-10	judge of the round-2 verification track (proofs and numbers only)	session model	rh/experiments/r2_judge	running	-
+R2-judge	2026-11-10	judge of the round-2 verification track (proofs and numbers only)	session model	rh/experiments/r2_judge	finished 2026-11-11	-
 C1-blank	2026-11-10	creation seat, no lane, starts from a blank page	session model	rh/experiments/c1_blank	running	-
 C1-inside	2026-11-10	creation seat, no lane, starts inside the project's understanding	session model	rh/experiments/c1_inside	running	-
 C1-data	2026-11-10	creation seat, no lane, starts from the raw numbers	session model	rh/experiments/c1_data	running	-
@@ -31,14 +31,14 @@ S1-curv	2026-11-10	participant: speaks for seat R2-curv's work	session model	rh/
 S1-parity	2026-11-10	participant: speaks for seat R2-parity's work	session model	rh/experiments/s1_seminar/parity	running	-
 S1-mirror	2026-11-10	participant: develops idea 21 (two-prime model)	session model	rh/experiments/s1_seminar/mirror	running	-
 K-atlas	2026-11-10	persistent seat: failure atlas keeper and the pairing job	session model	rh/experiments/k_atlas	running	-
-K-theory	2026-11-10	persistent seat: theory document keeper	session model	rh/experiments/k_theory	running	-
-FH	2026-11-10	persistent seat: foothold hunt	session model	rh/experiments/foothold	running	-
-BG	2026-11-10	persistent seat: bigger-statement track (creation rules)	session model	rh/experiments/bigger	running	-
-SP-reflection	2026-11-11	persistent specialist: reflection positivity, semigroups, moment problems (session 1, in seminar S1)	session model	rh/specialists/reflection	running	-
-SP-operator	2026-11-11	persistent specialist: de Branges/Krein, negative squares, Toeplitz/Hankel (session 1, in seminar S1)	session model	rh/specialists/operator	running	-
+K-theory	2026-11-10	persistent seat: theory document keeper	session model	rh/experiments/k_theory	finished 2026-11-11	-
+FH	2026-11-10	persistent seat: foothold hunt	session model	rh/experiments/foothold	finished 2026-11-11	-
+BG	2026-11-10	persistent seat: bigger-statement track (creation rules)	session model	rh/experiments/bigger	silent since start (creation rules; see decision D10)	-
+SP-reflection	2026-11-11	persistent specialist: reflection positivity, semigroups, moment problems (session 1, in seminar S1)	session model	rh/specialists/reflection	finished 2026-11-11	-
+SP-operator	2026-11-11	persistent specialist: de Branges/Krein, negative squares, Toeplitz/Hankel (session 1, in seminar S1)	session model	rh/specialists/operator	finished 2026-11-11	-
 FORMAL	2026-11-11	persistent seat: machine-checking lemmas in Lean 4 + mathlib	session model	rh/formal	running	-
-READER-1	2026-11-11	persistent reader: whole papers in full (window forms: Suzuki, Connes et al., Yoshida)	session model	rh/library	running	-
-READER-2	2026-11-11	persistent reader: whole papers in full (Johns preprint, Helson matrices, Rodgers-Tao, Lorentzian polynomials)	session model	rh/library	running	-
-R2-AUD	2026-11-11	auditor: round-2 local idea logs (65 entries) into the main log	session model	rh/experiments/r2_audit	running	-
+READER-1	2026-11-11	persistent reader: whole papers in full (window forms: Suzuki, Connes et al., Yoshida)	session model	rh/library	finished 2026-11-11	-
+READER-2	2026-11-11	persistent reader: whole papers in full (Johns preprint, Helson matrices, Rodgers-Tao, Lorentzian polynomials)	session model	rh/library	finished 2026-11-11	-
+R2-AUD	2026-11-11	auditor: round-2 local idea logs (65 entries) into the main log	session model	rh/experiments/r2_audit	finished 2026-11-11	-
 SP-modular	2026-11-11	persistent specialist: modular forms, Eisenstein series, Rankin-Selberg, converse theorems (session 1, in seminar S1 turn 3)	session model	rh/specialists/modular	running	-
 V-FH	2026-11-11	verifier: foothold theorems A (certified positivity L <= (1/2) log 3) and B (first atom forced into a box)	session model	rh/experiments/foothold/verifier	running	-

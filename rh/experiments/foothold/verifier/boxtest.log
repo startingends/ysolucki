@@ -1,0 +1,2 @@
+box: y in (0.6929394531, 0.6971679687), m in [0.488558, 0.510367]
+--- y direction: lam*(y) = max_m min(even, odd) ---
