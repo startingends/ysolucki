@@ -264,3 +264,6 @@ Nikolski, Hedenmalm–Lindqvist–Seip); (iii) the adelic picture, where the pro
 - **H9 (lead, from N46).** Before building on an identity, check whether it is LINEAR in the object whose zeros are
   sought (Hecke relations, Poisson summation, factorisations are). A linear identity evaluated at a zero returns the
   zero. Information must come from a quadratic or non-linear object that is not a function of the modulus on the line.
+- **H10 (lead, from N63).** Coefficient positivity at the critical line is (conjecturally) unavailable: Landau's theorem
+  ties every non-negative arithmetic weight to the pole at 1, and the one-sided Mertens bound that would move it to ½
+  is believed false (Ingham). A proposal must use two-sided cancellation or positivity of a FORM on the near side.

@@ -1027,3 +1027,24 @@ regions of Stechkin/Heath-Brown/Kadiri — but this exact bookkeeping was not fo
   form: on one-signed vectors zeta can fail only by its single pole square beating non-negative terms.
 - SO the map has a sixth face: (pole dominance in positive-weight explicit formulas) = (the band edge) = (the
   short-family wall). Recorded as a note on idea #34.
+
+**N63. The pole and positivity are one fact (Landau's theorem); the version at the critical line exists, is
+classical, and is believed FALSE — which rules out a whole class of approaches** (lead, 2026-11-11).
+- LANDAU: a Dirichlet series with non-negative coefficients has a singularity at the real point of its abscissa.
+  Every non-negative arithmetic weight built on the integers has abscissa 1, so its singularity is the pole at s = 1.
+  That is WHY the pole dominates in every positive-weight method (N62): positivity of coefficients and the pole at 1
+  are the same fact.
+- THE OBJECT THAT WOULD MAKE IT TRIVIAL AT ½ (rule 13 (c)): a non-negative weight whose abscissa is ½ and whose
+  singularities in Re s > ½ are the zeros of ζ. It EXISTS in the classical literature as a ONE-SIDED Mertens bound:
+  if √x − M(x) ≥ 0 (or M(x) ≤ C√x) for all large x, then ∫ (C√x − M(x)) x^(−s−1) dx has a non-negative integrand,
+  Landau applies, its only real singularity right of ½ would be a real zero of ζ in (½, 1) (there are none), so
+  1/ζ is holomorphic in Re s > ½: RH (and simple zeros). (Classical: Landau, Ingham; recalled, unread.)
+- BUT the one-sided bound is believed false: under the linear independence of the zeros' ordinates, M(x)/√x is
+  unbounded in BOTH directions (Ingham 1942; the Mertens conjecture itself is false, Odlyzko–te Riele 1985; recalled).
+- LESSON, as a rule (H10, proposed): **coefficient positivity at the critical line is (conjecturally) unavailable for
+  any arithmetic weight; so a proof of RH cannot be "a one-sided bound for an arithmetic sum". It must use either
+  two-sided cancellation (the parity wall of S2) or positivity of a FORM (Weil's), never positivity of
+  coefficients.** Idea #9 (positivity sieve) and every positive-weight explicit-formula method live under Landau's
+  theorem and are confined to the edge; Weil's form positivity is the only positivity in the record not confined by
+  it — and its near side is the short-family wall (#34). The two remaining kinds of input are therefore exactly:
+  form positivity on the near side, or Type II cancellation on the near side.
