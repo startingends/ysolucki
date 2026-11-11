@@ -290,3 +290,15 @@ Hinkkanen 1997. Partly read: L9 (KW98 pp. 7-37 unread), L13 (Basor-Ehrhardt, ver
 Answer from the toolkit; label PROVED / COMPUTED / HEURISTIC / CONJECTURE / KNOWN (citation, how much read);
 never post whether an idea is likely to work; the main move is the question; everything my toolkit proves is
 an equivalence or a count, not the inequality (CHARTER, "what it cannot do").
+
+## SESSION (one-object seat, H-1 local Weil discriminant; 2026-11-11): LOCAL_DISCRIMINANT.md
+- W_k = pencil (Q, D) on the real span of the D-kernels at a pair. PROVED: W_k >= kappa_min; on-line pair part = G^2 so
+  W_k >= lambda_min(G) >= 0 if all other zeros on line; off-line own part G J G has 2 negative eigenvalues; double zero:
+  W_k = other zeros' contribution (>0), NOT 0 (corrects H-1). With SEP the criterion is a pure reformulation of Weil.
+- KEY FORMULA (COMPUTED to 0.1-0.7%, zeta and impostor, 9 kernel entries): below T_D,
+  K_D(g, g') = 1/2 int_1^inf e^{-i(g-g')(L + log N)} conj R_N(rho) R_N(rho') dN/N,  R_N(s) = sum_{n<=N} a_n n^-s - pole,
+  i.e. Euler-Maclaurin remainders at the zeros (impostor: periodic A(x), no pole). mu-free, Lambda-free, L-independent
+  diagonal. Derived from plank 5 (F(gamma) = -<leak, tau_gamma>) + pole subtraction; unproved hypothesis (ADM).
+- REFUTED: impostor L = 1.72 quartet W = +0.43 while kappa_min = -0.048 (SEP fails). Euler product not active pair-locally.
+- Ratings Quality 6, Toward RH 2. Open problem: pair-local quantity with Lambda times a weight of forced sign.
+- Scripts two_zero/wk.py.txt, kformula.py.txt, kcross.py.txt; matrices rh/data/operator_two_zero/.

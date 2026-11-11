@@ -1468,3 +1468,23 @@ no measurement; the facts are classical, the packaging is the lead's).
   for γ in the bulk, i.e. positivity of a multiplicative object twisted by a multiplicative oscillation. Over
   function fields this is exactly what the Frobenius twist does (the oscillation q^(−inθ) is the Frobenius power,
   and positivity comes from geometry, not from the coefficients).
+
+**N85. H-1 is a shadow: the local Weil discriminant misses the one off-line zero on record; the D-kernel has an
+exact formula** (lead, after SP-operator session 3, `rh/specialists/operator/LOCAL_DISCRIMINANT.md`).
+- Refuted: at the impostor's failed window (L = 1.72) the off-line quartet's own W is +0.43 while κ_min = −0.048.
+  Proved: W_k ≥ κ_min; for an on-line pair its own part is G², so W_k ≥ λ_min(G) ≥ 0 when all other zeros are on
+  the line; for an off-line pair its own part GJG has two negative eigenvalues; at a double zero W_k equals the
+  OTHER zeros' contribution (> 0, not 0: H-1's tightness claim corrected). With a separation hypothesis the
+  criterion is equivalent to RH and then a pure reformulation of Weil's.
+- Found (checked to 0.1–0.7% on the diagonal, 0.2–3.5% off it, zeta and impostor): below the pinning height
+  K_D(γ, γ′) = ½∫₁^∞ e^(−i(γ−γ′)(L + log N)) conj R_N(ρ) R_N(ρ′) dN/N, R_N = partial sum of the L-function minus the
+  pole term. A mean value of the dual Dirichlet polynomials at the zeros; no μ and no Λ in it. One density hypothesis
+  on the out-of-band parts is unproved. In the 2×2 inequality Λ multiplies weights of no sign, so the Euler product
+  is present and does nothing pair by pair. Ratings (seat): Quality 6, Toward RH 2.
+- Lead's reading: H-1's open problem ("a pair-local quantity whose prime side is a Λ-weighted sum with a weight of
+  forced sign") collides head-on with N84: pair-local at height γ forces oscillation at γ, and a forced sign forces
+  a positive mean that pairs with the pole. So inside the class "Λ times a weight", pair-locality and a forced
+  sign exclude each other. That is a barrier statement (to be made precise; Quality could be 6, Toward RH 1), and it
+  says the missing positivity cannot come from the coefficients. It has to come from a structure (a Hilbert space
+  with the Hecke action, or geometry), which is exactly the triangle of N83. Both remaining lines now point at the
+  same question; it goes to two specialists at once (rule 13(b)).

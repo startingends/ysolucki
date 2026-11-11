@@ -132,3 +132,60 @@ are cross-correlations of two kernels, which change sign with n. This is the pre
 (C2) Kernel formula 3.3 on the diagonal: ½∫_1^∞ |R_N(ρ)|² dN/N against the measured K_D(γ) at three zeta zeros and the
      L-independence claim (K_D(111.03) is 1.342 at L = 1 and 1.705 at L = 1.25 in my logs, which already contradicts strict
      L-independence). I predict (ADM) fails visibly: formula/measured outside [0.5, 2] for at least one zero.
+
+### 5.1 Outcomes (COMPUTED 2026-11-11; scripts two_zero/wk.py.txt, kformula.py.txt, kcross.py.txt; matrices in
+rh/data/operator_two_zero/; one implementation, floats after multiprecision whitening; nothing certified)
+
+**(C2) The kernel formula 3.3 HOLDS (prediction MISSED: I expected (ADM) to fail).** Diagonal, ½∫_1^∞ |R_N(ρ)|² dN/N
+against the measured K_D(γ):
+| zero | formula | measured (L) |
+|---|---|---|
+| 14.135 | 0.3976 | 0.3935 (1.0) |
+| 21.022 | 0.5759 | 0.5717 (1.0) |
+| 59.347 | 0.7436 | 0.7442 (1.0) |
+| 60.832 | 1.2386 | 1.2370 (1.0) |
+| 111.030 | 1.7100 | 1.705 (1.25); 1.342 (1.0) |
+| impostor 40.163 / 40.683 (A(x) periodic, NO pole term) | 1.1920 / 1.1021 | 1.1891 / 1.0992 (1.5) |
+| impostor 22.160 / 23.345 | 1.1039 / 1.1652 | 1.1014 / 1.1626 (1.5) |
+Off-diagonal: zeta 59.35/60.83: formula K12 = 0.0537 + 0.6025i, measured 0.0519 − 0.6021i (complex conjugate: a convention);
+impostor 40.16/40.68: 0.6941 + 0.6874i vs 0.6921 − 0.6854i; 22.16/23.35: −0.1279 + 0.6070i vs −0.1274 − 0.6045i.
+Agreement 0.1–0.7% wherever the zero lies below the pinning height T_D(L); it fails above it (111.03 at L = 1: 1.71 vs
+1.34), which is where (ADM) should fail. L-independence of the diagonal below T_D confirmed (111.03: 1.705 at L = 1.25
+against the L-free formula 1.710). 98–99% of the integral comes from N < γ/2π, where by the approximate functional
+equation R_N(ρ) ≈ −χ(ρ) Σ_{m ≤ γ/(2πN)} m^{ρ−1}: **the D-Gram at the zeros is the matrix of mean squares (and cross
+correlations) of the DUAL Dirichlet polynomials Σ_{m≤M} m^{−½+iγ} over the length M, evaluated at the zeros**, i.e. a
+discrete-moment object of Gonek type, with no μ and no Λ in it. Status of 3.3: CONJECTURE → COMPUTED to 3 digits on 9
+kernel entries, two functions (proof would need (ADM): density of admissible leaks below T_D; not attempted).
+
+**(C1) W_k on the kernel span (prediction PARTLY MISSED).**
+| case | W_k | pair bound 2λ_min(G) | κ_min |
+|---|---|---|---|
+| zeta L = 1, 59.35/60.83 | 0.431 | 0.336 | 0.298 |
+| zeta L = 1.25, 111.03/111.87 | 0.375 | 0.230 | 0.205 |
+| impostor L = 1.5, 40.16/40.68 | 0.622 | 0.169 | 0.138 |
+| impostor L = 1.70, quartet 85.70 | +0.480 | — | +0.041 |
+| impostor L = 1.72, quartet 85.70 | **+0.428** | — | **−0.048** |
+(P1) and (P2a) hold (W_k ≥ pair bound ≥ 0 on-line; W_k ≥ κ_min). The excess over the pair bound is 28%, 63%, 270% (I
+predicted 5–30%). **Decisive: at the impostor's failed window L = 1.72 the quartet's own W is +0.43 while Q is
+indefinite.** So H-1(a) "W < 0 for the off-line pair" is FALSE there: SEP fails by a wide margin, the negative direction of
+Q is not in the span of the quartet's kernels (it lies in combinations with the neighbours and the ladder, as the foothold
+seat's decomposition showed: on-line part +5.8 Q(v), quartet −4.9 Q(v)). The quartet sits at 2.2× the band edge, far above
+T_D(1.72) ≈ 1.55 × 39.4 = 61, i.e. outside the pinned range where kernels are local. W_k is therefore not a detector of
+off-line zeros at the windows where they first matter.
+
+## 6. Verdict on H-1 after this session, and ratings
+- The geometric half of H-1 is real and now exact: below T_D the D-kernels at the zeros have a closed formula (3.3,
+  checked to 0.1–0.7%), the pair part λ_min(G_k) is collision-tight (TWO_ZERO 3.4), and W_k ≥ λ_min(G_k) ≥ 0 on the line.
+- The arithmetic half fails: the kernel is μ-free and Λ-free (Euler–Maclaurin remainders of the L-function's own
+  coefficients; for the impostor, its periodic summatory function), and in the 2×2 inequality Λ multiplies weights of no
+  sign (3.4). The Euler product is present but not active, pair by pair.
+- The W-criterion is a pure reformulation of Weil's criterion under SEP, and SEP fails at the one off-line case on record
+  (L = 1.72: W = +0.43, κ_min = −0.048). As a pair-local criterion H-1(a) is refuted on the impostor.
+- New object worth keeping (for the next resume): the D-Gram at the zeros = Gram of R_N(ρ) over N, i.e. a discrete
+  moment of dual Dirichlet polynomials over the zeros. κ_min ≈ (0.82–0.89) × the pair part of its bottom eigenvalue.
+  The open construction problem is now precise (section 4, last paragraph): a pair-local quantity whose prime side is
+  Σ Λ(n) n^{−1/2} ω(n) with ω of FORCED sign.
+**Quality 6/10**: one exact, checked formula (two functions, 9 entries) and two clean refutations, with short proofs; not
+higher because (ADM) is unproved and everything is one implementation. **Toward RH 2/10**: the object does not let the
+Euler product act pair by pair, and the pair-local criterion misses the impostor's off-line zero; not lower because the
+kernel formula turns the pinning into an explicit discrete-moment object that a sign-definite construction could use.
